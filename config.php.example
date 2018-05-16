@@ -18,7 +18,7 @@ define('BOT_ADMINS',			'');
 define('BOT_ACCESS',			'');
 
 // Languages
-define('LANGUAGE',             		'');
+define('LANGUAGE',             'EN'); // Currently possible: EN, DE, NL, BR-pt
 
 // Timezone and Google maps API 
 define('TIMEZONE',			'Europe/Berlin');

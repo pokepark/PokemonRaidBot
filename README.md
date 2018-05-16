@@ -65,7 +65,7 @@ Authentication against the proxy server by username and password is currently no
 
 ## Webhooks
 
-Set Telegram webhook via webhook.html, e.g. https://your-hostname/bot-dir/webhook.html
+Set Telegram webhook via webhook.html, e.g. https://your-hostname/bot-dir/core/tools/webhook.html
 
 ## Languages
 
