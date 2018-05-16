@@ -20,5 +20,3 @@ Germany
 
 
 
-Möchte nicht genannt werden!
-- Oke
