@@ -19,8 +19,6 @@ define('BOT_ACCESS',			'');
 
 // Languages
 define('LANGUAGE',             		'');
-define('RAID_POLL_LANGUAGE',   		'EN');
-define('QUEST_LANGUAGE',       		'EN');
 
 // Timezone and Google maps API 
 define('TIMEZONE',			'Europe/Berlin');
@@ -53,18 +51,6 @@ define('SHARE_RAID_CHATS',		'');
 // Raid overview
 define('RAID_PIN_MESSAGE',		'');
 
-// Quest creation
-define('QUEST_VIA_LOCATION',		true);
-define('QUEST_LOCATION',		false);
-define('QUEST_STOPS_RADIUS',		'50');
-define('QUEST_HIDE_REWARDS',		true);
-define('QUEST_HIDDEN_REWARDS',		'2,3,8,10');
-
-// Quest sharing
-define('SHARE_QUEST_MODERATORS',	true);
-define('SHARE_QUEST_USERS',		true);
-define('SHARE_QUEST_CHATS',		'');
-
 // Cleanup
 define('CLEANUP',			false);
 define('CLEANUP_LOGFILE',		'/var/log/tg-bots/dev-raid-bot-cleanup.log');
@@ -73,6 +59,4 @@ define('CLEANUP_RAID_TELEGRAM',		true);
 define('CLEANUP_RAID_TIME_TG',		'10');
 define('CLEANUP_RAID_DATABASE',		true);
 define('CLEANUP_RAID_TIME_DB',		'10080');
-define('CLEANUP_QUEST_TELEGRAM',	true);
-define('CLEANUP_QUEST_DATABASE',	true);
 
