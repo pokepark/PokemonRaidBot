@@ -248,7 +248,7 @@ if (isset($update['callback_query'])) {
         $com = strtolower(str_replace('/', '', str_replace(BOT_NAME, '', explode(' ', $update['message']['text'])[0])));
 
         // Set command path.
-        $command = ROOT_PATH . '/command/' . basename($com) . '.php';
+        $command = ROOT_PATH . '/commands/' . basename($com) . '.php';
 
         // Write to log.
         debug_log($command);
