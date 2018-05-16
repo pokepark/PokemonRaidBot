@@ -454,7 +454,7 @@ The following commands are used to create the raid-pokemon-bot.sql and raid-boss
 
 #### raid-pokemon-bot.sql
 
-Export command: `mysqldump -u USERNAME -p --no-data --skip-add-drop-table --skip-add-drop-database --skip-comments DATABASENAME | sed 's/ AUTO_INCREMENT=[0-9]*\b/ AUTO_INCREMENT=100/' > sql/raid-pokemon-bot.sql`
+Export command: `mysqldump -u USERNAME -p --no-data --skip-add-drop-table --skip-add-drop-database --skip-comments DATABASENAME | sed 's/ AUTO_INCREMENT=[0-9]*\b/ AUTO_INCREMENT=100/' > sql/pokemon-raid-bot.sql`
 
 #### pokedex-pokemon.sql
 
