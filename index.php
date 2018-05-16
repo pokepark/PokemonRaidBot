@@ -174,17 +174,9 @@ if (isset($update['callback_query'])) {
     // Check access to the bot
     bot_access_check($update);
 
-    // Ask what to create.
-    if(RAID_VIA_LOCATION == true && QUEST_VIA_LOCATION == true) {
-        include_once(ROOT_PATH . '/mods/geo_create.php');
-
-    // Create raid and exit.
-    } else if(RAID_VIA_LOCATION == true && QUEST_VIA_LOCATION == false) {
+        // Create raid and exit.
+    if(RAID_VIA_LOCATION == true) {
         include_once(ROOT_PATH . '/mods/raid_create.php');
-
-    // Create quest and exit.
-    } else if(RAID_VIA_LOCATION == false && QUEST_VIA_LOCATION == true) {
-        include_once(ROOT_PATH . '/mods/quest_geo.php');
     }
     exit();
 
