@@ -18,7 +18,7 @@ define('BOT_ADMINS',			'');
 define('BOT_ACCESS',			'');
 
 // Languages
-define('LANGUAGE',             'EN'); // Currently possible: EN, DE, NL, BR-pt
+define('LANGUAGE',             'EN'); // Currently possible: EN, DE, NL, PT-BR
 
 // Timezone and Google maps API 
 define('TIMEZONE',			'Europe/Berlin');
@@ -59,4 +59,3 @@ define('CLEANUP_RAID_TELEGRAM',		true);
 define('CLEANUP_RAID_TIME_TG',		'10');
 define('CLEANUP_RAID_DATABASE',		true);
 define('CLEANUP_RAID_TIME_DB',		'10080');
-
