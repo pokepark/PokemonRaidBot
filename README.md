@@ -298,24 +298,24 @@ The bot will guide you through the creation of the raid poll by asking you for t
 
 #### Screenshots
 #### Send `/start` to the bot to create a raid by gym selection:
-![Command: /start](/screenshots/command-start.png?raw=true "Command: /start")
+![Command: /start](/screens/command-start.png?raw=true "Command: /start")
 
 #### Select the gym via the first letter:
-![Command: /start](/screenshots/commands-start-select-gym-first-letter.png?raw=true "Command: /start")
-![Command: /start](/screenshots/commands-start-select-gym-letter-d.png?raw=true "Command: /start")
+![Command: /start](/screens/commands-start-select-gym-first-letter.png?raw=true "Command: /start")
+![Command: /start](/screens/commands-start-select-gym-letter-d.png?raw=true "Command: /start")
 
 #### Select the raid level and raid boss:
-![Command: /start](/screenshots/commands-start-select-raid-level.png?raw=true "Command: /start")
-![Command: /start](/screenshots/commands-start-select-raid-boss.png?raw=true "Command: /start")
+![Command: /start](/screens/commands-start-select-raid-level.png?raw=true "Command: /start")
+![Command: /start](/screens/commands-start-select-raid-boss.png?raw=true "Command: /start")
 
 #### Select the start time (clock time or minutes) and the duration of the raid:
-![Command: /start](/screenshots/commands-start-select-starttime-clock.png?raw=true "Command: /start")
-![Command: /start](/screenshots/commands-start-select-starttime-minutes.png?raw=true "Command: /start")
+![Command: /start](/screens/commands-start-select-starttime-clock.png?raw=true "Command: /start")
+![Command: /start](/screens/commands-start-select-starttime-minutes.png?raw=true "Command: /start")
 
-![Command: /start](/screenshots/commands-start-select-raid-duration.png?raw=true "Command: /start")
+![Command: /start](/screens/commands-start-select-raid-duration.png?raw=true "Command: /start")
 
 #### Raid poll is created. Delete or share it:
-![Command: /start](/screenshots/commands-start-raid-saved.png?raw=true "Command: /start")
+![Command: /start](/screens/commands-start-raid-saved.png?raw=true "Command: /start")
 
 ### Command: /help
 
@@ -352,31 +352,31 @@ Show and update any pokemon raid boss. You can change the raid level (select rai
 #### Screenshots
 #### Manage pokemons / raid bosses via the `/pokedex` command:
 
-![Command: /pokedex](/screenshots/command-pokedex.png?raw=true "Command: /pokedex")
+![Command: /pokedex](/screens/command-pokedex.png?raw=true "Command: /pokedex")
 
 #### All raid bosses:
 
-![Command: /pokedex](/screenshots/commands-pokedex-all-raid-bosses.png?raw=true "Command: /pokedex")
+![Command: /pokedex](/screens/commands-pokedex-all-raid-bosses.png?raw=true "Command: /pokedex")
 
 #### Select and edit a specific pokemon / raid boss:
 
-![Command: /pokedex](/screenshots/commands-pokedex-list-raid-boss-pokemon.png?raw=true "Command: /pokedex")
-![Command: /pokedex](/screenshots/commands-pokedex-edit-raid-boss-pokemon.png?raw=true "Command: /pokedex")
+![Command: /pokedex](/screens/commands-pokedex-list-raid-boss-pokemon.png?raw=true "Command: /pokedex")
+![Command: /pokedex](/screens/commands-pokedex-edit-raid-boss-pokemon.png?raw=true "Command: /pokedex")
 
 #### Edit the raid level:
 
-![Command: /pokedex](/screenshots/commands-pokedex-set-raid-level.png?raw=true "Command: /pokedex")
-![Command: /pokedex](/screenshots/commands-pokedex-saved-new-raid-level.png?raw=true "Command: /pokedex")
+![Command: /pokedex](/screens/commands-pokedex-set-raid-level.png?raw=true "Command: /pokedex")
+![Command: /pokedex](/screens/commands-pokedex-saved-new-raid-level.png?raw=true "Command: /pokedex")
 
 #### Edit the CP values, e.g. Max CP:
 
-![Command: /pokedex](/screenshots/commands-pokedex-enter-max-cp.png?raw=true "Command: /pokedex")
-![Command: /pokedex](/screenshots/commands-pokedex-save-max-cp.png?raw=true "Command: /pokedex")
-![Command: /pokedex](/screenshots/commands-pokedex-saved-new-max-cp.png?raw=true "Command: /pokedex")
+![Command: /pokedex](/screens/commands-pokedex-enter-max-cp.png?raw=true "Command: /pokedex")
+![Command: /pokedex](/screens/commands-pokedex-save-max-cp.png?raw=true "Command: /pokedex")
+![Command: /pokedex](/screens/commands-pokedex-saved-new-max-cp.png?raw=true "Command: /pokedex")
 
 #### Edit the weather:
 
-![Command: /pokedex](/screenshots/commands-pokedex-set-weather.png?raw=true "Command: /pokedex")
+![Command: /pokedex](/screens/commands-pokedex-set-weather.png?raw=true "Command: /pokedex")
 
 
 ### Command: /new
