@@ -2717,7 +2717,7 @@ function insert_raid_cleanup($chat_id, $message_id, $raid_id)
  */
 function run_raids_cleanup ($telegram = 2, $database = 2) {
     // Check configuration, cleanup of telegram needs to happen before database cleanup!
-    if (CLEANUP_RAID_TIME_TG > CLEANUP_RAID_TIME_DB) {
+    if (CLEANUP_TIME_TG > CLEANUP_TIME_DB) {
 	cleanup_log('Configuration issue! Cleanup time for telegram messages needs to be lower or equal to database cleanup time!');
 	cleanup_log('Stopping cleanup process now!');
 	exit;
@@ -2731,11 +2731,11 @@ function run_raids_cleanup ($telegram = 2, $database = 2) {
 
     // Get cleanup values from config per default.
     if ($telegram == 2) {
-	$telegram = (CLEANUP_RAID_TELEGRAM == true) ? 1 : 0;
+	$telegram = (CLEANUP_TELEGRAM == true) ? 1 : 0;
     }
 
     if ($database == 2) {
-	$database = (CLEANUP_RAID_DATABASE == true) ? 1 : 0;
+	$database = (CLEANUP_DATABASE == true) ? 1 : 0;
     }
 
     // Start cleanup when at least one parameter is set to trigger cleanup
@@ -2848,8 +2848,8 @@ function run_raids_cleanup ($telegram = 2, $database = 2) {
 	        $end = $raid['ts_end'];
 	        $tz = $raid['timezone'];
     	        $now = $raid['ts_now'];
-	        $cleanup_time_tg = 60*CLEANUP_RAID_TIME_TG;
-	        $cleanup_time_db = 60*CLEANUP_RAID_TIME_DB;
+	        $cleanup_time_tg = 60*CLEANUP_TIME_TG;
+	        $cleanup_time_db = 60*CLEANUP_TIME_DB;
 
 		// Write times to log.
 		cleanup_log("Current time: " . unix2tz($now,$tz,"Y-m-d H:i:s"));
