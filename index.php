@@ -104,14 +104,7 @@ if (isset($update['cleanup']) && CLEANUP == true) {
         // Run cleanup based on type
         $cleanup_type = $update['cleanup']['type'];
         cleanup_log('Calling ' . $cleanup_type . ' cleanup process now!');
-        // Raids cleanup
-        if ($cleanup_type == 'raid') {
-            run_raids_cleanup($telegram, $database);
-        } else if ($cleanup_type == 'quest') {
-            run_quests_cleanup($telegram, $database);
-        } else {
-            cleanup_log('Error! Wrong cleanup type supplied!', '!');
-        }
+        run_raids_cleanup($telegram, $database);
     } else {
         cleanup_log('Error! Wrong cleanup secret supplied!', '!');
     }
