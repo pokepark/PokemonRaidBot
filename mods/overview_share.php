@@ -95,7 +95,7 @@ if ($count_active_raids > 0) {
         $request_active_chats = my_query(
             "
             SELECT    *
-            FROM      cleanup_raids
+            FROM      cleanup
               WHERE   raid_id IN ({$raid_ids_active})
               ORDER BY chat_id, FIELD(raid_id, {$raid_ids_active})
             "
@@ -104,7 +104,7 @@ if ($count_active_raids > 0) {
         $request_active_chats = my_query(
             "
             SELECT    *
-            FROM      cleanup_raids
+            FROM      cleanup
               WHERE   raid_id IN ({$raid_ids_active})
 	      AND     chat_id = '{$chat_id}'
               ORDER BY chat_id, FIELD(raid_id, {$raid_ids_active})
