@@ -1,6 +1,6 @@
 <?php
 // Write to log.
-debug_log('POKEDEX()');
+debug_log('EXREPORT()');
 
 // For debug.
 //debug_log($update);
@@ -23,10 +23,9 @@ $rs = my_query(
         /
         count(distinct r.id)*2) +3)  as players_needed_to_trigger
 FROM raids r
-		LEFT JOIN pokemon ON pokemon.pokedex_id=r.pokemon
 		LEFT JOIN attendance a ON a.raid_id=r.id
 	WHERE   r.gym_name like '%!%'
-	AND pokemon.pokedex_id <> 150
+	AND r.pokemon = 150
     AND WEEK(r.start_time)  BETWEEN week(now())-2 AND week(now())
 	GROUP BY  r.gym_name
             "
@@ -65,7 +64,7 @@ FROM raids r
 
 
 // Set message.
-$msg = '<b>' . getTranslation('pokedex_start') . ':</b>';
+$msg = '<b> EX Raid Report</b>'; // . getTranslation('pokedex_start') . ':</b>';
 
 // Send message.
 send_message($update['message']['chat']['id'], $msg, $keys, ['reply_markup' => ['selective' => true, 'one_time_keyboard' => true]]);
