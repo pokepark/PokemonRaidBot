@@ -24,8 +24,7 @@ $rs = my_query(
         count(distinct r.id)*2) +3)  as players_needed_to_trigger
 FROM raids r
 		LEFT JOIN attendance a ON a.raid_id=r.id
-	WHERE   r.gym_name like '%!%'
-	AND r.pokemon = 150
+      WHERE   r.pokemon = 150
     AND WEEK(r.start_time)  BETWEEN week(now())-2 AND week(now())
 	GROUP BY  r.gym_name
             "
