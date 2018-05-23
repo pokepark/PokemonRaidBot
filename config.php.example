@@ -52,6 +52,9 @@ define('SHARE_CHATS',		'');
 // Raid overview
 define('RAID_PIN_MESSAGE',		'');
 
+//Map settings
+define('MAP_URL',   ''); 
+
 // Cleanup
 define('CLEANUP',			false);
 define('CLEANUP_LOGFILE',		'/var/log/tg-bots/dev-raid-bot-cleanup.log');
