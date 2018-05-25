@@ -4251,7 +4251,7 @@ function show_raid_poll($raid)
     }
 
     //Add custom message from the config.   
-    if (isset(MAP_URL) && MAP_URL != '') {
+    if (defined(MAP_URL) && MAP_URL != '') {
 
         $msg .= CR . MAP_URL ;
     }	
