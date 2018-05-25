@@ -244,7 +244,7 @@ if (isset($update['callback_query'])) {
         $com = strtolower(str_replace('/', '', str_replace(BOT_NAME, '', explode(' ', $update['message']['text'])[0])));
         if ( $com == 'start' ) {
           
-          include_once(ROOT_PATH . '/mods/raid_create.php');
+          include_once(ROOT_PATH . '/mods/raid_by_gym.php');
           exit();
         }
 
