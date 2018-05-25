@@ -242,11 +242,11 @@ if (isset($update['callback_query'])) {
     if (substr($update['message']['text'], 0, 1) == '/') {
         // Get command name.
         $com = strtolower(str_replace('/', '', str_replace(BOT_NAME, '', explode(' ', $update['message']['text'])[0])));
-        if ( $com == 'start' ) {
+/*        if ( $com == 'start' ) {
           
-          include_once(ROOT_PATH . '/mods/raid_by_gym.php');
+          include_once(ROOT_PATH . '/mods/raid_by_gym_letter.php');
           exit();
-        }
+        } */
 
         // Set command path.
         $command = ROOT_PATH . '/commands/' . basename($com) . '.php';
