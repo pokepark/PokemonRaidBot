@@ -2676,7 +2676,7 @@ function insert_raid_cleanup($chat_id, $message_id, $raid_id)
 	    $rs = my_query(
                 "
 		SELECT    *
-            	    FROM      cleanup
+            	    FROM      cleanup_raids
                     WHERE     raid_id = '{$raid_id}'
                 "
             );
@@ -2698,7 +2698,7 @@ function insert_raid_cleanup($chat_id, $message_id, $raid_id)
             debug_log('Adding cleanup info to database:');
             $rs = my_query(
                 "
-                INSERT INTO   cleanup
+                INSERT INTO   cleanup_raids
                 SET           raid_id = '{$raid_id}',
                                   chat_id = '{$chat_id}',
                                   message_id = '{$message_id}'
@@ -2746,7 +2746,7 @@ function run_raids_cleanup ($telegram = 2, $database = 2) {
             $rs = my_query(
                 "
                 SELECT    * 
-                FROM      cleanup
+                FROM      cleanup_raids
                   WHERE   chat_id <> 0
                   ORDER BY id DESC
                   LIMIT 0, 250     
@@ -2758,7 +2758,7 @@ function run_raids_cleanup ($telegram = 2, $database = 2) {
             $rs = my_query(
                 "
                 SELECT    * 
-                FROM      cleanup
+                FROM      cleanup_raids
                   WHERE   chat_id = 0
                   LIMIT 0, 250
                 ", true
@@ -2769,7 +2769,7 @@ function run_raids_cleanup ($telegram = 2, $database = 2) {
             $rs = my_query(
                 "
                 SELECT    * 
-                FROM      cleanup
+                FROM      cleanup_raids
                   LIMIT 0, 250
                 ", true
             );
@@ -2815,7 +2815,7 @@ function run_raids_cleanup ($telegram = 2, $database = 2) {
                 cleanup_log('Updating cleanup information.');
                 my_query(
                 "
-                    UPDATE    cleanup
+                    UPDATE    cleanup_raids
                     SET       chat_id = 0, 
                               message_id = 0 
                     WHERE   id = {$row['id']}
@@ -2876,7 +2876,7 @@ function run_raids_cleanup ($telegram = 2, $database = 2) {
                     cleanup_log('Updating telegram cleanup information.');
 		    my_query(
     		    "
-    		        UPDATE    cleanup
+    		        UPDATE    cleanup_raids
     		        SET       chat_id = 0, 
     		                  message_id = 0 
       		        WHERE   id = {$row['id']}
@@ -2912,7 +2912,7 @@ function run_raids_cleanup ($telegram = 2, $database = 2) {
                     cleanup_log('Updating database cleanup information.');
                     my_query(
                     "
-                        UPDATE    cleanup
+                        UPDATE    cleanup_raids
                         SET       raid_id = 0, 
 				  cleaned = {$row['raid_id']}
                         WHERE   raid_id = {$row['raid_id']}
@@ -2943,7 +2943,7 @@ function run_raids_cleanup ($telegram = 2, $database = 2) {
 		    $rs_cl = my_query(
                     "
                         SELECT *
-			FROM    cleanup
+			FROM    cleanup_raids
                         WHERE   cleaned = {$row['cleaned']}
                     ", true
 		    );
@@ -2956,7 +2956,7 @@ function run_raids_cleanup ($telegram = 2, $database = 2) {
 		    // Finally delete from cleanup table.
                     my_query(
                     "
-                        DELETE FROM    cleanup
+                        DELETE FROM    cleanup_raids
                         WHERE   cleaned = {$row['cleaned']}
                     ", true
                     );
@@ -3795,7 +3795,7 @@ function delete_raid($raid_id)
     $rs = my_query(
         "
         SELECT    *
-            FROM      cleanup
+            FROM      cleanup_raids
             WHERE     raid_id = '{$raid_id}'
               AND     chat_id <> 0
         "
@@ -3821,7 +3821,7 @@ function delete_raid($raid_id)
     debug_log('Deleting raid ' . $raid_id . ' from the cleanup table:');
     $rs_cleanup = my_query(
         "
-        DELETE FROM   cleanup
+        DELETE FROM   cleanup_raids
         WHERE   raid_id = '{$raid_id}' 
            OR   cleaned = '{$raid_id}'
         "
@@ -4251,10 +4251,10 @@ function show_raid_poll($raid)
     }
 
     //Add custom message from the config.   
-    if (defined(MAP_URL) && MAP_URL != '') {
-
+     if (defined(MAP_URL) && MAP_URL != '') {
+         
         $msg .= CR . MAP_URL ;
-    }	
+    }		
 	
     // Display creator.
     $msg .= ($raid['user_id'] && $raid['name']) ? (CR . getRaidTranslation('created_by') . ': <a href="tg://user?id=' . $raid['user_id'] . '">' . htmlspecialchars($raid['name']) . '</a>') : '';
