@@ -1150,5 +1150,19 @@
 		"DE": "Löschen",
 		"EN": "Delete",
 		"PT-BR": "Deletar"
+	},
+	"friend_code_update" : {
+		"NL": "Friend code is geupdate.",
+		"DE": "TRANSLATE",
+		"EN": "Friend code is updated.",
+		"PT-BR": "TRANSLATE"
+	},
+	"friend_code_update_fail" : {
+		"NL": "Friend code is NIET geupdate.",
+		"DE": "TRANSLATE",
+		"EN": "Friend code is NOT updated.",
+		"PT-BR": "TRANSLATE"
 	}
+}
+
 }
