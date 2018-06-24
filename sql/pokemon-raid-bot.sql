@@ -106,6 +106,8 @@ CREATE TABLE `users` (
   `timezone` int(10) DEFAULT NULL,
   `level` int(10) unsigned DEFAULT '0',
   `friend_code` text DEFAULT NULL,
+  `want` text DEFAULT NULL,
+  `have` text DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `i_userid` (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8;
