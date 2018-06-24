@@ -27,7 +27,7 @@ if ($update['message']['chat']['type'] == 'private' || $update['callback_query']
     sendMessage($update['message']['chat']['id'], getTranslation('friend_code_update'));
 
 } else {
-    sendMessage($update['message']['chat']['id'], 'Mislukt');
+    sendMessage($update['message']['chat']['id'], getTranslation('fail'));
     
 }
 
