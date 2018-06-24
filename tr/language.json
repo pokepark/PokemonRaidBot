@@ -1168,7 +1168,13 @@
 		"DE": "TRANSLATE",
 		"EN": "TRANSLATE",
 		"PT-BR": "TRANSLATE"
-	},
+	},  
+	"friend_code_invalid" : {
+   		"NL": "Dit is geen geldige Friend Code, probeer het opnieuw.",
+  		"DE": "TRANSLATE",
+   		"EN": "That's not a valid friend code, please try again",
+  	  	"PT-BR": "TRANSLATE"
+  },
 	"fail" : {
 		"NL": "Mislukt.",
 		"DE": "TRANSLATE",
