@@ -1154,15 +1154,25 @@
 	"friend_code_update" : {
 		"NL": "Friend code is geupdate.",
 		"DE": "TRANSLATE",
-		"EN": "Friend code is updated.",
+		"EN": "TRANSLATE",
 		"PT-BR": "TRANSLATE"
 	},
-	"friend_code_update_fail" : {
-		"NL": "Friend code is NIET geupdate.",
+	"want_update" : {
+		"NL": "Gevraagde Pokemon is geupdate.",
 		"DE": "TRANSLATE",
-		"EN": "Friend code is NOT updated.",
+		"EN": "TRANSLATE",
+		"PT-BR": "TRANSLATE"
+	},
+	"have_update" : {
+		"NL": "Aangeboden Pokemon is geupdate.",
+		"DE": "TRANSLATE",
+		"EN": "TRANSLATE",
+		"PT-BR": "TRANSLATE"
+	},
+	"fail" : {
+		"NL": "Mislukt.",
+		"DE": "TRANSLATE",
+		"EN": "Failed.",
 		"PT-BR": "TRANSLATE"
 	}
-}
-
 }
