@@ -3701,7 +3701,7 @@ function get_overview($update, $chats_active, $raids_active, $action = 'refresh'
                 // Output: Raid egg opens up 17:00
                 $msg .= $pokemon . ' — <b>' . getTranslation('raid_egg_opens') . ' ' . unix2tz($start_time, $tz) . '</b>' . CR;
             } else {
-                if($days_to_raid > 7) {
+                if($days_to_raid > 6) {
                     // Output: Raid egg opens on Friday, 13 April (2018)
                     $msg .= $pokemon . ' — <b>' . getTranslation('raid_egg_opens_day') . ' ' .  $raid_day . ', ' . $day_start . ' ' . $raid_month . (($year_start > $year_now) ? $year_start : '');
                 } else {
@@ -3924,7 +3924,7 @@ function show_raid_poll($raid)
             // Output: Raid egg opens up 17:00
             $msg .= '<b>' . getRaidTranslation('raid_egg_opens') . ' ' . unix2tz($raid['ts_start'], $raid['timezone']) . '</b>' . CR;
         } else {
-            if($days_to_raid > 7) {
+            if($days_to_raid > 6) {
                 // Output: Raid egg opens on Friday, 13 April (2018)
                 $msg .= '<b>' . getRaidTranslation('raid_egg_opens_day') . ' ' .  $raid_day . ', ' . $day_start . ' ' . $raid_month . (($year_start > $year_now) ? $year_start : '');
             } else {
@@ -4309,7 +4309,7 @@ function show_raid_poll_small($raid)
             // Output: Raid egg opens up 17:00
             $msg .= '<b>' . getTranslation('raid_egg_opens') . ' ' . unix2tz($raid['ts_start'], $raid['timezone']) . '</b>' . CR;
         } else {
-            if($days_to_raid > 7) {
+            if($days_to_raid > 6) {
                 // Output: Raid egg opens on Friday, 13 April (2018)
                 $msg .= '<b>' . getTranslation('raid_egg_opens_day') . ' ' .  $raid_day . ', ' . $day_start . ' ' . $raid_month . (($year_start > $year_now) ? $year_start : '');
             } else {
