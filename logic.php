@@ -2994,7 +2994,7 @@ function keys_vote($raid)
     $now = $raid['ts_now'];
     $start_time = $raid['ts_start'];
 
-    $keys = [
+    $keysgeneral = [
         [
             [
                 'text'          => getRaidTranslation('alone'),
@@ -3085,7 +3085,7 @@ function keys_vote($raid)
 
         // Add time keys.
         $keys_time = inline_key_array($keys_time, 4);
-        $keys = array_merge($keys, $keys_time);
+        $keys = array_merge($keys_time, $keysgeneral);
         //$keys[] = $keys_time;
 
         // Init keys pokemon array.
