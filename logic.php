@@ -3483,8 +3483,8 @@ function get_overview($update, $chats_active, $raids_active, $action = 'refresh'
             $msg = '<b>' . getTranslation('raid_overview_for_chat') . ' ' . $chat_title . ' '. getTranslation('from') .' '. unix2tz(time(), $tz, 'H:i') . '</b>' .  CR . CR;
             $msg .= getTranslation('no_active_raids');
 
-            //Add custom message from the config.   
-            if (RAID_PIN_MESSAGE != '') {
+            //Add custom message from the config.
+            if (defined('RAID_PIN_MESSAGE') && !empty(RAID_PIN_MESSAGE)) {
                 $msg .= RAID_PIN_MESSAGE . CR;
             }
 
@@ -3531,7 +3531,7 @@ function get_overview($update, $chats_active, $raids_active, $action = 'refresh'
 	    $keys = array();
         
             //Add custom message from the config.	
-            if (RAID_PIN_MESSAGE != '') {
+            if (defined('RAID_PIN_MESSAGE') && !empty(RAID_PIN_MESSAGE)) {
                 $msg .= RAID_PIN_MESSAGE . CR;
             }
 
@@ -4250,9 +4250,8 @@ function show_raid_poll($raid)
         $msg .= CR . getRaidTranslation('no_participants_yet') . CR;
     }
 
-    //Add custom message from the config.   
-    if (defined(MAP_URL) && MAP_URL != '') {
-
+    //Add custom message from the config.
+    if (defined('MAP_URL') && !empty(MAP_URL)) {
         $msg .= CR . MAP_URL ;
     }	
 	
