@@ -43,7 +43,7 @@ define('RAID_VOTE_ICONS',		true);
 define('RAID_VOTE_TEXT',		false);
 define('RAID_LATE_MSG',			true);
 define('RAID_LATE_TIME',		'3');
-
+define('POLL_UI_ORDER',			'MODIFIED'); //can be set to MODIFIED to order the buttons first by time, and then other buttons; or any other string for the original button ordering
 // Raid sharing
 define('SHARE_MODERATORS',		true);
 define('SHARE_USERS',		true);

@@ -2994,7 +2994,7 @@ function keys_vote($raid)
     $now = $raid['ts_now'];
     $start_time = $raid['ts_start'];
 
-    $keys = [
+    $buttons_general = [
         [
             [
                 'text'          => getRaidTranslation('alone'),
@@ -3084,12 +3084,12 @@ function keys_vote($raid)
         }
 
         // Add time keys.
-        $keys_time = inline_key_array($keys_time, 4);
-        $keys = array_merge($keys, $keys_time);
+        $buttons_time = inline_key_array($keys_time, 4);
+        //$keys = array_merge($buttons_time, $buttons_general);
         //$keys[] = $keys_time;
 
         // Init keys pokemon array.
-        $keys_poke = [];
+        $buttons_pokemon = [];
 
         // Get current pokemon
         $raid_pokemon = $raid['pokemon'];
@@ -3157,7 +3157,7 @@ function keys_vote($raid)
             // Add key for each raid level
             while ($pokemon = $rs->fetch_assoc()) {
                 if(in_array($pokemon['pokedex_id'], $eggs)) continue;
-                $keys_poke[] = array(
+                $buttons_pokemon[] = array(
                     'text'          => get_local_pokemon_name($pokemon['pokedex_id']),
                     'callback_data' => $raid['id'] . ':vote_pokemon:' . $pokemon['pokedex_id']
                 );
@@ -3169,14 +3169,14 @@ function keys_vote($raid)
             // Add pokemon keys if we have two or more pokemon
             if($count >= 2) {
                 // Add button if raid boss does not matter
-                $keys_poke[] = array(
+                $buttons_pokemon[] = array(
                     'text'          => getRaidTranslation('any_pokemon'),
                     'callback_data' => $raid['id'] . ':vote_pokemon:0'
                 );
 
                 // Finally add pokemon to keys
-                $keys_poke = inline_key_array($keys_poke, 3);
-                $keys = array_merge($keys, $keys_poke);
+                $buttons_pokemon = inline_key_array($buttons_pokemon, 3);
+                //$keys = array_merge($keys, $buttons_pokemon);
             }
         }
 
@@ -3202,7 +3202,7 @@ function keys_vote($raid)
         }
         
         // Add status keys.
-        $keys[] = [
+        $status_buttons[] = [
             [
                 'text'          => EMOJI_REFRESH,
                 'callback_data' => $raid['id'] . ':vote_refresh:0'
@@ -3225,7 +3225,17 @@ function keys_vote($raid)
             ],
         ];
     }
-
+    $keys = array(); 
+    switch (POLL_UI_ORDER) {
+	    case "MODIFIED":
+			$keys = array_merge($buttons_time,$buttons_general,$buttons_pokemon,$status_buttons);
+			break;
+    
+        	case "default":
+			$keys = array_merge($buttons_general,$buttons_time,$buttons_pokemon,$status_buttons);
+			break;
+    }
+    //$keys = array_merge($buttons_general,$buttons_time,$buttons_pokemon,$status_buttons);
     return $keys;
 }
 

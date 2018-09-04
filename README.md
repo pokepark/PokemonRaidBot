@@ -18,6 +18,10 @@ Telegram bot for organizing raids and sharing quests in Pokemon Go. Developers a
 
 Preferrably apache2 with php7 and https certificate ( https://www.letsencrypt.org )
 
+The following apache packages need to be installed:
+- pdo_mysql (ubuntu: php-mysql)
+- php_curl (ubuntu: php-curl)
+
 ## Bot token
 
 Start chat with https://t.me/BotFather and create bot token.
