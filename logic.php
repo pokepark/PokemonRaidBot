@@ -3531,7 +3531,7 @@ function get_overview($update, $chats_active, $raids_active, $action = 'refresh'
 	    $keys = array();
         
             //Add custom message from the config.	
-            if (RAID_PIN_MESSAGE != '') {
+            if (defined('RAID_PIN_MESSAGE') && !empty(RAID_PIN_MESSAGE)) {
                 $msg .= RAID_PIN_MESSAGE . CR;
             }
 
