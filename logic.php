@@ -4,6 +4,7 @@
  * @param $update
  * @param $access_type
  */
+require_once('config.php');
 $tz=TIMEZONE;
 function bot_access_check($update, $access_type = BOT_ACCESS, $return_result = false)
 {
@@ -292,6 +293,7 @@ function quest_access_check($update, $data, $return_result = false)
  */
 function raid_duplication_check($gym,$end)
 {
+    $tz = TIMEZONE;    
     // Build query.
     $rs = my_query(
         "
@@ -491,6 +493,7 @@ function get_raid_level($pokedex_id)
  */
 function get_raid($raid_id)
 {
+    $tz = TIMEZONE;
     // Get the raid data by id.
     $rs = my_query(
         "
