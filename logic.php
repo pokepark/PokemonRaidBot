@@ -4,7 +4,7 @@
  * @param $update
  * @param $access_type
  */
-$tz=TIMEZONE
+$tz=TIMEZONE;
 function bot_access_check($update, $access_type = BOT_ACCESS, $return_result = false)
 {
     // Restricted or public access
