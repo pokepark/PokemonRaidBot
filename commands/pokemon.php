@@ -44,7 +44,7 @@ $request = my_query(
               UNIX_TIMESTAMP(NOW())                           AS ts_now,
               UNIX_TIMESTAMP(CONVERT_TZ(end_time,'{$tz}','SYSTEM'))-UNIX_TIMESTAMP(NOW())  AS t_left
     FROM      raids
-      WHERE   CONVERT_TZ(end_time,'{$tz}','SYSTEM'>NOW()
+      WHERE   CONVERT_TZ(end_time,'{$tz}','SYSTEM')>NOW()
         AND   CONVERT_TZ(start_time,'{$tz}','SYSTEM')<NOW()
         AND   timezone='{$tz}'
     ORDER BY  end_time ASC LIMIT 20

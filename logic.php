@@ -530,7 +530,7 @@ function get_active_raids($tz)
                    UNIX_TIMESTAMP(NOW())                           AS ts_now,
                    UNIX_TIMESTAMP(CONVERT_TZ(end_time,'{$tz}','SYSTEM'))-UNIX_TIMESTAMP(NOW())  AS t_left
         FROM       raids
-        WHERE      CONVERT_TZ(end_time,'{$tz}','SYSTEM'>NOW()
+        WHERE      CONVERT_TZ(end_time,'{$tz}','SYSTEM')>NOW()
         AND        timezone='{$tz}'
         ORDER BY   end_time ASC LIMIT 20
         "
@@ -4413,7 +4413,7 @@ function raid_list($update)
                     LEFT JOIN   users
                     ON          raids.user_id = users.user_id
 		      WHERE     raids.id = {$iqq}
-                      AND       CONVERT_TZ(end_time,'{$tz}','SYSTEM'>NOW()
+                      AND       CONVERT_TZ(end_time,'{$tz}','SYSTEM')>NOW()
             "
         );
 
