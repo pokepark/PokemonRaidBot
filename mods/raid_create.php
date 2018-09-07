@@ -222,7 +222,7 @@ if (!empty($fullAddress)) {
 			          lat = '{$lat}',
 			          lon = '{$lon}',
 			          first_seen = CONVERT_TZ(NOW(),'SYSTEM','{$tz}'),
-			          start_time = DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:00'),
+			          start_time = DATE_FORMAT(CONVERT_TZ(NOW(),'SYSTEM','{$tz}'), '%Y-%m-%d %H:%i:00'),
 				  gym_name = '{$db->real_escape_string($gym_name)}',
 			          timezone = '{$tz}',
 			          address = '{$db->real_escape_string($fullAddress)}'
@@ -239,7 +239,7 @@ if (!empty($fullAddress)) {
 			          lat = '{$lat}',
 			          lon = '{$lon}',
 			          first_seen = NOW(),
-			          start_time = DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:00'),
+			          start_time = DATE_FORMAT(CONVERT_TZ(NOW(),'SYSTEM','{$tz}'), '%Y-%m-%d %H:%i:00'),
 				  gym_name = '{$db->real_escape_string($gym_name)}',
 			          timezone = '{$tz}'
         "

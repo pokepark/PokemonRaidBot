@@ -43,12 +43,12 @@ if (!$row) {
 $request_active_raids = my_query(
     "
     SELECT    *,
-              UNIX_TIMESTAMP(end_time)                        AS ts_end,
-              UNIX_TIMESTAMP(start_time)                      AS ts_start,
-              UNIX_TIMESTAMP(NOW())                           AS ts_now,
-              UNIX_TIMESTAMP(end_time)-UNIX_TIMESTAMP(NOW())  AS t_left
+	      UNIX_TIMESTAMP(CONVERT_TZ(end_time,'{$tz}','SYSTEM'))                        AS ts_end,
+	      UNIX_TIMESTAMP(CONVERT_TZ(start_time,'{$tz}','SYSTEM'))                      AS ts_start,
+	      UNIX_TIMESTAMP(NOW())                           AS ts_now,
+              UNIX_TIMESTAMP(CONVERT_TZ(end_time,'{$tz}','SYSTEM'))-UNIX_TIMESTAMP(NOW())  AS t_left
     FROM      raids
-      WHERE   end_time>NOW()
+      WHERE   CONVERT_TZ(end_time,'{$tz}','SYSTEM'>NOW()
         AND   timezone='{$tz}'
     ORDER BY  end_time ASC
     "
