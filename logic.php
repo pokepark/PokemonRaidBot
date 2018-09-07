@@ -295,10 +295,10 @@ function raid_duplication_check($gym,$end)
     $rs = my_query(
         "
         SELECT    *,
-                          UNIX_TIMESTAMP(end_time)                        AS ts_end,
-                          UNIX_TIMESTAMP(start_time)                      AS ts_start,
+	                  UNIX_TIMESTAMP(CONVERT_TZ(end_time,'{$tz}','SYSTEM'))                        AS ts_end,
+			  UNIX_TIMESTAMP(CONVERT_TZ(start_time,'{$tz}','SYSTEM'))                      AS ts_start,
                           UNIX_TIMESTAMP(NOW())                           AS ts_now,
-                          UNIX_TIMESTAMP(end_time)-UNIX_TIMESTAMP(NOW())  AS t_left
+                          UNIX_TIMESTAMP(CONVERT_TZ(end_time,'{$tz}','SYSTEM'))-UNIX_TIMESTAMP(NOW())  AS t_left
             FROM      raids
             WHERE   gym_name = '{$gym}'
 	    ORDER BY id DESC
@@ -494,10 +494,10 @@ function get_raid($raid_id)
     $rs = my_query(
         "
         SELECT     raids.*, users.name,
-                   UNIX_TIMESTAMP(start_time)                      AS ts_start,
-                   UNIX_TIMESTAMP(end_time)                        AS ts_end,
+                   UNIX_TIMESTAMP(CONVERT_TZ(start_time,'{$tz}','SYSTEM'))                      AS ts_start,
+                   UNIX_TIMESTAMP(CONVERT_TZ(end_time,'{$tz}','SYSTEM'))                        AS ts_end,
                    UNIX_TIMESTAMP(NOW())                           AS ts_now,
-                   UNIX_TIMESTAMP(end_time)-UNIX_TIMESTAMP(NOW())  AS t_left
+		   UNIX_TIMESTAMP(CONVERT_TZ(end_time,'{$tz}','SYSTEM'))-UNIX_TIMESTAMP(NOW())  AS t_left
         FROM       raids
         LEFT JOIN  users
         ON         raids.user_id = users.user_id
@@ -524,12 +524,12 @@ function get_active_raids($tz)
     $rs = my_query(
         "
         SELECT     *,
-                   UNIX_TIMESTAMP(start_time)                      AS ts_start,
-                   UNIX_TIMESTAMP(end_time)                        AS ts_end,
+                   UNIX_TIMESTAMP(CONVERT_TZ(start_time,'{$tz}','SYSTEM'))                      AS ts_start,
+                   UNIX_TIMESTAMP(CONVERT_TZ(end_time,'{$tz}','SYSTEM'))                        AS ts_end,
                    UNIX_TIMESTAMP(NOW())                           AS ts_now,
-                   UNIX_TIMESTAMP(end_time)-UNIX_TIMESTAMP(NOW())  AS t_left
+                   UNIX_TIMESTAMP(CONVERT_TZ(end_time,'{$tz}','SYSTEM'))-UNIX_TIMESTAMP(NOW())  AS t_left
         FROM       raids
-        WHERE      end_time>NOW()
+        WHERE      CONVERT_TZ(end_time,'{$tz}','SYSTEM'>NOW()
         AND        timezone='{$tz}'
         ORDER BY   end_time ASC LIMIT 20
         "
@@ -2802,7 +2802,7 @@ function run_raids_cleanup ($telegram = 2, $database = 2) {
             // Make sure raid exists
             $rs = my_query(
                 "
-                SELECT  UNIX_TIMESTAMP(end_time)      AS ts_end
+                SELECT  UNIX_TIMESTAMP(CONVERT_TZ(end_time,'{$tz}','SYSTEM'))                        AS ts_end
                 FROM    raids
                   WHERE id = {$current_raid_id}
                 ", true
@@ -2832,10 +2832,10 @@ function run_raids_cleanup ($telegram = 2, $database = 2) {
                 $rs = my_query(
                     "
                     SELECT  *,
-                            UNIX_TIMESTAMP(end_time)                        AS ts_end,
-                            UNIX_TIMESTAMP(start_time)                      AS ts_start,
+                            UNIX_TIMESTAMP(CONVERT_TZ(end_time,'{$tz}','SYSTEM'))                        AS ts_end,
+                            UNIX_TIMESTAMP(CONVERT_TZ(start_time,'{$tz}','SYSTEM'))                      AS ts_start,
                             UNIX_TIMESTAMP(NOW())                           AS ts_now,
-                            UNIX_TIMESTAMP(end_time)-UNIX_TIMESTAMP(NOW())  AS t_left
+                            UNIX_TIMESTAMP(CONVERT_TZ(end_time,'{$tz}','SYSTEM'))-UNIX_TIMESTAMP(NOW())  AS t_left
                     FROM    raids
                       WHERE id = {$current_raid_id}
                     ", true
@@ -4403,16 +4403,16 @@ function raid_list($update)
             "
             SELECT              raids.*,
                                 raids.id AS iqq_raid_id,
-			        UNIX_TIMESTAMP(end_time)                        AS ts_end,
-			        UNIX_TIMESTAMP(start_time)                      AS ts_start,
+			        UNIX_TIMESTAMP(CONVERT_TZ(end_time,'{$tz}','SYSTEM'))                        AS ts_end,
+			        UNIX_TIMESTAMP(CONVERT_TZ(start_time,'{$tz}','SYSTEM'))                      AS ts_start,
 			        UNIX_TIMESTAMP(NOW())                           AS ts_now,
-			        UNIX_TIMESTAMP(end_time)-UNIX_TIMESTAMP(NOW())  AS t_left,
+			        UNIX_TIMESTAMP(CONVERT_TZ(end_time,'{$tz}','SYSTEM'))-UNIX_TIMESTAMP(NOW())  AS t_left
                                 users.name
 		    FROM        raids
                     LEFT JOIN   users
                     ON          raids.user_id = users.user_id
 		      WHERE     raids.id = {$iqq}
-                      AND       end_time>NOW()
+                      AND       CONVERT_TZ(end_time,'{$tz}','SYSTEM'>NOW()
             "
         );
 
@@ -4443,10 +4443,10 @@ function raid_list($update)
             "
             SELECT              raids.*,
                                 raids.id AS iqq_raid_id,
-			        UNIX_TIMESTAMP(end_time)                        AS ts_end,
-			        UNIX_TIMESTAMP(start_time)                      AS ts_start,
+			        UNIX_TIMESTAMP(CONVERT_TZ(end_time,'{$tz}','SYSTEM'))                        AS ts_end,
+			        UNIX_TIMESTAMP(CONVERT_TZ(start_time,'{$tz}','SYSTEM'))                      AS ts_start,
 			        UNIX_TIMESTAMP(NOW())                           AS ts_now,
-			        UNIX_TIMESTAMP(end_time)-UNIX_TIMESTAMP(NOW())  AS t_left,
+			        UNIX_TIMESTAMP(CONVERT_TZ(end_time,'{$tz}','SYSTEM'))-UNIX_TIMESTAMP(NOW())  AS t_left
                                 users.name
 		    FROM        raids
                     LEFT JOIN   users
