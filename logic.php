@@ -4,7 +4,6 @@
  * @param $update
  * @param $access_type
  */
-require_once('config.php');
 $tz=TIMEZONE;
 function bot_access_check($update, $access_type = BOT_ACCESS, $return_result = false)
 {
@@ -4450,7 +4449,7 @@ function raid_list($update)
 			        UNIX_TIMESTAMP(CONVERT_TZ(end_time,'{$tz}','SYSTEM'))                        AS ts_end,
 			        UNIX_TIMESTAMP(CONVERT_TZ(start_time,'{$tz}','SYSTEM'))                      AS ts_start,
 			        UNIX_TIMESTAMP(NOW())                           AS ts_now,
-			        UNIX_TIMESTAMP(CONVERT_TZ(end_time,'{$tz}','SYSTEM'))-UNIX_TIMESTAMP(NOW())  AS t_left
+			        UNIX_TIMESTAMP(CONVERT_TZ(end_time,'{$tz}','SYSTEM'))-UNIX_TIMESTAMP(NOW())  AS t_left,
                                 users.name
 		    FROM        raids
                     LEFT JOIN   users
