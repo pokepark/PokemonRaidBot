@@ -3086,13 +3086,15 @@ function keys_vote($raid)
             }
         }
 
-        // Add time keys.
+	// Add time keys.
+	// Initialze buttons_time array for inline response
+	$buttons_time = array();
         $buttons_time = inline_key_array($keys_time, 4);
         //$keys = array_merge($buttons_time, $buttons_general);
         //$keys[] = $keys_time;
 
         // Init keys pokemon array.
-        $buttons_pokemon = [];
+        $buttons_pokemon = array();
 
         // Get current pokemon
         $raid_pokemon = $raid['pokemon'];
@@ -3204,7 +3206,8 @@ function keys_vote($raid)
             $text_cancel = getRaidTranslation('cancellation');
         }
         
-        // Add status keys.
+	// Add status keys.
+	$status_buttons = array();
         $status_buttons[] = [
             [
                 'text'          => EMOJI_REFRESH,
