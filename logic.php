@@ -3233,8 +3233,9 @@ function keys_vote($raid)
     }
     $keys = array(); 
     // don't set the key order if this is an in-line response
-    if not (isset($update['inline_query']['from'])) {
-    switch (POLL_UI_ORDER) {
+    if (isset($buttons_time,$buttons_pokemon,$status_buttons) && is_array($buttons_time) && is_array($buttons_general) && is_array($status_buttons))
+    { 
+    	switch (POLL_UI_ORDER) {
 	    case "MODIFIED":
 			$keys = array_merge($buttons_time,$buttons_general,$buttons_pokemon,$status_buttons);
 			break;
@@ -3242,7 +3243,7 @@ function keys_vote($raid)
         	case "default":
 			$keys = array_merge($buttons_general,$buttons_time,$buttons_pokemon,$status_buttons);
 			break;
-    }
+        }
     }
     //$keys = array_merge($buttons_general,$buttons_time,$buttons_pokemon,$status_buttons);
     return $keys;
@@ -4398,6 +4399,7 @@ function show_raid_poll_small($raid)
  */
 function raid_list($update)
 {
+    $tz = TIMEZONE;
     // Init empty rows array and query type.
     $rows = array();
 
@@ -4485,7 +4487,6 @@ function raid_list($update)
         }
     }
 
-    debug_log($rows);
     answerInlineQuery($update['inline_query']['id'], $rows);
 }
 
