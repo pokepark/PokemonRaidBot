@@ -1,26 +1,30 @@
 <?php
+//SQL database
 define('DB_HOST',			'localhost');
 define('DB_NAME',			'your_database_name');
 define('DB_USER',			'your_database_user');
 define('DB_PASSWORD',			'your_database_password');
 
+// General config
 define('DEBUG',				true);
 define('CONFIG_LOGFILE',		'/var/log/tg-bots/dev-raid-bot.log');
 define('CONFIG_HASH',			'aaaabbbbccccddddeeeeffff1111222233334444555566667777888899990000aaaabbbbccccddddeeeeffff1111222233334444555566667777888899990000');
 define('DDOS_MAXIMUM',			'10');
 
+// Proxy
 define('CURL_USEPROXY',			false);
 define('CURL_PROXYSERVER',		'http://your.proxyserver.com:8080');
 
+// Access
 define('MAINTAINER',			'@your_tg_username');
 define('MAINTAINER_ID',			'your_tg_integer');
 define('BOT_NAME',			'@RaidPokemonBot');
 define('BOT_ADMINS',			'');
 define('BOT_ACCESS',			'');
 
-// Languages
-define('LANGUAGE',             'EN'); // Currently possible: EN, DE, NL, PT-BR
-define('RAID_POLL_LANGUAGE', 'EN');
+// Languages: EN, DE, NL or PT-BR
+define('LANGUAGE',             		'EN');
+define('RAID_POLL_LANGUAGE', 		'EN');
 
 // Timezone and Google maps API 
 define('TIMEZONE',			'Europe/Berlin');
@@ -45,10 +49,11 @@ define('RAID_VOTE_TEXT',		false);
 define('RAID_LATE_MSG',			true);
 define('RAID_LATE_TIME',		'3');
 define('POLL_UI_ORDER',			'MODIFIED'); //can be set to MODIFIED to order the buttons first by time, and then other buttons; or any other string for the original button ordering
+
 // Raid sharing
 define('SHARE_MODERATORS',		true);
-define('SHARE_USERS',		true);
-define('SHARE_CHATS',		'');
+define('SHARE_USERS',			true);
+define('SHARE_CHATS',			'');
 
 // Raid overview
 define('RAID_PIN_MESSAGE',		'');
