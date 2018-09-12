@@ -2727,7 +2727,7 @@ function insert_raid_cleanup($chat_id, $message_id, $raid_id)
  * @param $database
  */
 function run_raids_cleanup ($telegram = 2, $database = 2) {
-    $ tz = TIMEZONE;
+    $tz = TIMEZONE;
     // Check configuration, cleanup of telegram needs to happen before database cleanup!
     if (CLEANUP_TIME_TG > CLEANUP_TIME_DB) {
 	cleanup_log('Configuration issue! Cleanup time for telegram messages needs to be lower or equal to database cleanup time!');
