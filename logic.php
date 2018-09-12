@@ -1521,6 +1521,13 @@ function raid_edit_gyms_first_letter_keys() {
     // Get the inline key array.
     $keys = inline_key_array($keys, 4);
 
+    // Add back navigation key.
+    $nav_keys = array();
+    $nav_keys[] = universal_inner_key($keys, '0', 'exit', '0', getTranslation('abort'));
+
+    // Get the inline key array.
+    $keys[] = $nav_keys;
+
     return $keys;
 }
 

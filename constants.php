@@ -2,6 +2,7 @@
 // Paths
 define('ROOT_PATH', __DIR__);
 define('TRANSLATION_PATH', ROOT_PATH . '/tr');
+define('DDOS_PATH', ROOT_PATH . '/ddos');
 
 // Carriage return.
 define('CR',  "\n");

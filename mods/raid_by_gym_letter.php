@@ -3,8 +3,8 @@
 debug_log('raid_by_gym_letter()');
 
 // For debug.
-debug_log($update);
-debug_log($data);
+//debug_log($update);
+//debug_log($data);
 
 // Get the keys.
 $keys = raid_edit_gyms_first_letter_keys();
@@ -23,7 +23,7 @@ if (!$keys) {
 }
 
 // Edit the message.
-edit_message($update, getTranslation('select_gym_first_letter'), $keys);
+edit_message($update,'<b>' . getTranslation('select_gym_first_letter') . '</b>', $keys);
 
 // Build callback message string.
 $callback_response = getTranslation('select_gym');
