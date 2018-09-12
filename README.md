@@ -16,11 +16,22 @@ Telegram bot for organizing raids and sharing quests in Pokemon Go. Developers a
 
 ## Webserver
 
-Preferrably apache2 with php7 and https certificate ( https://www.letsencrypt.org )
+Preferrably:
+- apache2
+- php7
+- mysql5 or mariadb10
+- SSL Certificate ( https://www.letsencrypt.org )
 
 The following apache packages need to be installed:
 - pdo_mysql (ubuntu: php-mysql)
 - php_curl (ubuntu: php-curl)
+
+## Git clone
+For git 2.13 and above:
+`git clone --recurse-submodules https://github.com/florianbecker/PokemonRaidBot.git`
+
+If you're running an older version of git use the deprecated recursive command:
+`git clone --recursive https://github.com/florianbecker/PokemonRaidBot.git`
 
 ## Bot token
 
@@ -33,17 +44,15 @@ Bot Settings:
 
 ## Database
 
-Create database named for your bot ID (first part of your Telegram bot token).
-
-Set database password to second part of your Telegram bot token.
+Create a new mysql database and user for your bot.
 
 Only allow localhost access.
 
-Import `raid-pokemon-bot.sql` as default DB structure and `raid-boss-pokedex.sql` for the raid bosses. You can find these files in the sql folder.
+Import `pokemon-raid-bot.sql` as default DB structure and `raid-boss-pokedex.sql` for the raid bosses. You can find these files in the sql folder.
 
-Command DB structure: `mysql -u USERNAME -p DATABASENAME < raid-pokemon-bot.sql`
+Command DB structure: `mysql -u USERNAME -p DATABASENAME < sql/pokemon-raid-bot.sql`
 
-Command raid bosses: `mysql -u USERNAME -p DATABASENAME < raid-boss-pokedex.sql`
+Command raid bosses: `mysql -u USERNAME -p DATABASENAME < sql/raid-boss-pokedex.sql`
 
 ## Config
 
@@ -456,10 +465,10 @@ Currently constantly new features, bug fixes and improvements are added to the b
 
 The following commands are used to create the raid-pokemon-bot.sql and raid-boss-pokedex.sql files. Make sure to replace USERNAME and DATABASENAME before executing the commands.
 
-#### raid-pokemon-bot.sql
+#### pokemon-raid-bot.sql
 
 Export command: `mysqldump -u USERNAME -p --no-data --skip-add-drop-table --skip-add-drop-database --skip-comments DATABASENAME | sed 's/ AUTO_INCREMENT=[0-9]*\b/ AUTO_INCREMENT=100/' > sql/pokemon-raid-bot.sql`
 
-#### pokedex-pokemon.sql
+#### raid-boss-pokedex.sql
 
-Export command: `mysqldump -u USERNAME -p --skip-extended-insert --skip-comments DATABASENAME pokemon > sql/pokedex-pokemon.sql`
+Export command: `mysqldump -u USERNAME -p --skip-extended-insert --skip-comments DATABASENAME pokemon > sql/raid-boss-pokedex.sql`

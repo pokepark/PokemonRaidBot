@@ -6,18 +6,11 @@ debug_log('START()');
 //debug_log($update);
 //debug_log($data);
 
-// Create keys array.
-$keys = [
-	    [
-	        [
-	            'text'          => getTranslation('create_a_raid'),
-		    'callback_data' => '0:raid_by_gym_letter:0',
-	        ]
-	    ]
-	];
+// Get the keys.
+$keys = raid_edit_gyms_first_letter_keys();
 
 // Set message.
-$msg = '<b>' . getTranslation('raid_by_gym') . '</b>' . CR2 . CR .  getTranslation('send_location') ;
+$msg = '<b>' . getTranslation('select_gym_first_letter') . '</b>' . (RAID_VIA_LOCATION == true ? (CR2 . CR .  getTranslation('send_location')) : '');
 
 // Send message.
 send_message($update['message']['chat']['id'], $msg, $keys, ['reply_markup' => ['selective' => true, 'one_time_keyboard' => true]]);
