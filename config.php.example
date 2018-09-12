@@ -7,6 +7,7 @@ define('DB_PASSWORD',			'your_database_password');
 define('DEBUG',				true);
 define('CONFIG_LOGFILE',		'/var/log/tg-bots/dev-raid-bot.log');
 define('CONFIG_HASH',			'aaaabbbbccccddddeeeeffff1111222233334444555566667777888899990000aaaabbbbccccddddeeeeffff1111222233334444555566667777888899990000');
+define('DDOS_MAXIMUM',			'10');
 
 define('CURL_USEPROXY',			false);
 define('CURL_PROXYSERVER',		'http://your.proxyserver.com:8080');
