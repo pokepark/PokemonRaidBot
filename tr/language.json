@@ -779,6 +779,7 @@
 	"raid_select_start_time" : {
 		"NL": "Selecteer de <b>start tijd</b> van de raid:",
 		"DE": "<b>Startzeit</b> des Raids auswählen:",
+		"EN": "Select the <b>start time</b> of the raid:",
 		"IT": "Seleziona l'<b>orario di inizio</b> del Raid:",
 		"PT-BR": "Select the <b>start time</b> of the raid:"
 	},
