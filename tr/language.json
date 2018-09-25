@@ -6,34 +6,34 @@
 		"IT": "Pokéstop",
 		"PT-BR": "TRANSLATE"
 	},
-        "pokestops_not_found" : {
-                "NL": "Error! Geen Pokestops gevonden!",
-                "DE": "Fehler! Keine Pokestops gefunden!",
-                "EN": "Error! No pokestops found!",
-								"IT": "Errore! Nessun Pokéstop trovato!",
-                "PT-BR": "Erro! Nenhum pokestops encontrado!"
-        },
-        "pokestops_not_found_command_text" : {
-                "NL": "Stuur /quest met een deel of een volledige pokestop naam.",
-                "DE": "Bitte /quest mit einem Teil oder dem vollständigen Namen des Pokestops aufrufen:",
-                "EN": "Please call /quest with a part or the complete name of the pokestop:",
-								"IT": "Prego usare /quest con una il nome completo di un Pokéstop o una sua parte:",
-                "PT-BR": "TRANSLATE"
-        },
-        "pokestops_not_found_command_example" : {
-                "NL": "<code>/quest PokeCity Stop</code>",
-                "DE": "<code>/quest PokeStadt Stop</code>",
-                "EN": "<code>/quest PokeCity Stop</code>",
-								"IT": "<code>/quest PokéCity Stop</code>",
-                "PT-BR": "<code>/quest PokeCity Stop</code>"
-        },
-        "unnamed_pokestop" : {
-                "NL": "Onbekende pokestop",
-                "DE": "Unbekannter Pokestop",
-                "EN": "Unknown Pokestop",
-								"IT": "Pokéstop sconosciuto",
-                "PT-BR": "TRANSLATE"
-        },
+  "pokestops_not_found" : {
+          "NL": "Error! Geen Pokestops gevonden!",
+          "DE": "Fehler! Keine Pokestops gefunden!",
+          "EN": "Error! No pokestops found!",
+					"IT": "Errore! Nessun Pokéstop trovato!",
+          "PT-BR": "Erro! Nenhum pokestops encontrado!"
+  },
+  "pokestops_not_found_command_text" : {
+          "NL": "Stuur /quest met een deel of een volledige pokestop naam.",
+          "DE": "Bitte /quest mit einem Teil oder dem vollständigen Namen des Pokestops aufrufen:",
+          "EN": "Please call /quest with a part or the complete name of the pokestop:",
+					"IT": "Prego usare /quest con una il nome completo di un Pokéstop o una sua parte:",
+          "PT-BR": "TRANSLATE"
+  },
+  "pokestops_not_found_command_example" : {
+          "NL": "<code>/quest PokeCity Stop</code>",
+          "DE": "<code>/quest PokeStadt Stop</code>",
+          "EN": "<code>/quest PokeCity Stop</code>",
+					"IT": "<code>/quest PokéCity Stop</code>",
+          "PT-BR": "<code>/quest PokeCity Stop</code>"
+  },
+  "unnamed_pokestop" : {
+          "NL": "Onbekende pokestop",
+          "DE": "Unbekannter Pokestop",
+          "EN": "Unknown Pokestop",
+					"IT": "Pokéstop sconosciuto",
+          "PT-BR": "TRANSLATE"
+  },
 	"quest" : {
 		"NL": "Quest",
 		"DE": "Forschung",
@@ -125,27 +125,27 @@
 		"IT": "Ricompensa",
 		"PT-BR": "TRANSLATE"
 	},
-        "reward_select_type" : {
-                "NL": "Selecteer het type beloning:",
-                "DE": "Art der Belohnung auswählen:",
-                "EN": "Select the reward type:",
-								"IT": "Seleziona il tipo di ricompensa:",
-                "PT-BR": "TRANSLATE"
-        },
-        "reward_select_qty_reward" : {
-                "NL": "Selecteer de beloning:",
-                "DE": "Belohnung auswählen:",
-                "EN": "Select reward:",
-								"IT": "Seleziona ricompensa:",
-                "PT-BR": "TRANSLATE"
-        },
-        "create_raid_or_quest" : {
-                "NL": "Wat wil je aanmaken:",
-                "DE": "Raid oder Forschung anlegen:",
-                "EN": "Create raid or quest:",
-								"IT": "Crea Raid o missione:",
-                "PT-BR": "TRANSLATE"
-        },
+  "reward_select_type" : {
+          "NL": "Selecteer het type beloning:",
+          "DE": "Art der Belohnung auswählen:",
+          "EN": "Select the reward type:",
+					"IT": "Seleziona il tipo di ricompensa:",
+          "PT-BR": "TRANSLATE"
+  },
+  "reward_select_qty_reward" : {
+          "NL": "Selecteer de beloning:",
+          "DE": "Belohnung auswählen:",
+          "EN": "Select reward:",
+					"IT": "Seleziona ricompensa:",
+          "PT-BR": "TRANSLATE"
+  },
+  "create_raid_or_quest" : {
+          "NL": "Wat wil je aanmaken:",
+          "DE": "Raid oder Forschung anlegen:",
+          "EN": "Create raid or quest:",
+					"IT": "Crea Raid o missione:",
+          "PT-BR": "TRANSLATE"
+  },
 	"quest_access_denied" : {
 		"NL": "Je hebt geen rechten om deze quest aan te passen!",
 		"DE": "Sie haben keine Berechtigung diese Forschung zu bearbeiten!",
@@ -153,13 +153,13 @@
 		"IT": "Non sei autorizzato a modificare questa missione!",
 		"PT-BR": "Você não tem permissão para editar esta quest!"
 	},
-        "raid" : {
-                "NL": "Raid",
-                "DE": "Raid",
-                "EN": "Raid",
-								"IT": "Raid",
-                "PT-BR": "Raid"
-        },
+  "raid" : {
+          "NL": "Raid",
+          "DE": "Raid",
+          "EN": "Raid",
+					"IT": "Raid",
+          "PT-BR": "Raid"
+  },
 	"Xstars" : {
 		"NL": "Ex-Raid",
 		"DE": "Ex-Raid",
