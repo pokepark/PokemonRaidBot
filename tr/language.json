@@ -6,34 +6,34 @@
 		"IT": "Pokéstop",
 		"PT-BR": "TRANSLATE"
 	},
-  "pokestops_not_found" : {
-          "NL": "Error! Geen Pokestops gevonden!",
-          "DE": "Fehler! Keine Pokestops gefunden!",
-          "EN": "Error! No pokestops found!",
-					"IT": "Errore! Nessun Pokéstop trovato!",
-          "PT-BR": "Erro! Nenhum pokestops encontrado!"
-  },
-  "pokestops_not_found_command_text" : {
-          "NL": "Stuur /quest met een deel of een volledige pokestop naam.",
-          "DE": "Bitte /quest mit einem Teil oder dem vollständigen Namen des Pokestops aufrufen:",
-          "EN": "Please call /quest with a part or the complete name of the pokestop:",
-					"IT": "Prego usare /quest con una il nome completo di un Pokéstop o una sua parte:",
-          "PT-BR": "TRANSLATE"
-  },
-  "pokestops_not_found_command_example" : {
-          "NL": "<code>/quest PokeCity Stop</code>",
-          "DE": "<code>/quest PokeStadt Stop</code>",
-          "EN": "<code>/quest PokeCity Stop</code>",
-					"IT": "<code>/quest PokéCity Stop</code>",
-          "PT-BR": "<code>/quest PokeCity Stop</code>"
-  },
-  "unnamed_pokestop" : {
-          "NL": "Onbekende pokestop",
-          "DE": "Unbekannter Pokestop",
-          "EN": "Unknown Pokestop",
-					"IT": "Pokéstop sconosciuto",
-          "PT-BR": "TRANSLATE"
-  },
+        "pokestops_not_found" : {
+                "NL": "Error! Geen Pokestops gevonden!",
+                "DE": "Fehler! Keine Pokestops gefunden!",
+                "EN": "Error! No pokestops found!",
+                "IT": "Errore! Nessun Pokéstop trovato!",
+                "PT-BR": "Erro! Nenhum pokestops encontrado!"
+        },
+        "pokestops_not_found_command_text" : {
+                "NL": "Stuur /quest met een deel of een volledige pokestop naam.",
+                "DE": "Bitte /quest mit einem Teil oder dem vollständigen Namen des Pokestops aufrufen:",
+                "EN": "Please call /quest with a part or the complete name of the pokestop:",
+                "IT": "Prego usare /quest con una il nome completo di un Pokéstop o una sua parte:",
+                "PT-BR": "TRANSLATE"
+        },
+        "pokestops_not_found_command_example" : {
+                "NL": "<code>/quest PokeCity Stop</code>",
+                "DE": "<code>/quest PokeStadt Stop</code>",
+                "EN": "<code>/quest PokeCity Stop</code>",
+                "IT": "<code>/quest PokéCity Stop</code>",
+                "PT-BR": "<code>/quest PokeCity Stop</code>"
+        },
+        "unnamed_pokestop" : {
+                "NL": "Onbekende pokestop",
+                "DE": "Unbekannter Pokestop",
+                "EN": "Unknown Pokestop",
+                "IT": "Pokéstop sconosciuto",
+                "PT-BR": "TRANSLATE"
+        },
 	"quest" : {
 		"NL": "Quest",
 		"DE": "Forschung",
@@ -45,77 +45,77 @@
                 "NL": "Maak een quest, selecteer een pokestop:",
                 "DE": "Lege eine Forschung per Pokestop-Auswahl an:",
                 "EN": "Make a quest per pokestop selection:",
-								"IT": "Crea una missione per il Pokéstop selezionato:",
+                "IT": "Crea una missione per il Pokéstop selezionato:",
                 "PT-BR": "TRANSLATE"
         },
         "quest_select_type" : {
                 "NL": "Selecteer een quest type:",
                 "DE": "Art der Forschung auswählen:",
                 "EN": "Select the quest type:",
-								"IT": "Seleziona il tipo di missione:",
+                "IT": "Seleziona il tipo di missione:",
                 "PT-BR": "TRANSLATE"
         },
         "quest_select_qty_action" : {
                 "NL": "Selecteer de taak van de quest:",
                 "DE": "Aufgabe der Forschung auswählen:",
                 "EN": "Select the task of the quest:",
-								"IT": "Seleziona l'obiettivo della missione:",
+                "IT": "Seleziona l'obiettivo della missione:",
                 "PT-BR": "TRANSLATE"
         },
         "quest_saved" : {
                 "NL": "Quest opgeslagen:",
                 "DE": "Forschung gespeichert:",
                 "EN": "Quest saved:",
-								"IT": "Missione salvata:",
+                "IT": "Missione salvata:",
                 "PT-BR": "TRANSLATE"
         },
         "quests_today" : {
                 "NL": "De quests van vandaag:",
                 "DE": "Heutige Forschungen:",
                 "EN": "Today's quests:",
-								"IT": "Missioni di oggi:",
+                "IT": "Missioni di oggi:",
                 "PT-BR": "TRANSLATE"
         },
         "no_quests_today" : {
                 "NL": "Vandaag zijn er nog geen quests!",
                 "DE": "Heute gibt es noch keine Forschungen!",
                 "EN": "Today there are no quests yet!",
-								"IT": "Non sono ancora presenti missioni per oggi!",
+                "IT": "Non sono ancora presenti missioni per oggi!",
                 "PT-BR": "TRANSLATE"
         },
         "quest_already_submitted" : {
                 "NL": "Quest voor deze pokestop is al aangemeld!",
                 "DE": "Forschung für diesen Pokestop ist bereits vorhanden!",
                 "EN": "Quest for this pokestop was already submitted!",
-								"IT": "La missione per questo Pokéstop è stata già inserita!",
+                "IT": "La missione per questo Pokéstop è stata già inserita!",
                 "PT-BR": "TRANSLATE"
         },
         "select_quest_to_delete" : {
                 "NL": "Selecteer een queest om te verwijderen:",
                 "DE": "Zum Löschen Forschung auswählen:",
                 "EN": "Select quest to delete:",
-								"IT": "Seleziona la missione da eliminare:",
+                "IT": "Seleziona la missione da eliminare:",
                 "PT-BR": "TRANSLATE"
         },
         "delete_this_quest" : {
                 "NL": "Weet u het zeker dat u deze quest wilt verwijderen?",
                 "DE": "Diese Forschung wirklich löschen?",
                 "EN": "Really delete this quest?",
-								"IT": "Vuoi veramente eliminare questa missione?",
+                "IT": "Vuoi veramente eliminare questa missione?",
                 "PT-BR": "TRANSLATE"
         },
         "quest_deletion_was_canceled" : {
                 "NL": "Verwijderen van de quest is geannuleerd!",
                 "DE": "Löschung der Forschung wurde abgebrochen!",
                 "EN": "Deletion of the quest was canceled!",
-								"IT": "L'eliminazione della missione è stata annullata!",
+                "IT": "L'eliminazione della missione è stata annullata!",
                 "PT-BR": "TRANSLATE"
         },
         "quest_successfully_deleted" : {
                 "NL": "Quest is succesvol verwijderd!",
                 "DE": "Forschung wurde erfolgreich gelöscht!",
                 "EN": "Quest was successfully deleted!",
-								"IT": "La missione è stata eliminata con successo!",
+                "IT": "La missione è stata eliminata con successo!",
                 "PT-BR": "TRANSLATE"
         },
 	"reward" : {
@@ -125,27 +125,27 @@
 		"IT": "Ricompensa",
 		"PT-BR": "TRANSLATE"
 	},
-  "reward_select_type" : {
-          "NL": "Selecteer het type beloning:",
-          "DE": "Art der Belohnung auswählen:",
-          "EN": "Select the reward type:",
-					"IT": "Seleziona il tipo di ricompensa:",
-          "PT-BR": "TRANSLATE"
-  },
-  "reward_select_qty_reward" : {
-          "NL": "Selecteer de beloning:",
-          "DE": "Belohnung auswählen:",
-          "EN": "Select reward:",
-					"IT": "Seleziona ricompensa:",
-          "PT-BR": "TRANSLATE"
-  },
-  "create_raid_or_quest" : {
-          "NL": "Wat wil je aanmaken:",
-          "DE": "Raid oder Forschung anlegen:",
-          "EN": "Create raid or quest:",
-					"IT": "Crea Raid o missione:",
-          "PT-BR": "TRANSLATE"
-  },
+        "reward_select_type" : {
+                "NL": "Selecteer het type beloning:",
+                "DE": "Art der Belohnung auswählen:",
+                "EN": "Select the reward type:",
+                "IT": "Seleziona il tipo di ricompensa:",
+                "PT-BR": "TRANSLATE"
+        },
+        "reward_select_qty_reward" : {
+                "NL": "Selecteer de beloning:",
+                "DE": "Belohnung auswählen:",
+                "EN": "Select reward:",
+                "IT": "Seleziona ricompensa:",
+                "PT-BR": "TRANSLATE"
+        },
+        "create_raid_or_quest" : {
+                "NL": "Wat wil je aanmaken:",
+                "DE": "Raid oder Forschung anlegen:",
+                "EN": "Create raid or quest:",
+                "IT": "Crea Raid o missione:",
+                "PT-BR": "TRANSLATE"
+        },
 	"quest_access_denied" : {
 		"NL": "Je hebt geen rechten om deze quest aan te passen!",
 		"DE": "Sie haben keine Berechtigung diese Forschung zu bearbeiten!",
@@ -153,13 +153,13 @@
 		"IT": "Non sei autorizzato a modificare questa missione!",
 		"PT-BR": "Você não tem permissão para editar esta quest!"
 	},
-  "raid" : {
-          "NL": "Raid",
-          "DE": "Raid",
-          "EN": "Raid",
-					"IT": "Raid",
-          "PT-BR": "Raid"
-  },
+        "raid" : {
+                "NL": "Raid",
+                "DE": "Raid",
+                "EN": "Raid",
+                "IT": "Raid",
+                "PT-BR": "Raid"
+        },
 	"Xstars" : {
 		"NL": "Ex-Raid",
 		"DE": "Ex-Raid",
