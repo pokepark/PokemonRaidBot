@@ -21,7 +21,7 @@
                 "EN": "Please call /quest with a part or the complete name of the pokestop:",
                 "IT": "Prego usare /quest con una il nome completo di un Pokéstop o una sua parte:",
                 "PT-BR": "TRANSLATE",
-				"RU": "Введите /quest с частью или полным названием покестопа:"
+		"RU": "Введите /quest с частью или полным названием покестопа:"
         },
         "pokestops_not_found_command_example" : {
                 "NL": "<code>/quest PokeCity Stop</code>",
@@ -29,7 +29,7 @@
                 "EN": "<code>/quest PokeCity Stop</code>",
                 "IT": "<code>/quest PokéCity Stop</code>",
                 "PT-BR": "<code>/quest PokeCity Stop</code>",
-				"RU": "<code>/quest PokeCity Stop</code>"
+		"RU": "<code>/quest PokeCity Stop</code>"
         },
         "unnamed_pokestop" : {
                 "NL": "Onbekende pokestop",
@@ -37,7 +37,7 @@
                 "EN": "Unknown Pokestop",
                 "IT": "Pokéstop sconosciuto",
                 "PT-BR": "TRANSLATE",
-				"RU": "Неизвестный покестоп"
+		"RU": "Неизвестный покестоп"
         },
 	"quest" : {
 		"NL": "Quest",
@@ -53,7 +53,7 @@
                 "EN": "Make a quest per pokestop selection:",
                 "IT": "Crea una spedizione per il Pokéstop selezionato:",
                 "PT-BR": "TRANSLATE",
-				"RU": "Создать квест для выбранного покестопа:"
+		"RU": "Создать квест для выбранного покестопа:"
         },
         "quest_select_type" : {
                 "NL": "Selecteer een quest type:",
@@ -61,7 +61,7 @@
                 "EN": "Select the quest type:",
                 "IT": "Seleziona il tipo di spedizione:",
                 "PT-BR": "TRANSLATE",
-				"RU": "Выберите тип квеста:"
+		"RU": "Выберите тип квеста:"
         },
         "quest_select_qty_action" : {
                 "NL": "Selecteer de taak van de quest:",
@@ -69,7 +69,7 @@
                 "EN": "Select the task of the quest:",
                 "IT": "Seleziona l'obiettivo della spedizione:",
                 "PT-BR": "TRANSLATE",
-				"RU": "Выберите задание квеста:"
+		"RU": "Выберите задание квеста:"
         },
         "quest_saved" : {
                 "NL": "Quest opgeslagen:",
@@ -77,7 +77,7 @@
                 "EN": "Quest saved:",
                 "IT": "Spedizione salvata:",
                 "PT-BR": "TRANSLATE",
-				"RU": "Сохраненный квест:"
+		"RU": "Сохраненный квест:"
         },
         "quests_today" : {
                 "NL": "De quests van vandaag:",
@@ -85,7 +85,7 @@
                 "EN": "Today's quests:",
                 "IT": "Spedizioni di oggi:",
                 "PT-BR": "TRANSLATE",
-				"RU": "Сегодняшние квесты:"
+		"RU": "Сегодняшние квесты:"
         },
         "no_quests_today" : {
                 "NL": "Vandaag zijn er nog geen quests!",
@@ -93,7 +93,7 @@
                 "EN": "Today there are no quests yet!",
                 "IT": "Non sono ancora presenti spedizioni per oggi!",
                 "PT-BR": "TRANSLATE",
-				"RU": "Сегодня здесь еще нет квестов!"
+		"RU": "Сегодня здесь еще нет квестов!"
 		},
         "quest_already_submitted" : {
                 "NL": "Quest voor deze pokestop is al aangemeld!",
@@ -101,7 +101,7 @@
                 "EN": "Quest for this pokestop was already submitted!",
                 "IT": "La spedizione per questo Pokéstop è stata già inserita!",
                 "PT-BR": "TRANSLATE",
-				"RU": "Квест для этого покестопа уже был отправлен!"
+		"RU": "Квест для этого покестопа уже был отправлен!"
         },
         "select_quest_to_delete" : {
                 "NL": "Selecteer een queest om te verwijderen:",
@@ -109,7 +109,7 @@
                 "EN": "Select quest to delete:",
                 "IT": "Seleziona la spedizione da eliminare:",
                 "PT-BR": "TRANSLATE",
-				"RU": "Выберите квест для удаления:"
+		"RU": "Выберите квест для удаления:"
         },
         "delete_this_quest" : {
                 "NL": "Weet u het zeker dat u deze quest wilt verwijderen?",
@@ -117,7 +117,7 @@
                 "EN": "Really delete this quest?",
                 "IT": "Vuoi veramente eliminare questa spedizione?",
                 "PT-BR": "TRANSLATE",
-				"RU": "Действительно удалить этот квест?"
+		"RU": "Действительно удалить этот квест?"
         },
         "quest_deletion_was_canceled" : {
                 "NL": "Verwijderen van de quest is geannuleerd!",
@@ -125,7 +125,7 @@
                 "EN": "Deletion of the quest was canceled!",
                 "IT": "L'eliminazione della spedizione è stata annullata!",
                 "PT-BR": "TRANSLATE",
-				"RU": "Удаление этого квеста отменено!"
+		"RU": "Удаление этого квеста отменено!"
         },
         "quest_successfully_deleted" : {
                 "NL": "Quest is succesvol verwijderd!",
@@ -133,7 +133,7 @@
                 "EN": "Quest was successfully deleted!",
                 "IT": "La spedizione è stata eliminata con successo!",
                 "PT-BR": "TRANSLATE",
-				"RU": "Квест успешно удален"
+		"RU": "Квест успешно удален"
         },
 	"reward" : {
 		"NL": "Beloning",
@@ -149,7 +149,7 @@
                 "EN": "Select the reward type:",
                 "IT": "Seleziona il tipo di ricompensa:",
                 "PT-BR": "TRANSLATE",
-				"RU": "Выберите тип награды:"
+		"RU": "Выберите тип награды:"
         },
         "reward_select_qty_reward" : {
                 "NL": "Selecteer de beloning:",
@@ -157,7 +157,7 @@
                 "EN": "Select reward:",
                 "IT": "Seleziona ricompensa:",
                 "PT-BR": "TRANSLATE",
-				"RU": "Выберите нагарду:"
+		"RU": "Выберите нагарду:"
         },
         "create_raid_or_quest" : {
                 "NL": "Wat wil je aanmaken:",
@@ -165,7 +165,7 @@
                 "EN": "Create raid or quest:",
                 "IT": "Crea Raid o spedizione:",
                 "PT-BR": "TRANSLATE",
-				"RU": "Создать рейд или квест:"
+		"RU": "Создать рейд или квест:"
         },
 	"quest_access_denied" : {
 		"NL": "Je hebt geen rechten om deze quest aan te passen!",
@@ -181,7 +181,7 @@
                 "EN": "Raid",
                 "IT": "Raid",
                 "PT-BR": "Raid",
-				"RU": "Рейд"
+		"RU": "Рейд"
         },
 	"Xstars" : {
 		"NL": "Ex-Raid",
