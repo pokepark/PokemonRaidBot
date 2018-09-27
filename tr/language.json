@@ -13,7 +13,7 @@
                 "EN": "Error! No pokestops found!",
                 "IT": "Errore! Nessun Pokéstop trovato!",
                 "PT-BR": "Erro! Nenhum pokestops encontrado!",
-				"RU": "Ошибка! Покестоп не найден!"
+		"RU": "Ошибка! Покестоп не найден!"
         },
         "pokestops_not_found_command_text" : {
                 "NL": "Stuur /quest met een deel of een volledige pokestop naam.",
@@ -237,7 +237,7 @@
 		"EN": "Disabled",
 		"IT": "Disabilitato",
 		"PT-BR": "TRANSLATE",
-		"RU": "Инвалид"
+		"RU": "Деактивировано"
 	},
 	"back" : {
 		"NL": "Terug",
@@ -829,7 +829,7 @@
 		"EN": "Optional - Gym name and Gym Team:",
 		"IT": "Opzionale - Nome della Palestra e Team della Palestra",
 		"PT-BR": "Opcional - Nome do gínasio e nome do time",
-		"RU": "Опционально - Имя Гима и Команду Гима"
+		"RU": "Опционально - Название Гима и Команда Гима"
 	},
 	"set_gym_name_command" : {
 		"NL": "/gym <code>Naam van de Gym</code>",
@@ -837,7 +837,7 @@
 		"EN": "/gym <code>Name of the Gym</code>",
 		"IT": "/gym <code>Nome della Palestra</code>",
 		"PT-BR": "/gym <code>Nome do ginásio</code>",
-		"RU": "/gym <code>Имя Гима</code>"
+		"RU": "/gym <code>Название Гима</code>"
 	},
 	"set_gym_team" : {
 		"NL": "Optioneel - zet Gym en Team",
@@ -1277,7 +1277,7 @@
 		"EN": "Gym name updated.",
 		"IT": "Nome della Palestra aggiornato.",
 		"PT-BR": "Nome do ginásio atualizado.",
-		"RU": "Имя гима обновлено."
+		"RU": "Название гима обновлено."
 	},
 	"mods_details" : {
 		"NL": "Selecteer moderator voor meer informatie:",
