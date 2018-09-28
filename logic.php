@@ -3238,7 +3238,7 @@ function keys_vote($raid)
 			$keys = array_merge($buttons_time,$buttons_general,$buttons_pokemon,$status_buttons);
 			break;
     
-        	case "default":
+default:
 			$keys = array_merge($buttons_general,$buttons_time,$buttons_pokemon,$status_buttons);
 			break;
     }
