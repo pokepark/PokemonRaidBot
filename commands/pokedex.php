@@ -10,7 +10,7 @@ debug_log('POKEDEX()');
 bot_access_check($update, BOT_ADMINS);
 
 // Init empty keys array.
-$keys = array();
+$keys = [];
 
 // Create keys array.
 $keys = [

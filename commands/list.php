@@ -10,7 +10,7 @@ debug_log('LIST()');
 bot_access_check($update, BOT_ACCESS);
 
 // Init empty keys array.
-$keys = array();
+$keys = [];
 
 // Create keys array.
 $keys = [
