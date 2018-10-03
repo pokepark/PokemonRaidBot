@@ -12,10 +12,16 @@ $keys = [];
 // Build message string.
 $msg = ($data['arg'] == 1) ? (getTranslation('done') . '!') : (getTranslation('action_aborted'));
 
-// Edit the message.
-edit_message($update, $msg, $keys);
-
 // Answer callback.
 answerCallbackQuery($update['callback_query']['id'], $msg);
 
+// Edit the message.
+edit_message($update, $msg, $keys);
+
+// Delete gym from database.
+if($data['arg'] == 2) {
+    delete_gym($data['id']);
+}
+
+// Exit.
 exit();

@@ -24,7 +24,7 @@ debug_log('New weather: ' . $new_weather);
 // Add weather
 if($action == 'add') {
     // Init empty keys array.
-    $keys = array();
+    $keys = [];
 
     // Get the keys.
     $keys = weather_keys($pokedex_id, 'pokedex_set_weather', $arg);
@@ -61,7 +61,7 @@ if($action == 'add') {
         );
 
     // Init empty keys array.
-    $keys = array();
+    $keys = [];
 
     // Back to pokemon and done keys.
     $keys = [
@@ -87,11 +87,11 @@ if($action == 'add') {
     $msg .= '<b>' . get_weather_icons($new_weather) . '</b>';
 }
 
+// Answer callback.
+answerCallbackQuery($update['callback_query']['id'], $callback_response);
 
 // Edit message.
 edit_message($update, $msg, $keys, false);
 
-// Answer callback.
-answerCallbackQuery($update['callback_query']['id'], $callback_response);
-
+// Exit.
 exit();

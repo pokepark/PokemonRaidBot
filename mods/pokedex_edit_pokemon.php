@@ -10,7 +10,7 @@ debug_log('pokedex_edit_pokemon()');
 $pokedex_id = $data['id'];
 
 // Init empty keys array.
-$keys = array();
+$keys = [];
 
 // Set the message.
 $msg = get_pokemon_info($pokedex_id);
@@ -77,11 +77,14 @@ $keys[] = [
     ]
 ];
 
-// Edit message.
-edit_message($update, $msg, $keys, false);
-
 // Build callback message string.
 $callback_response = 'OK';
 
 // Answer callback.
 answerCallbackQuery($update['callback_query']['id'], $callback_response);
+
+// Edit message.
+edit_message($update, $msg, $keys, false);
+
+// Exit.
+exit();

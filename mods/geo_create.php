@@ -6,6 +6,12 @@ debug_log('quest_geo()');
 //debug_log($update);
 //debug_log($data);
 
+// Forward request.
+include_once(ROOT_PATH . '/mods/raid_by_location.php');
+
+// Exit.
+exit();
+
 // Latitude and longitude
 $lat = '';
 $lon = '';

@@ -25,14 +25,15 @@ if ($update['callback_query']['message']['chat']['type'] == 'private') {
 	$msg = getTranslation('pokedex_not_found');
     }
 
-    // Edit message.
-    edit_message($update, $msg, $keys, false);
-
     // Build callback message string.
     $callback_response = 'OK';
 
     // Answer callback.
     answerCallbackQuery($update['callback_query']['id'], $callback_response);
+
+    // Edit message.
+    edit_message($update, $msg, $keys, false);
 } 
 
+// Exit.
 exit();

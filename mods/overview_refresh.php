@@ -60,8 +60,8 @@ $request_active_raids = my_query(
 $count_active_raids = 0;
 
 // Init empty active raids and raid_ids array.
-$raids_active = array();
-$raid_ids_active = array();
+$raids_active = [];
+$raid_ids_active = [];
 
 // Get all active raids into array.
 while ($rowRaids = $request_active_raids->fetch_assoc()) {
@@ -81,7 +81,7 @@ debug_log('Active raids:');
 debug_log($raids_active);
 
 // Init empty active chats array.
-$chats_active = array();
+$chats_active = [];
 
 // Make sure we have active raids.
 if ($count_active_raids > 0) {

@@ -40,7 +40,7 @@ debug_log('Action: ' . $action);
 // Add digits to cp
 if($action == 'add') {
     // Init empty keys array.
-    $keys = array();
+    $keys = [];
 
     // Get the keys.
     $keys = cp_keys($pokedex_id, 'pokedex_set_cp', $arg);
@@ -87,7 +87,7 @@ if($action == 'add') {
         );
 
     // Init empty keys array.
-    $keys = array();
+    $keys = [];
 
     // Back to pokemon and done keys.
     $keys = [
@@ -112,10 +112,11 @@ if($action == 'add') {
     $msg .= getTranslation('pokedex_' . $cp_type . $boosted) . ': <b>' . $cp_value . '</b>';
 }
 
-// Edit message.
-edit_message($update, $msg, $keys, false);
-
 // Answer callback.
 answerCallbackQuery($update['callback_query']['id'], $callback_response);
 
+// Edit message.
+edit_message($update, $msg, $keys, false);
+
+// Exit.
 exit();

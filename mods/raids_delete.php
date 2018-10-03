@@ -76,13 +76,14 @@ if ($action == 0) {
     delete_raid($id);
 }
     
-// Edit message.
-edit_message($update, $msg, $keys, false);
-
 // Build callback message string.
 $callback_response = 'OK';
 
 // Answer callback.
 answerCallbackQuery($update['callback_query']['id'], $callback_response);
 
-exit;
+// Edit message.
+edit_message($update, $msg, $keys, false);
+
+// Exit.
+exit();

@@ -39,7 +39,7 @@ if($data['arg'] == "setlevel") {
     $raid_levels = explode("','", $raid_levels);
 
     // Init empty keys array.
-    $keys = array();
+    $keys = [];
 
     // Create keys array.
     foreach($raid_levels as $lv) {
@@ -82,7 +82,7 @@ if($data['arg'] == "setlevel") {
         );
 
     // Init empty keys array.
-    $keys = array();
+    $keys = [];
 
     // Back to pokemon and done keys.
     $keys = [
@@ -108,9 +108,11 @@ if($data['arg'] == "setlevel") {
     $msg .= '<b>' . getTranslation($arg . 'stars') . '</b>';
 }
 
+// Answer callback.
+answerCallbackQuery($update['callback_query']['id'], $callback_response);
 
 // Edit message.
 edit_message($update, $msg, $keys, false);
 
-// Answer callback.
-answerCallbackQuery($update['callback_query']['id'], $callback_response);
+// Exit.
+exit();

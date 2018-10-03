@@ -17,7 +17,7 @@ $rs = my_query(
     );
 
 // Init empty keys array.
-$keys = array();
+$keys = [];
 
 // Add key for each raid level
 while ($pokemon = $rs->fetch_assoc()) {
@@ -77,11 +77,14 @@ if(!empty($msg)) {
     $msg = getTranslation('pokedex_not_found');
 }
 
-// Edit message.
-edit_message($update, $msg, $keys, false);
-
 // Build callback message string.
 $callback_response = getTranslation('select_pokemon');
 
 // Answer callback.
 answerCallbackQuery($update['callback_query']['id'], $callback_response);
+
+// Edit message.
+edit_message($update, $msg, $keys, false);
+
+// Exit.
+exit();
