@@ -23,6 +23,7 @@ CREATE TABLE `attendance` (
   `raid_done` tinyint(1) unsigned DEFAULT '0',
   `cancel` tinyint(1) unsigned DEFAULT '0',
   `late` tinyint(1) unsigned DEFAULT '0',
+  `invite` tinyint(1) unsigned DEFAULT '0',
   `pokemon` varchar(12) DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `raid_id` (`raid_id`)
@@ -47,6 +48,8 @@ CREATE TABLE `gyms` (
   `lon` decimal(11,8) DEFAULT NULL,
   `address` varchar(255) DEFAULT NULL,
   `gym_name` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `ex_gym` tinyint(1) unsigned DEFAULT '0',
+  `show_gym` tinyint(1) unsigned DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -80,15 +83,12 @@ CREATE TABLE `raids` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) DEFAULT NULL,
   `pokemon` varchar(12) DEFAULT NULL,
-  `lat` decimal(10,8) DEFAULT NULL,
-  `lon` decimal(11,8) DEFAULT NULL,
   `first_seen` datetime DEFAULT NULL,
   `start_time` datetime DEFAULT NULL,
   `end_time` datetime DEFAULT NULL,
   `timezone` char(30) DEFAULT NULL,
-  `address` varchar(255) DEFAULT NULL,
-  `gym_name` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL,
   `gym_team` enum('mystic','valor','instinct') DEFAULT NULL,
+  `gym_id` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `end_time` (`end_time`),
   KEY `user_id` (`user_id`)
