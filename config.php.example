@@ -42,7 +42,8 @@ define('RAID_DURATION_CLOCK_STYLE',	true);
 define('RAID_LOCATION',			false);
 define('RAID_SLOTS',			'15');
 define('RAID_LAST_START',		'10');
-define('RAID_ANYTIME',			false); 
+define('RAID_ANYTIME',			false);
+define('RAID_VIA_LOCATION', 'false');
 
 // Raid poll design and layout
 define('RAID_VOTE_ICONS',		true);

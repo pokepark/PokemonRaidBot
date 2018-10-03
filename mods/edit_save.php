@@ -53,7 +53,7 @@ if ($update['callback_query']['message']['chat']['type'] == 'private') {
         $keys_time = [
             [
                 [
-                    'text'          => 'Change duration',
+                    'text'          => getTranslation('change_raid_duration'),
                     'callback_data' => $id . ':edit_duration:0,0,more-options,1'
                 ]
             ]
