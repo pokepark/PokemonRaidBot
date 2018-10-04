@@ -2404,7 +2404,6 @@ function get_overview($update, $chats_active, $raids_active, $action = 'refresh'
 
                     // Set the callback message and keys
                     $callback_keys = [];
-                    $callback_keys = [];
                     $callback_msg = '<b>' . getTranslation('list_all_overviews') . ':</b>';
 
                     // Answer the callback.
@@ -2486,7 +2485,7 @@ function get_overview($update, $chats_active, $raids_active, $action = 'refresh'
         // Set variables for easier message building.
         $raid_id = $row['raid_id'];
         $pokemon = $raids_active[$raid_id]['pokemon'];
-        $pokemon = get_local_pokemon_name($pokemon);
+        $pokemon = get_local_pokemon_name($pokemon, true, 'raid');
         $gym = $raids_active[$raid_id]['gym_name'];
         $now = $raids_active[$raid_id]['ts_now'];
         $tz = $raids_active[$raid_id]['timezone'];
@@ -2544,7 +2543,7 @@ function get_overview($update, $chats_active, $raids_active, $action = 'refresh'
                 $msg .= ' ' . getRaidTranslation('raid_egg_opens_at') . ' ' . unix2tz($start_time, $tz);
             }
             // Add endtime
-            $msg .= SP . getTranslation('to') . SP . unix2tz($end_time, $tz) . '</b>' . CR;
+            $msg .= SP . getRaidTranslation('to') . SP . unix2tz($end_time, $tz) . '</b>' . CR;
 
         // Raid has started already
         } else {

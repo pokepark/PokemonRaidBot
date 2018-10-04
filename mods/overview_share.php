@@ -42,15 +42,18 @@ if (!$row) {
 // Get active raids.
 $request_active_raids = my_query(
     "
-    SELECT    *,
+    SELECT    raids.*,
+              gyms.lat, gyms.lon, gyms.address, gyms.gym_name, gyms.ex_gym,
               UNIX_TIMESTAMP(end_time)                        AS ts_end,
               UNIX_TIMESTAMP(start_time)                      AS ts_start,
               UNIX_TIMESTAMP(NOW())                           AS ts_now,
               UNIX_TIMESTAMP(end_time)-UNIX_TIMESTAMP(NOW())  AS t_left
     FROM      raids
-      WHERE   end_time>NOW()
-        AND   timezone='{$tz}'
-    ORDER BY  end_time ASC
+    LEFT JOIN gyms
+    ON        raids.gym_id = gyms.id
+      WHERE   raids.end_time>NOW()
+        AND   raids.timezone='{$tz}'
+    ORDER BY  raids.end_time ASC
     "
 );
 
