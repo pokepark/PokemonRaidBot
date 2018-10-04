@@ -1,0 +1,1162 @@
+{  
+  "raid":{  
+    "NL":"Raid",
+    "DE":"Raid",
+    "EN":"Raid",
+    "IT":"Raid",
+    "PT-BR":"Raid",
+    "RU":"Рейд",
+    "NO":"Raid"
+  },
+  "Xstars":{  
+    "NL":"Ex-Raid",
+    "DE":"Ex-Raid",
+    "EN":"Ex-Raid",
+    "IT":"Raid EX",
+    "PT-BR":"Ex-Raid",
+    "RU":"Экс-Рейд",
+    "NO":"Ex-Raid"
+  },
+  "5stars":{  
+    "NL":"5 Sterren",
+    "DE":"5 Sterne",
+    "EN":"5 Star",
+    "IT":"5 Stelle",
+    "PT-BR":"Nível 5",
+    "RU":"5 Звезд",
+    "NO":"Level 5"
+  },
+  "4stars":{  
+    "NL":"4 Sterren",
+    "DE":"4 Sterne",
+    "EN":"4 Star",
+    "IT":"4 Stelle",
+    "PT-BR":"Nível 4",
+    "RU":"4 Звезды",
+    "NO":"Level 4"
+  },
+  "3stars":{  
+    "NL":"3 Sterren",
+    "DE":"3 Sterne",
+    "EN":"3 Star",
+    "IT":"3 Stelle",
+    "PT-BR":"Nível 3",
+    "RU":"3 Звезды",
+    "NO":"Level 3"
+  },
+  "2stars":{  
+    "NL":"2 Sterren",
+    "DE":"2 Sterne",
+    "EN":"2 Star",
+    "IT":"2 Stelle",
+    "PT-BR":"Nível 2",
+    "RU":"2 Звезды",
+    "NO":"Level 2"
+  },
+  "1stars":{  
+    "NL":"1 Sterren",
+    "DE":"1 Sterne",
+    "EN":"1 Star",
+    "IT":"1 Stella",
+    "PT-BR":"Nível 1",
+    "RU":"1 Звезда",
+    "NO":"Level 1"
+  },
+  "0stars":{  
+    "NL":"Uitgeschakeld",
+    "DE":"Deaktiviert",
+    "EN":"Disabled",
+    "IT":"Disabilitato",
+    "PT-BR":"TRANSLATE",
+    "RU":"Деактивировано",
+    "NO":"Deaktivert"
+  },
+  "egg_5":{  
+    "NL":"Level 5 Ei",
+    "DE":"Level 5 Ei",
+    "EN":"Level 5 Egg",
+    "IT":"Uovo di Livello 5",
+    "PT-BR":"Ovo de Nível 5",
+    "RU":"Яйцо уровня 5",
+    "NO":"Level 5 Egg"
+  },
+  "egg_4":{  
+    "NL":"Level 4 Ei",
+    "DE":"Level 4 Ei",
+    "EN":"Level 4 Egg",
+    "IT":"Uovo di Livello 4",
+    "PT-BR":"Ovo de Nível 4",
+    "RU":"Яйцо уровня 4",
+    "NO":"Level 4 Egg"
+  },
+  "egg_3":{  
+    "NL":"Level 3 Ei",
+    "DE":"Level 3 Ei",
+    "EN":"Level 3 Egg",
+    "IT":"Uovo di Livello 3",
+    "PT-BR":"Ovo de Nível 3",
+    "RU":"Яйцо уровня 3",
+    "NO":"Level 3 Egg"
+  },
+  "egg_2":{  
+    "NL":"Level 2 Ei",
+    "DE":"Level 2 Ei",
+    "EN":"Level 2 Egg",
+    "IT":"Uovo di Livello 2",
+    "PT-BR":"Ovo de Nível 2",
+    "RU":"Яйцо уровня 2",
+    "NO":"Level 2 Egg"
+  },
+  "egg_1":{  
+    "NL":"Level 1 Ei",
+    "DE":"Level 1 Ei",
+    "EN":"Level 1 Egg",
+    "IT":"Uovo di Livello 1",
+    "PT-BR":"Ovo de Nível 1",
+    "RU":"Яйцо уровня 1",
+    "NO":"Level 1 Egg"
+  },
+  "egg_0":{  
+    "NL":"Raid Ei",
+    "DE":"Raid Ei",
+    "EN":"Raid Egg",
+    "IT":"Uovo del Raid",
+    "PT-BR":"Raid Ovo",
+    "RU":"Рейдовое Яйцо",
+    "NO":"Level 0 Egg"
+  },
+  "alone":{  
+    "NL":"Alleen",
+    "DE":"Alleine",
+    "EN":"Alone",
+    "IT":"Solo",
+    "PT-BR":"Sozinho",
+    "RU":"Один",
+    "NO":"Alene"
+  },
+  "here":{  
+    "NL":"Ben er",
+    "DE":"Bin da",
+    "EN":"Here",
+    "IT":"Qua",
+    "PT-BR":"Aqui",
+    "RU":"Здесь",
+    "NO":"Er her"
+  },
+  "late":{  
+    "NL":"Laat",
+    "DE":"Spät dran",
+    "EN":"Late",
+    "IT":"Tardi",
+    "PT-BR":"TRANSLATE",
+    "RU":"Позже",
+    "NO":"Sen"
+  },
+  "done":{  
+    "NL":"Klaar",
+    "DE":"Fertig",
+    "EN":"Done",
+    "IT":"Completato",
+    "PT-BR":"Feito",
+    "RU":"Готово",
+    "NO":"Ferdig"
+  },
+  "cancellation":{  
+    "NL":"Afwezig",
+    "DE":"Absage",
+    "EN":"Cancellation",
+    "IT":"Cancellazione",
+    "PT-BR":"Cancelada",
+    "RU":"Отмена",
+    "NO":"Avlysning"
+  },
+  "raid_done":{  
+    "NL":"Raid beëindigd",
+    "DE":"Raid beendet.",
+    "EN":"Raid done",
+    "IT":"Raid completato",
+    "PT-BR":"Raid completa",
+    "RU":"Рейд выполнен",
+    "NO":"Raidet er ferdig"
+  },
+  "vote_updated":{  
+    "NL":"Stem geüpdatet",
+    "DE":"Abstimmung aktualisiert",
+    "EN":"Vote updated",
+    "IT":"Voto aggiornato",
+    "PT-BR":"Votos atualizados",
+    "RU":"Голосование обновлено",
+    "NO":"Stemme oppdatert"
+  },
+  "vote_time_first":{  
+    "NL":"Kies eerst een tijd!",
+    "DE":"Zuerst für eine Uhrzeit abstimmen!",
+    "EN":"Vote for a time first!",
+    "IT":"Vota per un orario prima!",
+    "PT-BR":"TRANSLATE",
+    "RU":"Сначала выберите время!",
+    "NO":"Foreslå tid først"
+  },
+  "still":{  
+    "NL":"nog",
+    "DE":"noch",
+    "EN":"still",
+    "IT":"fermo",
+    "PT-BR":"ainda",
+    "RU":"Еще",
+    "NO":"fortsatt"
+  },
+  "raid_egg_opens":{  
+    "NL":"Gaat open",
+    "DE":"Öffnet sich um",
+    "EN":"Opens up",
+    "IT":"Si sta aprendo",
+    "PT-BR":"Ovo eclode",
+    "RU":"Откроется",
+    "NO":"Egget klekker"
+  },
+  "raid_egg_opens_day":{  
+    "NL":"Gaat open",
+    "DE":"Öffnet sich am",
+    "EN":"Opens on",
+    "IT":"Si aprirà",
+    "PT-BR":"Ovo eclode em",
+    "RU":"Откроется",
+    "NO":"Klekker"
+  },
+  "raid_egg_opens_at":{  
+    "NL":"om",
+    "DE":"um",
+    "EN":"at",
+    "IT":"il",
+    "PT-BR":"em",
+    "RU":"в",
+    "NO":""
+  },
+  "raid_until":{  
+    "NL":"Raid tot",
+    "DE":"Raid bis",
+    "EN":"Raid until",
+    "IT":"Raid fino",
+    "PT-BR":"Raid até",
+    "RU":"Рейд до",
+    "NO":"Raid fram til"
+  },
+  "exraid_pass":{  
+    "NL":"DEELNAME IS ALLEEN MOGELIJK MET EX-RAID PASS",
+    "DE":"TEILNAHME IST NUR MIT EX-RAID-PASS MÖGLICH",
+    "EN":"PARTICIPATION IS POSSIBLE ONLY WITH EX-RAID PASS",
+    "IT":"LA PARTECIPAZIONE È POSSIBILE SOLO CON UN PASS PER RAID EX",
+    "PT-BR":"PARTICIPAÇÃO APENAS COM PASSE EX",
+    "RU":"УЧАСТИЕ ВОЗМОЖНО ТОЛЬКО С ПРОПУСКОМ НА ЭКС-РЕЙД",
+    "NO":"DET ER BARE MULIG Å DELTA OM DU HAR ETT EX-RAID PASS FOR DENNE GYMMEN"
+  },
+  "no_participants_yet":{  
+    "NL":"Nog geen deelnemers",
+    "DE":"Noch keine Teilnehmer.",
+    "EN":"No participants yet",
+    "IT":"Ancora nessun partecipante",
+    "PT-BR":"Ainda sem participantes",
+    "RU":"Пока нет участников",
+    "NO":"Ingen deltaker ennå"
+  },
+  "finished":{  
+    "NL":"Klaar",
+    "DE":"Fertig",
+    "EN":"Finished",
+    "IT":"Finito",
+    "PT-BR":"Finalizada",
+    "RU":"Закончено",
+    "NO":"Ferdig"
+  },
+  "cancel":{  
+    "NL":"Annuleren",
+    "DE":"Abgesagt",
+    "EN":"Cancel",
+    "IT":"Annulla",
+    "PT-BR":"Cancelar",
+    "RU":"Отмена",
+    "NO":"Avbryt"
+  },
+  "from":{  
+    "NL":"van",
+    "DE":"von",
+    "EN":"from",
+    "IT":"da",
+    "PT-BR":"de",
+    "RU":"от",
+    "NO":"fra"
+  },
+  "to":{  
+    "NL":"tot",
+    "DE":"bis",
+    "EN":"to",
+    "IT":"a",
+    "PT-BR":"para",
+    "RU":"к",
+    "NO":"til"
+  },
+  "no_participants":{  
+    "NL":"Geen deelnemers",
+    "DE":"Keine Teilnehmer",
+    "EN":"No participants",
+    "IT":"Nessun partecipante",
+    "PT-BR":"Sem participantes",
+    "RU":"Нет участников",
+    "NO":"Ingen deltakere"
+  },
+  "late_participants":{  
+    "NL":"Let op er zijn spelers later.",
+    "DE":"Einige Teilnehmer verspäten sich.",
+    "EN":"Some participants are late.",
+    "IT":"Qualche partecipante è in ritardo.",
+    "PT-BR":"TRANSLATE",
+    "RU":"Некоторые участники задерживаются.",
+    "NO":"Noen deltakere er forsinket"
+  },
+  "late_participants_wait":{  
+    "NL":"A.u.b RAID_LATE_TIME minuten wachten!",
+    "DE":"Bitte RAID_LATE_TIME Minuten warten!",
+    "EN":"Please wait RAID_LATE_TIME minutes!",
+    "IT":"Prego aspettare RAID_LATE_TIME minuti!",
+    "PT-BR":"TRANSLATE",
+    "RU":"Пожалуйста подождите RAID_LATE_TIME минут!",
+    "NO":"Vær grei og vent RAID_LATE_TIME minutter!"
+  },
+  "select_gym_first_letter":{  
+    "NL":"Selecteer alstublieft de eerste letter van de gym:",
+    "DE":"Bitte Anfangsbuchstabe der Arena auswählen:",
+    "EN":"Please select the first letter of the gym:",
+    "IT":"Prego selezionare la prima lettera della Palestra:",
+    "PT-BR":"Por favor escolha a primeira letra do ginásio:",
+    "RU":"Пожалуйста, выберите первую букву гима:",
+    "NO":"Hva er den første bokstaven i gym navnet"
+  },
+  "select_gym":{  
+    "NL":"Beginletter geselecteerd.",
+    "DE":"Anfangsbuchstabe ausgewählt.",
+    "EN":"First letter selected.",
+    "IT":"Prima lettera selezionata.",
+    "PT-BR":"Primeira letra escolhida.:",
+    "RU":"Первая буква вабрана.",
+    "NO":"Første bokstav er valgt"
+  },
+  "raid_already_exists":{  
+    "NL":"Raid bestaat al!",
+    "DE":"Raid existiert bereits!",
+    "EN":"Raid already exists!",
+    "IT":"Il Raid è già esistente!",
+    "PT-BR":"A raid já existe!",
+    "RU":"Рейд уже существует!",
+    "NO":"Raidet finnes allerede!"
+  },
+  "create_raid":{  
+    "NL":"Begin Raid in",
+    "DE":"Erstelle Raid in",
+    "EN":"Create Raid in",
+    "IT":"Crea Raid in",
+    "PT-BR":"Criar raid em",
+    "RU":"Создать рейд в",
+    "NO":"Opprett raid i"
+  },
+  "select_raid_level_to_continue":{  
+    "NL":"Om echt door te gaan, selecteer een raid level",
+    "DE":"Um wirklich fortzufahren, bitte Raid Level auswählen",
+    "EN":"To really continue, please select raid level",
+    "IT":"Per continuare davvero, prego selezionare il livello del Raid",
+    "PT-BR":"Para continuar, escolha o nível da raid",
+    "RU":"Чтобы продолжить, пожалуйста, укажите уровень рейда",
+    "NO":"Velg raid level for å fortsette"
+  },
+  "select_raid_level":{  
+    "NL":"Selecteer Raid level",
+    "DE":"Bitte Raid Level auswählen",
+    "EN":"Select raid level",
+    "IT":"Seleziona il livello del Raid",
+    "PT-BR":"Escolha o nível da raid",
+    "RU":"Укажите уровень рейда",
+    "NO":"Velg raid level"
+  },
+  "gym":{  
+    "NL":"Gym",
+    "DE":"Arena",
+    "EN":"Gym",
+    "IT":"Palestra",
+    "PT-BR":"Ginásio",
+    "RU":"Гим",
+    "NO":"Gym"
+  },
+  "gym_saved":{  
+    "NL":"Gym opgeslagen.",
+    "DE":"Arena gespeichert.",
+    "EN":"Gym saved.",
+    "IT":"Palestra salvata.",
+    "PT-BR":"Ginásio salvo.",
+    "RU":"Гим сохранен",
+    "NO":"Gym lagret"
+  },
+  "select_raid_boss":{  
+    "NL":"Selecteer Raid baas",
+    "DE":"Raid-Boss auswählen",
+    "EN":"Select Raid boss",
+    "IT":"Seleziona il boss del Raid",
+    "PT-BR":"Escolha o Pokémon chefe da raid",
+    "RU":"Выберите Рейд босса",
+    "NO":"Velg raid boss"
+  },
+  "select_pokemon":{  
+    "NL":"Selecteer Pokemon",
+    "DE":"Pokemon auswählen",
+    "EN":"Select Pokemon",
+    "IT":"Seleziona Pokémon",
+    "PT-BR":"Escolha o Pokémon",
+    "RU":"Укажите Покемона",
+    "NO":"Velg Pokemon"
+  },
+  "raid_saved":{  
+    "NL":"Raid opgeslagen:",
+    "DE":"Raid gespeichert:",
+    "EN":"Raid saved:",
+    "IT":"Raid salvato:",
+    "PT-BR":"Raid salva:",
+    "RU":"Рейд сохранен:",
+    "NO":"Raid lagret"
+  },
+  "raid_boss":{  
+    "NL":"Raid baas",
+    "DE":"Raid-Boss",
+    "EN":"Raid boss",
+    "IT":"Boss del Raid",
+    "PT-BR":"Chefe da raid",
+    "RU":"Рейд Босс",
+    "NO":"Raidboss"
+  },
+  "raid_boss_saved":{  
+    "NL":"Raid baas opgeslagen!",
+    "DE":"Raid-Boss gespeichert!",
+    "EN":"Raid boss saved!",
+    "IT":"Boss del Raid salvato!",
+    "PT-BR":"Chefe da raid salvo!",
+    "RU":"Рейд Босс сохранен!",
+    "NO":"Raid boss lagret!"
+  },
+  "set_gym_name_and_team":{  
+    "NL":"Optioneel - Gym naam and Gym Team:",
+    "DE":"Optional - Arena Name und Arena Team:",
+    "EN":"Optional - Gym name and Gym Team:",
+    "IT":"Opzionale - Nome della Palestra e Team della Palestra",
+    "PT-BR":"Opcional - Nome do gínasio e nome do time",
+    "RU":"Опционально - Название Гима и Команда Гима",
+    "NO":"Valgfri - Gym navn og gym team:"
+  },
+  "set_gym_name_command":{  
+    "NL":"/gym <code>Naam van de Gym</code>",
+    "DE":"/gym <code>Name der Arena</code>",
+    "EN":"/gym <code>Name of the Gym</code>",
+    "IT":"/gym <code>Nome della Palestra</code>",
+    "PT-BR":"/gym <code>Nome do ginásio</code>",
+    "RU":"/gym <code>Название Гима</code>",
+    "NO":"/gym <code>Navn på gymmen</code>"
+  },
+  "set_gym_team":{  
+    "NL":"Optioneel - zet Gym en Team",
+    "DE":"Optional - Arena Team setzen",
+    "EN":"Optional - set Gym and Team",
+    "IT":"Opzionale - imposta Palestra e Team",
+    "PT-BR":"Opcional - escolha o gínasio e time",
+    "RU":"Опционально - указать Гим и Команду",
+    "NO":"Valgfri - Fortell hvilken Gym og Team"
+  },
+  "set_gym_team_command":{  
+    "NL":"/team <code>Mystic/Valor/Instinct/Blauw/Rood/Geel</code>",
+    "DE":"/team <code>Mystic/Valor/Instinct/Blau/Rot/Gelb</code>",
+    "EN":"/team <code>Mystic/Valor/Instinct/Blue/Red/Yellow</code>",
+    "IT":"/team <code>Saggezza/Valore/Istinto/Blu/Rosso/Giallo</code>",
+    "PT-BR":"/team <code>Mystic/Valor/Instinct/Azul/Vermelho/Amarelo</code>",
+    "RU":"/team <code>Mystic/Valor/Instinct/Синий/Красный/Желтый</code>",
+    "NO":"/team <code>Mystic/Valor/Instinct/Blue/Red/Yellow</code>"
+  },
+  "start_date_time":{  
+    "NL":"Starttijd gezet op",
+    "DE":"Startzeit gesetzt auf",
+    "EN":"Starttime set to",
+    "IT":"Orario di inizio impostato alle",
+    "PT-BR":"Hora de começar determinada para",
+    "RU":"Установить время начала",
+    "NO":"Startid satt til"
+  },
+  "end_time":{  
+    "NL":"Eindtijd gezet op ",
+    "DE":"Ablaufzeit gesetzt auf ",
+    "EN":"Endtime set to ",
+    "IT":"Orario di fine impostato alle",
+    "PT-BR":"Hora de término determinada para ",
+    "RU":"Установить время окончания",
+    "NO":"Ferdig klokken"
+  },
+  "raid_select_date":{  
+    "NL":"Selecteer de <b>datum</b> van de raid:",
+    "DE":"<b>Datum</b> des Raids auswählen:",
+    "EN":"Select the <b>date</b> of the raid:",
+    "IT":"Seleziona la <b>data</b> del Raid:",
+    "PT-BR":"Select the <b>date</b> of the raid:",
+    "RU":"Указать <b>дату</b> рейда:",
+    "NO":"Velg <b>dato</b> for raidet:"
+  },
+  "raid_select_hour":{  
+    "NL":"Selecteer het <b>uur</b> van de raid:",
+    "DE":"<b>Stunde</b> des Raids auswählen:",
+    "EN":"Select the <b>hour</b> of the raid:",
+    "IT":"Seleziona l'<b>ora</b> del Raid:",
+    "PT-BR":"Select the <b>hour</b> of the raid:",
+    "RU":"Указать <b>час</b> рейда:",
+    "NO":"Velg <b>tid>/b> for raidet:"
+  },
+  "raid_select_start_time":{  
+    "NL":"Selecteer de <b>start tijd</b> van de raid:",
+    "DE":"<b>Startzeit</b> des Raids auswählen:",
+    "EN":"Select the <b>start time</b> of the raid:",
+    "IT":"Seleziona l'<b>orario di inizio</b> del Raid:",
+    "PT-BR":"Select the <b>start time</b> of the raid:",
+    "RU":"Указать <b>Время начала</b> рейда:",
+    "NO":"Velg <b>når</b> raidet starter:"
+  },
+  "minutes":{  
+    "NL":"minuten",
+    "DE":"Minuten",
+    "EN":"minutes",
+    "IT":"minuti",
+    "PT-BR":"minutos",
+    "RU":"минут",
+    "NO":"Minutter"
+  },
+  "raid_starts_when":{  
+    "NL":"Wanneer gaat het Raid ei <b>open</b>?",
+    "DE":"Wann <b>beginnt</b> der Raid?",
+    "EN":"When will the Raid <b>begin</b>?",
+    "IT":"Quando <b>inizierà</b> il Raid?",
+    "PT-BR":"Quando a raid irá <b>começar</b>?",
+    "RU":"Когда <b>начало</b> рейда?",
+    "NO":"Når <b>starter</b> raidet?"
+  },
+  "raid_starts_when_minutes":{  
+    "NL":"Wanneer <b>begint</b> de Raid?",
+    "DE":"In wie viel Minuten <b>beginnt</b> der Raid?",
+    "EN":"In how many minutes does the raid <b>begin</b>?",
+    "IT":"In quanti minuti il Raid <b>inizierà</b>?",
+    "PT-BR":"Em quantos minutos a raid irá <b>começar</b>?",
+    "RU":"Через сколько минут рейд <b>начинается</b>?",
+    "NO":"Hvor mange minutter til raidet <b>starter</b>?"
+  },
+  "raid_starts_when_clocktime_view":{  
+    "NL":"klok",
+    "DE":"Uhrzeit-Ansicht",
+    "EN":"Clock time view",
+    "IT":"Vista oraria",
+    "PT-BR":"Ver horário",
+    "RU":"Просмотр времени",
+    "NO":"Klokkevisning"
+  },
+  "raid_starts_when_minutes_view":{  
+    "NL":"Minuten",
+    "DE":"Minuten-Ansicht",
+    "EN":"Minutes view",
+    "IT":"Vista per minuti",
+    "PT-BR":"Ver minutos",
+    "RU":"Просмотр минут",
+    "NO":"Minuttvisning"
+  },
+  "raid_starts_when_view_changed":{  
+    "NL":"Overzicht verandert!",
+    "DE":"Ansicht geändert!",
+    "EN":"View changed!",
+    "IT":"Vista cambiata!",
+    "PT-BR":"Visualização mudou!",
+    "RU":"Просмотр изменен!",
+    "NO":"Visning endret!"
+  },
+  "is_raid_active":{  
+    "NL":"Raid is al actief!",
+    "DE":"Raid läuft schon!",
+    "EN":"Raid is already active!",
+    "IT":"Il Raid è già attivo!",
+    "PT-BR":"A raid já está ativa!",
+    "RU":"Рейд уже активен!",
+    "NO":"Raidet er allerede aktivt!"
+  },
+  "raid_access_denied":{  
+    "NL":"Je hebt geen rechten om deze raid aan te passen!",
+    "DE":"Sie haben keine Berechtigung dieses Raid zu bearbeiten!",
+    "EN":"You are not allowed to edit this raid!",
+    "IT":"Non sei autorizzato ad editare questo Raid!",
+    "PT-BR":"Você não tem permissão para editar esta raid!",
+    "RU":"Вы не можете редактировать этот рейд!",
+    "NO":"Du har ikke tillatelse til å redigere dette raidet!"
+  },
+  "no_active_raids_found":{  
+    "NL":"Geen actieve raids gevonden!",
+    "DE":"Aktuell sind keine laufenden Raids im System!",
+    "EN":"No active raids found in the system!",
+    "IT":"Nessun Raid attivo trovato nel sistema!",
+    "PT-BR":"Nenhuma raid ativa encontrada no sistema!",
+    "RU":"Не найдено активных рейдов в системе!",
+    "NO":"Ingen aktive raid i systemet!"
+  },
+  "no_active_raids_shared":{  
+    "NL":"Geen van de actieve raid is gedeeld!",
+    "DE":"Keines der aktiven Raids wurde geteilt!",
+    "EN":"None of the active raids was shared!",
+    "IT":"Nessuno dei Raid attivi è stato condiviso!",
+    "PT-BR":"Nenhuma das raids ativas foi compartilhada!",
+    "RU":"Активными рейдами не делились!",
+    "NO":"Ingen av de aktive raidene ble delt!"
+  },
+  "no_active_raids":{  
+    "NL":"Geen actieve raids!",
+    "DE":"Aktuell gibt es keine Raids!",
+    "EN":"No active raids currently!",
+    "IT":"Non ci sono Raid attivi al momento!",
+    "PT-BR":"Nenhuma raid ativa no momento!",
+    "RU":"Нету текущих активных рейдов!",
+    "NO":"Det er ingen aktive raid akkurat nå!"
+  },
+  "pokemon_saved":{  
+    "NL":"Pokemon opgeslagen: ",
+    "DE":"Pokemon gespeichert: ",
+    "EN":"Pokemon saved: ",
+    "IT":"Pokémon salvato: ",
+    "PT-BR":"Pokemon salvo ",
+    "RU":"Покемон сохранен:",
+    "NO":"Pokemon lagret:"
+  },
+  "pokedex_start":{  
+    "NL":"Raid bazen lijst aanpassen",
+    "DE":"Raid-Boss / Pokemon anzeigen und bearbeiten",
+    "EN":"List and edit raid boss / pokemon",
+    "IT":"Lista e modifica boss del Raid / Pokémon",
+    "PT-BR":"TRANSLATE",
+    "RU":"Список и редактирование рейд босса / покемона",
+    "NO":"List og rediger raid boss / pokemon"
+  },
+  "pokedex_raid_pokemon":{  
+    "NL":"Lijst alle Raid bazen",
+    "DE":"Alle Raid-Bosse anzeigen",
+    "EN":"List of all raid bosses",
+    "IT":"Lista di tutti i boss del Raid",
+    "PT-BR":"TRANSLATE",
+    "RU":"Списов всех рейд боссов",
+    "NO":"Liste over alle raid bosser"
+  },
+  "pokedex_list_of_all":{  
+    "NL":"Lijst met alle pokemon.",
+    "DE":"Liste aller Pokemon.",
+    "EN":"List of all pokemon.",
+    "IT":"Lista di tutti i Pokémon.",
+    "PT-BR":"Lista de todos os pokemon.",
+    "RU":"Список всех покемонов",
+    "NO":"Liste over alle pokemon"
+  },
+  "pokedex_not_found":{  
+    "NL":"Error! Geen Pokemon gevonden!",
+    "DE":"Fehler! Keine Pokemon gefunden!",
+    "EN":"Error! No pokemon found!",
+    "IT":"Errore! Nessun Pokémon trovato!",
+    "PT-BR":"Erro! Nenhum pokemon encontrado!",
+    "RU":"Ошибка! Покемон не найден!",
+    "NO":"Feil: Ingen pokemon funnet!"
+  },
+  "pokedex_edit_pokemon":{  
+    "NL":"Selecteer een Pokemon / Raid baas om hem te bewerken",
+    "DE":"Zum Bearbeiten Pokemon / Raid-Boss auswählen:",
+    "EN":"Select pokemon / raid boss to edit:",
+    "IT":"Seleziona il Pokémon / boss del Raid da modificare:",
+    "PT-BR":"TRANSLATE",
+    "RU":"Выберите покемона / рейд босса для редактирования",
+    "NO":"Velg pokemon / raid boss som skal redigeres:"
+  },
+  "pokedex_raid_level":{  
+    "NL":"Raid level",
+    "DE":"Raid Level",
+    "EN":"Raid level",
+    "IT":"Livello del Raid",
+    "PT-BR":"TRANSLATE",
+    "RU":"Уровень рейда",
+    "NO":"Raid level"
+  },
+  "pokedex_new_raid_level":{  
+    "NL":"Nieuw Raid level",
+    "DE":"Neues Raid Level",
+    "EN":"New raid level",
+    "IT":"Nuovo livello del Raid",
+    "PT-BR":"TRANSLATE",
+    "RU":"Новый уровень рейда",
+    "NO":"Ny raid level"
+  },
+  "pokedex_current_raid_level":{  
+    "NL":"Actuele Raid level:",
+    "DE":"Aktuelles Raid Level:",
+    "EN":"Current raid level:",
+    "IT":"Livello del Raid attuale:",
+    "PT-BR":"TRANSLATE",
+    "RU":"Текущий уровень рейда",
+    "NO":"Nåværende raid level:"
+  },
+  "pokedex_select_action":{  
+    "NL":"Selecteer een eigenschap om deze aan te passen:",
+    "DE":"Eigenschaft zum Ändern auswählen:",
+    "EN":"Select feature to be changed:",
+    "IT":"Seleziona caratteristica da modificare:",
+    "PT-BR":"TRANSLATE",
+    "RU":"Выберите функцию для изменения:",
+    "NO":"Velg egenskap som skal endres:"
+  },
+  "pokedex_cp":{  
+    "NL":"CP:",
+    "DE":"WP:",
+    "EN":"CP:",
+    "IT":"PL",
+    "PT-BR":"CP:",
+    "RU":"CP",
+    "NO":"CP:"
+  },
+  "pokedex_min_cp":{  
+    "NL":"Min CP",
+    "DE":"Min WP",
+    "EN":"Min CP",
+    "IT":"Min PL",
+    "PT-BR":"Min CP",
+    "RU":"Min CP",
+    "NO":"Min CP"
+  },
+  "pokedex_max_cp":{  
+    "NL":"Max CP",
+    "DE":"Max WP",
+    "EN":"Max CP",
+    "IT":"Max PL",
+    "PT-BR":"Max CP",
+    "RU":"Max CP",
+    "NO":"Maks CP"
+  },
+  "pokedex_min_weather_cp":{  
+    "NL":"Min boosted CP",
+    "DE":"Min boosted WP",
+    "EN":"Min boosted CP",
+    "IT":"Min PL potenziati",
+    "PT-BR":"TRANSLATE",
+    "RU":"Min boosted CP",
+    "NO":"Min boostet CP"
+  },
+  "pokedex_max_weather_cp":{  
+    "NL":"Max boosted CP",
+    "DE":"Max boosted WP",
+    "EN":"Max boosted CP",
+    "IT":"Max PL potenziati",
+    "PT-BR":"TRANSLATE",
+    "RU":"Max boosted CP",
+    "NO":"Maks boostet CP"
+  },
+  "pokedex_current_cp":{  
+    "NL":"Actuele CP:",
+    "DE":"Aktuelle WP:",
+    "EN":"Current CP:",
+    "IT":"PL attuali:",
+    "PT-BR":"TRANSLATE",
+    "RU":"Текущий CP:",
+    "NO":"Nåværende CP:"
+  },
+  "pokedex_weather":{  
+    "NL":"Weer",
+    "DE":"Wetter",
+    "EN":"Weather",
+    "IT":"Meteo",
+    "PT-BR":"TRANSLATE",
+    "RU":"Погода",
+    "NO":"Vær"
+  },
+  "pokedex_current_weather":{  
+    "NL":"Actuele weer:",
+    "DE":"Aktuelles Wetter:",
+    "EN":"Current weather:",
+    "IT":"Meteo attuale:",
+    "PT-BR":"TRANSLATE",
+    "RU":"Текущая погода:",
+    "NO":"Værforhold:"
+  },
+  "pokedex_new_weather":{  
+    "NL":"Nieuw weer:",
+    "DE":"Neues Wetter:",
+    "EN":"New weather:",
+    "IT":"Nuovo meteo:",
+    "PT-BR":"TRANSLATE",
+    "RU":"Новая погода:",
+    "NO":"Været har endret seg:"
+  },
+  "how_long_raid":{  
+    "NL":"Hoe lang <b>duurt</b> de Raid?",
+    "DE":"Wie lange <b>dauert</b> der Raid?",
+    "EN":"How long will the raid <b>last</b>?",
+    "IT":"Quando tempo il Raid <b>durerà</b>?",
+    "PT-BR":"Quanto tempo a raid vai <b>durar</b>",
+    "RU":"Как долго рейд будет идти?",
+    "NO":"Hvor lenge varer raidet?"
+  },
+  "lead_time_set_to":{  
+    "NL":"Doorlooptijd ingesteld op",
+    "DE":"Vorlaufzeit gesetzt auf",
+    "EN":"Lead time set to",
+    "IT":"Tempo principale impostato alle",
+    "PT-BR":"Tempo principal configurado para",
+    "RU":"Основное время установлено на",
+    "NO":"Ledetid er satt til"
+  },
+  "select_gym_name":{  
+    "NL":"Selecteer Gym:",
+    "DE":"Bitte Arena auswählen:",
+    "EN":"Select Gym:",
+    "IT":"Seleziona Palestra:",
+    "PT-BR":"Escolha o ginásio:",
+    "RU":"Выберите Гим:",
+    "NO":"Velg Gym:"
+  },
+  "here_we_go":{  
+    "NL":"Hier gaan we!",
+    "DE":"Los gehts!",
+    "EN":"Here we go!",
+    "IT":"Eccoci qui!",
+    "PT-BR":"Bora arrasar!",
+    "RU":"А вот и мы!",
+    "NO":"Kjør på!"
+  },
+  "create_a_raid":{  
+    "NL":"Maak een Raid",
+    "DE":"Raid anlegen",
+    "EN":"Create a Raid",
+    "IT":"Crea un Raid",
+    "PT-BR":"Criar a raid",
+    "RU":"Создать Рейд",
+    "NO":"Opprett raid"
+  },
+  "coordination_succes":{  
+    "NL":"Coördinatie geslaagd!",
+    "DE":"Koordinaten erfolgreich übermittelt!",
+    "EN":"Coordinates successfully submitted!",
+    "IT":"Coordinate inserite con successo!",
+    "PT-BR":"Coordenadas enviadas com sucesso!",
+    "RU":"Координаты успешно отправлены!",
+    "NO":"Koordinater ble lagt til!"
+  },
+  "update_raid_boss":{  
+    "NL":"Raid baas vernieuwen",
+    "DE":"Raid-Boss aktualisieren",
+    "EN":"Update raid boss",
+    "IT":"Aggiorna boss del Raid",
+    "PT-BR":"Atualizar Chefe da raid",
+    "RU":"Обновить рейд босса",
+    "NO":"Oppdater raid boss"
+  },
+  "update_pokemon":{  
+    "NL":"Pokemon vernieuwen",
+    "DE":"Pokemon aktualisieren",
+    "EN":"Update Pokemon",
+    "IT":"Aggiorna Pokémon",
+    "PT-BR":"Atualizar Pokemon",
+    "RU":"Обновить Покемона",
+    "NO":"Oppdater Pokemon"
+  },
+  "change_raid_duration":{  
+    "NL":"TRANSLATE",
+    "DE":"Raid-Dauer ändern",
+    "EN":"Change raid duration",
+    "IT":"TRANSLATE",
+    "PT-BR":"TRANSLATE",
+    "RU":"TRANSLATE",
+    "NO":"TRANSLATE"
+  },
+  "send_location":{  
+    "NL":"Of stuur me alsjeblieft een locatie.",
+    "DE":"Oder sende mir einen Standort.",
+    "EN":"Or send me a location.",
+    "IT":"O inviami una localizzazione.",
+    "PT-BR":"Por favor, antes me envie a localização.",
+    "RU":"Или отправить мне локацию",
+    "NO":"Eller send meg lokasjonen din ved å trykke på bindersen"
+  },
+  "raid_by_gym":{  
+    "NL":"Maak een raid door een Gym te selecteren:",
+    "DE":"Lege ein Raid per Arena-Auswahl an:",
+    "EN":"Make a raid per gym selection:",
+    "IT":"Crea un Raid per la Palestra selezionata:",
+    "PT-BR":"Ou escolha uma raid por ginásio:",
+    "RU":"Сделать рейд, выбрав гим:",
+    "NO":"Opprett raid ved å velge fra gym listen"
+  },
+  "red":{  
+    "NL":"rood",
+    "DE":"rot",
+    "EN":"red",
+    "IT":"rosso",
+    "PT-BR":"vermelho",
+    "RU":"красный",
+    "NO":"rød"
+  },
+  "yellow":{  
+    "NL":"geel",
+    "DE":"gelb",
+    "EN":"yellow",
+    "IT":"giallo",
+    "PT-BR":"amarelo",
+    "RU":"желтый",
+    "NO":"gul"
+  },
+  "blue":{  
+    "NL":"blauw",
+    "DE":"blau",
+    "EN":"blue",
+    "IT":"blu",
+    "PT-BR":"azul",
+    "RU":"синий",
+    "NO":"blå"
+  },
+  "gym_team_set_to":{  
+    "NL":"Gym Team gezet op:",
+    "DE":"Arena Team gesetzt auf:",
+    "EN":"Gym Team set to:",
+    "IT":"Team della Palestra impostato a:",
+    "PT-BR":"Time do ginásio escolhido para",
+    "RU":"Команду гима:",
+    "NO":"Gym Team endret til:"
+  },
+  "invalid_team":{  
+    "NL":"Ongeldige team naam: schrijf: Mystic, Valor, Instinct or Blauw, Rood, Geel ",
+    "DE":"Ungültiger Team Name - schreibe: Mystic, Valor, Instinct oder Blau, Rot, Gelb",
+    "EN":"Invalid team name - write: Mystic, Valor, Instinct or Blue, Red, Yellow ",
+    "IT":"Nome del Team non valido - scrivi: Saggezza, Valore, Istinto o Blu, Rosso, Giallo",
+    "PT-BR":"Nome de time inválido - escreva: Mystic, Valor, Instinct ou Blue, Red, Yellow",
+    "RU":"Неверное имя команд - напишите: Mystic, Valor, Instinct или Синий, Красный, Желтый",
+    "NO":"Ugyldig team navn - skriv: Mystic, Valor, Instinct or Blue, Red, Yellow"
+  },
+  "gym_name_updated":{  
+    "NL":"Gym naam aangepast.",
+    "DE":"Der Arena Name wurde aktualisiert.",
+    "EN":"Gym name updated.",
+    "IT":"Nome della Palestra aggiornato.",
+    "PT-BR":"Nome do ginásio atualizado.",
+    "RU":"Название гима обновлено.",
+    "NO":"Gym navn oppdatert."
+  },
+  "mods_details":{  
+    "NL":"Selecteer moderator voor meer informatie:",
+    "DE":"Für Details Moderator auswählen:",
+    "EN":"Select moderator for details:",
+    "PT-BR":"Escolha moderador para detalhes:",
+    "RU":"Выберите модератора для деталей:",
+    "NO":"Velg moderator for å vise detaljer"
+  },
+  "mods_add_new":{  
+    "NL":"Nieuwe moderator toevoegen:",
+    "DE":"Neuen Moderator hinzufügen:",
+    "EN":"Add new moderator:",
+    "IT":"Aggiungi nuovo moderatore:",
+    "PT-BR":"Adicionar novo moderador:",
+    "RU":"Добавить нового модератора:",
+    "NO":"Legg til ny moderator"
+  },
+  "mods_delete":{  
+    "NL":"Moderator verwijderen:",
+    "DE":"Moderator löschen:",
+    "EN":"Delete moderator:",
+    "IT":"Rimuovi moderatore:",
+    "PT-BR":"Excluir moderador:",
+    "RU":"Удалить модератора:",
+    "NO":"Slett moderator:"
+  },
+  "mods_list_of_all":{  
+    "NL":"Lijst met alle moderators.",
+    "DE":"Liste aller Moderatoren.",
+    "EN":"List of all moderators.",
+    "IT":"Lista di tutti i moderatori.",
+    "PT-BR":"Lista de todos os moderadores.",
+    "RU":"Список всех модераторов:",
+    "NO":"Lise over alle moderatorer"
+  },
+  "mods_list_add_delete":{  
+    "NL":"Lijst, toevoegen of verwijderen van moderators",
+    "DE":"Moderatoren anzeigen, hinzufügen oder löschen",
+    "EN":"List, add or remove moderators",
+    "IT":"Lista, aggiungi o rimuovi moderatori",
+    "PT-BR":"Listar, adicionar ou remover moderadores",
+    "RU":"Список, добавить или удалить модераторов",
+    "NO":"List, legg til eller fjern moderatorer"
+  },
+  "mods_not_found":{  
+    "NL":"Error! Geen Moderator of gebruiker gevonden!",
+    "DE":"Fehler! Keine Moderatoren oder Benutzer gefunden!",
+    "EN":"Error! No moderators or users found!",
+    "IT":"Errore! Nessun moderatore o utente trovato!",
+    "PT-BR":"Erro! Nenhum moderador ou usuário encontrado!",
+    "RU":"Ошибка! Нет модераторов или ползователей",
+    "NO":"Feil! Ingen moderator eller brukere funnet!"
+  },
+  "mods_saved_mod":{  
+    "NL":"Moderator opgeslagen!",
+    "DE":"Moderator gespeichert!",
+    "EN":"Moderator saved!",
+    "IT":"Moderatore salvato!",
+    "PT-BR":"Moderador salvo!",
+    "RU":"Модератор сохранен!",
+    "NO":"Moderator lagret!"
+  },
+  "mods_delete_mod":{  
+    "NL":"Moderator verwijderd!",
+    "DE":"Moderator gelöscht!",
+    "EN":"Moderator deleted!",
+    "IT":"Moderatore rimosso!",
+    "PT-BR":"Moderador excluído!",
+    "RU":"Модератор удален!",
+    "NO":"Moderator slettet!"
+  },
+  "mods_info_about_mod":{  
+    "NL":"Informatie over deze moderator:",
+    "DE":"Infos zum diesem Moderator:",
+    "EN":"Info about this moderator:",
+    "IT":"Informazioni su questo moderatore:",
+    "PT-BR":"Informações sobre esse moderador:",
+    "RU":"Информация о модераторе",
+    "NO":"Informasjon om denne moderatoren"
+  },
+  "overview_share":{  
+    "NL":"Overzicht delen",
+    "DE":"Übersicht teilen",
+    "EN":"Share overview",
+    "IT":"Condividi panoramica",
+    "PT-BR":"Detalhes de compartilhamento",
+    "RU":"Общий обзор",
+    "NO":"Del oversikt"
+  },
+  "overview_delete":{  
+    "NL":"Vewijder overzicht",
+    "DE":"Übersicht löschen",
+    "EN":"Delete overview",
+    "IT":"Elimina panoramica",
+    "PT-BR":"Deletar detalhes",
+    "RU":"Удалить обзор",
+    "NO":"Slett oversikt"
+  },
+  "raids_list_share_overview":{  
+    "NL":"Geef de actieve raid weer als een lijst of deel / verwijder het raid overzicht",
+    "DE":"Aktive Raids als Liste anzeigen oder die Raid-Übersicht pro Chat teilen / löschen",
+    "EN":"Show active raids as list or share / delete the raid overview per chat",
+    "IT":"Visualizza i Raid attivi come lista o condividi / elimina la panoramica del Raid via chat",
+    "PT-BR":"Mostrar raids ativas como lista ou compartilhar / deletar detalhes de raid por chat",
+    "RU":"Показать активные рейды списком или поделиться / удалить обзор рейда через чат",
+    "NO":"Vis aktive raid som liste eller del / slett raid oversikten per chat"
+  },
+  "list_all_active_raids":{  
+    "NL":"Alle actieve raids",
+    "DE":"Alle aktiven Raids",
+    "EN":"All active raids",
+    "IT":"Tutti i Raid attivi",
+    "PT-BR":"Todas as raids ativas",
+    "RU":"Все активные рейды",
+    "NO":"Alle aktive raid"
+  },
+  "list_all_overviews":{  
+    "NL":"Totaal raid overzicht",
+    "DE":"Alle Raid-Übersichten",
+    "EN":"All raid overviews",
+    "IT":"Tutte le panoramiche dei Raid",
+    "PT-BR":"Todos os detalhes de raid",
+    "RU":"Все активные обзоры",
+    "NO":"Alle raid oversikter"
+  },
+  "delete_raid_overview_for_chat":{  
+    "NL":"Verwijder raid overzicht voor",
+    "DE":"Raid-Übersicht löschen für",
+    "EN":"Delete raid overview for",
+    "IT":"Elimina la panoramica del Raid per",
+    "PT-BR":"Deletar detalhe de raid para",
+    "RU":"Удалить обзор рейда для",
+    "NO":"Slett raid oversikt for"
+  },
+  "no_overviews_found":{  
+    "NL":"Geen raid overzicht gevonden in het systeem!",
+    "DE":"Keine Raid-Übersichten im System gefunden!",
+    "EN":"No raid overviews found in the system!",
+    "IT":"Nessuna panoramica dei Raid trovata nel sistema!",
+    "PT-BR":"Nenhum detalhe de raid encontrado no sistema!",
+    "RU":"В системе нет обзора рейдов!",
+    "NO":"Ingen oppsummering funnet i systemet!"
+  },
+  "overview_successfully_deleted":{  
+    "NL":"Raid overzicht is succesvol verwijderd!",
+    "DE":"Raid-Übersicht wurde erfolgreich gelöscht!",
+    "EN":"Raid overview was successfully deleted!",
+    "IT":"Panoramica del Raid eliminata con successo!",
+    "PT-BR":"Detalhe de raid deletado com sucesso!",
+    "RU":"Обзор рейдов успешно удален!",
+    "NO":"Raid oppsummeringen ble slettet!"
+  },
+  "overview_deletion_was_canceled":{  
+    "NL":"Het verwijderen van het raid overzicht is gestopt!",
+    "DE":"Löschung der Raid-Übersicht wurde abgebrochen!",
+    "EN":"Deletion of the raid overview was canceled!",
+    "IT":"Elimimazione della panoramica del Raid cancellata!",
+    "PT-BR":"O deletamento dos detalhes da raid foi cancelado!",
+    "RU":"Удаление обзора рейда было отменено!",
+    "NO":"Sletting av raid oppsummeringen ble avbrutt!"
+  },
+  "raid_overview_for_chat":{  
+    "NL":"Raid overzicht voor",
+    "DE":"Raid-Übersicht für",
+    "EN":"Overview of raids for",
+    "IT":"Panoramica dei Raid per",
+    "PT-BR":"Detalhes de raids para",
+    "RU":"Обзор рейда для",
+    "NO":"Oppsummering av raid for"
+  },
+  "delete_this_raid":{  
+    "NL":"Verwijder deze raid?",
+    "DE":"Dieses Raid wirklich löschen?",
+    "EN":"Really delete this raid?",
+    "IT":"Vuoi veramente eliminare questo Raid?",
+    "PT-BR":"Realmente deletar esta raid?",
+    "RU":"Действительно удалить этот рейд?",
+    "NO":"Skal du virkelig slette raidet?"
+  },
+  "raid_deletion_was_canceled":{  
+    "NL":"Het verwijderen van het raid is gestopt!",
+    "DE":"Löschung des Raids wurde abgebrochen!",
+    "EN":"Deletion of the raid was canceled!",
+    "IT":"Eliminazione del Raid cancellata!",
+    "PT-BR":"O deletamento da raid foi cancelado!",
+    "RU":"Удаление рейда было отменено!",
+    "NO":"Sletting av raidet ble avbrutt!"
+  },
+  "raid_successfully_deleted":{  
+    "NL":"Raid is succesvol verwijderd!",
+    "DE":"Raid wurde erfolgreich gelöscht!",
+    "EN":"Raid was successfully deleted!",
+    "IT":"Raid eliminato con successo!",
+    "PT-BR":"Raid deletado com sucesso!",
+    "RU":"Рейд был успешно удален!",
+    "NO":"Raidet ble slettet"
+  },
+  "anytime":{  
+    "NL":"Elke tijd",
+    "DE":"Jederzeit",
+    "EN":"Anytime",
+    "IT":"In qualsiasi momento",
+    "PT-BR":"TRANSLATE",
+    "RU":"В любое время",
+    "NO":"Alle tider passer"
+  },
+  "any_pokemon":{  
+    "NL":"Elke raid baas",
+    "DE":"Jeder Raid-Boss",
+    "EN":"Any raid boss",
+    "IT":"Qualsiasi boss del Raid",
+    "PT-BR":"Qualquer chefe da raid",
+    "RU":"Любой рейд босс",
+    "NO":"Uansett raidboss"
+  }
+}
