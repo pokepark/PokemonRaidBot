@@ -152,15 +152,6 @@
     "RU":"Позже",
     "NO":"Sen"
   },
-  "done":{  
-    "NL":"Klaar",
-    "DE":"Fertig",
-    "EN":"Done",
-    "IT":"Completato",
-    "PT-BR":"Feito",
-    "RU":"Готово",
-    "NO":"Ferdig"
-  },
   "cancellation":{  
     "NL":"Afwezig",
     "DE":"Absage",

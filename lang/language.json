@@ -251,6 +251,15 @@
     "RU":"Вперед",
     "NO":"Neste"
   },
+  "done":{  
+    "NL":"Klaar",
+    "DE":"Fertig",
+    "EN":"Done",
+    "IT":"Completato",
+    "PT-BR":"Feito",
+    "RU":"Готово",
+    "NO":"Ferdig"
+  },
   "add":{  
     "NL":"Toevoegen",
     "DE":"Hinzufügen",
