@@ -141,7 +141,7 @@ if (isset($update['callback_query'])) {
         $message_id = $update['message']['message_id'];
 
 	// Get id from text.
-        $id = substr(strrchr($update['channel_post']['text'], substr(strtoupper(BOT_ID), 0, 1) . '-ID = '), 7);
+        $id = substr(strrchr($update['message']['text'], substr(strtoupper(BOT_ID), 0, 1) . '-ID = '), 7);
     }
 
     // Write cleanup info to database.
