@@ -12,7 +12,7 @@ $arg = $data['arg'];
 // Check for options.
 if (strpos($arg, ',') !== false)
 { 
-    $args = explode(",", $arg);
+    $args = explode(',', $arg);
     $pokemon_id = $args[0];
     $arg = $args[1];
     debug_log('More options got requested for raid duration!');
@@ -22,6 +22,7 @@ if (strpos($arg, ',') !== false)
 }
 // Set the id.
 $id = $data['id'];
+$gym_id = explode(',', $data['id'])[0];
 
 // Get level of pokemon
 $raid_level = '0';
@@ -32,11 +33,6 @@ debug_log('Pokemon raid level: ' . $raid_level);
 if($raid_level == 'X') {
     // Init empty keys array.
     $keys = [];
-
-    // Not sure if necessary, leaving as comment
-    // Timezone - maybe there's a more elegant solution as date_default_timezone_set?!
-    //$tz = TIMEZONE;
-    //date_default_timezone_set($tz);
 
     // Current month
     $current_month = date('Y-m', strtotime('now'));
@@ -162,7 +158,7 @@ if (!$keys) {
     // Add navigation keys.
     $nav_keys = [];
     $nav_keys[] = universal_inner_key($nav_keys, $back_id, $back_action, $back_arg, getTranslation('back'));
-    $nav_keys[] = universal_inner_key($nav_keys, '0', 'exit', '0', getTranslation('abort'));
+    $nav_keys[] = universal_inner_key($nav_keys, $gym_id, 'exit', '2', getTranslation('abort'));
     $nav_keys = inline_key_array($nav_keys, 2);
 
     // Merge keys.

@@ -30,7 +30,7 @@ if($count_id == 0) {
 // Count 3 means we received pokemon_id, starttime, optional argument and slot switch
 $pokemon_time = explode(',', $data['arg']);
 $opt_arg = 'new-raid';
-$slow_switch = 0;
+$slot_switch = 0;
 if($count_arg == 1) {
     $pokemon_id = $pokemon_time[0];
     $starttime = $pokemon_time[1];

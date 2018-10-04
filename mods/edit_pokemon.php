@@ -35,7 +35,7 @@ if (!$keys) {
     // Add navigation keys.
     $nav_keys = [];
     $nav_keys[] = universal_inner_key($nav_keys, $back_id, $back_action, $back_arg, getTranslation('back'));
-    $nav_keys[] = universal_inner_key($nav_keys, '0', 'exit', '0', getTranslation('abort'));
+    $nav_keys[] = universal_inner_key($nav_keys, $back_arg, 'exit', '2', getTranslation('abort'));
     $nav_keys = inline_key_array($nav_keys, 2);
 
     // Merge keys.

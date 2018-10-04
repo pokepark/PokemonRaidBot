@@ -22,12 +22,6 @@ $keys = [
     ],
     [
         [
-            'text'          => getTranslation('update_pokemon'),
-            'callback_data' => '0:pokedex:1'
-        ]
-    ],
-    [
-        [
             'text'          => getTranslation('pokedex_raid_pokemon'),
             'callback_data' => '0:pokedex_list_raids:0'
         ]

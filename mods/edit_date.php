@@ -17,6 +17,7 @@ if (!$admin_access) {
 
 // Set the id.
 $id = $data['id'];
+$gym_id = explode(',',$data['id'])[0];
 
 // Get the argument.
 $arg = $data['arg'];
@@ -115,7 +116,7 @@ if(substr_count($raid_time, '-') == 1 || substr_count($raid_time, '-') == 4) {
     $nav_keys[] = universal_inner_key($nav_keys, $back_id, $back_action, $back_arg, getTranslation('back'));
 }
 
-$nav_keys[] = universal_inner_key($nav_keys, '0', 'exit', '0', getTranslation('abort'));
+$nav_keys[] = universal_inner_key($nav_keys, $gym_id, 'exit', '2', getTranslation('abort'));
 $nav_keys = inline_key_array($nav_keys, 2);
 
 // Merge keys.

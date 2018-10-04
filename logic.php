@@ -229,13 +229,14 @@ function raid_duplication_check($gym_id,$start,$end)
     $rs = my_query(
         "
         SELECT     raids.*,
-                   gyms.lat, gyms.lon, gyms.address, gyms.gym_name,
+                   gyms.lat, gyms.lon, gyms.address, gyms.gym_name, gyms.show_gym,
                    UNIX_TIMESTAMP(end_time)                        AS ts_end,
                    UNIX_TIMESTAMP(start_time)                      AS ts_start
         FROM       raids
         LEFT JOIN  gyms
         ON         raids.gym_id = gyms.id
         WHERE      gyms.id = {$gym_id}
+        AND        gyms.show_gym = 1
 	ORDER BY   id DESC
 	LIMIT 1
         "
@@ -456,7 +457,7 @@ function get_local_pokemon_name($pokedex_id, $override_language = false, $type =
         $pokemon_name = $getTypeTranslation('egg_0');
 
     // Fallback 2: Get original pokemon name from database
-    } else if(empty($pokemon_name)) {
+    } else if(empty($pokemon_name) && $type == 'raid') {
         $rs = my_query(
                 "
                 SELECT    pokemon_name

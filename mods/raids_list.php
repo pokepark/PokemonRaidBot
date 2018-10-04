@@ -84,7 +84,9 @@ if($id != 0) {
     while ($raid = $rs->fetch_assoc()) {
         // Set text and keys.
         $text .= $raid['gym_name'] . CR;
-        $text .= get_local_pokemon_name($raid['pokemon']) . SP . '—' . SP . unix2tz($raid['ts_start'], $raid['timezone']) . SP . getTranslation('to') . SP . unix2tz($raid['ts_end'], $raid['timezone']) . CR . CR;
+        $raid_day = unix2tz($raid['ts_start'], $raid['timezone'], 'Y-m-d');
+        $today = unix2tz($raid['ts_now'], $raid['timezone'], 'Y-m-d');
+        $text .= get_local_pokemon_name($raid['pokemon']) . SP . '—' . SP . (($raid_day == $today) ? '' : ($raid_day . ', ')) . unix2tz($raid['ts_start'], $raid['timezone']) . SP . getTranslation('to') . SP . unix2tz($raid['ts_end'], $raid['timezone']) . CR . CR;
         $keys[] = array(
             'text'          => $raid['gym_name'],
             'callback_data' => $raid['id'] . ':raids_list:0'
@@ -100,6 +102,14 @@ if($id != 0) {
     } else {
         // Get the inline key array.
         $keys = inline_key_array($keys, 1);
+
+        // Add exit key.
+        $keys[] = [
+            [
+                'text'          => getTranslation('abort'),
+                'callback_data' => '0:exit:0'
+            ]
+        ];
 
         // Build message.
         $msg = '<b>' . getTranslation('list_all_active_raids') . ':</b>' . CR;

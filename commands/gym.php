@@ -18,7 +18,8 @@ if ($update['message']['chat']['type'] == 'private') {
     my_query(
         "
         UPDATE    gyms
-        SET       gym_name = '{$db->real_escape_string($gym_name)}'
+        SET       gym_name = '{$db->real_escape_string($gym_name)}',
+                  show_gym = 1
           WHERE   gym_name = '#{$update['message']['from']['id']}'
         ORDER BY  id DESC LIMIT 1
         "

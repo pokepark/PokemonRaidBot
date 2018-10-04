@@ -73,8 +73,11 @@ if ($update['callback_query']['message']['chat']['type'] == 'private') {
     $msg .= getTranslation('raid_saved') . CR;
     $msg .= show_raid_poll_small($raid) . CR;
 
+    // User_id tag.
+    $user_id_tag = '#' . $update['callback_query']['from']['id'];
+
     // Gym Name
-    if(!empty($raid['gym_name'])) {
+    if(!empty($raid['gym_name']) && ($raid['gym_name'] != $user_id_tag)) {
 	$msg .= getTranslation('set_gym_team') . CR2;
     } else {
         $msg .= getTranslation('set_gym_name_and_team') . CR2;
