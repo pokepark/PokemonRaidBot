@@ -49,7 +49,7 @@ if($count_arg == 1) {
 debug_log('count_id: ' . $count_id);
 debug_log('count_arg: ' . $count_arg);
 debug_log('opt_arg: ' . $opt_arg);
-debug_log('slot_switch: ' . $slow_switch);
+debug_log('slot_switch: ' . $slot_switch);
 
 // Create raid under the following conditions::
 // raid_id is 0, means we did not create it yet
