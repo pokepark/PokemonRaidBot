@@ -17,7 +17,7 @@ $keys = [
     [
         [
             'text'          => getTranslation('update_raid_boss'),
-            'callback_data' => '0:pokedex:0'
+            'callback_data' => '0:pokedex:1'
         ]
     ],
     [
