@@ -29,8 +29,8 @@ if ($raid_level != '0') {
     $keys = [
         [
             [
-                'text'          => 'Not supported',
-                'callback_data' => 'edit:not_supported'
+                'text'          => getTranslation('not_supported'),
+                'callback_data' => '0:exit:0'
             ]
         ]
     ];
