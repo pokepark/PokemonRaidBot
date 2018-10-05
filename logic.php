@@ -2506,7 +2506,7 @@ function get_overview($update, $chats_active, $raids_active, $action = 'refresh'
          * Level 5 Egg opens up 18:41h
         */
         // Gym name.
-        $msg .= $ex_gym ? $ex_raid_gym_marker : '';
+        $msg .= $ex_gym ? $ex_raid_gym_marker . SP : '';
         $msg .= !empty($chat_username) ? '<a href="https://t.me/' . $chat_username . '/' . $row['message_id'] . '">' . htmlspecialchars($gym) . '</a>' : $gym;
         $msg .= CR;
 
@@ -2698,7 +2698,7 @@ function show_raid_poll($raid)
         // Add gym name to message.
         if ($raid['gym_name']) {
             $ex_raid_gym_marker = (strtolower(RAID_EX_GYM_MARKER) == 'icon') ? EMOJI_STAR : '<b>' . RAID_EX_GYM_MARKER . '</b>';
-            $msg .= getRaidTranslation('gym') . ': ' . ($raid['ex_gym'] ? $ex_raid_gym_marker : '') . ' <b>' . $raid['gym_name'] . '</b>';
+            $msg .= getRaidTranslation('gym') . ': ' . ($raid['ex_gym'] ? $ex_raid_gym_marker . SP : '') . '<b>' . $raid['gym_name'] . '</b>';
         }
 
         // Add team to message.
