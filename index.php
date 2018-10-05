@@ -8,7 +8,7 @@ require_once(__DIR__ . '/core/class/geo_api.php');
 require_once(__DIR__ . '/logic.php');
 
 // Start logging.
-debug_log('RAID-BOT');
+debug_log("RAID-BOT '" . BOT_ID . "'");
 
 // Check API Key and get input from telegram
 include_once(CORECLASS_PATH . '/apikey.php');
