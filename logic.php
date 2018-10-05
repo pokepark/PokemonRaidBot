@@ -2770,7 +2770,7 @@ function show_raid_poll($raid)
             $msg .= ' ' . getRaidTranslation('raid_egg_opens_at') . ' ' . unix2tz($raid['ts_start'], $raid['timezone']);
         }
         // Add endtime
-        $msg .= SP . getTranslation('to') . SP . unix2tz($raid['ts_end'], $raid['timezone']) . '</b>' . CR;
+        $msg .= SP . getRaidTranslation('to') . SP . unix2tz($raid['ts_end'], $raid['timezone']) . '</b>' . CR;
 
     // Raid has started and active or already ended
     } else {
