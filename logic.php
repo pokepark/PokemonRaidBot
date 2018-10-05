@@ -2487,6 +2487,8 @@ function get_overview($update, $chats_active, $raids_active, $action = 'refresh'
         $pokemon = $raids_active[$raid_id]['pokemon'];
         $pokemon = get_local_pokemon_name($pokemon, true, 'raid');
         $gym = $raids_active[$raid_id]['gym_name'];
+        $ex_gym = $raids_active[$raid_id]['ex_gym'];
+        $ex_raid_gym_marker = (strtolower(RAID_EX_GYM_MARKER) == 'icon') ? EMOJI_STAR : '<b>' . RAID_EX_GYM_MARKER . '</b>';
         $now = $raids_active[$raid_id]['ts_now'];
         $tz = $raids_active[$raid_id]['timezone'];
         $start_time = $raids_active[$raid_id]['ts_start'];
@@ -2504,6 +2506,7 @@ function get_overview($update, $chats_active, $raids_active, $action = 'refresh'
          * Level 5 Egg opens up 18:41h
         */
         // Gym name.
+        $msg .= $ex_gym ? $ex_raid_gym_marker : '';
         $msg .= !empty($chat_username) ? '<a href="https://t.me/' . $chat_username . '/' . $row['message_id'] . '">' . htmlspecialchars($gym) . '</a>' : $gym;
         $msg .= CR;
 
