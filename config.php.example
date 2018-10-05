@@ -23,7 +23,7 @@ define('BOT_NAME',			'@RaidPokemonBot');
 define('BOT_ADMINS',			'');
 define('BOT_ACCESS',			'');
 
-// Languages: EN, DE, NL or PT-BR
+// Languages: EN, DE, NL, IT, NO, RU or PT-BR
 define('LANGUAGE',             		'EN');
 define('RAID_POLL_LANGUAGE', 		'EN');
 
