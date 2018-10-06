@@ -72,6 +72,17 @@ function bot_access_check($update, $access_type = BOT_ACCESS, $return_result = f
 		    debug_log('Positive result on access check!');
                     $allow_access = true;
                     break;
+                } else if (BOT_ALLOW_MEMBERS == true) {
+                    // Build chat arrays to check membership
+                    $member_chats = '';
+                    $member_chats = explode(',', BOT_ALLOW_MEMBERS_CHATS);
+                    $member_chats = array_unique($member_chats);
+                    // Allow access if being a member is enough
+                    if (in_array($chat, $member_chats) && $chat_obj['result']['user']['id'] == $update_id && $chat_obj['result']['status'] == 'member') {
+                        debug_log('Positive result on member access check!');
+                        $allow_access = true;
+                        break;
+                    }
                 }
             }
 	}
