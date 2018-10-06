@@ -28,7 +28,7 @@ if (!empty($answer)) {
     my_query(
         "
         UPDATE    attendance
-        SET       pokemon = {$data['arg']}
+        SET       pokemon = '{$data['arg']}'
           WHERE   raid_id = {$data['id']}
             AND   user_id = {$update['callback_query']['from']['id']}
         "

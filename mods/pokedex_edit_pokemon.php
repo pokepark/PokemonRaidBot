@@ -12,11 +12,6 @@ $pokedex_id = $data['id'];
 // Set the arg.
 $arg = $data['arg'];
 
-// Split pokedex_id and form
-$dex_id_form = explode('-',$pokedex_id);
-$dex_id = $dex_id_form[0];
-$dex_form = $dex_id_form[1];
-
 // Init empty keys array.
 $keys = [];
 
@@ -36,7 +31,7 @@ $keys = [
 
 // Raid-Egg? Hide specific options!
 $eggs = $GLOBALS['eggs'];
-if(!in_array($dex_id, $eggs)) {
+if(!in_array($pokedex_id, $eggs)) {
     $keys_cp_weather = [
         [  
             [

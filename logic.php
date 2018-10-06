@@ -517,7 +517,7 @@ function get_local_pokemon_name($pokemon_id_form, $override_language = false, $t
     $eggs = $GLOBALS['eggs'];
 
     // Get eggs from normal translation.
-    if(in_array($pokedex_id, $eggs)) {
+    if(in_array($pokemon_id_form, $eggs)) {
         $pokemon_name = $getTypeTranslation('egg_' . substr($pokedex_id, -1));
     } else if ($pokemon_form != 0) { 
         $pokemon_name = $getTypeTranslation('pokemon_id_' . $pokedex_id) . SP . $getTypeTranslation('pokemon_form_' . $pokemon_form);
