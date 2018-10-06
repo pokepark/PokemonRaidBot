@@ -9,6 +9,14 @@ debug_log('pokedex_edit_pokemon()');
 // Set the id.
 $pokedex_id = $data['id'];
 
+// Set the arg.
+$arg = $data['arg'];
+
+// Split pokedex_id and form
+$dex_id_form = explode('-',$pokedex_id);
+$dex_id = $dex_id_form[0];
+$dex_form = $dex_id_form[1];
+
 // Init empty keys array.
 $keys = [];
 
@@ -28,7 +36,7 @@ $keys = [
 
 // Raid-Egg? Hide specific options!
 $eggs = $GLOBALS['eggs'];
-if(!in_array($pokedex_id, $eggs)) {
+if(!in_array($dex_id, $eggs)) {
     $keys_cp_weather = [
         [  
             [
@@ -77,14 +85,22 @@ $keys[] = [
     ]
 ];
 
-// Build callback message string.
-$callback_response = 'OK';
-
-// Answer callback.
-answerCallbackQuery($update['callback_query']['id'], $callback_response);
+// Send message.
+if($arg == 'id-or-name') {
+    // Send message.
+    send_message($update['message']['chat']['id'], $msg, $keys, ['reply_markup' => ['selective' => true, 'one_time_keyboard' => true]]);
 
 // Edit message.
-edit_message($update, $msg, $keys, false);
+} else {
+    // Build callback message string.
+    $callback_response = 'OK';
+
+    // Answer callback.
+    answerCallbackQuery($update['callback_query']['id'], $callback_response);
+
+    // Edit message.
+    edit_message($update, $msg, $keys, false);
+}
 
 // Exit.
 exit();
