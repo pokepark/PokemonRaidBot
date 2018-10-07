@@ -2086,9 +2086,9 @@ function keys_vote($raid)
 
             // Add key for each raid level
             while ($pokemon = $rs->fetch_assoc()) {
-                if(in_array($pokemon['pokedex_id'], $eggs)) continue;
+                if(in_array($pokemon['pokedex_id'] . '-' . $pokemon['pokemon_form'], $eggs)) continue;
                 $buttons_pokemon[] = array(
-                    'text'          => get_local_pokemon_name($pokemon['pokedex_id'] . '-' . $pokemon['pokemon_form']),
+                    'text'          => get_local_pokemon_name($pokemon['pokedex_id'] . '-' . $pokemon['pokemon_form'], true, 'raid'),
                     'callback_data' => $raid['id'] . ':vote_pokemon:' . $pokemon['pokedex_id'] . '-' . $pokemon['pokemon_form']
                 );
 
@@ -2106,6 +2106,9 @@ function keys_vote($raid)
 
                 // Finally add pokemon to keys
                 $buttons_pokemon = inline_key_array($buttons_pokemon, 3);
+            } else {
+                // Reset pokemon buttons.
+                $buttons_pokemon = [];
             }
         }
 
