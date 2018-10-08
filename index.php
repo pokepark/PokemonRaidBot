@@ -1,127 +1,32 @@
 <?php
-// Set error reporting in debug mode.
-if ('DEBUG' === true) {
-    error_reporting(E_ALL ^ E_NOTICE);
-}
-
-// Tell telegram 'OK'
-http_response_code(200);
-
-// Get current unix timestamp as float.
-$start = microtime(true);
-
 // Include files.
-require_once('config.php');
-require_once('core/class/debug.php');
-require_once('core/class/functions.php');
-require_once('constants.php');
-require_once('logic.php');
-require_once('core/class/geo_api.php');
+require_once(__DIR__ . '/config.php');
+require_once(__DIR__ . '/core/class/constants.php');
+require_once(__DIR__ . '/core/class/debug.php');
+require_once(__DIR__ . '/core/class/functions.php');
+require_once(__DIR__ . '/core/class/geo_api.php');
+require_once(__DIR__ . '/logic.php');
 
-// Get api key from get parameters.
-$apiKey = $_GET['apikey'];
+// Start logging.
+debug_log("RAID-BOT '" . BOT_ID . "'");
 
-// Check if hashed api key is matching config.
-if (hash('sha512', $apiKey) == strtolower(CONFIG_HASH)) {
-    // Split the api key.
-    $splitKey = explode(':', $apiKey);
-
-    // Set constants.
-    define('API_KEY', $apiKey);
-
-// Api key is wrong!
-} else {
-    // Echo data.
-    sendMessageEcho(MAINTAINER_ID, $_SERVER['REMOTE_ADDR'] . ' ' . isset($_SERVER['HTTP_X_FORWARDED_FOR']) . ' ' . $apiKey);
-    // And exit script.
-    exit();
-}
-
-// Get content from POST data.
-$content = file_get_contents('php://input');
-
-// Decode the json string.
-$update = json_decode($content, true);
+// Check API Key and get input from telegram
+include_once(CORECLASS_PATH . '/apikey.php');
 
 // DDOS protection
-if (isset($update['callback_query'])) {
-    // Init empty data array.
-    $data = array();
-    // Get callback query data
-    if ($update['callback_query']['data']) {
-        // Split callback data and assign to data array.
-        $splitData = explode(':', $update['callback_query']['data']);
-        $splitAction = explode('_', $splitData[1]);
-        $action = $splitAction[0];
-        // Check the 
-        if ($action == 'vote') {
-            // Get the user_id and set the related ddos file
-            $ddos_id = $update['callback_query']['from']['id'];
-            $ddos_file = (DDOS_PATH . '/' . $ddos_id);
-            // Check if ddos file exists and is not empty
-            if (file_exists($ddos_file) && filesize($ddos_file) > 0) {
-                // Get current time and last modification time of file
-                $now = date("YmdHi");
-                $lastchange = date("YmdHi", filemtime($ddos_file));
-                // Get DDOS count or rest DDOS count if new minute
-                if ($now == $lastchange) {
-                    // Get DDOS count from file
-                    $ddos_count = file_get_contents($ddos_file);
-                    $ddos_count = $ddos_count + 1;
-                // Reset DDOS count to 1
-                } else {
-                    $ddos_count = 1;
-                }
-                // Exit if DDOS of user_id count is exceeded.
-                if ($ddos_count > DDOS_MAXIMUM) {
-                    exit();
-                // Update DDOS count in file
-                } else {
-                    file_put_contents($ddos_file, $ddos_count);
-                }
-            // Create file with initial DDOS count
-            } else {
-                $ddos_count = 1;
-                file_put_contents($ddos_file, $ddos_count);
-            }
-        }
-    }
-}
+include_once(CORECLASS_PATH . '/ddos.php');
 
-// Get language from user - otherwise use language from config.
-if (LANGUAGE == '') {
-    // Message or callback?
-    if(isset($update['message']['from']['language_code'])) {
-        $language_code = $update['message']['from']['language_code'];
-    } else if(isset($update['callback_query']['from']['language_code'])) {
-        $language_code = $update['callback_query']['from']['language_code'];
-    } else {
-        $language_code = LANGUAGE;
-    }
-
-    // Get and define userlanguage.
-    $userlanguage = get_user_language($language_code);
-    define('USERLANGUAGE', $userlanguage);
-} else {
-    // Set user language to language from config.
-    define('USERLANGUAGE', LANGUAGE);
-}
+// Get language
+include_once(CORECLASS_PATH . '/language.php');
 
 // Update var is false.
+$log_prefix = '<';
 if (!$update) {
-    // Write to log.
-    debug_log($content, '!');
-
-} else {
-    // Write to log.
-    debug_log($update, '<');
+    $log_prefix = '!';
 }
 
-// Init command.
-$command = NULL;
-
-$dbh = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4", DB_USER, DB_PASSWORD, array( PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION ));
-$dbh->setAttribute( PDO::ATTR_ORACLE_NULLS, PDO::NULL_EMPTY_STRING );
+// Write to log.
+debug_log($update, $log_prefix);
 
 // Establish mysql connection.
 $db = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
@@ -133,62 +38,50 @@ if ($db->connect_errno) {
     debug_log("Failed to connect to Database!" . $db->connect_error(), '!');
     // Echo data.
     sendMessage($update['message']['chat']['id'], "Failed to connect to Database!\nPlease contact " . MAINTAINER . " and forward this message...\n");
+    // Exit.
+    exit();
 }
 
-// Cleanup request received.
-if (isset($update['cleanup']) && CLEANUP == true) {
-    cleanup_log('Cleanup process request received...');
-    // Check access to cleanup of bot
-    if ($update['cleanup']['secret'] == CLEANUP_SECRET) {
-	// Get telegram cleanup value if specified.
-        if (isset($update['cleanup']['telegram'])) {
-	    $telegram = $update['cleanup']['telegram'];
-	} else {
-	    $telegram = 2;
-	}
-	// Get database cleanup value if specified.
-        if (isset($update['cleanup']['database'])) {
-	    $database = $update['cleanup']['database'];
-	} else {
-	    $database = 2;
-	}
-        // Run cleanup based on type
-        $cleanup_type = $update['cleanup']['type'];
-        cleanup_log('Calling ' . $cleanup_type . ' cleanup process now!');
-        run_raids_cleanup($telegram, $database);
-    } else {
-        cleanup_log('Error! Wrong cleanup secret supplied!', '!');
-    }
-    // Exit after cleanup
-    exit();
-} 
+// Run cleanup if requested
+include_once(CORECLASS_PATH . '/cleanup_run.php');
 
-// Update the user.
-$userUpdate = update_user($update);
+// Update the user
+if ($ddos_count == 0 || $ddos_count > 2) {
+    // Update the user.
+    $userUpdate = update_user($update);
 
-// Write to log.
-debug_log('Update user: ' . $userUpdate);
+    // Write to log.
+    debug_log('Update user: ' . $userUpdate);
+}
 
 // Callback query received.
 if (isset($update['callback_query'])) {
     // Init empty data array.
-    $data = array();
+    $data = [];
 
     // Callback data found.
     if ($update['callback_query']['data']) {
+        // Split bot folder name away from actual data.
+        $botnameData = explode(':', $update['callback_query']['data'], 2);
+        $botname = $botnameData[0];
+        $thedata = $botnameData[1];
+
+        // Write to log
+        debug_log('Bot Name: ' . $botname);
+        debug_log('The Data: ' . $thedata);
+
         // Split callback data and assign to data array.
-        $splitData = explode(':', $update['callback_query']['data']);
+        $splitData = explode(':', $thedata);
         $data['id']     = $splitData[0];
         $data['action'] = $splitData[1];
         $data['arg']    = $splitData[2];
     }
 
     // Write data to log.
-    debug_log('DATA=');
-    debug_log($data);
+    debug_log($data, '* DATA= ');
 
     // Set module path by sent action name.
-    $module = 'mods/' . basename($data['action']) . '.php';
+    $module = ROOT_PATH . '/mods/' . basename($data['action']) . '.php';
 
     // Write module to log.
     debug_log($module);
@@ -218,9 +111,9 @@ if (isset($update['callback_query'])) {
     // Check access to the bot
     bot_access_check($update);
 
-        // Create raid and exit.
+    // Create raid and exit.
     if(RAID_VIA_LOCATION == true) {
-        include_once(ROOT_PATH . '/mods/raid_create.php');
+        include_once(ROOT_PATH . '/mods/raid_by_location.php');
     }
     exit();
 
@@ -228,9 +121,9 @@ if (isset($update['callback_query'])) {
 } else if ((isset($update['channel_post']) && $update['channel_post']['chat']['type'] == "channel") || (isset($update['message']) && $update['message']['chat']['type'] == "supergroup")) {
     // Write to log.
     debug_log('Collecting cleanup preparation information...');
-    // Init raid_id and quest_id.
-    $raid_id = 0;
-    $quest_id = 0;
+
+    // Init ID.
+    $id = 0;
 
     // Channel 
     if(isset($update['channel_post'])) {
@@ -238,19 +131,8 @@ if (isset($update['callback_query'])) {
         $chat_id = $update['channel_post']['chat']['id'];
         $message_id = $update['channel_post']['message_id'];
 
-        // Get ID type (raid or quest) to get ID afterwards.
-        $id_pos = strrpos($update['channel_post']['text'], '-ID = ');
-        $id_type = ($id_pos === false) ? ('0') : (substr($update['channel_post']['text'], ($id_pos - 1), 1));
-
-	// Get raid_id from text.
-        if($id_type == 'R') {
-            $raid_id = substr(strrchr($update['channel_post']['text'], 'R-ID = '), 7);
-        }
-
-        // Get quest_id from text.
-        if($id_type == 'Q') {
-            $quest_id = substr(strrchr($update['channel_post']['text'], 'Q-ID = '), 7);
-        }
+	// Get id from text.
+        $id = substr(strrchr($update['channel_post']['text'], substr(strtoupper(BOT_ID), 0, 1) . '-ID = '), 7);
 
     // Supergroup
     } else if ($update['message']['chat']['type'] == "supergroup") {
@@ -258,58 +140,56 @@ if (isset($update['callback_query'])) {
         $chat_id = $update['message']['chat']['id'];
         $message_id = $update['message']['message_id'];
 
-        // Get ID type (raid or quest) to get ID afterwards.
-        $id_pos = strrpos($update['message']['text'], '-ID = ');
-        $id_type = ($id_pos === false) ? ('0') : (substr($update['message']['text'], ($id_pos - 1), 1));
-
-        // Get raid_id from text.
-        if($id_type == 'R') {
-            $raid_id = substr(strrchr($update['message']['text'], 'R-ID = '), 7);
-        }
-
-        // Get quest_id from text.
-        if($id_type == 'Q') {
-            $quest_id = substr(strrchr($update['message']['text'], 'Q-ID = '), 7);
-        }
+	// Get id from text.
+        $id = substr(strrchr($update['message']['text'], substr(strtoupper(BOT_ID), 0, 1) . '-ID = '), 7);
     }
 
     // Write cleanup info to database.
     debug_log('Calling cleanup preparation now!');
-    if($raid_id != 0) {
-        insert_raid_cleanup($chat_id, $message_id, $raid_id);
-    } else if($quest_id != 0) {
-        insert_quest_cleanup($chat_id, $message_id, $quest_id);
+    if($id != 0) {
+        insert_cleanup($chat_id, $message_id, $id);
     }
     exit();
 
 // Message is required to check for commands.
-} else if (isset($update['message']) && $update['message']['chat']['type'] == 'private') {
+} else if (isset($update['message']) && ($update['message']['chat']['type'] == 'private' || $update['message']['chat']['type'] == 'channel')) {
     // Check access to the bot
     bot_access_check($update);
+
+    // Init command.
+    $command = NULL;
+
     // Check message text for a leading slash.
     if (substr($update['message']['text'], 0, 1) == '/') {
         // Get command name.
         $com = strtolower(str_replace('/', '', str_replace(BOT_NAME, '', explode(' ', $update['message']['text'])[0])));
-/*        if ( $com == 'start' ) {
-          
-          include_once(ROOT_PATH . '/mods/raid_by_gym_letter.php');
-          exit();
-        } */
+        $altcom = strtolower(str_replace('/' . basename(ROOT_PATH), '', str_replace(BOT_NAME, '', explode(' ', $update['message']['text'])[0])));
 
-        // Set command path.
+        // Set command paths.
         $command = ROOT_PATH . '/commands/' . basename($com) . '.php';
+        $altcommand = ROOT_PATH . '/commands/' . basename($altcom) . '.php';
+        $startcommand = ROOT_PATH . '/commands/start.php';
 
         // Write to log.
-        debug_log($command);
+        debug_log('Command-File: ' . $command);
+        debug_log('Alternative Command-File: ' . $altcommand);
+        debug_log('Start Command-File: ' . $startcommand);
 
         // Check if command file exits.
-        if (file_exists($command)) {
+        if (is_file($command)) {
             // Dynamically include command file and exit.
             include_once($command);
             exit();
+        } else if (is_file($altcommand)) {
+            // Dynamically include command file and exit.
+            include_once($altcommand);
+            exit();
+        } else if ($com == basename(ROOT_PATH)) {
+            // Include start file and exit.
+            include_once($startcommand);
+            exit();
+        } else {
+            sendMessage($update['message']['chat']['id'], '<b>' . getTranslation('not_supported') . '</b>');
         }
-
-        // Echo bot response.
-        sendMessage($update['message']['chat']['id'], '<b>' . getTranslation('send_location') . '</b>');
     }
 }

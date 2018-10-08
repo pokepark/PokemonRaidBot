@@ -1,0 +1,353 @@
+{  
+  "weekday_1":{  
+    "NL":"Maandag",
+    "DE":"Montag",
+    "EN":"Monday",
+    "IT":"Lunedì",
+    "PT-BR":"Segunda-feira",
+    "RU":"Понедельник",
+    "NO":"Mandag"
+  },
+  "weekday_2":{  
+    "NL":"Dinsdag",
+    "DE":"Dienstag",
+    "EN":"Tuesday",
+    "IT":"Martedì",
+    "PT-BR":"Terça-feira",
+    "RU":"Вторник",
+    "NO":"Tirsdag"
+  },
+  "weekday_3":{  
+    "NL":"Woensdag",
+    "DE":"Mittwoch",
+    "EN":"Wednesday",
+    "IT":"Mercoledì",
+    "PT-BR":"Quarta-feira",
+    "RU":"Среда",
+    "NO":"Onsdag"
+  },
+  "weekday_4":{  
+    "NL":"Donderdag",
+    "DE":"Donnerstag",
+    "EN":"Thursday",
+    "IT":"Giovedì",
+    "PT-BR":"Quinta-feira",
+    "RU":"Четверг",
+    "NO":"Torsdag"
+  },
+  "weekday_5":{  
+    "NL":"Vrijdag",
+    "DE":"Freitag",
+    "EN":"Friday",
+    "IT":"Venerdì",
+    "PT-BR":"Sexta-feira",
+    "RU":"Пятница",
+    "NO":"Fredag"
+  },
+  "weekday_6":{  
+    "NL":"Zaterdag",
+    "DE":"Samstag",
+    "EN":"Saturday",
+    "IT":"Sabato",
+    "PT-BR":"Sábado",
+    "RU":"Суббота",
+    "NO":"Lørdag"
+  },
+  "weekday_7":{  
+    "NL":"Zondag",
+    "DE":"Sonntag",
+    "EN":"Sunday",
+    "IT":"Domenica",
+    "PT-BR":"Domingo",
+    "RU":"Воскресение",
+    "NO":"Søndag"
+  },
+  "month_01":{  
+    "NL":"Januari",
+    "DE":"Januar",
+    "EN":"January",
+    "IT":"Gennaio",
+    "PT-BR":"Janeiro",
+    "RU":"Январь",
+    "NO":"Januar"
+  },
+  "month_02":{  
+    "NL":"Februari",
+    "DE":"Februar",
+    "EN":"February",
+    "IT":"Febbraio",
+    "PT-BR":"Fevereiro",
+    "RU":"Февраль",
+    "NO":"Februar"
+  },
+  "month_03":{  
+    "NL":"Maart",
+    "DE":"März",
+    "EN":"March",
+    "IT":"Marzo",
+    "PT-BR":"Março",
+    "RU":"Март",
+    "NO":"Mars"
+  },
+  "month_04":{  
+    "NL":"April",
+    "DE":"April",
+    "EN":"April",
+    "IT":"Aprile",
+    "PT-BR":"Abril",
+    "RU":"Апрель",
+    "NO":"April"
+  },
+  "month_05":{  
+    "NL":"Mei",
+    "DE":"Mai",
+    "EN":"May",
+    "IT":"Maggio",
+    "PT-BR":"Mais",
+    "RU":"Май",
+    "NO":"Mai"
+  },
+  "month_06":{  
+    "NL":"Juni",
+    "DE":"Juni",
+    "EN":"June",
+    "IT":"Giugno",
+    "PT-BR":"Junho",
+    "RU":"Июнь",
+    "NO":"Juni"
+  },
+  "month_07":{  
+    "NL":"Juli",
+    "DE":"Juli",
+    "EN":"July",
+    "IT":"Luglio",
+    "PT-BR":"Julho",
+    "RU":"Июль",
+    "NO":"Juli"
+  },
+  "month_08":{  
+    "NL":"Augustus",
+    "DE":"August",
+    "EN":"August",
+    "IT":"Agosto",
+    "PT-BR":"Agosto",
+    "RU":"Август",
+    "NO":"August"
+  },
+  "month_09":{  
+    "NL":"September",
+    "DE":"September",
+    "EN":"September",
+    "IT":"Settembre",
+    "PT-BR":"Setembro",
+    "RU":"Сентябрь",
+    "NO":"September"
+  },
+  "month_10":{  
+    "NL":"Oktober",
+    "DE":"Oktober",
+    "EN":"October",
+    "IT":"Ottobre",
+    "PT-BR":"Outubro",
+    "RU":"Октябрь",
+    "NO":"Oktober"
+  },
+  "month_11":{  
+    "NL":"November",
+    "DE":"November",
+    "EN":"November",
+    "IT":"Novembre",
+    "PT-BR":"Novembro",
+    "RU":"Ноябрь",
+    "NO":"November"
+  },
+  "month_12":{  
+    "NL":"December",
+    "DE":"Dezember",
+    "EN":"December",
+    "IT":"Dicembre",
+    "PT-BR":"Dezembro",
+    "RU":"Декабрь",
+    "NO":"Desember"
+  },
+  "bot_access_denied":{  
+    "NL":"Je hebt geen toegang tot deze functie of bot!",
+    "DE":"Sie haben keine Berechtigung diesen Befehl oder Bot zu nutzen!",
+    "EN":"You are not allowed to use this command or bot!",
+    "IT":"Non hai i permessi necessari per usare questo comando o bot!",
+    "PT-BR":"Você não tem permissão para utilizar esse comando ou bot!",
+    "RU":"Вы не можете использовать эту команду или бота!",
+    "NO":"Du har ikke tillatelse til å bruke denne kommandoen eller boten!"
+  },
+  "forest":{  
+    "NL":"Ergens in het bos",
+    "DE":"Irgendwo im Wald",
+    "EN":"Somewhere in the forest",
+    "IT":"Da qualche parte nella foresta",
+    "PT-BR":"Em algum lugar na floresta",
+    "RU":"Где-то в лесу",
+    "NO":"Ett sted i skogen"
+  },
+  "yes":{  
+    "NL":"Ja",
+    "DE":"Ja",
+    "EN":"Yes",
+    "IT":"Sì",
+    "PT-BR":"Sim",
+    "RU":"Да",
+    "NO":"Ja"
+  },
+  "no":{  
+    "NL":"Nee",
+    "DE":"Nein",
+    "EN":"No",
+    "IT":"No",
+    "PT-BR":"Não",
+    "RU":"Нет",
+    "NO":"Nei"
+  },
+  "not_supported":{  
+    "NL":"Niet ondersteund",
+    "DE":"Nicht unterstützt",
+    "EN":"Not supported",
+    "IT":"Non compatibile",
+    "PT-BR":"Não compatível",
+    "RU":"Не поддерживается",
+    "NO":"Ikke støttet"
+  },
+  "abort":{  
+    "NL":"Afbreken",
+    "DE":"Abbrechen",
+    "EN":"Abort",
+    "IT":"Cancella",
+    "PT-BR":"Abortar",
+    "RU":"Прервать",
+    "NO":"Avbryt"
+  },
+  "action_aborted":{  
+    "NL":"Het proces is afgebroken!",
+    "DE":"Der Vorgang wurde abgebrochen!",
+    "EN":"The process was aborted!",
+    "IT":"Il processo è stato cancellato!",
+    "PT-BR":"O processo foi abortado!",
+    "RU":"Процесс был прерван!",
+    "NO":"Handlingen ble avbrutt!"
+  },
+  "back":{  
+    "NL":"Terug",
+    "DE":"Zurück",
+    "EN":"Back",
+    "IT":"Precedente",
+    "PT-BR":"Voltar",
+    "RU":"Назад",
+    "NO":"Tilbake"
+  },
+  "next":{  
+    "NL":"Volgende",
+    "DE":"Weiter",
+    "EN":"Next",
+    "IT":"Successivo",
+    "PT-BR":"Próximo",
+    "RU":"Вперед",
+    "NO":"Neste"
+  },
+  "done":{  
+    "NL":"Klaar",
+    "DE":"Fertig",
+    "EN":"Done",
+    "IT":"Completato",
+    "PT-BR":"Feito",
+    "RU":"Готово",
+    "NO":"Ferdig"
+  },
+  "add":{  
+    "NL":"Toevoegen",
+    "DE":"Hinzufügen",
+    "EN":"Add",
+    "IT":"Aggiungi",
+    "PT-BR":"Adicionar",
+    "RU":"Добавить",
+    "NO":"Legg til"
+  },
+  "delete":{  
+    "NL":"Verwijder",
+    "DE":"Löschen",
+    "EN":"Delete",
+    "IT":"Elimina",
+    "PT-BR":"Deletar",
+    "RU":"Удалить",
+    "NO":"Slett"
+  },
+  "list":{  
+    "NL":"Lijst",
+    "DE":"Anzeigen",
+    "EN":"List",
+    "IT":"Lista",
+    "PT-BR":"Lista",
+    "RU":"Список",
+    "NO":"List"
+  },
+  "reset":{  
+    "NL":"Reset",
+    "DE":"Reset",
+    "EN":"Reset",
+    "IT":"Reset",
+    "PT-BR":"TRANSLATE",
+    "RU":"Сброс",
+    "NO":"Reset"
+  },
+  "created_by":{  
+    "NL":"Aangemaakt door",
+    "DE":"Erstellt von",
+    "EN":"Created by",
+    "IT":"Creato da",
+    "PT-BR":"Criada por",
+    "RU":"Создано",
+    "NO":"Postet av"
+  },
+  "updated":{  
+    "NL":"Bijgewerkt",
+    "DE":"Aktualisiert",
+    "EN":"Updated",
+    "IT":"Aggiornato",
+    "PT-BR":"Atualizada",
+    "RU":"Обновлено",
+    "NO":"Oppdatert"
+  },
+  "share":{  
+    "NL":"Delen",
+    "DE":"Teilen",
+    "EN":"Share",
+    "IT":"Condividi",
+    "PT-BR":"Compartilhar",
+    "RU":"Поделиться",
+    "NO":"Del"
+  },
+  "share_with":{  
+    "NL":"Delen met",
+    "DE":"Teilen mit",
+    "EN":"Share with",
+    "IT":"Condividi con",
+    "PT-BR":"Compartilhar com",
+    "RU":"Поделиться с",
+    "NO":"Del med"
+  },
+  "successfully_shared":{
+    "NL":"Succesvol gedeeld!",
+    "DE":"Erfolgreich geteilt!",
+    "EN":"Successfully shared!",
+    "IT":"Condiviso con successo!",
+    "PT-BR":"Compartilhado com sucesso!",
+    "RU":"Успешно отправлено!",
+    "NO":"Deling velykket!"
+  },
+  "expand":{  
+    "NL":"Uitklappen",
+    "DE":"Ausklappen",
+    "EN":"Expand",
+    "IT":"Espandi",
+    "PT-BR":"Expandir",
+    "RU":"Развернуть",
+    "NO":"Flere valg"
+  }
+}

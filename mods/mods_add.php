@@ -24,17 +24,17 @@ if ($update['callback_query']['message']['chat']['type'] == 'private') {
     $msg .= '<b>' . getTranslation('mods_saved_mod') . '</b>' . CR . CR;
     $msg .= get_user($user_id);
 
-    // Create the keys.
-    $keys = [];
-
-    // Edit message.
-    edit_message($update, $msg, $keys, false);
-
     // Build callback message string.
     $callback_response = getTranslation('mods_saved_mod');
 
     // Answer callback.
     answerCallbackQuery($update['callback_query']['id'], $callback_response);
+
+    // Create the keys.
+    $keys = [];
+
+    // Edit message.
+    edit_message($update, $msg, $keys, false);
 }
 
 exit();

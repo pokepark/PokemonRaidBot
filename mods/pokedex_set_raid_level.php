@@ -12,6 +12,11 @@ $pokedex_id = $data['id'];
 // Get the raid level.
 $arg = $data['arg'];
 
+// Split pokedex_id and form
+$dex_id_form = explode('-',$pokedex_id);
+$dex_id = $dex_id_form[0];
+$dex_form = $dex_id_form[1];
+
 // Set raid level or show raid levels?
 if($data['arg'] == "setlevel") {
     // Get raid levels from database.
@@ -39,7 +44,7 @@ if($data['arg'] == "setlevel") {
     $raid_levels = explode("','", $raid_levels);
 
     // Init empty keys array.
-    $keys = array();
+    $keys = [];
 
     // Create keys array.
     foreach($raid_levels as $lv) {
@@ -67,7 +72,7 @@ if($data['arg'] == "setlevel") {
     $callback_response = getTranslation('select_raid_level');
 
     // Set the message.
-    $msg = getTranslation('raid_boss') . ': <b>' . get_local_pokemon_name($pokedex_id) . ' (#' . $pokedex_id . ')</b>' . CR;
+    $msg = getTranslation('raid_boss') . ': <b>' . get_local_pokemon_name($pokedex_id) . ' (#' . $dex_id . ')</b>' . CR;
     $old_raid_level = get_raid_level($pokedex_id);
     $msg .= getTranslation('pokedex_current_raid_level') . ' ' . getTranslation($old_raid_level . 'stars') . CR . CR;
     $msg .= '<b>' . getTranslation('pokedex_new_raid_level') . ':</b>';
@@ -77,12 +82,13 @@ if($data['arg'] == "setlevel") {
             "
             UPDATE    pokemon
             SET       raid_level = '{$arg}'
-            WHERE     pokedex_id = {$pokedex_id}
+            WHERE     pokedex_id = {$dex_id}
+            AND       pokemon_form = {$dex_form}
             "
         );
 
     // Init empty keys array.
-    $keys = array();
+    $keys = [];
 
     // Back to pokemon and done keys.
     $keys = [
@@ -103,14 +109,16 @@ if($data['arg'] == "setlevel") {
 
     // Set the message.
     $msg = getTranslation('pokemon_saved') . CR;
-    $msg .= '<b>' . get_local_pokemon_name($pokedex_id) . ' (#' . $pokedex_id . ')</b>' . CR . CR;
+    $msg .= '<b>' . get_local_pokemon_name($pokedex_id) . ' (#' . $dex_id . ')</b>' . CR . CR;
     $msg .= getTranslation('pokedex_new_raid_level') . ':' . CR;
     $msg .= '<b>' . getTranslation($arg . 'stars') . '</b>';
 }
 
+// Answer callback.
+answerCallbackQuery($update['callback_query']['id'], $callback_response);
 
 // Edit message.
 edit_message($update, $msg, $keys, false);
 
-// Answer callback.
-answerCallbackQuery($update['callback_query']['id'], $callback_response);
+// Exit.
+exit();

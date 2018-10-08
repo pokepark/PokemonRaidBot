@@ -23,7 +23,7 @@ if ($chat_id == 0) {
     );
 
     // Init keys.
-    $keys = array();
+    $keys = [];
 
     // Count results.
     $count = 0;
@@ -96,17 +96,17 @@ if ($chat_id == 0) {
     $callback_msg = '<b>' . getTranslation('overview_successfully_deleted') . '</b>';
 }
 
-// Init keys.
-$callback_keys = array();
-
 // Set keys.
 $callback_keys = [];
-
-// Edit message.
-edit_message($update, $callback_msg, $callback_keys, false);
 
 // Build callback message string.
 $callback_response = 'OK';
 
 // Answer callback.
 answerCallbackQuery($update['callback_query']['id'], $callback_response);
+
+// Edit message.
+edit_message($update, $callback_msg, $callback_keys, false);
+
+// Exit.
+exit();

@@ -10,7 +10,7 @@ debug_log('LIST()');
 bot_access_check($update, BOT_ACCESS);
 
 // Init empty keys array.
-$keys = array();
+$keys = [];
 
 // Create keys array.
 $keys = [
@@ -38,4 +38,5 @@ $msg = '<b>' . getTranslation('raids_list_share_overview') . ':</b>';
 // Send message.
 send_message($update['message']['chat']['id'], $msg, $keys, ['reply_markup' => ['selective' => true, 'one_time_keyboard' => true]]);
 
-exit;
+// Exit.
+exit();

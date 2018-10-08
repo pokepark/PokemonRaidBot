@@ -10,7 +10,7 @@ debug_log('EXREPORT()');
 bot_access_check($update, BOT_ADMINS);
 
 // Init empty keys array.
-    $keys = array();
+    $keys = [];
         $keys[0]['text'] = 'Gym Name';
         $keys[0]['callback_data'] = 0;
         $keys[1]['text'] = 'Total Raided';

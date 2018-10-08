@@ -25,7 +25,7 @@ $keys = keys_vote($raid);
 // Send location.
 if (RAID_LOCATION == true) {
     // Send location.
-    $msg_text = !empty($raid['address']) ? ($raid['address'] . ', R-ID = ' . $raid['id']) : ($raid['pokemon'] . ', ' . $raid['id']); // DO NOT REMOVE " R-ID = " --> NEEDED FOR CLEANUP PREPARATION!
+    $msg_text = !empty($raid['address']) ? ($raid['address'] . ', ' . substr(strtoupper(BOT_ID), 0, 1) . '-ID = ' . $raid['id']) : ($raid['pokemon'] . ', ' . $raid['id']); // DO NOT REMOVE "ID ="--> NEEDED FOR CLEANUP PREPARATION!
     $loc = send_venue($chat, $raid['lat'], $raid['lon'], '', $msg_text);
 
     // Write to log.
@@ -38,13 +38,13 @@ send_message($chat, $text, $keys, ['reply_to_message_id' => $chat, 'disable_web_
 
 // Set callback keys and message
 $callback_msg = getTranslation('successfully_shared');
-$callback_keys = array();
 $callback_keys = [];
-
-// Edit message.
-edit_message($update, $callback_msg, $callback_keys, false);
 
 // Answer callback.
 answerCallbackQuery($update['callback_query']['id'], $callback_msg);
 
+// Edit message.
+edit_message($update, $callback_msg, $callback_keys, false);
+
+// Exit.
 exit();

@@ -42,15 +42,18 @@ if (!$row) {
 // Get active raids.
 $request_active_raids = my_query(
     "
-    SELECT    *,
+    SELECT    raids.*,
+              gyms.lat, gyms.lon, gyms.address, gyms.gym_name, gyms.ex_gym,
               UNIX_TIMESTAMP(end_time)                        AS ts_end,
               UNIX_TIMESTAMP(start_time)                      AS ts_start,
               UNIX_TIMESTAMP(NOW())                           AS ts_now,
               UNIX_TIMESTAMP(end_time)-UNIX_TIMESTAMP(NOW())  AS t_left
     FROM      raids
-      WHERE   end_time>NOW()
-        AND   timezone='{$tz}'
-    ORDER BY  end_time ASC
+    LEFT JOIN gyms
+    ON        raids.gym_id = gyms.id
+      WHERE   raids.end_time>NOW()
+        AND   raids.timezone='{$tz}'
+    ORDER BY  raids.end_time ASC
     "
 );
 
@@ -58,8 +61,8 @@ $request_active_raids = my_query(
 $count_active_raids = 0;
 
 // Init empty active raids and raid_ids array.
-$raids_active = array();
-$raid_ids_active = array();
+$raids_active = [];
+$raid_ids_active = [];
 
 // Get all active raids into array.
 while ($rowRaids = $request_active_raids->fetch_assoc()) {
@@ -79,7 +82,7 @@ debug_log('Active raids:');
 debug_log($raids_active);
 
 // Init empty active chats array.
-$chats_active = array();
+$chats_active = [];
 
 // Make sure we have active raids.
 if ($count_active_raids > 0) {

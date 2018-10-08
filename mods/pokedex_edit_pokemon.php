@@ -9,8 +9,11 @@ debug_log('pokedex_edit_pokemon()');
 // Set the id.
 $pokedex_id = $data['id'];
 
+// Set the arg.
+$arg = $data['arg'];
+
 // Init empty keys array.
-$keys = array();
+$keys = [];
 
 // Set the message.
 $msg = get_pokemon_info($pokedex_id);
@@ -77,11 +80,22 @@ $keys[] = [
     ]
 ];
 
+// Send message.
+if($arg == 'id-or-name') {
+    // Send message.
+    send_message($update['message']['chat']['id'], $msg, $keys, ['reply_markup' => ['selective' => true, 'one_time_keyboard' => true]]);
+
 // Edit message.
-edit_message($update, $msg, $keys, false);
+} else {
+    // Build callback message string.
+    $callback_response = 'OK';
 
-// Build callback message string.
-$callback_response = 'OK';
+    // Answer callback.
+    answerCallbackQuery($update['callback_query']['id'], $callback_response);
 
-// Answer callback.
-answerCallbackQuery($update['callback_query']['id'], $callback_response);
+    // Edit message.
+    edit_message($update, $msg, $keys, false);
+}
+
+// Exit.
+exit();

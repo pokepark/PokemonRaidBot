@@ -20,21 +20,8 @@ $id = $data['id'];
 
 // Execute the action.
 if ($action == 0) {
-    // Build query.
-    $request = my_query(
-        "
-        SELECT    *,
-                  UNIX_TIMESTAMP(end_time)                        AS ts_end,
-                  UNIX_TIMESTAMP(start_time)                      AS ts_start,
-                  UNIX_TIMESTAMP(NOW())                           AS ts_now,
-                  UNIX_TIMESTAMP(end_time)-UNIX_TIMESTAMP(NOW())  AS t_left
-        FROM      raids
-          WHERE   id = '{$id}' 
-        "
-    );
-
     // Get raid.
-    $raid = $request->fetch_assoc();
+    $raid = get_raid($id);
 
     // Write to log.
     debug_log('Asking for confirmation to delete the following raid:');
@@ -76,13 +63,14 @@ if ($action == 0) {
     delete_raid($id);
 }
     
-// Edit message.
-edit_message($update, $msg, $keys, false);
-
 // Build callback message string.
 $callback_response = 'OK';
 
 // Answer callback.
 answerCallbackQuery($update['callback_query']['id'], $callback_response);
 
-exit;
+// Edit message.
+edit_message($update, $msg, $keys, false);
+
+// Exit.
+exit();

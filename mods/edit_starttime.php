@@ -1,47 +1,38 @@
 <?php
 // Write to log.
-debug_log('edit_poke()');
+debug_log('edit_starttime()');
 
 // For debug.
 //debug_log($update);
 //debug_log($data);
 
-// Check raid access.
-raid_access_check($update, $data);
-
-// Set the id.
-$id = $data['id'];
-
 // Get the argument.
 $arg = $data['arg'];
 
-// Set raid level.
-$raid_level = '0';
-
-// Update pokemon in the raid table.
-if ($arg != "minutes" && $arg != "clocktime") {
-    my_query(
-        "
-        UPDATE    raids
-          SET     pokemon = '{$data['arg']}'
-          WHERE   id = {$id}
-        "
-    );
-
-    // Get level of pokemon
-    $raid_level = get_raid_level($data['arg']);
-    debug_log('Pokemon raid level: ' . $raid_level);
+// Check for options.
+if (strpos($arg, ',') !== false)
+{ 
+    $args = explode(',', $arg);
+    $pokemon_id = $args[0];
+    $arg = $args[1];
+    debug_log('More options got requested for raid duration!');
+    debug_log('Received Pokemon ID and argument: ' . $pokemon_id . ', ' . $arg);
+} else {
+    $pokemon_id = $arg;
 }
+// Set the id.
+$id = $data['id'];
+$gym_id = explode(',', $data['id'])[0];
+
+// Get level of pokemon
+$raid_level = '0';
+$raid_level = get_raid_level($pokemon_id);
+debug_log('Pokemon raid level: ' . $raid_level);
 
 // Pokemon in level X?
 if($raid_level == 'X') {
     // Init empty keys array.
-    $keys = array();
-
-    // Not sure if necessary, leaving as comment
-    // Timezone - maybe there's a more elegant solution as date_default_timezone_set?!
-    //$tz = TIMEZONE;
-    //date_default_timezone_set($tz);
+    $keys = [];
 
     // Current month
     $current_month = date('Y-m', strtotime('now'));
@@ -59,13 +50,13 @@ if($raid_level == 'X') {
     $keys[] = array(
         //'text'          => $current_month_name . ' (' . $current_month . ')',
         'text'          => $current_month_name . ' ' . $year_of_current_month_name,
-        'callback_data' => $id . ':edit_date:' . $current_month
+        'callback_data' => $id . ':edit_date:' . $pokemon_id . ',' . $current_month
     );
 
     $keys[] = array(
         //'text'          => $next_month_name . ' (' . $next_month . ')',
         'text'          => $next_month_name . ' ' . $year_of_next_month_name,
-        'callback_data' => $id . ':edit_date:' . $next_month
+        'callback_data' => $id . ':edit_date:' . $pokemon_id . ',' . $next_month
     );
     // Get the inline key array.
     $keys = inline_key_array($keys, 2);
@@ -82,7 +73,7 @@ if($raid_level == 'X') {
     }
 
     // Init empty keys array.
-    $keys = array();
+    $keys = [];
 
     // Timezone - maybe there's a more elegant solution as date_default_timezone_set?!
     $tz = TIMEZONE;
@@ -103,8 +94,7 @@ if($raid_level == 'X') {
             $keys[] = array(
                 // Just show the time, no text - not everyone has a phone or tablet with a large screen...
                 'text'          => floor($i / 60) . ':' . str_pad($i % 60, 2, '0', STR_PAD_LEFT),
-                //'callback_data' => $id . ':edit_start:' . $i
-                'callback_data' => $id . ':edit_start:' . unix2tz($now_plus_i,$tz,"H-i")
+                'callback_data' => $id . ':edit_duration:' . $pokemon_id . ',' . unix2tz($now_plus_i,$tz,"H-i")
             );
         }
     } else {
@@ -120,8 +110,7 @@ if($raid_level == 'X') {
             $keys[] = array(
 	        // Just show the time, no text - not everyone has a phone or tablet with a large screen...
 	        'text'	        => unix2tz($now_plus_i,$tz,"H:i"),
-                //'callback_data' => $id . ':edit_start:' . $i
-                'callback_data' => $id . ':edit_start:' . unix2tz($now_plus_i,$tz,"H-i") 
+                'callback_data' => $id . ':edit_duration:' . $pokemon_id . ',' . unix2tz($now_plus_i,$tz,"H-i") 
             );
         }
     }
@@ -129,13 +118,13 @@ if($raid_level == 'X') {
     // Raid already running
     $keys[] = array(
         'text'	        => getTranslation('is_raid_active'),
-        'callback_data' => $id . ':edit_start:' . unix2tz($now,$tz,"H-i").",0"
+        'callback_data' => $id . ':edit_duration:' . $pokemon_id . ',' . unix2tz($now,$tz,"H-i").",more-options,0"
     );
 
     // Switch view: clocktime / minutes until start
     $keys[] = array(
         'text'	        => $switch_text,
-        'callback_data' => $id . ':edit_poke:' . $switch_view
+        'callback_data' => $id . ':edit_starttime:' . $pokemon_id . ',' . $switch_view
     );
 
     // Get the inline key array.
@@ -146,7 +135,7 @@ if($raid_level == 'X') {
 
 } else {
     // Edit pokemon.
-    $keys = raid_edit_start_keys($id);
+    $keys = raid_edit_raidlevel_keys($id);
 }
 
 // No keys found.
@@ -155,12 +144,36 @@ if (!$keys) {
     $keys = [
         [
             [
-                'text'          => getTranslation('not_supported'),
-                'callback_data' => 'edit:not_supported'
+                'text'          => getTranslation('abort'),
+                'callback_data' => '0:exit:0'
             ]
         ]
     ];
+} else {
+    // Back key id, action and arg
+    $back_id = $id;
+    $back_action = 'edit_pokemon';
+    $back_arg = get_raid_level($pokemon_id);
+
+    // Add navigation keys.
+    $nav_keys = [];
+    $nav_keys[] = universal_inner_key($nav_keys, $back_id, $back_action, $back_arg, getTranslation('back'));
+    $nav_keys[] = universal_inner_key($nav_keys, $gym_id, 'exit', '2', getTranslation('abort'));
+    $nav_keys = inline_key_array($nav_keys, 2);
+
+    // Merge keys.
+    $keys = array_merge($keys, $nav_keys);
 }
+
+// Build callback message string.
+if ($data['arg'] != "minutes" && $data['arg'] != "clocktime") {
+    $callback_response = getTranslation('pokemon_saved') . get_local_pokemon_name($data['arg']);
+} else {
+    $callback_response = getTranslation('raid_starts_when_view_changed');
+}
+
+// Answer callback.
+answerCallbackQuery($update['callback_query']['id'], $callback_response);
 
 // Edit the message.
 if ($arg == "minutes") {
@@ -169,12 +182,5 @@ if ($arg == "minutes") {
     edit_message($update, getTranslation('raid_starts_when'), $keys);
 }
 
-// Build callback message string.
-if ($data['arg'] != "minutes" && $data['arg'] != "clocktime") {
-    $callback_response = getTranslation('pokemon_saved') . $data['arg'];
-} else {
-    $callback_response = getTranslation('raid_starts_when_view_changed');
-}
-
-// Answer callback.
-answerCallbackQuery($update['callback_query']['id'], $callback_response);
+// Exit.
+exit();

@@ -135,14 +135,6 @@ if ($raid_id > 0) {
     // Get raid data.
     $raid = get_raid($raid_id);
 
-    //Debug
-    // Set text.
-    //$text = '<b>Raid aktualisiert!  R-ID = ' . $raid_id . "</b>" . CR;
-    //$text .= CR . show_raid_poll($raid);
-
-    // Send the message
-    //sendMessage($update['message']['chat']['id'], $text);
-
     // Exit now after update of raid and message.
     exit();
 }
@@ -193,7 +185,7 @@ if (!empty($address)) {
 $id = my_insert_id();
 
 // Write to log.
-debug_log('R-ID=' . $id);
+debug_log('ID=' . $id);
 
 // Get raid data.
 $raid = get_raid($id);
@@ -201,7 +193,7 @@ $raid = get_raid($id);
 // Send location.
 if (RAID_LOCATION == true) {
     //$loc = send_location($update['message']['chat']['id'], $raid['lat'], $raid['lon']);
-    $msg_text = !empty($raid['address']) ? $raid['address'] . ', R-ID = ' . $raid['id'] : $raid['pokemon'] . ', ' . $raid['id']; // DO NOT REMOVE " R-ID = " --> NEEDED FOR CLEANUP PREPARATION!
+    $msg_text = !empty($raid['address']) ? $raid['address'] . ', ' . substr(strtoupper(BOT_ID), 0, 1) . '-ID = ' . $raid['id'] : $raid['pokemon'] . ', ' . $raid['id']; // DO NOT REMOVE " ID = " --> NEEDED FOR CLEANUP PREPARATION!
     $loc = send_venue($update['message']['chat']['id'], $raid['lat'], $raid['lon'], "", $msg_text);
 
     // Write to log.

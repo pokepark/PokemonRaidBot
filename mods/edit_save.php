@@ -1,6 +1,6 @@
 <?php
 // Write to log.
-debug_log('edit_left()');
+debug_log('edit_save()');
 
 // For debug.
 //debug_log($update);
@@ -12,23 +12,29 @@ raid_access_check($update, $data);
 // Set the id.
 $id = $data['id'];
 
+// Set the arg.
+$arg = $data['arg'];
+
 // Set the user id.
 $userid = $update['callback_query']['from']['id'];
 
-// Build query.
-my_query(
-    "
-    UPDATE    raids
-    SET       user_id = {$userid},
-              end_time = DATE_ADD(start_time, INTERVAL {$data['arg']} MINUTE)
-      WHERE   id = {$id}
-    "
-);
+// Update only if time is not equal to RAID_POKEMON_DURATION_SHORT
+if($arg != RAID_POKEMON_DURATION_SHORT) {
 
-//if ($update['message']['chat']['type'] == 'private' || $update['callback_query']['message']['chat']['type'] == 'private') {
+    // Build query.
+    my_query(
+        "
+        UPDATE    raids
+        SET       end_time = DATE_ADD(start_time, INTERVAL {$data['arg']} MINUTE)
+          WHERE   id = {$id}
+        "
+    );
+}
+
+// Build msg.
 if ($update['callback_query']['message']['chat']['type'] == 'private') {
     // Init keys.
-    $keys = array();
+    $keys = [];
 
     // Add delete to keys.
     $keys = [
@@ -39,6 +45,21 @@ if ($update['callback_query']['message']['chat']['type'] == 'private') {
             ]
         ]
     ];
+
+    // Check access level prior allowing to change raid time
+    $admin_access = bot_access_check($update, BOT_ADMINS, true);
+    if($admin_access && $arg == RAID_POKEMON_DURATION_SHORT) {
+        // Add time change to keys.
+        $keys_time = [
+            [
+                [
+                    'text'          => getTranslation('change_raid_duration'),
+                    'callback_data' => $id . ':edit_duration:0,0,more-options,1'
+                ]
+            ]
+        ];
+        $keys = array_merge($keys, $keys_time);
+    }
 
     // Add keys to share.
     $keys_share = share_raid_keys($id, $userid);
@@ -52,8 +73,11 @@ if ($update['callback_query']['message']['chat']['type'] == 'private') {
     $msg .= getTranslation('raid_saved') . CR;
     $msg .= show_raid_poll_small($raid) . CR;
 
+    // User_id tag.
+    $user_id_tag = '#' . $update['callback_query']['from']['id'];
+
     // Gym Name
-    if(!empty($raid['gym_name'])) {
+    if(!empty($raid['gym_name']) && ($raid['gym_name'] != $user_id_tag)) {
 	$msg .= getTranslation('set_gym_team') . CR2;
     } else {
         $msg .= getTranslation('set_gym_name_and_team') . CR2;
@@ -61,14 +85,14 @@ if ($update['callback_query']['message']['chat']['type'] == 'private') {
     }
     $msg .= getTranslation('set_gym_team_command');
 
-    // Edit message.
-    edit_message($update, $msg, $keys, false);
-
     // Build callback message string.
     $callback_response = getTranslation('end_time') . $data['arg'] . ' ' . getTranslation('minutes');
 
     // Answer callback.
     answerCallbackQuery($update['callback_query']['id'], $callback_response);
+
+    // Edit message.
+    edit_message($update, $msg, $keys, false);
 
 } else {
     // Get raid times.
@@ -78,13 +102,15 @@ if ($update['callback_query']['message']['chat']['type'] == 'private') {
     $text = show_raid_poll($raid);
     $keys = keys_vote($raid);
 
-    // Edit message.
-    edit_message($update, $text, $keys, false);
-
     // Build callback message string.
-    $callback_response = 'End time set to ' . $data['arg'] . ' minutes';
+    $callback_response = getTranslation('end_time') . $data['arg'] . ' ' . getTranslation('minutes');
 
     // Answer callback.
     answerCallbackQuery($update['callback_query']['id'], $callback_response);
+
+    // Edit message.
+    edit_message($update, $text, $keys, false);
 }
 
+// Exit.
+exit();
