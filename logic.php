@@ -710,7 +710,7 @@ function get_pokemon_weather($pokemon_id_form)
     // Split pokedex_id and form
     $dex_id_form = explode('-',$pokemon_id_form);
     $pokedex_id = $dex_id_form[0];
-    $pokemon_form = $dex_id_form[1];
+    $pokemon_form = 0; // TODO: $dex_id_form[1];
 
     if($pokedex_id !== "NULL" && $pokedex_id != 0) {
         // Get pokemon weather from database
