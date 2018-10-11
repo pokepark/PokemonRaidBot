@@ -150,13 +150,11 @@ if (!empty($address)) {
         INSERT INTO   raids
         SET           pokemon = '{$db->real_escape_string($boss)}',
 		              user_id = {$update['message']['from']['id']},
-		              lat = '{$lat}',
-		              lon = '{$lon}',
 		              first_seen = DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:00'),
 		              start_time = DATE_ADD(first_seen, INTERVAL {$countdown} MINUTE),
 		              end_time = DATE_ADD(start_time, INTERVAL {$endtime} MINUTE),
 		              gym_team = '{$db->real_escape_string($team)}',
-		              gym_name = '{$db->real_escape_string($name)}',
+		              gym_id = '{$db->real_escape_string($name)}',
 		              timezone = '{$tz}',
 		              address = '{$db->real_escape_string($address)}'
         "
@@ -169,13 +167,11 @@ if (!empty($address)) {
         INSERT INTO   raids
         SET           pokemon = '{$db->real_escape_string($boss)}',
 		              user_id = {$update['message']['from']['id']},
-		              lat = '{$lat}',
-		              lon = '{$lon}',
 		              first_seen = DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:00'),
 		              start_time = DATE_ADD(first_seen, INTERVAL {$countdown} MINUTE),
 		              end_time = DATE_ADD(start_time, INTERVAL {$endtime} MINUTE),
 		              gym_team = '{$db->real_escape_string($team)}',
-		              gym_name = '{$db->real_escape_string($name)}',
+		              gym_id = '{$db->real_escape_string($name)}',
 		              timezone = '{$tz}'
         "
     );
