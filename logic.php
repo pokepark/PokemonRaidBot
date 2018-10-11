@@ -351,7 +351,7 @@ function get_raid_level($pokedex_id)
     // Split pokedex_id and form
     $dex_id_form = explode('-',$pokedex_id);
     $dex_id = $dex_id_form[0];
-    $dex_form = $dex_id_form[1];
+    $dex_form = 0; // TODO: $dex_id_form[1];
 
     // Make sure $dex_id is numeric
     if(is_numeric($dex_id)) {
@@ -513,7 +513,7 @@ function get_local_pokemon_name($pokemon_id_form, $override_language = false, $t
     // Split pokedex_id and form
     $dex_id_form = explode('-',$pokemon_id_form);
     $pokedex_id = $dex_id_form[0];
-    $pokemon_form = $dex_id_form[1];
+    $pokemon_form = 0; // TODO: $dex_id_form[1];
 
     debug_log('Pokemon_form: ' . $pokemon_form);
 
@@ -663,7 +663,7 @@ function get_formatted_pokemon_cp($pokemon_id_form, $override_language = false)
     // Split pokedex_id and form
     $dex_id_form = explode('-',$pokemon_id_form);
     $pokedex_id = $dex_id_form[0];
-    $pokemon_form = $dex_id_form[1];
+    $pokemon_form = 0; // TODO: $dex_id_form[1];
 
     // Init cp text.
     $cp20 = '';
