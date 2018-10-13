@@ -42,7 +42,4 @@ if ($update['message']['chat']['type'] == 'private') {
     // Send the message.
     sendMessage($update['message']['chat']['id'], getTranslation('gym_name_updated'));
 }
-
-// Exit.
-exit;
 ?>

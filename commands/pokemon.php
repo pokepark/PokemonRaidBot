@@ -12,27 +12,6 @@ bot_access_check($update, BOT_ACCESS);
 // Get timezone.
 $tz = get_timezone($update['message']['from']['id']);
 
-// Get last 20 active raids.
-$rs = my_query(
-    "
-    SELECT     raids.*,
-               gyms.lat, gyms.lon, gyms.address, gyms.gym_name, gyms.ex_gym,
-               users.name,
-               UNIX_TIMESTAMP(start_time)                      AS ts_start,
-               UNIX_TIMESTAMP(end_time)                        AS ts_end,
-               UNIX_TIMESTAMP(NOW())                           AS ts_now,
-               UNIX_TIMESTAMP(end_time)-UNIX_TIMESTAMP(NOW())  AS t_left
-    FROM       raids
-    LEFT JOIN  gyms
-    ON         raids.gym_id = gyms.id
-    LEFT JOIN  users
-    ON         raids.user_id = users.user_id
-    WHERE      raids.end_time>NOW()
-    AND        raids.timezone='{$tz}'
-    ORDER BY   raids.end_time ASC LIMIT 20
-    "
-);
-
 // Count results.
 $count = 0;
 
@@ -40,20 +19,55 @@ $count = 0;
 $text = '';
 $keys = [];
 
-// Get raids.
-while ($raid = $rs->fetch_assoc()) {
-    // Set text and keys.
-    $text .= $raid['gym_name'] . CR;
-    $raid_day = unix2tz($raid['ts_start'], $raid['timezone'], 'Y-m-d');
-    $today = unix2tz($raid['ts_now'], $raid['timezone'], 'Y-m-d');
-    $text .= get_local_pokemon_name($raid['pokemon']) . SP . '—' . SP . (($raid_day == $today) ? '' : ($raid_day . ', ')) . unix2tz($raid['ts_start'], $raid['timezone']) . SP . getTranslation('to') . SP . unix2tz($raid['ts_end'], $raid['timezone']) . CR . CR;
-    $keys[] = array(
-        'text'          => $raid['gym_name'],
-        'callback_data' => $raid['id'] . ':raid_edit_poke:' . $raid['pokemon'],
-    );
+try {
 
-    // Counter++
-    $count = $count + 1;
+    $query = '
+        SELECT
+            raids.*, gyms.lat ,
+            gyms.lon ,
+            gyms.address ,
+            gyms.gym_name ,
+            gyms.ex_gym ,
+            users. NAME ,
+            UNIX_TIMESTAMP(start_time) AS ts_start ,
+            UNIX_TIMESTAMP(end_time) AS ts_end ,
+            UNIX_TIMESTAMP(NOW()) AS ts_now ,
+            UNIX_TIMESTAMP(end_time) - UNIX_TIMESTAMP(NOW()) AS t_left
+        FROM
+            raids
+        LEFT JOIN gyms ON raids.gym_id = gyms.id
+        LEFT JOIN users ON raids.user_id = users.user_id
+        WHERE
+            raids.end_time > NOW()
+        AND raids.timezone = :timezone
+        ORDER BY
+            raids.end_time ASC
+        LIMIT 20
+    ';
+    $statement = $dbh->prepare( $query );
+    $statement->bindValue(':timezone', $tz, PDO::PARAM_STR);
+    $statement->execute();
+    while ($row = $statement->fetch()) {
+    
+        // Set text and keys.
+        $text .= $row['gym_name'] . CR;
+        $raid_day = unix2tz($row['ts_start'], $row['timezone'], 'Y-m-d');
+        $today = unix2tz($row['ts_now'], $row['timezone'], 'Y-m-d');
+        $text .= get_local_pokemon_name($row['pokemon']) . SP . '—' . SP . (($raid_day == $today) ? '' : ($raid_day . ', ')) . unix2tz($row['ts_start'], $row['timezone']) . SP . getTranslation('to') . SP . unix2tz($row['ts_end'], $row['timezone']) . CR . CR;
+        $keys[] = array(
+            'text'          => $row['gym_name'],
+            'callback_data' => $row['id'] . ':raid_edit_poke:' . $row['pokemon'],
+        );
+
+        // Counter++
+        $count = $count + 1;
+    }
+}
+catch (PDOException $exception) {
+
+    error_log($exception->getMessage());
+    $dbh = null;
+    exit;
 }
     
 // Set message.
@@ -83,5 +97,4 @@ $callback_response = 'OK';
 // Send message.
 send_message($update['message']['chat']['id'], $msg, $keys, ['reply_markup' => ['selective' => true, 'one_time_keyboard' => true]]);
 
-// Exit.
-exit();
+?>

@@ -78,4 +78,4 @@ $msg = '<b>' . getTranslation('pokedex_start') . ':</b>';
 // Send message.
 send_message($update['message']['chat']['id'], $msg, $keys, ['reply_markup' => ['selective' => true, 'one_time_keyboard' => true]]);
 
-exit();
+?>

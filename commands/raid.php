@@ -2,6 +2,8 @@
 // Write to log.
 debug_log('RAID()');
 
+exit;
+
 // For debug.
 //debug_log($update);
 //debug_log($data);
@@ -230,4 +232,5 @@ if ($update['message']['chat']['type'] == 'private' || $update['callback_query']
     send_message($update['message']['chat']['id'], $text, $keys, ['reply_to_message_id' => $reply_to, 'reply_markup' => ['selective' => true, 'one_time_keyboard' => true], 'disable_web_page_preview' => 'true']);
 }
 
-exit();
+?>
+
