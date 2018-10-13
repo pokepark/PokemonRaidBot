@@ -65,8 +65,8 @@ try {
         g.gym_name
     ';
     $statement = $dbh->prepare( $query );
-      $statement->execute();
-    while($row = $statement->fetch()) {
+    $statement->execute();
+    while ($row = $statement->fetch()) {
     
         $keys[$i]['text'] = $row['gym_name'];
         $keys[$i]['callback_data'] = 0;
@@ -82,9 +82,11 @@ try {
         $i = $i+4;
     }
 }
-catch ( PDOException $exception ) {
+catch (PDOException $exception) {
 
-    error_log( $exception->getMessage() );
+    error_log($exception->getMessage());
+    $dbh = null;
+    exit;
 }
 
 // Get the inline key array.
@@ -96,5 +98,5 @@ $msg = '<b>EX Raid Report</b>';
 // Send message.
 send_message($update['message']['chat']['id'], $msg, $keys, ['reply_markup' => ['selective' => true, 'one_time_keyboard' => true]]);
 
-exit();
+exit;
 ?>
