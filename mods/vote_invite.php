@@ -14,7 +14,8 @@ my_query(
              WHEN invite = '0' THEN '1'
              ELSE '0'
            END
-      WHERE   user_id = {$update['callback_query']['from']['id']}
+    WHERE   raid_id = {$data['id']}
+    AND   user_id = {$update['callback_query']['from']['id']}
     "
 );
 
