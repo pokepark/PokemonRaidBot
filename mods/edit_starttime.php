@@ -94,7 +94,7 @@ if($raid_level == 'X') {
             $keys[] = array(
                 // Just show the time, no text - not everyone has a phone or tablet with a large screen...
                 'text'          => floor($i / 60) . ':' . str_pad($i % 60, 2, '0', STR_PAD_LEFT),
-                'callback_data' => $id . ':edit_duration:' . $pokemon_id . ',' . unix2tz($now_plus_i,$tz,"H-i")
+                'callback_data' => $id . ':edit_time:' . $pokemon_id . ',' . unix2tz($now_plus_i,$tz,"H-i")
             );
         }
     } else {
@@ -110,7 +110,7 @@ if($raid_level == 'X') {
             $keys[] = array(
 	        // Just show the time, no text - not everyone has a phone or tablet with a large screen...
 	        'text'	        => unix2tz($now_plus_i,$tz,"H:i"),
-                'callback_data' => $id . ':edit_duration:' . $pokemon_id . ',' . unix2tz($now_plus_i,$tz,"H-i") 
+                'callback_data' => $id . ':edit_time:' . $pokemon_id . ',' . unix2tz($now_plus_i,$tz,"H-i") 
             );
         }
     }
@@ -118,7 +118,7 @@ if($raid_level == 'X') {
     // Raid already running
     $keys[] = array(
         'text'	        => getTranslation('is_raid_active'),
-        'callback_data' => $id . ':edit_duration:' . $pokemon_id . ',' . unix2tz($now,$tz,"H-i").",more-options,0"
+        'callback_data' => $id . ':edit_time:' . $pokemon_id . ',' . unix2tz($now,$tz,"H-i").",more,0"
     );
 
     // Switch view: clocktime / minutes until start

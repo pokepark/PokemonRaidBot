@@ -1,6 +1,6 @@
 <?php
 // Write to log.
-debug_log('edit_duration()');
+debug_log('edit_time()');
 
 // For debug.
 //debug_log($update);
@@ -55,14 +55,12 @@ debug_log('slot_switch: ' . $slot_switch);
 // raid_id is 0, means we did not create it yet
 // gym_id is not 0, means we have a gym_id for creation
 if ($raid_id == 0 && $gym_id != 0) {
-//if (($opt_arg == 'new-raid' && $count_arg == 1) || ($opt_arg == 'more-options' && $slot_switch == 0 && $count_arg = 3)) {
-
     // Replace "-" with ":" to get proper time format
     debug_log('Formatting the raid time properly now.');
     $arg_time = str_replace('-', ':', $starttime);
 
     // Ex-Raid or normal raid?
-    if($opt_arg == 'ex-raid') {
+    if($opt_arg == 'X') {
         debug_log('Ex-Raid time :D ... Setting raid date to ' . $arg_time);
         $start_date_time = $arg_time;
     } else {
@@ -131,7 +129,7 @@ if ($raid_id == 0 && $gym_id != 0) {
 $keys = [];
 
 // Raid pokemon duration short or 1 Minute / 5 minute time slots
-if($opt_arg == 'more-options') {
+if($opt_arg == 'more') {
     if ($slot_switch == 0) {
 	$slotmax = RAID_POKEMON_DURATION_SHORT;
 	$slotsize = 1;
@@ -187,7 +185,7 @@ if($opt_arg == 'more-options') {
         // Button for more options.
         $keys[] = array(
             'text'          => getTranslation('expand'),
-            'callback_data' => $raid_id . ':edit_duration:' . $pokemon_id . ',' . $start_time . ',more-options,' . $slot_switch
+            'callback_data' => $raid_id . ':edit_time:' . $pokemon_id . ',' . $start_time . ',more,' . $slot_switch
         );
 
 
@@ -201,7 +199,7 @@ $keys = inline_key_array($keys, 5);
 debug_log($keys);
 
 // Build callback message string.
-if ($opt_arg != 'more-options' && $opt_arg !='ex-raid') {
+if ($opt_arg != 'more' && $opt_arg !='X') {
     $callback_response = getTranslation('start_date_time') . ' ' . $arg_time;
 } else {
     $callback_response = getTranslation('raid_starts_when_view_changed');
