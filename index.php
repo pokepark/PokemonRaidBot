@@ -28,6 +28,9 @@ if (!$update) {
 // Write to log.
 debug_log($update, $log_prefix);
 
+$dbh = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4", DB_USER, DB_PASSWORD, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+$dbh->setAttribute(PDO::ATTR_ORACLE_NULLS, PDO::NULL_EMPTY_STRING);
+
 // Establish mysql connection.
 $db = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 $db->set_charset('utf8mb4');
@@ -96,7 +99,6 @@ if (isset($update['callback_query'])) {
     if (file_exists($module)) {
         // Dynamically include module file and exit.
         include_once($module);
-        exit();
 
     // Module file is missing.
     } else {
@@ -110,7 +112,6 @@ if (isset($update['callback_query'])) {
     bot_access_check($update);
     // List polls and exit.
     raid_list($update);
-    exit();
 
 // Location received.
 } else if (isset($update['message']['location'])) {
@@ -121,7 +122,6 @@ if (isset($update['callback_query'])) {
     if(RAID_VIA_LOCATION == true) {
         include_once(ROOT_PATH . '/mods/raid_by_location.php');
     }
-    exit();
 
 // Cleanup collection from channel/supergroup messages.
 } else if ((isset($update['channel_post']) && $update['channel_post']['chat']['type'] == "channel") || (isset($update['message']) && $update['message']['chat']['type'] == "supergroup")) {
@@ -155,7 +155,6 @@ if (isset($update['callback_query'])) {
     if($id != 0) {
         insert_cleanup($chat_id, $message_id, $id);
     }
-    exit();
 
 // Message is required to check for commands.
 } else if (isset($update['message']) && ($update['message']['chat']['type'] == 'private' || $update['message']['chat']['type'] == 'channel')) {
@@ -185,17 +184,17 @@ if (isset($update['callback_query'])) {
         if (is_file($command)) {
             // Dynamically include command file and exit.
             include_once($command);
-            exit();
         } else if (is_file($altcommand)) {
             // Dynamically include command file and exit.
             include_once($altcommand);
-            exit();
         } else if ($com == basename(ROOT_PATH)) {
             // Include start file and exit.
             include_once($startcommand);
-            exit();
         } else {
             sendMessage($update['message']['chat']['id'], '<b>' . getTranslation('not_supported') . '</b>');
         }
     }
 }
+
+$dbh = null;
+?>

@@ -2,6 +2,8 @@
 // Write to log.
 debug_log('RAID()');
 
+exit;
+
 // For debug.
 //debug_log($update);
 //debug_log($data);
@@ -150,13 +152,11 @@ if (!empty($address)) {
         INSERT INTO   raids
         SET           pokemon = '{$db->real_escape_string($boss)}',
 		              user_id = {$update['message']['from']['id']},
-		              lat = '{$lat}',
-		              lon = '{$lon}',
 		              first_seen = DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:00'),
 		              start_time = DATE_ADD(first_seen, INTERVAL {$countdown} MINUTE),
 		              end_time = DATE_ADD(start_time, INTERVAL {$endtime} MINUTE),
 		              gym_team = '{$db->real_escape_string($team)}',
-		              gym_name = '{$db->real_escape_string($name)}',
+		              gym_id = '{$db->real_escape_string($name)}',
 		              timezone = '{$tz}',
 		              address = '{$db->real_escape_string($address)}'
         "
@@ -169,13 +169,11 @@ if (!empty($address)) {
         INSERT INTO   raids
         SET           pokemon = '{$db->real_escape_string($boss)}',
 		              user_id = {$update['message']['from']['id']},
-		              lat = '{$lat}',
-		              lon = '{$lon}',
 		              first_seen = DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:00'),
 		              start_time = DATE_ADD(first_seen, INTERVAL {$countdown} MINUTE),
 		              end_time = DATE_ADD(start_time, INTERVAL {$endtime} MINUTE),
 		              gym_team = '{$db->real_escape_string($team)}',
-		              gym_name = '{$db->real_escape_string($name)}',
+		              gym_id = '{$db->real_escape_string($name)}',
 		              timezone = '{$tz}'
         "
     );
@@ -234,4 +232,5 @@ if ($update['message']['chat']['type'] == 'private' || $update['callback_query']
     send_message($update['message']['chat']['id'], $text, $keys, ['reply_to_message_id' => $reply_to, 'reply_markup' => ['selective' => true, 'one_time_keyboard' => true], 'disable_web_page_preview' => 'true']);
 }
 
-exit();
+?>
+

@@ -43,3 +43,5 @@ if ($teams[$gym_team]) {
     // Send the message.
     sendMessage($update['message']['chat']['id'], getTranslation('invalid_team'));
 }
+
+?>

@@ -14,20 +14,32 @@ debug_log('Setting gym name to ' . $gym_name);
 
 // Private chat type.
 if ($update['message']['chat']['type'] == 'private') {
-    // Update gym name in raid table.
-    my_query(
-        "
-        UPDATE    gyms
-        SET       gym_name = '{$db->real_escape_string($gym_name)}',
-                  show_gym = 1
-          WHERE   gym_name = '#{$update['message']['from']['id']}'
-        ORDER BY  id DESC LIMIT 1
-        "
-    );
+
+    try {
+     
+         // Update gym name in raid table.
+        $query = '
+            UPDATE gyms
+            SET gym_name = :gym_name, show_gym = 1
+            WHERE
+                gym_id = :gym_id
+            ORDER BY
+                id DESC
+            LIMIT 1
+        ';
+        $statement = $dbh->prepare( $query );
+        $statement->bindValue(':gym_name', $gym_name, PDO::PARAM_STR);
+        $statement->bindValue(':gym_id', $update['message']['from']['id'], PDO::PARAM_INT);
+        $statement->execute();   
+    }
+    catch (PDOException $exception) {
+
+        error_log($exception->getMessage());
+        $dbh = null;
+        exit;
+    }
 
     // Send the message.
     sendMessage($update['message']['chat']['id'], getTranslation('gym_name_updated'));
 }
-
-// Exit.
-exit();
+?>
