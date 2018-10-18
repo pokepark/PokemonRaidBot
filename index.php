@@ -65,7 +65,7 @@ if (isset($update['callback_query'])) {
     // Callback data found.
     if ($update['callback_query']['data']) {
         // Bridge mode?
-        if(defined('BRIDGE_MODE') && BOT_BRIDGE_MODE == true) {
+        if(defined('BRIDGE_MODE') && BRIDGE_MODE == true) {
             // Split bot folder name away from actual data.
             $botnameData = explode(':', $update['callback_query']['data'], 2);
             $botname = $botnameData[0];
