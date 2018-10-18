@@ -17,6 +17,8 @@ if(!empty($pokemon)) {
     $forward = false;
     // Pokedex_id received?
     if(is_numeric($pokemon)) {
+        // Always normal form
+        $pokemon = $pokemon . '-normal';
         // Set forward to true
         $forward = true;
 
@@ -34,7 +36,7 @@ if(!empty($pokemon)) {
     if($forward == true) {
         // Reset data array
         $data = [];
-        $data['id'] = $pokemon . '-0';
+        $data['id'] = $pokemon;
         $data['action'] = 'pokedex_edit_pokemon';
         $data['arg'] = 'id-or-name';
 
