@@ -62,7 +62,7 @@ if($action == 'add') {
             UPDATE    pokemon
             SET       weather = {$new_weather}
             WHERE     pokedex_id = {$dex_id}
-            AND       pokemon_form = {$dex_form}
+            AND       pokemon_form = '{$dex_form}'
             "
         );
 

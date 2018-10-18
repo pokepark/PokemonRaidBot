@@ -83,7 +83,7 @@ if($data['arg'] == "setlevel") {
             UPDATE    pokemon
             SET       raid_level = '{$arg}'
             WHERE     pokedex_id = {$dex_id}
-            AND       pokemon_form = {$dex_form}
+            AND       pokemon_form = '{$dex_form}'
             "
         );
 
