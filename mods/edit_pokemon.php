@@ -43,7 +43,7 @@ if (!$keys) {
 }
 
 // Build callback message string.
-$callback_response = 'Ok';
+$callback_response = 'OK';
 
 // Answer callback.
 answerCallbackQuery($update['callback_query']['id'], $callback_response);
