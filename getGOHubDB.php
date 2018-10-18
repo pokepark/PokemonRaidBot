@@ -31,7 +31,7 @@ function formatPokemonData($pokemon, $DB_ID) {
     // Get data.
     $poke_id = $pokemon['id'];
     $poke_name = str_replace("'",'’',$pokemon['name']); // Farfetch’d
-    $poke_form = $pokemon['form'] === NULL ? 'normal' : strtolower($pokemon['form']);
+    $poke_form = $pokemon['form'] === NULL ? 'normal' : ((strtolower($pokemon['form']) == 'alola') ? (strtolower($pokemon['form']) . 'n') : strtolower($pokemon['form'])); // Always alolan with n at the end, not alola!
     $poke_raid_level = 0;
     $poke_min_cp = $pokemon['CPs']['raidCaptureMin'];
     $poke_max_cp = $pokemon['CPs']['raidCaptureMax'];
