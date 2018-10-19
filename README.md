@@ -105,6 +105,8 @@ You can set several languages for the bot. Available languages are (A-Z):
 
 Set `LANGUAGE` for the prefered language the bot will answer users when they chat with them. Leave blank that the bot will answer in the users language. If the users language is not supported, e.g. ZH-CN (Chinese), the bot will always use EN (English) as fallback language.
 
+Set `RAID_POLL_LANGUAGE` to the prefered language for raid polls.
+
 So if you want to have the bot communication based on the users Telegram language, e.g. Russian, and show the raid polls in German for example:
 
 `define('LANGUAGE', '');`
