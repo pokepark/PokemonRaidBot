@@ -240,7 +240,7 @@ Activate the cleanup of telegram messages and/or the database for raids by setti
 
 Specify the amount of minutes which need to pass by after raid has ended before the bot executes the cleanup. Times are in minutes in `CLEANUP_TIME_TG` for telegram cleanup and `CLEANUP_TIME_DB` for database cleanup. The value for the minutes of the database cleanup `CLEANUP_TIME_DB` must be greater than then one for telegram cleanup `CLEANUP_TIME_TG`. Otherwise cleanup will do nothing and exit due to misconfiguration!
 
-Finally set up a cronjob to trigger the cleanup. You can also trigger telegram / database cleanup per cronjob: For no cleanup use 0, for cleanup use 1 and to use your config file use 2 or leave "telegram" and "database" out of the request data array. Please make sure to always specify the cleanup type which can be `raid`.
+Finally set up a cronjob to trigger the cleanup. You can also trigger telegram / database cleanup per cronjob: For no cleanup use 0, for cleanup use 1 and to use your config file use 2 or leave "telegram" and "database" out of the request data array. Please make sure to always specify the cleanup type which needs to be `raid`.
 
 A few examples for raids - make sure to replace the URL with yours:
 
@@ -284,6 +284,18 @@ Example for restricted access:
 `define('BOT_ADMINS', '111222333,111555999');`
 
 `define('BOT_ACCESS', '111222333,-100224466889,-100112233445,111555999');`
+
+To allow members from groups, supergroups or channels:
+
+Set `BOT_ALLOW_MEMBERS` to true, so members of a Telegram chat in addition to the administrators are considered during the access check and allowed to use the bot if they are a member of the respective chat.
+
+Set `BOT_ALLOW_MEMBERS_CHAT` to the chats you wish to allow member access for.
+
+Example to allow members of chat groups -100112233445 and -100224466889:
+`define('BOT_ALLOW_MEMBERS', true);`
+
+`define('BOT_ALLOW_MEMBERS_CHATS', '-100112233445, -100224466889');`
+
 
 ## Access overview
 
