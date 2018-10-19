@@ -236,9 +236,9 @@ To activate cleanup you need to change the config and create a cronjob to trigge
 
 Set the `CLEANUP` in the config to `true` and define a cleanup secret/passphrase under `CLEANUP_SECRET`.
 
-Activate the cleanup of telegram messages and/or the database for raids by setting `CLEANUP_RAID_TELEGRAM` / `CLEANUP_RAID_DATABASE` to true.
+Activate the cleanup of telegram messages and/or the database for raids by setting `CLEANUP_TELEGRAM` / `CLEANUP_DATABASE` to true.
 
-For raids: Specify the amount of minutes which need to pass by after raid has ended before the bot executes the cleanup. Times are in minutes in `CLEANUP_RAID_TIME_TG` for telegram cleanup and `CLEANUP_RAID_TIME_DB` for database cleanup. The value for the minutes of the database cleanup `CLEANUP_RAID_TIME_DB` must be greater than then one for telegram cleanup `CLEANUP_RAID_TIME_TG`. Otherwise cleanup will do nothing and exit due to misconfiguration!
+Specify the amount of minutes which need to pass by after raid has ended before the bot executes the cleanup. Times are in minutes in `CLEANUP_TIME_TG` for telegram cleanup and `CLEANUP_TIME_DB` for database cleanup. The value for the minutes of the database cleanup `CLEANUP_TIME_DB` must be greater than then one for telegram cleanup `CLEANUP_TIME_TG`. Otherwise cleanup will do nothing and exit due to misconfiguration!
 
 Finally set up a cronjob to trigger the cleanup. You can also trigger telegram / database cleanup per cronjob: For no cleanup use 0, for cleanup use 1 and to use your config file use 2 or leave "telegram" and "database" out of the request data array. Please make sure to always specify the cleanup type which can be `raid`.
 
