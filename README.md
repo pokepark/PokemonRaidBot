@@ -192,19 +192,19 @@ A few examples:
 
 #### Restrict sharing for moderators and users to chats -100111222333 and -100444555666
 
-`define('SHARE_RAID_MODERATORS', false);`
+`define('SHARE_MODERATORS', false);`
 
-`define('SHARE_RAID_USERS', false);`
+`define('SHARE_USERS', false);`
 
-`define('SHARE_RAID_CHATS', '-100111222333,-100444555666');`
+`define('SHARE_CHATS', '-100111222333,-100444555666');`
 
 #### Allow moderators to share with any chat, restrict sharing for users to chat -100111222333
 
-`define('SHARE_RAID_MODERATORS', true);`
+`define('SHARE_MODERATORS', true);`
 
-`define('SHARE_RAID_USERS', false);`
+`define('SHARE_USERS', false);`
 
-`define('SHARE_RAID_CHATS', '-100111222333');`
+`define('SHARE_CHATS', '-100111222333');`
 
 ## Raid overview
 
