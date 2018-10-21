@@ -7,9 +7,9 @@ debug_log('START()');
 //debug_log($data);
 
 // Get gym by name.
-// Trim away everything before the first space
+// Trim away everything before "/start "
 $searchterm = $update['message']['text'];
-$searchterm = trim(substr($searchterm, strpos($searchterm, ' ') + 1));
+$searchterm = substr($searchterm, 7);
 
 // Get the keys by gym name search.
 if(!empty($searchterm)) {
