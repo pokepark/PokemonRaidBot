@@ -2876,7 +2876,32 @@ function show_raid_poll($raid)
     if (!empty($raid['address'])) {
         $msg .= '<a href="https://maps.google.com/?daddr=' . $raid['lat'] . ',' . $raid['lon'] . '">' . $raid['address'] . '</a>' . CR;
     } else {
+
+    // Get the address.
+		$addr = get_address($raid['lat'], $raid['lon']);
+ 		// Get full address - Street #, ZIP District
+		$Address = "";
+		$Address .= (!empty($addr['street']) ? $addr['street'] : "");
+		$Address .= (!empty($addr['street_number']) ? " " . $addr['street_number'] : "");
+		$Address .= (!empty($Address) ? ", " : "");
+		$Address .= (!empty($addr['postal_code']) ? $addr['postal_code'] . " " : "");
+		$Address .= (!empty($addr['district']) ? $addr['district'] : "");
+		
+		//Only store address if not empty
+		if(!empty($Address)) {
+			my_query(
+				"
+				UPDATE    gyms
+				SET     address = '{$Address}'
+				WHERE   id = {$raid['gym_id']}
+				"
+			);    
+       //Use new address
+	$msg .= '<a href="https://maps.google.com/?daddr=' . $raid['lat'] . ',' . $raid['lon'] . '">' . $Address . '</a>' . CR;
+		}    else {
+	//If no address is found show google link
 	$msg .= '<a href="http://maps.google.com/maps?q=' . $raid['lat'] . ',' . $raid['lon'] . '">http://maps.google.com/maps?q=' . $raid['lat'] . ',' . $raid['lon'] . '</a>' . CR;
+    }	
     }
 
     // Display raid boss name.
