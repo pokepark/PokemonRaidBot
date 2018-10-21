@@ -6,8 +6,20 @@ debug_log('START()');
 //debug_log($update);
 //debug_log($data);
 
-// Get the keys.
-$keys = raid_edit_gyms_first_letter_keys();
+// Get gym by name.
+// Trim away everything before the first space
+$searchterm = $update['message']['text'];
+$searchterm = trim(substr($searchterm, strpos($searchterm, ' ') + 1));
+
+// Get the keys by gym name search.
+if(!empty($searchterm)) {
+    $keys = raid_get_gyms_list_keys($searchterm);
+} 
+
+// Get the keys if nothing was returned. 
+if(!$keys) {
+    $keys = raid_edit_gyms_first_letter_keys();
+}
 
 // No keys found.
 if (!$keys) {

@@ -95,7 +95,7 @@ if(substr_count($raid_time, '-') == 1) {
     // Adding button to continue with next step in raid creation
     $keys[] = array(
         'text'          => getTranslation('next'),
-        'callback_data' => $id . ':edit_duration:' . $arg . ',ex-raid,0'
+        'callback_data' => $id . ':edit_time:' . $arg . ',X,0'
     );
 
     // Set message.

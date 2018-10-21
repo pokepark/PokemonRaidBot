@@ -24,7 +24,7 @@ CREATE TABLE `attendance` (
   `cancel` tinyint(1) unsigned DEFAULT '0',
   `late` tinyint(1) unsigned DEFAULT '0',
   `invite` tinyint(1) unsigned DEFAULT '0',
-  `pokemon` varchar(12) DEFAULT '0',
+  `pokemon` varchar(20) DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `raid_id` (`raid_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -68,7 +68,7 @@ CREATE TABLE `pokemon` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `pokedex_id` int(10) unsigned NOT NULL,
   `pokemon_name` varchar(12) DEFAULT NULL,
-  `pokemon_form` int(10) unsigned DEFAULT '0',
+  `pokemon_form` varchar(12) DEFAULT 'normal',
   `raid_level` enum('0','1','2','3','4','5','X') DEFAULT '0',
   `min_cp` int(10) unsigned NOT NULL,
   `max_cp` int(10) unsigned NOT NULL,
@@ -83,7 +83,7 @@ CREATE TABLE `pokemon` (
 CREATE TABLE `raids` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) DEFAULT NULL,
-  `pokemon` varchar(12) DEFAULT NULL,
+  `pokemon` varchar(20) DEFAULT NULL,
   `first_seen` datetime DEFAULT NULL,
   `start_time` datetime DEFAULT NULL,
   `end_time` datetime DEFAULT NULL,

@@ -351,7 +351,7 @@ function get_raid_level($pokedex_id)
     // Split pokedex_id and form
     $dex_id_form = explode('-',$pokedex_id);
     $dex_id = $dex_id_form[0];
-    $dex_form = 0; // TODO: $dex_id_form[1];
+    $dex_form = $dex_id_form[1];
 
     // Make sure $dex_id is numeric
     if(is_numeric($dex_id)) {
@@ -361,7 +361,7 @@ function get_raid_level($pokedex_id)
                 SELECT    raid_level
                 FROM      pokemon
                 WHERE     pokedex_id = {$dex_id}
-                AND       pokemon_form = {$dex_form}
+                AND       pokemon_form = '{$dex_form}'
                 "
             );
 
@@ -452,11 +452,11 @@ function get_pokemon_id_by_name($pokemon_name)
 {
     // Init id and write name to search to log.
     $pokemon_id = 0;
-    $pokemon_form = 0;
+    $pokemon_form = 'normal';
     debug_log($pokemon_name,'P:');
 
     // Explode pokemon name in case we have a form too.
-    $delimiter = 0;
+    $delimiter = '';
     if(strpos($pokemon_name, ' ') !== false) {
         $delimiter = ' ';
     } else if (strpos($pokemon_name, '-') !== false) {
@@ -467,10 +467,12 @@ function get_pokemon_id_by_name($pokemon_name)
     
     // Explode if delimiter was found.
     $poke_name = $pokemon_name;
-    if($delimiter != 0) {
+    if($delimiter != '') {
         $pokemon_name_form = explode($delimiter,$pokemon_name,2);
-        $poke_name = $pokemon_name_form[0];
-        $poke_form = $pokemon_name_form[1];
+        $poke_name = trim($pokemon_name_form[0]);
+        $poke_name = strtolower($poke_name);
+        $poke_form = trim($pokemon_name_form[1]);
+        $poke_form = strtolower($poke_form);
     }
 
     // Set language
@@ -492,10 +494,31 @@ function get_pokemon_id_by_name($pokemon_name)
         $pokemon_id = $key + 1;
     }
 
-    // TODO: Get ID of form from translation file
+    // Get form.
+    // Works like this: Search form in language file via language, e.g. 'DE' and local form translation, e.g. 'Alola' for 'DE'.
+    // Once we found the key name, e.g. 'pokemon_form_attack', get the form name 'attack' from it via str_replace'ing the prefix 'pokemon_form'.
+    if($pokemon_id != 0 && isset($poke_form) && !empty($poke_form) && $poke_form != 'normal') {
+
+        // Get forms translation file
+        $str_form = file_get_contents(TRANSLATION_PATH . '/pokemon_forms.json');
+        $json_form = json_decode($str_form, true);
+
+        // Search pokemon form in json
+        foreach($json_form as $key_form => $jform) {
+            // Stop search if we found it.
+            if ($jform[$language] === ucfirst($poke_form)) {
+                $pokemon_form = str_replace('pokemon_form_','',$key_form);
+                break;
+            }
+        }
+    }
 
     // Write to log.
     debug_log($pokemon_id,'P:');
+    debug_log($pokemon_form,'P:');
+
+    // Set pokemon form.
+    $pokemon_id = $pokemon_id . '-' . $pokemon_form;
 
     // Return pokemon_id
     return $pokemon_id;
@@ -513,7 +536,7 @@ function get_local_pokemon_name($pokemon_id_form, $override_language = false, $t
     // Split pokedex_id and form
     $dex_id_form = explode('-',$pokemon_id_form);
     $pokedex_id = $dex_id_form[0];
-    $pokemon_form = 0; // TODO: $dex_id_form[1];
+    $pokemon_form = $dex_id_form[1];
 
     debug_log('Pokemon_form: ' . $pokemon_form);
 
@@ -528,9 +551,9 @@ function get_local_pokemon_name($pokemon_id_form, $override_language = false, $t
     $eggs = $GLOBALS['eggs'];
 
     // Get eggs from normal translation.
-    if(in_array($pokemon_id_form, $eggs)) {
+    if(in_array($pokedex_id, $eggs)) {
         $pokemon_name = $getTypeTranslation('egg_' . substr($pokedex_id, -1));
-    } else if ($pokemon_form != 0) { 
+    } else if ($pokemon_form != 'normal') { 
         $pokemon_name = $getTypeTranslation('pokemon_id_' . $pokedex_id) . SP . $getTypeTranslation('pokemon_form_' . $pokemon_form);
     } else { 
         $pokemon_name = $getTypeTranslation('pokemon_id_' . $pokedex_id);
@@ -546,8 +569,8 @@ function get_local_pokemon_name($pokemon_id_form, $override_language = false, $t
                 "
                 SELECT    pokemon_name
                 FROM      pokemon
-                WHERE     pokedex_id = $pokedex_id
-                AND       pokemon_form = $pokemon_form
+                WHERE     pokedex_id = {$pokedex_id}
+                AND       pokemon_form = '{$pokemon_form}'
                 "
             );
 
@@ -643,7 +666,7 @@ function get_pokemon_cp($pokemon_id_form)
             SELECT    min_cp, max_cp, min_weather_cp, max_weather_cp
             FROM      pokemon
             WHERE     pokedex_id = {$pokedex_id}
-            AND       pokemon_form = {$pokemon_form}
+            AND       pokemon_form = '{$pokemon_form}'
             "
         );
 
@@ -663,7 +686,7 @@ function get_formatted_pokemon_cp($pokemon_id_form, $override_language = false)
     // Split pokedex_id and form
     $dex_id_form = explode('-',$pokemon_id_form);
     $pokedex_id = $dex_id_form[0];
-    $pokemon_form = 0; // TODO: $dex_id_form[1];
+    $pokemon_form = $dex_id_form[1];
 
     // Init cp text.
     $cp20 = '';
@@ -677,7 +700,7 @@ function get_formatted_pokemon_cp($pokemon_id_form, $override_language = false)
                 SELECT    min_cp, max_cp, min_weather_cp, max_weather_cp
                 FROM      pokemon
                 WHERE     pokedex_id = {$pokedex_id}
-                AND       pokemon_form = {$pokemon_form}
+                AND       pokemon_form = '{$pokemon_form}'
                 "
             );
 
@@ -710,7 +733,7 @@ function get_pokemon_weather($pokemon_id_form)
     // Split pokedex_id and form
     $dex_id_form = explode('-',$pokemon_id_form);
     $pokedex_id = $dex_id_form[0];
-    $pokemon_form = 0; // TODO: $dex_id_form[1];
+    $pokemon_form = $dex_id_form[1];
 
     if($pokedex_id !== "NULL" && $pokedex_id != 0) {
         // Get pokemon weather from database
@@ -719,7 +742,7 @@ function get_pokemon_weather($pokemon_id_form)
                 SELECT    weather
                 FROM      pokemon
                 WHERE     pokedex_id = {$pokedex_id}
-                AND       pokemon_form = {$pokemon_form}
+                AND       pokemon_form = '{$pokemon_form}'
                 "
             );
 
@@ -1099,6 +1122,61 @@ function raid_edit_gym_keys($first)
 }
 
 /**
+ * Get gyms by searchterm.
+ * @param $searchterm
+ * @return bool|array
+ */
+function raid_get_gyms_list_keys($searchterm)
+{
+    // Init empty keys array.
+    $keys = [];
+
+    // Make sure the search term is not empty
+    if(!empty($searchterm)) {
+        // Get gyms from database
+        $rs = my_query(
+                "
+                SELECT    id, gym_name
+                FROM      gyms
+                WHERE     gym_name LIKE '$searchterm%'
+                OR        gym_name LIKE '%$searchterm%'
+                ORDER BY
+                  CASE
+                    WHEN  gym_name LIKE '$searchterm%' THEN 1
+                    WHEN  gym_name LIKE '%$searchterm%' THEN 2
+                    ELSE  3
+                  END
+                LIMIT     15
+                "
+            );
+
+        while ($gym = $rs->fetch_assoc()) {
+            $first = strtoupper(substr($gym['gym_name'], 0, 1));
+	    $keys[] = array(
+                'text'          => $gym['gym_name'],
+                'callback_data' => $first . ':edit_raidlevel:' . $gym['id']
+            );
+        }
+    }
+    
+    // Add abort key.
+    if($keys) {
+        // Get the inline key array.
+        $keys = inline_key_array($keys, 1);
+
+        // Add back navigation key.
+        $nav_keys = [];
+        $nav_keys[] = universal_inner_key($keys, '0', 'exit', '0', getTranslation('abort'));
+
+        // Get the inline key array.
+        $keys[] = $nav_keys;
+    }
+
+    return $keys;
+}
+
+
+/**
  * Pokedex edit pokemon keys.
  * @param $limit
  * @param $action
@@ -1123,7 +1201,7 @@ function edit_pokedex_keys($limit, $action)
         "
         SELECT    pokedex_id, pokemon_form
         FROM      pokemon
-        ORDER BY  pokedex_id, pokemon_form
+        ORDER BY  pokedex_id, pokemon_form != 'normal', pokemon_form
         LIMIT     $limit, $entries
         "
     );
@@ -2053,11 +2131,14 @@ function keys_vote($raid)
         debug_log('Participants for raid with ID ' . $raid['id'] . ': ' . $count_pp);
         debug_log('Participants who voted for any pokemon: ' . $count_any_pokemon);
         debug_log('Participants who voted for ' . $raid_pokemon . ': ' . $count_raid_pokemon);
+    
+        // Split pokemon id and form
+        $raid_pokemon_id = explode('-',$raid_pokemon)[0];
 
         // Hide keys for specific cases
         $show_keys = true;
         // Make sure raid boss is not an egg
-        if(!in_array($raid_pokemon, $GLOBALS['eggs'])) {
+        if(!in_array($raid_pokemon_id, $GLOBALS['eggs'])) {
             // Make sure we either have no participants
             // OR all participants voted for "any" raid boss
             // OR all participants voted for the hatched raid boss 
@@ -2086,7 +2167,7 @@ function keys_vote($raid)
 
             // Add key for each raid level
             while ($pokemon = $rs->fetch_assoc()) {
-                if(in_array($pokemon['pokedex_id'] . '-' . $pokemon['pokemon_form'], $eggs)) continue;
+                if(in_array($pokemon['pokedex_id'], $eggs)) continue;
                 $buttons_pokemon[] = array(
                     'text'          => get_local_pokemon_name($pokemon['pokedex_id'] . '-' . $pokemon['pokemon_form'], true, 'raid'),
                     'callback_data' => $raid['id'] . ':vote_pokemon:' . $pokemon['pokedex_id'] . '-' . $pokemon['pokemon_form']

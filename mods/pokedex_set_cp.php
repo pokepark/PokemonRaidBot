@@ -88,7 +88,7 @@ if($action == 'add') {
             UPDATE    pokemon
             SET       $cp_column = {$cp_value}
             WHERE     pokedex_id = {$dex_id}
-            AND       pokemon_form = {$dex_form}
+            AND       pokemon_form = '{$dex_form}'
             "
         );
 

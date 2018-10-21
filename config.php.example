@@ -10,6 +10,7 @@ define('DEBUG',				true);
 define('CONFIG_LOGFILE',		'/var/log/tg-bots/dev-raid-bot.log');
 define('CONFIG_HASH',			'aaaabbbbccccddddeeeeffff1111222233334444555566667777888899990000aaaabbbbccccddddeeeeffff1111222233334444555566667777888899990000');
 define('DDOS_MAXIMUM',			'10');
+define('BRIDGE_MODE',			false);
 
 // Proxy
 define('CURL_USEPROXY',			false);

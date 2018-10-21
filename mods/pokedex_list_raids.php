@@ -12,7 +12,7 @@ $rs = my_query(
         SELECT    pokedex_id, pokemon_form, raid_level
         FROM      pokemon
         WHERE     raid_level != '0'
-        ORDER BY  raid_level, pokedex_id, pokemon_form
+        ORDER BY  raid_level, pokedex_id, pokemon_form != 'normal', pokemon_form
         "
     );
 

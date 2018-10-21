@@ -6,7 +6,8 @@
     "IT":"Lunedì",
     "PT-BR":"Segunda-feira",
     "RU":"Понедельник",
-    "NO":"Mandag"
+    "NO":"Mandag",
+    "FR":"Lundi"
   },
   "weekday_2":{  
     "NL":"Dinsdag",
@@ -15,7 +16,8 @@
     "IT":"Martedì",
     "PT-BR":"Terça-feira",
     "RU":"Вторник",
-    "NO":"Tirsdag"
+    "NO":"Tirsdag",
+    "FR":"Mardi"
   },
   "weekday_3":{  
     "NL":"Woensdag",
@@ -24,7 +26,8 @@
     "IT":"Mercoledì",
     "PT-BR":"Quarta-feira",
     "RU":"Среда",
-    "NO":"Onsdag"
+    "NO":"Onsdag",
+    "FR":"Mercredi"
   },
   "weekday_4":{  
     "NL":"Donderdag",
@@ -33,7 +36,8 @@
     "IT":"Giovedì",
     "PT-BR":"Quinta-feira",
     "RU":"Четверг",
-    "NO":"Torsdag"
+    "NO":"Torsdag",
+    "FR":"Jeudi"
   },
   "weekday_5":{  
     "NL":"Vrijdag",
@@ -42,7 +46,8 @@
     "IT":"Venerdì",
     "PT-BR":"Sexta-feira",
     "RU":"Пятница",
-    "NO":"Fredag"
+    "NO":"Fredag",
+    "FR":"Vendredi"
   },
   "weekday_6":{  
     "NL":"Zaterdag",
@@ -51,7 +56,8 @@
     "IT":"Sabato",
     "PT-BR":"Sábado",
     "RU":"Суббота",
-    "NO":"Lørdag"
+    "NO":"Lørdag",
+    "FR":"Samedi"
   },
   "weekday_7":{  
     "NL":"Zondag",
@@ -60,7 +66,8 @@
     "IT":"Domenica",
     "PT-BR":"Domingo",
     "RU":"Воскресение",
-    "NO":"Søndag"
+    "NO":"Søndag",
+    "FR":"Dimanche"
   },
   "month_01":{  
     "NL":"Januari",
@@ -69,7 +76,8 @@
     "IT":"Gennaio",
     "PT-BR":"Janeiro",
     "RU":"Январь",
-    "NO":"Januar"
+    "NO":"Januar",
+    "FR":"Janvier"
   },
   "month_02":{  
     "NL":"Februari",
@@ -78,7 +86,8 @@
     "IT":"Febbraio",
     "PT-BR":"Fevereiro",
     "RU":"Февраль",
-    "NO":"Februar"
+    "NO":"Februar",
+    "FR":"Février"
   },
   "month_03":{  
     "NL":"Maart",
@@ -87,7 +96,8 @@
     "IT":"Marzo",
     "PT-BR":"Março",
     "RU":"Март",
-    "NO":"Mars"
+    "NO":"Mars",
+    "FR":"Mars"
   },
   "month_04":{  
     "NL":"April",
@@ -96,7 +106,8 @@
     "IT":"Aprile",
     "PT-BR":"Abril",
     "RU":"Апрель",
-    "NO":"April"
+    "NO":"April",
+    "FR":"Avril"
   },
   "month_05":{  
     "NL":"Mei",
@@ -105,7 +116,8 @@
     "IT":"Maggio",
     "PT-BR":"Mais",
     "RU":"Май",
-    "NO":"Mai"
+    "NO":"Mai",
+    "FR":"Mai"
   },
   "month_06":{  
     "NL":"Juni",
@@ -114,7 +126,8 @@
     "IT":"Giugno",
     "PT-BR":"Junho",
     "RU":"Июнь",
-    "NO":"Juni"
+    "NO":"Juni",
+    "FR":"Juin"
   },
   "month_07":{  
     "NL":"Juli",
@@ -123,7 +136,8 @@
     "IT":"Luglio",
     "PT-BR":"Julho",
     "RU":"Июль",
-    "NO":"Juli"
+    "NO":"Juli",
+    "FR":"Juillet"
   },
   "month_08":{  
     "NL":"Augustus",
@@ -132,7 +146,8 @@
     "IT":"Agosto",
     "PT-BR":"Agosto",
     "RU":"Август",
-    "NO":"August"
+    "NO":"August",
+    "FR":"Août"
   },
   "month_09":{  
     "NL":"September",
@@ -141,7 +156,8 @@
     "IT":"Settembre",
     "PT-BR":"Setembro",
     "RU":"Сентябрь",
-    "NO":"September"
+    "NO":"September",
+    "FR":"Septembre"
   },
   "month_10":{  
     "NL":"Oktober",
@@ -150,7 +166,8 @@
     "IT":"Ottobre",
     "PT-BR":"Outubro",
     "RU":"Октябрь",
-    "NO":"Oktober"
+    "NO":"Oktober",
+    "FR":"Octobre"
   },
   "month_11":{  
     "NL":"November",
@@ -159,7 +176,8 @@
     "IT":"Novembre",
     "PT-BR":"Novembro",
     "RU":"Ноябрь",
-    "NO":"November"
+    "NO":"November",
+    "FR":"Novembre"
   },
   "month_12":{  
     "NL":"December",
@@ -168,7 +186,8 @@
     "IT":"Dicembre",
     "PT-BR":"Dezembro",
     "RU":"Декабрь",
-    "NO":"Desember"
+    "NO":"Desember",
+    "FR":"Décembre"
   },
   "bot_access_denied":{  
     "NL":"Je hebt geen toegang tot deze functie of bot!",
@@ -177,7 +196,8 @@
     "IT":"Non hai i permessi necessari per usare questo comando o bot!",
     "PT-BR":"Você não tem permissão para utilizar esse comando ou bot!",
     "RU":"Вы не можете использовать эту команду или бота!",
-    "NO":"Du har ikke tillatelse til å bruke denne kommandoen eller boten!"
+    "NO":"Du har ikke tillatelse til å bruke denne kommandoen eller boten!",
+    "FR":"Tu n'es pas autorisé à utiliser cette commande !"
   },
   "forest":{  
     "NL":"Ergens in het bos",
@@ -186,7 +206,8 @@
     "IT":"Da qualche parte nella foresta",
     "PT-BR":"Em algum lugar na floresta",
     "RU":"Где-то в лесу",
-    "NO":"Ett sted i skogen"
+    "NO":"Ett sted i skogen",
+    "FR":"Quelque part dans la forêt"
   },
   "yes":{  
     "NL":"Ja",
@@ -195,7 +216,8 @@
     "IT":"Sì",
     "PT-BR":"Sim",
     "RU":"Да",
-    "NO":"Ja"
+    "NO":"Ja",
+    "FR":"Oui"
   },
   "no":{  
     "NL":"Nee",
@@ -204,7 +226,8 @@
     "IT":"No",
     "PT-BR":"Não",
     "RU":"Нет",
-    "NO":"Nei"
+    "NO":"Nei",
+    "FR":"Non"
   },
   "not_supported":{  
     "NL":"Niet ondersteund",
@@ -213,7 +236,8 @@
     "IT":"Non compatibile",
     "PT-BR":"Não compatível",
     "RU":"Не поддерживается",
-    "NO":"Ikke støttet"
+    "NO":"Ikke støttet",
+    "FR":"Non compatible"
   },
   "abort":{  
     "NL":"Afbreken",
@@ -222,7 +246,8 @@
     "IT":"Cancella",
     "PT-BR":"Abortar",
     "RU":"Прервать",
-    "NO":"Avbryt"
+    "NO":"Avbryt",
+    "FR":"Abandonner"
   },
   "action_aborted":{  
     "NL":"Het proces is afgebroken!",
@@ -231,7 +256,8 @@
     "IT":"Il processo è stato cancellato!",
     "PT-BR":"O processo foi abortado!",
     "RU":"Процесс был прерван!",
-    "NO":"Handlingen ble avbrutt!"
+    "NO":"Handlingen ble avbrutt!",
+    "FR":"Le processus à échoué !"
   },
   "back":{  
     "NL":"Terug",
@@ -240,7 +266,8 @@
     "IT":"Precedente",
     "PT-BR":"Voltar",
     "RU":"Назад",
-    "NO":"Tilbake"
+    "NO":"Tilbake",
+    "FR":"Retour"
   },
   "next":{  
     "NL":"Volgende",
@@ -249,7 +276,8 @@
     "IT":"Successivo",
     "PT-BR":"Próximo",
     "RU":"Вперед",
-    "NO":"Neste"
+    "NO":"Neste",
+    "FR":"Suivant"
   },
   "done":{  
     "NL":"Klaar",
@@ -258,7 +286,8 @@
     "IT":"Completato",
     "PT-BR":"Feito",
     "RU":"Готово",
-    "NO":"Ferdig"
+    "NO":"Ferdig",
+    "FR":"Terminé"
   },
   "add":{  
     "NL":"Toevoegen",
@@ -267,7 +296,8 @@
     "IT":"Aggiungi",
     "PT-BR":"Adicionar",
     "RU":"Добавить",
-    "NO":"Legg til"
+    "NO":"Legg til",
+    "FR":"Ajouter"
   },
   "delete":{  
     "NL":"Verwijder",
@@ -276,7 +306,8 @@
     "IT":"Elimina",
     "PT-BR":"Deletar",
     "RU":"Удалить",
-    "NO":"Slett"
+    "NO":"Slett",
+    "FR":"Supprimer"
   },
   "list":{  
     "NL":"Lijst",
@@ -285,7 +316,8 @@
     "IT":"Lista",
     "PT-BR":"Lista",
     "RU":"Список",
-    "NO":"List"
+    "NO":"List",
+    "FR":"Liste"
   },
   "reset":{  
     "NL":"Reset",
@@ -294,7 +326,8 @@
     "IT":"Reset",
     "PT-BR":"TRANSLATE",
     "RU":"Сброс",
-    "NO":"Reset"
+    "NO":"Reset",
+    "FR":"Remise à zéro"
   },
   "created_by":{  
     "NL":"Aangemaakt door",
@@ -303,7 +336,8 @@
     "IT":"Creato da",
     "PT-BR":"Criada por",
     "RU":"Создано",
-    "NO":"Postet av"
+    "NO":"Postet av",
+    "FR":"Créé par"
   },
   "updated":{  
     "NL":"Bijgewerkt",
@@ -312,7 +346,8 @@
     "IT":"Aggiornato",
     "PT-BR":"Atualizada",
     "RU":"Обновлено",
-    "NO":"Oppdatert"
+    "NO":"Oppdatert",
+    "FR":"Mis à jour"
   },
   "share":{  
     "NL":"Delen",
@@ -321,7 +356,8 @@
     "IT":"Condividi",
     "PT-BR":"Compartilhar",
     "RU":"Поделиться",
-    "NO":"Del"
+    "NO":"Del",
+    "FR":"Partager"
   },
   "share_with":{  
     "NL":"Delen met",
@@ -330,7 +366,8 @@
     "IT":"Condividi con",
     "PT-BR":"Compartilhar com",
     "RU":"Поделиться с",
-    "NO":"Del med"
+    "NO":"Del med",
+    "FR":"Partager avec"
   },
   "successfully_shared":{
     "NL":"Succesvol gedeeld!",
@@ -339,7 +376,8 @@
     "IT":"Condiviso con successo!",
     "PT-BR":"Compartilhado com sucesso!",
     "RU":"Успешно отправлено!",
-    "NO":"Deling velykket!"
+    "NO":"Deling velykket!",
+    "FR":"Partagé avec succès !"
   },
   "expand":{  
     "NL":"Uitklappen",
@@ -348,6 +386,8 @@
     "IT":"Espandi",
     "PT-BR":"Expandir",
     "RU":"Развернуть",
-    "NO":"Flere valg"
+    "NO":"Flere valg",
+    "FR":"Agrandir"
   }
 }
+
