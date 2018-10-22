@@ -67,7 +67,7 @@ try {
         LIMIT 1
     ';
     $statement = $dbh->prepare( $query );
-    $statement->bindValue('%:gym_name%', $gym_name, PDO::PARAM_STR);
+    $statement->bindValue(':gym_name', $gym_name, PDO::PARAM_STR);
     $statement->execute();
     while ($row = $statement->fetch()) {
     
@@ -154,7 +154,7 @@ if ($raid_id > 0) {
 		              start_time = DATE_ADD(first_seen, INTERVAL {$countdown} MINUTE),
 		              end_time = DATE_ADD(start_time, INTERVAL {$endtime} MINUTE),
 		              gym_team = '{$db->real_escape_string($team)}',
-		              gym_name = '{$gym_id}',
+		              gym_id = '{$gym_id}',
 		              timezone = '{$tz}'
         "
     ); */
@@ -170,7 +170,7 @@ if ($raid_id > 0) {
 		              start_time = DATE_ADD(first_seen, INTERVAL {$countdown} MINUTE),
 		              end_time = DATE_ADD(start_time, INTERVAL {$endtime} MINUTE),
 		              gym_team = '{$db->real_escape_string($team)}',
-		              gym_name = '{$gym_id}',
+		              gym_id = '{$gym_id}',
 		              timezone = '{$tz}'
         "
     );
