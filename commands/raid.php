@@ -63,11 +63,11 @@ try {
         SELECT id
         FROM gyms
         WHERE
-            gym_name LIKE %:gym_name%
+            gym_name LIKE :gym_name
         LIMIT 1
     ';
     $statement = $dbh->prepare( $query );
-    $statement->bindValue(':gym_name', $gym_name, PDO::PARAM_STR);
+    $statement->bindValue('%:gym_name%', $gym_name, PDO::PARAM_STR);
     $statement->execute();
     while ($row = $statement->fetch()) {
     
