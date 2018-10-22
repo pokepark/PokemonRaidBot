@@ -2,8 +2,6 @@
 // Write to log.
 debug_log('RAID()');
 
-exit;
-
 // For debug.
 //debug_log($update);
 //debug_log($data);
@@ -18,23 +16,19 @@ $tz = TIMEZONE;
 $gym_data = trim(substr($update['message']['text'], 5));
 
 // Create data array (max. 9)
-$data = explode(',', $gym_data, 9);
+$data = explode(',', $gym_data, 5);
 
 /**
  * Info:
  * [0] = Boss pokedex id
- * [1] = latitude
- * [2] = longitude
- * [3] = raid duration in minutes
- * [4] = gym team
- * [5] = gym name
- * [6] = district (or street)
- * [7] = street (or district)
- * [8] = optional: raid countdown minutes
+ * [1] = raid duration in minutes
+ * [2] = gym name
+ * [3] = gym team
+ * [4] = optional: raid countdown minutes
  */
 
 // Invalid data received.
-if (count($data) < 8) {
+if (count($data) < 4) {
     send_message($update['message']['chat']['id'], 'Invalid input - Paramter mismatch', []);
     exit;
 }
@@ -46,49 +40,53 @@ if (empty($boss) || !is_numeric($boss) || strpos($boss, '.') !== false ) {
     exit;
 }
 
-// Get latitude / longitude from data.
-$lat = floatval($data[1]);
-$lon = floatval($data[2]);
-
-// Format lat/long values.
-$lat = substr($lat, 0, strpos('.', $lat) + 9);
-$lon = substr($lon, 0, strpos('.', $lon) + 9);
-
 // Endtime from input
-$endtime = $data[3];
+$endtime = $data[1];
 
 // Team
-$team = $data[4];
+$team = $data[3];
 
 // Escape comma in Raidname
-$name = str_replace('|',',',$data[5]);
-
-// Build address string.
-if(!empty(GOOGLE_API_KEY)){
-    $addr = get_address($lat, $lon);
-
-    // Get full address - Street #, ZIP District
-    $address = "";
-    $address .= (!empty($addr['street']) ? $addr['street'] : "");
-    $address .= (!empty($addr['street_number']) ? " " . $addr['street_number'] : "");
-    $address .= (!empty($addr) ? ", " : "");
-    $address .= (!empty($addr['postal_code']) ? $addr['postal_code'] . " " : "");
-    $address .= (!empty($addr['district']) ? $addr['district'] : "");
-} else {
-    //Based on input order of [6] and [7] it'll be either: Street, District or District, Street
-    $address = (!empty($data[6]) ? $data[6] : '') . (!empty($data[7]) ? ", " . $data[7] : "");
-}
+$gym_name = str_replace('|',',',$data[2]);
 
 // Get countdown minutes when specified, otherwise 0 minutes until raid starts
 $countdown = 0;
-if (!empty($data[8])) {
-    $countdown = $data[8];
+if (!empty($data[4])) {
+    $countdown = $data[4];
+}
+
+$gym_id = 0;
+try {
+     
+    // Update gym name in raid table.
+    $query = '
+        SELECT id
+        FROM gyms
+        WHERE
+            gym_name LIKE %:gym_name%
+        LIMIT 1
+    ';
+    $statement = $dbh->prepare( $query );
+    $statement->bindValue(':gym_name', $gym_name, PDO::PARAM_STR);
+    $statement->execute();
+    while ($row = $statement->fetch()) {
+    
+        $gym_id = $row['id'];
+    }
+}
+catch (PDOException $exception) {
+
+    error_log($exception->getMessage());
+    $dbh = null;
+    exit;
 }
 
 // Insert new raid or update existing raid/ex-raid?
-$raid_id = raid_duplication_check($name,($endtime + $countdown));
+$raid_id = raid_duplication_check($gym_id,($endtime + $countdown));
 
 if ($raid_id > 0) {
+
+    
     // Get current pokemon from database for raid.
     $rs_ex_raid = my_query(
         "
@@ -142,12 +140,12 @@ if ($raid_id > 0) {
 }
 
 // Address found.
-if (!empty($address)) {
+//if (!empty($address)) {
     // Insert gym with address, lat and lon to database if not already in database
-    $gym2db = insert_gym($name, $lat, $lon, $address);
+//    $gym2db = insert_gym($name, $lat, $lon, $address);
 
     // Build the query.
-    $rs = my_query(
+/*    $rs = my_query(
         "
         INSERT INTO   raids
         SET           pokemon = '{$db->real_escape_string($boss)}',
@@ -156,13 +154,12 @@ if (!empty($address)) {
 		              start_time = DATE_ADD(first_seen, INTERVAL {$countdown} MINUTE),
 		              end_time = DATE_ADD(start_time, INTERVAL {$endtime} MINUTE),
 		              gym_team = '{$db->real_escape_string($team)}',
-		              gym_id = '{$db->real_escape_string($name)}',
-		              timezone = '{$tz}',
-		              address = '{$db->real_escape_string($address)}'
+		              gym_name = '{$gym_id}',
+		              timezone = '{$tz}'
         "
-    );
+    ); */
 // No address found.
-} else {
+/* } else { */
     // Build the query.
     $rs = my_query(
         "
@@ -173,11 +170,11 @@ if (!empty($address)) {
 		              start_time = DATE_ADD(first_seen, INTERVAL {$countdown} MINUTE),
 		              end_time = DATE_ADD(start_time, INTERVAL {$endtime} MINUTE),
 		              gym_team = '{$db->real_escape_string($team)}',
-		              gym_id = '{$db->real_escape_string($name)}',
+		              gym_name = '{$gym_id}',
 		              timezone = '{$tz}'
         "
     );
-}
+// }
 
 // Get last insert id from db.
 $id = my_insert_id();
