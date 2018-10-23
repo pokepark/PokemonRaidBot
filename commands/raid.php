@@ -2,6 +2,8 @@
 // Write to log.
 debug_log('RAID()');
 
+exit;
+
 // For debug.
 //debug_log($update);
 //debug_log($data);
@@ -135,14 +137,6 @@ if ($raid_id > 0) {
     // Get raid data.
     $raid = get_raid($raid_id);
 
-    //Debug
-    // Set text.
-    //$text = '<b>Raid aktualisiert!  R-ID = ' . $raid_id . "</b>" . CR;
-    //$text .= CR . show_raid_poll($raid);
-
-    // Send the message
-    //sendMessage($update['message']['chat']['id'], $text);
-
     // Exit now after update of raid and message.
     exit();
 }
@@ -158,13 +152,11 @@ if (!empty($address)) {
         INSERT INTO   raids
         SET           pokemon = '{$db->real_escape_string($boss)}',
 		              user_id = {$update['message']['from']['id']},
-		              lat = '{$lat}',
-		              lon = '{$lon}',
 		              first_seen = DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:00'),
 		              start_time = DATE_ADD(first_seen, INTERVAL {$countdown} MINUTE),
 		              end_time = DATE_ADD(start_time, INTERVAL {$endtime} MINUTE),
 		              gym_team = '{$db->real_escape_string($team)}',
-		              gym_name = '{$db->real_escape_string($name)}',
+		              gym_id = '{$db->real_escape_string($name)}',
 		              timezone = '{$tz}',
 		              address = '{$db->real_escape_string($address)}'
         "
@@ -177,13 +169,11 @@ if (!empty($address)) {
         INSERT INTO   raids
         SET           pokemon = '{$db->real_escape_string($boss)}',
 		              user_id = {$update['message']['from']['id']},
-		              lat = '{$lat}',
-		              lon = '{$lon}',
 		              first_seen = DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:00'),
 		              start_time = DATE_ADD(first_seen, INTERVAL {$countdown} MINUTE),
 		              end_time = DATE_ADD(start_time, INTERVAL {$endtime} MINUTE),
 		              gym_team = '{$db->real_escape_string($team)}',
-		              gym_name = '{$db->real_escape_string($name)}',
+		              gym_id = '{$db->real_escape_string($name)}',
 		              timezone = '{$tz}'
         "
     );
@@ -193,7 +183,7 @@ if (!empty($address)) {
 $id = my_insert_id();
 
 // Write to log.
-debug_log('R-ID=' . $id);
+debug_log('ID=' . $id);
 
 // Get raid data.
 $raid = get_raid($id);
@@ -201,7 +191,7 @@ $raid = get_raid($id);
 // Send location.
 if (RAID_LOCATION == true) {
     //$loc = send_location($update['message']['chat']['id'], $raid['lat'], $raid['lon']);
-    $msg_text = !empty($raid['address']) ? $raid['address'] . ', R-ID = ' . $raid['id'] : $raid['pokemon'] . ', ' . $raid['id']; // DO NOT REMOVE " R-ID = " --> NEEDED FOR CLEANUP PREPARATION!
+    $msg_text = !empty($raid['address']) ? $raid['address'] . ', ' . substr(strtoupper(BOT_ID), 0, 1) . '-ID = ' . $raid['id'] : $raid['pokemon'] . ', ' . $raid['id']; // DO NOT REMOVE " ID = " --> NEEDED FOR CLEANUP PREPARATION!
     $loc = send_venue($update['message']['chat']['id'], $raid['lat'], $raid['lon'], "", $msg_text);
 
     // Write to log.
@@ -242,4 +232,5 @@ if ($update['message']['chat']['type'] == 'private' || $update['callback_query']
     send_message($update['message']['chat']['id'], $text, $keys, ['reply_to_message_id' => $reply_to, 'reply_markup' => ['selective' => true, 'one_time_keyboard' => true], 'disable_web_page_preview' => 'true']);
 }
 
-exit();
+?>
+

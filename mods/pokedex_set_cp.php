@@ -37,10 +37,15 @@ debug_log('New CP: ' . $cp_value);
 debug_log('Old CP: ' . $current_cp);
 debug_log('Action: ' . $action);
 
+// Split pokedex_id and form
+$dex_id_form = explode('-',$pokedex_id);
+$dex_id = $dex_id_form[0];
+$dex_form = $dex_id_form[1];
+
 // Add digits to cp
 if($action == 'add') {
     // Init empty keys array.
-    $keys = array();
+    $keys = [];
 
     // Get the keys.
     $keys = cp_keys($pokedex_id, 'pokedex_set_cp', $arg);
@@ -61,7 +66,7 @@ if($action == 'add') {
     $callback_response = 'OK';
 
     // Set the message.
-    $msg = getTranslation('raid_boss') . ': <b>' . get_local_pokemon_name($pokedex_id) . ' (#' . $pokedex_id . ')</b>' . CR;
+    $msg = getTranslation('raid_boss') . ': <b>' . get_local_pokemon_name($pokedex_id) . ' (#' . $dex_id . ')</b>' . CR;
     $msg .= getTranslation('pokedex_current_cp') . ' ' . $current_cp . CR . CR;
     $msg .= '<b>' .getTranslation('pokedex_' . $cp_type . $boosted) . ': ' . $cp_value . '</b>';
 
@@ -82,12 +87,13 @@ if($action == 'add') {
             "
             UPDATE    pokemon
             SET       $cp_column = {$cp_value}
-            WHERE     pokedex_id = {$pokedex_id}
+            WHERE     pokedex_id = {$dex_id}
+            AND       pokemon_form = '{$dex_form}'
             "
         );
 
     // Init empty keys array.
-    $keys = array();
+    $keys = [];
 
     // Back to pokemon and done keys.
     $keys = [
@@ -108,14 +114,15 @@ if($action == 'add') {
 
     // Set the message.
     $msg = getTranslation('pokemon_saved') . CR;
-    $msg .= '<b>' . get_local_pokemon_name($pokedex_id) . ' (#' . $pokedex_id . ')</b>' . CR . CR;
+    $msg .= '<b>' . get_local_pokemon_name($pokedex_id) . ' (#' . $dex_id . ')</b>' . CR . CR;
     $msg .= getTranslation('pokedex_' . $cp_type . $boosted) . ': <b>' . $cp_value . '</b>';
 }
-
-// Edit message.
-edit_message($update, $msg, $keys, false);
 
 // Answer callback.
 answerCallbackQuery($update['callback_query']['id'], $callback_response);
 
+// Edit message.
+edit_message($update, $msg, $keys, false);
+
+// Exit.
 exit();

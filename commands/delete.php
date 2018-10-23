@@ -9,80 +9,91 @@ debug_log('DELETE()');
 // Check access.
 bot_access_check($update, BOT_ACCESS);
 
-// Build query.
-$rs = my_query(
-    "
-    SELECT    timezone
-    FROM      raids
-      WHERE   id = (
-                  SELECT    raid_id
-                  FROM      attendance
-                    WHERE   user_id = {$update['message']['from']['id']}
-                  ORDER BY  id DESC LIMIT 1
-              )
-    "
-);
-
-// Get row.
-$row = $rs->fetch_assoc();
-
-// No data found.
-if (!$row) {
-    //sendMessage($update['message']['from']['id'], 'Can\'t determine your location, please participate in at least 1 raid');
-    //exit;
-    $tz = TIMEZONE;
-} else {
-    $tz = $row['timezone'];
-}
-
-// Build query.
-$request = my_query(
-    "
-    SELECT    *,
-              UNIX_TIMESTAMP(end_time)                        AS ts_end,
-              UNIX_TIMESTAMP(start_time)                      AS ts_start,
-              UNIX_TIMESTAMP(NOW())                           AS ts_now,
-              UNIX_TIMESTAMP(end_time)-UNIX_TIMESTAMP(NOW())  AS t_left
-    FROM      raids
-      WHERE   end_time>NOW()
-        AND   timezone='{$tz}'
-    ORDER BY  end_time ASC LIMIT 20
-    "
-);
+// Get timezone.
+$tz = get_timezone($update['message']['from']['id']);
 
 // Count results.
 $count = 0;
 
-// Get raids.
-while ($raid = $request->fetch_assoc()) {
+// Init text and keys.
+$text = '';
+$keys = [];
 
-    // Counter++
-    $count = $count + 1;
+try {
 
-    // Create keys array.
-    $keys = [
+    $query = '
+        SELECT
+            raids.*, gyms.lat ,
+            gyms.lon ,
+            gyms.address ,
+            gyms.gym_name ,
+            gyms.ex_gym ,
+            users. NAME ,
+            UNIX_TIMESTAMP(start_time) AS ts_start ,
+            UNIX_TIMESTAMP(end_time) AS ts_end ,
+            UNIX_TIMESTAMP(NOW()) AS ts_now ,
+            UNIX_TIMESTAMP(end_time) - UNIX_TIMESTAMP(NOW()) AS t_left
+        FROM
+            raids
+        LEFT JOIN gyms ON raids.gym_id = gyms.id
+        LEFT JOIN users ON raids.user_id = users.user_id
+        WHERE
+            raids.end_time > NOW()
+        AND raids.timezone = :timezone
+        ORDER BY
+            raids.end_time ASC
+        LIMIT 20
+    ';
+    $statement = $dbh->prepare( $query );
+    $statement->bindValue(':timezone', $tz, PDO::PARAM_STR);
+    $statement->execute();
+    while ($row = $statement->fetch()) {
+    
+        // Set text and keys.
+        $text .= $row['gym_name'] . CR;
+        $raid_day = unix2tz($row['ts_start'], $row['timezone'], 'Y-m-d');
+        $today = unix2tz($row['ts_now'], $row['timezone'], 'Y-m-d');
+        $text .= get_local_pokemon_name($row['pokemon']) . SP . '—' . SP . (($raid_day == $today) ? '' : ($raid_day . ', ')) . unix2tz($row['ts_start'], $row['timezone']) . SP . getTranslation('to') . SP . unix2tz($row['ts_end'], $row['timezone']) . CR . CR;
+        $keys[] = array(
+            'text'          => $row['gym_name'],
+            'callback_data' => $row['id'] . ':raids_delete:0'
+        );
+
+        // Counter++
+        $count = $count + 1;
+    }
+}
+catch (PDOException $exception) {
+
+    error_log($exception->getMessage());
+    $dbh = null;
+    exit;
+}
+
+// Set message.
+if($count == 0) {
+    $msg = '<b>' . getTranslation('no_active_raids_found') . '</b>';
+} else {
+    // Get the inline key array.
+    $keys = inline_key_array($keys, 1);
+
+    // Add exit key.
+    $keys[] = [
         [
-            [
-                'text'          => getTranslation('delete'),
-                'callback_data' => $raid['id'] . ':raids_delete:0'
-            ]
+            'text'          => getTranslation('abort'),
+            'callback_data' => '0:exit:0'
         ]
     ];
 
-    // Get message.
-    $msg = show_raid_poll_small($raid);
-
-    // Send message.
-    send_message($update['message']['from']['id'], $msg, $keys, ['reply_markup' => ['selective' => true, 'one_time_keyboard' => true]]);
-}
-    
-// Send message if no active raids were found.
-if($count == 0) {
-    // Set message.
-    $msg = '<b>' . getTranslation('no_active_raids_found') . '</b>';
-    
-    // Send message.
-    sendMessage($update['message']['from']['id'], $msg);
+    // Build message.
+    $msg = '<b>' . getTranslation('list_all_active_raids') . ':</b>' . CR;
+    $msg .= $text;
+    $msg .= '<b>' . getTranslation('select_gym_name') . '</b>' . CR;
 }
 
-exit;
+// Build callback message string.
+$callback_response = 'OK';
+
+// Send message.
+send_message($update['message']['chat']['id'], $msg, $keys, ['reply_markup' => ['selective' => true, 'one_time_keyboard' => true]]);
+?>

@@ -10,42 +10,65 @@ debug_log('EXREPORT()');
 bot_access_check($update, BOT_ADMINS);
 
 // Init empty keys array.
-    $keys = array();
-        $keys[0]['text'] = 'Gym Name';
-        $keys[0]['callback_data'] = 0;
-        $keys[1]['text'] = 'Total Raided';
-        $keys[1]['callback_data'] = 0;
-        $keys[2]['text'] = 'Total Raids';
-        $keys[2]['callback_data'] = 0;
-        $keys[3]['text'] = 'Players Needed to Trigger';
-        $keys[3]['callback_data'] = 0;
-        $i = 4;
+$keys = [];
+$keys[0]['text'] = 'Gym Name';
+$keys[0]['callback_data'] = 0;
+$keys[1]['text'] = 'Total Raided';
+$keys[1]['callback_data'] = 0;
+$keys[2]['text'] = 'Total Raids';
+$keys[2]['callback_data'] = 0;
+$keys[3]['text'] = 'Players Needed to Trigger';
+$keys[3]['callback_data'] = 0;
+$i = 4;
 
 try {
 
-  $query = '
-    SELECT   r.gym_name,
-                    SUM(CASE 
-                         WHEN a.cancel=FALSE or a.raid_done=FALSE 
-                         THEN (a.extra_mystic+a.extra_valor+a.extra_instinct+1)
-                         ELSE 0 
-                        END) as Total_attended,
-                    count(distinct r.id) as Total_raids,    
-  ROUND((SUM(CASE WHEN a.cancel=FALSE or a.raid_done=FALSE THEN (a.extra_mystic+a.extra_valor+a.extra_instinct+1)
-            ELSE 0 END)
-        /
-        count(distinct r.id)*2) +3)  as players_needed_to_trigger
-FROM raids r
-		LEFT JOIN attendance a ON a.raid_id=r.id
-      WHERE   r.pokemon = 150
-    AND WEEK(r.start_time)  BETWEEN week(now())-2 AND week(now())
-        GROUP BY  r.gym_name
+    $query = '
+        SELECT
+        g.gym_name ,
+        SUM(
+            CASE
+            WHEN a.cancel = FALSE
+            OR a.raid_done = FALSE THEN
+                (
+                    a.extra_mystic + a.extra_valor + a.extra_instinct + 1
+                )
+            ELSE
+                0
+            END
+        ) AS Total_attended ,
+        count(DISTINCT r.id) AS Total_raids ,
+        ROUND(
+            (
+                SUM(
+                    CASE
+                    WHEN a.cancel = FALSE
+                    OR a.raid_done = FALSE THEN
+                        (
+                            a.extra_mystic + a.extra_valor + a.extra_instinct + 1
+                        )
+                    ELSE
+                        0
+                    END
+                ) / count(DISTINCT r.id) * 2
+            ) + 3
+        ) AS players_needed_to_trigger
+    FROM
+        raids r
+    LEFT JOIN attendance a ON a.raid_id = r.id
+    LEFT JOIN gyms g ON g.id = r.gym_id
+    WHERE
+        g.ex_gym = 1
+    AND WEEK(r.start_time) BETWEEN WEEK(now()) - 2
+    AND WEEK(now())
+    GROUP BY
+        g.gym_name
     ';
-  $statement = $dbh->prepare( $query );
-  $statement->execute();
-  while($row = $statement->fetch()) {
+    $statement = $dbh->prepare( $query );
+    $statement->execute();
+    while ($row = $statement->fetch()) {
     
-    $keys[$i]['text'] = $row['gym_name'];
+        $keys[$i]['text'] = $row['gym_name'];
         $keys[$i]['callback_data'] = 0;
         
         $keys[$i+1]['text'] = $row['Total_attended'];
@@ -57,23 +80,21 @@ FROM raids r
         $keys[$i+3]['text'] = $row['players_needed_to_trigger'];
         $keys[$i+3]['callback_data'] = 0;
         $i = $i+4;
-  }
+    }
 }
-catch ( PDOException $exception ) {
+catch (PDOException $exception) {
 
-  error_log( $exception->getMessage() );
-//  invalidRequest( $dbh, $exception->getMessage() );
+    error_log($exception->getMessage());
+    $dbh = null;
+    exit;
 }
-//}
 
-    // Get the inline key array.
-    $keys = inline_key_array($keys, 4);
-
+// Get the inline key array.
+$keys = inline_key_array($keys, 4);
 
 // Set message.
-$msg = '<b> EX Raid Report</b>'; // . getTranslation('pokedex_start') . ':</b>';
+$msg = '<b>EX Raid Report</b>';
 
 // Send message.
 send_message($update['message']['chat']['id'], $msg, $keys, ['reply_markup' => ['selective' => true, 'one_time_keyboard' => true]]);
-
-exit();
+?>

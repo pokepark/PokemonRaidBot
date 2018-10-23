@@ -72,6 +72,17 @@ function bot_access_check($update, $access_type = BOT_ACCESS, $return_result = f
 		    debug_log('Positive result on access check!');
                     $allow_access = true;
                     break;
+                } else if (BOT_ALLOW_MEMBERS == true) {
+                    // Build chat arrays to check membership
+                    $member_chats = '';
+                    $member_chats = explode(',', BOT_ALLOW_MEMBERS_CHATS);
+                    $member_chats = array_unique($member_chats);
+                    // Allow access if being a member is enough
+                    if (in_array($chat, $member_chats) && $chat_obj['result']['user']['id'] == $update_id && $chat_obj['result']['status'] == 'member') {
+                        debug_log('Positive result on member access check!');
+                        $allow_access = true;
+                        break;
+                    }
                 }
             }
 	}
@@ -121,11 +132,12 @@ function bot_access_check($update, $access_type = BOT_ACCESS, $return_result = f
             $response_msg = '<b>' . getTranslation('bot_access_denied') . '</b>';
             // Edit message or send new message based on value of $update_type
             if ($update_type == 'callback_query') {
+                // Answer the callback.
+                answerCallbackQuery($update[$update_type]['id'], getTranslation('bot_access_denied'));
+                // Init keys.
                 $keys = [];
                 // Edit message.
                 edit_message($update, $response_msg, $keys);
-                // Answer the callback.
-                answerCallbackQuery($update[$update_type]['id'], getTranslation('bot_access_denied'));
             } else {
 	        sendMessage($update[$update_type]['from']['id'], $response_msg);
             }
@@ -201,84 +213,16 @@ function raid_access_check($update, $data, $return_result = false)
         debug_log("Denying access to the raid");
         return $raid_access;
     } else {
+        // Answer callback.
+        answerCallbackQuery($update['callback_query']['id'], getTranslation('raid_access_denied'));
+        // Init keys.
         $keys = [];
+        // Edit the message.
         if (isset($update['callback_query']['inline_message_id'])) {
             editMessageText($update['callback_query']['inline_message_id'], '<b>' . getTranslation('raid_access_denied') . '</b>', $keys);
         } else {
             editMessageText($update['callback_query']['message']['message_id'], '<b>' . getTranslation('raid_access_denied') . '</b>', $keys, $update['callback_query']['message']['chat']['id'], $keys);
         }
-        answerCallbackQuery($update['callback_query']['id'], getTranslation('raid_access_denied'));
-        exit;
-    }
-}
-
-/**
- * Quest access check.
- * @param $update
- * @param $data
- * @return bool
- */
-function quest_access_check($update, $data, $return_result = false)
-{
-    // Default: Deny access to quests
-    $quest_access = false;
-
-    // Build query.
-    $rs = my_query(
-        "
-        SELECT    user_id
-        FROM      quests
-          WHERE   id = {$data['id']}
-        "
-    );
-
-    $quest = $rs->fetch_assoc();
-
-    if ($update['callback_query']['from']['id'] != $quest['user_id']) {
-        // Build query.
-        $rs = my_query(
-            "
-            SELECT    COUNT(*)
-            FROM      users
-              WHERE   user_id = {$update['callback_query']['from']['id']}
-               AND    moderator = 1
-            "
-        );
-
-        $row = $rs->fetch_row();
-
-        if (empty($row['0'])) {
-            $admin_access = bot_access_check($update, BOT_ADMINS, true);
-            if ($admin_access) {
-                // Allow quest access
-                $quest_access = true;
-            }
-        } else {
-            // Allow quest access
-            $quest_access = true;
-        }
-    } else {
-        // Allow quest access
-        $quest_access = true;
-    }
-
-    // Allow or deny access to the quest and log result
-    if ($quest_access && !$return_result) {
-        debug_log("Allowing access to the quest");
-    } else if ($quest_access && $return_result) {
-        debug_log("Allowing access to the quest");
-        return $quest_access;
-    } else if (!$quest_access && $return_result) {
-        debug_log("Denying access to the quest");
-        return $quest_access;
-    } else {
-        $keys = [];
-        if (isset($update['callback_query']['inline_message_id'])) {
-            editMessageText($update['callback_query']['inline_message_id'], '<b>' . getTranslation('quest_access_denied') . '</b>', $keys);
-        } else {
-            editMessageText($update['callback_query']['message']['message_id'], '<b>' . getTranslation('quest_access_denied') . '</b>', $keys, $update['callback_query']['message']['chat']['id'], $keys);
-        }
-        answerCallbackQuery($update['callback_query']['id'], getTranslation('quest_access_denied'));
         exit;
     }
 }
@@ -286,23 +230,26 @@ function quest_access_check($update, $data, $return_result = false)
 /**
  * Raid duplication check.
  * @param $gym
+ * @param $start
  * @param $end
  * @return string
  */
-function raid_duplication_check($gym,$end)
+function raid_duplication_check($gym_id,$start,$end)
 {
     // Build query.
     $rs = my_query(
         "
-        SELECT    *,
-                          UNIX_TIMESTAMP(end_time)                        AS ts_end,
-                          UNIX_TIMESTAMP(start_time)                      AS ts_start,
-                          UNIX_TIMESTAMP(NOW())                           AS ts_now,
-                          UNIX_TIMESTAMP(end_time)-UNIX_TIMESTAMP(NOW())  AS t_left
-            FROM      raids
-            WHERE   gym_name = '{$gym}'
-	    ORDER BY id DESC
-	    LIMIT 1
+        SELECT     raids.*,
+                   gyms.lat, gyms.lon, gyms.address, gyms.gym_name, gyms.show_gym,
+                   UNIX_TIMESTAMP(end_time)                        AS ts_end,
+                   UNIX_TIMESTAMP(start_time)                      AS ts_start
+        FROM       raids
+        LEFT JOIN  gyms
+        ON         raids.gym_id = gyms.id
+        WHERE      gyms.id = {$gym_id}
+        AND        gyms.show_gym = 1
+	ORDER BY   id DESC
+	LIMIT 1
         "
     );
 
@@ -312,96 +259,36 @@ function raid_duplication_check($gym,$end)
     // Set duplicate ID to 0
     $duplicate_id = 0;
 
-    // If gym is in database and new end_time matches existing end_time the updated duplicate ID to raid ID from database
+    // Raid for that gym already in database?
     if ($raid) {
-	// Timezone - maybe there's a more elegant solution as date_default_timezone_set?!
-        $tz = TIMEZONE;
-        date_default_timezone_set($tz);
+	// Timezone and start/end time in unix
+        $start_unix = strtotime($start);
+        $end_unix = strtotime($end);
+
+        // Write to log.
+	debug_log('Start last raid: ' . $raid['ts_start']);
+	debug_log('Start new raid: ' . $start_unix);
+	debug_log('End last raid: ' . $raid['ts_end']);
+	debug_log('End new raid: ' . $end_unix);
 	
-	// Now
-	$now = time();
-
-	// Compare time - check minutes before and after database value
-	$beforeAfter = 15;
-	$extendBefore = 180;
-
-	// Seems raid is being created at the moment
-        if ($raid['ts_end'] === NULL) {
-	    // Compare via start_time.
-	    $compare = "start";
-	    $time4compare = $now;
-
-	    // Set compare values.
-	    $ts_compare_before = $raid['ts_start'] - ($beforeAfter*60);
-	    $ts_compare_after = $raid['ts_start'] + ($beforeAfter*60);
-	} else {
-	    // Compare via end_time.
-	    $compare = "end";
-	    $time4compare = $now + $end*60;
-
-	    // Set compare values.
-	    // Extend compare time for raid times if $time4compare is equal to $now which means $end must be 0
-	    $ts_compare_before = ($time4compare == $now) ? ($raid['ts_end'] - ($extendBefore*60)) : ($raid['ts_end'] - ($beforeAfter*60));
-	    $ts_compare_after = $raid['ts_end'] + ($beforeAfter*60);
-	}
-
-        // Debug log unix times
-        debug_log('Unix timestamp of ' . $compare . 'time new raid: ' . $time4compare);
-        debug_log('Unix timestamp of ' . $compare . 'time -' . (($time4compare == $now) ? $extendBefore : $beforeAfter) . ' minutes of existing raid: ' . $ts_compare_before);
-        debug_log('Unix timestamp of ' . $compare . 'time +' . $beforeAfter . ' minutes of existing raid: ' . $ts_compare_after);
-
-        // Debug log
-        debug_log('Searched database for raids at ' . $raid['gym_name']);
-        debug_log('Database raid ID of last raid at '. $raid['gym_name'] . ': ' . $raid['id']);
-        debug_log('New raid at ' . $raid['gym_name'] . ' will ' . $compare . ': ' . unix2tz($time4compare,$tz));
-        debug_log('Existing raid at ' . $raid['gym_name'] . ' will ' . $compare . ' between ' . unix2tz($ts_compare_before,$tz) . ' and ' . unix2tz($ts_compare_after,$tz));
-
-        // Check if end_time of new raid is between plus minus the specified minutes of existing raid
-        if($time4compare >= $ts_compare_before && $time4compare <= $ts_compare_after){
-	    // Update existing raid.
-	    // Negative raid ID if compare method is start and not end time
-	    $duplicate_id = ($compare == "start") ? (0-$raid['id']) : $raid['id'];
-	    debug_log('New raid matches ' . $compare . 'time of existing raid!');
+        // Check if new raid is conflicting with existing raid
+        if(($start_unix >= $raid['ts_start'] && $start_unix <= $raid['ts_end']) || ($raid['ts_start'] >= $start_unix && $raid['ts_start'] <= $end_unix)) {
+	    // Found existing raid.
+	    $duplicate_id = $raid['id'];
+	    debug_log('New raid matches start or end time of existing raid!');
 	    debug_log('Updating raid ID: ' . $duplicate_id);
     	} else {
 	    // Create new raid.
-	    debug_log('New raid ' . $compare . 'time does not match the ' . $compare . 'time of existing raid.');
+	    debug_log('New raid times do not match the times of existing raid.');
 	    debug_log('Creating new raid at gym: ' . $raid['gym_name']);
         }
     } else {
-	debug_log("Gym '" . $gym . "' not found in database!");
-	debug_log("Creating new raid at gym: " . $gym);
+	debug_log('No raids found in database for gym ' . $raid['gym_name']);
+	debug_log('Creating new raid at gym: ' . $raid['gym_name']);
     }
 
-    // Return ID, -ID or 0
+    // Return ID or 0
     return $duplicate_id;
-}
-
-/**
- * Quest duplication check.
- * @param $pokestop_id
- * @return array
- */
-function quest_duplication_check($pokestop_id)
-{
-    // Check if quest already exists for this pokestop.
-    // Exclude unnamed pokestops with pokestop_id 0.
-    $rs = my_query(
-        "
-        SELECT    id, pokestop_id
-        FROM      quests
-          WHERE   quest_date = CURDATE() 
-            AND   pokestop_id > 0
-            AND   pokestop_id = {$pokestop_id}
-        "
-    );
-
-    // Get the row.
-    $quest = $rs->fetch_assoc();
-
-    debug_log($quest);
-
-    return $quest;
 }
 
 /**
@@ -461,14 +348,20 @@ function insert_gym($name, $lat, $lon, $address)
  */
 function get_raid_level($pokedex_id)
 {
-    // Make sure $pokedex_id is numeric
-    if(is_numeric($pokedex_id)) {
+    // Split pokedex_id and form
+    $dex_id_form = explode('-',$pokedex_id);
+    $dex_id = $dex_id_form[0];
+    $dex_form = $dex_id_form[1];
+
+    // Make sure $dex_id is numeric
+    if(is_numeric($dex_id)) {
         // Get raid level from database
         $rs = my_query(
                 "
                 SELECT    raid_level
                 FROM      pokemon
-                WHERE     pokedex_id = $pokedex_id
+                WHERE     pokedex_id = {$dex_id}
+                AND       pokemon_form = '{$dex_form}'
                 "
             );
 
@@ -493,12 +386,16 @@ function get_raid($raid_id)
     // Get the raid data by id.
     $rs = my_query(
         "
-        SELECT     raids.*, users.name,
+        SELECT     raids.*,
+                   gyms.lat, gyms.lon, gyms.address, gyms.gym_name, gyms.ex_gym,
+                   users.name,
                    UNIX_TIMESTAMP(start_time)                      AS ts_start,
                    UNIX_TIMESTAMP(end_time)                        AS ts_end,
                    UNIX_TIMESTAMP(NOW())                           AS ts_now,
                    UNIX_TIMESTAMP(end_time)-UNIX_TIMESTAMP(NOW())  AS t_left
         FROM       raids
+        LEFT JOIN  gyms
+        ON         raids.gym_id = gyms.id
         LEFT JOIN  users
         ON         raids.user_id = users.user_id
         WHERE      raids.id = {$raid_id}
@@ -523,12 +420,15 @@ function get_active_raids($tz)
     // Get the raid data by id.
     $rs = my_query(
         "
-        SELECT     *,
+        SELECT     raids.*,
+                   gyms.lat, gyms.lon, gyms.address, gyms.gym_name, gyms.ex_gym,
                    UNIX_TIMESTAMP(start_time)                      AS ts_start,
                    UNIX_TIMESTAMP(end_time)                        AS ts_end,
                    UNIX_TIMESTAMP(NOW())                           AS ts_now,
                    UNIX_TIMESTAMP(end_time)-UNIX_TIMESTAMP(NOW())  AS t_left
         FROM       raids
+        LEFT JOIN  gyms
+        ON         raids.gym_id = gyms.id
         WHERE      end_time>NOW()
         AND        timezone='{$tz}'
         ORDER BY   end_time ASC LIMIT 20
@@ -544,14 +444,102 @@ function get_active_raids($tz)
 }
 
 /**
+ * Get pokedex id by name of pokemon.
+ * @param $pokemon_name
+ * @return string
+ */
+function get_pokemon_id_by_name($pokemon_name)
+{
+    // Init id and write name to search to log.
+    $pokemon_id = 0;
+    $pokemon_form = 'normal';
+    debug_log($pokemon_name,'P:');
+
+    // Explode pokemon name in case we have a form too.
+    $delimiter = '';
+    if(strpos($pokemon_name, ' ') !== false) {
+        $delimiter = ' ';
+    } else if (strpos($pokemon_name, '-') !== false) {
+        $delimiter = '-';
+    } else if (strpos($pokemon_name, ',') !== false) {
+        $delimiter = ',';
+    }
+    
+    // Explode if delimiter was found.
+    $poke_name = $pokemon_name;
+    if($delimiter != '') {
+        $pokemon_name_form = explode($delimiter,$pokemon_name,2);
+        $poke_name = trim($pokemon_name_form[0]);
+        $poke_name = strtolower($poke_name);
+        $poke_form = trim($pokemon_name_form[1]);
+        $poke_form = strtolower($poke_form);
+    }
+
+    // Set language
+    $language = USERLANGUAGE;
+
+    // Make sure file exists, otherwise use English language as fallback.
+    if(!is_file(TRANSLATION_PATH . '/pokemon_' . strtolower($language) . '.json')) {
+        $language = 'EN';
+    }
+
+    // Get translation file
+    $str = file_get_contents(TRANSLATION_PATH . '/pokemon_' . strtolower($language) . '.json');
+    $json = json_decode($str, true);
+
+    // Search pokemon name in json
+    $key = array_search(ucfirst($poke_name), $json);
+    if($key !== FALSE) {
+        // Index starts at 0, so key + 1 for the correct id!
+        $pokemon_id = $key + 1;
+    }
+
+    // Get form.
+    // Works like this: Search form in language file via language, e.g. 'DE' and local form translation, e.g. 'Alola' for 'DE'.
+    // Once we found the key name, e.g. 'pokemon_form_attack', get the form name 'attack' from it via str_replace'ing the prefix 'pokemon_form'.
+    if($pokemon_id != 0 && isset($poke_form) && !empty($poke_form) && $poke_form != 'normal') {
+
+        // Get forms translation file
+        $str_form = file_get_contents(TRANSLATION_PATH . '/pokemon_forms.json');
+        $json_form = json_decode($str_form, true);
+
+        // Search pokemon form in json
+        foreach($json_form as $key_form => $jform) {
+            // Stop search if we found it.
+            if ($jform[$language] === ucfirst($poke_form)) {
+                $pokemon_form = str_replace('pokemon_form_','',$key_form);
+                break;
+            }
+        }
+    }
+
+    // Write to log.
+    debug_log($pokemon_id,'P:');
+    debug_log($pokemon_form,'P:');
+
+    // Set pokemon form.
+    $pokemon_id = $pokemon_id . '-' . $pokemon_form;
+
+    // Return pokemon_id
+    return $pokemon_id;
+}
+
+/**
  * Get local name of pokemon.
- * @param $pokedex_id
+ * @param $pokemon_id_form
  * @param $override_language
  * @param $type: raid|quest
  * @return string
  */
-function get_local_pokemon_name($pokedex_id, $override_language = false, $type = '')
+function get_local_pokemon_name($pokemon_id_form, $override_language = false, $type = '')
 {
+    // Split pokedex_id and form
+    $dex_id_form = explode('-',$pokemon_id_form);
+    $pokedex_id = $dex_id_form[0];
+    $pokemon_form = $dex_id_form[1];
+
+    debug_log('Pokemon_form: ' . $pokemon_form);
+
     // Get translation type
     if($override_language == true && $type != '' && ($type == 'raid' || $type == 'quest')) {
         $getTypeTranslation = 'get' . ucfirst($type) . 'Translation';
@@ -565,6 +553,8 @@ function get_local_pokemon_name($pokedex_id, $override_language = false, $type =
     // Get eggs from normal translation.
     if(in_array($pokedex_id, $eggs)) {
         $pokemon_name = $getTypeTranslation('egg_' . substr($pokedex_id, -1));
+    } else if ($pokemon_form != 'normal') { 
+        $pokemon_name = $getTypeTranslation('pokemon_id_' . $pokedex_id) . SP . $getTypeTranslation('pokemon_form_' . $pokemon_form);
     } else { 
         $pokemon_name = $getTypeTranslation('pokemon_id_' . $pokedex_id);
     }
@@ -574,12 +564,13 @@ function get_local_pokemon_name($pokedex_id, $override_language = false, $type =
         $pokemon_name = $getTypeTranslation('egg_0');
 
     // Fallback 2: Get original pokemon name from database
-    } else if(empty($pokemon_name)) {
+    } else if(empty($pokemon_name) && $type == 'raid') {
         $rs = my_query(
                 "
                 SELECT    pokemon_name
                 FROM      pokemon
-                WHERE     pokedex_id = $pokedex_id
+                WHERE     pokedex_id = {$pokedex_id}
+                AND       pokemon_form = '{$pokemon_form}'
                 "
             );
 
@@ -589,465 +580,6 @@ function get_local_pokemon_name($pokedex_id, $override_language = false, $type =
     }
 
     return $pokemon_name;
-}
-
-/**
- * Get questlist entry.
- * @param $questlist_id
- * @return array
- */
-function get_questlist_entry($questlist_id)
-{
-    // Get the questlist entry by id.
-    $rs = my_query(
-        "
-        SELECT     *
-        FROM       questlist
-        WHERE      id = {$questlist_id}
-        "
-    );
-
-    // Get the row.
-    $ql_entry = $rs->fetch_assoc();
-
-    debug_log($ql_entry);
-
-    return $ql_entry;
-}
-
-/**
- * Get quest.
- * @param $quest_id
- * @return array
- */
-function get_quest($quest_id)
-{
-    // Get the quest data by id.
-    $rs = my_query(
-        "
-        SELECT     quests.*,
-                   users.name,
-                   pokestops.pokestop_name, pokestops.lat, pokestops.lon, pokestops.address,
-                   questlist.quest_type, questlist.quest_quantity, questlist.quest_action,
-                   rewardlist.reward_type, rewardlist.reward_quantity,
-                   encounterlist.pokedex_ids
-        FROM       quests
-        LEFT JOIN  users
-        ON         quests.user_id = users.user_id
-        LEFT JOIN  pokestops
-        ON         quests.pokestop_id = pokestops.id
-        LEFT JOIN  questlist
-        ON         quests.quest_id = questlist.id
-        LEFT JOIN  rewardlist
-        ON         quests.reward_id = rewardlist.id
-        LEFT JOIN  encounterlist
-        ON         quests.quest_id = encounterlist.quest_id
-        WHERE      quests.id = {$quest_id}
-        "
-    );
-
-    // Get the row.
-    $quest = $rs->fetch_assoc();
-
-    debug_log($quest);
-
-    return $quest;
-}
-
-/**
- * Get quest and reward as formatted string.
- * @param $quest array
- * @param $add_creator bool
- * @param $add_timestamp bool
- * @param $compact_format bool
- * @param $override_language bool
- * @return array
- */
-function get_formatted_quest($quest, $add_creator = false, $add_timestamp = false, $compact_format = false, $override_language = false)
-{
-    /** Example:
-     * Pokestop: Reward-Stop Number 1
-     * Quest-Street 5, 13579 Poke-City
-     * Quest: Hatch 1 Egg
-     * Reward: 1 Pokemon (Magikarp or Onix)
-    */
-
-    // Get translation type
-    if($override_language == true) {
-        $getTypeTranslation = 'getQuestTranslation';
-    } else {
-        $getTypeTranslation = 'getTranslation';
-    }
-
-    // Pokestop name and address.
-    $pokestop_name = SP . '<b>' . (!empty($quest['pokestop_name']) ? ($quest['pokestop_name']) : ($getTypeTranslation('unnamed_pokestop'))) . '</b>' . CR;
-
-    // Get pokestop info.
-    $stop = get_pokestop($quest['pokestop_id']);
-
-    // Add google maps link.
-    if(!empty($quest['address'])) {
-        $pokestop_address = '<a href="https://maps.google.com/?daddr=' . $quest['lat'] . ',' . $quest['lon'] . '">' . $quest['address'] . '</a>';
-    } else if(!empty($stop['address'])) {
-        $pokestop_address = '<a href="https://maps.google.com/?daddr=' . $stop['lat'] . ',' . $stop['lon'] . '">' . $stop['address'] . '</a>';
-    } else {
-        $pokestop_address = '<a href="http://maps.google.com/maps?q=' . $quest['lat'] . ',' . $quest['lon'] . '">http://maps.google.com/maps?q=' . $quest['lat'] . ',' . $quest['lon'] . '</a>';
-    }
-
-    // Quest action: Singular or plural?
-    $quest_action = explode(":", $getTypeTranslation('quest_action_' . $quest['quest_action']));
-    $quest_action_singular = $quest_action[0];
-    $quest_action_plural = $quest_action[1];
-    $qty_action = $quest['quest_quantity'] . SP . (($quest['quest_quantity'] > 1) ? ($quest_action_plural) : ($quest_action_singular));
-
-    // Reward type: Singular or plural?
-    $reward_type = explode(":", $getTypeTranslation('reward_type_' . $quest['reward_type']));
-    $reward_type_singular = $reward_type[0];
-    $reward_type_plural = $reward_type[1];
-    $qty_reward = $quest['reward_quantity'] . SP . (($quest['reward_quantity'] > 1) ? ($reward_type_plural) : ($reward_type_singular));
-    
-    // Reward pokemon forecast?
-    $msg_poke = '';
-
-    if($quest['pokedex_ids'] != '0' && $quest['reward_type'] == 1) {
-        $quest_pokemons = explode(',', $quest['pokedex_ids']);
-        // Get local pokemon name
-        foreach($quest_pokemons as $pokedex_id) {
-            $msg_poke .= ($override_language == true) ? (get_local_pokemon_name($pokedex_id, true, 'quest')) : (get_local_pokemon_name($pokedex_id));
-            $msg_poke .= ' / ';
-        }
-        // Trim last slash
-        $msg_poke = rtrim($msg_poke,' / ');
-        $msg_poke = (!empty($msg_poke) ? (SP . '(' . $msg_poke . ')') : '');
-    }
-
-    // Build quest message
-    $msg = '';
-    if($compact_format == false) {
-        $msg .= $getTypeTranslation('pokestop') . ':' . $pokestop_name . $pokestop_address . CR;
-        $msg .= $getTypeTranslation('quest') . ': <b>' . $getTypeTranslation('quest_type_' . $quest['quest_type']) . SP . $qty_action . '</b>' . CR;
-        $msg .= $getTypeTranslation('reward') . ': <b>' . $qty_reward . '</b>' . $msg_poke . CR;
-    } else {
-        $msg .= $getTypeTranslation('quest_type_' . $quest['quest_type']) . SP . $qty_action . ' — ' . $qty_reward . $msg_poke;
-    }
-
-    // Display creator.
-    $msg .= ($quest['user_id'] && $add_creator == true) ? (CR . $getTypeTranslation('created_by') . ': <a href="tg://user?id=' . $quest['user_id'] . '">' . htmlspecialchars($quest['name']) . '</a>') : '';
-
-    // Add update time and quest id to message.
-    if($add_timestamp == true) {
-        $quest_date = explode(' ', $quest['quest_date']);
-        $msg .= CR . '<i>' . $getTypeTranslation('updated') . ': ' . $quest_date[0] . '</i>';
-        $msg .= '  Q-ID = ' . $quest['id']; // DO NOT REMOVE! --> NEEDED FOR CLEANUP PREPARATION!
-    }
-
-    return $msg;
-}
-
-/**
- * Get today's quests as formatted string.
- * @return string
- */
-function get_todays_formatted_quests()
-{
-    // Get the quest data by id.
-    $rs = my_query(
-        "
-        SELECT     id
-        FROM       quests
-        WHERE      quest_date = CURDATE() 
-        "
-    );
-
-    // Init empty message and counter.
-    $msg = '';
-    $count = 0;
-
-    // Get the quests.
-    while ($todays_quests = $rs->fetch_assoc()) {
-        $quest = get_quest($todays_quests['id']);
-        $msg .= get_formatted_quest($quest);
-        $msg .= CR;
-        $count = $count + 1;
-    }
-
-    // No quests today?
-    if($count == 0) {
-        $msg = getTranslation('no_quests_today');
-    } else {
-        // Add update time to message.
-        $msg .= '<i>' . getTranslation('updated') . ': ' . date('H:i:s') . '</i>';
-    }
-
-    return $msg;
-}
-
-/**
- * Get rewardlist entry.
- * @param $reward_id
- * @return array
- */
-function get_rewardlist_entry($reward_id)
-{
-    // Get the reward data by id.
-    $rs = my_query(
-        "
-        SELECT     *
-        FROM       rewardlist
-        WHERE      id = {$reward_id}
-        "
-    );
-
-    // Get the row.
-    $reward = $rs->fetch_assoc();
-
-    debug_log($reward);
-
-    return $reward;
-}
-
-/**
- * Get encounterlist entry.
- * @param $reward_id
- * @return array
- */
-function get_encounterlist_entry($quest_id)
-{
-    // Get the reward data by id.
-    $rs = my_query(
-        "
-        SELECT     pokedex_ids
-        FROM       encounterlist
-        WHERE      quest_id = {$quest_id}
-        "
-    );
-
-    // Get the row.
-    $encounters = $rs->fetch_assoc();
-
-    debug_log($encounters);
-
-    return $encounters;
-}
-
-/**
- * Delete quest.
- * @param $quest_id
- */
-function delete_quest($quest_id)
-{
-    global $db;
-
-    // Delete telegram messages for quest.
-    $rs = my_query(
-        "
-        SELECT        *
-            FROM      cleanup_quests
-            WHERE     quest_id = '{$quest_id}'
-              AND     chat_id <> 0
-        "
-    );
-
-    // Counter
-    $counter = 0;
-
-    // Delete every telegram message
-    while ($row = $rs->fetch_assoc()) {
-        // Delete telegram message.
-        debug_log('Deleting telegram message ' . $row['message_id'] . ' from chat ' . $row['chat_id'] . ' for quest ' . $row['quest_id']);
-        delete_message($row['chat_id'], $row['message_id']);
-        $counter = $counter + 1;
-    }
-
-    // Nothing to delete on telegram.
-    if ($counter == 0) {
-        debug_log('Quest with ID ' . $quest_id . ' was not found in the cleanup table! Skipping deletion of telegram messages!');
-    }
-
-    // Delete quest from cleanup table.
-    debug_log('Deleting quest ' . $quest_id . ' from the cleanup table:');
-    $rs_cleanup = my_query(
-        "
-        DELETE FROM   cleanup_quests
-        WHERE   quest_id = '{$quest_id}' 
-           OR   cleaned = '{$quest_id}'
-        "
-    );
-
-    // Delete quest from quest table.
-    debug_log('Deleting quest ' . $quest_id . ' from the quest table:');
-    $rs_quests = my_query(
-        "
-        DELETE FROM   quests 
-        WHERE   id = '{$quest_id}'
-        "
-    );
-}
-
-/**
- * Get pokestop.
- * @param $pokestop_id
- * @return array
- */
-function get_pokestop($pokestop_id, $update_pokestop = true)
-{
-    global $db;
-
-    // Pokestop from database
-    if($pokestop_id != 0) {
-        // Get pokestop from database
-        $rs = my_query(
-                "
-                SELECT    *
-                FROM      pokestops
-                WHERE     id = {$pokestop_id}
-                "
-            );
-
-        $stop = $rs->fetch_assoc();
-
-    // Get address and update address string.
-    if(!empty(GOOGLE_API_KEY) && $update_pokestop == true){
-        // Get address.
-        $lat = $stop['lat'];
-        $lon = $stop['lon'];
-        $addr = get_address($lat, $lon);
-
-        // Get full address - Street #, ZIP District
-        $address = "";
-        $address .= (!empty($addr['street']) ? $addr['street'] : "");
-        $address .= (!empty($addr['street_number']) ? " " . $addr['street_number'] : "");
-        $address .= (!empty($addr) ? ", " : "");
-        $address .= (!empty($addr['postal_code']) ? $addr['postal_code'] . " " : "");
-        $address .= (!empty($addr['district']) ? $addr['district'] : "");
-
-        // Update pokestop address.
-        $rs = my_query(
-            "
-            UPDATE        pokestops
-            SET           address = '{$db->real_escape_string($address)}'
-               WHERE      id = '{$pokestop_id}'
-            "
-        );
-
-       // Set pokestop address.
-       $stop['address'] = $address;
-    }
-
-    // Unnamend pokestop
-    } else {
-        $stop = 0;
-    }
-
-    debug_log($stop);
-
-    return $stop;
-}
-
-/**
- * Get pokestops starting with the searchterm.
- * @param $searchterm
- * @return bool|array
- */
-function get_pokestop_list_keys($searchterm)
-{
-    // Make sure the search term is not empty
-    if(!empty($searchterm)) {
-        // Get pokestop from database
-        $rs = my_query(
-                "
-                SELECT    id, pokestop_name
-                FROM      pokestops
-                WHERE     pokestop_name LIKE '%$searchterm%'
-                LIMIT     10
-                "
-            );
-
-        // Init empty keys array.
-        $keys = array();
-
-        // Add key for each found pokestop
-        while ($stops = $rs->fetch_assoc()) {
-            // Pokestop name.
-            $pokestop_name = (!empty($stops['pokestop_name']) ? ($stops['pokestop_name']) : (getTranslation('unnamed_pokestop')));
-
-            // Add keys.
-            $keys[] = array(
-                'text'          => $pokestop_name,
-                'callback_data' => $stops['id'] . ':quest_create:0'
-            );
-        }
-        
-        if($keys) {
-            // Get the inline key array.
-            $keys = inline_key_array($keys, 1);
-        } else {
-            $keys = true;
-        }
-    } else {
-        // Return false.
-        $keys = false;
-    }
-
-    return $keys;
-}
-
-/**
- * Get pokestops within radius around lat/lon.
- * @param $lat
- * @param $lon
- * @param $radius
- * @return array
- */
-function get_pokestops_in_radius_keys($lat, $lon, $radius)
-{
-    $radius = $radius / 1000;
-    // Get all pokestop within the radius
-    $rs = my_query(
-            " SELECT    id, pokestop_name,
-                        (
-                            6371 *
-                            acos(
-                                cos(radians({$lat})) *
-                                cos(radians(lat)) *
-                                cos(
-                                    radians(lon) - radians({$lon})
-                                ) +
-                                sin(radians({$lat})) *
-                                sin(radians(lat))
-                            )
-                        ) AS distance
-              FROM      pokestops
-              HAVING    distance < {$radius}
-              ORDER BY  distance
-              LIMIT     10
-            "
-        );
-
-    // Init empty keys array.
-    $keys = array();
-
-    // Add key for each found pokestop
-    while ($stops = $rs->fetch_assoc()) {
-        // Pokestop name.
-        $pokestop_name = (!empty($stops['pokestop_name']) ? ($stops['pokestop_name']) : (getTranslation('unnamed_pokestop')));
-
-        // Add keys.
-        $keys[] = array(
-            'text'          => $pokestop_name,
-            'callback_data' => $stops['id'] . ':quest_create:0'
-        );
-    }
-
-    // Add unknown pokestop.
-    //$unknown_keys = array();
-    //$unknown_keys[] = universal_inner_key($keys, '0', 'quest_create', $lat . ',' . $lon, getTranslation('unnamed_pokestop'));
-
-    // Inline keys.
-    $keys = inline_key_array($keys, 1);
-    //$keys[] = $unknown_keys;
-
-    return $keys;
 }
 
 /**
@@ -1072,22 +604,43 @@ function get_gym($id)
 }
 
 /**
- * Get pokemon info as formatted string.
- * @param $pokedex_id
+ * Delete gym.
+ * @param $id
  * @return array
  */
-function get_pokemon_info($pokedex_id)
+function delete_gym($id)
 {
+    // Get gym from database
+    $rs = my_query(
+            "
+            DELETE FROM gyms
+	    WHERE     id = {$id}
+            "
+        );
+}
+
+/**
+ * Get pokemon info as formatted string.
+ * @param $pokemon_id_form
+ * @return array
+ */
+function get_pokemon_info($pokemon_id_form)
+{
+    // Split pokedex_id and form
+    $dex_id_form = explode('-',$pokemon_id_form);
+    $pokedex_id = $dex_id_form[0];
+    $pokemon_form = $dex_id_form[1];
+
     /** Example:
      * Raid boss: Mewtwo (#ID)
      * Weather: Icons
      * CP: CP values (Boosted CP values)
     */
     $info = '';
-    $info .= getTranslation('raid_boss') . ': <b>' . get_local_pokemon_name($pokedex_id) . ' (#' . $pokedex_id . ')</b>' . CR . CR;
-    $poke_raid_level = get_raid_level($pokedex_id);
-    $poke_cp = get_formatted_pokemon_cp($pokedex_id);
-    $poke_weather = get_pokemon_weather($pokedex_id);
+    $info .= getTranslation('raid_boss') . ': <b>' . get_local_pokemon_name($pokemon_id_form) . ' (#' . $pokedex_id . ')</b>' . CR . CR;
+    $poke_raid_level = get_raid_level($pokemon_id_form);
+    $poke_cp = get_formatted_pokemon_cp($pokemon_id_form);
+    $poke_weather = get_pokemon_weather($pokemon_id_form);
     $info .= getTranslation('pokedex_raid_level') . ': ' . getTranslation($poke_raid_level . 'stars') . CR;
     $info .= (empty($poke_cp)) ? (getTranslation('pokedex_cp') . CR) : $poke_cp . CR;
     $info .= getTranslation('pokedex_weather') . ': ' . get_weather_icons($poke_weather) . CR . CR;
@@ -1097,17 +650,23 @@ function get_pokemon_info($pokedex_id)
 
 /**
  * Get pokemon cp values.
- * @param $pokedex_id
+ * @param $pokemon_id_form
  * @return array
  */
-function get_pokemon_cp($pokedex_id)
+function get_pokemon_cp($pokemon_id_form)
 {
+    // Split pokedex_id and form
+    $dex_id_form = explode('-',$pokemon_id_form);
+    $pokedex_id = $dex_id_form[0];
+    $pokemon_form = $dex_id_form[1];
+
     // Get gyms from database
     $rs = my_query(
             "
             SELECT    min_cp, max_cp, min_weather_cp, max_weather_cp
             FROM      pokemon
             WHERE     pokedex_id = {$pokedex_id}
+            AND       pokemon_form = '{$pokemon_form}'
             "
         );
 
@@ -1118,12 +677,17 @@ function get_pokemon_cp($pokedex_id)
 
 /**
  * Get formatted pokemon cp values.
- * @param $pokedex_id
+ * @param $pokemon_id_form
  * @param $override_language
  * @return string
  */
-function get_formatted_pokemon_cp($pokedex_id, $override_language = false)
+function get_formatted_pokemon_cp($pokemon_id_form, $override_language = false)
 {
+    // Split pokedex_id and form
+    $dex_id_form = explode('-',$pokemon_id_form);
+    $pokedex_id = $dex_id_form[0];
+    $pokemon_form = $dex_id_form[1];
+
     // Init cp text.
     $cp20 = '';
     $cp25 = '';
@@ -1136,6 +700,7 @@ function get_formatted_pokemon_cp($pokedex_id, $override_language = false)
                 SELECT    min_cp, max_cp, min_weather_cp, max_weather_cp
                 FROM      pokemon
                 WHERE     pokedex_id = {$pokedex_id}
+                AND       pokemon_form = '{$pokemon_form}'
                 "
             );
 
@@ -1160,11 +725,16 @@ function get_formatted_pokemon_cp($pokedex_id, $override_language = false)
 
 /**
  * Get pokemon weather.
- * @param $pokedex_id
+ * @param $pokemon_id_form
  * @return string
  */
-function get_pokemon_weather($pokedex_id)
+function get_pokemon_weather($pokemon_id_form)
 {
+    // Split pokedex_id and form
+    $dex_id_form = explode('-',$pokemon_id_form);
+    $pokedex_id = $dex_id_form[0];
+    $pokemon_form = $dex_id_form[1];
+
     if($pokedex_id !== "NULL" && $pokedex_id != 0) {
         // Get pokemon weather from database
         $rs = my_query(
@@ -1172,6 +742,7 @@ function get_pokemon_weather($pokedex_id)
                 SELECT    weather
                 FROM      pokemon
                 WHERE     pokedex_id = {$pokedex_id}
+                AND       pokemon_form = '{$pokemon_form}'
                 "
             );
 
@@ -1259,33 +830,20 @@ function get_user($user_id)
 
 /**
  * Get timezone from user or config as fallback.
- * @param $update
+ * @param $user_id
  * @return timezone
  */
-function get_timezone($update)
+function get_timezone($user_id)
 {
-    // Get telegram ID to check access from $update - either message, callback_query or inline_query
-    $update_type = '';
-    $update_type = !empty($update['message']['from']['id']) ? 'message' : $update_type;
-    $update_type = (empty($update_type) && !empty($update['callback_query']['from']['id'])) ? 'callback_query' : $update_type;
-    $update_type = (empty($update_type) && !empty($update['inline_query']['from']['id'])) ? 'inline_query' : $update_type;
-    $update_id = $update[$update_type]['from']['id'];
-
-    // Log message type and ID
-    debug_log('Telegram message type: ' . $update_type);
-    debug_log('Getting timezone for ID: ' . $update_id);
+    // Log user_id
+    debug_log('Getting timezone for user_id: ' . $user_id);
 
     // Build query.
     $rs = my_query(
         "
         SELECT    timezone
-        FROM      raids
-          WHERE   id = (
-                      SELECT    raid_id
-                      FROM      attendance
-                        WHERE   user_id = {$update_id}
-                      ORDER BY  id DESC LIMIT 1
-                  )
+        FROM      users
+          WHERE   user_id = {$user_id}
         "
     );
 
@@ -1293,13 +851,13 @@ function get_timezone($update)
     $row = $rs->fetch_assoc();
 
     // No data found.
-    if (!$row) {
+    if ($row['timezone'] === NULL) {
         $tz = TIMEZONE;
-        debug_log('No timezone found for ID: ' . $update_id, '!');
+        debug_log('No timezone found for user_id: ' . $user_id, '!');
         debug_log('Returning default timezone: ' . $tz, '!');
     } else {
         $tz = $row['timezone'];
-        debug_log('Found timezone for ID: ' . $update_id);
+        debug_log('Found timezone for user_id: ' . $user_id);
         debug_log('Returning timezone: ' . $tz);
     }
 
@@ -1324,7 +882,7 @@ function edit_moderator_keys($limit, $action)
     $module = "mods";
 
     // Init empty keys array.
-    $keys = array();
+    $keys = [];
 
     // Get moderators from database
     if ($action == "list" || $action == "delete") {
@@ -1380,13 +938,13 @@ function edit_moderator_keys($limit, $action)
     }
 
     // Empty backs and next keys
-    $keys_back = array();
-    $keys_next = array();
+    $keys_back = [];
+    $keys_next = [];
 
     // Add back key.
     if ($limit > 0) {
         $new_limit = $limit - $entries;
-        $empty_back_key = array();
+        $empty_back_key = [];
         $back = universal_key($empty_back_key, $new_limit, $module, $action, getTranslation('back') . " (-" . $entries . ")");
         $keys_back[] = $back[0][0];
     }
@@ -1394,7 +952,7 @@ function edit_moderator_keys($limit, $action)
     // Add skip back key.
     if ($limit - $skip > 0) {
         $new_limit = $limit - $skip - $entries;
-        $empty_back_key = array();
+        $empty_back_key = [];
         $back = universal_key($empty_back_key, $new_limit, $module, $action, getTranslation('back') . " (-" . $skip . ")");
         $keys_back[] = $back[0][0];
     }
@@ -1402,7 +960,7 @@ function edit_moderator_keys($limit, $action)
     // Add next key.
     if (($limit + $entries) < $count) {
         $new_limit = $limit + $entries;
-        $empty_next_key = array();
+        $empty_next_key = [];
         $next = universal_key($empty_next_key, $new_limit, $module, $action, getTranslation('next') . " (+" . $entries . ")");
         $keys_next[] = $next[0][0];
     }
@@ -1410,13 +968,13 @@ function edit_moderator_keys($limit, $action)
     // Add skip next key.
     if (($limit + $skip + $entries) < $count) {
         $new_limit = $limit + $skip + $entries;
-        $empty_next_key = array();
+        $empty_next_key = [];
         $next = universal_key($empty_next_key, $new_limit, $module, $action, getTranslation('next') . " (+" . $skip . ")");
         $keys_next[] = $next[0][0];
     }
 
     // Exit key
-    $empty_exit_key = array();
+    $empty_exit_key = [];
     $key_exit = universal_key($empty_exit_key, "0", "exit", "0", getTranslation('abort'));
 
     // Get the inline key array.
@@ -1438,7 +996,7 @@ function edit_moderator_keys($limit, $action)
  */
 function inline_key_array($buttons, $columns)
 {
-    $result = array();
+    $result = [];
     $col = 0;
     $row = 0;
 
@@ -1456,10 +1014,11 @@ function inline_key_array($buttons, $columns)
 
 /**
  * Raid edit start keys.
- * @param $id
+ * @param $gym_id
+ * @param $gym_first_letter
  * @return array
  */
-function raid_edit_start_keys($id)
+function raid_edit_raidlevel_keys($gym_id, $gym_first_letter)
 {
     // Get all raid levels from database
     $rs = my_query(
@@ -1473,13 +1032,13 @@ function raid_edit_start_keys($id)
         );
 
     // Init empty keys array.
-    $keys = array();
+    $keys = [];
 
     // Add key for each raid level
     while ($level = $rs->fetch_assoc()) {
         $keys[] = array(
             'text'          => getTranslation($level['raid_level'] . 'stars'),
-            'callback_data' => $id . ':edit:' . $level['raid_level']
+            'callback_data' => $gym_id . ',' . $gym_first_letter . ':edit_pokemon:' . $level['raid_level']
         );
     }
     
@@ -1499,12 +1058,13 @@ function raid_edit_gyms_first_letter_keys() {
             "
             SELECT UPPER(LEFT(gym_name, 1)) AS first_letter
             FROM      gyms
+            WHERE     show_gym = 1
             GROUP BY LEFT(gym_name, 1)
             "
         );
 
     // Init empty keys array.
-    $keys = array();
+    $keys = [];
 
     while ($gym = $rs->fetch_assoc()) {
 	// Add first letter to keys array
@@ -1518,7 +1078,7 @@ function raid_edit_gyms_first_letter_keys() {
     $keys = inline_key_array($keys, 4);
 
     // Add back navigation key.
-    $nav_keys = array();
+    $nav_keys = [];
     $nav_keys[] = universal_inner_key($keys, '0', 'exit', '0', getTranslation('abort'));
 
     // Get the inline key array.
@@ -1540,17 +1100,18 @@ function raid_edit_gym_keys($first)
             SELECT    id, gym_name
             FROM      gyms
 	    WHERE     UPPER(LEFT(gym_name, 1)) = UPPER('{$first}')
+            AND       show_gym = 1
 	    ORDER BY  gym_name
             "
         );
 
     // Init empty keys array.
-    $keys = array();
+    $keys = [];
 
     while ($gym = $rs->fetch_assoc()) {
 	$keys[] = array(
             'text'          => $gym['gym_name'],
-            'callback_data' => '0:raid_create:ID,' . $gym['id']
+            'callback_data' => $first . ':edit_raidlevel:' . $gym['id']
         );
     }
     
@@ -1561,12 +1122,67 @@ function raid_edit_gym_keys($first)
 }
 
 /**
+ * Get gyms by searchterm.
+ * @param $searchterm
+ * @return bool|array
+ */
+function raid_get_gyms_list_keys($searchterm)
+{
+    // Init empty keys array.
+    $keys = [];
+
+    // Make sure the search term is not empty
+    if(!empty($searchterm)) {
+        // Get gyms from database
+        $rs = my_query(
+                "
+                SELECT    id, gym_name
+                FROM      gyms
+                WHERE     gym_name LIKE '$searchterm%'
+                OR        gym_name LIKE '%$searchterm%'
+                ORDER BY
+                  CASE
+                    WHEN  gym_name LIKE '$searchterm%' THEN 1
+                    WHEN  gym_name LIKE '%$searchterm%' THEN 2
+                    ELSE  3
+                  END
+                LIMIT     15
+                "
+            );
+
+        while ($gym = $rs->fetch_assoc()) {
+            $first = strtoupper(substr($gym['gym_name'], 0, 1));
+	    $keys[] = array(
+                'text'          => $gym['gym_name'],
+                'callback_data' => $first . ':edit_raidlevel:' . $gym['id']
+            );
+        }
+    }
+    
+    // Add abort key.
+    if($keys) {
+        // Get the inline key array.
+        $keys = inline_key_array($keys, 1);
+
+        // Add back navigation key.
+        $nav_keys = [];
+        $nav_keys[] = universal_inner_key($keys, '0', 'exit', '0', getTranslation('abort'));
+
+        // Get the inline key array.
+        $keys[] = $nav_keys;
+    }
+
+    return $keys;
+}
+
+
+/**
  * Pokedex edit pokemon keys.
  * @param $limit
  * @param $action
  * @return array
  */
-function edit_pokedex_keys($limit, $action, $all_pokemon = true)
+function edit_pokedex_keys($limit, $action)
 {
     // Number of entries to display at once.
     $entries = 10;
@@ -1578,76 +1194,47 @@ function edit_pokedex_keys($limit, $action, $all_pokemon = true)
     $module = "pokedex";
 
     // Init empty keys array.
-    $keys = array();
+    $keys = [];
 
-    // Get only pokemon with CP and weather values from database
-    if($all_pokemon == false) {
-        $rs = my_query(
-            "
-            SELECT    pokedex_id
-            FROM      pokemon
-            WHERE     min_cp > 0
-              AND     max_cp > 0
-              AND     min_weather_cp > 0
-              AND     max_weather_cp > 0
-              AND     weather > 0
-            ORDER BY  pokedex_id
-            LIMIT     $limit, $entries
-            "
-        );
-
-        // Number of entries
-        $cnt = my_query(
-            "
-            SELECT    COUNT(*)
-            FROM      pokemon
-            WHERE     min_cp > 0
-              AND     max_cp > 0
-              AND     min_weather_cp > 0
-              AND     max_weather_cp > 0
-              AND     weather > 0
-            "
-        );
     // Get all pokemon from database
-    } else {
-        $rs = my_query(
-            "
-            SELECT    pokedex_id
-            FROM      pokemon
-            ORDER BY  pokedex_id
-            LIMIT     $limit, $entries
-            "
-        );
+    $rs = my_query(
+        "
+        SELECT    pokedex_id, pokemon_form
+        FROM      pokemon
+        ORDER BY  pokedex_id, pokemon_form != 'normal', pokemon_form
+        LIMIT     $limit, $entries
+        "
+    );
 
-        // Number of entries
-        $cnt = my_query(
-            "
-            SELECT    COUNT(*)
-            FROM      pokemon
-            "
-        );
-    }
+    // Number of entries
+    $cnt = my_query(
+        "
+        SELECT    COUNT(*)
+        FROM      pokemon
+        "
+    );
+
     // Number of database entries found.
     $sum = $cnt->fetch_row();
     $count = $sum['0'];
 
     // List users / moderators
     while ($mon = $rs->fetch_assoc()) {
-        $pokemon_name = get_local_pokemon_name($mon['pokedex_id']);
+        $pokemon_name = get_local_pokemon_name($mon['pokedex_id'] . '-' . $mon['pokemon_form']);
         $keys[] = array(
-            'text'          => $mon['pokedex_id'] . ' ' . $pokemon_name,
-            'callback_data' => $mon['pokedex_id'] . ':pokedex_edit_pokemon:0'
+            'text'          => $mon['pokedex_id'] . SP . $pokemon_name,
+            'callback_data' => $mon['pokedex_id'] . '-' . $mon['pokemon_form'] . ':pokedex_edit_pokemon:0'
         );
     }
 
     // Empty backs and next keys
-    $keys_back = array();
-    $keys_next = array();
+    $keys_back = [];
+    $keys_next = [];
 
     // Add back key.
     if ($limit > 0) {
         $new_limit = $limit - $entries;
-        $empty_back_key = array();
+        $empty_back_key = [];
         $back = universal_key($empty_back_key, $new_limit, $module, $action, getTranslation('back') . " (-" . $entries . ")");
         $keys_back[] = $back[0][0];
     }
@@ -1655,7 +1242,7 @@ function edit_pokedex_keys($limit, $action, $all_pokemon = true)
     // Add skip back key.
     if ($limit - $skip > 0) {
         $new_limit = $limit - $skip - $entries;
-        $empty_back_key = array();
+        $empty_back_key = [];
         $back = universal_key($empty_back_key, $new_limit, $module, $action, getTranslation('back') . " (-" . $skip . ")");
         $keys_back[] = $back[0][0];
     }
@@ -1663,7 +1250,7 @@ function edit_pokedex_keys($limit, $action, $all_pokemon = true)
     // Add next key.
     if (($limit + $entries) < $count) {
         $new_limit = $limit + $entries;
-        $empty_next_key = array();
+        $empty_next_key = [];
         $next = universal_key($empty_next_key, $new_limit, $module, $action, getTranslation('next') . " (+" . $entries . ")");
         $keys_next[] = $next[0][0];
     }
@@ -1671,13 +1258,13 @@ function edit_pokedex_keys($limit, $action, $all_pokemon = true)
     // Add skip next key.
     if (($limit + $skip + $entries) < $count) {
         $new_limit = $limit + $skip + $entries;
-        $empty_next_key = array();
+        $empty_next_key = [];
         $next = universal_key($empty_next_key, $new_limit, $module, $action, getTranslation('next') . " (+" . $skip . ")");
         $keys_next[] = $next[0][0];
     }
 
     // Exit key
-    $empty_exit_key = array();
+    $empty_exit_key = [];
     $key_exit = universal_key($empty_exit_key, "0", "exit", "0", getTranslation('abort'));
 
     // Get the inline key array.
@@ -1692,295 +1279,20 @@ function edit_pokedex_keys($limit, $action, $all_pokemon = true)
 }
 
 /**
- * Quest type keys.
- * @param $pokestop_id
- * @return array
- */
-function quest_type_keys($pokestop_id)
-{
-    // Get all quest types from database
-    $rs = my_query(
-            "
-            SELECT    quest_type
-            FROM      questlist
-            GROUP BY  quest_type
-            "
-        );
-
-    // Init empty keys array.
-    $keys = array();
-
-    // Add key for each quest quantity and action
-    while ($quest = $rs->fetch_assoc()) {
-        $text = getTranslation('quest_type_'. $quest['quest_type']) . '...';
-        // Add keys.
-        $keys[] = array(
-            'text'          => $text,
-            'callback_data' => $pokestop_id . ':quest_edit_type:' . $quest['quest_type']
-        );
-    }
-
-    // Get the inline key array.
-    $keys = inline_key_array($keys, 2);
-
-    // Add quick selection keys.
-    $quick_keys = quick_quest_keys($pokestop_id);
-    $keys = array_merge($keys, $quick_keys);
-
-    // Add navigation key.
-    $nav_keys = array();
-    $nav_keys[] = universal_inner_key($keys, '0', 'exit', '0', getTranslation('abort'));
-    $keys[] = $nav_keys;
-
-    debug_log($keys);
-
-    return $keys;
-}
-
-/**
- * Quick quest keys.
- * @param $pokestop_id
- * @return array
- */
-function quick_quest_keys($pokestop_id)
-{
-    // Get data from quick questlist.
-    $qs = my_query(
-            "
-            SELECT    *
-            FROM      quick_questlist
-            "
-        );
-
-    // Init empty keys array.
-    $keys = array();
-
-    // Add key for each quest quantity and action
-    while ($qq = $qs->fetch_assoc()) {
-        $ql_entry = get_questlist_entry($qq['quest_id']);
-
-        // Quest action: Singular or plural?
-        $quest_action = explode(":", getTranslation('quest_action_' . $ql_entry['quest_action']));
-        $quest_action_singular = $quest_action[0];
-        $quest_action_plural = $quest_action[1];
-        $qty_action = $ql_entry['quest_quantity'] . SP . (($ql_entry['quest_quantity'] > 1) ? ($quest_action_plural) : ($quest_action_singular));
-
-        // Rewardlist entry.
-        $rl_entry = get_rewardlist_entry($qq['reward_id']);
-
-        // Reward type: Singular or plural?
-        $reward_type = explode(":", getTranslation('reward_type_' . $rl_entry['reward_type']));
-        $reward_type_singular = $reward_type[0];
-        $reward_type_plural = $reward_type[1];
-        $qty_reward = $rl_entry['reward_quantity'] . SP . (($rl_entry['reward_quantity'] > 1) ? ($reward_type_plural) : ($reward_type_singular));
-
-        // Reward pokemon forecast?
-        $msg_poke = '';
-
-        if($rl_entry['reward_type'] == 1) {
-            $el_entry = get_encounterlist_entry($ql_entry['id']);
-            $quest_pokemons = explode(',', $el_entry['pokedex_ids']);
-            // Get local pokemon name
-            foreach($quest_pokemons as $pokedex_id) {
-                $msg_poke .= get_local_pokemon_name($pokedex_id);
-                $msg_poke .= ' / ';
-            }
-            // Trim last slash
-            $msg_poke = rtrim($msg_poke,' / ');
-            $msg_poke = (!empty($msg_poke) ? (SP . '(' . $msg_poke . ')') : '');
-        }
-
-        // Quest and reward text.
-        $text = '';
-        $text .= getTranslation('quest_type_' . $ql_entry['quest_type']) . SP . $qty_action . ' — ' . $qty_reward . $msg_poke;
-
-        // Add keys.
-        $keys[] = array(
-            'text'          => $text,
-            'callback_data' => $pokestop_id . ',' . $qq['quest_id'] . ':quest_save:' . $qq['reward_id']
-        );
-    }
-
-    // Add quick selection keys.
-    $keys = inline_key_array($keys, 1);
-
-    debug_log($keys);
-
-    return $keys;
-    
-}
-
-/**
- * Quest quantity and action keys.
- * @param $pokestop_id
- * @param $quest_type
- * @return array
- */
-function quest_qty_action_keys($pokestop_id, $quest_type)
-{
-    // Get all quest types from database
-    $rs = my_query(
-            "
-            SELECT    *
-            FROM      questlist
-            WHERE     quest_type = '$quest_type'
-            ORDER BY  quest_quantity
-            "
-        );
-
-    // Init empty keys array.
-    $keys = array();
-
-    // Add key for each quest quantity and action
-    while ($quest = $rs->fetch_assoc()) {
-        // Quest action: Singular or plural?
-        $quest_action = explode(":", getTranslation('quest_action_' . $quest['quest_action']));
-        $quest_action_singular = $quest_action[0];
-        $quest_action_plural = $quest_action[1];
-        $qty_action = $quest['quest_quantity'] . SP . (($quest['quest_quantity'] > 1) ? ($quest_action_plural) : ($quest_action_singular));
-
-        // Add keys.
-        $keys[] = array(
-            'text'          => $qty_action,
-            'callback_data' => $pokestop_id . ':quest_edit_reward:' . $quest['id'] . ',' . $quest_type
-        );
-    }
-
-    // Add back and abort navigation keys.
-    $nav_keys = array();
-    $nav_keys[] = universal_inner_key($keys, $pokestop_id, 'quest_create', '0', getTranslation('back'));
-    $nav_keys[] = universal_inner_key($keys, '0', 'exit', '0', getTranslation('abort'));
-
-    // Get the inline key array.
-    $keys = inline_key_array($keys, 1);
-    $keys[] = $nav_keys;
-
-    debug_log($keys);
-
-    return $keys;
-}
-
-/**
- * Reward type keys.
- * @param $pokestop_id
- * @param $quest_id
- * @param $quest_type
- * @return array
- */
-function reward_type_keys($pokestop_id, $quest_id, $quest_type)
-{
-    // Get all reward types from database
-    $rs = my_query(
-            "
-            SELECT    reward_type
-            FROM      rewardlist
-            GROUP BY  reward_type
-            "
-        );
-
-    // Init empty keys array.
-    $keys = array();
-
-    // Hidden rewards array.
-    $hide_rewards = array();
-    $hide_rewards = (QUEST_HIDE_REWARDS == true && !empty(QUEST_HIDDEN_REWARDS)) ? (explode(',', QUEST_HIDDEN_REWARDS)) : '';
-
-    // Add key for each quest quantity and action
-    while ($reward = $rs->fetch_assoc()) {
-        // Continue if some rewards shall be hidden
-        if(QUEST_HIDE_REWARDS == true && in_array($reward['reward_type'], $hide_rewards)) continue;
-
-        // Get translation.
-        $rw_type = explode(":", getTranslation('reward_type_' . $reward['reward_type']));
-        $text = $rw_type[0];
-        // Add keys.
-        $keys[] = array(
-            'text'          => $text,
-            'callback_data' => $pokestop_id . ',' . $quest_id . ':quest_edit_qty_reward:' . $quest_type . ',' . $reward['reward_type']
-        );
-    }
-
-    // Add back and abort navigation keys.
-    $nav_keys = array();
-    $nav_keys[] = universal_inner_key($keys, $pokestop_id, 'quest_edit_type', $quest_type, getTranslation('back'));
-    $nav_keys[] = universal_inner_key($keys, '0', 'exit', '0', getTranslation('abort'));
-
-    // Get the inline key array.
-    $keys = inline_key_array($keys, 2);
-    $keys[] = $nav_keys;
-
-    debug_log($keys);
-
-    return $keys;
-}
-
-/**
- * Reward quantity and type keys.
- * @param $pokestop_id
- * @param $quest_id
- * @param $quest_type
- * @param $reward_type
- * @return array
- */
-function reward_qty_type_keys($pokestop_id, $quest_id, $quest_type, $reward_type)
-{
-    // Get all reward types from database
-    $rs = my_query(
-            "
-            SELECT    *
-            FROM      rewardlist
-            WHERE     reward_type = '$reward_type'
-            ORDER BY  reward_quantity
-            "
-        );
-
-    // Init empty keys array.
-    $keys = array();
-
-    // Add key for each reward quantity and type
-    while ($reward = $rs->fetch_assoc()) {
-        // Reward qty: Singular or plural?
-        $rw_type = explode(":", getTranslation('reward_type_' . $reward['reward_type']));
-        $rw_type_singular = $rw_type[0];
-        $rw_type_plural = $rw_type[1];
-        $qty_rw = $reward['reward_quantity'] . SP . (($reward['reward_quantity'] > 1) ? ($rw_type_plural) : ($rw_type_singular));
-
-        // Add keys.
-        $keys[] = array(
-            'text'          => $qty_rw,
-            'callback_data' => $pokestop_id . ',' . $quest_id . ':quest_save:' . $reward['id']
-        );
-    }
-
-    // Add back and abort navigation keys.
-    $nav_keys = array();
-    $nav_keys[] = universal_inner_key($keys, $pokestop_id, 'quest_edit_reward', $quest_id . ',' . $quest_type, getTranslation('back'));
-    $nav_keys[] = universal_inner_key($keys, '0', 'exit', '0', getTranslation('abort'));
-
-    // Get the inline key array.
-    $keys = inline_key_array($keys, 2);
-    $keys[] = $nav_keys;
-
-    debug_log($keys);
-
-    return $keys;
-}
-
-/**
  * Pokemon keys.
- * @param $raid_id
+ * @param $gym_id_plus_letter
  * @param $raid_level
  * @return array
  */
-function pokemon_keys($raid_id, $raid_level, $action)
+function pokemon_keys($gym_id_plus_letter, $raid_level, $action)
 {
     // Init empty keys array.
-    $keys = array();
+    $keys = [];
 
     // Get pokemon from database
     $rs = my_query(
             "
-            SELECT    pokedex_id
+            SELECT    pokedex_id, pokemon_form
             FROM      pokemon
             WHERE     raid_level = '$raid_level'
             "
@@ -1989,8 +1301,8 @@ function pokemon_keys($raid_id, $raid_level, $action)
     // Add key for each raid level
     while ($pokemon = $rs->fetch_assoc()) {
         $keys[] = array(
-            'text'          => get_local_pokemon_name($pokemon['pokedex_id']),
-            'callback_data' => $raid_id . ':' . $action . ':' . $pokemon['pokedex_id']
+            'text'          => get_local_pokemon_name($pokemon['pokedex_id'] . '-' . $pokemon['pokemon_form']),
+            'callback_data' => $gym_id_plus_letter . ':' . $action . ':' . $pokemon['pokedex_id'] . '-' . $pokemon['pokemon_form']
         );
     }
 
@@ -2019,7 +1331,7 @@ function weather_keys($pokedex_id, $action, $arg)
     $reset_arg = $weather_add . '0';
     
     // Init empty keys array.
-    $keys = array();
+    $keys = [];
 
     // Max amount of weathers a pokemon raid boss can have is 3 which means 999
     // Keys will be shown up to 99 and when user is adding one more weather we exceed 99, so we remove the keys then
@@ -2090,7 +1402,7 @@ function cp_keys($pokedex_id, $action, $arg)
     $reset_arg = $cp_add . '0';
     
     // Init empty keys array.
-    $keys = array();
+    $keys = [];
 
     // Max CP is 9999 and no the value 999 is not a typo!
     // Keys will be shown up to 999 and when user is adding one more number we exceed 999, so we remove the keys then
@@ -2200,7 +1512,7 @@ function universal_key($keys, $id, $action, $arg, $text = '0')
 
 
 /**
- * Universal key.
+ * Universal inner key.
  * @param $keys
  * @param $id
  * @param $action
@@ -2253,7 +1565,7 @@ function share_raid_keys($raid_id, $user_id)
         $keys[] = [
             [
                 'text'                => getTranslation('share'),
-                'switch_inline_query' => strval($raid_id)
+                'switch_inline_query' => basename(ROOT_PATH) . ':' . strval($raid_id)
             ]
         ];
     }
@@ -2284,383 +1596,12 @@ function share_raid_keys($raid_id, $user_id)
 }
 
 /**
- * Share keys.
- * @param $quest_id
- * @param $user_id
- * @return array
- */
-function share_quest_keys($quest_id, $user_id) 
-{
-    // Moderator or not?
-    debug_log("Checking if user is moderator: " . $user_id);
-    $rs = my_query(
-        "
-        SELECT    moderator
-        FROM      users
-          WHERE   user_id = {$user_id}
-        "
-    );
-
-    // Fetch user data.
-    $user = $rs->fetch_assoc();
-
-    // Check moderator status.
-    $mod = $user['moderator'];
-    debug_log('User is ' . (($mod == 1) ? '' : 'not ') . 'a moderator: ' . $user_id);
-
-    // Add share button if not restricted.
-    if ((SHARE_QUEST_MODERATORS == true && $mod == 1) || SHARE_QUEST_USERS == true) {
-        debug_log('Adding general share key to inline keys');
-        // Set the keys.
-        $keys[] = [
-            [
-                'text'                => getTranslation('share'),
-                'switch_inline_query' => strval($quest_id)
-            ]
-        ];
-    }
-        
-    // Add buttons for predefined sharing chats.
-    if (!empty(SHARE_QUEST_CHATS)) {
-        // Add keys for each chat.
-        $chats = explode(',', SHARE_QUEST_CHATS);
-        foreach($chats as $chat) {
-            // Get chat object 
-            debug_log("Getting chat object for '" . $chat . "'");
-            $chat_obj = get_chat($chat);
-            
-            // Check chat object for proper response.
-            if ($chat_obj['ok'] == true) {
-                debug_log('Proper chat object received, continuing to add key for this chat: ' . $chat_obj['result']['title']);
-                $keys[] = [
-                    [
-                        'text'          => getTranslation('share_with') . ' ' . $chat_obj['result']['title'],
-                        'callback_data' => $quest_id . ':quest_share:' . $chat
-                    ]
-                ];
-            }
-        }
-    }
-
-    return $keys;
-}
-
-/**
- * Insert quest cleanup info to database.
- * @param $chat_id
- * @param $message_id
- * @param $quest_id
- */
-function insert_quest_cleanup($chat_id, $message_id, $quest_id)
-{
-    // Log ID's of quest, chat and message
-    debug_log('Quest_ID: ' . $quest_id);
-    debug_log('Chat_ID: ' . $chat_id);
-    debug_log('Message_ID: ' . $message_id);
-
-    if ((is_numeric($chat_id)) && (is_numeric($message_id)) && (is_numeric($quest_id)) && ($quest_id > 0)) {
-        global $db;
-
-        // Get quest.
-        $quest = get_quest($quest_id);
-    
-        // Init found.
-        $found = false;
-
-        // Insert cleanup info to database
-        if ($quest) {
-            // Check if cleanup info is already in database or not
-            // Needed since raids can be shared to multiple channels / supergroups!
-            $rs = my_query(
-                "
-                SELECT    *
-                    FROM      cleanup_quests
-                    WHERE     quest_id = '{$quest_id}'
-                "
-            );
-
-            // Chat_id and message_id equal to info from database
-            while ($cleanup = $rs->fetch_assoc()) {
-                // Leave while loop if cleanup info is already in database
-                if(($cleanup['chat_id'] == $chat_id) && ($cleanup['message_id'] == $message_id)) {
-                    debug_log('Cleanup preparation info is already in database!');
-                    $found = true;
-                    break;
-                } 
-            }
-        }
-
-        // Insert into database when raid found but no cleanup info found
-        if ($quest && !$found) {
-            // Build query for cleanup table to add cleanup info to database
-            debug_log('Adding cleanup info to database:');
-            $rs = my_query(
-                "
-                INSERT INTO   cleanup_quests
-                SET           quest_id = '{$quest_id}',
-                                  chat_id = '{$chat_id}',
-                                  message_id = '{$message_id}'
-                "
-            );
-        }
-    } else {
-        debug_log('Invalid input for cleanup preparation!');
-    }
-}
-
-/**
- * Run quests cleanup.
- * @param $telegram
- * @param $database
- */
-function run_quests_cleanup ($telegram = 2, $database = 2) {
-    /* Check input
-     * 0 = Do nothing
-     * 1 = Cleanup
-     * 2 = Read from config
-    */
-
-    // Get cleanup values from config per default.
-    if ($telegram == 2) {
-        $telegram = (CLEANUP_QUEST_TELEGRAM == true) ? 1 : 0;
-    }
-
-    if ($database == 2) {
-        $database = (CLEANUP_QUEST_DATABASE == true) ? 1 : 0;
-    }
-
-    // Start cleanup when at least one parameter is set to trigger cleanup
-    if ($telegram == 1 || $database == 1) {
-        // Query for telegram cleanup without database cleanup
-        if ($telegram == 1 && $database == 0) {
-            // Get cleanup info.
-            $rs = my_query(
-                "
-                SELECT    * 
-                FROM      cleanup_quests
-                  WHERE   chat_id <> 0
-                  ORDER BY id DESC
-                  LIMIT 0, 250     
-                ", true
-            );
-        // Query for database cleanup without telegram cleanup
-        } else if ($telegram == 0 && $database == 1) {
-            // Get cleanup info.
-            $rs = my_query(
-                "
-                SELECT    * 
-                FROM      cleanup_quests
-                  WHERE   chat_id = 0
-                  LIMIT 0, 250
-                ", true
-            );
-        // Query for telegram and database cleanup
-        } else {
-            // Get cleanup info.
-            $rs = my_query(
-                "
-                SELECT    * 
-                FROM      cleanup_quests
-                  LIMIT 0, 250
-                ", true
-            );
-        }
-
-        // Init empty cleanup jobs array.
-        $cleanup_jobs = array();
-
-        // Fill array with cleanup jobs.
-        while ($rowJob = $rs->fetch_assoc()) {
-            $cleanup_jobs[] = $rowJob;
-        }
-
-        // Write to log.
-        cleanup_log($cleanup_jobs);
-
-        // Init previous quest id.
-        $prev_quest_id = "FIRST_RUN";
-
-        foreach ($cleanup_jobs as $row) {
-            // Set current quest id.
-            $current_quest_id = ($row['quest_id'] == 0) ? $row['cleaned'] : $row['quest_id'];
-
-            // Write to log.
-            cleanup_log("Cleanup ID: " . $row['id']);
-            cleanup_log("Chat ID: " . $row['chat_id']);
-            cleanup_log("Message ID: " . $row['message_id']);
-            cleanup_log("Quest ID: " . $row['quest_id']);
-
-            // Make sure quest exists
-            $rs = my_query(
-                "
-                SELECT  id
-                FROM    quests
-                  WHERE id = {$current_quest_id}
-                ", true
-            );
-            $qq = $rs->fetch_row();
-
-            // No quest found - set cleanup to 0 and continue with next quest
-            if (empty($qq['0'])) {
-                cleanup_log('No quest found with ID: ' . $current_quest_id, '!');
-                cleanup_log('Updating cleanup information.');
-                my_query(
-                "
-                    UPDATE    cleanup_quests
-                    SET       chat_id = 0, 
-                              message_id = 0 
-                    WHERE   id = {$row['id']}
-                ", true
-                );
-
-                // Continue with next quest
-                continue;
-            }
-
-            // Get quest data only when quest_id changed compared to previous run
-            if ($prev_quest_id != $current_quest_id) {
-                // Get the quest date by id.
-                $rs = my_query(
-                    "
-                    SELECT  quest_date,
-                            CURDATE()                   AS  today,
-                            UNIX_TIMESTAMP(quest_date)  AS  ts_questdate,
-                            UNIX_TIMESTAMP(CURDATE())   AS  ts_today
-                    FROM    quests
-                      WHERE id = {$current_quest_id}
-                    ", true
-                );
-
-                // Fetch quest date.
-                $quest = $rs->fetch_assoc();
-
-                // Get quest date and todays date.
-                $questdate = $quest['quest_date'];
-                $today = $quest['today'];
-                $unix_questdate = $quest['ts_questdate'];
-                $unix_today = $quest['ts_today'];
-
-                // Write unix timestamps and dates to log.
-                cleanup_log('Unix timestamps:');
-                cleanup_log('Today: ' . $unix_today);
-                cleanup_log('Quest date: ' . $unix_questdate);
-                cleanup_log('Today: ' . $today);
-                cleanup_log('Quest date: '  . $questdate);
-            }
-
-            // Time for telegram cleanup?
-            if ($unix_today > $unix_questdate) {
-                // Delete quest telegram message if not already deleted
-                if ($telegram == 1 && $row['chat_id'] != 0 && $row['message_id'] != 0) {
-                    // Delete telegram message.
-                    cleanup_log('Deleting telegram message ' . $row['message_id'] . ' from chat ' . $row['chat_id'] . ' for quest ' . $row['quest_id']);
-                    delete_message($row['chat_id'], $row['message_id']);
-                    // Set database values of chat_id and message_id to 0 so we know telegram message was deleted already.
-                    cleanup_log('Updating telegram cleanup information.');
-                    my_query(
-                    "
-                        UPDATE    cleanup_quests
-                        SET       chat_id = 0, 
-                                  message_id = 0 
-                        WHERE   id = {$row['id']}
-                    ", true
-                    );
-                } else {
-                    if ($telegram == 1) {
-                        cleanup_log('Telegram message is already deleted!');
-                    } else {
-                        cleanup_log('Telegram cleanup was not triggered! Skipping...');
-                    }
-                }
-            } else {
-                cleanup_log('Skipping cleanup of telegram for this quest! Cleanup time has not yet come...');
-            }
-
-            // Time for database cleanup?
-            if ($unix_today > $unix_questdate) {
-                // Delete quest from quests table.
-                // Make sure to delete only once - quest may be in multiple channels/supergroups, but only 1 time in database
-                if (($database == 1) && $row['quest_id'] != 0 && ($prev_quest_id != $current_quest_id)) {
-                    // Delete quest from quest table.
-                    cleanup_log('Deleting quest ' . $current_quest_id);
-                    my_query(
-                    "
-                        DELETE FROM    quests
-                        WHERE   id = {$row['id']}
-                    ", true
-                    );
-
-                    // Set database value of quest_id to 0 so we know info was deleted already
-                    // Use quest_id in where clause since the same quest_id can in cleanup more than once
-                    cleanup_log('Updating database cleanup information.');
-                    my_query(
-                    "
-                        UPDATE    cleanup_quests
-                        SET       quest_id = 0, 
-                                  cleaned = {$row['quest_id']}
-                        WHERE   quest_id = {$row['quest_id']}
-                    ", true
-                    );
-                } else {
-                    if ($database == 1) {
-                        cleanup_log('Quest is already deleted!');
-                    } else {
-                        cleanup_log('Quest cleanup was not triggered! Skipping...');
-                    }
-                }
-
-                // Delete quest from cleanup table once every value is set to 0 and cleaned got updated from 0 to the quest_id
-                // In addition trigger deletion only when previous and current quest_id are different to avoid unnecessary sql queries
-                if ($row['quest_id'] == 0 && $row['chat_id'] == 0 && $row['message_id'] == 0 && $row['cleaned'] != 0 && ($prev_quest_id != $current_quest_id)) {
-                    // Get all cleanup jobs which will be deleted now.
-                    cleanup_log('Removing cleanup info from database:');
-                    $rs_cl = my_query(
-                    "
-                        SELECT *
-                        FROM    cleanup_quests
-                        WHERE   cleaned = {$row['cleaned']}
-                    ", true
-                    );
-
-                    // Log each cleanup ID which will be deleted.
-                    while($rs_cleanups = $rs_cl->fetch_assoc()) {
-                        cleanup_log('Cleanup ID: ' . $rs_cleanups['id'] . ', Former Quest ID: ' . $rs_cleanups['cleaned']);
-                    }
-
-                    // Finally delete from cleanup table.
-                    my_query(
-                    "
-                        DELETE FROM    cleanup_quests
-                        WHERE   cleaned = {$row['cleaned']}
-                    ", true
-                    );
-                } else {
-                    if ($prev_quest_id != $current_quest_id) {
-                        cleanup_log('Time for complete removal of quest from database has not yet come.');
-                    } else {
-                        cleanup_log('Complete removal of quest from database was already done!');
-                    }
-                }
-            } else {
-                cleanup_log('Skipping cleanup of database for this quest! Cleanup time has not yet come...');
-            }
-
-            // Store current quest id as previous id for next loop
-            $prev_quest_id = $current_quest_id;
-        }
-
-        // Write to log.
-        cleanup_log('Finished with cleanup process!');
-    }
-}
-
-/**
  * Insert raid cleanup info to database.
  * @param $chat_id
  * @param $message_id
  * @param $raid_id
  */
-function insert_raid_cleanup($chat_id, $message_id, $raid_id)
+function insert_cleanup($chat_id, $message_id, $raid_id)
 {
     // Log ID's of raid, chat and message
     debug_log('Raid_ID: ' . $raid_id);
@@ -2783,7 +1724,7 @@ function run_raids_cleanup ($telegram = 2, $database = 2) {
         }
 
         // Init empty cleanup jobs array.
-        $cleanup_jobs = array();
+        $cleanup_jobs = [];
 
 	// Fill array with cleanup jobs.
         while ($rowJob = $rs->fetch_assoc()) {
@@ -2994,14 +1935,15 @@ function run_raids_cleanup ($telegram = 2, $database = 2) {
  */
 function keys_vote($raid)
 {
-    // Init keys time array.
+    // Init keys_time array.
     $keys_time = [];
 
     $end_time = $raid['ts_end'];
     $now = $raid['ts_now'];
     $start_time = $raid['ts_start'];
 
-    $buttons_general = [
+    // Extra Keys
+    $buttons_extra = [
         [
             [
                 'text'          => getRaidTranslation('alone'),
@@ -3019,7 +1961,11 @@ function keys_vote($raid)
                 'text'          => '+ ' . TEAM_Y,
                 'callback_data' => $raid['id'] . ':vote_extra:instinct'
             ]
-        ],
+        ]
+    ];
+
+    // Team and level keys.
+    $buttons_teamlvl = [
         [
             [
                 'text'          => 'Team',
@@ -3034,6 +1980,64 @@ function keys_vote($raid)
                 'callback_data' => $raid['id'] . ':vote_level:down'
             ]
         ]
+    ];
+
+    // Ex-Raid Invite key
+    $button_invite = [
+        [
+            [
+                'text'          => EMOJI_INVITE,
+                'callback_data' => $raid['id'] . ':vote_invite:0'
+            ]
+        ]
+    ];
+
+
+    // Show icon, icon + text or just text.
+    // Icon.
+    if(RAID_VOTE_ICONS == true && RAID_VOTE_TEXT == false) {
+        $text_here = EMOJI_HERE;
+        $text_late = EMOJI_LATE;
+        $text_done = TEAM_DONE;
+        $text_cancel = TEAM_CANCEL;
+    // Icon + text.
+    } else if(RAID_VOTE_ICONS == true && RAID_VOTE_TEXT == true) {
+        $text_here = EMOJI_HERE . getRaidTranslation('here');
+        $text_late = EMOJI_LATE . getRaidTranslation('late');
+        $text_done = TEAM_DONE . getRaidTranslation('done');
+        $text_cancel = TEAM_CANCEL . getRaidTranslation('cancellation');
+    // Text.
+    } else {
+        $text_here = getRaidTranslation('here');
+        $text_late = getRaidTranslation('late');
+        $text_done = getRaidTranslation('done');
+        $text_cancel = getRaidTranslation('cancellation');
+    }
+
+    // Status keys.
+    $buttons_status = [
+        [
+            [
+                'text'          => EMOJI_REFRESH,
+                'callback_data' => $raid['id'] . ':vote_refresh:0'
+            ],
+            [
+                'text'          => $text_here,
+                'callback_data' => $raid['id'] . ':vote_status:arrived'
+            ],
+            [
+                'text'          => $text_late,
+                'callback_data' => $raid['id'] . ':vote_status:late'
+            ],
+            [
+                'text'          => $text_done,
+                'callback_data' => $raid['id'] . ':vote_status:raid_done'
+            ],
+            [
+                'text'          => $text_cancel,
+                'callback_data' => $raid['id'] . ':vote_status:cancel'
+            ],
+        ],
     ];
 
     // Raid ended already.
@@ -3062,7 +2066,6 @@ function keys_vote($raid)
         }
 
         // Old stuff, left for possible future use or in case of bugs:
-        //for ($i = ceil($now / $timePerSlot) * $timePerSlot; $i <= ($end_time - $timeBeforeEnd); $i = $i + $timePerSlot) {
         for ($i = ceil($start_time / $timePerSlot) * $timePerSlot; $i <= ($end_time - $timeBeforeEnd); $i = $i + $timePerSlot) {
 	    // Plus 60 seconds, so vote button for e.g. 10:00 will disappear after 10:00:59 / at 10:01:00 and not right after 09:59:59 / at 10:00:00
 	    if (($i + 60) > $now) {
@@ -3092,8 +2095,6 @@ function keys_vote($raid)
 
         // Add time keys.
         $buttons_time = inline_key_array($keys_time, 4);
-        //$keys = array_merge($buttons_time, $buttons_general);
-        //$keys[] = $keys_time;
 
         // Init keys pokemon array.
         $buttons_pokemon = [];
@@ -3130,11 +2131,14 @@ function keys_vote($raid)
         debug_log('Participants for raid with ID ' . $raid['id'] . ': ' . $count_pp);
         debug_log('Participants who voted for any pokemon: ' . $count_any_pokemon);
         debug_log('Participants who voted for ' . $raid_pokemon . ': ' . $count_raid_pokemon);
+    
+        // Split pokemon id and form
+        $raid_pokemon_id = explode('-',$raid_pokemon)[0];
 
         // Hide keys for specific cases
         $show_keys = true;
         // Make sure raid boss is not an egg
-        if(!in_array($raid_pokemon, $GLOBALS['eggs'])) {
+        if(!in_array($raid_pokemon_id, $GLOBALS['eggs'])) {
             // Make sure we either have no participants
             // OR all participants voted for "any" raid boss
             // OR all participants voted for the hatched raid boss 
@@ -3149,7 +2153,7 @@ function keys_vote($raid)
             // Get pokemon from database
             $rs = my_query(
                 "
-                SELECT    pokedex_id
+                SELECT    pokedex_id, pokemon_form
                 FROM      pokemon
                 WHERE     raid_level = '$raid_level'
                 "
@@ -3165,8 +2169,8 @@ function keys_vote($raid)
             while ($pokemon = $rs->fetch_assoc()) {
                 if(in_array($pokemon['pokedex_id'], $eggs)) continue;
                 $buttons_pokemon[] = array(
-                    'text'          => get_local_pokemon_name($pokemon['pokedex_id']),
-                    'callback_data' => $raid['id'] . ':vote_pokemon:' . $pokemon['pokedex_id']
+                    'text'          => get_local_pokemon_name($pokemon['pokedex_id'] . '-' . $pokemon['pokemon_form'], true, 'raid'),
+                    'callback_data' => $raid['id'] . ':vote_pokemon:' . $pokemon['pokedex_id'] . '-' . $pokemon['pokemon_form']
                 );
 
                 // Counter
@@ -3183,66 +2187,40 @@ function keys_vote($raid)
 
                 // Finally add pokemon to keys
                 $buttons_pokemon = inline_key_array($buttons_pokemon, 3);
-                //$keys = array_merge($keys, $buttons_pokemon);
+            } else {
+                // Reset pokemon buttons.
+                $buttons_pokemon = [];
             }
         }
 
-        // Show icon, icon + text or just text.
-        // Icon.
-        if(RAID_VOTE_ICONS == true && RAID_VOTE_TEXT == false) {
-            $text_here = EMOJI_HERE;
-            $text_late = EMOJI_LATE;
-            $text_done = TEAM_DONE;
-            $text_cancel = TEAM_CANCEL;
-        // Icon + text.
-        } else if(RAID_VOTE_ICONS == true && RAID_VOTE_TEXT == true) {
-            $text_here = EMOJI_HERE . getRaidTranslation('here');
-            $text_late = EMOJI_LATE . getRaidTranslation('late');
-            $text_done = TEAM_DONE . getRaidTranslation('done');
-            $text_cancel = TEAM_CANCEL . getRaidTranslation('cancellation');
-        // Text.
-        } else {
-            $text_here = getRaidTranslation('here');
-            $text_late = getRaidTranslation('late');
-            $text_done = getRaidTranslation('done');
-            $text_cancel = getRaidTranslation('cancellation');
+        // Init keys array
+        $keys = [];
+
+        // Get UI order from config and apply if nothing is missing!
+        $keys_UI_config = explode(',', RAID_POLL_UI_ORDER);
+        $keys_default = explode(',', 'extra,teamlvl,time,pokemon,status');
+
+        //debug_log($keys_UI_config);
+        //debug_log($keys_default);
+
+        // Add Ex-Raid Invite button for raid level X
+        if ($raid_level == 'X') {
+                $buttons_teamlvl[0] = array_merge($buttons_teamlvl[0], $button_invite[0]);
         }
-        
-        // Add status keys.
-        $status_buttons[] = [
-            [
-                'text'          => EMOJI_REFRESH,
-                'callback_data' => $raid['id'] . ':vote_refresh:0'
-            ],
-            [
-                'text'          => $text_here,
-                'callback_data' => $raid['id'] . ':vote_status:arrived'
-            ],
-            [
-                'text'          => $text_late,
-                'callback_data' => $raid['id'] . ':vote_status:late'
-            ],
-            [
-                'text'          => $text_done,
-                'callback_data' => $raid['id'] . ':vote_status:raid_done'
-            ],
-            [
-                'text'          => $text_cancel,
-                'callback_data' => $raid['id'] . ':vote_status:cancel'
-            ],
-        ];
+
+        // Compare if arrays have the same key/value pairs
+        if(count($keys_UI_config) == count($keys_default) && count(array_diff($keys_UI_config, $keys_default)) == 0){
+            // Custom keys order
+            foreach ($keys_UI_config as $keyname) {
+                $keys = array_merge($keys, ${'buttons_' . $keyname});
+            }
+        } else {
+            // Default keys order
+            $keys = array_merge($buttons_extra,$buttons_teamlvl,$buttons_time,$buttons_pokemon,$buttons_status);
+        }
     }
-    $keys = array(); 
-    switch (POLL_UI_ORDER) {
-	    case "MODIFIED":
-			$keys = array_merge($buttons_time,$buttons_general,$buttons_pokemon,$status_buttons);
-			break;
-    
-        	case "default":
-			$keys = array_merge($buttons_general,$buttons_time,$buttons_pokemon,$status_buttons);
-			break;
-    }
-    //$keys = array_merge($buttons_general,$buttons_time,$buttons_pokemon,$status_buttons);
+
+    // Return the keys.
     return $keys;
 }
 
@@ -3345,7 +2323,7 @@ function send_response_vote($update, $data, $new = false)
     $keys = keys_vote($raid);
 
     // Write to log.
-    debug_log($keys);
+    // debug_log($keys);
 
     if ($new) {
         $loc = send_location($update['callback_query']['message']['chat']['id'], $raid['lat'], $raid['lon']);
@@ -3356,15 +2334,16 @@ function send_response_vote($update, $data, $new = false)
 
         // Send the message.
         send_message($update['callback_query']['message']['chat']['id'], $msg . "\n", $keys, ['reply_to_message_id' => $loc['result']['message_id']]);
+
         // Answer the callback.
         answerCallbackQuery($update['callback_query']['id'], $msg);
     } else {
-        // Edit the message.
-        edit_message($update, $msg, $keys, ['disable_web_page_preview' => 'true']);
         // Change message string.
-        $msg = getTranslation('vote_updated');
+        $callback_msg = getTranslation('vote_updated');
         // Answer the callback.
-        answerCallbackQuery($update['callback_query']['id'], $msg);
+        answerCallbackQuery($update['callback_query']['id'], $callback_msg, true);
+        // Edit the message.
+        edit_message($update, $msg, $keys, ['disable_web_page_preview' => 'true'], true);
     }
 
     exit();
@@ -3456,7 +2435,7 @@ function delete_overview($chat_id, $message_id)
 function get_overview($update, $chats_active, $raids_active, $action = 'refresh', $chat_id = 0)
 {
     // Add pseudo array for last run to active chats array
-    $last_run = array();
+    $last_run = [];
     $last_run['chat_id'] = 'LAST_RUN';
     $chats_active[] = $last_run;
 
@@ -3469,7 +2448,6 @@ function get_overview($update, $chats_active, $raids_active, $action = 'refresh'
     // Any active raids currently?
     if (empty($raids_active)) {
         // Init keys.
-        $keys = array();
         $keys = [];
 
         // Refresh active overview messages with 'no_active_raids_currently' or send 'no_active_raids_found' message to user.
@@ -3497,8 +2475,8 @@ function get_overview($update, $chats_active, $raids_active, $action = 'refresh'
             }
 
             // Set the message.
-            $msg = '<b>' . getTranslation('raid_overview_for_chat') . ' ' . $chat_title . ' '. getTranslation('from') .' '. unix2tz(time(), $tz, 'H:i') . '</b>' .  CR . CR;
-            $msg .= getTranslation('no_active_raids');
+            $msg = '<b>' . getRaidTranslation('raid_overview_for_chat') . ' ' . $chat_title . ' '. getRaidTranslation('from') .' '. unix2tz(time(), $tz, 'H:i') . '</b>' .  CR . CR;
+            $msg .= getRaidTranslation('no_active_raids');
 
             //Add custom message from the config.
             if (defined('RAID_PIN_MESSAGE') && !empty(RAID_PIN_MESSAGE)) {
@@ -3513,13 +2491,13 @@ function get_overview($update, $chats_active, $raids_active, $action = 'refresh'
         // Triggered from user or cronjob?
         if (!empty($update['callback_query']['id'])) {
             // Send no active raids message to the user.
-            $msg = getTranslation('no_active_raids');
-
-            // Edit the message, but disable the web preview!
-            edit_message($update, $msg, $keys);
+            $msg = getRaidTranslation('no_active_raids');
 
             // Answer the callback.
             answerCallbackQuery($update['callback_query']['id'], $msg);
+
+            // Edit the message, but disable the web preview!
+            edit_message($update, $msg, $keys);
         }
     
         // Exit here.
@@ -3533,19 +2511,19 @@ function get_overview($update, $chats_active, $raids_active, $action = 'refresh'
         // Are any raids shared?
         if ($previous == "FIRST_RUN" && $current == "LAST_RUN") {
             // Send no active raids message to the user.
-            $msg = getTranslation('no_active_raids_shared');
-
-            // Edit the message, but disable the web preview!
-            edit_message($update, $msg, $keys);
+            $msg = getRaidTranslation('no_active_raids_shared');
 
             // Answer the callback.
             answerCallbackQuery($update['callback_query']['id'], $msg);
+
+            // Edit the message, but disable the web preview!
+            edit_message($update, $msg, $keys);
         }
 
         // Send message if not first run and previous not current
         if ($previous !== 'FIRST_RUN' && $previous !== $current) {
             // Add keys.
-	    $keys = array();
+	    $keys = [];
         
             //Add custom message from the config.	
             if (defined('RAID_PIN_MESSAGE') && !empty(RAID_PIN_MESSAGE)) {
@@ -3588,15 +2566,14 @@ function get_overview($update, $chats_active, $raids_active, $action = 'refresh'
                     send_message($update['callback_query']['message']['chat']['id'], $msg, $keys, ['disable_web_page_preview' => 'true']);
 
                     // Set the callback message and keys
-                    $callback_keys = array();
                     $callback_keys = [];
                     $callback_msg = '<b>' . getTranslation('list_all_overviews') . ':</b>';
 
-                    // Edit the message.
-                    edit_message($update, $callback_msg, $callback_keys);
-
                     // Answer the callback.
                     answerCallbackQuery($update['callback_query']['id'], 'OK');
+
+                    // Edit the message.
+                    edit_message($update, $callback_msg, $callback_keys);
                 } else {
                     // Shared overview
                     $keys = [];
@@ -3604,11 +2581,11 @@ function get_overview($update, $chats_active, $raids_active, $action = 'refresh'
                     // Set callback message string.
                     $msg_callback = getTranslation('successfully_shared');
 
-                    // Edit the message, but disable the web preview!
-                    edit_message($update, $msg_callback, $keys, ['disable_web_page_preview' => 'true']);
-
                     // Answer the callback.
                     answerCallbackQuery($update['callback_query']['id'], $msg_callback);
+
+                    // Edit the message, but disable the web preview!
+                    edit_message($update, $msg_callback, $keys, ['disable_web_page_preview' => 'true']);
 
                     // Send the message, but disable the web preview!
                     send_message($chat_id, $msg, $keys, ['disable_web_page_preview' => 'true']);
@@ -3665,14 +2642,16 @@ function get_overview($update, $chats_active, $raids_active, $action = 'refresh'
                 debug_log('Username of the chat: ' . $chat_obj['result']['username']);
             }
 
-            $msg = '<b>' . getTranslation('raid_overview_for_chat') . ' ' . $chat_obj['result']['title'] . ' ' . getTranslation('from') . ' '. unix2tz(time(), $tz, 'H:i') . '</b>' .  CR . CR;
+            $msg = '<b>' . getRaidTranslation('raid_overview_for_chat') . ' ' . $chat_obj['result']['title'] . ' ' . getRaidTranslation('from') . ' '. unix2tz(time(), $tz, 'H:i') . '</b>' .  CR . CR;
         }
 
         // Set variables for easier message building.
         $raid_id = $row['raid_id'];
         $pokemon = $raids_active[$raid_id]['pokemon'];
-        $pokemon = get_local_pokemon_name($pokemon);
+        $pokemon = get_local_pokemon_name($pokemon, true, 'raid');
         $gym = $raids_active[$raid_id]['gym_name'];
+        $ex_gym = $raids_active[$raid_id]['ex_gym'];
+        $ex_raid_gym_marker = (strtolower(RAID_EX_GYM_MARKER) == 'icon') ? EMOJI_STAR : '<b>' . RAID_EX_GYM_MARKER . '</b>';
         $now = $raids_active[$raid_id]['ts_now'];
         $tz = $raids_active[$raid_id]['timezone'];
         $start_time = $raids_active[$raid_id]['ts_start'];
@@ -3690,6 +2669,7 @@ function get_overview($update, $chats_active, $raids_active, $action = 'refresh'
          * Level 5 Egg opens up 18:41h
         */
         // Gym name.
+        $msg .= $ex_gym ? $ex_raid_gym_marker . SP : '';
         $msg .= !empty($chat_username) ? '<a href="https://t.me/' . $chat_username . '/' . $row['message_id'] . '">' . htmlspecialchars($gym) . '</a>' : $gym;
         $msg .= CR;
 
@@ -3705,8 +2685,8 @@ function get_overview($update, $chats_active, $raids_active, $action = 'refresh'
             $day_start = date('j', $start_time);
             $month_start = date('m', $start_time);
             $year_start = date('Y', $start_time);
-            $raid_day = getTranslation('weekday_' . $weekday_start);
-            $raid_month = getTranslation('month_' . $month_start);
+            $raid_day = getRaidTranslation('weekday_' . $weekday_start);
+            $raid_month = getRaidTranslation('month_' . $month_start);
 
             // Days until the raid starts
             $date_now = new DateTime(date('Y-m-d', $now));
@@ -3716,22 +2696,25 @@ function get_overview($update, $chats_active, $raids_active, $action = 'refresh'
             // Is the raid in the same week?
             if($week_now == $week_start && $date_now == $date_raid) {
                 // Output: Raid egg opens up 17:00
-                $msg .= $pokemon . ' — <b>' . getTranslation('raid_egg_opens') . ' ' . unix2tz($start_time, $tz) . '</b>' . CR;
+                $msg .= $pokemon . ' — <b>' . getRaidTranslation('raid_egg_opens') . ' ' . unix2tz($start_time, $tz);
             } else {
                 if($days_to_raid > 6) {
                     // Output: Raid egg opens on Friday, 13 April (2018)
-                    $msg .= $pokemon . ' — <b>' . getTranslation('raid_egg_opens_day') . ' ' .  $raid_day . ', ' . $day_start . ' ' . $raid_month . (($year_start > $year_now) ? $year_start : '');
+                    $msg .= $pokemon . ' — <b>' . getRaidTranslation('raid_egg_opens_day') . ' ' .  $raid_day . ', ' . $day_start . ' ' . $raid_month . (($year_start > $year_now) ? $year_start : '');
                 } else {
                     // Output: Raid egg opens on Friday
-                    $msg .= $pokemon . ' — <b>' . getTranslation('raid_egg_opens_day') . ' ' .  $raid_day;
+                    $msg .= $pokemon . ' — <b>' . getRaidTranslation('raid_egg_opens_day') . ' ' .  $raid_day;
                 }
                 // Adds 'at 17:00' to the output.
-                $msg .= ' ' . getTranslation('raid_egg_opens_at') . ' ' . unix2tz($start_time, $tz) . '</b>' . CR;
+                $msg .= ' ' . getRaidTranslation('raid_egg_opens_at') . ' ' . unix2tz($start_time, $tz);
             }
+            // Add endtime
+            $msg .= SP . getRaidTranslation('to') . SP . unix2tz($end_time, $tz) . '</b>' . CR;
+
         // Raid has started already
         } else {
             // Add time left message.
-            $msg .= $pokemon . ' — <b>' . getTranslation('still') . ' ' . floor($time_left / 60) . ':' . str_pad($time_left % 60, 2, '0', STR_PAD_LEFT) . 'h</b>' . CR;
+            $msg .= $pokemon . ' — <b>' . getRaidTranslation('still') . ' ' . floor($time_left / 60) . ':' . str_pad($time_left % 60, 2, '0', STR_PAD_LEFT) . 'h</b>' . CR;
         }
 
         // Count attendances
@@ -3877,7 +2860,8 @@ function show_raid_poll($raid)
     if ($raid['gym_name'] || $raid['gym_team']) {
         // Add gym name to message.
         if ($raid['gym_name']) {
-            $msg .= getRaidTranslation('gym') . ': <b>' . $raid['gym_name'] . '</b>';
+            $ex_raid_gym_marker = (strtolower(RAID_EX_GYM_MARKER) == 'icon') ? EMOJI_STAR : '<b>' . RAID_EX_GYM_MARKER . '</b>';
+            $msg .= getRaidTranslation('gym') . ': ' . ($raid['ex_gym'] ? $ex_raid_gym_marker . SP : '') . '<b>' . $raid['gym_name'] . '</b>';
         }
 
         // Add team to message.
@@ -3939,7 +2923,7 @@ function show_raid_poll($raid)
         // Is the raid in the same week?
         if($week_now == $week_start && $date_now == $date_raid) {
             // Output: Raid egg opens up 17:00
-            $msg .= '<b>' . getRaidTranslation('raid_egg_opens') . ' ' . unix2tz($raid['ts_start'], $raid['timezone']) . '</b>' . CR;
+            $msg .= '<b>' . getRaidTranslation('raid_egg_opens') . ' ' . unix2tz($raid['ts_start'], $raid['timezone']);
         } else {
             if($days_to_raid > 6) {
                 // Output: Raid egg opens on Friday, 13 April (2018)
@@ -3949,8 +2933,10 @@ function show_raid_poll($raid)
                 $msg .= '<b>' . getRaidTranslation('raid_egg_opens_day') . ' ' .  $raid_day;
             }
             // Adds 'at 17:00' to the output.
-            $msg .= ' ' . getRaidTranslation('raid_egg_opens_at') . ' ' . unix2tz($raid['ts_start'], $raid['timezone']) . '</b>' . CR;
+            $msg .= ' ' . getRaidTranslation('raid_egg_opens_at') . ' ' . unix2tz($raid['ts_start'], $raid['timezone']);
         }
+        // Add endtime
+        $msg .= SP . getRaidTranslation('to') . SP . unix2tz($raid['ts_end'], $raid['timezone']) . '</b>' . CR;
 
     // Raid has started and active or already ended
     } else {
@@ -4002,7 +2988,7 @@ function show_raid_poll($raid)
     );
 
     // Init empty count array and count sum.
-    $cnt = array();
+    $cnt = [];
     $cnt_all = 0;
     $cnt_latewait = 0;
 
@@ -4048,7 +3034,7 @@ function show_raid_poll($raid)
         );
 
         // Init empty count array and count sum.
-        $cnt_pokemon = array();
+        $cnt_pokemon = [];
 
         while ($cnt_rowpoke = $rs_cnt_pokemon->fetch_assoc()) {
             $cnt_pokemon[$cnt_rowpoke['ts_att'] . '_' . $cnt_rowpoke['pokemon']] = $cnt_rowpoke;
@@ -4150,11 +3136,12 @@ function show_raid_poll($raid)
                 }
             }
 
-            // Add users: TEAM -- LEVEL -- NAME -- ARRIVED -- EXTRAPEOPLE
+            // Add users: ARRIVED --- TEAM -- LEVEL -- NAME -- INVITE -- EXTRAPEOPLE
             $msg .= ($row['arrived']) ? (EMOJI_HERE . ' ') : (($row['late']) ? (EMOJI_LATE . ' ') : '└ ');
             $msg .= ($row['team'] === NULL) ? ($GLOBALS['teams']['unknown'] . ' ') : ($GLOBALS['teams'][$row['team']] . ' ');
             $msg .= ($row['level'] == 0) ? ('<b>00</b> ') : (($row['level'] < 10) ? ('<b>0' . $row['level'] . '</b> ') : ('<b>' . $row['level'] . '</b> '));
             $msg .= '<a href="tg://user?id=' . $row['user_id'] . '">' . htmlspecialchars($row['name']) . '</a> ';
+            $msg .= ($raid_level == 'X' && $row['invite']) ? (EMOJI_INVITE . ' ') : '';
             $msg .= ($row['extra_mystic']) ? ('+' . $row['extra_mystic'] . TEAM_B . ' ') : '';
             $msg .= ($row['extra_valor']) ? ('+' . $row['extra_valor'] . TEAM_R . ' ') : '';
             $msg .= ($row['extra_instinct']) ? ('+' . $row['extra_instinct'] . TEAM_Y . ' ') : '';
@@ -4184,7 +3171,7 @@ function show_raid_poll($raid)
     );
 
     // Init empty count array and count sum.
-    $cnt_cancel_done = array();
+    $cnt_cancel_done = [];
 
     while ($cnt_row_cancel_done = $rs_cnt_cancel_done->fetch_assoc()) {
         // Cancel count
@@ -4253,6 +3240,7 @@ function show_raid_poll($raid)
             $msg .= ($row['team'] === NULL) ? ('└ ' . $GLOBALS['teams']['unknown'] . ' ') : ('└ ' . $GLOBALS['teams'][$row['team']] . ' ');
             $msg .= ($row['level'] == 0) ? ('<b>00</b> ') : (($row['level'] < 10) ? ('<b>0' . $row['level'] . '</b> ') : ('<b>' . $row['level'] . '</b> '));
             $msg .= '<a href="tg://user?id=' . $row['user_id'] . '">' . htmlspecialchars($row['name']) . '</a> ';
+            $msg .= ($raid_level == 'X' && $row['invite']) ? (EMOJI_INVITE . ' ') : '';
             $msg .= ($row['cancel'] == 1) ? ('[' . (($row['ts_att'] == 0) ? (getRaidTranslation('anytime')) : (unix2tz($row['ts_att'], $raid['timezone']))) . '] ') : '';
             $msg .= ($row['raid_done'] == 1) ? ('[' . (($row['ts_att'] == 0) ? (getRaidTranslation('anytime')) : (unix2tz($row['ts_att'], $raid['timezone']))) . '] ') : '';
             $msg .= ($row['extra_mystic']) ? ('+' . $row['extra_mystic'] . TEAM_B . ' ') : '';
@@ -4277,7 +3265,7 @@ function show_raid_poll($raid)
 
     // Add update time and raid id to message.
     $msg .= CR . '<i>' . getRaidTranslation('updated') . ': ' . unix2tz(time(), $raid['timezone'], 'H:i:s') . '</i>';
-    $msg .= '  R-ID = ' . $raid['id']; // DO NOT REMOVE! --> NEEDED FOR CLEANUP PREPARATION!
+    $msg .= '  ' . substr(strtoupper(BOT_ID), 0, 1) . '-ID = ' . $raid['id']; // DO NOT REMOVE! --> NEEDED FOR CLEANUP PREPARATION!
 
     // Return the message.
     return $msg;
@@ -4290,12 +3278,19 @@ function show_raid_poll($raid)
  */
 function show_raid_poll_small($raid)
 {
-    // Left for possible future redesign of small raid poll
-    //$time_left = floor($raid['t_left'] / 60);
-    //$time_left = 'noch ' . floor($time_left / 60) . ':' . str_pad($time_left % 60, 2, '0', STR_PAD_LEFT);
-
     // Build message string.
     $msg = '';
+
+    // Gym Name
+    if(!empty($raid['gym_name'])) {
+        $msg .= '<b>' . $raid['gym_name'] . '</b>' . CR;
+    }
+
+    // Address found.
+    if (!empty($raid['address'])) {
+        $msg .= '<i>' . $raid['address'] . '</i>' . CR2;
+    }
+
     // Pokemon
     if(!empty($raid['pokemon'])) {
         $msg .= '<b>' . get_local_pokemon_name($raid['pokemon']) . '</b> ' . CR;
@@ -4323,7 +3318,7 @@ function show_raid_poll_small($raid)
         // Is the raid in the same week?
         if($week_now == $week_start && $date_now == $date_raid) {
             // Output: Raid egg opens up 17:00
-            $msg .= '<b>' . getTranslation('raid_egg_opens') . ' ' . unix2tz($raid['ts_start'], $raid['timezone']) . '</b>' . CR;
+            $msg .= '<b>' . getTranslation('raid_egg_opens') . ' ' . unix2tz($raid['ts_start'], $raid['timezone']);
         } else {
             if($days_to_raid > 6) {
                 // Output: Raid egg opens on Friday, 13 April (2018)
@@ -4333,17 +3328,10 @@ function show_raid_poll_small($raid)
                 $msg .= '<b>' . getTranslation('raid_egg_opens_day') . ' ' .  $raid_day;
             }
             // Adds 'at 17:00' to the output.
-            $msg .= ' ' . getTranslation('raid_egg_opens_at') . ' ' . unix2tz($raid['ts_start'], $raid['timezone']) . '</b>' . CR;
+            $msg .= ' ' . getTranslation('raid_egg_opens_at') . ' ' . unix2tz($raid['ts_start'], $raid['timezone']);
         }
-    }
-    // Gym Name
-    if(!empty($raid['gym_name'])) {
-        $msg .= $raid['gym_name'] . CR;
-    }
-
-    // Address found.
-    if (!empty($raid['address'])) {
-        $msg .= '<i>' . $raid['address'] . '</i>' . CR2;
+        // Add endtime
+        $msg .= SP . getTranslation('to') . SP . unix2tz($raid['ts_end'], $raid['timezone']) . '</b>' . CR;
     }
 
     // Count attendances
@@ -4397,25 +3385,38 @@ function show_raid_poll_small($raid)
 function raid_list($update)
 {
     // Init empty rows array and query type.
-    $rows = array();
+    $rows = [];
+
+    // Init raid id.
+    $iqq = 0;
+   
+    // Botname:raid_id received? 
+    if (substr_count($update['inline_query']['query'], ':') == 1) {
+        // Botname: received, is there a raid_id after : or not?
+        if(strlen(explode(':', $update['inline_query']['query'])[1]) != 0) {
+            // Raid ID.
+            $iqq = intval(explode(':', $update['inline_query']['query'])[1]);
+        }
+    }
+
 
     // Inline list polls.
-    if ($update['inline_query']['query']) {
-
-        // Raid / Quest id.
-        $iqq = intval($update['inline_query']['query']);
+    if ($iqq != 0) {
 
         // Raid by ID.
         $request = my_query(
             "
             SELECT              raids.*,
                                 raids.id AS iqq_raid_id,
+                                gyms.lat, gyms.lon, gyms.address, gyms.gym_name, gyms.ex_gym,
 			        UNIX_TIMESTAMP(end_time)                        AS ts_end,
 			        UNIX_TIMESTAMP(start_time)                      AS ts_start,
 			        UNIX_TIMESTAMP(NOW())                           AS ts_now,
 			        UNIX_TIMESTAMP(end_time)-UNIX_TIMESTAMP(NOW())  AS t_left,
                                 users.name
 		    FROM        raids
+                    LEFT JOIN   gyms
+                    ON          raids.gym_id = gyms.id
                     LEFT JOIN   users
                     ON          raids.user_id = users.user_id
 		      WHERE     raids.id = {$iqq}
@@ -4427,38 +3428,25 @@ function raid_list($update)
             $rows[] = $answer;
         }
 
-        // No raid found - try quest via ID.
-        if(!$rows) {
-            // Quest by ID.
-            $request = my_query(
-                "
-                SELECT  *,
-                        id AS iqq_quest_id
-                        FROM      quests
-                          WHERE   id = {$iqq}
-                          AND     quest_date = CURDATE()
-                "
-            );
-
-            while ($answer = $request->fetch_assoc()) {
-                $rows[] = $answer;
-            }
-        }
     } else {
         // Get raid data by user.
         $request = my_query(
             "
             SELECT              raids.*,
                                 raids.id AS iqq_raid_id,
+                                gyms.lat, gyms.lon, gyms.address, gyms.gym_name, gyms.ex_gym,
 			        UNIX_TIMESTAMP(end_time)                        AS ts_end,
 			        UNIX_TIMESTAMP(start_time)                      AS ts_start,
 			        UNIX_TIMESTAMP(NOW())                           AS ts_now,
 			        UNIX_TIMESTAMP(end_time)-UNIX_TIMESTAMP(NOW())  AS t_left,
                                 users.name
 		    FROM        raids
+                    LEFT JOIN   gyms
+                    ON          raids.gym_id = gyms.id
                     LEFT JOIN   users
                     ON          raids.user_id = users.user_id
 		      WHERE     raids.user_id = {$update['inline_query']['from']['id']}
+                      AND       end_time>NOW()
 		      ORDER BY  iqq_raid_id DESC LIMIT 2
             "
         );
@@ -4467,20 +3455,6 @@ function raid_list($update)
             $rows[] = $answer_raids;
         }
 
-        // Get quest data by user.
-        $request = my_query(
-            "
-            SELECT              *,
-                                quests.id AS iqq_quest_id
-                    FROM        quests
-                      WHERE     user_id = {$update['inline_query']['from']['id']}
-                      ORDER BY  id DESC LIMIT 2
-            "
-        );
-
-        while ($answer_quests = $request->fetch_assoc()) {
-            $rows[] = $answer_quests;
-        }
     }
 
     debug_log($rows);

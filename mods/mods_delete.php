@@ -27,15 +27,16 @@ if ($update['callback_query']['message']['chat']['type'] == 'private') {
     // Create the keys.
     $keys = [];
 
-    // Edit message.
-    edit_message($update, $msg, $keys, false);
-
     // Build callback message string.
     $callback_response = getTranslation('mods_delete_mod');
 
     // Answer callback.
     answerCallbackQuery($update['callback_query']['id'], $callback_response);
 
+    // Edit message.
+    edit_message($update, $msg, $keys, false);
+
 }
 
+// Exit.
 exit();

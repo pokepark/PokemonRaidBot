@@ -1,34 +1,5 @@
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-DROP TABLE IF EXISTS `pokemon`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `pokemon` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `pokedex_id` int(10) unsigned NOT NULL,
-  `pokemon_name` varchar(12) DEFAULT NULL,
-  `pokemon_form` varchar(12) DEFAULT 'normal',
-  `raid_level` enum('0','1','2','3','4','5','X') DEFAULT '0',
-  `min_cp` int(10) unsigned NOT NULL,
-  `max_cp` int(10) unsigned NOT NULL,
-  `min_weather_cp` int(10) unsigned NOT NULL,
-  `max_weather_cp` int(10) unsigned NOT NULL,
-  `weather` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=455 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
-LOCK TABLES `pokemon` WRITE;
-/*!40000 ALTER TABLE `pokemon` DISABLE KEYS */;
+DELETE FROM `pokemon`;
+TRUNCATE `pokemon`;
 INSERT INTO `pokemon` VALUES (1,1,'Bulbasaur','normal','0',590,637,737,796,125);
 INSERT INTO `pokemon` VALUES (2,2,'Ivysaur','normal','0',831,886,1039,1108,125);
 INSERT INTO `pokemon` VALUES (3,3,'Venusaur','normal','0',1395,1467,1744,1834,125);
@@ -57,7 +28,7 @@ INSERT INTO `pokemon` VALUES (25,23,'Ekans','normal','0',405,444,506,556,5);
 INSERT INTO `pokemon` VALUES (26,24,'Arbok','normal','0',933,992,1166,1240,5);
 INSERT INTO `pokemon` VALUES (27,25,'Pikachu','normal','0',410,450,512,562,3);
 INSERT INTO `pokemon` VALUES (28,26,'Raichu','normal','0',1092,1157,1366,1446,3);
-INSERT INTO `pokemon` VALUES (29,26,'Raichu','alolan','3',1092,1157,1366,1446,36);
+INSERT INTO `pokemon` VALUES (29,26,'Raichu','alolan','0',1092,1157,1366,1446,36);
 INSERT INTO `pokemon` VALUES (30,27,'Sandshrew','normal','0',633,682,792,853,12);
 INSERT INTO `pokemon` VALUES (31,27,'Sandshrew','alolan','0',633,682,792,853,7);
 INSERT INTO `pokemon` VALUES (32,28,'Sandslash','normal','0',1262,1330,1577,1663,12);
@@ -107,7 +78,7 @@ INSERT INTO `pokemon` VALUES (75,64,'Kadabra','normal','0',996,1062,1246,1328,6)
 INSERT INTO `pokemon` VALUES (76,65,'Alakazam','normal','0',1569,1649,1961,2062,6);
 INSERT INTO `pokemon` VALUES (77,66,'Machop','normal','0',636,685,795,856,5);
 INSERT INTO `pokemon` VALUES (78,67,'Machoke','normal','0',1029,1091,1287,1364,5);
-INSERT INTO `pokemon` VALUES (79,68,'Machamp','normal','3',1574,1650,1967,2063,5);
+INSERT INTO `pokemon` VALUES (79,68,'Machamp','normal','0',1574,1650,1967,2063,5);
 INSERT INTO `pokemon` VALUES (80,69,'Bellsprout','normal','0',479,523,599,654,125);
 INSERT INTO `pokemon` VALUES (81,70,'Weepinbell','normal','0',787,842,984,1053,125);
 INSERT INTO `pokemon` VALUES (82,71,'Victreebel','normal','0',1228,1296,1535,1620,125);
@@ -148,19 +119,19 @@ INSERT INTO `pokemon` VALUES (116,100,'Voltorb','normal','0',448,489,560,612,3);
 INSERT INTO `pokemon` VALUES (117,101,'Electrode','normal','0',1023,1085,1279,1357,3);
 INSERT INTO `pokemon` VALUES (118,102,'Exeggcute','normal','0',583,629,728,787,126);
 INSERT INTO `pokemon` VALUES (119,103,'Exeggutor','normal','0',1589,1666,1987,2083,126);
-INSERT INTO `pokemon` VALUES (120,103,'Exeggutor','alolan','2',1589,1666,1987,2083,126);
+INSERT INTO `pokemon` VALUES (120,103,'Exeggutor','alolan','0',1589,1666,1987,2083,126);
 INSERT INTO `pokemon` VALUES (121,104,'Cubone','normal','0',495,539,618,673,12);
 INSERT INTO `pokemon` VALUES (122,105,'Marowak','normal','0',908,966,1135,1208,12);
-INSERT INTO `pokemon` VALUES (123,105,'Marowak','alolan','4',908,966,1135,1208,128);
+INSERT INTO `pokemon` VALUES (123,105,'Marowak','alolan','0',908,966,1135,1208,128);
 INSERT INTO `pokemon` VALUES (124,106,'Hitmonlee','normal','0',1302,1375,1627,1718,5);
 INSERT INTO `pokemon` VALUES (125,107,'Hitmonchan','normal','0',1132,1199,1415,1499,5);
-INSERT INTO `pokemon` VALUES (126,108,'Lickitung','normal','2',703,755,879,944,4);
+INSERT INTO `pokemon` VALUES (126,108,'Lickitung','normal','0',703,755,879,944,4);
 INSERT INTO `pokemon` VALUES (127,109,'Koffing','normal','0',576,623,720,779,5);
 INSERT INTO `pokemon` VALUES (128,110,'Weezing','normal','0',1180,1247,1476,1559,5);
 INSERT INTO `pokemon` VALUES (129,111,'Rhyhorn','normal','0',901,959,1127,1199,124);
 INSERT INTO `pokemon` VALUES (130,112,'Rhydon','normal','0',1804,1886,2256,2357,124);
 INSERT INTO `pokemon` VALUES (131,113,'Chansey','normal','0',769,839,961,1049,4);
-INSERT INTO `pokemon` VALUES (132,114,'Tangela','normal','3',1195,1262,1493,1577,12);
+INSERT INTO `pokemon` VALUES (132,114,'Tangela','normal','0',1195,1262,1493,1577,12);
 INSERT INTO `pokemon` VALUES (133,115,'Kangaskhan','normal','0',1337,1407,1671,1759,4);
 INSERT INTO `pokemon` VALUES (134,116,'Horsea','normal','0',482,526,602,658,3);
 INSERT INTO `pokemon` VALUES (135,117,'Seadra','normal','0',1067,1131,1334,1414,3);
@@ -183,7 +154,7 @@ INSERT INTO `pokemon` VALUES (151,133,'Eevee','normal','0',510,553,637,692,4);
 INSERT INTO `pokemon` VALUES (152,134,'Vaporeon','normal','0',1724,1804,2155,2255,3);
 INSERT INTO `pokemon` VALUES (153,135,'Jolteon','normal','0',1484,1560,1855,1950,3);
 INSERT INTO `pokemon` VALUES (154,136,'Flareon','normal','0',1581,1659,1976,2074,12);
-INSERT INTO `pokemon` VALUES (155,137,'Porygon','normal','3',840,895,1050,1120,4);
+INSERT INTO `pokemon` VALUES (155,137,'Porygon','normal','0',840,895,1050,1120,4);
 INSERT INTO `pokemon` VALUES (156,138,'Omanyte','normal','0',714,768,893,961,43);
 INSERT INTO `pokemon` VALUES (157,139,'Omastar','normal','0',1460,1534,1825,1918,43);
 INSERT INTO `pokemon` VALUES (158,140,'Kabuto','normal','0',618,670,773,837,43);
@@ -196,7 +167,7 @@ INSERT INTO `pokemon` VALUES (164,146,'Moltres','normal','0',1788,1870,2235,2337
 INSERT INTO `pokemon` VALUES (165,147,'Dratini','normal','0',450,491,562,614,6);
 INSERT INTO `pokemon` VALUES (166,148,'Dragonair','normal','0',862,919,1078,1149,6);
 INSERT INTO `pokemon` VALUES (167,149,'Dragonite','normal','0',1961,2046,2451,2558,6);
-INSERT INTO `pokemon` VALUES (168,150,'Mewtwo','normal','5',2184,2275,2730,2844,6);
+INSERT INTO `pokemon` VALUES (168,150,'Mewtwo','normal','0',2184,2275,2730,2844,6);
 INSERT INTO `pokemon` VALUES (169,151,'Mew','normal','0',1687,1766,2109,2207,6);
 INSERT INTO `pokemon` VALUES (170,152,'Chikorita','normal','0',418,458,522,572,12);
 INSERT INTO `pokemon` VALUES (171,153,'Bayleef','normal','0',689,740,862,925,12);
@@ -261,13 +232,13 @@ INSERT INTO `pokemon` VALUES (229,211,'Qwilfish','normal','0',1029,1091,1287,136
 INSERT INTO `pokemon` VALUES (230,212,'Scizor','normal','0',1524,1600,1905,2000,37);
 INSERT INTO `pokemon` VALUES (231,213,'Shuckle','normal','0',137,171,171,214,34);
 INSERT INTO `pokemon` VALUES (232,214,'Heracross','normal','0',1601,1679,2002,2098,35);
-INSERT INTO `pokemon` VALUES (233,215,'Sneasel','normal','2',1005,1067,1256,1334,87);
+INSERT INTO `pokemon` VALUES (233,215,'Sneasel','normal','0',1005,1067,1256,1334,87);
 INSERT INTO `pokemon` VALUES (234,216,'Teddiursa','normal','0',627,676,784,845,4);
 INSERT INTO `pokemon` VALUES (235,217,'Ursaring','normal','0',1501,1577,1877,1971,4);
 INSERT INTO `pokemon` VALUES (236,218,'Slugma','normal','0',390,429,487,536,12);
 INSERT INTO `pokemon` VALUES (237,219,'Magcargo','normal','0',825,882,1031,1102,124);
 INSERT INTO `pokemon` VALUES (238,220,'Swinub','normal','0',343,379,428,473,712);
-INSERT INTO `pokemon` VALUES (239,221,'Piloswine','normal','3',1237,1305,1547,1631,712);
+INSERT INTO `pokemon` VALUES (239,221,'Piloswine','normal','0',1237,1305,1547,1631,712);
 INSERT INTO `pokemon` VALUES (240,222,'Corsola','normal','0',644,693,805,867,34);
 INSERT INTO `pokemon` VALUES (241,223,'Remoraid','normal','0',388,428,485,535,3);
 INSERT INTO `pokemon` VALUES (242,224,'Octillery','normal','0',1148,1213,1435,1517,3);
@@ -294,7 +265,7 @@ INSERT INTO `pokemon` VALUES (262,244,'Entei','normal','0',1847,1930,2309,2412,1
 INSERT INTO `pokemon` VALUES (263,245,'Suicune','normal','0',1538,1613,1922,2016,3);
 INSERT INTO `pokemon` VALUES (264,246,'Larvitar','normal','0',474,517,593,646,412);
 INSERT INTO `pokemon` VALUES (265,247,'Pupitar','normal','0',862,918,1078,1148,412);
-INSERT INTO `pokemon` VALUES (266,248,'Tyranitar','normal','4',2011,2097,2514,2621,48);
+INSERT INTO `pokemon` VALUES (266,248,'Tyranitar','normal','0',2011,2097,2514,2621,48);
 INSERT INTO `pokemon` VALUES (267,249,'Lugia','normal','0',1969,2056,2462,2570,6);
 INSERT INTO `pokemon` VALUES (268,250,'Ho-Oh','normal','0',2133,2222,2667,2778,126);
 INSERT INTO `pokemon` VALUES (269,251,'Celebi','normal','0',1687,1766,2109,2207,612);
@@ -327,7 +298,7 @@ INSERT INTO `pokemon` VALUES (295,277,'Swellow','normal','0',938,998,1173,1248,4
 INSERT INTO `pokemon` VALUES (296,278,'Wingull','normal','0',330,366,413,458,36);
 INSERT INTO `pokemon` VALUES (297,279,'Pelipper','normal','0',1061,1125,1327,1406,36);
 INSERT INTO `pokemon` VALUES (298,280,'Ralts','normal','0',220,249,275,312,65);
-INSERT INTO `pokemon` VALUES (299,281,'Kirlia','normal','2',440,481,551,602,65);
+INSERT INTO `pokemon` VALUES (299,281,'Kirlia','normal','0',440,481,551,602,65);
 INSERT INTO `pokemon` VALUES (300,282,'Gardevoir','normal','0',1615,1694,2019,2117,65);
 INSERT INTO `pokemon` VALUES (301,283,'Surskit','normal','0',360,397,450,497,3);
 INSERT INTO `pokemon` VALUES (302,284,'Masquerain','normal','0',1154,1220,1443,1525,36);
@@ -349,10 +320,10 @@ INSERT INTO `pokemon` VALUES (317,299,'Nosepass','normal','0',430,474,538,593,4)
 INSERT INTO `pokemon` VALUES (318,300,'Skitty','normal','0',341,376,426,471,4);
 INSERT INTO `pokemon` VALUES (319,301,'Delcatty','normal','0',739,791,924,989,4);
 INSERT INTO `pokemon` VALUES (320,302,'Sableye','normal','0',694,745,868,932,8);
-INSERT INTO `pokemon` VALUES (321,303,'Mawile','normal','2',793,848,991,1060,75);
+INSERT INTO `pokemon` VALUES (321,303,'Mawile','normal','0',793,848,991,1060,75);
 INSERT INTO `pokemon` VALUES (322,304,'Aron','normal','0',654,704,817,880,74);
 INSERT INTO `pokemon` VALUES (323,305,'Lairon','normal','0',1080,1145,1351,1432,74);
-INSERT INTO `pokemon` VALUES (324,306,'Aggron','normal','4',1636,1716,2045,2145,74);
+INSERT INTO `pokemon` VALUES (324,306,'Aggron','normal','0',1636,1716,2045,2145,74);
 INSERT INTO `pokemon` VALUES (325,307,'Meditite','normal','0',284,317,355,396,56);
 INSERT INTO `pokemon` VALUES (326,308,'Medicham','normal','0',678,728,848,911,56);
 INSERT INTO `pokemon` VALUES (327,309,'Electrike','normal','0',422,462,528,578,3);
@@ -405,7 +376,7 @@ INSERT INTO `pokemon` VALUES (373,355,'Duskull','normal','0',264,299,330,374,8);
 INSERT INTO `pokemon` VALUES (374,356,'Dusclops','normal','0',708,762,885,953,8);
 INSERT INTO `pokemon` VALUES (375,357,'Tropius','normal','0',994,1055,1242,1319,126);
 INSERT INTO `pokemon` VALUES (376,358,'Chimecho','normal','0',1132,1197,1416,1496,6);
-INSERT INTO `pokemon` VALUES (377,359,'Absol','normal','4',1232,1303,1540,1629,8);
+INSERT INTO `pokemon` VALUES (377,359,'Absol','normal','0',1232,1303,1540,1629,8);
 INSERT INTO `pokemon` VALUES (378,360,'Wynaut','normal','0',252,287,315,359,6);
 INSERT INTO `pokemon` VALUES (379,361,'Snorunt','normal','0',402,441,503,551,7);
 INSERT INTO `pokemon` VALUES (380,362,'Glalie','normal','0',1049,1111,1312,1389,7);
@@ -432,7 +403,7 @@ INSERT INTO `pokemon` VALUES (400,382,'Kyogre','normal','0',2236,2328,2796,2910,
 INSERT INTO `pokemon` VALUES (401,383,'Groudon','normal','0',2236,2328,2796,2910,12);
 INSERT INTO `pokemon` VALUES (402,384,'Rayquaza','normal','0',1995,2083,2494,2604,6);
 INSERT INTO `pokemon` VALUES (403,385,'Jirachi','normal','0',1687,1766,2109,2207,76);
-INSERT INTO `pokemon` VALUES (404,386,'Deoxys','normal','X',1485,1570,1857,1963,6);
+INSERT INTO `pokemon` VALUES (404,386,'Deoxys','normal','0',1485,1570,1857,1963,6);
 INSERT INTO `pokemon` VALUES (405,386,'Deoxys','attack','0',1485,1570,1857,1963,6);
 INSERT INTO `pokemon` VALUES (406,386,'Deoxys','defense','0',1485,1570,1857,1963,6);
 INSERT INTO `pokemon` VALUES (407,386,'Deoxys','speed','0',1356,1431,1695,1789,6);
@@ -448,11 +419,11 @@ INSERT INTO `pokemon` VALUES (416,395,'Empoleon','normal','0',1581,1657,1976,207
 INSERT INTO `pokemon` VALUES (417,396,'Starly','normal','0',372,410,465,513,46);
 INSERT INTO `pokemon` VALUES (418,397,'Staravia','normal','0',690,742,863,927,46);
 INSERT INTO `pokemon` VALUES (419,398,'Staraptor','normal','0',1538,1614,1922,2018,46);
-INSERT INTO `pokemon` VALUES (420,399,'Bidoof','normal','1',373,412,467,515,4);
+INSERT INTO `pokemon` VALUES (420,399,'Bidoof','normal','0',373,412,467,515,4);
 INSERT INTO `pokemon` VALUES (421,400,'Bibarel','normal','0',981,1041,1226,1302,43);
-INSERT INTO `pokemon` VALUES (422,401,'Kricketot','normal','1',200,229,250,286,3);
+INSERT INTO `pokemon` VALUES (422,401,'Kricketot','normal','0',200,229,250,286,3);
 INSERT INTO `pokemon` VALUES (423,402,'Kricketune','normal','0',886,944,1107,1181,3);
-INSERT INTO `pokemon` VALUES (424,403,'Shinx','normal','1',458,500,572,625,3);
+INSERT INTO `pokemon` VALUES (424,403,'Shinx','normal','0',458,500,572,625,3);
 INSERT INTO `pokemon` VALUES (425,404,'Luxio','normal','0',793,849,992,1061,3);
 INSERT INTO `pokemon` VALUES (426,405,'Luxray','normal','0',1573,1650,1967,2063,3);
 INSERT INTO `pokemon` VALUES (427,406,'Budew','normal','0',448,489,560,611,125);
@@ -476,22 +447,10 @@ INSERT INTO `pokemon` VALUES (444,423,'Gastrodon','normal','0',1259,1328,1574,16
 INSERT INTO `pokemon` VALUES (445,424,'Ambipom','normal','0',1311,1381,1639,1727,4);
 INSERT INTO `pokemon` VALUES (446,425,'Drifloon','normal','0',633,684,791,855,86);
 INSERT INTO `pokemon` VALUES (447,426,'Drifblim','normal','0',1287,1361,1609,1701,86);
-INSERT INTO `pokemon` VALUES (448,427,'Buneary','normal','1',669,719,836,899,4);
+INSERT INTO `pokemon` VALUES (448,427,'Buneary','normal','0',669,719,836,899,4);
 INSERT INTO `pokemon` VALUES (449,428,'Lopunny','normal','0',1112,1177,1391,1471,4);
-INSERT INTO `pokemon` VALUES (450,9991,'Level 1 Egg','normal','1',0,0,0,0,0);
-INSERT INTO `pokemon` VALUES (451,9992,'Level 2 Egg','normal','2',0,0,0,0,0);
-INSERT INTO `pokemon` VALUES (452,9993,'Level 3 Egg','normal','3',0,0,0,0,0);
-INSERT INTO `pokemon` VALUES (453,9994,'Level 4 Egg','normal','4',0,0,0,0,0);
-INSERT INTO `pokemon` VALUES (454,9995,'Level 5 Egg','normal','5',0,0,0,0,0);
-/*!40000 ALTER TABLE `pokemon` ENABLE KEYS */;
-UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
-
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
+INSERT INTO `pokemon` VALUES (450,9991,'Level 1 Egg','normal','0',0,0,0,0,0);
+INSERT INTO `pokemon` VALUES (451,9992,'Level 2 Egg','normal','0',0,0,0,0,0);
+INSERT INTO `pokemon` VALUES (452,9993,'Level 3 Egg','normal','0',0,0,0,0,0);
+INSERT INTO `pokemon` VALUES (453,9994,'Level 4 Egg','normal','0',0,0,0,0,0);
+INSERT INTO `pokemon` VALUES (454,9995,'Level 5 Egg','normal','0',0,0,0,0,0);

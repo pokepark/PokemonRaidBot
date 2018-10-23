@@ -21,10 +21,15 @@ debug_log('Action: ' . $action);
 debug_log('Old weather: ' . $old_weather);
 debug_log('New weather: ' . $new_weather);
 
+// Split pokedex_id and form
+$dex_id_form = explode('-',$pokedex_id);
+$dex_id = $dex_id_form[0];
+$dex_form = $dex_id_form[1];
+
 // Add weather
 if($action == 'add') {
     // Init empty keys array.
-    $keys = array();
+    $keys = [];
 
     // Get the keys.
     $keys = weather_keys($pokedex_id, 'pokedex_set_weather', $arg);
@@ -45,7 +50,7 @@ if($action == 'add') {
     ];
 
     // Set the message.
-    $msg = getTranslation('raid_boss') . ': <b>' . get_local_pokemon_name($pokedex_id) . ' (#' . $pokedex_id . ')</b>' . CR;
+    $msg = getTranslation('raid_boss') . ': <b>' . get_local_pokemon_name($pokedex_id) . ' (#' . $dex_id . ')</b>' . CR;
     $msg .= getTranslation('pokedex_current_weather') . get_weather_icons($old_weather) . CR . CR;
     $msg .= '<b>' . getTranslation('pokedex_new_weather') . get_weather_icons($new_weather) . '</b>';
 
@@ -56,12 +61,13 @@ if($action == 'add') {
             "
             UPDATE    pokemon
             SET       weather = {$new_weather}
-            WHERE     pokedex_id = {$pokedex_id}
+            WHERE     pokedex_id = {$dex_id}
+            AND       pokemon_form = '{$dex_form}'
             "
         );
 
     // Init empty keys array.
-    $keys = array();
+    $keys = [];
 
     // Back to pokemon and done keys.
     $keys = [
@@ -82,16 +88,16 @@ if($action == 'add') {
 
     // Set the message.
     $msg = getTranslation('pokemon_saved') . CR;
-    $msg .= '<b>' . get_local_pokemon_name($pokedex_id) . ' (#' . $pokedex_id . ')</b>' . CR . CR;
+    $msg .= '<b>' . get_local_pokemon_name($pokedex_id) . ' (#' . $dex_id . ')</b>' . CR . CR;
     $msg .= getTranslation('pokedex_weather') . ':' . CR;
     $msg .= '<b>' . get_weather_icons($new_weather) . '</b>';
 }
 
+// Answer callback.
+answerCallbackQuery($update['callback_query']['id'], $callback_response);
 
 // Edit message.
 edit_message($update, $msg, $keys, false);
 
-// Answer callback.
-answerCallbackQuery($update['callback_query']['id'], $callback_response);
-
+// Exit.
 exit();

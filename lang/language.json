@@ -1,0 +1,393 @@
+{  
+  "weekday_1":{  
+    "NL":"Maandag",
+    "DE":"Montag",
+    "EN":"Monday",
+    "IT":"Lunedì",
+    "PT-BR":"Segunda-feira",
+    "RU":"Понедельник",
+    "NO":"Mandag",
+    "FR":"Lundi"
+  },
+  "weekday_2":{  
+    "NL":"Dinsdag",
+    "DE":"Dienstag",
+    "EN":"Tuesday",
+    "IT":"Martedì",
+    "PT-BR":"Terça-feira",
+    "RU":"Вторник",
+    "NO":"Tirsdag",
+    "FR":"Mardi"
+  },
+  "weekday_3":{  
+    "NL":"Woensdag",
+    "DE":"Mittwoch",
+    "EN":"Wednesday",
+    "IT":"Mercoledì",
+    "PT-BR":"Quarta-feira",
+    "RU":"Среда",
+    "NO":"Onsdag",
+    "FR":"Mercredi"
+  },
+  "weekday_4":{  
+    "NL":"Donderdag",
+    "DE":"Donnerstag",
+    "EN":"Thursday",
+    "IT":"Giovedì",
+    "PT-BR":"Quinta-feira",
+    "RU":"Четверг",
+    "NO":"Torsdag",
+    "FR":"Jeudi"
+  },
+  "weekday_5":{  
+    "NL":"Vrijdag",
+    "DE":"Freitag",
+    "EN":"Friday",
+    "IT":"Venerdì",
+    "PT-BR":"Sexta-feira",
+    "RU":"Пятница",
+    "NO":"Fredag",
+    "FR":"Vendredi"
+  },
+  "weekday_6":{  
+    "NL":"Zaterdag",
+    "DE":"Samstag",
+    "EN":"Saturday",
+    "IT":"Sabato",
+    "PT-BR":"Sábado",
+    "RU":"Суббота",
+    "NO":"Lørdag",
+    "FR":"Samedi"
+  },
+  "weekday_7":{  
+    "NL":"Zondag",
+    "DE":"Sonntag",
+    "EN":"Sunday",
+    "IT":"Domenica",
+    "PT-BR":"Domingo",
+    "RU":"Воскресение",
+    "NO":"Søndag",
+    "FR":"Dimanche"
+  },
+  "month_01":{  
+    "NL":"Januari",
+    "DE":"Januar",
+    "EN":"January",
+    "IT":"Gennaio",
+    "PT-BR":"Janeiro",
+    "RU":"Январь",
+    "NO":"Januar",
+    "FR":"Janvier"
+  },
+  "month_02":{  
+    "NL":"Februari",
+    "DE":"Februar",
+    "EN":"February",
+    "IT":"Febbraio",
+    "PT-BR":"Fevereiro",
+    "RU":"Февраль",
+    "NO":"Februar",
+    "FR":"Février"
+  },
+  "month_03":{  
+    "NL":"Maart",
+    "DE":"März",
+    "EN":"March",
+    "IT":"Marzo",
+    "PT-BR":"Março",
+    "RU":"Март",
+    "NO":"Mars",
+    "FR":"Mars"
+  },
+  "month_04":{  
+    "NL":"April",
+    "DE":"April",
+    "EN":"April",
+    "IT":"Aprile",
+    "PT-BR":"Abril",
+    "RU":"Апрель",
+    "NO":"April",
+    "FR":"Avril"
+  },
+  "month_05":{  
+    "NL":"Mei",
+    "DE":"Mai",
+    "EN":"May",
+    "IT":"Maggio",
+    "PT-BR":"Mais",
+    "RU":"Май",
+    "NO":"Mai",
+    "FR":"Mai"
+  },
+  "month_06":{  
+    "NL":"Juni",
+    "DE":"Juni",
+    "EN":"June",
+    "IT":"Giugno",
+    "PT-BR":"Junho",
+    "RU":"Июнь",
+    "NO":"Juni",
+    "FR":"Juin"
+  },
+  "month_07":{  
+    "NL":"Juli",
+    "DE":"Juli",
+    "EN":"July",
+    "IT":"Luglio",
+    "PT-BR":"Julho",
+    "RU":"Июль",
+    "NO":"Juli",
+    "FR":"Juillet"
+  },
+  "month_08":{  
+    "NL":"Augustus",
+    "DE":"August",
+    "EN":"August",
+    "IT":"Agosto",
+    "PT-BR":"Agosto",
+    "RU":"Август",
+    "NO":"August",
+    "FR":"Août"
+  },
+  "month_09":{  
+    "NL":"September",
+    "DE":"September",
+    "EN":"September",
+    "IT":"Settembre",
+    "PT-BR":"Setembro",
+    "RU":"Сентябрь",
+    "NO":"September",
+    "FR":"Septembre"
+  },
+  "month_10":{  
+    "NL":"Oktober",
+    "DE":"Oktober",
+    "EN":"October",
+    "IT":"Ottobre",
+    "PT-BR":"Outubro",
+    "RU":"Октябрь",
+    "NO":"Oktober",
+    "FR":"Octobre"
+  },
+  "month_11":{  
+    "NL":"November",
+    "DE":"November",
+    "EN":"November",
+    "IT":"Novembre",
+    "PT-BR":"Novembro",
+    "RU":"Ноябрь",
+    "NO":"November",
+    "FR":"Novembre"
+  },
+  "month_12":{  
+    "NL":"December",
+    "DE":"Dezember",
+    "EN":"December",
+    "IT":"Dicembre",
+    "PT-BR":"Dezembro",
+    "RU":"Декабрь",
+    "NO":"Desember",
+    "FR":"Décembre"
+  },
+  "bot_access_denied":{  
+    "NL":"Je hebt geen toegang tot deze functie of bot!",
+    "DE":"Sie haben keine Berechtigung diesen Befehl oder Bot zu nutzen!",
+    "EN":"You are not allowed to use this command or bot!",
+    "IT":"Non hai i permessi necessari per usare questo comando o bot!",
+    "PT-BR":"Você não tem permissão para utilizar esse comando ou bot!",
+    "RU":"Вы не можете использовать эту команду или бота!",
+    "NO":"Du har ikke tillatelse til å bruke denne kommandoen eller boten!",
+    "FR":"Tu n'es pas autorisé à utiliser cette commande !"
+  },
+  "forest":{  
+    "NL":"Ergens in het bos",
+    "DE":"Irgendwo im Wald",
+    "EN":"Somewhere in the forest",
+    "IT":"Da qualche parte nella foresta",
+    "PT-BR":"Em algum lugar na floresta",
+    "RU":"Где-то в лесу",
+    "NO":"Ett sted i skogen",
+    "FR":"Quelque part dans la forêt"
+  },
+  "yes":{  
+    "NL":"Ja",
+    "DE":"Ja",
+    "EN":"Yes",
+    "IT":"Sì",
+    "PT-BR":"Sim",
+    "RU":"Да",
+    "NO":"Ja",
+    "FR":"Oui"
+  },
+  "no":{  
+    "NL":"Nee",
+    "DE":"Nein",
+    "EN":"No",
+    "IT":"No",
+    "PT-BR":"Não",
+    "RU":"Нет",
+    "NO":"Nei",
+    "FR":"Non"
+  },
+  "not_supported":{  
+    "NL":"Niet ondersteund",
+    "DE":"Nicht unterstützt",
+    "EN":"Not supported",
+    "IT":"Non compatibile",
+    "PT-BR":"Não compatível",
+    "RU":"Не поддерживается",
+    "NO":"Ikke støttet",
+    "FR":"Non compatible"
+  },
+  "abort":{  
+    "NL":"Afbreken",
+    "DE":"Abbrechen",
+    "EN":"Abort",
+    "IT":"Cancella",
+    "PT-BR":"Abortar",
+    "RU":"Прервать",
+    "NO":"Avbryt",
+    "FR":"Abandonner"
+  },
+  "action_aborted":{  
+    "NL":"Het proces is afgebroken!",
+    "DE":"Der Vorgang wurde abgebrochen!",
+    "EN":"The process was aborted!",
+    "IT":"Il processo è stato cancellato!",
+    "PT-BR":"O processo foi abortado!",
+    "RU":"Процесс был прерван!",
+    "NO":"Handlingen ble avbrutt!",
+    "FR":"Le processus à échoué !"
+  },
+  "back":{  
+    "NL":"Terug",
+    "DE":"Zurück",
+    "EN":"Back",
+    "IT":"Precedente",
+    "PT-BR":"Voltar",
+    "RU":"Назад",
+    "NO":"Tilbake",
+    "FR":"Retour"
+  },
+  "next":{  
+    "NL":"Volgende",
+    "DE":"Weiter",
+    "EN":"Next",
+    "IT":"Successivo",
+    "PT-BR":"Próximo",
+    "RU":"Вперед",
+    "NO":"Neste",
+    "FR":"Suivant"
+  },
+  "done":{  
+    "NL":"Klaar",
+    "DE":"Fertig",
+    "EN":"Done",
+    "IT":"Completato",
+    "PT-BR":"Feito",
+    "RU":"Готово",
+    "NO":"Ferdig",
+    "FR":"Terminé"
+  },
+  "add":{  
+    "NL":"Toevoegen",
+    "DE":"Hinzufügen",
+    "EN":"Add",
+    "IT":"Aggiungi",
+    "PT-BR":"Adicionar",
+    "RU":"Добавить",
+    "NO":"Legg til",
+    "FR":"Ajouter"
+  },
+  "delete":{  
+    "NL":"Verwijder",
+    "DE":"Löschen",
+    "EN":"Delete",
+    "IT":"Elimina",
+    "PT-BR":"Deletar",
+    "RU":"Удалить",
+    "NO":"Slett",
+    "FR":"Supprimer"
+  },
+  "list":{  
+    "NL":"Lijst",
+    "DE":"Anzeigen",
+    "EN":"List",
+    "IT":"Lista",
+    "PT-BR":"Lista",
+    "RU":"Список",
+    "NO":"List",
+    "FR":"Liste"
+  },
+  "reset":{  
+    "NL":"Reset",
+    "DE":"Reset",
+    "EN":"Reset",
+    "IT":"Reset",
+    "PT-BR":"TRANSLATE",
+    "RU":"Сброс",
+    "NO":"Reset",
+    "FR":"Remise à zéro"
+  },
+  "created_by":{  
+    "NL":"Aangemaakt door",
+    "DE":"Erstellt von",
+    "EN":"Created by",
+    "IT":"Creato da",
+    "PT-BR":"Criada por",
+    "RU":"Создано",
+    "NO":"Postet av",
+    "FR":"Créé par"
+  },
+  "updated":{  
+    "NL":"Bijgewerkt",
+    "DE":"Aktualisiert",
+    "EN":"Updated",
+    "IT":"Aggiornato",
+    "PT-BR":"Atualizada",
+    "RU":"Обновлено",
+    "NO":"Oppdatert",
+    "FR":"Mis à jour"
+  },
+  "share":{  
+    "NL":"Delen",
+    "DE":"Teilen",
+    "EN":"Share",
+    "IT":"Condividi",
+    "PT-BR":"Compartilhar",
+    "RU":"Поделиться",
+    "NO":"Del",
+    "FR":"Partager"
+  },
+  "share_with":{  
+    "NL":"Delen met",
+    "DE":"Teilen mit",
+    "EN":"Share with",
+    "IT":"Condividi con",
+    "PT-BR":"Compartilhar com",
+    "RU":"Поделиться с",
+    "NO":"Del med",
+    "FR":"Partager avec"
+  },
+  "successfully_shared":{
+    "NL":"Succesvol gedeeld!",
+    "DE":"Erfolgreich geteilt!",
+    "EN":"Successfully shared!",
+    "IT":"Condiviso con successo!",
+    "PT-BR":"Compartilhado com sucesso!",
+    "RU":"Успешно отправлено!",
+    "NO":"Deling velykket!",
+    "FR":"Partagé avec succès !"
+  },
+  "expand":{  
+    "NL":"Uitklappen",
+    "DE":"Ausklappen",
+    "EN":"Expand",
+    "IT":"Espandi",
+    "PT-BR":"Expandir",
+    "RU":"Развернуть",
+    "NO":"Flere valg",
+    "FR":"Agrandir"
+  }
+}
+

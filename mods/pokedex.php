@@ -17,22 +17,22 @@ if ($update['callback_query']['message']['chat']['type'] == 'private') {
     $msg = getTranslation('pokedex_list_of_all') . CR . CR . '<b>' . getTranslation('pokedex_edit_pokemon') . '</b>';
 
     // Get pokemon.
-    $all_pokemon = ($action == 1) ? true : false;
-    $keys = edit_pokedex_keys($limit, $action, $all_pokemon);
+    $keys = edit_pokedex_keys($limit, $action);
 
     // Empty keys?
     if (!$keys) {
 	$msg = getTranslation('pokedex_not_found');
     }
 
-    // Edit message.
-    edit_message($update, $msg, $keys, false);
-
     // Build callback message string.
     $callback_response = 'OK';
 
     // Answer callback.
     answerCallbackQuery($update['callback_query']['id'], $callback_response);
+
+    // Edit message.
+    edit_message($update, $msg, $keys, false);
 } 
 
+// Exit.
 exit();

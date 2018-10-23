@@ -7,13 +7,19 @@ debug_log('pokedex_edit_pokemon()');
 //debug_log($data);
 
 // Set the id.
-$pokedex_id = $data['id'];
+$poke_id_form = $data['id'];
+$dex_id_form = explode('-',$data['id']);
+$pokedex_id = $dex_id_form[0];
+$pokemon_form = $dex_id_form[1];
+
+// Set the arg.
+$arg = $data['arg'];
 
 // Init empty keys array.
-$keys = array();
+$keys = [];
 
 // Set the message.
-$msg = get_pokemon_info($pokedex_id);
+$msg = get_pokemon_info($poke_id_form);
 $msg .= '<b>' . getTranslation('pokedex_select_action') . '</b>';
 
 // Create keys array.
@@ -21,7 +27,7 @@ $keys = [
     [
         [
             'text'          => getTranslation('pokedex_raid_level'),
-            'callback_data' => $pokedex_id . ':pokedex_set_raid_level:setlevel'
+            'callback_data' => $poke_id_form . ':pokedex_set_raid_level:setlevel'
         ]
     ]
 ];
@@ -33,31 +39,31 @@ if(!in_array($pokedex_id, $eggs)) {
         [  
             [
                 'text'          => getTranslation('pokedex_min_cp'),
-                'callback_data' => $pokedex_id . ':pokedex_set_cp:min-20-add-0'
+                'callback_data' => $poke_id_form . ':pokedex_set_cp:min-20-add-0'
             ]
         ],
         [
             [
                 'text'          => getTranslation('pokedex_max_cp'),
-                'callback_data' => $pokedex_id . ':pokedex_set_cp:max-20-add-0'
+                'callback_data' => $poke_id_form . ':pokedex_set_cp:max-20-add-0'
             ]
         ],
         [
             [
                 'text'          => getTranslation('pokedex_min_weather_cp'),
-                'callback_data' => $pokedex_id . ':pokedex_set_cp:min-25-add-0'
+                'callback_data' => $poke_id_form . ':pokedex_set_cp:min-25-add-0'
             ]
         ],
         [
             [
                 'text'          => getTranslation('pokedex_max_weather_cp'),
-                'callback_data' => $pokedex_id . ':pokedex_set_cp:max-25-add-0'
+                'callback_data' => $poke_id_form . ':pokedex_set_cp:max-25-add-0'
             ]
         ],
         [
             [
                 'text'          => getTranslation('pokedex_weather'),
-                'callback_data' => $pokedex_id . ':pokedex_set_weather:add-0'
+                'callback_data' => $poke_id_form . ':pokedex_set_weather:add-0'
             ]
         ]
     ];
@@ -77,11 +83,22 @@ $keys[] = [
     ]
 ];
 
+// Send message.
+if($arg == 'id-or-name') {
+    // Send message.
+    send_message($update['message']['chat']['id'], $msg, $keys, ['reply_markup' => ['selective' => true, 'one_time_keyboard' => true]]);
+
 // Edit message.
-edit_message($update, $msg, $keys, false);
+} else {
+    // Build callback message string.
+    $callback_response = 'OK';
 
-// Build callback message string.
-$callback_response = 'OK';
+    // Answer callback.
+    answerCallbackQuery($update['callback_query']['id'], $callback_response);
 
-// Answer callback.
-answerCallbackQuery($update['callback_query']['id'], $callback_response);
+    // Edit message.
+    edit_message($update, $msg, $keys, false);
+}
+
+// Exit.
+exit();
