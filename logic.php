@@ -2480,7 +2480,7 @@ function get_overview($update, $chats_active, $raids_active, $action = 'refresh'
 
             //Add custom message from the config.
             if (defined('RAID_PIN_MESSAGE') && !empty(RAID_PIN_MESSAGE)) {
-                $msg .= RAID_PIN_MESSAGE . CR;
+                $msg .= CR . CR .RAID_PIN_MESSAGE . CR;
             }
 
             // Edit the message, but disable the web preview!
