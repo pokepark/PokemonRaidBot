@@ -75,8 +75,15 @@ for($i = $first_dex_id; $i <= $last_dex_id; $i++) {
 
     // Create SQL command for pokemon.
     if(is_array($pokemon)) {
-        echo 'Formatting data for pokemon id ' . $i . PHP_EOL;
-        $SQL .= formatPokemonData($pokemon, $DB_ID);
+        // Make sure it's normal form (NULL)
+        if($pokemon['form'] === NULL) {
+            echo 'Formatting data for pokemon id ' . $i . PHP_EOL;
+            $SQL .= formatPokemonData($pokemon, $DB_ID);
+        // Skip if first form is not normal form, e.g. Giratina only having altered and origin as forms but no normal form
+        } else {
+            echo 'Missing normal form for pokemon id ' . $i . PHP_EOL;
+            echo 'Skipping normal form for pokemon id ' . $i . PHP_EOL;
+        }
     } else {
         echo 'No data received for pokemon id ' . $i . PHP_EOL;
         continue;
