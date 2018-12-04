@@ -49,7 +49,7 @@ if ($db->connect_errno) {
 include_once(CORECLASS_PATH . '/cleanup_run.php');
 
 // Update the user
-if ($ddos_count == 0 || $ddos_count > 2) {
+if ($ddos_count < 2) {
     // Update the user.
     $userUpdate = update_user($update);
 
