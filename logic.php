@@ -2067,6 +2067,9 @@ function keys_vote($raid)
 
         // Start_next_five check value
         $Added_start_next_five = false;
+        
+        // Added_start_direct check value
+        $Added_start_direct = false;
 
         // Create time buttons for voting:
         for ($i = ceil($start_time / $timePerSlot) * $timePerSlot; $i <= ($end_time - $timeBeforeEnd); $i = $i + $timePerSlot) {
@@ -2090,6 +2093,24 @@ function keys_vote($raid)
             } else {
                 // Change check value for start_next_five
                 $Added_start_next_five = true;
+            }
+            
+            if ( RAID_DIRECT_START == true ) {
+
+                // Add option for raid direct start time
+                if($Added_start_direct == false && $start_time + 60 > $now && $start_time < $i && $start_time != $i) {
+                    // Display vote buttons for now + 1 additional minute
+                    $keys_time[] = array(
+                        'text'          => unix2tz($start_time, $raid['timezone']),
+                        'callback_data' => $raid['id'] . ':vote_time:' . $start_time
+                    );
+
+                    // Change check value for Added_start_direct
+                    $Added_start_direct = true;
+                } else {
+                    // Change check value for Added_start_direct
+                    $Added_start_direct = true;
+               }
             }
 
 	    // Plus 60 seconds, so vote button for e.g. 10:00 will disappear after 10:00:59 / at 10:01:00 and not right after 09:59:59 / at 10:00:00
