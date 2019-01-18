@@ -44,6 +44,7 @@ define('RAID_DURATION_CLOCK_STYLE',	true);
 // Raid times
 define('RAID_LOCATION',			false);
 define('RAID_SLOTS',			'15');
+define('RAID_FIRST_START',		'10');
 define('RAID_LAST_START',		'10');
 define('RAID_ANYTIME',			false);
 
