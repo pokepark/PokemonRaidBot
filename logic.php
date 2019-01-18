@@ -2065,8 +2065,26 @@ function keys_vote($raid)
             );
         }
 
-        // Old stuff, left for possible future use or in case of bugs:
+        // Start_next_five check value
+        $Added_start_next_five = false;
+
+        // Create time buttons for voting:
         for ($i = ceil($start_time / $timePerSlot) * $timePerSlot; $i <= ($end_time - $timeBeforeEnd); $i = $i + $timePerSlot) {
+            // Get next 5 minute from start_time, e.g. if the raid starts 15:32, next 5 minutes would be 15:35
+            $start_next_five = ceil($start_time/300)*300;
+            debug_log('Next 5 is ' . $start_next_five);
+            // Add option for raid first start time
+            if($Added_start_next_five == false && $start_next_five + 60 > $now && ((($start_time + RAID_FIRST_START) < $start_next_five) || ($start_time == $start_next_five))) {
+                // Display vote buttons for now + 1 additional minute
+                $keys_time[] = array(
+                    'text'          => unix2tz($start_next_five, $raid['timezone']),
+                    'callback_data' => $raid['id'] . ':vote_time:' . $start_next_five
+                );
+
+                // Change check value for start_next_five
+                $Added_start_next_five = true;
+            }
+
 	    // Plus 60 seconds, so vote button for e.g. 10:00 will disappear after 10:00:59 / at 10:01:00 and not right after 09:59:59 / at 10:00:00
 	    if (($i + 60) > $now) {
 		// Display vote buttons for now + 1 additional minute

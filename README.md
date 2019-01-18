@@ -158,6 +158,8 @@ Set `RAID_LOCATION` to true to send back the location as message in addition to 
 
 Set `RAID_SLOTS` to the amount of minutes which shall be between the voting slots.
 
+Set `RAID_FIRST_START` to the amount of minutes required to add an earlier first start time before the first regular voting slot.
+
 Set `RAID_LAST_START` to the minutes for the last start option before the a raid ends.
 
 Set `RAID_ANYTIME` to true to allow attendance of the raid at any time. If set to false, users have to pick a specific time.
