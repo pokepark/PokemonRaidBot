@@ -81,8 +81,13 @@ catch (PDOException $exception) {
     exit;
 }
 
+$start = date("Y-m-d H:i:s",strtotime(date("Y-m-d H:i:s")." +".$countdown." minutes"));
+$end = date("Y-m-d H:i:s",strtotime(date("Y-m-d H:i:s")." +".$endtime." minutes"));
+
 // Insert new raid or update existing raid/ex-raid?
-$raid_id = raid_duplication_check($gym_id,($endtime + $countdown));
+$raid_id = raid_duplication_check($gym_id,$start, $end);
+
+
 
 if ($raid_id > 0) {
 
