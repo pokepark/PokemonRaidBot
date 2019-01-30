@@ -83,15 +83,16 @@ if($id != 0) {
     // Get raids.
     while ($raid = $rs->fetch_assoc()) {
         // Set text and keys.
-        if ( empty( $raid['gym_name'] ) )
-          $text .= "" . CR;
-        else
-          $text .= $raid['gym_name'] . CR;
+        $gym_name = $raid['gym_name'];
+        if ( empty( $gym_name ) )
+          $gym_name = '';
+
+        $text .= $gym_name . CR;
         $raid_day = unix2tz($raid['ts_start'], $raid['timezone'], 'Y-m-d');
         $today = unix2tz($raid['ts_now'], $raid['timezone'], 'Y-m-d');
         $text .= get_local_pokemon_name($raid['pokemon']) . SP . '—' . SP . (($raid_day == $today) ? '' : ($raid_day . ', ')) . unix2tz($raid['ts_start'], $raid['timezone']) . SP . getTranslation('to') . SP . unix2tz($raid['ts_end'], $raid['timezone']) . CR . CR;
         $keys[] = array(
-            'text'          => $raid['gym_name'],
+            'text'          => $gym_name,
             'callback_data' => $raid['id'] . ':raids_list:0'
         );
 
