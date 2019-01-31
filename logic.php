@@ -829,42 +829,6 @@ function get_user($user_id)
 }
 
 /**
- * Get timezone from user or config as fallback.
- * @param $user_id
- * @return timezone
- */
-function get_timezone($user_id)
-{
-    // Log user_id
-    debug_log('Getting timezone for user_id: ' . $user_id);
-
-    // Build query.
-    $rs = my_query(
-        "
-        SELECT    timezone
-        FROM      users
-          WHERE   user_id = {$user_id}
-        "
-    );
-
-    // Get row.
-    $row = $rs->fetch_assoc();
-
-    // No data found.
-    if ($row['timezone'] === NULL) {
-        $tz = TIMEZONE;
-        debug_log('No timezone found for user_id: ' . $user_id, '!');
-        debug_log('Returning default timezone: ' . $tz, '!');
-    } else {
-        $tz = $row['timezone'];
-        debug_log('Found timezone for user_id: ' . $user_id);
-        debug_log('Returning timezone: ' . $tz);
-    }
-
-    return $tz;
-}
-
-/**
  * Moderator keys.
  * @param $limit
  * @param $action

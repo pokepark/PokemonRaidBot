@@ -10,7 +10,7 @@ debug_log('DELETE()');
 bot_access_check($update, BOT_ACCESS);
 
 // Get timezone.
-$tz = get_timezone($update['message']['from']['id']);
+$tz = TIMEZONE;
 
 // Count results.
 $count = 0;

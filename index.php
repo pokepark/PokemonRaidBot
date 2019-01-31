@@ -10,6 +10,10 @@ require_once(__DIR__ . '/logic.php');
 // Start logging.
 debug_log("RAID-BOT '" . BOT_ID . "'");
 
+// Set time zone as configured in the config file
+$tz = TIMEZONE;
+date_default_timezone_set($tz);
+
 // Check API Key and get input from telegram
 include_once(CORECLASS_PATH . '/apikey.php');
 

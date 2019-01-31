@@ -50,7 +50,7 @@ if($id != 0) {
 // Get last 20 active raids.
 } else {
     // Get timezone.
-    $tz = get_timezone($update['callback_query']['from']['id']);
+    $tz = TIMEZONE;
 
     // Build query.
     $rs = my_query(

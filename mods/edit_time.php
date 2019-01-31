@@ -85,7 +85,7 @@ if ($raid_id == 0 && $gym_id != 0) {
     // Continue with raid creation
     if($duplicate_id == 0) {
         // Get timezone.
-        $tz = get_timezone($update['callback_query']['from']['id']);
+        $tz = TIMEZONE;
 
         // Create raid in database.
         $rs = my_query(

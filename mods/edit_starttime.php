@@ -77,7 +77,6 @@ if($raid_level == 'X') {
 
     // Timezone - maybe there's a more elegant solution as date_default_timezone_set?!
     $tz = TIMEZONE;
-    date_default_timezone_set($tz);
 
     // Now 
     $now = time();
