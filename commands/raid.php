@@ -86,7 +86,7 @@ catch (PDOException $exception) {
 /* Remove all unknown gyms */
 if ( $gym_id <= 0 ) {
 
-   send_message($update['message']['chat']['id'], 'Invalid input - Gym is not matched in database', []);
+//   send_message($update['message']['chat']['id'], 'Invalid input - Gym is not matched in database', []);
    exit;
 }
 
