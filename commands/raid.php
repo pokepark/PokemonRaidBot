@@ -142,7 +142,7 @@ if ($raid_id > 0) {
 
     // Debug log
     debug_log('Updated raid ID: ' . $raid_id);
-    send_message($update['message']['chat']['id'], 'Raid is updated: ' . $raid_id, []);
+//    send_message($update['message']['chat']['id'], 'Raid is updated: ' . $raid_id, []);
 
     // Get raid data.
     $raid = get_raid($raid_id);
