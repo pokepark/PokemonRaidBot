@@ -16,8 +16,15 @@ $back_action = 'raid_by_gym';
 $back_arg = $data['id'];
 $gym_first_letter = $back_arg;
 
-// Get the keys.
-$keys = raid_edit_raidlevel_keys($gym_id, $gym_first_letter);
+// Check access - user must be admin for raid_level X
+$admin_access = bot_access_check($update, BOT_ADMINS, true);
+if ($admin_access) {
+    // Get the keys.
+    $keys = raid_edit_raidlevel_keys($gym_id, $gym_first_letter, true);
+} else {
+    // Get the keys.
+    $keys = raid_edit_raidlevel_keys($gym_id, $gym_first_letter);
+}
 
 // No keys found.
 if (!$keys) {
