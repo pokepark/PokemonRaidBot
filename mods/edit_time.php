@@ -112,7 +112,29 @@ if ($raid_id == 0 && $gym_id != 0) {
         $keys = [];
         $raid_id = $duplicate_id;
         $raid = get_raid($raid_id);
-	$msg = EMOJI_WARN . SP . getTranslation('raid_already_exists') . SP . EMOJI_WARN . CR . show_raid_poll_small($raid);
+        $msg = EMOJI_WARN . SP . getTranslation('raid_already_exists') . SP . EMOJI_WARN . CR . show_raid_poll_small($raid);
+
+        // Check if the raid was already shared.
+        $rs_share = my_query(
+            "
+            SELECT  COUNT(*) AS raid_count
+            FROM    cleanup
+            WHERE   raid_id = '{$raid_id}'
+            "
+        );
+
+        $shared = $rs_share->fetch_assoc();
+
+        // Add keys for sharing the raid.
+        if($shared['raid_count'] == 0) {
+            $user_id = $update['callback_query']['from']['id'];
+            $keys = share_raid_keys($raid_id, $user_id);
+
+            // Exit key
+            $empty_exit_key = [];
+            $key_exit = universal_key($empty_exit_key, '0', 'exit', '0', getTranslation('abort'));
+            $keys = array_merge($keys, $key_exit);
+        }
 
         // Answer callback.
         answerCallbackQuery($update['callback_query']['id'], getTranslation('raid_already_exists'));
