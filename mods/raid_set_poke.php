@@ -41,5 +41,23 @@ answerCallbackQuery($update['callback_query']['id'], $callback_response);
 // Edit message.
 edit_message($update, $msg, $keys, false);
 
+// Get raid poll messages to be updated from cleanup.
+$rs = my_query(
+    "
+    SELECT    *
+    FROM      cleanup
+      WHERE   raid_id = {$id}
+    "
+);
+
+// Get updated raid poll message and keys.
+$updated_msg = show_raid_poll($raid);
+$updated_keys = keys_vote($raid);
+
+// Update the shared raid polls.
+while ($raidmsg = $rs->fetch_assoc()) {
+    editMessageText($raidmsg['message_id'], $updated_msg, $updated_keys, $raidmsg['chat_id'], ['disable_web_page_preview' => 'true'], true);
+} 
+
 // Exit.
 exit();
