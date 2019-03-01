@@ -248,8 +248,8 @@ function raid_duplication_check($gym_id,$start,$end)
         ON         raids.gym_id = gyms.id
         WHERE      gyms.id = {$gym_id}
         AND        gyms.show_gym = 1
-	ORDER BY   id DESC
-	LIMIT 1
+        ORDER BY   id DESC
+        LIMIT 1
         "
     );
 
@@ -261,30 +261,46 @@ function raid_duplication_check($gym_id,$start,$end)
 
     // Raid for that gym already in database?
     if ($raid) {
-	// Timezone and start/end time in unix
+
+        // Timezone and start/end time in unix
         $start_unix = strtotime($start);
         $end_unix = strtotime($end);
 
         // Write to log.
-	debug_log('Start last raid: ' . $raid['ts_start']);
-	debug_log('Start new raid: ' . $start_unix);
-	debug_log('End last raid: ' . $raid['ts_end']);
-	debug_log('End new raid: ' . $end_unix);
-	
+        debug_log('Start last raid: ' . $raid['ts_start']);
+        debug_log('Start new raid: ' . $start_unix);
+        debug_log('End last raid: ' . $raid['ts_end']);
+        debug_log('End new raid: ' . $end_unix);
+        /* Minutes * Seconds (Always 60) */
+        /* Offset for 2 hours after last raid seams to be the absolut correct
+           value, but may cause with new raids +-1 minute. Also, we want to
+           identify the matching raid, not if we should not post new raid. */
+        /* So default value is 15 minutes in the future is the same raid! */
+        $offset_to_raid_in_seconds = 15 * 60;
+        $possible_old_raid_unix = $raid['ts_start'] - $offset_to_raid_in_seconds;
+        $possible_new_raid_unix = $raid['ts_end'] + $offset_to_raid_in_seconds;
+        debug_log('Next possible ***BOT*** raid: ' . $end_unix);
+        
+        /* Rules to check if this is the same Raid, or even some kind of duplication */
+        /* 1. New Raid Starts later, than last Raid Ends - also with an offset of 15 Minutes */
+
         // Check if new raid is conflicting with existing raid
-        if(($start_unix >= $raid['ts_start'] && $start_unix <= $raid['ts_end']) || ($raid['ts_start'] >= $start_unix && $raid['ts_start'] <= $end_unix)) {
-	    // Found existing raid.
-	    $duplicate_id = $raid['id'];
-	    debug_log('New raid matches start or end time of existing raid!');
-	    debug_log('Updating raid ID: ' . $duplicate_id);
-    	} else {
-	    // Create new raid.
-	    debug_log('New raid times do not match the times of existing raid.');
-	    debug_log('Creating new raid at gym: ' . $raid['gym_name']);
+        if (($start_unix >= $raid['ts_start'] && $start_unix <= $raid['ts_end']) || ($raid['ts_start'] >= $start_unix && $raid['ts_start'] <= $end_unix) || ($start_unix >= $possible_old_raid_unix && $end_unix <= $possible_new_raid_unix)) {
+
+            // Found existing raid.
+            $duplicate_id = $raid['id'];
+            debug_log('New raid matches start or end time of existing raid!');
+            debug_log('Updating raid ID: ' . $duplicate_id);
+        } else {
+
+            // Create new raid.
+            debug_log('New raid times do not match the times of existing raid.');
+            debug_log('Creating new raid at gym: ' . $raid['gym_name']);
         }
     } else {
-	debug_log('No raids found in database for gym ' . $raid['gym_name']);
-	debug_log('Creating new raid at gym: ' . $raid['gym_name']);
+    
+       debug_log('No raids found in database for gym ' . $raid['gym_name']);
+       debug_log('Creating new raid at gym: ' . $raid['gym_name']);
     }
 
     // Return ID or 0
