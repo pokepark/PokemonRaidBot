@@ -228,6 +228,35 @@ function raid_access_check($update, $data, $return_result = false)
 }
 
 /**
+ * Active raid duplication check.
+ * @param $gym_id
+ * @return string
+ */
+function active_raid_duplication_check($gym_id)
+{
+    // Build query.
+    $rs = my_query(
+        "
+        SELECT id, count(gym_id) AS active_raid
+        FROM   raids
+        WHERE  end_time > (NOW() + INTERVAL 10 MINUTE)
+        AND    gym_id = {$gym_id}
+        "
+    );
+
+    // Get row.
+    $raid = $rs->fetch_assoc();
+    $active_counter = $raid['active_raid'];
+
+    // Return 0 or raid id
+    if ($active_counter > 0) {
+        return $raid['id'];
+    } else {
+        return 0;
+    }
+}
+
+/**
  * Raid duplication check.
  * @param $gym
  * @param $start
@@ -1096,7 +1125,7 @@ function raid_edit_gyms_first_letter_keys() {
 }
 
 /**
- * Raid edit gym keys.
+ * Raid edit gym keys with active raids marker.
  * @param $first
  * @return array
  */
@@ -1104,29 +1133,43 @@ function raid_edit_gym_keys($first)
 {
     // Get gyms from database
     $rs = my_query(
-            "
-            SELECT    id, gym_name
-            FROM      gyms
-	    WHERE     UPPER(LEFT(gym_name, 1)) = UPPER('{$first}')
-            AND       show_gym = 1
-	    ORDER BY  gym_name
-            "
-        );
+        "
+        SELECT    gyms.id, gyms.gym_name,
+                  CASE WHEN SUM(raids.end_time > NOW() + INTERVAL 15 MINUTE) THEN 1 ELSE 0 END AS active_raid
+        FROM      gyms
+        LEFT JOIN raids
+        ON        raids.gym_id = gyms.id 
+        WHERE     UPPER(LEFT(gym_name, 1)) = UPPER('{$first}')
+        AND       gyms.show_gym = 1 
+        GROUP BY  gym_name 
+        ORDER BY  gym_name
+        "
+    );
 
     // Init empty keys array.
     $keys = [];
 
     while ($gym = $rs->fetch_assoc()) {
-	$keys[] = array(
-            'text'          => $gym['gym_name'],
-            'callback_data' => $first . ':edit_raidlevel:' . $gym['id']
-        );
+        // No active raid
+        if($gym['active_raid'] == 0) {
+            $keys[] = array(
+                'text'          => $gym['gym_name'],
+                'callback_data' => $first . ':edit_raidlevel:' . $gym['id']
+            );
+        // Add warning emoji for active raid
+        } else {
+            $keys[] = array(
+                'text'          => EMOJI_WARN . SP . $gym['gym_name'],
+                'callback_data' => $first . ':edit_raidlevel:' . $gym['id']
+            );
+        }
     }
-    
+
     // Get the inline key array.
     $keys = inline_key_array($keys, 1);
 
     return $keys;
+
 }
 
 /**
