@@ -20,7 +20,7 @@ $data = explode(',', $gym_data, 5);
 
 /**
  * Info:
- * [0] = Boss pokedex id
+ * [0] = Boss pokedex id (optional: including form, e.g. 487-origin)
  * [1] = raid duration in minutes
  * [2] = gym name
  * [3] = gym team
@@ -35,12 +35,14 @@ if (count($data) < 4) {
 
 // Raid boss name
 $boss = $data[0];
-if (empty($boss) || !is_numeric($boss) || strpos($boss, '.') !== false ) {
+if (empty($boss) || strpos($boss, '.') !== false ) {
     send_message($update['message']['chat']['id'], 'Invalid input - Raidboss ID is empty or invalid', []);
     exit;
 }
-// Add always normal Form - because PFMS seems not to include the form!?
-$boss = $boss . '-normal';
+if (strpos($boss, '-') === false ) {
+    // Add normal form as default if form is missing
+    $boss = $boss . '-normal';
+}
 
 // Endtime from input
 $endtime = $data[1];
