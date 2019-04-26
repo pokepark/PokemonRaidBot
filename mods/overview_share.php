@@ -7,52 +7,22 @@ debug_log('overview_share()');
 //debug_log($data);
 
 // Check access.
-bot_access_check($update, BOT_ADMINS);
+bot_access_check($update, 'overview');
 
 // Get chat ID from data
 $chat_id = 0;
 $chat_id = $data['arg'];
-
-// Build query.
-$rs = my_query(
-    "
-    SELECT    timezone
-    FROM      raids
-      WHERE   id = (
-                  SELECT    raid_id
-                  FROM      attendance
-                    WHERE   user_id = {$update['callback_query']['from']['id']}
-                  ORDER BY  id DESC LIMIT 1
-              )
-    "
-);
-
-// Get row.
-$row = $rs->fetch_assoc();
-
-// No data found.
-if (!$row) {
-    //sendMessage($update['message']['from']['id'], 'Can\'t determine your location, please participate in at least 1 raid');
-    //exit;
-    $tz = TIMEZONE;
-} else {
-    $tz = $row['timezone'];
-}
 
 // Get active raids.
 $request_active_raids = my_query(
     "
     SELECT    raids.*,
               gyms.lat, gyms.lon, gyms.address, gyms.gym_name, gyms.ex_gym,
-              UNIX_TIMESTAMP(end_time)                        AS ts_end,
-              UNIX_TIMESTAMP(start_time)                      AS ts_start,
-              UNIX_TIMESTAMP(NOW())                           AS ts_now,
-              UNIX_TIMESTAMP(end_time)-UNIX_TIMESTAMP(NOW())  AS t_left
+              UNIX_TIMESTAMP(end_time)-UNIX_TIMESTAMP(UTC_TIMESTAMP())  AS t_left
     FROM      raids
     LEFT JOIN gyms
     ON        raids.gym_id = gyms.id
-      WHERE   raids.end_time>NOW()
-        AND   raids.timezone='{$tz}'
+      WHERE   raids.end_time>UTC_TIMESTAMP()
     ORDER BY  raids.end_time ASC
     "
 );

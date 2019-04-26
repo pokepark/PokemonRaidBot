@@ -1,23 +1,23 @@
 <?php
 // Write to log.
-debug_log('GYM');
+debug_log('DELETEGYM()');
 
 // For debug.
 //debug_log($update);
 //debug_log($data);
 
 // Check access.
-bot_access_check($update, 'gym-details');
+bot_access_check($update, 'gym-delete');
 
 // Set message.
-$msg = '<b>' . getTranslation('show_gym_details') . SP . '—' . SP . getTranslation('select_gym_first_letter') . '</b>';
+$msg = '<b>' . getTranslation('gym_delete') . SP . '—' . SP . getTranslation('select_gym_first_letter') . '</b>';
 
 // Set keys.
-$keys = raid_edit_gyms_first_letter_keys('gym_details');
+$keys = raid_edit_gyms_first_letter_keys('gym_delete');
 
 // Add key for hidden gyms.
 $h_keys = [];
-$h_keys[] = universal_inner_key($h_keys, '0', 'gym_hidden_letter', 'gym_details', getTranslation('hidden_gyms'));
+$h_keys[] = universal_inner_key($h_keys, '0', 'gym_hidden_letter', 'gym_delete', getTranslation('hidden_gyms'));
 $h_keys = inline_key_array($h_keys, 1);
 
 // Merge keys.

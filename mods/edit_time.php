@@ -6,6 +6,9 @@ debug_log('edit_time()');
 //debug_log($update);
 //debug_log($data);
 
+// Check access.
+bot_access_check($update, 'create');
+
 // Get count of ID and argument.
 $count_id = substr_count($data['id'], ',');
 $count_arg = substr_count($data['arg'], ',');
@@ -51,6 +54,9 @@ debug_log('count_arg: ' . $count_arg);
 debug_log('opt_arg: ' . $opt_arg);
 debug_log('slot_switch: ' . $slot_switch);
 
+// Telegram JSON array.
+$tg_json = array();
+
 // Create raid under the following conditions::
 // raid_id is 0, means we did not create it yet
 // gym_id is not 0, means we have a gym_id for creation
@@ -79,13 +85,13 @@ if ($raid_id == 0 && $gym_id != 0) {
     // Check for duplicate raid
     $duplicate_id = 0;
     if($raid_id == 0) {
-        $duplicate_id = raid_duplication_check($gym_id,$start_date_time,$end);
+        $duplicate_id = active_raid_duplication_check($gym_id);
     }
 
     // Continue with raid creation
     if($duplicate_id == 0) {
-        // Get timezone.
-        $tz = TIMEZONE;
+        // Now.
+        $now = utcnow();
 
         // Create raid in database.
         $rs = my_query(
@@ -93,10 +99,9 @@ if ($raid_id == 0 && $gym_id != 0) {
             INSERT INTO   raids
             SET           user_id = {$update['callback_query']['from']['id']},
 			  pokemon = '{$pokemon_id}',
-			  first_seen = NOW(),
+			  first_seen = UTC_TIMESTAMP(),
 			  start_time = '{$start_date_time}',
                           end_time = DATE_ADD(start_time, INTERVAL {$duration} MINUTE),
-			  timezone = '{$tz}',
 			  gym_id = '{$gym_id}'
             "
         );
@@ -127,8 +132,7 @@ if ($raid_id == 0 && $gym_id != 0) {
 
         // Add keys for sharing the raid.
         if($shared['raid_count'] == 0) {
-            $user_id = $update['callback_query']['from']['id'];
-            $keys = share_raid_keys($raid_id, $user_id);
+            $keys = share_keys($raid_id, 'raid_share', $update);
 
             // Exit key
             $empty_exit_key = [];
@@ -137,10 +141,13 @@ if ($raid_id == 0 && $gym_id != 0) {
         }
 
         // Answer callback.
-        answerCallbackQuery($update['callback_query']['id'], getTranslation('raid_already_exists'));
+        $tg_json[] = answerCallbackQuery($update['callback_query']['id'], getTranslation('raid_already_exists'), true);
 
         // Edit the message.
-        edit_message($update, $msg, $keys);
+        $tg_json[] = edit_message($update, $msg, $keys, false, true);
+
+        // Telegram multicurl request.
+        curl_json_multi_request($tg_json);
 
         // Exit.
         exit();
@@ -168,6 +175,7 @@ if($opt_arg == 'more') {
             'callback_data' => $raid_id . ':edit_save:' . $i
         );
     }
+
 } else {
     debug_log('Comparing slot switch and argument for fast forward using RAID_POKEMON_DURATION_SHORT');
     if ($slot_switch == 0) {
@@ -228,10 +236,13 @@ if ($opt_arg != 'more' && $opt_arg !='X') {
 }
 
 // Answer callback.
-answerCallbackQuery($update['callback_query']['id'], $callback_response);
+$tg_json[] = answerCallbackQuery($update['callback_query']['id'], $callback_response, true);
 
 // Edit the message.
-edit_message($update, getTranslation('how_long_raid'), $keys);
+$tg_json[] = edit_message($update, getTranslation('how_long_raid'), $keys, false, true);
+
+// Telegram multicurl request.
+curl_json_multi_request($tg_json);
 
 // Exit.
 exit();

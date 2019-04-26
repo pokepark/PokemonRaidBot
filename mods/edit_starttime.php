@@ -6,6 +6,9 @@ debug_log('edit_starttime()');
 //debug_log($update);
 //debug_log($data);
 
+// Check access.
+bot_access_check($update, 'create');
+
 // Get the argument.
 $arg = $data['arg'];
 
@@ -75,11 +78,8 @@ if($raid_level == 'X') {
     // Init empty keys array.
     $keys = [];
 
-    // Timezone - maybe there's a more elegant solution as date_default_timezone_set?!
-    $tz = TIMEZONE;
-
     // Now 
-    $now = time();
+    $now = utcnow();
 
     if ($arg == "minutes") {
 	// Set switch view.
@@ -88,12 +88,15 @@ if($raid_level == 'X') {
 	$key_count = 5;
 
         for ($i = 1; $i <= RAID_EGG_DURATION; $i = $i + 1) {
-            $now_plus_i = $now + $i*60;
+            // Create new DateTime object, add minutes and convert back to string.
+            $now_plus_i = new DateTime($now, new DateTimeZone('UTC'));
+            $now_plus_i->add(new DateInterval('PT'.$i.'M'));
+            $now_plus_i = $now_plus_i->format("Y-m-d H:i:s");
             // Create the keys.
             $keys[] = array(
                 // Just show the time, no text - not everyone has a phone or tablet with a large screen...
                 'text'          => floor($i / 60) . ':' . str_pad($i % 60, 2, '0', STR_PAD_LEFT),
-                'callback_data' => $id . ':edit_time:' . $pokemon_id . ',' . unix2tz($now_plus_i,$tz,"H-i")
+                'callback_data' => $id . ':edit_time:' . $pokemon_id . ',' . utctime($now_plus_i,"H-i")
             );
         }
     } else {
@@ -104,12 +107,15 @@ if($raid_level == 'X') {
 	$key_count = 4;
 
         for ($i = 1; $i <= RAID_EGG_DURATION; $i = $i + 1) {
-	    $now_plus_i = $now + $i*60;
+            // Create new DateTime object, add minutes and convert back to string.
+            $now_plus_i = new DateTime($now, new DateTimeZone('UTC'));
+            $now_plus_i->add(new DateInterval('PT'.$i.'M'));
+            $now_plus_i = $now_plus_i->format("Y-m-d H:i:s");
             // Create the keys.
             $keys[] = array(
 	        // Just show the time, no text - not everyone has a phone or tablet with a large screen...
-	        'text'	        => unix2tz($now_plus_i,$tz,"H:i"),
-                'callback_data' => $id . ':edit_time:' . $pokemon_id . ',' . unix2tz($now_plus_i,$tz,"H-i") 
+	        'text'	        => dt2time($now_plus_i),
+                'callback_data' => $id . ':edit_time:' . $pokemon_id . ',' . utctime($now_plus_i,"H-i") 
             );
         }
     }
@@ -117,7 +123,7 @@ if($raid_level == 'X') {
     // Raid already running
     $keys[] = array(
         'text'	        => getTranslation('is_raid_active'),
-        'callback_data' => $id . ':edit_time:' . $pokemon_id . ',' . unix2tz($now,$tz,"H-i").",more,0"
+        'callback_data' => $id . ':edit_time:' . $pokemon_id . ',' . utctime($now,"H-i").",more,0"
     );
 
     // Switch view: clocktime / minutes until start
@@ -171,15 +177,21 @@ if ($data['arg'] != "minutes" && $data['arg'] != "clocktime") {
     $callback_response = getTranslation('raid_starts_when_view_changed');
 }
 
+// Telegram JSON array.
+$tg_json = array();
+
 // Answer callback.
-answerCallbackQuery($update['callback_query']['id'], $callback_response);
+$tg_json[] = answerCallbackQuery($update['callback_query']['id'], $callback_response, true);
 
 // Edit the message.
 if ($arg == "minutes") {
-    edit_message($update, getTranslation('raid_starts_when_minutes'), $keys);
+    $tg_json[] = edit_message($update, getTranslation('raid_starts_when_minutes'), $keys, false, true);
 } else {
-    edit_message($update, getTranslation('raid_starts_when'), $keys);
+    $tg_json[] = edit_message($update, getTranslation('raid_starts_when'), $keys, false, true);
 }
+
+// Telegram multicurl request.
+curl_json_multi_request($tg_json);
 
 // Exit.
 exit();

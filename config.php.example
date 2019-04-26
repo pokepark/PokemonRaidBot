@@ -7,8 +7,8 @@ define('DB_PASSWORD',			'your_database_password');
 
 // General config
 define('DEBUG',				true);
-define('CONFIG_LOGFILE',		'/var/log/tg-bots/dev-raid-bot.log');
-define('CONFIG_HASH',			'aaaabbbbccccddddeeeeffff1111222233334444555566667777888899990000aaaabbbbccccddddeeeeffff1111222233334444555566667777888899990000');
+define('DEBUG_LOGFILE',			'/var/log/tg-bots/dev-raid-bot.log');
+define('APIKEY_HASH',			'aaaabbbbccccddddeeeeffff1111222233334444555566667777888899990000aaaabbbbccccddddeeeeffff1111222233334444555566667777888899990000');
 define('DDOS_MAXIMUM',			'10');
 define('BRIDGE_MODE',			false);
 
@@ -22,17 +22,15 @@ define('MAINTAINER_ID',			'your_tg_integer');
 define('BOT_ID',			'R');
 define('BOT_NAME',			'@RaidPokemonBot');
 define('BOT_ADMINS',			'');
-define('BOT_ACCESS',			'');
-define('BOT_ALLOW_MEMBERS',             false);
-define('BOT_ALLOW_MEMBERS_CHATS',       '');
 
 // Languages: EN, DE, NL, IT, NO, RU or PT-BR
-define('LANGUAGE',             		'EN');
-define('RAID_POLL_LANGUAGE', 		'EN');
+define('LANGUAGE_PRIVATE',    		'EN');
+define('LANGUAGE_PUBLIC', 		'EN');
 
 // Timezone and Google maps API 
 define('TIMEZONE',			'Europe/Berlin');
-define('GOOGLE_API_KEY',		''); 
+define('MAPS_LOOKUP',			false); 
+define('MAPS_API_KEY',			''); 
 
 // Raid creation
 define('RAID_VIA_LOCATION',		true);
@@ -40,6 +38,7 @@ define('RAID_EGG_DURATION',		'60');
 define('RAID_POKEMON_DURATION_SHORT',	'45');
 define('RAID_POKEMON_DURATION_LONG',	'90');
 define('RAID_DURATION_CLOCK_STYLE',	true);
+define('RAID_CUSTOM_GYM_LETTERS',	'');
 
 // Raid times
 define('RAID_LOCATION',			false);
@@ -58,8 +57,6 @@ define('RAID_POLL_UI_ORDER',		'extra,teamlvl,time,pokemon,status');
 define('RAID_EX_GYM_MARKER',		'icon');
 
 // Raid sharing
-define('SHARE_MODERATORS',		true);
-define('SHARE_USERS',			true);
 define('SHARE_CHATS',			'');
 
 // Raid overview

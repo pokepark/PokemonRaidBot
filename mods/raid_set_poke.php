@@ -6,8 +6,8 @@ debug_log('raid_set_poke()');
 //debug_log($update);
 //debug_log($data);
 
-// Check raid access.
-raid_access_check($update, $data);
+// Access check.
+raid_access_check($update, $data, 'pokemon');
 
 // Set the id.
 $id = $data['id'];
@@ -18,6 +18,17 @@ my_query(
     UPDATE    raids
     SET       pokemon = '{$data['arg']}'
       WHERE   id = {$id}
+    "
+);
+
+// Update users in attendance table.
+// Helps to proper sort users as they are ordered by pokemon.
+my_query(
+    "
+    UPDATE    attendance
+    SET       pokemon = '0'
+      WHERE   raid_id = {$id}
+      AND     pokemon = '{$data['arg']}'
     "
 );
 
@@ -35,11 +46,14 @@ $msg .= show_raid_poll_small($raid);
 // Build callback message string.
 $callback_response = getTranslation('raid_boss_saved');
 
+// Telegram JSON array.
+$tg_json = array();
+
 // Answer callback.
-answerCallbackQuery($update['callback_query']['id'], $callback_response);
+$tg_json[] = answerCallbackQuery($update['callback_query']['id'], $callback_response, true);
 
 // Edit message.
-edit_message($update, $msg, $keys, false);
+$tg_json[] = edit_message($update, $msg, $keys, false, true);
 
 // Get raid poll messages to be updated from cleanup.
 $rs = my_query(
@@ -56,8 +70,11 @@ $updated_keys = keys_vote($raid);
 
 // Update the shared raid polls.
 while ($raidmsg = $rs->fetch_assoc()) {
-    editMessageText($raidmsg['message_id'], $updated_msg, $updated_keys, $raidmsg['chat_id'], ['disable_web_page_preview' => 'true'], true);
+    $tg_json[] = editMessageText($raidmsg['message_id'], $updated_msg, $updated_keys, $raidmsg['chat_id'], ['disable_web_page_preview' => 'true'], true);
 } 
+
+// Telegram multicurl request.
+curl_json_multi_request($tg_json);
 
 // Exit.
 exit();

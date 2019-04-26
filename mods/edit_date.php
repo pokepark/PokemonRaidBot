@@ -6,14 +6,8 @@ debug_log('edit_date()');
 //debug_log($update);
 //debug_log($data);
 
-// Check access - user must be admin!
-$admin_access = bot_access_check($update, BOT_ADMINS, true);
-if (!$admin_access) {
-    // Do not edit message, but send access denied back to user and exit then
-    $response_msg = '<b>' . getTranslation('bot_access_denied') . '</b>';
-    sendMessage($update['callback_query']['from']['id'], $response_msg);
-    exit;
-}
+// Check access.
+bot_access_check($update, 'ex-raids');
 
 // Set the id.
 $id = $data['id'];
@@ -125,11 +119,17 @@ $keys = array_merge($keys, $nav_keys);
 // Build callback message string.
 $callback_response = 'OK';
 
+// Telegram JSON array.
+$tg_json = array();
+
 // Answer callback.
-answerCallbackQuery($update['callback_query']['id'], $callback_response);
+$tg_json[] = answerCallbackQuery($update['callback_query']['id'], $callback_response, true);
 
 // Edit the message.
-edit_message($update, $msg, $keys);
+$tg_json[] = edit_message($update, $msg, $keys, false, true);
+
+// Telegram multicurl request.
+curl_json_multi_request($tg_json);
 
 // Exit.
 exit();

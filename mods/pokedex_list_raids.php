@@ -6,6 +6,9 @@ debug_log('pokedex_list_raids()');
 //debug_log($update);
 //debug_log($data);
 
+// Check access.
+bot_access_check($update, 'pokedex');
+
 // Get all pokemon with raid levels from database.
 $rs = my_query(
         "
@@ -83,11 +86,17 @@ if(!empty($msg)) {
 // Build callback message string.
 $callback_response = getTranslation('select_pokemon');
 
+// Telegram JSON array.
+$tg_json = array();
+
 // Answer callback.
-answerCallbackQuery($update['callback_query']['id'], $callback_response);
+$tg_json[] = answerCallbackQuery($update['callback_query']['id'], $callback_response, true);
 
 // Edit message.
-edit_message($update, $msg, $keys, false);
+$tg_json[] = edit_message($update, $msg, $keys, false, true);
+
+// Telegram multicurl request.
+curl_json_multi_request($tg_json);
 
 // Exit.
 exit();

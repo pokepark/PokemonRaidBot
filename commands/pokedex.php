@@ -6,8 +6,8 @@ debug_log('POKEDEX()');
 //debug_log($update);
 //debug_log($data);
 
-// Check access - user must be admin!
-bot_access_check($update, BOT_ADMINS);
+// Check access.
+bot_access_check($update, 'pokedex');
 
 // Get pokemon name or dex id.
 $pokemon = trim(substr($update['message']['text'], 8));

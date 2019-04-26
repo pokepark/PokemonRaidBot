@@ -6,6 +6,9 @@ debug_log('edit_pokemon()');
 //debug_log($update);
 //debug_log($data);
 
+// Check access.
+bot_access_check($update, 'create');
+
 // Set the id.
 $gym_id_plus_letter = $data['id'];
 
@@ -45,15 +48,21 @@ if (!$keys) {
 // Build callback message string.
 $callback_response = 'OK';
 
+// Telegram JSON array.
+$tg_json = array();
+
 // Answer callback.
-answerCallbackQuery($update['callback_query']['id'], $callback_response);
+$tg_json[] = answerCallbackQuery($update['callback_query']['id'], $callback_response, true);
 
 // Edit the message.
 if (isset($update['callback_query']['inline_message_id'])) {
-    editMessageText($update['callback_query']['inline_message_id'], getTranslation('select_raid_boss') . ':', $keys);
+    $tg_json[] = editMessageText($update['callback_query']['inline_message_id'], getTranslation('select_raid_boss') . ':', $keys, NULL, false, true);
 } else {
-    editMessageText($update['callback_query']['message']['message_id'], getTranslation('select_raid_boss') . ':', $keys, $update['callback_query']['message']['chat']['id'], $keys);
+    $tg_json[] = editMessageText($update['callback_query']['message']['message_id'], getTranslation('select_raid_boss') . ':', $keys, $update['callback_query']['message']['chat']['id'], $keys, true);
 }
+
+// Telegram multicurl request.
+curl_json_multi_request($tg_json);
 
 // Exit.
 exit();

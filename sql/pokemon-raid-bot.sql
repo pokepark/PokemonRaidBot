@@ -50,6 +50,7 @@ CREATE TABLE `gyms` (
   `gym_name` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL,
   `ex_gym` tinyint(1) unsigned DEFAULT '0',
   `show_gym` tinyint(1) unsigned DEFAULT '0',
+  `gym_note` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -87,7 +88,6 @@ CREATE TABLE `raids` (
   `first_seen` datetime DEFAULT NULL,
   `start_time` datetime DEFAULT NULL,
   `end_time` datetime DEFAULT NULL,
-  `timezone` char(30) DEFAULT NULL,
   `gym_team` enum('mystic','valor','instinct') DEFAULT NULL,
   `gym_id` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`),
@@ -104,7 +104,6 @@ CREATE TABLE `users` (
   `name` varchar(200) CHARACTER SET utf8mb4 DEFAULT NULL,
   `team` enum('mystic','valor','instinct') DEFAULT NULL,
   `moderator` tinyint(1) unsigned DEFAULT NULL,
-  `timezone` int(10) DEFAULT NULL,
   `level` int(10) unsigned DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `i_userid` (`user_id`)

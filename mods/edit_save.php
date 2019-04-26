@@ -6,8 +6,8 @@ debug_log('edit_save()');
 //debug_log($update);
 //debug_log($data);
 
-// Check raid access.
-raid_access_check($update, $data);
+// Check access.
+bot_access_check($update, 'create');
 
 // Set the id.
 $id = $data['id'];
@@ -31,6 +31,9 @@ if($arg != RAID_POKEMON_DURATION_SHORT) {
     );
 }
 
+// Telegram JSON array.
+$tg_json = array();
+
 // Build msg.
 if ($update['callback_query']['message']['chat']['type'] == 'private') {
     // Init keys.
@@ -47,7 +50,7 @@ if ($update['callback_query']['message']['chat']['type'] == 'private') {
     ];
 
     // Check access level prior allowing to change raid time
-    $admin_access = bot_access_check($update, BOT_ADMINS, true);
+    $admin_access = bot_access_check($update, 'raid-duration', true);
     if($admin_access && $arg == RAID_POKEMON_DURATION_SHORT) {
         // Add time change to keys.
         $keys_time = [
@@ -62,7 +65,7 @@ if ($update['callback_query']['message']['chat']['type'] == 'private') {
     }
 
     // Add keys to share.
-    $keys_share = share_raid_keys($id, $userid);
+    $keys_share = share_keys($id, 'raid_share', $update);
     $keys = array_merge($keys, $keys_share);
 
     // Get raid times.
@@ -89,10 +92,10 @@ if ($update['callback_query']['message']['chat']['type'] == 'private') {
     $callback_response = getTranslation('end_time') . $data['arg'] . ' ' . getTranslation('minutes');
 
     // Answer callback.
-    answerCallbackQuery($update['callback_query']['id'], $callback_response);
+    $tg_json[] = answerCallbackQuery($update['callback_query']['id'], $callback_response, true);
 
     // Edit message.
-    edit_message($update, $msg, $keys, false);
+    $tg_json[] = edit_message($update, $msg, $keys, false, true);
 
 } else {
     // Get raid times.
@@ -106,11 +109,14 @@ if ($update['callback_query']['message']['chat']['type'] == 'private') {
     $callback_response = getTranslation('end_time') . $data['arg'] . ' ' . getTranslation('minutes');
 
     // Answer callback.
-    answerCallbackQuery($update['callback_query']['id'], $callback_response);
+    $tg_json[] = answerCallbackQuery($update['callback_query']['id'], $callback_response, true);
 
     // Edit message.
-    edit_message($update, $text, $keys, false);
+    $tg_json[] = edit_message($update, $text, $keys, false, true);
 }
+
+// Telegram multicurl request.
+curl_json_multi_request($tg_json);
 
 // Exit.
 exit();

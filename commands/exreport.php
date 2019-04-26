@@ -6,8 +6,8 @@ debug_log('EXREPORT()');
 //debug_log($update);
 //debug_log($data);
 
-// Check access - user must be admin!
-bot_access_check($update, BOT_ADMINS);
+// Check access.
+bot_access_check($update, 'ex-report');
 
 // Init empty keys array.
 $keys = [];

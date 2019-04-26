@@ -11,7 +11,10 @@ $chat_id = 0;
 $chat_id = $data['arg'];
 
 // Check access.
-bot_access_check($update, BOT_ADMINS);
+bot_access_check($update, 'overview');
+
+// Telegram JSON array.
+$tg_json = array();
 
 // Get all or specific overview
 if ($chat_id == 0) {
@@ -59,7 +62,7 @@ if ($chat_id == 0) {
         ];
 
         // Send the message, but disable the web preview!
-        send_message($update['callback_query']['message']['chat']['id'], $msg, $keys);
+        $tg_json[] = send_message($update['callback_query']['message']['chat']['id'], $msg, $keys, true);
     }
 
     // Set message.
@@ -103,10 +106,13 @@ $callback_keys = [];
 $callback_response = 'OK';
 
 // Answer callback.
-answerCallbackQuery($update['callback_query']['id'], $callback_response);
+$tg_json[] = answerCallbackQuery($update['callback_query']['id'], $callback_response, true);
 
 // Edit message.
-edit_message($update, $callback_msg, $callback_keys, false);
+$tg_json[] = edit_message($update, $callback_msg, $callback_keys, false, true);
+
+// Telegram multicurl request.
+curl_json_multi_request($tg_json);
 
 // Exit.
 exit();

@@ -6,6 +6,9 @@ debug_log('edit_raidlevel()');
 //debug_log($update);
 //debug_log($data);
 
+// Check access.
+bot_access_check($update, 'create');
+
 // Get gym data via ID in arg
 $gym_id = $data['arg'];
 $gym = get_gym($gym_id);
@@ -15,6 +18,9 @@ $back_id = 0;
 $back_action = 'raid_by_gym';
 $back_arg = $data['id'];
 $gym_first_letter = $back_arg;
+
+// Telegram JSON array.
+$tg_json = array();
 
 // Active raid?
 $duplicate_id = active_raid_duplication_check($gym_id);
@@ -37,8 +43,7 @@ if ($duplicate_id > 0) {
 
     // Add keys for sharing the raid.
     if($shared['raid_count'] == 0) {
-        $user_id = $update['callback_query']['from']['id'];
-        $keys = share_raid_keys($raid_id, $user_id);
+        $keys = share_keys($raid_id, 'raid_share', $update);
 
         // Exit key
         $empty_exit_key = [];
@@ -47,17 +52,20 @@ if ($duplicate_id > 0) {
     }
 
     // Answer callback.
-    answerCallbackQuery($update['callback_query']['id'], getTranslation('raid_already_exists'));
+    $tg_json[] = answerCallbackQuery($update['callback_query']['id'], getTranslation('raid_already_exists'), true);
 
     // Edit the message.
-    edit_message($update, $msg, $keys);
+    $tg_json[] = edit_message($update, $msg, $keys, false, true);
+
+    // Telegram multicurl request.
+    curl_json_multi_request($tg_json);
 
     // Exit.
     exit();
 }
 
 // Check access - user must be admin for raid_level X
-$admin_access = bot_access_check($update, BOT_ADMINS, true);
+$admin_access = bot_access_check($update, 'ex-raids', true);
 if ($admin_access) {
     // Get the keys.
     $keys = raid_edit_raidlevel_keys($gym_id, $gym_first_letter, true);
@@ -94,10 +102,13 @@ $msg = getTranslation('create_raid') . ': <i>' . $gym['address'] . '</i>';
 $callback_response = getTranslation('gym_saved');
 
 // Answer callback.
-answerCallbackQuery($update['callback_query']['id'], $callback_response);
+$tg_json[] = answerCallbackQuery($update['callback_query']['id'], $callback_response, true);
 
 // Edit the message.
-edit_message($update, $msg . CR . getTranslation('select_raid_level') . ':', $keys);
+$tg_json[] = edit_message($update, $msg . CR . getTranslation('select_raid_level') . ':', $keys, false, true);
+
+// Telegram multicurl request.
+curl_json_multi_request($tg_json);
 
 // Exit.
 exit();

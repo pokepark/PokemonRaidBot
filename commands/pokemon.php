@@ -7,10 +7,7 @@ debug_log('POKEMON()');
 //debug_log($data);
 
 // Check access.
-bot_access_check($update, BOT_ACCESS);
-
-// Get timezone.
-$tz = TIMEZONE;
+bot_access_check($update, 'pokemon');
 
 // Count results.
 $count = 0;
@@ -28,34 +25,43 @@ try {
             gyms.address ,
             gyms.gym_name ,
             gyms.ex_gym ,
-            users. NAME ,
-            UNIX_TIMESTAMP(start_time) AS ts_start ,
-            UNIX_TIMESTAMP(end_time) AS ts_end ,
-            UNIX_TIMESTAMP(NOW()) AS ts_now ,
-            UNIX_TIMESTAMP(end_time) - UNIX_TIMESTAMP(NOW()) AS t_left
+            users. NAME 
         FROM
             raids
         LEFT JOIN gyms ON raids.gym_id = gyms.id
         LEFT JOIN users ON raids.user_id = users.user_id
         WHERE
-            raids.end_time > NOW()
-        AND raids.timezone = :timezone
+            raids.end_time > UTC_TIMESTAMP
         ORDER BY
             raids.end_time ASC
         LIMIT 20
     ';
     $statement = $dbh->prepare( $query );
-    $statement->bindValue(':timezone', $tz, PDO::PARAM_STR);
     $statement->execute();
     while ($row = $statement->fetch()) {
-    
+        // Get times.
+        $now = utcnow();
+        $today = dt2date($now);
+        $raid_day = dt2date($row['start_time']);
+        $start = dt2time($row['start_time']);
+        $end = dt2time($row['end_time']);
+
+        // Split pokemon and form to get the pokedex id.
+        $pokedex_id = explode('-', $row['pokemon'])[0];
+
+        // Pokemon is an egg?
+        $eggs = $GLOBALS['eggs'];
+        if(in_array($pokedex_id, $eggs)) {
+            $keys_text = EMOJI_EGG . SP . $row['gym_name'];
+        } else {
+            $keys_text = $row['gym_name'];
+        }
+
         // Set text and keys.
         $text .= $row['gym_name'] . CR;
-        $raid_day = unix2tz($row['ts_start'], $row['timezone'], 'Y-m-d');
-        $today = unix2tz($row['ts_now'], $row['timezone'], 'Y-m-d');
-        $text .= get_local_pokemon_name($row['pokemon']) . SP . '—' . SP . (($raid_day == $today) ? '' : ($raid_day . ', ')) . unix2tz($row['ts_start'], $row['timezone']) . SP . getTranslation('to') . SP . unix2tz($row['ts_end'], $row['timezone']) . CR . CR;
+        $text .= get_local_pokemon_name($row['pokemon']) . SP . '—' . SP . (($raid_day == $today) ? '' : ($raid_day . ', ')) . $start . SP . getTranslation('to') . SP . $end . CR . CR;
         $keys[] = array(
-            'text'          => $row['gym_name'],
+            'text'          => $keys_text,
             'callback_data' => $row['id'] . ':raid_edit_poke:' . $row['pokemon'],
         );
 

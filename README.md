@@ -63,27 +63,33 @@ Important: The raid level is NOT set when importing the raid bosses from the goh
 
 ## Config
 
-Copy config.php.example to config.php and edit (values explained further).
+Copy the example config.php.example to your own config.php and edit the values (explained further).
 
-Enter the details for the database connection to the config.php file.
+Some values are missing as the bot has default values. If you like to change those, you need to add and define them in your config.php file, e.g. `define('DDOS_MAXIMUM', '10');`.
+
+## Database connection
+
+Enter the details for the database connection to the config.php file via `DB_HOST`, `DB_NAME`, `DB_USER` and `DB_PASSWORD`.
 
 ## General config and log files
 
 Set `DEBUG` to true, to enable the debug logfile.
 
-Set `CONFIG_LOGFILE` to the location of the logfile, e.g. /var/log/tg-bots/dev-raid-bot.log. Make sure to create the log dir, e.g. /var/log/tg-bots/ and set it writeable by webserver.
+Set `DEBUG_LOGFILE` to the location of the logfile, e.g. /var/log/tg-bots/dev-raid-bot.log. Make sure to create the log dir, e.g. /var/log/tg-bots/ and set it writeable by webserver.
 
-Set `CONFIG_HASH` to the hashed value of your bot token (preferably lowercase) using a hash generator, e.g. https://www.miniwebtool.com/sha512-hash-generator/ 
+Set `APIKEY_HASH` to the hashed value of your bot token (preferably lowercase) using a hash generator, e.g. https://www.miniwebtool.com/sha512-hash-generator/ 
 
-Set `DDOS_MAXIMUM` to the amount of callback queries each user is allowed to do each minute. If the amount is reached, e.g. 10, any further callback query is rejected by the DDOS check.
+Set `DDOS_MAXIMUM` to the amount of callback queries each user is allowed to do each minute. If the amount is reached any further callback query is rejected by the DDOS check. Default value: 10.
 
-Set `BRIDGE_MODE` to true when you're using the PokemonBotBridge. If you're not using the PokemonBotBridge keep the default false. PokemonBotBridge: https://github.com/florianbecker/PokemonBotBridge
+Set `BRIDGE_MODE` to true when you're using the PokemonBotBridge. If you're not using the PokemonBotBridge the default value of false is used. PokemonBotBridge: https://github.com/florianbecker/PokemonBotBridge
 
 ## Proxy
 
-Set `CURL_USEPROXY` to `true` in case you are running the bot behind a proxy server.
+Set `CURL_USEPROXY` with a value of `true` in case you are running the bot behind a proxy server.
 
-Set `CURL_PROXYSERVER` to the proxy server address and port.
+Set `CURL_PROXYSERVER` to the proxy server address and port, for example:
+`define('CURL_USEPROXY',                 false);
+define('CURL_PROXYSERVER',              'http://your.proxyserver.com:8080');`
 
 Authentication against the proxy server by username and password is currently not supported!
 
@@ -102,23 +108,22 @@ You can set several languages for the bot. Available languages are (A-Z):
  - NO (Norwegian)
  - PT-BR (Brazilian Portugese)
  - RU (Russian)
+ - PL (Polish)
 
-Set `LANGUAGE` for the prefered language the bot will answer users when they chat with them. Leave blank that the bot will answer in the users language. If the users language is not supported, e.g. ZH-CN (Chinese), the bot will always use EN (English) as fallback language.
+Set `LANGUAGE_PRIVATE` for the prefered language the bot will answer users when they chat with them. Leave blank that the bot will answer in the users language. If the users language is not supported, e.g. ZH-CN (Chinese), the bot will always use EN (English) as fallback language.
 
-Set `RAID_POLL_LANGUAGE` to the prefered language for raid polls.
+Set `LANGUAGE_PUBLIC` to the prefered language for raid polls. Default value: EN
 
 So if you want to have the bot communication based on the users Telegram language, e.g. Russian, and show the raid polls in German for example:
 
-`define('LANGUAGE', '');`
-`define('RAID_POLL_LANGUAGE', 'DE');`
+`define('LANGUAGE_PRIVATE', '');`
+`define('LANGUAGE_PUBLIC', 'DE');`
 
 ## Timezone and Google maps API
 
 Set `TIMEZONE` to the timezone you wish to use for the bot. Predefined value from the example config is "Europe/Berlin".
 
-Optionally you can you use Google maps API to lookup addresses of gyms based on latitude and longitude
-
-Therefore get a Google maps API key and set it as `GOOGLE_API_KEY` in your config.
+Optionally you can you use Google maps API to lookup addresses of gyms based on latitude and longitude. Therefore get a Google maps API key. 
 
 To get a new API key, navigate to https://console.developers.google.com/apis/credentials and create a new API project, e.g. PokemonRaidBot 
 
@@ -136,6 +141,8 @@ https://console.developers.google.com/apis/library/geocoding-backend.googleapis.
 
 Finally check the dashboard again and make sure Google Maps Geocoding API and Google Maps Time Zone API are listed as enabled services.
 
+Set `MAPS_LOOKUP` to true and put the API key in `MAPS_API_KEY` in your config.
+
 ## Raid creation
 
 There are several options to customize the creation of raid polls:
@@ -149,6 +156,8 @@ Set `RAID_POKEMON_DURATION_SHORT` to the maximum amount of minutes a user can se
 Set `RAID_POKEMON_DURATION_LONG` to the maximum amount of minutes a user can select as raid duration for not yet hatched raid eggs.
 
 Set `RAID_DURATION_CLOCK_STYLE` to customize the default style for the raid start time selection. Set to true, the bot will show the time in clocktime style, e.g. "18:34" as selection when the raid will start. Set to false the bot will show the time until the raid starts in minutes, e.g. "0:16" (similar to the countdown in the gyms). Users can switch between both style in the raid creation process.
+
+Set `RAID_CUSTOM_GYM_LETTERS` to further split gyms by their first letter. For example if you have a lot of gyms starting with 'St' as there are a lot of churches like St. Helen, St. Jospeh, etc. in your area and the gym list under the letter 'S' is too long, you can tell the bot to put the gyms starting with 'St' under 'St' and exclude them from the letter 'S'. There is no limitation in length, so even 'Berlin' would work to split gyms, but the recommendation is to use as less chars as possible to split the gyms. You can add multiple custom gym letters, just separate them by comma. Example: `define('RAID_CUSTOM_GYM_LETTERS', 'Ber,Sch,St,Wi');`
 
 ## Raid times
 
@@ -186,29 +195,17 @@ Set `RAID_EX_GYM_MARKER` to set the marker for ex-raid gyms. You can use a prede
 
 You can share raid polls with any chat in Telegram via a share button.
 
-Sharing raid polls can be restricted, so only moderators or users or both can be allowed to share a raid poll.
+Sharing raid polls can be restricted, so only specific chats/users can be allowed to share a raid poll - take a look at the permission system!
 
-Therefore it is possible, via a comma-separated list, to specify the chats the raid polls can be shared with.
+With a predefined list you can specify the chats which should appear as buttons for sharing raid polls.
 
-For the ID of a chat either forward a message from the chat to a bot like @RawDataBot or search the web for another method ;)
+For the ID of a chat either forward a message from the chat to a bot like @RawDataBot, @getidsbot or search the web for another method ;)
 
-A few examples:
+Example:
 
-#### Restrict sharing for moderators and users to chats -100111222333 and -100444555666
-
-`define('SHARE_MODERATORS', false);`
-
-`define('SHARE_USERS', false);`
+#### Predefine sharing to the chats -100111222333 and -100444555666
 
 `define('SHARE_CHATS', '-100111222333,-100444555666');`
-
-#### Allow moderators to share with any chat, restrict sharing for users to chat -100111222333
-
-`define('SHARE_MODERATORS', true);`
-
-`define('SHARE_USERS', false);`
-
-`define('SHARE_CHATS', '-100111222333');`
 
 ## Raid overview
 
@@ -244,98 +241,175 @@ Activate the cleanup of telegram messages and/or the database for raids by setti
 
 Specify the amount of minutes which need to pass by after raid has ended before the bot executes the cleanup. Times are in minutes in `CLEANUP_TIME_TG` for telegram cleanup and `CLEANUP_TIME_DB` for database cleanup. The value for the minutes of the database cleanup `CLEANUP_TIME_DB` must be greater than then one for telegram cleanup `CLEANUP_TIME_TG`. Otherwise cleanup will do nothing and exit due to misconfiguration!
 
-Finally set up a cronjob to trigger the cleanup. You can also trigger telegram / database cleanup per cronjob: For no cleanup use 0, for cleanup use 1 and to use your config file use 2 or leave "telegram" and "database" out of the request data array. Please make sure to always specify the cleanup type which needs to be `raid`.
+Finally set up a cronjob to trigger the cleanup. You can also trigger telegram / database cleanup per cronjob: For no cleanup use 0, for cleanup use 1 and to use your config file use 2 or leave "telegram" and "database" out of the request data array.
 
 A few examples for raids - make sure to replace the URL with yours:
 
 #### Cronjob using cleanup values from config.php for raid polls: Just the secret without telegram/database OR telegram = 2 and database = 2
 
-`curl -k -d '{"cleanup":{"type":"raid","secret":"your-cleanup-secret/passphrase"}}' https://localhost/index.php?apikey=111111111:AABBCCDDEEFFGGHHIIJJKKLLMMNNOOPP123`
+`curl -k -d '{"cleanup":{"secret":"your-cleanup-secret/passphrase"}}' https://localhost/index.php?apikey=111111111:AABBCCDDEEFFGGHHIIJJKKLLMMNNOOPP123`
 
 OR
 
-`curl -k -d '{"cleanup":{"type":"raid","secret":"your-cleanup-secret/passphrase","telegram":"2","database":"2"}}' https://localhost/index.php?apikey=111111111:AABBCCDDEEFFGGHHIIJJKKLLMMNNOOPP123`
+`curl -k -d '{"cleanup":{"secret":"your-cleanup-secret/passphrase","telegram":"2","database":"2"}}' https://localhost/index.php?apikey=111111111:AABBCCDDEEFFGGHHIIJJKKLLMMNNOOPP123`
 
 #### Cronjob to clean up telegram raid poll messages only: telegram = 1 and database = 0 
 
-`curl -k -d '{"cleanup":{"type":"raid","secret":"your-cleanup-secret/passphrase","telegram":"1","database":"0"}}' https://localhost/index.php?apikey=111111111:AABBCCDDEEFFGGHHIIJJKKLLMMNNOOPP123`
+`curl -k -d '{"cleanup":{"secret":"your-cleanup-secret/passphrase","telegram":"1","database":"0"}}' https://localhost/index.php?apikey=111111111:AABBCCDDEEFFGGHHIIJJKKLLMMNNOOPP123`
 
 #### Cronjob to clean up telegram raid poll messages and database: telegram = 1 and database = 1
 
-`curl -k -d '{"cleanup":{"type":"raid","secret":"your-cleanup-secret/passphrase","telegram":"1","database":"1"}}' https://localhost/index.php?apikey=111111111:AABBCCDDEEFFGGHHIIJJKKLLMMNNOOPP123`
+`curl -k -d '{"cleanup":{"secret":"your-cleanup-secret/passphrase","telegram":"1","database":"1"}}' https://localhost/index.php?apikey=111111111:AABBCCDDEEFFGGHHIIJJKKLLMMNNOOPP123`
 
 #### Cronjob to clean up database and maybe telegram raid poll messages (when specified in config): telegram = 2 and database = 1
 
-`curl -k -d '{"cleanup":{"type":"raid","secret":"your-cleanup-secret/passphrase","telegram":"2","database":"1"}}' https://localhost/index.php?apikey=111111111:AABBCCDDEEFFGGHHIIJJKKLLMMNNOOPP123`
+`curl -k -d '{"cleanup":{"secret":"your-cleanup-secret/passphrase","telegram":"2","database":"1"}}' https://localhost/index.php?apikey=111111111:AABBCCDDEEFFGGHHIIJJKKLLMMNNOOPP123`
 
 # Access permissions
 
 ## Public access
 
-When no telegram id, group, supergroup or channel is specified in `BOT_ADMINS` and/or `BOT_ACCESS`, the bot will allow everyone to use it (public access).
+When no telegram id, group, supergroup or channel is specified in `BOT_ADMINS` the bot will allow everyone to use it (public access).
 
 Example for public access: `define('BOT_ACCESS', '');`
 
-## Restricted access
+## Access and permissions
 
-With BOT_ADMINS and BOT_ACCESS being used to restrict access, there are several access roles / types. When you do not configure BOT_ACCESS, everyone will have access to your bot (public access).  
+The `MAINTAINER_ID` is not able to access the bot nor has any permissions as that id is only contacted in case of errors and issues with the bot configuration.
 
-Set `BOT_ADMINS` and `BOT_ACCESS` to id (-100123456789) of one or multiple by comma separated individual telegram chat names/ids, groups, supergroups or channels.
+The `BOT_ADMINS` have all permissions and can use any feature of the bot. 
 
-Please note, when you're setting groups, supergroups or channels only administrators (not members!) from these chats will gain access to the bot! So make sure this requirement is fulfilled or add their individual telegram usernames/ids instead.
+Telegram Users can only vote on raid polls, but have no access to other bot functions (unless you configured it).
 
-Example for restricted access:  
-`define('BOT_ADMINS', '111222333,111555999');`
+That telegram chats/users can access the bot and use the features, you need to create an access file.
 
-`define('BOT_ACCESS', '111222333,-100224466889,-100112233445,111555999');`
+Those access files need to be placed under the subdirectory 'access' and follow the name scheme 'accessCHAT_ID'.
 
-To allow members from groups, supergroups or channels:
+Every access file allows the access for a particular chat and must include the permissons which should be granted to that chat. 
 
-Set `BOT_ALLOW_MEMBERS` to true, so members of a Telegram chat in addition to the administrators are considered during the access check and allowed to use the bot if they are a member of the respective chat.
+To grant permissions via an access file, you easily add every permission on a single line of the access file. 
 
-Set `BOT_ALLOW_MEMBERS_CHAT` to the chats you wish to allow member access for.
+This way you define individual access to bot commands per chat id.
 
-Example to allow members of chat groups -100112233445 and -100224466889:
-`define('BOT_ALLOW_MEMBERS', true);`
+Last but not least: It does not matter if a chat is a user, group, supergroup or channel - any kind of chat is supported as every chat has a chat id!
 
-`define('BOT_ALLOW_MEMBERS_CHATS', '-100112233445, -100224466889');`
+## Permissions overview
+
+The following two tables are showing the permissions you need to write into an access file (last column) to grant permissions to users/chats.
+
+For groups, supergroups or channels you need add at least one of the following permissions that either the creator, the admins or the members can access the bot.
+
+So it's always a combination of at least one of the permissions from the first table plus the actual permissions from the second table.
+
+| Chat type  | Role      | **Permission inside access file** |
+|------------|-----------|-----------------------------------|
+| User       | Not required!                                ||
+|            |           |                                   |
+| Group      | Creator   | `allow-creator`                   |
+|            | Admins    | `allow-admins`                    |
+|            | Members   | `allow-members`                   |
+|            |           |                                   |
+| Supergroup | Creator   | `allow-creator`                   |
+|            | Admins    | `allow-admins`                    |
+|            | Members   | `allow-members`                   |
+|            |           |                                   |
+| Channel    | Creator   | `allow-creator`                   |
+|            | Admins    | `allow-admins`                    |
+|            | Members   | `allow-members`                   |
+
+A few examples for access files can be found below the permission overview table.
 
 
-## Access overview
+| Access     | **Action and /command**                                          | Permission inside access file            |
+|------------|------------------------------------------------------------------|------------------------------------------|
+| Bot        | Access the bot itself                                            | `bot-access`                             |
+|            |                                                                  |                                          |
+| Raid poll  | Vote on shared raid poll                                         | Not required!                            |
+|            | Create raids `/start`, `/raid`                                   | `create`                                 |
+|            | Create ex-raids `/start`                                         | `ex-raids`                               |
+|            | Change raid duration `/start`                                    | `raid-duration`                          |
+|            | List all raids `/list`                                           | `list`                                   |
+|            | Manage overview `/overview`                                      | `overview`                               |
+|            | Delete OWN raid polls `/delete`                                  | `delete` and `delete-own`                | 
+|            | Delete ALL raid polls `/delete`                                  | `delete` and `delete-all`                |
+|            |                                                                  |                                          |
+| Sharing    | Share OWN created raids to predefined chats 'SHARE_CHATS'        | `share-own`                              |
+|            | Share ALL created raids to predefined chats 'SHARE_CHATS'        | `share-all`                              |
+|            | Share OWN created raids to any chat                              | `share-own` and `share-any-chat`         |
+|            | Share ALL created raids to any chat                              | `share-own` and `share-any-chat`         |
+|            |                                                                  |                                          |
+| Pokemon    | Update pokemon on OWN raid polls `/pokemon`                      | `pokemon` and `pokemon-own`              |
+|            | Update pokemon on ALL raid polls `/pokemon`                      | `pokemon` and `pokemon-all`              |
+|            |                                                                  |                                          |
+| Gym        | Get gym details `/gym`                                           | `gym-details`                            |
+|            | Edit extended gym details `/gym`                                 | `gym-edit`                               |
+|            | Edit gym name `/gymname`                                         | `gym-name`                               |
+|            | Edit gym address `/gymaddress`                                   | `gym-address`                            |
+|            | Edit gym note `/gymnote`                                         | `gym-note`                               |
+|            | Add a gym `/addgym`                                              | `gym-add`                                |
+|            | Delete a gym `/deletegym`                                        | `gym-delete`                             |
+|            |                                                                  |                                          |
+| Pokedex    | Manage raid pokemon `/pokedex`                                   | `pokedex`                                |
+|            |                                                                  |                                          |
+| Help       | Show help `/help`                                                | `help`                                   |
 
-With your `MAINTAINER_ID` and as a member of `BOT_ADMINS` you have the permissions to do anything. **For performance improvements, it's recommended to add the MAINTAINER and all members of BOT_ADMINS as moderator via /mods command!** 
 
-As a member of `BOT_ACCESS` you can create raid polls, update your own raid polls' pokemon and change the gym team of your last raid poll. `BOT_ACCESS` members who are moderators too, can also change the gym name and update pokemon from other users raid polls. Not that members of `BOT_ACCESS` are not allowed to create polls for ex-raids, only the `MAINTAINER_ID` and the `BOT_ADMINS` have the right to create them.
+#### Example: Allow the user 111555999 to create raids and share them to the predefined chat list
 
-Telegram Users can only vote on raid polls, but have no access to other bot functions (unless you configured it for public access).
+Access file: `access\access111555999`
 
+Content of the access file, so the actual permissions:
+`access-bot
+create
+share-own`
 
-| Access:   |            |                                  | MAINTAINER_ID | BOT_ADMINS | BOT_ACCESS | BOT_ACCESS | Telegram |
-|-----------|------------|----------------------------------|---------------|------------|------------|------------|----------|
-| Database: |            |                                  |               |            | Moderator  | User       | User     |
-|           | **Area**   | **Action and /command**          |               |            |            |            |          |
-|           | Raid poll  | Vote                             | Yes           | Yes        | Yes        | Yes        | Yes      |
-|           |            | Create `/start`, `/raid`, `/new` | Yes           | Yes        | Yes        | Yes        |          |
-|           |            | Create ex-raid `/start`          | Yes           | Yes        |            |            |          |
-|           |            | List `/list`                     | Yes           | Yes        | Yes        | Yes        |          |
-|           |            | Overview `/list`                 | Yes           | Yes        |            |            |          |
-|           |            | Delete ALL raid polls `/delete`  | Yes           | Yes        | Yes        |            |          |
-|           |            | Delete OWN raid polls `/delete`  | Yes           | Yes        | Yes        | Yes        |          |
-|           |            |                                  |               |            |            |            |          |
-|           | Pokemon    | ALL raid polls `/pokemon`        | Yes           | Yes        | Yes        |            |          |
-|           |            | OWN raid polls `/pokemon`        | Yes           | Yes        | Yes        | Yes        |          |
-|           |            |                                  |               |            |            |            |          |
-|           | Gym        | Name `/gym`                      | Yes           | Yes        | Yes        |            |          |
-|           |            | Team `/team`                     | Yes           | Yes        | Yes        | Yes        |          |
-|           |            |                                  |               |            |            |            |          |
-|           | Moderators | List `/mods`                     | Yes           | Yes        |            |            |          |
-|           |            | Add `/mods`                      | Yes           | Yes        |            |            |          |
-|           |            | Delete `/mods`                   | Yes           | Yes        |            |            |          |
-|           |            |                                  |               |            |            |            |          |
-|           | Pokedex    | Manage raid pokemon `/pokedex`   | Yes           | Yes        |            |            |          |
-|           |            |                                  |               |            |            |            |          |
-|           | Help       | Show `/help`                     | Yes           | Yes        | Yes        | Yes        |          |
+#### Example: Allow the creator and the admins of the channel -100224466889 to create raids as well as sharing raids created by their own or others to the predefined chat list or any other chat
 
+Access file: `access\access-100224466889`
+
+Important: The minus `-` in front of the actual chat id must be part of the name as it's part of the chat id!
+
+Content of the access file, so the actual permissions:
+`access-bot
+allow-creator
+allow-admins
+create
+share-all
+share-own
+share-any-chat`
+
+# Customization
+
+The bot allows you to customize things and therefore has a folder 'custom' for your customizations.
+
+## Custom icons
+
+In case you do not like some of the predefined icons and might like to change them to other/own icons:
+- Create a file named `constants.php` in the custom folder
+- Lookup the icon definitions you'd like to change in either the core or bot constants.php (`core/bot/constants.php` and `constants.php`)
+- Define your own icons in your custom constants.php
+- For example to change the yellow exclamation mark icon to a red exclamation mark put the following in your `custom/constants.php`:
+`<?php
+defined('EMOJI_WARN')           or define('EMOJI_WARN',    iconv('UCS-4LE', 'UTF-8', pack('V', 0x2757)));
+`
+- Make sure to not miss the first line which declares the file as php file!
+- To get the codes (here: 0x2757) of the icons/emojis, take a look at one of the large emoji databases in the web. They ususally have them mentioned and also show how the icons look like on different systems.
+
+## Custom translation
+
+To change translations you can do the following:
+- Create a file named `language.json` in the custom folder
+- Find the translation name/id by searching the core and bot language.php files (`core/lang/language.php` and `lang/language.php`)
+- Set your own translation in your custom language.json
+- For example to change the translation of 'Friday' to a shorter 'Fri' put the following in your `custom/language.json`:
+`{
+    "weekday_5":{
+        "EN":"Fri"
+    }
+}
+`
+- Make sure to create a valid JSON file for your custom translations
+- To verify your custom language.json you can use several apps, programs and web services.
 
 # Usage
 
@@ -378,20 +452,15 @@ To search for the gym by partial or full name you can use `/start gym name`, e.g
 The bot will answer you "This is a private bot" so you can verify the bot is working and accepting input.
 
 
-### Command: /mods
-
-The bot allows you to set some users as moderators. You can list, add and delete moderators from the bot. Note that when you have restricted the access to your bot via BOT_ADMINS and BOT_ACCESS, you need to add the users as administrators of a chat or their Telegram IDs to either BOT_ADMINS or BOT_ACCESS. Otherwise they won't have access to the bot, even though you have added them as moderators! 
-
-
 ### Command: /raid
 
 Create a new raid by gomap-notifier or other input. The raid command expects 8 parameters and an optional 9th parameter as input seperated by comma.
 
 Additionally the raid command checks for existing raids, so sending the same command multiple times to the bot will result in an update of the pokemon raid boss and gym team and won't create duplicate raids.
 
-Parameters: Pokemon raid boss id, latitude, longitude, raid duration in minutes, gym team, gym name, district or street, district or street, raid pre-hatch egg countdown in minutes (optional)
+Parameters: Pokemon raid boss id and form (combine with minus), latitude, longitude, raid duration in minutes, gym team, gym name, district or street, district or street, raid pre-hatch egg countdown in minutes (optional)
 
-Example input: `/raid 244,52.516263,13.377755,45,Mystic,Brandenburger Tor,Pariser Platz 1, 10117 Berlin,30`
+Example input: `/raid 244-normal,52.516263,13.377755,45,Mystic,Brandenburger Tor,Pariser Platz 1, 10117 Berlin,30`
 
 
 ### Command: /pokemon
@@ -443,7 +512,8 @@ Your telegram is set to German and you like to change Marowak (German: Knogga) i
 
 ### Command: /list 
 
-The bot will allow you to get a list of the last 20 active raids, share and delete all raids which got shared to channels as a raid overview.
+The bot will allow you to get a list of the last 20 active raids and re-share or delete them.
+
 
 #### Screenshots
 #### List existing raid polls with the `/list` command:
@@ -452,13 +522,18 @@ The bot will allow you to get a list of the last 20 active raids, share and dele
 
 ![Command: /list](/screens/commands-list-active-raids.png?raw=true "Command: /list")
 
+
+### Command: /overview 
+
+Share and delete the raid overview message.
+
 #### Share overview message with all raids shared to channel "Chat-Name" to the channel:
 
-![Command: /list](/screens/commands-list-share-overview.png?raw=true "Command: /list")
+![Command: /overview](/screens/commands-list-share-overview.png?raw=true "Command: /overview")
 
 #### Delete the shared overview message:
 
-![Command: /list](/screens/commands-list-delete-overview.png?raw=true "Command: /list")
+![Command: /overview](/screens/commands-list-delete-overview.png?raw=true "Command: /overview")
 
 ### Command: /delete
 
@@ -482,9 +557,51 @@ Example input: `/team Mystic`
 
 ### Command: /gym
 
-The bot will set the name of gym to your input.
+The bot will show the details of each gym. Additionally you can change the extended gym details to hide/show gyms under `/start` as well as mark/un-mark them as ex-raid gym.
 
-Example input: `/gym Siegessäule`
+Example input: `/gym`
+
+
+### Command: /addgym
+
+The bot will add a gym under the coordinates you're submitting. First latitude, then longitude. The gym is added under the name '#YourTelegramID' (e.g. '#111555777') and you need to change the name afterwards using the `/gymname` command. You cannot submit a second gym unless you changed the name of the first gym. In case you submit a second gym without changing the name of the previously submitted gym, the first gym coordinates will be overwritten!
+
+Example input: `/addgym 52.5145434,13.3501189`
+
+
+### Command: /gymname
+
+The bot will set the name of gym to your input. If you submitted a gym via location sharing you can use it without an id. Otherwise the id of the gym is required.
+
+Example input: `/gymname Siegessäule`
+
+Example input with gym id: `/gymname 34, Siegessäule`
+
+
+### Command: /gymaddress
+
+The bot will set the address of gym to your input. The id of the gym is required. You can delete the gym address using the keyword 'reset'.
+
+Example input: `/gymaddress 34, Großer Stern, 10557 Berlin`
+
+Example input to delete the gym address: `/gymaddress 34, reset`
+
+
+### Command: /gymnote
+
+The bot will set the note for gym to your input. The id of the gym is required. You can delete the gym note using the keyword 'reset'.
+
+Example input: `/gymnote 34, Meeting point: Behind the buildung`
+
+Example input to delete the gym note: `/gymnote 34, reset`
+
+
+### Command: /deletegym
+
+The bot will show all gyms. Select a gym and confirm the deletion to remove it from the database.
+
+Example input: `/deletegym`
+
 
 # Debugging
 
@@ -495,10 +612,6 @@ Check your bot logfile and other related log files, e.g. apache/httpd log, php l
 Currently constantly new features, bug fixes and improvements are added to the bot. Since we do not have an update mechanism yet, when updating the bot, please always do the following:
  - Add new config variables which got added to the config.php.example to your own config.php!
  - If new tables and/or columns got added or changed inside raid-pokemon-bot.sql, please add/alter these tables/columns at your existing installation!
-
-# TODO
-
-* New gyms: Adding gyms to database without creating a raid via /raid
 
 # SQL Files
 
