@@ -13,7 +13,7 @@ bot_access_check($update, 'gym-add');
 $input = trim(substr($update['message']['text'], 7));
 
 // Count commans given in input.
-$count = substr_count($input);
+$count = substr_count($input, ",");
 
 // 1 comma as it should be?
 // E.g. 52.5145434,13.3501189
