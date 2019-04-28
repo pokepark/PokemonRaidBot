@@ -315,7 +315,7 @@ A few examples for access files can be found below the permission overview table
 
 | Access     | **Action and /command**                                          | Permission inside access file            |
 |------------|------------------------------------------------------------------|------------------------------------------|
-| Bot        | Access the bot itself                                            | `bot-access`                             |
+| Bot        | Access the bot itself                                            | `access-bot`                             |
 |            |                                                                  |                                          |
 | Raid poll  | Vote on shared raid poll                                         | Not required!                            |
 |            | Create raids `/start`, `/raid`                                   | `create`                                 |
