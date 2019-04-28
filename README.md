@@ -209,7 +209,7 @@ Example:
 
 ## Raid overview
 
-The bot allows you to list all raids which got shared with one or more chats as a single raid overview message to quickly get an overview of all raids which are currently running and got shared in each chat. You can view and share raid overviews via the /list command - but only if some raids are currently active and if these active raids got shared to any chats!
+The bot allows you to list all raids which got shared with one or more chats as a single raid overview message to quickly get an overview of all raids which are currently running and got shared in each chat. You can view and share raid overviews via the /overview command - but only if some raids are currently active and if these active raids got shared to any chats!
 
 To keep this raid overview always up to date when you have it e.g. pinned inside your raid channel, you can setup a cronjob that updates the message by calling the overview_refresh module.
 
@@ -221,7 +221,7 @@ To just refresh the raid overview message you've shared with a specific chat (e.
 
 `curl -k -d '{"callback_query":{"data":"0:overview_refresh:-100112233445"}}' https://localhost/botdir/index.php?apikey=111111111:AABBccddEEFFggHHiijjKKLLmmnnOOPPqq`
 
-To delete a shared raid overview message you can use the /list command too.
+To delete a shared raid overview message you can use the /overview command too.
 
 With the `RAID_PIN_MESSAGE` in the config you can add a custom message to the bottom of the raid overview messages.
 
