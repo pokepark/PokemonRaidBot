@@ -334,7 +334,7 @@ function get_local_pokemon_name($pokemon_id_form, $override_language = false)
         $pokemon_name = $getTypeTranslation('egg_0');
 
     // Fallback 2: Get original pokemon name from database
-    } else if(empty($pokemon_name) && $type == 'raid') {
+    } else if(empty($pokemon_name)) {
         $rs = my_query(
                 "
                 SELECT    pokemon_name
@@ -2778,10 +2778,19 @@ function delete_raid($raid_id)
 /**
  * Get raid time message.
  * @param $raid
+ * @param override_language
  * @return string
  */
-function get_raid_times($raid)
+function get_raid_times($raid, $override_language = false)
 {
+
+    // Get translation type
+    if($override_language == true) {
+        $getTypeTranslation = 'getPublicTranslation';
+    } else {
+        $getTypeTranslation = 'getTranslation';
+    }
+
     // Init empty message string.
     $msg = '';
 
@@ -2797,8 +2806,8 @@ function get_raid_times($raid)
     $year_start = utctime($raid['start_time'], 'Y');
 
     // Translation for raid day and month
-    $raid_day = getPublicTranslation('weekday_' . $weekday_start);
-    $raid_month = getPublicTranslation('month_' . $month_start);
+    $raid_day = $getTypeTranslation('weekday_' . $weekday_start);
+    $raid_month = $getTypeTranslation('month_' . $month_start);
 
     // Days until the raid starts
     $dt_now = utcdate('now');
@@ -2808,7 +2817,7 @@ function get_raid_times($raid)
     $days_to_raid = $date_raid->diff($date_now)->format("%a");
 
     // Raid times.
-    $msg .= getPublicTranslation('raid') . ':' . SP;
+    $msg .= $getTypeTranslation('raid') . ':' . SP;
     // Is the raid in the same week?
     if($week_now == $week_start && $date_now == $date_raid) {
         // Output: Raid egg opens up 17:00
@@ -2822,10 +2831,10 @@ function get_raid_times($raid)
             $msg .= '<b>' .  $raid_day;
         }
         // Adds 'at 17:00' to the output.
-        $msg .= ' ' . getPublicTranslation('raid_egg_opens_at') . ' ' . dt2time($raid['start_time']);
+        $msg .= ' ' . $getTypeTranslation('raid_egg_opens_at') . ' ' . dt2time($raid['start_time']);
     }
     // Add endtime
-    $msg .= SP . getPublicTranslation('to') . SP . dt2time($raid['end_time']) . '</b>' . CR;
+    $msg .= SP . $getTypeTranslation('to') . SP . dt2time($raid['end_time']) . '</b>' . CR;
 
     return $msg;
 }
@@ -3248,9 +3257,10 @@ function show_raid_poll($raid)
 /**
  * Show small raid poll.
  * @param $raid
+ * @param $override_language
  * @return string
  */
-function show_raid_poll_small($raid)
+function show_raid_poll_small($raid, $override_language = false)
 {
     // Build message string.
     $msg = '';
@@ -3272,7 +3282,7 @@ function show_raid_poll_small($raid)
     // Start time and end time
     if(!empty($raid['start_time']) && !empty($raid['end_time'])) {
         // Get raid times message.
-        $msg .= get_raid_times($raid);
+        $msg .= get_raid_times($raid, $override_language);
     }
 
     // Count attendances

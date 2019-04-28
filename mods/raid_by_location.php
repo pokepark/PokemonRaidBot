@@ -132,21 +132,6 @@ try {
     exit();
 }
 
-/*
-$rs = my_query(
-    "
-    INSERT INTO   gyms
-    SET           lat = '{$lat}',
-                  lon = '{$lon}',
-		  address = '{$db->real_escape_string($address)}',
-                  gym_name = '{$db->real_escape_string($gym_name)}'
-    "
-);
-
-// Get last insert id from db.
-$gym_id = my_insert_id();
-*/
-
 // Write to log.
 debug_log('Gym ID: ' . $gym_id);
 debug_log('Gym Name: ' . $gym_name);

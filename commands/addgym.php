@@ -12,7 +12,7 @@ bot_access_check($update, 'gym-add');
 // Get gym name.
 $input = trim(substr($update['message']['text'], 7));
 
-// Count commans given in input.
+// Count commas given in input.
 $count = substr_count($input, ",");
 
 // 1 comma as it should be?
@@ -125,6 +125,17 @@ try {
     $statement->bindValue(':lon', $lon, PDO::PARAM_STR);
     $statement->bindValue(':address', $address, PDO::PARAM_STR);
     $statement->execute();
+
+    // Get last insert id.
+    if (empty($row['0'])) {
+        $gym_id = $dbh->lastInsertId();
+    }
+
+    // Gym details.
+    if($gym_id > 0) {
+        $gym = get_gym($gym_id);
+        $msg .= CR . CR . get_gym_details($gym);
+    }
 } catch (PDOException $exception) {
 
     error_log($exception->getMessage());
