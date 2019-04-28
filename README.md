@@ -215,11 +215,11 @@ To keep this raid overview always up to date when you have it e.g. pinned inside
 
 You can either refresh all shared raid overview messages by calling the following curl command:
 
-`curl -k -d '{"callback_query":{"data":"0:overview_refresh:0"}}' https://localhost/botdir/index.php?apikey=111111111:AABBccddEEFFggHHiijjKKLLmmnnOOPPqq`
+`curl -k -d '{"callback_query":{"data":"raid:0:overview_refresh:0"}}' https://localhost/botdir/index.php?apikey=111111111:AABBccddEEFFggHHiijjKKLLmmnnOOPPqq`
 
 To just refresh the raid overview message you've shared with a specific chat (e.g. -100112233445) use:
 
-`curl -k -d '{"callback_query":{"data":"0:overview_refresh:-100112233445"}}' https://localhost/botdir/index.php?apikey=111111111:AABBccddEEFFggHHiijjKKLLmmnnOOPPqq`
+`curl -k -d '{"callback_query":{"data":"raid:0:overview_refresh:-100112233445"}}' https://localhost/botdir/index.php?apikey=111111111:AABBccddEEFFggHHiijjKKLLmmnnOOPPqq`
 
 To delete a shared raid overview message you can use the /overview command too.
 
