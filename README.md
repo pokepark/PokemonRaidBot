@@ -88,8 +88,11 @@ Set `BRIDGE_MODE` to true when you're using the PokemonBotBridge. If you're not 
 Set `CURL_USEPROXY` with a value of `true` in case you are running the bot behind a proxy server.
 
 Set `CURL_PROXYSERVER` to the proxy server address and port, for example:
-`define('CURL_USEPROXY',                 false);
-define('CURL_PROXYSERVER',              'http://your.proxyserver.com:8080');`
+
+```
+define('CURL_USEPROXY',                 false);
+define('CURL_PROXYSERVER',              'http://your.proxyserver.com:8080');
+```
 
 Authentication against the proxy server by username and password is currently not supported!
 
@@ -116,8 +119,10 @@ Set `LANGUAGE_PUBLIC` to the prefered language for raid polls. Default value: EN
 
 So if you want to have the bot communication based on the users Telegram language, e.g. Russian, and show the raid polls in German for example:
 
-`define('LANGUAGE_PRIVATE', '');`
-`define('LANGUAGE_PUBLIC', 'DE');`
+```
+define('LANGUAGE_PRIVATE', '');
+define('LANGUAGE_PUBLIC', 'DE');
+```
 
 ## Timezone and Google maps API
 
@@ -221,7 +226,7 @@ To just refresh the raid overview message you've shared with a specific chat (e.
 
 `curl -k -d '{"callback_query":{"data":"raid:0:overview_refresh:-100112233445"}}' https://localhost/botdir/index.php?apikey=111111111:AABBccddEEFFggHHiijjKKLLmmnnOOPPqq`
 
-To delete a shared raid overview message you can use the /overview command too.
+To delete a shared raid overview message you can use the `/overview` command too.
 
 With the `RAID_PIN_MESSAGE` in the config you can add a custom message to the bottom of the raid overview messages.
 
@@ -352,9 +357,11 @@ A few examples for access files can be found below the permission overview table
 Access file: `access\access111555999`
 
 Content of the access file, so the actual permissions:
-`access-bot
+```
+access-bot
 create
-share-own`
+share-own
+```
 
 #### Example: Allow the creator and the admins of the channel -100224466889 to create raid polls as well as sharing raid polls created by their own or others to the predefined chat list or any other chat
 
@@ -365,11 +372,13 @@ Access file for the admins: `access\admins-100224466889`
 Important: The minus `-` in front of the actual chat id must be part of the name as it's part of the chat id!
 
 Content of the access files, so the actual permissions:
-`access-bot
+```
+access-bot
 create
 share-all
 share-own
-share-any-chat`
+share-any-chat
+```
 
 ## Custom icons
 
@@ -378,6 +387,7 @@ In case you do not like some of the predefined icons and might like to change th
 - Lookup the icon definitions you'd like to change in either the core or bot constants.php (`core/bot/constants.php` and `constants.php`)
 - Define your own icons in your custom constants.php
 - For example to change the yellow exclamation mark icon to a red exclamation mark put the following in your `custom/constants.php`:
+
 `<?php
 defined('EMOJI_WARN')           or define('EMOJI_WARN',    iconv('UCS-4LE', 'UTF-8', pack('V', 0x2757)));
 `
@@ -391,12 +401,14 @@ To change translations you can do the following:
 - Find the translation name/id by searching the core and bot language.php files (`core/lang/language.php` and `lang/language.php`)
 - Set your own translation in your custom language.json
 - For example to change the translation of 'Friday' to a shorter 'Fri' put the following in your `custom/language.json`:
-`{
+
+```
+{
     "weekday_5":{
         "EN":"Fri"
     }
 }
-`
+```
 - Make sure to create a valid JSON file for your custom translations
 - To verify your custom language.json you can use several apps, programs and web services.
 
