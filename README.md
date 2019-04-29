@@ -276,7 +276,7 @@ OR
 
 When no telegram id, group, supergroup or channel is specified in `BOT_ADMINS` the bot will allow everyone to use it (public access).
 
-Example for public access: `define('BOT_ACCESS', '');`
+Example for public access: `define('BOT_ADMINS', '');`
 
 ## Access and permissions
 
@@ -379,6 +379,10 @@ share-all
 share-own
 share-any-chat
 ```
+
+# Customization
+
+The bot allows you to customize things and therefore has a folder 'custom' for your customizations.
 
 ## Custom icons
 
