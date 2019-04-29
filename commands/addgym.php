@@ -143,7 +143,10 @@ try {
     exit();
 }
 
+// Set keys.
+$keys = [];
+
 // Send the message.
-sendMessage($update['message']['chat']['id'], $msg);
+send_message($update['message']['chat']['id'], $msg, $keys, ['disable_web_page_preview' => 'true']);
 
 ?>

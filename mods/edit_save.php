@@ -74,7 +74,7 @@ if ($update['callback_query']['message']['chat']['type'] == 'private') {
     // Build message string.
     $msg = '';
     $msg .= getTranslation('raid_saved') . CR;
-    $msg .= show_raid_poll_small($raid, true) . CR;
+    $msg .= show_raid_poll_small($raid, false) . CR;
 
     // User_id tag.
     $user_id_tag = '#' . $update['callback_query']['from']['id'];

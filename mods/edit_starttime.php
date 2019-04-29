@@ -37,30 +37,31 @@ if($raid_level == 'X') {
     // Init empty keys array.
     $keys = [];
 
-    // Current month
-    $current_month = date('Y-m', strtotime('now'));
-    //$current_month_name = date('F', strtotime('now'));
-    $current_month_name = getTranslation('month_' . substr($current_month, -2));
-    $year_of_current_month_name = substr($current_month, 0, 4);
+    // Current time from the user
+    // We let the user pick the raid date and time and convert to UTC afterwards in edit_date.php
+    $tz = TIMEZONE;
+    $today = new DateTimeImmutable('now', new DateTimeZone($tz));
 
-    // Next month
-    $next_month = date('Y-m', strtotime('first day of +1 months'));
-    //$next_month_name = date('F', strtotime('first day of +1 months'));
-    $next_month_name = getTranslation('month_' . substr($next_month, -2));
-    $year_of_next_month_name = substr($next_month, 0, 4);
+    // Next 14 days.
+    for ($d = 0; $d <= 14; $d = $d + 1) {
+        // Add day to today.
+        $today_plus_d = $today->add(new DateInterval("P".$d."D"));
 
-    // Buttons for current and next month
-    $keys[] = array(
-        //'text'          => $current_month_name . ' (' . $current_month . ')',
-        'text'          => $current_month_name . ' ' . $year_of_current_month_name,
-        'callback_data' => $id . ':edit_date:' . $pokemon_id . ',' . $current_month
-    );
+        // Format date, e.g 14 April 2019
+        $date_tz = $today_plus_d->format('Y-m-d');
+        $text_split = explode('-', $date_tz);
+        $text_day = $text_split[2];
+        $text_month = getTranslation('month_' . $text_split[1]);
+        $text_year = $text_split[0];
+         
+        // Add keys.
+        $cb_date = $today_plus_d->format('Y-m-d');
+        $keys[] = array(
+            'text'          => $text_day . SP . $text_month . SP . $text_year,
+            'callback_data' => $id . ':edit_date:' . $pokemon_id . ',' . $cb_date
+        );
+    }
 
-    $keys[] = array(
-        //'text'          => $next_month_name . ' (' . $next_month . ')',
-        'text'          => $next_month_name . ' ' . $year_of_next_month_name,
-        'callback_data' => $id . ':edit_date:' . $pokemon_id . ',' . $next_month
-    );
     // Get the inline key array.
     $keys = inline_key_array($keys, 2);
 
@@ -183,12 +184,25 @@ $tg_json = array();
 // Answer callback.
 $tg_json[] = answerCallbackQuery($update['callback_query']['id'], $callback_response, true);
 
+// Set the message.
+if ($arg == 'minutes') {
+    $msg = getTranslation('raid_starts_when_minutes');
+} else if ($raid_level == 'X') {
+    $msg = getTranslation('raid_starts_when');
+    $msg .= CR . CR . getTranslation('raid_select_date');
+} else {
+    $msg = getTranslation('raid_starts_when');
+}
+
 // Edit the message.
+$tg_json[] = edit_message($update, $msg, $keys, false, true);
+/*
 if ($arg == "minutes") {
     $tg_json[] = edit_message($update, getTranslation('raid_starts_when_minutes'), $keys, false, true);
 } else {
     $tg_json[] = edit_message($update, getTranslation('raid_starts_when'), $keys, false, true);
 }
+*/
 
 // Telegram multicurl request.
 curl_json_multi_request($tg_json);

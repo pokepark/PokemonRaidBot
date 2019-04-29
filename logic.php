@@ -2781,7 +2781,7 @@ function delete_raid($raid_id)
  * @param override_language
  * @return string
  */
-function get_raid_times($raid, $override_language = false)
+function get_raid_times($raid, $override_language = true)
 {
 
     // Get translation type
