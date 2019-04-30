@@ -45,6 +45,7 @@ if (strpos($boss, '-') === false ) {
     // Add normal form as default if form is missing
     $boss = $boss . '-normal';
 }
+
 // Endtime from input
 $endtime = $data[1];
 
