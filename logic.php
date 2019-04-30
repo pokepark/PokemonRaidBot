@@ -250,12 +250,12 @@ function get_pokemon_id_by_name($pokemon_name)
     $language = USERLANGUAGE;
 
     // Make sure file exists, otherwise use English language as fallback.
-    if(!is_file(TRANSLATION_PATH . '/pokemon_' . strtolower($language) . '.json')) {
+    if(!is_file(CORE_LANG_PATH . '/pokemon_' . strtolower($language) . '.json')) {
         $language = 'EN';
     }
 
     // Get translation file
-    $str = file_get_contents(TRANSLATION_PATH . '/pokemon_' . strtolower($language) . '.json');
+    $str = file_get_contents(CORE_LANG_PATH . '/pokemon_' . strtolower($language) . '.json');
     $json = json_decode($str, true);
 
     // Search pokemon name in json
@@ -271,7 +271,7 @@ function get_pokemon_id_by_name($pokemon_name)
     if($pokemon_id != 0 && isset($poke_form) && !empty($poke_form) && $poke_form != 'normal') {
 
         // Get forms translation file
-        $str_form = file_get_contents(TRANSLATION_PATH . '/pokemon_forms.json');
+        $str_form = file_get_contents(CORE_LANG_PATH . '/pokemon_forms.json');
         $json_form = json_decode($str_form, true);
 
         // Search pokemon form in json
