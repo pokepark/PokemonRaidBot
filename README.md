@@ -28,11 +28,34 @@ The following apache packages need to be installed:
 - PHP_curl (ubuntu: php-curl)
 
 ## Git clone
+
+#### Core module inside bot folder
+
 For git 2.13 and above:
+
 `git clone --recurse-submodules https://github.com/florianbecker/PokemonRaidBot.git`
 
 If you're running an older version of git use the deprecated recursive command:
+
 `git clone --recursive https://github.com/florianbecker/PokemonRaidBot.git`
+
+#### Core module outside bot folder
+
+If you like to keep the core repo outside the bot folder so multiple bots can access the core (e.g. via the [PokemonBotBridge](https://github.com/florianbecker/PokemonBotBridge.git "PokemonBotBridge")) you can do the following:
+
+Clone the bot repo to e.g. `var/www/html`:
+
+`git clone https://github.com/florianbecker/PokemonRaidBot.git`
+
+Clone the core repo to e.g. `var/www/html`:
+
+`git clone https://github.com/florianbecker/php.core.telegram.git`
+
+Change to the bot folder and create a symlink to make core accessible for the bot:
+```
+cd /var/www/html/PokemonRaidBot
+ln -sf /var/www/html/php.core.telegram core
+```
 
 ## Bot token
 
