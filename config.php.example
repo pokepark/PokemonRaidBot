@@ -37,6 +37,7 @@ define('RAID_VIA_LOCATION',		true);
 define('RAID_EGG_DURATION',		'60');
 define('RAID_POKEMON_DURATION_SHORT',	'45');
 define('RAID_POKEMON_DURATION_LONG',	'90');
+define('RAID_POKEMON_DURATION_EVENT',	'60');
 define('RAID_DURATION_CLOCK_STYLE',	true);
 define('RAID_CUSTOM_GYM_LETTERS',	'');
 

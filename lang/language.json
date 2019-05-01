@@ -1000,6 +1000,17 @@
     "FR":"minutes",
     "PL":"minuty"
   },
+  "minutes_short":{  
+    "NL":"min",
+    "DE":"min",
+    "EN":"min",
+    "IT":"min",
+    "PT-BR":"min",
+    "RU":"минут",
+    "NO":"min",
+    "FR":"min",
+    "PL":"min"
+  },
   "raid_starts_when":{  
     "NL":"Wanneer gaat het Raid ei <b>open</b>?",
     "DE":"Wann <b>beginnt</b> der Raid?",

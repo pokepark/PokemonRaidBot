@@ -14,6 +14,7 @@ defined('EMOJI_STAR') 		or define('EMOJI_STAR',    iconv('UCS-4LE', 'UTF-8', pac
 defined('EMOJI_INVITE') 	or define('EMOJI_INVITE',  iconv('UCS-4LE', 'UTF-8', pack('V', 0x2709)));
 defined('EMOJI_INFO')		or define('EMOJI_INFO',    iconv('UCS-4LE', 'UTF-8', pack('V', 0x2139)));
 defined('EMOJI_EGG')		or define('EMOJI_EGG',     iconv('UCS-4LE', 'UTF-8', pack('V', 0x1F95A)));
+defined('EMOJI_CLOCK')		or define('EMOJI_CLOCK',   iconv('UCS-4LE', 'UTF-8', pack('V', 0x1F551)));
 
 // Weather Icons.
 defined('EMOJI_W_SUNNY') 		or define('EMOJI_W_SUNNY',            iconv('UCS-4LE', 'UTF-8', pack('V', 0x2600)));

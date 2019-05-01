@@ -9,11 +9,18 @@ debug_log('edit_save()');
 // Check access.
 bot_access_check($update, 'create');
 
-// Set the id.
-$id = $data['id'];
+// Set the id and arg.
+if(substr_count($data['id'], ',') == 1) {
 
-// Set the arg.
-$arg = $data['arg'];
+    $idval = explode(',', $data['id']);
+    $id = $idval[0];
+    $arg = $idval[1];
+    $chat = $data['arg'];
+} else {
+    $id = $data['id'];
+    $arg = $data['arg'];
+    $chat = 0;
+}
 
 // Set the user id.
 $userid = $update['callback_query']['from']['id'];
@@ -25,10 +32,42 @@ if($arg != RAID_POKEMON_DURATION_SHORT) {
     my_query(
         "
         UPDATE    raids
-        SET       end_time = DATE_ADD(start_time, INTERVAL {$data['arg']} MINUTE)
+        SET       end_time = DATE_ADD(start_time, INTERVAL {$arg} MINUTE)
           WHERE   id = {$id}
         "
     );
+}
+
+// Fast forward to raid sharing.
+if(substr_count($data['id'], ',') == 1) {
+    // Write to log.
+    debug_log('Doing a fast forward now!');
+    debug_log('Changing data array first...');
+
+    // Reset data array
+    $data = [];
+    $data['id'] = $id;
+    $data['action'] = 'raid_share';
+    $data['arg'] = $chat;
+
+    // Write to log.
+    debug_log($data, '* NEW DATA= ');
+
+    // Set module path by sent action name.
+    $module = ROOT_PATH . '/mods/raid_share.php';
+
+    // Write module to log.
+    debug_log($module);
+
+    // Check if the module file exists.
+    if (file_exists($module)) {
+        // Dynamically include module file and exit.
+        include_once($module);
+        exit();
+    } else {
+        debug_log('Error! Fast forward failed as file does not exist!');
+        exit();
+    }
 }
 
 // Telegram JSON array.
@@ -68,6 +107,12 @@ if ($update['callback_query']['message']['chat']['type'] == 'private') {
     $keys_share = share_keys($id, 'raid_share', $update);
     $keys = array_merge($keys, $keys_share);
 
+    // Add event keys.
+    if(RAID_POKEMON_DURATION_EVENT > RAID_POKEMON_DURATION_SHORT) {
+        $prefix_text = EMOJI_CLOCK . SP . RAID_POKEMON_DURATION_EVENT . getTranslation('minutes_short') . SP . '+' . SP;
+        $keys_event = share_keys($id . ',' . RAID_POKEMON_DURATION_EVENT, 'edit_save', $update, $prefix_text, true);
+        $keys = array_merge($keys, $keys_event);
+    }
     // Get raid times.
     $raid = get_raid($data['id']);
 
