@@ -54,6 +54,7 @@ Clone the core repo to e.g. `var/www/html`:
 Change to the bot folder and create a symlink to make core accessible for the bot:
 ```
 cd /var/www/html/PokemonRaidBot
+rm -rf core/
 ln -sf /var/www/html/php.core.telegram core
 ```
 
