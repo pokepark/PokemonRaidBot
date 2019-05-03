@@ -12,10 +12,6 @@ define('APIKEY_HASH',			'aaaabbbbccccddddeeeeffff1111222233334444555566667777888
 define('DDOS_MAXIMUM',			'10');
 define('BRIDGE_MODE',			false);
 
-// Proxy
-define('CURL_USEPROXY',			false);
-define('CURL_PROXYSERVER',		'http://your.proxyserver.com:8080');
-
 // Access
 define('MAINTAINER',			'@your_tg_username');
 define('MAINTAINER_ID',			'your_tg_integer');

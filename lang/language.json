@@ -703,6 +703,17 @@
     "FR":"TRANSLATE",
     "PL":"TRANSLATE"
   },
+  "gym_note_new":{  
+    "NL":"TRANSLATE",
+    "DE":"Neue Arena-Notiz:",
+    "EN":"New gym note:",
+    "IT":"TRANSLATE",
+    "PT-BR":"TRANSLATE",
+    "RU":"TRANSLATE",
+    "NO":"TRANSLATE",
+    "FR":"TRANSLATE",
+    "PL":"TRANSLATE"
+  },
   "gym_id_note_missing":{  
     "NL":"Error! Gym id of info mist!",
     "DE":"Fehler! Arena-ID oder Notiz fehlt!",
