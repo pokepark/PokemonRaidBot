@@ -18,7 +18,7 @@ $request_active_raids = my_query(
     "
     SELECT    raids.*,
               gyms.lat, gyms.lon, gyms.address, gyms.gym_name, gyms.ex_gym,
-              UNIX_TIMESTAMP(end_time)-UNIX_TIMESTAMP(UTC_TIMESTAMP())  AS t_left
+              TIME_FORMAT(TIMEDIFF(end_time, UTC_TIMESTAMP()) + INTERVAL 1 MINUTE, '%k:%i') AS t_left
     FROM      raids
     LEFT JOIN gyms
     ON        raids.gym_id = gyms.id
