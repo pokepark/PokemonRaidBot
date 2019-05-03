@@ -352,16 +352,16 @@ A few examples for access files can be found below the permission overview table
 |            | Change raid duration `/start`                                    | `raid-duration`                          |
 |            | List all raids `/list`                                           | `list`                                   |
 |            | Manage overview `/overview`                                      | `overview`                               |
-|            | Delete OWN raid polls `/delete`                                  | `delete` and `delete-own`                | 
-|            | Delete ALL raid polls `/delete`                                  | `delete` and `delete-all`                |
+|            | Delete OWN raid polls `/delete`                                  | `delete-own`                             | 
+|            | Delete ALL raid polls `/delete`                                  | `delete-all`                             |
 |            |                                                                  |                                          |
 | Sharing    | Share OWN created raids to predefined chats 'SHARE_CHATS'        | `share-own`                              |
 |            | Share ALL created raids to predefined chats 'SHARE_CHATS'        | `share-all`                              |
 |            | Share OWN created raids to any chat                              | `share-own` and `share-any-chat`         |
 |            | Share ALL created raids to any chat                              | `share-all` and `share-any-chat`         |
 |            |                                                                  |                                          |
-| Pokemon    | Update pokemon on OWN raid polls `/pokemon`                      | `pokemon` and `pokemon-own`              |
-|            | Update pokemon on ALL raid polls `/pokemon`                      | `pokemon` and `pokemon-all`              |
+| Pokemon    | Update pokemon on OWN raid polls `/pokemon`                      | `pokemon-own`                            |
+|            | Update pokemon on ALL raid polls `/pokemon`                      | `pokemon-all`                            |
 |            |                                                                  |                                          |
 | Gym        | Get gym details `/gym`                                           | `gym-details`                            |
 |            | Edit extended gym details `/gym`                                 | `gym-edit`                               |
