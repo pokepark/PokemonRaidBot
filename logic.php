@@ -1850,11 +1850,6 @@ function keys_vote($raid)
         ];
     // Raid is still running.
     } else {
-/*
-	$timePerSlot = 60*RAID_SLOTS;
-	$timeBeforeEnd = 60*RAID_LAST_START;
-*/
-
         // Attend raid at any time
         if(RAID_ANYTIME == true)
         {
@@ -2091,6 +2086,7 @@ function keys_vote($raid)
 
         // Add regular slots.
         foreach($regular_slots as $slot){
+            debug_log($slot, 'Regular slot:');
             // Add regular slot.
             if($slot >= $dt_now) {
                 $slot = $slot->format('Y-m-d H:i:s');
@@ -2114,13 +2110,19 @@ function keys_vote($raid)
         $last_extra_slot = $last_extra_slot->sub(new DateInterval('PT'.RAID_LAST_START.'M'));
         $s = 5 * 60;
         $last_extra_slot = $last_extra_slot->setTimestamp($s * floor($last_extra_slot->getTimestamp() / $s));
-        $time_to_last_slot = $last_extra_slot->diff($last_slot)->format("%a");
+        //$time_to_last_slot = $last_extra_slot->diff($last_slot)->format("%a");
 
         // Last extra slot not conflicting with last slot and time to last regular slot larger than RAID_LAST_START?
         //if($last_extra_slot > $last_slot && $time_to_last_slot > RAID_LAST_START) {
+
+        // Log last and last extra slot.
+        debug_log($last_slot, 'Last slot:');
+        debug_log($last_extra_slot, 'Last extra slot:');
+
+        // Last extra slot not conflicting with last slot
         if($last_extra_slot > $last_slot) {
             // Add last extra slot
-            if($slot >= $dt_now) {
+            if($last_extra_slot >= $dt_now) {
                 $slot = $last_extra_slot->format('Y-m-d H:i:s');
                 $keys_time[] = array(
                     'text'          => dt2time($slot),
