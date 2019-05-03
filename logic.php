@@ -2086,21 +2086,25 @@ function keys_vote($raid)
 
         // Add regular slots.
         foreach($regular_slots as $slot){
-            debug_log($slot, 'Regular slot:');
-            // Add regular slot.
-            if($slot >= $dt_now) {
-                $slot = $slot->format('Y-m-d H:i:s');
-                $keys_time[] = array(
-                    'text'          => dt2time($slot),
-                    'callback_data' => $raid['id'] . ':vote_time:' . utctime($slot, 'YmdHis')
-                );
+            $slot_end = $slot->add(new DateInterval('PT'.RAID_LAST_START.'M'));
+            // Slot + RAID_LAST_START before end_time?
+            if($slot_end < $dt_end) {
+                debug_log($slot, 'Regular slot:');
+                // Add regular slot.
+                if($slot >= $dt_now) {
+                    $slot = $slot->format('Y-m-d H:i:s');
+                    $keys_time[] = array(
+                        'text'          => dt2time($slot),
+                        'callback_data' => $raid['id'] . ':vote_time:' . utctime($slot, 'YmdHis')
+                    );
 
-                // Set last slot for later.
-                $last_slot = new DateTimeImmutable($slot, new DateTimeZone('UTC'));
-            } else {
-                // Set last slot for later.
-                $slot = $slot->format('Y-m-d H:i:s');
-                $last_slot = new DateTimeImmutable($slot, new DateTimeZone('UTC'));
+                    // Set last slot for later.
+                    $last_slot = new DateTimeImmutable($slot, new DateTimeZone('UTC'));
+                } else {
+                    // Set last slot for later.
+                    $slot = $slot->format('Y-m-d H:i:s');
+                    $last_slot = new DateTimeImmutable($slot, new DateTimeZone('UTC'));
+                }
             }
         }
 
