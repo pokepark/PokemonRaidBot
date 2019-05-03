@@ -2655,7 +2655,7 @@ function get_overview($update, $chats_active, $raids_active, $action = 'refresh'
          * Raikou - still 0:24h
          *
          * Bus Station Gym
-         * Level 5 Egg opens up 18:41h
+         * Level 5 Egg 18:41 to 19:26
         */
         // Gym name.
         $msg .= $ex_gym ? $ex_raid_gym_marker . SP : '';
@@ -2664,7 +2664,7 @@ function get_overview($update, $chats_active, $raids_active, $action = 'refresh'
 
         // Raid has not started yet - adjust time left message
         if ($now < $start_time) {
-            $msg .= get_raid_times($raids_active[$raid_id]);
+            $msg .= get_raid_times($raids_active[$raid_id], true, true);
         // Raid has started already
         } else {
             // Add time left message.
@@ -2781,9 +2781,10 @@ function delete_raid($raid_id)
  * Get raid time message.
  * @param $raid
  * @param override_language
+ * @param pokemon
  * @return string
  */
-function get_raid_times($raid, $override_language = true)
+function get_raid_times($raid, $override_language = true, $pokemon = false)
 {
 
     // Get translation type
@@ -2819,7 +2820,11 @@ function get_raid_times($raid, $override_language = true)
     $days_to_raid = $date_raid->diff($date_now)->format("%a");
 
     // Raid times.
-    $msg .= $getTypeTranslation('raid') . ':' . SP;
+    if($pokemon == true) {
+        $msg .= get_local_pokemon_name($raid['pokemon'], $override_language) . ':' . SP;
+    } else {
+        $msg .= $getTypeTranslation('raid') . ':' . SP;
+    }
     // Is the raid in the same week?
     if($week_now == $week_start && $date_now == $date_raid) {
         // Output: Raid egg opens up 17:00
