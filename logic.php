@@ -2582,6 +2582,10 @@ function get_overview($update, $chats_active, $raids_active, $action = 'refresh'
                     // Send the message, but disable the web preview!
                     $tg_json[] = send_message($chat_id, $msg, $keys, ['disable_web_page_preview' => 'true'], true);
                 }
+
+                // Telegram multicurl request.
+                curl_json_multi_request($tg_json);
+
 	    } else {
                 // Refresh overview messages.
                 $keys = [];
@@ -2600,18 +2604,16 @@ function get_overview($update, $chats_active, $raids_active, $action = 'refresh'
                     // Set message_id.
                     $message_id = $row_msg_id['message_id'];
                     debug_log('Updating overview:' . CR . 'Chat_ID: ' . $previous . CR . 'Message_ID: ' . $message_id);
-                    $tg_json[] = editMessageText($message_id, $msg, $keys, $previous, ['disable_web_page_preview' => 'true']);
+                    editMessageText($message_id, $msg, $keys, $previous, ['disable_web_page_preview' => 'true']);
                 }
 
                 // Triggered from user or cronjob?
                 if (!empty($update['callback_query']['id'])) {
                     // Answer the callback.
-                    $tg_json[] = answerCallbackQuery($update['callback_query']['id'], 'OK');
+                    answerCallbackQuery($update['callback_query']['id'], 'OK');
                 }
             }
 
-            // Telegram multicurl request.
-            curl_json_multi_request($tg_json);
         }
 
         // End if last run
