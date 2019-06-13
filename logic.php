@@ -1517,11 +1517,23 @@ function run_cleanup ($telegram = 2, $database = 2) {
             );
         // Query for telegram and database cleanup
         } else {
-            // Get cleanup info.
+            // Get cleanup info for telegram cleanup.
             $rs = my_query(
                 "
                 SELECT    * 
                 FROM      cleanup
+                  WHERE   chat_id <> 0
+                  ORDER BY id DESC
+                  LIMIT 0, 250
+                ", true
+            );
+
+            // Get cleanup info for database cleanup.
+            $rs_db = my_query(
+                "
+                SELECT    * 
+                FROM      cleanup
+                  WHERE   chat_id = 0
                   LIMIT 0, 250
                 ", true
             );
@@ -1533,6 +1545,14 @@ function run_cleanup ($telegram = 2, $database = 2) {
 	// Fill array with cleanup jobs.
         while ($rowJob = $rs->fetch_assoc()) {
             $cleanup_jobs[] = $rowJob;
+        }
+
+        // Cleanup telegram and database?
+        if($telegram == 1 && $database == 1) {
+	    // Add database cleanup jobs to array.
+            while ($rowDBJob = $rs_db->fetch_assoc()) {
+                $cleanup_jobs[] = $rowDBJob;
+            }
         }
 
         // Write to log.

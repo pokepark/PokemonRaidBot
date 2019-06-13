@@ -71,7 +71,7 @@ if(empty($id_info)) {
 
         // Set message.
         $msg = get_gym_details($gym);        
-        $msg .= EMOJI_INFO . SP . $info;
+        $msg .= EMOJI_NEW . SP . $info;
         $msg .= CR . CR . '<b>' . getTranslation('gym_address_added') . '</b>';
     } else if($gym && empty($info)) {
         debug_log('Missing gym address!');

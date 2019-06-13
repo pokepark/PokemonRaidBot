@@ -37,7 +37,6 @@ try {
         LIMIT 20
     ';
     $statement = $dbh->prepare( $query );
-    $statement->bindValue(':now', $now, PDO::PARAM_STR);
     $statement->execute();
     while ($row = $statement->fetch()) {
         // Set text and keys.

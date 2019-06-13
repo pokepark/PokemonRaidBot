@@ -173,7 +173,7 @@ if (!$keys) {
 
 // Build callback message string.
 if ($data['arg'] != "minutes" && $data['arg'] != "clocktime") {
-    $callback_response = getTranslation('pokemon_saved') . get_local_pokemon_name($data['arg']);
+    $callback_response = getTranslation('pokemon_saved') . get_local_pokemon_name($pokemon_id);
 } else {
     $callback_response = getTranslation('raid_starts_when_view_changed');
 }
@@ -196,13 +196,6 @@ if ($arg == 'minutes') {
 
 // Edit the message.
 $tg_json[] = edit_message($update, $msg, $keys, false, true);
-/*
-if ($arg == "minutes") {
-    $tg_json[] = edit_message($update, getTranslation('raid_starts_when_minutes'), $keys, false, true);
-} else {
-    $tg_json[] = edit_message($update, getTranslation('raid_starts_when'), $keys, false, true);
-}
-*/
 
 // Telegram multicurl request.
 curl_json_multi_request($tg_json);
