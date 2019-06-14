@@ -1,6 +1,6 @@
 {  
   "help_create":{  
-    "NL":"TRANSLATE",
+    "NL":"/start - Raid aanmaken",
     "DE":"/start - Raid anlegen",
     "EN":"/start - Create raid",
     "IT":"TRANSLATE",
@@ -11,7 +11,7 @@
     "PL":"TRANSLATE"
   },
   "help_ex-raids":{  
-    "NL":"TRANSLATE",
+    "NL":"/start - Ex-Raid aanmaken",
     "DE":"/start - Ex-Raid anlegen",
     "EN":"/start - Create ex-raid",
     "IT":"TRANSLATE",
@@ -22,7 +22,7 @@
     "PL":"TRANSLATE"
   },
   "help_raid-duration":{  
-    "NL":"TRANSLATE",
+    "NL":"/start - verander de raid tijdsduur",
     "DE":"/start - Raid-Dauer ändern",
     "EN":"/start - Change raid duration",
     "IT":"TRANSLATE",
@@ -33,7 +33,7 @@
     "PL":"TRANSLATE"
   },
   "help_list":{  
-    "NL":"TRANSLATE",
+    "NL":"/list - alle actieve Raids",
     "DE":"/list - Alle aktiven Raids",
     "EN":"/list - All active raids",
     "IT":"TRANSLATE",
@@ -44,7 +44,7 @@
     "PL":"TRANSLATE"
   },
   "help_overview":{  
-    "NL":"TRANSLATE",
+    "NL":"/overview - Beheer raid overzicht",
     "DE":"/overview - Raid-Übersicht verwalten",
     "EN":"/overview - Manage raid overview",
     "IT":"TRANSLATE",
@@ -55,7 +55,7 @@
     "PL":"TRANSLATE"
   },
   "help_delete-own":{  
-    "NL":"TRANSLATE",
+    "NL":"/delete - Verwijderen eigen Raids",
     "DE":"/delete - Eigene Raids löschen",
     "EN":"/delete - Delete own raids",
     "IT":"TRANSLATE",
@@ -66,7 +66,7 @@
     "PL":"TRANSLATE"
   },
   "help_delete-all":{  
-    "NL":"TRANSLATE",
+    "NL":"/delete - Verwijder alle raids",
     "DE":"/delete - Alle Raids löschen",
     "EN":"/delete - Delete all raids",
     "IT":"TRANSLATE",
@@ -77,7 +77,7 @@
     "PL":"TRANSLATE"
   },
   "help_pokemon-own":{  
-    "NL":"TRANSLATE",
+    "NL":"/pokemon - Update pokemon (eigen raids)",
     "DE":"/pokemon - Pokemon aktualisieren (eigene Raids)",
     "EN":"/pokemon - Update pokemon (own raids)",
     "IT":"TRANSLATE",
@@ -88,7 +88,7 @@
     "PL":"TRANSLATE"
   },
   "help_pokemon-all":{  
-    "NL":"TRANSLATE",
+    "NL":"/pokemon - Update pokemon (alle raids)",
     "DE":"/pokemon - Pokemon aktualisieren (alle Raids)",
     "EN":"/pokemon - Update pokemon (all raids)",
     "IT":"TRANSLATE",
@@ -99,7 +99,7 @@
     "PL":"TRANSLATE"
   },
   "help_gym-details":{  
-    "NL":"TRANSLATE",
+    "NL":"/gym - Laat gym info zien",
     "DE":"/gym - Arena-Details anzeigen",
     "EN":"/gym - Show gym details",
     "IT":"TRANSLATE",
@@ -110,7 +110,7 @@
     "PL":"TRANSLATE"
   },
   "help_gym-edit":{  
-    "NL":"TRANSLATE",
+    "NL":"/gym - Verander alle gym informatie",
     "DE":"/gym - Erweiterte Arena-Details bearbeiten",
     "EN":"/gym - Edit extended gym details",
     "IT":"TRANSLATE",
@@ -121,7 +121,7 @@
     "PL":"TRANSLATE"
   },
   "help_gym-name":{  
-    "NL":"TRANSLATE",
+    "NL":"/gymname - Verander de gym naam",
     "DE":"/gymname - Arena-Namen bearbeiten",
     "EN":"/gymname - Edit gym name",
     "IT":"TRANSLATE",
@@ -132,7 +132,7 @@
     "PL":"TRANSLATE"
   },
   "help_gym-address":{  
-    "NL":"TRANSLATE",
+    "NL":"/gymaddress - Verander gym adres",
     "DE":"/gymaddress - Arena-Adresse bearbeiten",
     "EN":"/gymaddress - Edit gym address",
     "IT":"TRANSLATE",
@@ -143,7 +143,7 @@
     "PL":"TRANSLATE"
   },
   "help_gym-note":{  
-    "NL":"TRANSLATE",
+    "NL":"/gymnote - Verander extra gym informatie",
     "DE":"/gymnote - Arena-Notiz bearbeiten",
     "EN":"/gymnote - Edit gym note",
     "IT":"TRANSLATE",
@@ -154,7 +154,7 @@
     "PL":"TRANSLATE"
   },
   "help_gym-add":{  
-    "NL":"TRANSLATE",
+    "NL":"/addgym - Gym toevoegen",
     "DE":"/addgym - Arena hinzufügen",
     "EN":"/addgym - Add a gym",
     "IT":"TRANSLATE",
@@ -165,7 +165,7 @@
     "PL":"TRANSLATE"
   },
   "help_gym-delete":{  
-    "NL":"TRANSLATE",
+    "NL":"/deletegym - Verwijder een gym",
     "DE":"/deletegym - Arena löschen",
     "EN":"/deletegym - Delete a gym",
     "IT":"TRANSLATE",
@@ -176,7 +176,7 @@
     "PL":"TRANSLATE"
   },
   "help_pokedex":{  
-    "NL":"TRANSLATE",
+    "NL":"/pokedex - Verander raid bazen",
     "DE":"/pokedex - Raid Bosse verwalten",
     "EN":"/pokedex - Manage raid bosses",
     "IT":"TRANSLATE",
@@ -187,7 +187,7 @@
     "PL":"TRANSLATE"
   },
   "help_config-get":{  
-    "NL":"TRANSLATE",
+    "NL":"/getconfig - Laat de bot configuratie zien",
     "DE":"/getconfig - Bot-Konfiguration anzeigen",
     "EN":"/getconfig - Show bot configuration",
     "IT":"TRANSLATE",
@@ -198,7 +198,7 @@
     "PL":"TRANSLATE"
   },
   "help_config-set":{  
-    "NL":"TRANSLATE",
+    "NL":"/setconfig - Verander de bot configuratie",
     "DE":"/setconfig - Bot-Konfiguration bearbeiten",
     "EN":"/setconfig - Edit bot configuration",
     "IT":"TRANSLATE",
@@ -209,7 +209,7 @@
     "PL":"TRANSLATE"
   },
   "help_help":{  
-    "NL":"TRANSLATE",
+    "NL":"/help - laat help zien",
     "DE":"/help - Hilfe anzeigen",
     "EN":"/help - Show help",
     "IT":"TRANSLATE",
