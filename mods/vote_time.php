@@ -28,7 +28,7 @@ $arg = $data['arg'];
 // Raid anytime?
 if($arg == 0) {
     // Raid anytime.
-    $attend_time = 0;
+    $attend_time = '0000-00-00 00:00:00';
 } else {
     // Normal raid time - convert data arg to UTC time.
     $dt = new DateTime();
