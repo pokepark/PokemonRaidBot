@@ -3053,8 +3053,6 @@ function show_raid_poll($raid)
         debug_log($cnt_pokemon);
 
         // Get attendance for this raid.
-// OLDi:
-// UNIX_TIMESTAMP(attend_time) AS ts_att
         $rs_att = my_query(
             "
             SELECT      attendance.*,
