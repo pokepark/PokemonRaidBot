@@ -33,9 +33,9 @@ if($action == 'show' || $action == 'ex') {
 
     // New extended gym detail.
     if($action == 'show' && $value == 0) {
-        $msg .= CR . '-' . SP . getTranslation('show_gym');
-    } else if($action == 'show' && $value == 1) {
         $msg .= CR . '-' . SP . getTranslation('hide_gym');
+    } else if($action == 'show' && $value == 1) {
+        $msg .= CR . '-' . SP . getTranslation('show_gym');
     } else if($action == 'ex' && $value == 0) {
         $msg .= CR . '-' . SP . getTranslation('normal_gym');
     } else if($action == 'ex' && $value == 1) {
