@@ -1,4 +1,15 @@
 {  
+  "help_create_via_location":{  
+    "NL":"Locatie delen - Raid aanmaken",
+    "DE":"Standort teilen - Raid anlegen",
+    "EN":"Share location - Create raid",
+    "IT":"TRANSLATE",
+    "PT-BR":"TRANSLATE",
+    "RU":"TRANSLATE",
+    "NO":"TRANSLATE",
+    "FR":"TRANSLATE",
+    "PL":"TRANSLATE"
+  },
   "help_create":{  
     "NL":"/start - Raid aanmaken",
     "DE":"/start - Raid anlegen",

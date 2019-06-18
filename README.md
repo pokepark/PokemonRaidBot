@@ -87,9 +87,11 @@ Important: The raid level is NOT set when importing the raid bosses from the goh
 
 ## Config
 
-Copy the example config.php.example to your own config.php and edit the values (explained further).
+Inside the config folder, copy the example config.json.example to your own config.json and edit the values (explained further).
 
-Some values are missing as the bot has default values. If you like to change those, you need to add and define them in your config.php file, e.g. `define('DDOS_MAXIMUM', '10');`.
+Don't forget to change the file permissions of your config file to 0600 (e.g. `chmod 0600 config.json`) afterwards.
+
+Some values are missing as the bot has default values. If you like to change those, you need to add and define them in your config.php file, e.g. `"DDOS_MAXIMUM":"10"`.
 
 ## Database connection
 
@@ -114,8 +116,8 @@ Set `CURL_USEPROXY` with a value of `true` in case you are running the bot behin
 Set `CURL_PROXYSERVER` to the proxy server address and port, for example:
 
 ```
-define('CURL_USEPROXY',                 false);
-define('CURL_PROXYSERVER',              'http://your.proxyserver.com:8080');
+"CURL_USEPROXY":"false",
+"CURL_PROXYSERVER":"http://your.proxyserver.com:8080",
 ```
 
 Authentication against the proxy server by username and password is currently not supported!
@@ -144,8 +146,8 @@ Set `LANGUAGE_PUBLIC` to the prefered language for raid polls. Default value: EN
 So if you want to have the bot communication based on the users Telegram language, e.g. Russian, and show the raid polls in German for example:
 
 ```
-define('LANGUAGE_PRIVATE', '');
-define('LANGUAGE_PUBLIC', 'DE');
+"LANGUAGE_PRIVATE":"",
+"LANGUAGE_PUBLIC":"DE",
 ```
 
 ## Timezone and Google maps API
@@ -186,7 +188,7 @@ Set `RAID_POKEMON_DURATION_LONG` to the maximum amount of minutes a user can sel
 
 Set `RAID_DURATION_CLOCK_STYLE` to customize the default style for the raid start time selection. Set to true, the bot will show the time in clocktime style, e.g. "18:34" as selection when the raid will start. Set to false the bot will show the time until the raid starts in minutes, e.g. "0:16" (similar to the countdown in the gyms). Users can switch between both style in the raid creation process.
 
-Set `RAID_CUSTOM_GYM_LETTERS` to further split gyms by their first letter. For example if you have a lot of gyms starting with 'St' as there are a lot of churches like St. Helen, St. Jospeh, etc. in your area and the gym list under the letter 'S' is too long, you can tell the bot to put the gyms starting with 'St' under 'St' and exclude them from the letter 'S'. There is no limitation in length, so even 'Berlin' would work to split gyms, but the recommendation is to use as less chars as possible to split the gyms. You can add multiple custom gym letters, just separate them by comma. Example: `define('RAID_CUSTOM_GYM_LETTERS', 'Ber,Sch,St,Wi');`
+Set `RAID_CUSTOM_GYM_LETTERS` to further split gyms by their first letter. For example if you have a lot of gyms starting with 'St' as there are a lot of churches like St. Helen, St. Jospeh, etc. in your area and the gym list under the letter 'S' is too long, you can tell the bot to put the gyms starting with 'St' under 'St' and exclude them from the letter 'S'. There is no limitation in length, so even 'Berlin' would work to split gyms, but the recommendation is to use as less chars as possible to split the gyms. You can add multiple custom gym letters, just separate them by comma. Example: `"RAID_CUSTOM_GYM_LETTERS":"Ber,Sch,St,Wi"`
 
 ## Raid times
 
@@ -234,7 +236,7 @@ Example:
 
 #### Predefine sharing to the chats -100111222333 and -100444555666
 
-`define('SHARE_CHATS', '-100111222333,-100444555666');`
+`"SHARE_CHATS":"-100111222333,-100444555666"`
 
 ## Raid overview
 
@@ -300,7 +302,7 @@ OR
 
 When no telegram id, group, supergroup or channel is specified in `BOT_ADMINS` the bot will allow everyone to use it (public access).
 
-Example for public access: `define('BOT_ADMINS', '');`
+Example for public access: `"BOT_ADMINS":""`
 
 ## Access and permissions
 
@@ -478,7 +480,7 @@ To search for the gym by partial or full name you can use `/start gym name`, e.g
 
 ### Command: /help
 
-The bot will answer you "This is a private bot" so you can verify the bot is working and accepting input.
+The bot will give a personal help based on the permissions you have to access and use it.
 
 
 ### Command: /raid

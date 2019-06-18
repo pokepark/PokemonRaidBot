@@ -34,9 +34,16 @@ if($access && (is_file(ROOT_PATH . '/access/' . $access) || $access == 'BOT_ADMI
     // Write to log.
     // debug_log($permissions,'ACCESS: ');
 
-    // Show help.
+    // Show help header.
     debug_log('Showing help to user now');
     $msg = '<b>' . getTranslation('personal_help') . '</b>' . CR . CR;
+
+    // Raid via location?
+    if(RAID_VIA_LOCATION == true) {
+        $msg .= EMOJI_CLIPPY . SP . getTranslation('help_create_via_location') . CR . CR;
+    }
+
+    // Show help.
     foreach($permissions as $id => $p) {
         if($p == 'access-bot' || strpos($p, 'share-') === 0) continue;
         $msg .= getTranslation('help_' . $p) . CR . CR;
