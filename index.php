@@ -50,8 +50,14 @@ if (isset($update['callback_query'])) {
 
 // Message is required to check for commands.
 } else if (isset($update['message']) && ($update['message']['chat']['type'] == 'private' || $update['message']['chat']['type'] == 'channel')) {
-    // Logic to get the command
-    include_once(CORE_BOT_PATH . '/commands.php');
+    // Portal message?
+    if(isset($update['message']['entities']['1']['type']) && $update['message']['entities']['1']['type'] == 'text_link' && strpos($update['message']['entities']['1']['url'], 'https://intel.ingress.com/intel?ll=') === 0) {
+        // Import portal.
+        include_once(ROOT_PATH . '/mods/importal.php');
+    } else {
+        // Logic to get the command
+        include_once(CORE_BOT_PATH . '/commands.php');
+    }
 }
 
 $dbh = null;
