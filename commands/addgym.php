@@ -30,7 +30,9 @@ if($count == 1) {
     $lon = $lat_lon[2] . '.' . $lat_lon[3];
 } else {
     // Invalid input - send the message and exit.
-    $msg = getTranslation('invalid_input');
+    $msg = '<b>' . getTranslation('invalid_input') . '</b>' . CR . CR;
+    $msg .= getTranslation('gym_coordinates_format_error') . CR;
+    $msg .= getTranslation('gym_coordinates_format_example');
     sendMessage($update['message']['chat']['id'], $msg);
     exit();
 }
@@ -135,6 +137,12 @@ try {
     if($gym_id > 0) {
         $gym = get_gym($gym_id);
         $msg .= CR . CR . get_gym_details($gym);
+        $msg .= CR . getTranslation('gym_instructions');
+        $msg .= CR . getTranslation('help_gym-edit');
+        $msg .= CR . getTranslation('help_gym-name');
+        $msg .= CR . getTranslation('help_gym-address');
+        $msg .= CR . getTranslation('help_gym-note');
+        $msg .= CR . getTranslation('help_gym-delete');
     }
 } catch (PDOException $exception) {
 

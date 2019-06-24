@@ -593,6 +593,28 @@
     "FR":"TRANSLATE",
     "PL":"TRANSLATE"
   },
+  "gym_coordinates_format_error":{  
+    "NL":"TRANSLATE",
+    "DE":"Fehler! Bitte übermittle die Koordinaten im Format <code>Breitengrad,Längengrad</code> zum Hinzufügen einer neuen Arena!",
+    "EN":"Error! Please submit the coordinates in the format <code>Latitude,Longitude</code> to add a new gym!",
+    "IT":"TRANSLATE",
+    "PT-BR":"TRANSLATE",
+    "RU":"TRANSLATE",
+    "NO":"TRANSLATE",
+    "FR":"TRANSLATE",
+    "PL":"TRANSLATE"
+  },
+  "gym_coordinates_format_example":{  
+    "NL":"TRANSLATE",
+    "DE":"Zum Beispiel: <code>/addgym 52.516263,13.377755</code>",
+    "EN":"For example: <code>/addgym 52.516263,13.377755</code>",
+    "IT":"TRANSLATE",
+    "PT-BR":"TRANSLATE",
+    "RU":"TRANSLATE",
+    "NO":"TRANSLATE",
+    "FR":"TRANSLATE",
+    "PL":"TRANSLATE"
+  },
   "gymname_then_location":{  
     "NL":"Gebruik het commando /gymname <code>Naam van de gym</code> om deze aan de coordinaten vast te zetten. Daarna kan je weer een locatie delen!",
     "DE":"Bitte nutze den Befehl /gymname <code>Name der Arena</code>, um einen Arena-Namen für die zuletzt übermittelten Koordinaten festzulegen. Erst dann kann wieder ein Standort übermittelt werden!",
@@ -1516,6 +1538,17 @@
     "NO":"Ugyldig team navn - skriv: Mystic, Valor, Instinct or Blue, Red, Yellow",
     "FR":"Couleur invalide - écrit : Sagesse, Bravoure, Intuition ou Bleu, Rouge, Jaune",
     "PL":"Zła nazwa Teamu - napisz: niebieski, czerwony albo żółty"
+  },
+  "gym_instructions":{  
+    "NL":"TRANSLATE",
+    "DE":"Mit folgenden Befehlen kannst du die Arena weiter bearbeiten:",
+    "EN":"Use the following commands to further edit the gym:",
+    "IT":"TRANSLATE",
+    "PT-BR":"TRANSLATE",
+    "RU":"TRANSLATE",
+    "NO":"TRANSLATE",
+    "FR":"TRANSLATE",
+    "PL":"TRANSLATE"
   },
   "gym_get_id_details":{  
     "NL":"Om de ID en extra informatie te krijgen stuur /gym.",
