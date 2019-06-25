@@ -260,6 +260,10 @@ With the `RAID_PIN_MESSAGE` in the config you can add a custom message to the bo
 
 Set `MAP_URL` to the URL of the PokemonBotMap to add it to each raid poll. PokemonBotMap: https://github.com/florianbecker/PokemonBotMap
 
+## Portal Import
+
+Set `PORTAL_IMPORT` to `true` to enable the possibility to import portals from Telegram Ingress Bots.
+
 ## Cleanup
 
 The bot features an automatic cleanup of telegram raid poll messages as well as cleanup of the database (attendance and raids tables).
@@ -373,6 +377,8 @@ A few examples for access files can be found below the permission overview table
 |            | Add a gym `/addgym`                                              | `gym-add`                                |
 |            | Delete a gym `/deletegym`                                        | `gym-delete`                             |
 |            |                                                                  |                                          |
+| Portal     | Import portals via inline search from other bots                 | `portal-import`                          |
+|            |                                                                  |                                          |
 | Pokedex    | Manage raid pokemon `/pokedex`                                   | `pokedex`                                |
 |            |                                                                  |                                          |
 | Help       | Show help `/help`                                                | `help`                                   |
@@ -450,6 +456,16 @@ To change translations you can do the following:
 The bot will guide you through the creation of a raid poll based on the settings in the config file.
 
 In case of a raid poll the bot will ask you for the raid level, the pokemon raid boss, the time until the raids starts and the time left for the raid. Afterwards you can set the gym name and gym team by using the /gym and /team commands.
+
+### Command: No command - using inline search of @PortalMapBot or @Ingressportalbot
+
+You can add new gyms to the bot using the inline search of one of the bots mentioned above. Just search for a portal name, e.g. `Brandenburger Tor`, and select one of the portals shown as result of your search.
+
+On selection the portal information will get posted as a normal message and detected, so a new gym is automatically created from the portal info in that message.
+
+In case the portal is already in your gym list / database, it will get updated with the new info (latitude, longitude and address) from the message.
+
+Example: `@PortalMapBot Brandenburger Tor`
 
 ### Command: /start
 

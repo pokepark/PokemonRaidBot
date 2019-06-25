@@ -40,6 +40,7 @@
   "SHARE_CHATS":"",
   "RAID_PIN_MESSAGE":"",
   "MAP_URL":"",
+  "PORTAL_IMPORT":"true",
   "CLEANUP":"false",
   "CLEANUP_LOGFILE":"/var/log/tg-bots/dev-raid-bot-cleanup.log",
   "CLEANUP_SECRET":"your-cleanup-secret/passphrase",
