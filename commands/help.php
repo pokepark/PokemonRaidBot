@@ -46,7 +46,7 @@ if($access && (is_file(ROOT_PATH . '/access/' . $access) || $access == 'BOT_ADMI
 
     // Show help.
     foreach($permissions as $id => $p) {
-        if($p == 'access-bot' || strpos($p, 'share-') === 0) continue;
+        if($p == 'access-bot' || strpos($p, 'share-') === 0 || strpos($p, 'ignore-') === 0) continue;
         $msg .= getTranslation('help_' . $p) . CR . CR;
     }
 // No help for the user.
