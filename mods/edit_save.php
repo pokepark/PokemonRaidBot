@@ -103,19 +103,35 @@ if ($update['callback_query']['message']['chat']['type'] == 'private') {
         $keys = array_merge($keys, $keys_time);
     }
 
+    // Get raid times.
+    $raid = get_raid($data['id']);
+
+    // Get raid level.
+    $raid_level = get_raid_level($raid['pokemon']);
+    $const = 'SHARE_CHATS_LEVEL_' . $raid_level;
+
+    // Debug.
+    //debug_log($const,'CONSTANT NAME:');
+    //debug_log(constant($const),'CONSTANT VALUE:');
+
+    // Special sharing keys for raid level?
+    if(defined($const) && !empty($const)) {
+        $chats = constant($const);
+        debug_log('Special sharing keys detected for raid level ' . $raid_level);
+    } else {
+        $chats = '';
+    }
+
     // Add keys to share.
-    $keys_share = share_keys($id, 'raid_share', $update);
+    $keys_share = share_keys($id, 'raid_share', $update, $chats);
     $keys = array_merge($keys, $keys_share);
 
     // Add event keys.
     if(RAID_POKEMON_DURATION_EVENT > RAID_POKEMON_DURATION_SHORT) {
         $prefix_text = EMOJI_CLOCK . SP . RAID_POKEMON_DURATION_EVENT . getTranslation('minutes_short') . SP . '+' . SP;
-        $keys_event = share_keys($id . ',' . RAID_POKEMON_DURATION_EVENT, 'edit_save', $update, $prefix_text, true);
+        $keys_event = share_keys($id . ',' . RAID_POKEMON_DURATION_EVENT, 'edit_save', $update, $chats, $prefix_text, true);
         $keys = array_merge($keys, $keys_event);
     }
-    // Get raid times.
-    $raid = get_raid($data['id']);
-
     // Build message string.
     $msg = '';
     $msg .= getTranslation('raid_saved') . CR;

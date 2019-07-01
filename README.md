@@ -228,15 +228,22 @@ You can share raid polls with any chat in Telegram via a share button.
 
 Sharing raid polls can be restricted, so only specific chats/users can be allowed to share a raid poll - take a look at the permission system!
 
-With a predefined list you can specify the chats which should appear as buttons for sharing raid polls.
+With a predefined list `SHARE_CHATS` you can specify the chats which should appear as buttons for sharing raid polls.
+
+You can define different chats for specific raid levels using `SHARE_CHATS_LEVEL_` plus the raid level too. Raid levels can be 'X', '5', '4', '3', '2' or '1'.
 
 For the ID of a chat either forward a message from the chat to a bot like @RawDataBot, @getidsbot or search the web for another method ;)
 
-Example:
+Examples:
 
-#### Predefine sharing to the chats -100111222333 and -100444555666
+#### Predefine sharing all raids to the chats -100111222333 and -100444555666
 
 `"SHARE_CHATS":"-100111222333,-100444555666"`
+
+#### Predefine sharing all raids to the chats -100111222333 and -100444555666, except level 5 raids which will be shared to the chat -100999666333
+
+`"SHARE_CHATS":"-100111222333,-100444555666"`
+`"SHARE_CHATS_LEVEL_5":"-100444555666"`
 
 ## Raid overview
 
@@ -322,20 +329,26 @@ It does not matter if a chat is a user, group, supergroup or channel - any kind 
 
 Those access files need to be placed under the subdirectory 'access' and follow a special name scheme.
 
-| Chat type                     | User role      | Name of the access file           | Example                 |
-|-------------------------------|----------------|-----------------------------------|-------------------------|
-| User                          | -              | `accessCHAT_ID`                   | `access111555999`       |
-|                               |                |                                   |                         |
-| Group, Supergroup, Channel    | Any role       | `accessCHAT_ID`                   | `access-100224466889`   |
-|                               | Creator        | `creatorCHAT_ID`                  | `creator-100224466889`  |
-|                               | Admin          | `adminsCHAT_ID`                   | `admins-100224466889`   |
-|                               | Member         | `membersCHAT_ID`                  | `members-100224466889`  |
+| Chat type                     | User role      | Name of the access file           | Example                   |
+|-------------------------------|----------------|-----------------------------------|---------------------------|
+| User                          | -              | `accessCHAT_ID`                   | `access111555999`         |
+|                               |                |                                   |                           |
+| Group, Supergroup, Channel    | Any role       | `accessCHAT_ID`                   | `access-100224466889`     |
+|                               | Creator        | `creatorCHAT_ID`                  | `creator-100224466889`    |
+|                               | Admin          | `adminsCHAT_ID`                   | `admins-100224466889`     |
+|                               | Member         | `membersCHAT_ID`                  | `members-100224466889`    |
+|                               | Restricted     | `restrictedCHAT_ID`               | `restricted-100224466889` |
+|                               | Kicked         | `kickedCHAT_ID`                   | `kicked-100224466889`     |
 
 As you can see in the table, you can define different permissions for the creator, the admins and the members of a group, supergroup and channel.
 
-You can also create just one access file, so any user has the same permission regardless of their role in the chat. But this is not recommended (see important note below!).
+You can also create just one access file for groups, supergroups or channels (e.g. `access-100224466889`) so any user has the same permission regardless of their role in the chat, but this is not recommended (see important note below!).
 
-**Important: Any role means any role - so in addition to roles 'creator', 'administrator' or 'member' this will also grant 'kicked', 'restricted' and 'left' users to access the bot with the defined permissions!**
+**Important: Any role means any role - so in addition to roles 'creator', 'administrator' or 'member' this will also grant 'restricted' and 'kicked' users to access the bot with the defined permissions!
+
+To exclude 'restricted' and 'kicked' users when using an access file for any role (e.g. `access-100224466889`) you can add the permissions `ignore-restricted` and `ignore-kicked` to the access file!
+
+User with the role 'left' are automatically receiving an 'Access denied' from the bot as they willingly have choosen to leave the chat through which they got access to the bot!**
 
 Every access file allows the access for a particular chat and must include the permissons which should be granted to that chat.
 
@@ -351,6 +364,8 @@ A few examples for access files can be found below the permission overview table
 | Access     | **Action and /command**                                          | Permission inside access file            |
 |------------|------------------------------------------------------------------|------------------------------------------|
 | Bot        | Access the bot itself                                            | `access-bot`                             |
+|            | Deny access to restricted group/supergroup/channel members       | `ignore-restricted`                      |
+|            | Deny access to kicked group/supergroup/channel members           | `ignore-kicked`                          |
 |            |                                                                  |                                          |
 | Raid poll  | Vote on shared raid poll                                         | Not required!                            |
 |            | Create raids `/start`, `/raid`                                   | `create`                                 |
