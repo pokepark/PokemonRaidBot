@@ -307,6 +307,17 @@
     "FR":"Aucun participant",
     "PL":"Brak chętnych"
   },
+  "import":{  
+    "NL":"Import",
+    "DE":"Import",
+    "EN":"Import",
+    "IT":"TRANSLATE",
+    "PT-BR":"TRANSLATE",
+    "RU":"TRANSLATE",
+    "NO":"TRANSLATE",
+    "FR":"TRANSLATE",
+    "PL":"TRANSLATE"
+  },
   "finished":{  
     "NL":"Klaar",
     "DE":"Fertig",
@@ -449,6 +460,28 @@
     "NO":"Velg raid level",
     "FR":"Sélectionne un niveau de raid",
     "PL":"Wybierz poziom Rajdu"
+  },
+  "disable_raid_level":{  
+    "NL":"TRANSLATE",
+    "DE":"Raid Level deaktivieren",
+    "EN":"Disable raid level",
+    "IT":"TRANSLATE",
+    "PT-BR":"TRANSLATE",
+    "RU":"TRANSLATE",
+    "NO":"TRANSLATE",
+    "FR":"TRANSLATE",
+    "PL":"TRANSLATE"
+  },
+  "disabled_raid_level":{  
+    "NL":"TRANSLATE",
+    "DE":"Raid Level deaktiviert",
+    "EN":"Disabled raid level",
+    "IT":"TRANSLATE",
+    "PT-BR":"TRANSLATE",
+    "RU":"TRANSLATE",
+    "NO":"TRANSLATE",
+    "FR":"TRANSLATE",
+    "PL":"TRANSLATE"
   },
   "gym":{  
     "NL":"Gym",
@@ -923,6 +956,50 @@
     "FR":"Boss de raid sauvegardé",
     "PL":"Boss Rajdu zapisany!"
   },
+  "excluded_raid_bosses":{  
+    "NL":"TRANSLATE",
+    "DE":"Vom Import ausgenommene Raid-Bosse:",
+    "EN":"From import excluded raid bosses:",
+    "IT":"TRANSLATE",
+    "PT-BR":"TRANSLATE",
+    "RU":"TRANSLATE",
+    "NO":"TRANSLATE",
+    "FR":"TRANSLATE",
+    "PL":"TRANSLATE"
+  },
+  "exclude_raid_boss_or_import":{  
+    "NL":"TRANSLATE",
+    "DE":"Raid-Boss auswählen, der nicht importiert werden soll oder den Import mit 'Speichern' abschließen",
+    "EN":"Select raid boss to exclude from import or finish import via 'Save'",
+    "IT":"TRANSLATE",
+    "PT-BR":"TRANSLATE",
+    "RU":"TRANSLATE",
+    "NO":"TRANSLATE",
+    "FR":"TRANSLATE",
+    "PL":"TRANSLATE"
+  },
+  "import_raid_bosses":{  
+    "NL":"TRANSLATE",
+    "DE":"Raid-Bosse importieren?",
+    "EN":"Import raid bosses?",
+    "IT":"TRANSLATE",
+    "PT-BR":"TRANSLATE",
+    "RU":"TRANSLATE",
+    "NO":"TRANSLATE",
+    "FR":"TRANSLATE",
+    "PL":"TRANSLATE"
+  },
+  "import_done":{  
+    "NL":"TRANSLATE",
+    "DE":"Import abgeschlossen!",
+    "EN":"Import done!",
+    "IT":"TRANSLATE",
+    "PT-BR":"TRANSLATE",
+    "RU":"TRANSLATE",
+    "NO":"TRANSLATE",
+    "FR":"TRANSLATE",
+    "PL":"TRANSLATE"
+  },
   "set_gym_name_and_team":{  
     "NL":"Optioneel - Gym naam and Gym Team:",
     "DE":"Optional - Arena-Name und Arena Team:",
@@ -1165,27 +1242,38 @@
     "FR":"Pokémon enregistré",
     "PL":"Pokemon zapisany:"
   },
+  "edit_pokemon":{  
+    "NL":"Pokemon aanpassen",
+    "DE":"Pokemon bearbeiten",
+    "EN":"Edit Pokemon",
+    "IT":"TRANSLATE",
+    "PT-BR":"TRANSLATE",
+    "RU":"TRANSLATE",
+    "NO":"TRANSLATE",
+    "FR":"TRANSLATE",
+    "PL":"TRANSLATE"
+  },
   "pokedex_start":{  
     "NL":"Raid bazen lijst aanpassen",
-    "DE":"Raid-Boss / Pokemon anzeigen und bearbeiten",
-    "EN":"List and edit raid boss / pokemon",
-    "IT":"Lista e modifica boss del Raid / Pokémon",
-    "PT-BR":"Listar e modificar chefe de reide / Pokémon",
-    "RU":"Список и редактирование рейд босса / покемона",
-    "NO":"List og rediger raid boss / pokemon",
-    "FR":"Liste et changer le boss de raid / Pokémon",
-    "PL":"Pokaż Bossa Rajdu / Pokemona i edytuj go"
+    "DE":"Raid-Bosse anzeigen, bearbeiten und importieren",
+    "EN":"List, edit and import raid bosses",
+    "IT":"TRANSLATE",
+    "PT-BR":"TRANSLATE",
+    "RU":"TRANSLATE",
+    "NO":"TRANSLATE",
+    "FR":"TRANSLATE",
+    "PL":"TRANSLATE"
   },
   "pokedex_raid_pokemon":{  
-    "NL":"Lijst alle Raid bazen",
-    "DE":"Alle Raid-Bosse anzeigen",
-    "EN":"List of all raid bosses",
-    "IT":"Lista di tutti i boss del Raid",
-    "PT-BR":"Lista de todos os chefes de reide",
-    "RU":"Списов всех рейд боссов",
-    "NO":"Liste over alle raid bosser",
-    "FR":"Liste de tous les boss de raid",
-    "PL":"Pokaż wszystkich Bossów Rajdów"
+    "NL":"Lijst actuele Raid bazen",
+    "DE":"Aktuelle Raid-Bosse anzeigen",
+    "EN":"List current raid bosses",
+    "IT":"TRANSLATE",
+    "PT-BR":"TRANSLATE",
+    "RU":"TRANSLATE",
+    "NO":"TRANSLATE",
+    "FR":"TRANSLATE",
+    "PL":"TRANSLATE"
   },
   "pokedex_list_of_all":{  
     "NL":"Lijst met alle pokemon.",
@@ -1230,6 +1318,17 @@
     "NO":"Raid level",
     "FR":"Niveau du raid",
     "PL":"Poziom Rajdu"
+  },
+  "pokedex_all_raid_level":{  
+    "NL":"Alle Raid level",
+    "DE":"Alle Raid Level",
+    "EN":"All raid levels",
+    "IT":"TRANSLATE",
+    "PT-BR":"TRANSLATE",
+    "RU":"TRANSLATE",
+    "NO":"TRANSLATE",
+    "FR":"TRANSLATE",
+    "PL":"TRANSLATE"
   },
   "pokedex_new_raid_level":{  
     "NL":"Nieuw Raid level",

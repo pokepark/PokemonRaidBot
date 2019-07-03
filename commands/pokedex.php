@@ -56,14 +56,26 @@ $keys = [];
 $keys = [
     [
         [
-            'text'          => getTranslation('update_raid_boss'),
+            'text'          => getTranslation('pokedex_raid_pokemon'),
+            'callback_data' => '0:pokedex_list_raids:0'
+        ]
+    ],
+    [
+        [
+            'text'          => getTranslation('edit_pokemon'),
             'callback_data' => '0:pokedex:0'
         ]
     ],
     [
         [
-            'text'          => getTranslation('pokedex_raid_pokemon'),
-            'callback_data' => '0:pokedex_list_raids:0'
+            'text'          => getTranslation('disable_raid_level'),
+            'callback_data' => '0:pokedex_disable_raids:0'
+        ]
+    ],
+    [
+        [
+            'text'          => getTranslation('import') . SP . '(Pokebattler)',
+            'callback_data' => '0:pokebattler:0'
         ]
     ],
     [

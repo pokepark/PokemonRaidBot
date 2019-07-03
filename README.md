@@ -536,11 +536,15 @@ Based on your access to the bot, you may can only change the pokemon raid boss o
 
 Show and update any pokemon raid boss. You can change the raid level (select raid level 0 to disable a raid boss), pokemon CP values and weather information of any pokemon raid boss.
 
+There is also a possibility to import the raids bosses from Pokebattler and disable all raid bosses for all or just a specific raid level which makes raid boss management pretty easy.
+
 To quickly get to a specific pokemon raid boss, you can use the /pokedex command with the local name of the pokemon. A few examples:
 
 Your telegram is set to English and you like to change Deoxys in his Attack form: `/pokedex Deoxys Attack`
 
 Your telegram is set to German and you like to change Marowak (German: Knogga) in his Alolan (German: Alola) form: `/pokedex Knogga Alola`
+
+Beside your local language the bot always is looking at the English language as a fallback.
 
 #### Screenshots
 #### Manage pokemons / raid bosses via the `/pokedex` command:

@@ -54,7 +54,7 @@ foreach ($levels as $id => $lv) {
 
     // Add button to edit pokemon.
     $keys[] = array(
-        'text'          => $poke_name,
+        'text'          => '[' . $lv . ']' . SP . $poke_name,
         'callback_data' => $id . ':pokedex_edit_pokemon:0'
     );
 

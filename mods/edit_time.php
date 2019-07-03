@@ -160,7 +160,12 @@ $keys = [];
 // Raid pokemon duration short or 1 Minute / 5 minute time slots
 if($opt_arg == 'more') {
     if ($slot_switch == 0) {
-	$slotmax = RAID_POKEMON_DURATION_SHORT;
+        // Event running?
+        if(RAID_POKEMON_DURATION_EVENT > RAID_POKEMON_DURATION_SHORT) {
+	    $slotmax = RAID_POKEMON_DURATION_EVENT;
+        } else {
+	    $slotmax = RAID_POKEMON_DURATION_SHORT;
+        }
 	$slotsize = 1;
     } else {
 	$slotmax = RAID_POKEMON_DURATION_LONG;
