@@ -1711,7 +1711,7 @@ function run_cleanup ($telegram = 2, $database = 2) {
                     my_query(
                     "
                         DELETE FROM    attendance
-                        WHERE   id = {$row['raid_id']}
+                        WHERE          raid_id = {$row['raid_id']}
                     ", true
                     );
 
