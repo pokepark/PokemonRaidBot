@@ -462,7 +462,7 @@
     "PL":"Wybierz poziom Rajdu"
   },
   "disable_raid_level":{  
-    "NL":"TRANSLATE",
+    "NL":"Zet raid level uit",
     "DE":"Raid Level deaktivieren",
     "EN":"Disable raid level",
     "IT":"TRANSLATE",
@@ -473,7 +473,7 @@
     "PL":"TRANSLATE"
   },
   "disabled_raid_level":{  
-    "NL":"TRANSLATE",
+    "NL":"Uitgezette raid levels",
     "DE":"Raid Level deaktiviert",
     "EN":"Disabled raid level",
     "IT":"TRANSLATE",
@@ -627,7 +627,7 @@
     "PL":"TRANSLATE"
   },
   "gym_coordinates_format_error":{  
-    "NL":"TRANSLATE",
+    "NL":"Error! Stuur de coordinaten in het volgende formaat <code>Latitude,Longitude</code> om de nieuwe gym toe te voegen!",
     "DE":"Fehler! Bitte übermittle die Koordinaten im Format <code>Breitengrad,Längengrad</code> zum Hinzufügen einer neuen Arena!",
     "EN":"Error! Please submit the coordinates in the format <code>Latitude,Longitude</code> to add a new gym!",
     "IT":"TRANSLATE",
@@ -638,7 +638,7 @@
     "PL":"TRANSLATE"
   },
   "gym_coordinates_format_example":{  
-    "NL":"TRANSLATE",
+    "NL":"Als voorbeeld: <code>/addgym 51.516263,4.377755</code>",
     "DE":"Zum Beispiel: <code>/addgym 52.516263,13.377755</code>",
     "EN":"For example: <code>/addgym 52.516263,13.377755</code>",
     "IT":"TRANSLATE",
@@ -957,7 +957,7 @@
     "PL":"Boss Rajdu zapisany!"
   },
   "excluded_raid_bosses":{  
-    "NL":"TRANSLATE",
+    "NL":"De volgende raid bazen worden niet overgezet:",
     "DE":"Vom Import ausgenommene Raid-Bosse:",
     "EN":"From import excluded raid bosses:",
     "IT":"TRANSLATE",
@@ -968,7 +968,7 @@
     "PL":"TRANSLATE"
   },
   "exclude_raid_boss_or_import":{  
-    "NL":"TRANSLATE",
+    "NL":"Selecteer raid bazen om ze niet over te zetten of importeer via 'Save'",
     "DE":"Raid-Boss auswählen, der nicht importiert werden soll oder den Import mit 'Speichern' abschließen",
     "EN":"Select raid boss to exclude from import or finish import via 'Save'",
     "IT":"TRANSLATE",
@@ -979,7 +979,7 @@
     "PL":"TRANSLATE"
   },
   "import_raid_bosses":{  
-    "NL":"TRANSLATE",
+    "NL":"Raid bazen importeren?",
     "DE":"Raid-Bosse importieren?",
     "EN":"Import raid bosses?",
     "IT":"TRANSLATE",
@@ -990,7 +990,7 @@
     "PL":"TRANSLATE"
   },
   "import_done":{  
-    "NL":"TRANSLATE",
+    "NL":"Import klaar!",
     "DE":"Import abgeschlossen!",
     "EN":"Import done!",
     "IT":"TRANSLATE",
@@ -1639,7 +1639,7 @@
     "PL":"Zła nazwa Teamu - napisz: niebieski, czerwony albo żółty"
   },
   "gym_instructions":{  
-    "NL":"TRANSLATE",
+    "NL":"Gebruik de volgende commando's om de gym te wijzigen:",
     "DE":"Mit folgenden Befehlen kannst du die Arena weiter bearbeiten:",
     "EN":"Use the following commands to further edit the gym:",
     "IT":"TRANSLATE",
