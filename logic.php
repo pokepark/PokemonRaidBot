@@ -3117,7 +3117,8 @@ function show_raid_poll($raid)
               ORDER BY  attend_time,
                         pokemon,
                         users.team,
-                        arrived
+                        arrived,
+                        users.level desc
             "
         );
 
