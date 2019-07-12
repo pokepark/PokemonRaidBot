@@ -110,6 +110,9 @@ if($id == 0) {
         $rl = $i + 1;
         $msg .= '<b>' . getTranslation('pokedex_raid_level') . SP . $rl . ':</b>' . CR;
 
+        // Count raid bosses and add raid egg later if 2 or more bosses.
+        $bosscount = 0;
+
         // Get raid bosses for each raid level.
         foreach($json['tiers'][$i]['raids'] as $raid) {
             // Pokemon name ending with "_FORM" ?
@@ -121,7 +124,28 @@ if($id == 0) {
                 // Get pokemon name and form.
                 $name = explode("_", $pokemon, 2)[0];
                 $form = explode("_", $pokemon, 2)[1];
-                $pokemon = $name . SP . $form;
+
+            // Pokemon name ending with "_MALE" ?
+            } else if(substr_compare($raid['pokemon'], '_MALE', -strlen('_MALE')) === 0) {
+                debug_log('Pokemon with gender MALE received: ' . $raid['pokemon']);
+                // Remove "_MALE"
+                $pokemon = str_replace('_MALE', '', $raid['pokemon']);
+
+                // Get pokemon name and form.
+                $name = explode("_", $pokemon, 2)[0] . '♂';
+                $form = 'normal';
+
+            // Pokemon name ending with "_FEMALE" ?
+            } else if(substr_compare($raid['pokemon'], '_FEMALE', -strlen('_FEMALE')) === 0) {
+                debug_log('Pokemon with gender FEMALE received: ' . $raid['pokemon']);
+                // Remove "_FEMALE"
+                $pokemon = str_replace('_FEMALE', '', $raid['pokemon']);
+
+                // Get pokemon name and form.
+                $name = explode("_", $pokemon, 2)[0] . '♀';
+                $form = 'normal';
+
+            // Normal pokemon without form or gender.
             } else {
                 // Fix pokemon like "HO_OH"...
                 if(substr_count($raid['pokemon'], '_') >= 1) {
@@ -173,6 +197,9 @@ if($id == 0) {
                 // Add pokemon to message.
                 $msg .= $local_pokemon . SP . '(#' . $dex_id . ')' . CR;
 
+                // Counter.
+                $bosscount = $bosscount + 1;
+
                 // Save to database?
                 if(strpos($arg, 'save#') === 0) {
                     // Update raid level of pokemon
@@ -210,6 +237,26 @@ if($id == 0) {
                 }
             }
 
+        }
+
+        // Add raid egg?
+        if($bosscount > 1) {
+            // Add pokemon to message.
+            $msg .= getTranslation('egg_' . $rl) . SP . '(#999' . $rl . ')' . CR;
+            $egg_id = '999'  . $rl;
+            debug_log('Adding raid level egg with id: ' . $egg_id);
+
+            // Save raid egg.
+            if(strpos($arg, 'save#') === 0) {
+                $re = my_query(
+                        "
+                        UPDATE    pokemon
+                        SET       raid_level = '{$rl}'
+                        WHERE     pokedex_id = {$egg_id}
+                        AND       pokemon_form = 'normal'
+                        "
+                    );
+            }
         }
         $msg .= CR;
     }
@@ -263,7 +310,7 @@ if($id == 0) {
             $msg .= $poke_name . ' (#' . $dex_id . ')' . CR;
 
             // Add button to edit pokemon.
-            if($pid == '54321') {
+            if($id == '54321') {
                 $keys[] = array(
                     'text'          => '[' . $lv . ']' . SP . $poke_name,
                     'callback_data' => $pid . ':pokedex_edit_pokemon:0'
