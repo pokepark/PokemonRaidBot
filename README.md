@@ -352,6 +352,20 @@ User with the role 'left' are automatically receiving an 'Access denied' from th
 
 Every access file allows the access for a particular chat and must include the permissons which should be granted to that chat.
 
+To differ between all those access file you can add any kind of comment to the filename of the access file itself. Just make sure to not use a number (0-9) right after the chat id!
+
+Consider you have 4 channels. One for each district of your town: east, west, south and north. So you could name the access file for example like this:
+
+```
+access-100333444555 South-Channel
+access-100444555666+NorthernChannel
+admins-100222333444_West-District
+creator-100111222333-Channel-East-District
+creator-100444555666+NorthernChannel
+members-100111222333-Channel-East-District
+members-100222333444_West-District
+```
+
 ## Permissions overview
 
 The following table shows the permissions you need to write into an access file (last column) to grant permissions to chats.
