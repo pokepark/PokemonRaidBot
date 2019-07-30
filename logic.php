@@ -2525,7 +2525,7 @@ function get_overview($update, $chats_active, $raids_active, $action = 'refresh'
 
             // Edit the message, but disable the web preview!
             debug_log('Updating overview:' . CR . 'Chat_ID: ' . $chat_id . CR . 'Message_ID: ' . $message_id);
-            editMessageText($message_id, $msg, $keys, $chat_id);
+            editMessageText($message_id, $msg, $keys, $chat_id, ['disable_web_page_preview' => 'true']);
         }
 
         // Triggered from user or cronjob?
