@@ -103,18 +103,35 @@ if($id == 0) {
     // Init empty keys array.
     $keys = [];
 
-    // Process raid tier(s)
-    debug_log('Processing received pokebattler raid bosses');
+    // Raid tier array
+    debug_log('Processing the following raid levels:');
+    $raidlevels = array();
     for($i = $start; $i <= $end; $i++) {
-        // Raid level and message.
         $rl = $i + 1;
+        $raidlevels[] = 'RAID_LEVEL_' . $rl;
+    }
+    debug_log($raidlevels);
+
+    // Process raid tier(s)
+    debug_log('Processing received pokebattler raid bosses for each raid level');
+    // Init index to process the json
+    $index = 0;
+    foreach($json['tiers'] as $tier) {
+        // Process raid level?
+        if(!in_array($tier['tier'],$raidlevels)) {
+            // Index + 1
+            $index = $index + 1;
+            continue;
+        }
+        // Raid level and message.
+        $rl = str_replace('RAID_LEVEL_','', $tier['tier']);
         $msg .= '<b>' . getTranslation('pokedex_raid_level') . SP . $rl . ':</b>' . CR;
 
         // Count raid bosses and add raid egg later if 2 or more bosses.
         $bosscount = 0;
 
         // Get raid bosses for each raid level.
-        foreach($json['tiers'][$i]['raids'] as $raid) {
+        foreach($json['tiers'][$index]['raids'] as $raid) {
             // Pokemon name ending with "_FORM" ?
             if(substr_compare($raid['pokemon'], '_FORM', -strlen('_FORM')) === 0) {
                 debug_log('Pokemon with a special form received: ' . $raid['pokemon']);
@@ -224,7 +241,7 @@ if($id == 0) {
                     if($id == '54321') {
                         // Add key to exclude pokemon from import.
                         $keys[] = array(
-                            'text'          => '[' . ($i +1) . ']' . SP . $local_pokemon,
+                            'text'          => '[' . ($rl) . ']' . SP . $local_pokemon,
                             'callback_data' => $id . ':pokebattler:' . $new_arg
                         );
                     } else {
@@ -259,6 +276,9 @@ if($id == 0) {
             }
         }
         $msg .= CR;
+
+        // Increase index
+        $index = $index + 1;
     }
 
     // Get the inline key array.
