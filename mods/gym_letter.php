@@ -21,7 +21,7 @@ if($arg == 'gym_delete') {
     $arg = 'gym_details';
 
     // Check access.
-    bot_access_check($update, 'gym');
+    bot_access_check($update, 'gym-details');
 
     // Set message.
     $msg = '<b>' . getTranslation('show_gym_details') . SP . '—' . SP . getTranslation('select_gym_first_letter') . '</b>';
