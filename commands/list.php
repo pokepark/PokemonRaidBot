@@ -59,9 +59,6 @@ while ($raid = $rs->fetch_assoc()) {
         $keys_text = $gym_name;
     }
 
-debug_log('HALLO 123');
-debug_log($eggs);
-debug_log($raid['pokemon']);
     $keys[] = array(
         'text'          => $keys_text,
         'callback_data' => $raid['id'] . ':raids_list:0'
