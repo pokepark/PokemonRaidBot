@@ -1,4 +1,5 @@
 { 
+  "VERSION":"1.9.231.1",
   "DB_HOST":"localhost",
   "DB_NAME":"your_database_name",
   "DB_USER":"your_database_user",
