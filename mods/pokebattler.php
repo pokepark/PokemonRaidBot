@@ -142,6 +142,11 @@ if($id == 0) {
                 $name = explode("_", $pokemon, 2)[0];
                 $form = explode("_", $pokemon, 2)[1];
 
+                // Fix for MEWTWO_A_FORM
+                if($name == 'MEWTWO' && $form == 'A') {
+                    $form = 'ARMORED';
+                }
+
             // Pokemon name ending with "_MALE" ?
             } else if(substr_compare($raid['pokemon'], '_MALE', -strlen('_MALE')) === 0) {
                 debug_log('Pokemon with gender MALE received: ' . $raid['pokemon']);
