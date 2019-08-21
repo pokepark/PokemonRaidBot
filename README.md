@@ -690,7 +690,7 @@ Check your bot logfile and other related log files, e.g. apache/httpd log, php l
 # Updates
 
 Currently constantly new features, bug fixes and improvements are added to the bot. Since we do not have an update mechanism yet, when updating the bot, please always do the following:
- - Add new config variables which got added to the config.php.example to your own config.php!
+ - Add new config variables which got added to the config.json.example to your own config.json!
  - If new tables and/or columns got added or changed inside raid-pokemon-bot.sql, please add/alter these tables/columns at your existing installation!
 
 # SQL Files
