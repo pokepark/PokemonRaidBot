@@ -102,7 +102,7 @@ if(!empty($atts)) {
             "
             INSERT INTO attendance
             VALUES(
-            'NULL',
+            NULL,
             '{$atts[0]['user_id']}',
             '{$atts[0]['raid_id']}',
             '{$atts[0]['attend_time']}',
