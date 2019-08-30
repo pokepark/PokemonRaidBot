@@ -3287,6 +3287,7 @@ function show_raid_poll($raid)
               WHERE     raid_id = {$raid['id']}
                 AND     (raid_done = 1
                         OR cancel = 1)
+              GROUP BY  attendance.user_id
               ORDER BY  raid_done,
                         attend_time
             "
