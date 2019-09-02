@@ -3044,6 +3044,7 @@ function show_raid_poll($raid)
                         sum(IF(late = '1', (late = '1') + extra_mystic + extra_valor + extra_instinct, 0)) AS count_late,
                         sum(pokemon = '0')                   AS count_any_pokemon,
                         sum(pokemon = '{$raid['pokemon']}')  AS count_raid_pokemon,
+                        sum(pokemon != '{$raid['pokemon']}' AND pokemon != '0')  AS count_other_pokemon,
                         attend_time
         FROM            attendance
         LEFT JOIN       users
@@ -3131,7 +3132,8 @@ function show_raid_poll($raid)
                         pokemon,
                         users.team,
                         arrived,
-                        users.level desc
+                        users.level desc,
+                        users.name
             "
         );
 
@@ -3156,10 +3158,13 @@ function show_raid_poll($raid)
             if($previous_att_time != $current_att_time) {
                 // Add to message.
                 $count_att_time_extrapeople = $cnt[$current_att_time]['extra_mystic'] + $cnt[$current_att_time]['extra_valor'] + $cnt[$current_att_time]['extra_instinct'];
-                $msg .= CR . '<b>' . (($current_att_time == 0) ? (getPublicTranslation('anytime')) : ($dt_att_time)) . '</b>' . ' [' . ($cnt[$current_att_time]['count'] + $count_att_time_extrapeople) . ']';
+                $msg .= CR . '<b>' . (($current_att_time == 0) ? (getPublicTranslation('anytime')) : ($dt_att_time)) . '</b>';
 
-                // Add attendance counts by team.
-                if ($cnt[$current_att_time]['count'] > 0) {
+                // Hide if other pokemon got selected. Show attendances for each pokemon instead of each attend time.
+                $msg .= (($cnt[$current_att_time]['count_other_pokemon'] == 0) ? (' [' . ($cnt[$current_att_time]['count'] + $count_att_time_extrapeople) . ']') : '');
+
+                // Add attendance counts by team - hide if other pokemon got selected.
+                if ($cnt[$current_att_time]['count'] > 0 && $cnt[$current_att_time]['count_other_pokemon'] == 0) {
                     // Attendance counts by team.
                     $count_mystic = $cnt[$current_att_time]['count_mystic'] + $cnt[$current_att_time]['extra_mystic'];
                     $count_valor = $cnt[$current_att_time]['count_valor'] + $cnt[$current_att_time]['extra_valor'];
@@ -3228,50 +3233,46 @@ function show_raid_poll($raid)
     // Get sums canceled/done for the raid
     $rs_cnt_cancel_done = my_query(
         "
-        SELECT DISTINCT sum(raid_done = '1')   AS count_done,
-                        sum(cancel = '1')      AS count_cancel,
-                        sum(extra_mystic)           AS extra_mystic,
-                        sum(extra_valor)            AS extra_valor,
-                        sum(extra_instinct)         AS extra_instinct
+        SELECT DISTINCT sum(DISTINCT raid_done = '1')  AS count_done,
+                        sum(DISTINCT cancel = '1')     AS count_cancel,
+                        sum(DISTINCT extra_mystic)     AS extra_mystic,
+                        sum(DISTINCT extra_valor)      AS extra_valor,
+                        sum(DISTINCT extra_instinct)   AS extra_instinct,
+                        attendance.user_id
         FROM            attendance
           WHERE         raid_id = {$raid['id']}
             AND         (raid_done = 1
                         OR cancel = 1)
-          GROUP BY      raid_done
-          ORDER BY      raid_done
+          GROUP BY      attendance.user_id
+          ORDER BY      attendance.user_id, attend_time, raid_done
         "
     );
 
     // Init empty count array and count sum.
     $cnt_cancel_done = [];
 
+    // Counter for cancel and done.
+    $cnt_cancel = 0;
+    $cnt_done = 0;
+
     while ($cnt_row_cancel_done = $rs_cnt_cancel_done->fetch_assoc()) {
         // Cancel count
         if($cnt_row_cancel_done['count_cancel'] > 0) {
-            $cnt_cancel_done['count_cancel'] = $cnt_row_cancel_done['count_cancel'] + $cnt_row_cancel_done['extra_mystic'] + $cnt_row_cancel_done['extra_valor'] + $cnt_row_cancel_done['extra_instinct'];
+            $cnt_cancel = $cnt_cancel + $cnt_row_cancel_done['count_cancel'] + $cnt_row_cancel_done['extra_mystic'] + $cnt_row_cancel_done['extra_valor'] + $cnt_row_cancel_done['extra_instinct'];
         }
 
         // Done count
         if($cnt_row_cancel_done['count_done'] > 0) {
-            $cnt_cancel_done['count_done'] = $cnt_row_cancel_done['count_done'] + $cnt_row_cancel_done['extra_mystic'] + $cnt_row_cancel_done['extra_valor'] + $cnt_row_cancel_done['extra_instinct'];
+            $cnt_done = $cnt_done + $cnt_cancel_done['count_done'] = $cnt_row_cancel_done['count_done'] + $cnt_row_cancel_done['extra_mystic'] + $cnt_row_cancel_done['extra_valor'] + $cnt_row_cancel_done['extra_instinct'];
         }
     }
     
-    // Set canceled count to avoid undefined index notices.
-    if(!isset($cnt_cancel_done['count_cancel'])) {
-        $cnt_cancel_done['count_cancel'] = 0;
-    }
-
-    // Set done count to avoid undefined index notices.
-    if(!isset($cnt_cancel_done['count_done'])) {
-        $cnt_cancel_done['count_done'] = 0;
-    }
-
     // Write to log.
-    debug_log($cnt_cancel_done);
+    debug_log($cnt_cancel, 'Cancel count:');
+    debug_log($cnt_done, 'Done count:');
 
     // Canceled or done?
-    if((isset($cnt_cancel_done['count_cancel']) && $cnt_cancel_done['count_cancel'] > 0) || (isset($cnt_cancel_done['count_done']) && $cnt_cancel_done['count_done'] > 0)) {
+    if($cnt_cancel > 0 || $cnt_done > 0) {
         // Get done and canceled attendances
 
         $rs_att = my_query(
@@ -3287,9 +3288,11 @@ function show_raid_poll($raid)
               WHERE     raid_id = {$raid['id']}
                 AND     (raid_done = 1
                         OR cancel = 1)
-              GROUP BY  attendance.user_id
+              GROUP BY  attendance.user_id, raid_done
               ORDER BY  raid_done,
-                        attend_time
+                        users.team,
+                        users.level desc,
+                        users.name
             "
         );
 
@@ -3303,13 +3306,13 @@ function show_raid_poll($raid)
 
             // Add section/header for canceled
             if($row['cancel'] == 1 && $cancel_done == 'CANCEL') {
-                $msg .= CR . TEAM_CANCEL . ' <b>' . getPublicTranslation('cancel') . ': </b>' . '[' . $cnt_cancel_done['count_cancel'] . ']' . CR;
+                $msg .= CR . TEAM_CANCEL . ' <b>' . getPublicTranslation('cancel') . ': </b>' . '[' . $cnt_cancel . ']' . CR;
                 $cancel_done = 'DONE';
             }
 
             // Add section/header for canceled
             if($row['raid_done'] == 1 && $cancel_done == 'CANCEL' || $row['raid_done'] == 1 && $cancel_done == 'DONE') {
-                $msg .= CR . TEAM_DONE . ' <b>' . getPublicTranslation('finished') . ': </b>' . '[' . $cnt_cancel_done['count_done'] . ']' . CR;
+                $msg .= CR . TEAM_DONE . ' <b>' . getPublicTranslation('finished') . ': </b>' . '[' . $cnt_done . ']' . CR;
                 $cancel_done = 'END';
             }
 
@@ -3328,7 +3331,7 @@ function show_raid_poll($raid)
     } 
 
     // Add no attendance found message.
-    if ($cnt_all + $cnt_cancel_done['count_cancel'] + $cnt_cancel_done['count_done'] == 0) {
+    if ($cnt_all + $cnt_cancel + $cnt_done == 0) {
         $msg .= CR . getPublicTranslation('no_participants_yet') . CR;
     }
 
