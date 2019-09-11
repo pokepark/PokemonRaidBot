@@ -161,7 +161,7 @@ $keys = [];
 if($opt_arg == 'more') {
     if ($slot_switch == 0) {
         // Event running?
-        if(RAID_POKEMON_DURATION_EVENT > RAID_POKEMON_DURATION_SHORT) {
+        if(RAID_POKEMON_DURATION_EVENT != RAID_POKEMON_DURATION_SHORT) {
 	    $slotmax = RAID_POKEMON_DURATION_EVENT;
         } else {
 	    $slotmax = RAID_POKEMON_DURATION_SHORT;

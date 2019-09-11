@@ -127,7 +127,7 @@ if ($update['callback_query']['message']['chat']['type'] == 'private') {
     $keys = array_merge($keys, $keys_share);
 
     // Add event keys.
-    if(RAID_POKEMON_DURATION_EVENT > RAID_POKEMON_DURATION_SHORT) {
+    if(RAID_POKEMON_DURATION_EVENT != RAID_POKEMON_DURATION_SHORT) {
         $prefix_text = EMOJI_CLOCK . SP . RAID_POKEMON_DURATION_EVENT . getTranslation('minutes_short') . SP . '+' . SP;
         $keys_event = share_keys($id . ',' . RAID_POKEMON_DURATION_EVENT, 'edit_save', $update, $chats, $prefix_text, true);
         $keys = array_merge($keys, $keys_event);
