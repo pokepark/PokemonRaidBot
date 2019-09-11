@@ -121,20 +121,29 @@ if($raid_level == 'X') {
         }
     }
 
+    // Get the inline key array.
+    $keys = inline_key_array($keys, $key_count);
+
+    // Init empty keys other options array.
+    $keys_opt = [];
+
     // Raid already running
-    $keys[] = array(
+    $keys_opt[] = array(
         'text'	        => getTranslation('is_raid_active'),
         'callback_data' => $id . ':edit_time:' . $pokemon_id . ',' . utctime($now,"H-i").",more,0"
     );
 
     // Switch view: clocktime / minutes until start
-    $keys[] = array(
+    $keys_opt[] = array(
         'text'	        => $switch_text,
         'callback_data' => $id . ':edit_starttime:' . $pokemon_id . ',' . $switch_view
     );
 
     // Get the inline key array.
-    $keys = inline_key_array($keys, $key_count);
+    $keys_opt = inline_key_array($keys_opt, 2);
+
+    // Merge keys
+    $keys = array_merge($keys, $keys_opt);
 
     // Write to log.
     debug_log($keys);

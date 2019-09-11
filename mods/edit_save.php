@@ -123,7 +123,8 @@ if ($update['callback_query']['message']['chat']['type'] == 'private') {
     }
 
     // Add keys to share.
-    $keys_share = share_keys($id, 'raid_share', $update, $chats);
+    $pre_text = EMOJI_CLOCK . SP . RAID_POKEMON_DURATION_SHORT . getTranslation('minutes_short') . SP . '+' . SP;
+    $keys_share = share_keys($id, 'raid_share', $update, $chats, $pre_text);
     $keys = array_merge($keys, $keys_share);
 
     // Add event keys.
