@@ -20,6 +20,7 @@ if($access && (is_file(ROOT_PATH . '/access/' . $access) || $access == 'BOT_ADMI
         $permissions[] = 'gym-edit';
         $permissions[] = 'gym-name';
         $permissions[] = 'gym-address';
+        $permissions[] = 'gym-gps';
         $permissions[] = 'gym-note';
         $permissions[] = 'gym-add';
         $permissions[] = 'gym-delete';

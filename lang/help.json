@@ -153,6 +153,17 @@
     "FR":"TRANSLATE",
     "PL":"TRANSLATE"
   },
+  "help_gym-gps":{  
+    "NL":"/gymgps - Verander gym coordinaten",
+    "DE":"/gymgps - Arena-Koordinaten bearbeiten",
+    "EN":"/gymgps - Edit gym coordinates",
+    "IT":"TRANSLATE",
+    "PT-BR":"TRANSLATE",
+    "RU":"TRANSLATE",
+    "NO":"TRANSLATE",
+    "FR":"TRANSLATE",
+    "PL":"TRANSLATE"
+  },
   "help_gym-note":{  
     "NL":"/gymnote - Verander extra gym informatie",
     "DE":"/gymnote - Arena-Notiz bearbeiten",
