@@ -709,7 +709,7 @@ Updates to the config file are NOT checked automatically. Therefore always check
 
 # Git Hooks
 
-In the needed core repository we provide a folder with git hooks which can be used to automate several processes. Copy them to the `.git/hooks/` folder of this bot to use them.
+In the needed core repository we provide a folder with git hooks which can be used to automate several processes. Copy them to the `.git/hooks/` folder of this bot and make them executable (e.g. `chmod +x .git/hooks/pre-commit`) to use them.
 
 #### pre-commit
 
