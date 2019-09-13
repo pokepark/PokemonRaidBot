@@ -402,6 +402,7 @@ A few examples for access files can be found below the permission overview table
 |            | Edit extended gym details `/gym`                                 | `gym-edit`                               |
 |            | Edit gym name `/gymname`                                         | `gym-name`                               |
 |            | Edit gym address `/gymaddress`                                   | `gym-address`                            |
+|            | Edit gym gps coordinates `/gymgps`                               | `gym-gps`                                |
 |            | Edit gym note `/gymnote`                                         | `gym-note`                               |
 |            | Add a gym `/addgym`                                              | `gym-add`                                |
 |            | Delete a gym `/deletegym`                                        | `gym-delete`                             |
@@ -665,6 +666,13 @@ The bot will set the address of gym to your input. The id of the gym is required
 Example input: `/gymaddress 34, Großer Stern, 10557 Berlin`
 
 Example input to delete the gym address: `/gymaddress 34, reset`
+
+
+### Command: /gymgps
+
+The bot will set the gps coordinates of gym to your input. The id of the gym is required.
+
+Example input: `/gymgps 34, 52.5145434,13.3501189`
 
 
 ### Command: /gymnote

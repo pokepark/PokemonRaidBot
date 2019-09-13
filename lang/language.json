@@ -648,6 +648,61 @@
     "FR":"TRANSLATE",
     "PL":"TRANSLATE"
   },
+  "gym_gps_coordinates_format_error":{  
+    "NL":"Error! Stuur de coordinaten in het volgende formaat: <code>Latitude,Longitude</code>",
+    "DE":"Fehler! Bitte übermittle die Koordinaten im folgenden Format: <code>Breitengrad,Längengrad</code>",
+    "EN":"Error! Please submit the coordinates in the following format: <code>Latitude,Longitude</code>",
+    "IT":"TRANSLATE",
+    "PT-BR":"TRANSLATE",
+    "RU":"TRANSLATE",
+    "NO":"TRANSLATE",
+    "FR":"TRANSLATE",
+    "PL":"TRANSLATE"
+  },
+  "gym_gps_instructions":{  
+    "NL":"Om de gym coordinaten te veranderen stuur /gymgps <code>gym id, nieuwe gym coordinaten</code>!",
+    "DE":"Zum Ändern der Arena-Koordinaten bitte /gymgps <code>Arena-ID, neue Arena-Koordinaten</code> eingeben!",
+    "EN":"To change the coordinates of a gym please enter /gymgps <code>gym id, new gym coordinates</code>!",
+    "IT":"TRANSLATE",
+    "PT-BR":"TRANSLATE",
+    "RU":"TRANSLATE",
+    "NO":"TRANSLATE",
+    "FR":"TRANSLATE",
+    "PL":"TRANSLATE"
+  },
+  "gym_gps_example":{  
+    "NL":"Als voorbeeld: <code>/gymgps 34, 51.516263,4.377755</code>",
+    "DE":"Zum Beispiel: <code>/gymgps 34, 52.516263,13.377755</code>",
+    "EN":"For example: <code>/gymgps 34, 52.516263,13.377755</code>",
+    "IT":"TRANSLATE",
+    "PT-BR":"TRANSLATE",
+    "RU":"TRANSLATE",
+    "NO":"TRANSLATE",
+    "FR":"TRANSLATE",
+    "PL":"TRANSLATE"
+  },
+  "gym_gps_added":{  
+    "NL":"Gym coordinaten succesvol toegevoegd!",
+    "DE":"Arena-Koordinaten erfolgreich hinzugefügt!",
+    "EN":"Gym coordinates successfully added!",
+    "IT":"TRANSLATE",
+    "PT-BR":"TRANSLATE",
+    "RU":"TRANSLATE",
+    "NO":"TRANSLATE",
+    "FR":"TRANSLATE",
+    "PL":"TRANSLATE"
+  },
+  "gym_id_gps_missing":{  
+    "NL":"Error! gym id of coordinaten mist!",
+    "DE":"Fehler! Arena-ID oder Koordinaten fehlen!",
+    "EN":"Error! Gym id or coordinates are missing!",
+    "IT":"TRANSLATE",
+    "PT-BR":"TRANSLATE",
+    "RU":"TRANSLATE",
+    "NO":"TRANSLATE",
+    "FR":"TRANSLATE",
+    "PL":"TRANSLATE"
+  },
   "gymname_then_location":{  
     "NL":"Gebruik het commando /gymname <code>Naam van de gym</code> om deze aan de coordinaten vast te zetten. Daarna kan je weer een locatie delen!",
     "DE":"Bitte nutze den Befehl /gymname <code>Name der Arena</code>, um einen Arena-Namen für die zuletzt übermittelten Koordinaten festzulegen. Erst dann kann wieder ein Standort übermittelt werden!",
