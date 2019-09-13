@@ -385,7 +385,8 @@ function get_local_pokemon_name($pokemon_id_form, $override_language = false)
     if(in_array($pokedex_id, $eggs)) {
         $pokemon_name = $getTypeTranslation('egg_' . substr($pokedex_id, -1));
     } else if ($pokemon_form != 'normal') { 
-        $pokemon_name = $getTypeTranslation('pokemon_id_' . $pokedex_id) . SP . $getTypeTranslation('pokemon_form_' . $pokemon_form);
+        $pokemon_name = $getTypeTranslation('pokemon_id_' . $pokedex_id);
+        $pokemon_name = (!empty($pokemon_name)) ? ($pokemon_name . SP . $getTypeTranslation('pokemon_form_' . $pokemon_form)) : '';
     } else { 
         $pokemon_name = $getTypeTranslation('pokemon_id_' . $pokedex_id);
     }
@@ -398,7 +399,7 @@ function get_local_pokemon_name($pokemon_id_form, $override_language = false)
     } else if(empty($pokemon_name)) {
         $rs = my_query(
                 "
-                SELECT    pokemon_name
+                SELECT    pokemon_name, pokemon_form
                 FROM      pokemon
                 WHERE     pokedex_id = {$pokedex_id}
                 AND       pokemon_form = '{$pokemon_form}'
@@ -406,7 +407,13 @@ function get_local_pokemon_name($pokemon_id_form, $override_language = false)
             );
 
         while ($pokemon = $rs->fetch_assoc()) {
+            // Pokemon name
             $pokemon_name = $pokemon['pokemon_name'];
+            // Pokemon form
+            if(!empty($pokemon['pokemon_form']) && $pokemon['pokemon_form'] != 'normal') {
+                $pokemon_form = $getTypeTranslation('pokemon_form_' . $pokemon['pokemon_form']);
+                $pokemon_name = (!empty($pokemon_form)) ? ($pokemon_name . SP . $pokemon_form) : ($pokemon_name . SP . ucfirst($pokemon['pokemon_form']));
+            }
         }
     }
 
