@@ -697,9 +697,37 @@ Check your bot logfile and other related log files, e.g. apache/httpd log, php l
 
 # Updates
 
-Currently constantly new features, bug fixes and improvements are added to the bot. Since we do not have an update mechanism yet, when updating the bot, please always do the following:
- - Add new config variables which got added to the config.json.example to your own config.json!
- - If new tables and/or columns got added or changed inside raid-pokemon-bot.sql, please add/alter these tables/columns at your existing installation!
+The bot has a version system and checks for updates to the database automatically.
+
+The bot will send a message to the MAINTAINER_ID when an upgrade is required. In case the MAINTAINER_ID is not specified an error message is written to the error log of your webserver.
+
+Required SQL upgrades files can be found under the `sql/upgrade` folder and need to be applied manually!
+
+After any upgrade you need to make sure to change the bot version in your config.json as that version is used for comparison against the latest bot version in the `VERSION` file.
+
+Updates to the config file are NOT checked automatically. Therefore always check for changes to the config.json.example and add new config variables to your own config.json then too!
+
+# Git Hooks
+
+In the needed core repository we provide a folder with git hooks which can be used to automate several processes. Copy them to the `.git/hooks/` folder of this bot to use them.
+
+#### pre-commit
+
+The pre-commit git hook will automatically update the VERSION file whenever you do a `git commit`.
+
+The bot version is automatically generated when using the pre-commit hook according to the following scheme consisting of 4 parts separated by dots:
+ - Current decade (1 char)
+ - Current year (1 char)
+ - Current day of the year (up to 3 chars)
+ - Number of the commit at the current day of the year (1 or more chars)
+
+To give a little example the bot version `1.9.256.4` means:
+ - Decade was 20**1**0-20**1**9
+ - Year was 201**9**
+ - Day number **256** (from 365 days in 2019) was the 13th September 2019
+ - There have been **4** commits at that day
+
+This way it is easy to find out when a bot version was released and how old/new a version is.
 
 # SQL Files
 
