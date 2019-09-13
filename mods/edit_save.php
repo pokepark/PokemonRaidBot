@@ -105,6 +105,7 @@ if ($update['callback_query']['message']['chat']['type'] == 'private') {
 
     // Get raid times.
     $raid = get_raid($data['id']);
+    $raid_duration = $raid['t_duration'];
 
     // Get raid level.
     $raid_level = get_raid_level($raid['pokemon']);
@@ -123,7 +124,7 @@ if ($update['callback_query']['message']['chat']['type'] == 'private') {
     }
 
     // Add keys to share.
-    $pre_text = EMOJI_CLOCK . SP . RAID_POKEMON_DURATION_SHORT . getTranslation('minutes_short') . SP . '+' . SP;
+    $pre_text = EMOJI_CLOCK . SP . $raid_duration . getTranslation('minutes_short') . SP . '+' . SP;
     $keys_share = share_keys($id, 'raid_share', $update, $chats, $pre_text);
     $keys = array_merge($keys, $keys_share);
 

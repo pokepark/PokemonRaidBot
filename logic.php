@@ -197,7 +197,8 @@ function get_raid($raid_id)
         SELECT     raids.*,
                    gyms.lat, gyms.lon, gyms.address, gyms.gym_name, gyms.ex_gym, gyms.gym_note,
                    users.name,
-                   TIME_FORMAT(TIMEDIFF(end_time, UTC_TIMESTAMP()) + INTERVAL 1 MINUTE, '%k:%i') AS t_left
+                   TIME_FORMAT(TIMEDIFF(end_time, UTC_TIMESTAMP()) + INTERVAL 1 MINUTE, '%k:%i') AS t_left,
+                   TIMESTAMPDIFF(MINUTE,raids.start_time,raids.end_time) as t_duration
         FROM       raids
         LEFT JOIN  gyms
         ON         raids.gym_id = gyms.id
