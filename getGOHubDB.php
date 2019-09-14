@@ -6,7 +6,7 @@ $SQL_file = __DIR__ . '/sql/gohub-raid-boss-pokedex.sql';
 
 // Pokemon IDs.
 $first_dex_id = 1;
-$last_dex_id = 493;
+$last_dex_id = 809;
 
 // Get JSON
 function getPokemonData($pokedex_id, $pokemon_form = 'Normal') {

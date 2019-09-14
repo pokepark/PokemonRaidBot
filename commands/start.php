@@ -6,12 +6,16 @@ debug_log('START()');
 //debug_log($update);
 //debug_log($data);
 
+// Check access.
+bot_access_check($update, 'create');
+
 // Get gym by name.
 // Trim away everything before "/start "
 $searchterm = $update['message']['text'];
 $searchterm = substr($searchterm, 7);
 
 // Get the keys by gym name search.
+$keys = '';
 if(!empty($searchterm)) {
     $keys = raid_get_gyms_list_keys($searchterm);
 } 

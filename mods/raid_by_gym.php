@@ -6,6 +6,9 @@ debug_log('raid_by_gym()');
 //debug_log($update);
 //debug_log($data);
 
+// Check access.
+bot_access_check($update, 'create');
+
 // Get the first letter
 $first = $data['arg'];
 
@@ -41,11 +44,17 @@ if (!$keys) {
 // Build callback message string.
 $callback_response = getTranslation('here_we_go');
 
+// Telegram JSON array.
+$tg_json = array();
+
 // Answer callback.
-answerCallbackQuery($update['callback_query']['id'], $callback_response);
+$tg_json[] = answerCallbackQuery($update['callback_query']['id'], $callback_response, true);
 
 // Edit the message.
-edit_message($update, getTranslation('select_gym_name'), $keys);
+$tg_json[] = edit_message($update, getTranslation('select_gym_name'), $keys, false, true);
+
+// Telegram multicurl request.
+curl_json_multi_request($tg_json);
 
 // Exit.
 exit();

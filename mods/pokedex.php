@@ -6,6 +6,9 @@ debug_log('pokedex()');
 //debug_log($update);
 //debug_log($data);
 
+// Check access.
+bot_access_check($update, 'pokedex');
+
 // Get the limit.
 $limit = $data['id'];
 
@@ -27,11 +30,17 @@ if ($update['callback_query']['message']['chat']['type'] == 'private') {
     // Build callback message string.
     $callback_response = 'OK';
 
+    // Telegram JSON array.
+    $tg_json = array();
+
     // Answer callback.
-    answerCallbackQuery($update['callback_query']['id'], $callback_response);
+    $tg_json[] = answerCallbackQuery($update['callback_query']['id'], $callback_response, true);
 
     // Edit message.
-    edit_message($update, $msg, $keys, false);
+    $tg_json[] = edit_message($update, $msg, $keys, false, true);
+
+    // Telegram multicurl request.
+    curl_json_multi_request($tg_json);
 } 
 
 // Exit.

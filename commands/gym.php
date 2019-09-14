@@ -1,45 +1,29 @@
 <?php
 // Write to log.
-debug_log('GYM()');
+debug_log('GYM');
 
 // For debug.
 //debug_log($update);
 //debug_log($data);
 
-// Get gym name.
-$gym_name = trim(substr($update['message']['text'], 4));
+// Check access.
+bot_access_check($update, 'gym-details');
 
-// Write to log.
-debug_log('Setting gym name to ' . $gym_name);
+// Set message.
+$msg = '<b>' . getTranslation('show_gym_details') . SP . '—' . SP . getTranslation('select_gym_first_letter') . '</b>';
 
-// Private chat type.
-if ($update['message']['chat']['type'] == 'private') {
+// Set keys.
+$keys = raid_edit_gyms_first_letter_keys('gym_details');
 
-    try {
-     
-         // Update gym name in raid table.
-        $query = '
-            UPDATE gyms
-            SET gym_name = :gym_name, show_gym = 1
-            WHERE
-                gym_id = :gym_id
-            ORDER BY
-                id DESC
-            LIMIT 1
-        ';
-        $statement = $dbh->prepare( $query );
-        $statement->bindValue(':gym_name', $gym_name, PDO::PARAM_STR);
-        $statement->bindValue(':gym_id', $update['message']['from']['id'], PDO::PARAM_INT);
-        $statement->execute();   
-    }
-    catch (PDOException $exception) {
+// Add key for hidden gyms.
+$h_keys = [];
+$h_keys[] = universal_inner_key($h_keys, '0', 'gym_hidden_letter', 'gym_details', getTranslation('hidden_gyms'));
+$h_keys = inline_key_array($h_keys, 1);
 
-        error_log($exception->getMessage());
-        $dbh = null;
-        exit;
-    }
+// Merge keys.
+$keys = array_merge($h_keys, $keys);
 
-    // Send the message.
-    sendMessage($update['message']['chat']['id'], getTranslation('gym_name_updated'));
-}
+// Send message.
+send_message($update['message']['chat']['id'], $msg, $keys, ['reply_markup' => ['selective' => true, 'one_time_keyboard' => true], 'disable_web_page_preview' => 'true']);
+
 ?>

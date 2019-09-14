@@ -12,22 +12,17 @@ $keys = [];
 // Build message string.
 $msg = ($data['arg'] == 1) ? (getTranslation('done') . '!') : (getTranslation('action_aborted'));
 
+// Telegram JSON array.
+$tg_json = array();
+
 // Answer callback.
-answerCallbackQuery($update['callback_query']['id'], $msg);
+$tg_json[] = answerCallbackQuery($update['callback_query']['id'], $msg, true);
 
 // Edit the message.
-edit_message($update, $msg, $keys);
+$tg_json[] = edit_message($update, $msg, $keys, false, true);
 
-// Set gym_user_id tag.
-$gym_user_id = '#' . $update['callback_query']['from']['id'];
-
-// Get gym.
-$gym = get_gym($data['id']);
-
-// Delete gym from database.
-if($gym['gym_name'] == $gym_user_id && $gym['show_gym'] == 0 && $data['arg'] == 2) {
-    delete_gym($data['id']);
-}
+// Telegram multicurl request.
+curl_json_multi_request($tg_json);
 
 // Exit.
 exit();

@@ -6,8 +6,8 @@ debug_log('raids_delete()');
 //debug_log($update);
 //debug_log($data);
 
-// Check raid access.
-raid_access_check($update, $data);
+// Access check.
+raid_access_check($update, $data, 'delete');
 
 // Get the action.
 // 0 -> Confirmation required
@@ -66,11 +66,17 @@ if ($action == 0) {
 // Build callback message string.
 $callback_response = 'OK';
 
+// Telegram JSON array.
+$tg_json = array();
+
 // Answer callback.
-answerCallbackQuery($update['callback_query']['id'], $callback_response);
+$tg_json[] = answerCallbackQuery($update['callback_query']['id'], $callback_response, true);
 
 // Edit message.
-edit_message($update, $msg, $keys, false);
+$tg_json[] = edit_message($update, $msg, $keys, false, true);
+
+// Telegram multicurl request.
+curl_json_multi_request($tg_json);
 
 // Exit.
 exit();

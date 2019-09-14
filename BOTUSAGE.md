@@ -8,7 +8,7 @@ Germany
 - Elze - https://t.me/PoGoGronauElzeRaids
 - Gronau - https://t.me/PoGoGronauElzeRaids
 - Hildesheim - https://t.me/PoGoHiRaids, https://t.me/PoGoHi
-- Kaiserslautern - https://t.me/PoGoKlRaids, https://t.me/PoGoKl
+- Kaiserslautern - https://t.me/PoGoKlRaids
 - Nordstemmen - https://t.me/PoGoGronauElzeRaids
 - Regensburg
 

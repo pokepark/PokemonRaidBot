@@ -10,7 +10,9 @@ debug_log('RAID()');
  * Mimic inline message to create raid poll from external notifier.
  *
  */
-$tz = TIMEZONE;
+
+// Check access.
+bot_access_check($update, 'create');
 
 // Get data from message text. (remove: "/raid ")
 $gym_data = trim(substr($update['message']['text'], 5));
@@ -86,9 +88,8 @@ catch (PDOException $exception) {
 }
 
 /* Remove all unknown gyms */
-if ( $gym_id <= 0 ) {
-
-//   send_message($update['message']['chat']['id'], 'Invalid input - Gym is not matched in database', []);
+if ($gym_id <= 0) {
+   //send_message($update['message']['chat']['id'], 'Invalid input - Gym is not matched in database', []);
    exit;
 }
 
@@ -144,7 +145,7 @@ if ($raid_id > 0) {
 
     // Debug log
     debug_log('Updated raid ID: ' . $raid_id);
-//    send_message($update['message']['chat']['id'], 'Raid is updated: ' . $raid_id, []);
+    //send_message($update['message']['chat']['id'], 'Raid is updated: ' . $raid_id, []);
 
     // Get raid data.
     $raid = get_raid($raid_id);
@@ -153,42 +154,19 @@ if ($raid_id > 0) {
     exit();
 }
 
-// Address found.
-//if (!empty($address)) {
-    // Insert gym with address, lat and lon to database if not already in database
-//    $gym2db = insert_gym($name, $lat, $lon, $address);
-
-    // Build the query.
-/*    $rs = my_query(
-        "
-        INSERT INTO   raids
-        SET           pokemon = '{$db->real_escape_string($boss)}',
-		              user_id = {$update['message']['from']['id']},
-		              first_seen = DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:00'),
-		              start_time = DATE_ADD(first_seen, INTERVAL {$countdown} MINUTE),
-		              end_time = DATE_ADD(start_time, INTERVAL {$endtime} MINUTE),
-		              gym_team = '{$db->real_escape_string($team)}',
-		              gym_id = '{$gym_id}',
-		              timezone = '{$tz}'
-        "
-    ); */
-// No address found.
-/* } else { */
-    // Build the query.
-    $rs = my_query(
-        "
-        INSERT INTO   raids
-        SET           pokemon = '{$db->real_escape_string($boss)}',
-		              user_id = {$update['message']['from']['id']},
-		              first_seen = DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:00'),
-		              start_time = DATE_ADD(first_seen, INTERVAL {$countdown} MINUTE),
-		              end_time = DATE_ADD(start_time, INTERVAL {$endtime} MINUTE),
-		              gym_team = '{$db->real_escape_string($team)}',
-		              gym_id = '{$gym_id}',
-		              timezone = '{$tz}'
-        "
-    );
-// }
+// Build the query.
+$rs = my_query(
+    "
+    INSERT INTO   raids
+    SET           pokemon = '{$db->real_escape_string($boss)}',
+		  user_id = {$update['message']['from']['id']},
+		  first_seen = DATE_FORMAT(UTC_TIMESTAMP(), '%Y-%m-%d %H:%i:00'),
+		  start_time = DATE_ADD(first_seen, INTERVAL {$countdown} MINUTE),
+		  end_time = DATE_ADD(start_time, INTERVAL {$endtime} MINUTE),
+		  gym_team = '{$db->real_escape_string($team)}',
+		  gym_id = '{$gym_id}'
+    "
+);
 
 // Get last insert id from db.
 $id = my_insert_id();

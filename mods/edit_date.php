@@ -6,14 +6,8 @@ debug_log('edit_date()');
 //debug_log($update);
 //debug_log($data);
 
-// Check access - user must be admin!
-$admin_access = bot_access_check($update, BOT_ADMINS, true);
-if (!$admin_access) {
-    // Do not edit message, but send access denied back to user and exit then
-    $response_msg = '<b>' . getTranslation('bot_access_denied') . '</b>';
-    sendMessage($update['callback_query']['from']['id'], $response_msg);
-    exit;
-}
+// Check access.
+bot_access_check($update, 'ex-raids');
 
 // Set the id.
 $id = $data['id'];
@@ -28,35 +22,8 @@ $raid_time = explode(',', $arg)[1];
 $keys = [];
 $keys_count = 2;
 
-// Check amount of "-" in $arg to add day, hour and minute of ex-raid date
-// Received: Year-Month / 1970-01 / 1x "-"
-if(substr_count($raid_time, '-') == 1) {
-    debug_log('Generating buttons for each day in the given year and month: ' . $raid_time);
-
-    // Number of days in month
-    $days_in_month = date('t', strtotime($raid_time));
-
-    // Formatting stuff.
-    $month = substr($raid_time, -2);
-    $year = substr($raid_time, 0, 4);
-
-    // Is month the current month then start from current day, otherwise from 1st day of the month
-    $start_date = (date('m') == $month) ? date('j') : 1;
-
-    // Buttons for each day in the given month
-    for ($i = $start_date; $i <= $days_in_month; $i = $i + 1) {
-        // Create the keys.
-        $keys[] = array(
-            //'text'          => $arg . '-' . str_pad($i, 2, '0', STR_PAD_LEFT),
-            'text'          => str_pad($i, 2, '0', STR_PAD_LEFT) . ' ' . getTranslation('month_' . $month) . ' ' . $year,
-            'callback_data' => $id . ':edit_date:' . $arg . '-' . str_pad($i, 2, '0', STR_PAD_LEFT)
-        );
-    }
-
-    //Set message
-    $msg = getTranslation('raid_select_date');
 // Received: Year-Month-Day / 1970-01-01 / 2x "-"
-} else if (substr_count($raid_time, '-') == 2) {
+if (substr_count($raid_time, '-') == 2) {
     debug_log('Generating buttons for each hour of the day');
     // Buttons for each hour
     for ($i = 0; $i <= 23; $i = $i + 1) {
@@ -90,16 +57,32 @@ if(substr_count($raid_time, '-') == 1) {
 // Received: Year-Month-Day Hour-Minute-Second / 1970-01-01 00-00-00 / 4x "-"
 } else if (substr_count($raid_time, '-') == 4) {
     debug_log('Received the following date for the raid: ' . $raid_time);
+
+    // Format date, e.g 14 April 2019, 15:15h
+    $tz = TIMEZONE;
+    $tz_raid_time = DateTimeImmutable::createFromFormat('Y-m-d H-i-s', $raid_time, new DateTimeZone($tz));
+    $date_tz = $tz_raid_time->format('Y-m-d');
+    $text_split = explode('-', $date_tz);
+    $text_day = $text_split[2];
+    $text_month = getTranslation('month_' . $text_split[1]);
+    $text_year = $text_split[0];
+    $time_tz = $tz_raid_time->format('H:i') . 'h';
+
+    // Raid time in UTC
+    $utc_raid_time = $tz_raid_time->setTimezone(new DateTimeZone('UTC'));
+    $utc_raid_time = $utc_raid_time->format('Y-m-d H-i-s');
+    debug_log('Converting date to UTC to store in database');
+    debug_log('UTC date for the raid: ' . $utc_raid_time);
     debug_log('Waiting for confirmation to save the raid');
 
     // Adding button to continue with next step in raid creation
     $keys[] = array(
         'text'          => getTranslation('next'),
-        'callback_data' => $id . ':edit_time:' . $arg . ',X,0'
+        'callback_data' => $id . ':edit_time:' . $pokemon_id . ',' . $utc_raid_time . ',X,0'
     );
 
     // Set message.
-    $msg = getTranslation('start_date_time') . ':' . CR .'<b>' . $raid_time . '</b>';
+    $msg = getTranslation('start_date_time') . ':' . CR .'<b>' . $text_day . SP . $text_month . SP . $text_year . ',' . SP . $time_tz . '</b>';
 }
 
 // Get the inline key array.
@@ -125,11 +108,17 @@ $keys = array_merge($keys, $nav_keys);
 // Build callback message string.
 $callback_response = 'OK';
 
+// Telegram JSON array.
+$tg_json = array();
+
 // Answer callback.
-answerCallbackQuery($update['callback_query']['id'], $callback_response);
+$tg_json[] = answerCallbackQuery($update['callback_query']['id'], $callback_response, true);
 
 // Edit the message.
-edit_message($update, $msg, $keys);
+$tg_json[] = edit_message($update, $msg, $keys, false, true);
+
+// Telegram multicurl request.
+curl_json_multi_request($tg_json);
 
 // Exit.
 exit();
