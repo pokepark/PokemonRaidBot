@@ -101,7 +101,7 @@ Inside the config folder, copy the example config.json.example to your own confi
 
 Don't forget to change the file permissions of your config file to 0600 (e.g. `chmod 0600 config.json`) afterwards.
 
-Some values are missing as the bot has default values. If you like to change those, you need to add and define them in your config.php file, e.g. `"DDOS_MAXIMUM":"10"`.
+Some values are missing as the bot has default values. If you like to change those, you need to add and define them in your config.json file, e.g. `"DDOS_MAXIMUM":"10"`.
 
 ## Database connection
 
