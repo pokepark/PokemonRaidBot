@@ -71,7 +71,17 @@ Bot Settings:
 
 Create a new mysql database and user for your bot.
 
-Only allow localhost access.
+Command to access the terminal as root user: `mysql -u root -p`
+
+Command to create a user with localhost access (Only allow localhost access!): `CREATE USER 'USERNAME'@'localhost' IDENTIFIED BY 'PASSWORD';`
+
+Command to create a database: `CREATE DATABASE DATABASENAME;`
+
+Command to create privileges for new user to database: `GRANT ALL PRIVILEGES ON DATABASENAME.* TO 'USERNAME'@'localhost';`
+
+Flush privileges: `FLUSH PRIVILEGES;`
+
+Just use exit to logout from database.
 
 Import `pokemon-raid-bot.sql` as default DB structure and `raid-boss-pokedex.sql` for the current raid bosses. You can find these files in the sql folder.
 
