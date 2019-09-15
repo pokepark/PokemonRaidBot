@@ -33,7 +33,7 @@ foreach ($update as $raid) {
         break;    
     }
 }
-if ($weebhook == true) {
+if ($webhook == true) {
     
     // Create raid(s) and exit.
     include_once(ROOT_PATH . '/commands/raid_from_webhook.php');
