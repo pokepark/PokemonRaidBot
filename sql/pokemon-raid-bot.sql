@@ -44,13 +44,15 @@ CREATE TABLE `cleanup` (
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `gyms` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `lat` decimal(10,8) DEFAULT NULL,
-  `lon` decimal(11,8) DEFAULT NULL,
+  `lat` decimal(19,16) DEFAULT NULL,
+  `lon` decimal(19,16) DEFAULT NULL,
   `address` varchar(255) DEFAULT NULL,
   `gym_name` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL,
   `ex_gym` tinyint(1) unsigned DEFAULT '0',
   `show_gym` tinyint(1) unsigned DEFAULT '0',
   `gym_note` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `gym_id` varchar(40) DEFAULT NULL,
+  `img_url` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -90,6 +92,9 @@ CREATE TABLE `raids` (
   `end_time` datetime DEFAULT NULL,
   `gym_team` enum('mystic','valor','instinct') DEFAULT NULL,
   `gym_id` int(10) unsigned NOT NULL,
+  `move1` varchar(255) DEFAULT NULL,
+  `move2` varchar(255) DEFAULT NULL,
+  `gender` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `end_time` (`end_time`),
   KEY `user_id` (`user_id`)
