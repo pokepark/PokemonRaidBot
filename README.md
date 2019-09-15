@@ -99,7 +99,7 @@ Important: The raid level is NOT set when importing the raid bosses from the goh
 
 Inside the config folder, copy the example config.json.example to your own config.json and edit the values (explained further).
 
-Don't forget to change the file permissions of your config file to 0600 (e.g. `chmod 0600 config.json`) afterwards.
+Don't forget to change the file permissions of your config file to 0600 (e.g. `chmod 0600 config.json`) afterwards. You need to change the ownerchip of all files to the webserver user - otherwise the config is not readable. Normally this: `chown www-data:www-data -R *`
 
 Some values are missing as the bot has default values. If you like to change those, you need to add and define them in your config.json file, e.g. `"DDOS_MAXIMUM":"10"`.
 
