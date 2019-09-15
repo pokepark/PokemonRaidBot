@@ -23,6 +23,24 @@ include_once(CORE_BOT_PATH . '/db.php');
 // Run cleanup if requested
 include_once(CORE_BOT_PATH . '/cleanup_run.php');
 
+// We maybe receive a webhook so far...
+$webhook = false;
+foreach ($update as $raid) {
+
+    if (isset($raid['type']) && $raid['type'] == 'raid') {
+    
+        $webhook = true;
+        break;    
+    }
+}
+if ($weebhook == true) {
+    
+    // Create raid(s) and exit.
+    include_once(ROOT_PATH . '/commands/raid_from_webhook.php');
+    $dbh = null;
+    exit();
+}
+
 // Update the user
 update_user($update);
 
@@ -35,12 +53,14 @@ if (isset($update['callback_query'])) {
 } else if (isset($update['inline_query'])) {
     // List quests and exit.
     raid_list($update);
+    $dbh = null;
     exit();
 
 // Location received.
 } else if (isset($update['message']['location']) && $update['message']['chat']['type'] == 'private') {
     // Create raid and exit.
     include_once(ROOT_PATH . '/mods/raid_by_location.php');
+    $dbh = null;
     exit();
 
 // Cleanup collection from channel/supergroup messages.
