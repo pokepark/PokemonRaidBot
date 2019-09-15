@@ -145,8 +145,8 @@ foreach ($update as $raid) {
     $pokemon = $pokemon . '-normal';
     $start_timestamp = $raid['message']['start'];
     $end_timestamp = $raid['message']['end'];
-    $start = date("Y-m-d H:i:s",$start_timestamp);
-    $end = date("Y-m-d H:i:s",$end_timestamp);
+    $start = gmdate("Y-m-d H:i:s",$start_timestamp);
+    $end = gmdate("Y-m-d H:i:s",$end_timestamp);
     
     $team = $raid['message']['team_id'];
     if (! empty($team)) {
@@ -211,7 +211,7 @@ foreach ($update as $raid) {
         $statement = $dbh->prepare( $query );
         $statement->bindValue(':pokemon', $pokemon, PDO::PARAM_STR);
         $statement->bindValue(':user_id', RAID_AUTO_USER, PDO::PARAM_STR);
-        $statement->bindValue(':first_seen', date("Y-m-d H:i:s"), PDO::PARAM_STR);
+        $statement->bindValue(':first_seen', gmdate("Y-m-d H:i:s"), PDO::PARAM_STR);
         $statement->bindValue(':start_time', $start, PDO::PARAM_STR);
         $statement->bindValue(':end_time', $end, PDO::PARAM_STR);
         $statement->bindValue(':gym_team', $team, PDO::PARAM_STR);
