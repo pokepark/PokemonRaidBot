@@ -223,6 +223,9 @@ foreach ($update as $raid) {
     // Set reply to.
     $reply_to = $chat_id; //$update['message']['chat']['id'];
     
+    // Set keys.
+    $keys = keys_vote($created_raid);
+    
     // Send the message.
     send_message($chat_id, $text, $keys, ['reply_to_message_id' => $reply_to, 'reply_markup' => ['selective' => true, 'one_time_keyboard' => true], 'disable_web_page_preview' => 'true']);
 }
