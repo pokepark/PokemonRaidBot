@@ -2765,6 +2765,8 @@ function get_overview($update, $chats_active, $raids_active, $action = 'refresh'
             // Add time left message.
             $msg .= $pokemon . ' — <b>' . getPublicTranslation('still') . SP . $time_left . 'h</b>' . CR;
         }
+        
+        if ( $raid_id ) {
 
         // Count attendances
         $rs_att = my_query(
@@ -2801,6 +2803,7 @@ function get_overview($update, $chats_active, $raids_active, $action = 'refresh'
 
         // Add CR to message now since we don't know if attendances got added or not
         $msg .= CR;
+        }
 
         // Prepare next iteration
         $previous = $current;
