@@ -147,15 +147,6 @@ foreach ($update as $raid) {
     $end_timestamp = $raid['message']['end'];
     $start = date("Y-m-d H:i:s",$start_timestamp);
     $end = date("Y-m-d H:i:s",$end_timestamp);
-
-    // Insert new raid or update existing raid/ex-raid?
-    $raid_id = active_raid_duplication_check($gym_internal_id);
-    
-    // Raid exists, do updates!
-    if ( $raid_id > 0 ) {
-        
-        continue;
-    }
     
     $team = $raid['message']['team_id'];
     if (! empty($team)) {
@@ -170,6 +161,43 @@ foreach ($update as $raid) {
                 $team = 'instinct';
                 break;
         }
+    }
+
+    // Insert new raid or update existing raid/ex-raid?
+    $raid_id = active_raid_duplication_check($gym_internal_id);
+    
+    // Raid exists, do updates!
+    if ( $raid_id > 0 ) {
+        
+        try {
+
+            $query = '
+                UPDATE raids
+                SET
+                    pokemon = :pokemon,
+                    gym_team = :gym_team,
+                    move1 = :move1,
+                    move2 = :move2,
+                    gender = :gender
+                WHERE
+                    id LIKE :id
+            ';
+            $statement = $dbh->prepare( $query );
+            $statement->bindValue(':pokemon', $pokemon, PDO::PARAM_STR);
+            $statement->bindValue(':gym_team', $team, PDO::PARAM_STR);
+            $statement->bindValue(':move1', $move_1, PDO::PARAM_STR);
+            $statement->bindValue(':move2', $move_2, PDO::PARAM_STR);
+            $statement->bindValue(':gender', $gender, PDO::PARAM_STR);
+            $statement->bindValue(':id', $raid_id, PDO::PARAM_INT);
+            $statement->execute();
+        }
+        catch (PDOException $exception) {
+
+            error_log($exception->getMessage());
+            $dbh = null;
+            exit;
+        }
+        continue;
     }
     
     // Create Raid and send messages
