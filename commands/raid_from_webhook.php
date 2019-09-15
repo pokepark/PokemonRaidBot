@@ -149,7 +149,7 @@ foreach ($update as $raid) {
     $end = date("Y-m-d H:i:s",$end_timestamp);
 
     // Insert new raid or update existing raid/ex-raid?
-    $raid_id = active_raid_duplication_check($gym_indernal_id);
+    $raid_id = active_raid_duplication_check($gym_internal_id);
     
     // Raid exists, do updates!
     if ( $raid_id > 0 ) {
