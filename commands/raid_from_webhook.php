@@ -12,12 +12,12 @@ foreach ($update as $raid) {
     }
 
     // Create gym if not exists
-    $gym_name = $data['message']['name'];
-    $gym_lat = $data['message']['latitude'];
-    $gym_lon = $data['message']['longitude'];
-    $gym_id = $data['message']['gym_id'];
-    $gym_img_url = $data['message']['url'];
-    $gym_is_ex = $data['message']['is_ex_raid_eligible'];
+    $gym_name = $raid['message']['name'];
+    $gym_lat = $raid['message']['latitude'];
+    $gym_lon = $raid['message']['longitude'];
+    $gym_id = $raid['message']['gym_id'];
+    $gym_img_url = $raid['message']['url'];
+    $gym_is_ex = $raid['message']['is_ex_raid_eligible'];
     $gym_internal_id = 0;
     
     // Does gym exists?
