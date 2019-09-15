@@ -112,7 +112,7 @@ foreach ($update as $raid) {
     }
 
     // Create raid if not exists otherwise update if changes are detected
-    $pokemon = $raid['message']['pokemon'];
+    $pokemon = $raid['message']['pokemon_id'];
     // Just an egg
     if ( $pokemon == 0 ) {
         
@@ -149,7 +149,7 @@ foreach ($update as $raid) {
     $end = date("Y-m-d H:i:s",$end_timestamp);
 
     // Insert new raid or update existing raid/ex-raid?
-    $raid_id = raid_duplication_check($gym_indernal_id,$start, $end);
+    $raid_id = active_raid_duplication_check($gym_indernal_id);
     
     // Raid exists, do updates!
     if ( $raid_id > 0 ) {
