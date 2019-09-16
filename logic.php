@@ -1057,7 +1057,7 @@ function raid_edit_gym_keys($first, $warn = true, $action = 'edit_raidlevel', $d
     $rs = my_query(
         "
         SELECT    gyms.id, gyms.gym_name,
-                  CASE WHEN SUM(raids.end_time > UTC_TIMESTAMP() + INTERVAL 15 MINUTE) THEN 1 ELSE 0 END AS active_raid
+                  CASE WHEN SUM(raids.end_time > UTC_TIMESTAMP() - INTERVAL 10 MINUTE) THEN 1 ELSE 0 END AS active_raid
         FROM      gyms
         LEFT JOIN raids
         ON        raids.gym_id = gyms.id 
