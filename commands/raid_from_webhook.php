@@ -237,7 +237,7 @@ foreach ($update as $raid) {
     if (RAID_LOCATION == true) {
 
         //$loc = send_location($update['message']['chat']['id'], $raid['lat'], $raid['lon']);
-        $msg_text = !empty($created_raid['address']) ? $created_raid['address'] . ', ' . substr(strtoupper(BOT_ID), 0, 1) . '-ID = ' . $created_raid['id'] : $created_raid['pokemon'] . ', ' . $created_raid['id']; // DO NOT REMOVE " ID = " --> NEEDED FOR CLEANUP PREPARATION!
+        $msg_text = !empty($created_raid['address']) ? $created_raid['address'] . ', ' . substr(strtoupper(BOT_ID), 0, 1) . '-ID = ' . $created_raid['id'] : $created_raid['pokemon'] . ', ' . substr(strtoupper(BOT_ID), 0, 1) . '-ID = ' . $created_raid['id']; // DO NOT REMOVE " ID = " --> NEEDED FOR CLEANUP PREPARATION!
         $loc = send_venue($chat_id, $created_raid['lat'], $created_raid['lon'], "", $msg_text);
 
         // Write to log.
