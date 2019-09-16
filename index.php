@@ -11,18 +11,6 @@ debug_log("RAID-BOT '" . BOT_ID . "'");
 // Check API Key and get input from telegram
 include_once(CORE_BOT_PATH . '/apikey.php');
 
-// DDOS protection
-include_once(CORE_BOT_PATH . '/ddos.php');
-
-// Get language
-include_once(CORE_BOT_PATH . '/userlanguage.php');
-
-// Database connection
-include_once(CORE_BOT_PATH . '/db.php');
-
-// Run cleanup if requested
-include_once(CORE_BOT_PATH . '/cleanup_run.php');
-
 // We maybe receive a webhook so far...
 $webhook = false;
 foreach ($update as $raid) {
@@ -33,7 +21,23 @@ foreach ($update as $raid) {
         break;    
     }
 }
-if ($webhook == true) {
+
+if ($webhook === false) {
+    
+    // DDOS protection
+    include_once(CORE_BOT_PATH . '/ddos.php');
+}
+
+// Get language
+include_once(CORE_BOT_PATH . '/userlanguage.php');
+
+// Database connection
+include_once(CORE_BOT_PATH . '/db.php');
+
+// Run cleanup if requested
+include_once(CORE_BOT_PATH . '/cleanup_run.php');
+
+if ($webhook === true) {
     
     // Create raid(s) and exit.
     include_once(ROOT_PATH . '/commands/raid_from_webhook.php');
