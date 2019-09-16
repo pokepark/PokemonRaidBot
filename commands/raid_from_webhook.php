@@ -232,7 +232,7 @@ foreach ($update as $raid) {
     // Get raid data.
     $created_raid = get_raid($raid_id);
 
-    $chat_id = '';
+    $chat_id = WEBHOOK_CHAT;
     // Send location.
     if (RAID_LOCATION == true) {
 
