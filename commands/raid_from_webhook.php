@@ -8,7 +8,7 @@ foreach ($update as $raid) {
     $pokemon = $raid['message']['pokemon_id'];
     $exclude_raid_levels = explode(',', WEBHOOK_EXCLUDE_RAID_LEVEL);
     $exclude_pokemons = explode(',', WEBHOOK_EXCLUDE_POKEMON);
-    if ( in_array($level, $explude_raid_levels) || in_array($pokemon, $explude_pokemons) ) {
+    if ( in_array($level, $exclude_raid_levels) || in_array($pokemon, $exclude_pokemons) ) {
         
         continue;
     }
