@@ -5,8 +5,10 @@ debug_log('RAID_FROM_WEBHOOK()');
 foreach ($update as $raid) {
 
     $level = $raid['message']['level'];
-    // TODO: Read from configuration
-    if ( $level == 1 || $level == 2 || $level == 3 ) {
+    $pokemon = $raid['message']['pokemon_id'];
+    $exclude_raid_levels = explode(',', WEBHOOK_EXCLUDE_RAID_LEVEL);
+    $exclude_pokemons = explode(',', WEBHOOK_EXCLUDE_POKEMON);
+    if ( in_array($level, $explude_raid_levels) || in_array($pokemon, $explude_pokemons) ) {
         
         continue;
     }
@@ -21,6 +23,11 @@ foreach ($update as $raid) {
     $gym_internal_id = 0;
     
     // Does gym exists?
+    $gym_lat_exist = 0;
+    $gym_lot_exist = 0;
+    $gym_name_exist = '';
+    $gym_is_ex_exist = 0;
+    $gym_img_url_exist = '';
     try {
 
         $query = '
@@ -34,13 +41,13 @@ foreach ($update as $raid) {
         $statement->bindValue(':gym_id', $gym_id, PDO::PARAM_STR);
         $statement->execute();
         while ($row = $statement->fetch()) {
-    
-            // TODO: Check for data
-            $gym_internal_id = $row['id'];
-            
-//            $gym_lat_exist = $row['lat'];
-//            $gym_lob_exist = $row['lon'];
-//            $gym_
+
+            $gym_internal_id = $row['id'];            
+            $gym_lat_exist = $row['lat'];
+            $gym_lon_exist = $row['lon'];
+            $gym_name_exist = $row['gym_name'];
+            $gym_is_ex_exist = $row['ex_gym'];
+            $gym_img_url_exist = $row['img_url'];
         }
     }
     catch (PDOException $exception) {
@@ -50,10 +57,9 @@ foreach ($update as $raid) {
         exit;
     }
     // Update gym name in raid table.
-    // TODO: Compare data and only update on change - so comment out to avoid traffic on the database
     if ($gym_internal_id > 0) {
         
-/*        try {
+        try {
 
             $query = '
                 UPDATE gyms
@@ -68,12 +74,12 @@ foreach ($update as $raid) {
                     gym_id LIKE :gym_id
             ';
             $statement = $dbh->prepare( $query );
-            $statement->bindValue(':lat', $gym_lat, PDO::PARAM_STR);
-            $statement->bindValue(':lon', $gym_lon, PDO::PARAM_STR);
-            $statement->bindValue(':gym_name', $gym_id, PDO::PARAM_STR);
-            $statement->bindValue(':ex_gym', $gym_is_ex, PDO::PARAM_INT);
-            $statement->bindValue(':img_url', $gym_img_url, PDO::PARAM_STR);
-            $statement->bindValue(':gym_id', $gym_id, PDO::PARAM_STR);
+            $statement->bindValue(':lat', $gym_lat_exist, PDO::PARAM_STR);
+            $statement->bindValue(':lon', $gym_lon_exist, PDO::PARAM_STR);
+            $statement->bindValue(':gym_name', $gym_name_exist, PDO::PARAM_STR);
+            $statement->bindValue(':ex_gym', $gym_is_ex_exist, PDO::PARAM_INT);
+            $statement->bindValue(':img_url', $gym_img_url_exist, PDO::PARAM_STR);
+            $statement->bindValue(':gym_id', $gym_internal_id, PDO::PARAM_STR);
             $statement->execute();
         }
         catch (PDOException $exception) {
@@ -81,7 +87,7 @@ foreach ($update as $raid) {
             error_log($exception->getMessage());
             $dbh = null;
             exit;
-        } */
+        }
     }
     // Create gym
     else {
@@ -112,7 +118,6 @@ foreach ($update as $raid) {
     }
 
     // Create raid if not exists otherwise update if changes are detected
-    $pokemon = $raid['message']['pokemon_id'];
     // Just an egg
     if ( $pokemon == 0 ) {
         
@@ -147,7 +152,6 @@ foreach ($update as $raid) {
     $end_timestamp = $raid['message']['end'];
     $start = gmdate("Y-m-d H:i:s",$start_timestamp);
     $end = gmdate("Y-m-d H:i:s",$end_timestamp);
-    
     $team = $raid['message']['team_id'];
     if (! empty($team)) {
         switch ($team) {
@@ -210,7 +214,7 @@ foreach ($update as $raid) {
         ';
         $statement = $dbh->prepare( $query );
         $statement->bindValue(':pokemon', $pokemon, PDO::PARAM_STR);
-        $statement->bindValue(':user_id', RAID_AUTO_USER, PDO::PARAM_STR);
+        $statement->bindValue(':user_id', WEBHOOK_CREATOR, PDO::PARAM_STR);
         $statement->bindValue(':first_seen', gmdate("Y-m-d H:i:s"), PDO::PARAM_STR);
         $statement->bindValue(':start_time', $start, PDO::PARAM_STR);
         $statement->bindValue(':end_time', $end, PDO::PARAM_STR);
@@ -236,7 +240,6 @@ foreach ($update as $raid) {
     // Send location.
     if (RAID_LOCATION == true) {
 
-        //$loc = send_location($update['message']['chat']['id'], $raid['lat'], $raid['lon']);
         $msg_text = !empty($created_raid['address']) ? $created_raid['address'] . ', ' . substr(strtoupper(BOT_ID), 0, 1) . '-ID = ' . $created_raid['id'] : $created_raid['pokemon'] . ', ' . substr(strtoupper(BOT_ID), 0, 1) . '-ID = ' . $created_raid['id']; // DO NOT REMOVE " ID = " --> NEEDED FOR CLEANUP PREPARATION!
         $loc = send_venue($chat_id, $created_raid['lat'], $created_raid['lon'], "", $msg_text);
 
