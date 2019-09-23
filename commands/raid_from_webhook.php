@@ -236,28 +236,51 @@ foreach ($update as $raid) {
     // Get raid data.
     $created_raid = get_raid($raid_id);
 
-    $chat_id = WEBHOOK_CHAT;
-    // Send location.
-    if (RAID_LOCATION == true) {
-
-        $msg_text = !empty($created_raid['address']) ? $created_raid['address'] . ', ' . substr(strtoupper(BOT_ID), 0, 1) . '-ID = ' . $created_raid['id'] : $created_raid['pokemon'] . ', ' . substr(strtoupper(BOT_ID), 0, 1) . '-ID = ' . $created_raid['id']; // DO NOT REMOVE " ID = " --> NEEDED FOR CLEANUP PREPARATION!
-        $loc = send_venue($chat_id, $created_raid['lat'], $created_raid['lon'], "", $msg_text);
-
-        // Write to log.
-        debug_log('location:');
-        debug_log($loc);
-    }
-    
     // Set text.
     $text = show_raid_poll($created_raid);
     
-    // Set reply to.
-    $reply_to = $chat_id; //$update['message']['chat']['id'];
-    
     // Set keys.
     $keys = keys_vote($created_raid);
+
+    $chats = explode(',', WEBHOOK_CHATS);
+    if ($level == 1 && defined(WEBHOOK_CHATS_LEVEL_1) && !empty(WEBHOOK_CHATS_LEVEL_1)) {
+        
+        $chats = explode(',', WEBHOOK_CHATS_LEVEL_1);
+    }
+    if ($level == 2 && defined(WEBHOOK_CHATS_LEVEL_2) && !empty(WEBHOOK_CHATS_LEVEL_2)) {
+        
+        $chats = explode(',', WEBHOOK_CHATS_LEVEL_2);
+    }
+    if ($level == 3 && defined(WEBHOOK_CHATS_LEVEL_3) && !empty(WEBHOOK_CHATS_LEVEL_3)) {
+        
+        $chats = explode(',', WEBHOOK_CHATS_LEVEL_3);
+    }
+    if ($level == 4 && defined(WEBHOOK_CHATS_LEVEL_4) && !empty(WEBHOOK_CHATS_LEVEL_4)) {
+        
+        $chats = explode(',', WEBHOOK_CHATS_LEVEL_4);
+    }
+    if ($level == 5 && defined(WEBHOOK_CHATS_LEVEL_5) && !empty(WEBHOOK_CHATS_LEVEL_5)) {
+        
+        $chats = explode(',', WEBHOOK_CHATS_LEVEL_5);
+    }
+    foreach ($chats as $chat) {
     
-    // Send the message.
-    send_message($chat_id, $text, $keys, ['reply_to_message_id' => $reply_to, 'reply_markup' => ['selective' => true, 'one_time_keyboard' => true], 'disable_web_page_preview' => 'true']);
+        // Send location.
+        if (RAID_LOCATION == true) {
+
+            $msg_text = !empty($created_raid['address']) ? $created_raid['address'] . ', ' . substr(strtoupper(BOT_ID), 0, 1) . '-ID = ' . $created_raid['id'] : $created_raid['pokemon'] . ', ' . substr(strtoupper(BOT_ID), 0, 1) . '-ID = ' . $created_raid['id']; // DO NOT REMOVE " ID = " --> NEEDED FOR CLEANUP PREPARATION!
+            $loc = send_venue($chat, $created_raid['lat'], $created_raid['lon'], "", $msg_text);
+
+            // Write to log.
+            debug_log('location:');
+            debug_log($loc);
+        }
+    
+        // Set reply to.
+        $reply_to = $chat; //$update['message']['chat']['id'];
+    
+        // Send the message.
+        send_message($chat, $text, $keys, ['reply_to_message_id' => $reply_to, 'reply_markup' => ['selective' => true, 'one_time_keyboard' => true], 'disable_web_page_preview' => 'true']);
+    }
 }
 ?>
