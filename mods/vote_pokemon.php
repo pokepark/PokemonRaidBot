@@ -48,10 +48,12 @@ if(!empty($atts)) {
         "
         DELETE FROM attendance
         WHERE id NOT IN (
-            SELECT MIN(id)
-            FROM   attendance
-            WHERE  raid_id = {$data['id']}
-            AND    user_id = {$update['callback_query']['from']['id']}
+            SELECT * FROM (
+                SELECT MIN(id)
+                FROM   attendance
+                WHERE  raid_id = {$data['id']}
+                AND    user_id = {$update['callback_query']['from']['id']}
+            ) AS AVOID_MYSQL_ERROR_1093
         )
         AND raid_id = {$data['id']}
         AND user_id = {$update['callback_query']['from']['id']}
