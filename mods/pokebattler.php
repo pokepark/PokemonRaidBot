@@ -178,6 +178,11 @@ if($id == 0) {
                 // Name and form.
                 $name = $pokemon;
                 $form = 'normal';
+		
+		// Fix for GIRATINA as the actual GIRATINA_ALTERED_FORM is just GIRATINA
+                if($name == 'GIRATINA' && $form == 'normal') {
+                    $form = 'ALTERED';
+                }
             }
             // Get ID and form name used internally.
             debug_log('Getting dex id and form for pokemon ' . $name . ' with form ' . $form);
