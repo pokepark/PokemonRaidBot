@@ -197,6 +197,17 @@
     "FR":"TRANSLATE",
     "PL":"TRANSLATE"
   },
+  "help_portal-import":{
+    "NL":"@PortalMapBot of @Ingressportalbot - Importeer gym",
+    "DE":"@PortalMapBot oder @Ingressportalbot - Arena importieren",
+    "EN":"@PortalMapBot or @Ingressportalbot - Import gym",
+    "IT":"TRANSLATE",
+    "PT-BR":"TRANSLATE",
+    "RU":"TRANSLATE",
+    "NO":"TRANSLATE",
+    "FR":"TRANSLATE",
+    "PL":"TRANSLATE"
+  },
   "help_pokedex":{  
     "NL":"/pokedex - Verander raid bazen",
     "DE":"/pokedex - Raid Bosse verwalten",

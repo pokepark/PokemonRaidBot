@@ -24,6 +24,7 @@ if($access && (is_file(ROOT_PATH . '/access/' . $access) || $access == 'BOT_ADMI
         $permissions[] = 'gym-note';
         $permissions[] = 'gym-add';
         $permissions[] = 'gym-delete';
+        $permissions[] = 'portal-import';
         $permissions[] = 'config-get';
         $permissions[] = 'config-set';
         $permissions[] = 'pokedex';
