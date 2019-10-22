@@ -94,7 +94,7 @@ foreach ($update as $raid) {
         
         try {
 
-            $addr = get_address($gym['lat'], $gym['lon']);
+            $addr = get_address($gym_lat, $gym_lon);
             $address = format_address($addr);
             $query = '
                 
