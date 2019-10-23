@@ -94,18 +94,15 @@ foreach ($update as $raid) {
         
         try {
 
-            $addr = get_address($gym_lat, $gym_lon);
-            $address = format_address($addr);
             $query = '
                 
-                INSERT INTO gyms (lat, lon, gym_name, address, gym_id, ex_gym, img_url, show_gym)
-                VALUES (:lat, :lon, :gym_name, :address, :gym_id, :ex_gym, :img_url, 1)
+                INSERT INTO gyms (lat, lon, gym_name, gym_id, ex_gym, img_url, show_gym)
+                VALUES (:lat, :lon, :gym_name, :gym_id, :ex_gym, :img_url, 1)
             ';
             $statement = $dbh->prepare( $query );
             $statement->bindValue(':lat', $gym_lat, PDO::PARAM_STR);
             $statement->bindValue(':lon', $gym_lon, PDO::PARAM_STR);
             $statement->bindValue(':gym_name', $gym_name, PDO::PARAM_STR);
-            $statement->bindValue(':address', $address, PDO::PARAM_STR);
             $statement->bindValue(':gym_id', $gym_id, PDO::PARAM_STR);
             $statement->bindValue(':ex_gym', $gym_is_ex, PDO::PARAM_INT);
             $statement->bindValue(':img_url', $gym_img_url, PDO::PARAM_STR);
