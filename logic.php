@@ -3273,12 +3273,14 @@ function show_raid_poll($raid)
                         sum(DISTINCT extra_mystic)     AS extra_mystic,
                         sum(DISTINCT extra_valor)      AS extra_valor,
                         sum(DISTINCT extra_instinct)   AS extra_instinct,
+                        attend_time,
+                        raid_done,
                         attendance.user_id
         FROM            attendance
           WHERE         raid_id = {$raid['id']}
             AND         (raid_done = 1
                         OR cancel = 1)
-          GROUP BY      attendance.user_id
+          GROUP BY      attendance.user_id, attend_time, raid_done
           ORDER BY      attendance.user_id, attend_time, raid_done
         "
     );
