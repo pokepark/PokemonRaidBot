@@ -88,7 +88,7 @@
                 "EN": "Megahorn"
         },
 		"pokemon_move_23" : {
-                "DE": "Fl¸gelschlag",
+                "DE": "Fl√ºgelschlag",
                 "EN": "Wing Attack"
         },
 		"pokemon_move_24" : {
@@ -104,7 +104,7 @@
                 "EN": "Dig"
         },
 		"pokemon_move_27" : {
-                "DE": "Fuﬂkick",
+                "DE": "Fu√ükick",
                 "EN": "Low Kick"
         },
 		"pokemon_move_28" : {
@@ -136,7 +136,7 @@
                 "EN": "Heart Stamp"
         },
 		"pokemon_move_35" : {
-                "DE": "Ladungsstoﬂ",
+                "DE": "Ladungssto√ü",
                 "EN": "Discharge"
         },
 		"pokemon_move_36" : {
@@ -184,7 +184,7 @@
                 "EN": "Drill Run"
         },
 		"pokemon_move_47" : {
-                "DE": "Bl¸tenwirbel",
+                "DE": "Bl√ºtenwirbel",
                 "EN": "Petal Blizzard"
         },
 		"pokemon_move_48" : {
@@ -192,7 +192,7 @@
                 "EN": "Mega Drain"
         },
 		"pokemon_move_49" : {
-                "DE": "K‰fergebrumm",
+                "DE": "K√§fergebrumm",
                 "EN": "Bug Buzz"
         },
 		"pokemon_move_50" : {
@@ -212,7 +212,7 @@
                 "EN": "Bubble Beam"
         },
 		"pokemon_move_54" : {
-                "DE": "‹berroller",
+                "DE": "√úberroller",
                 "EN": "Submission"
         },
 		"pokemon_move_55" : {
@@ -220,11 +220,11 @@
                 "EN": "Karate Chop"
         },
 		"pokemon_move_56" : {
-                "DE": "Fuﬂtritt",
+                "DE": "Fu√ütritt",
                 "EN": "Low Sweep"
         },
 		"pokemon_move_57" : {
-                "DE": "Wasserd¸se",
+                "DE": "Wasserd√ºse",
                 "EN": "Aqua Jet"
         },
 		"pokemon_move_58" : {
@@ -260,7 +260,7 @@
                 "EN": "Power Gem"
         },
 		"pokemon_move_66" : {
-                "DE": "Schattenstoﬂ",
+                "DE": "Schattensto√ü",
                 "EN": "Shadow Sneak"
         },
 		"pokemon_move_67" : {
@@ -272,7 +272,7 @@
                 "EN": "Shadow Claw"
         },
 		"pokemon_move_69" : {
-                "DE": "Unheilbˆen",
+                "DE": "Unheilb√∂en",
                 "EN": "Ominous Wind"
         },
 		"pokemon_move_70" : {
@@ -288,11 +288,11 @@
                 "EN": "Magnet Bomb"
         },
 		"pokemon_move_73" : {
-                "DE": "Stahlfl¸gel",
+                "DE": "Stahlfl√ºgel",
                 "EN": "Steel Wing"
         },
 		"pokemon_move_74" : {
-                "DE": "Eisensch‰del",
+                "DE": "Eisensch√§del",
                 "EN": "Iron Head"
         },
 		"pokemon_move_75" : {
@@ -332,7 +332,7 @@
                 "EN": "Dragon Claw"
         },
 		"pokemon_move_84" : {
-                "DE": "S‰uselstimme",
+                "DE": "S√§uselstimme",
                 "EN": "Disarming Voice"
         },
 		"pokemon_move_85" : {
@@ -364,7 +364,7 @@
                 "EN": "Sludge Wave"
         },
 		"pokemon_move_92" : {
-                "DE": "M¸lltreffer",
+                "DE": "M√ºlltreffer",
                 "EN": "Gunk Shot"
         },
 		"pokemon_move_93" : {
@@ -388,7 +388,7 @@
                 "EN": "Fury Cutter"
         },
 		"pokemon_move_98" : {
-                "DE": "K‰ferbiss",
+                "DE": "K√§ferbiss",
                 "EN": "Bug Bite"
         },
 		"pokemon_move_99" : {
@@ -432,7 +432,7 @@
                 "EN": "Psychic"
         },
 		"pokemon_move_109" : {
-                "DE": "Psychostoﬂ",
+                "DE": "Psychosto√ü",
                 "EN": "Psystrike"
         },
 		"pokemon_move_110" : {
@@ -468,7 +468,7 @@
                 "EN": "Leaf Blade"
         },
 		"pokemon_move_118" : {
-                "DE": "Blattgeiﬂel",
+                "DE": "Blattgei√üel",
                 "EN": "Power Whip"
         },
 		"pokemon_move_119" : {
@@ -476,7 +476,7 @@
                 "EN": "Splash"
         },
 		"pokemon_move_120" : {
-                "DE": "S‰ure",
+                "DE": "S√§ure",
                 "EN": "Acid"
         },
 		"pokemon_move_121" : {
@@ -528,7 +528,7 @@
                 "EN": "Rest"
         },
 		"pokemon_move_133" : {
-                "DE": "K‰fertrutz",
+                "DE": "K√§fertrutz",
                 "EN": "Struggle"
         },
 		"pokemon_move_134" : {
@@ -540,7 +540,7 @@
                 "EN": "Hydro Pump (Blastoise)"
         },
 		"pokemon_move_136" : {
-                "DE": "Wickel (Gr¸n)",
+                "DE": "Wickel (Gr√ºn)",
                 "EN": "Wrap (Green)"
         },
 		"pokemon_move_137" : {
@@ -800,7 +800,7 @@
                 "EN": "Fury Cutter"
         },
 		"pokemon_move_201" : {
-                "DE": "K‰ferbiss",
+                "DE": "K√§ferbiss",
                 "EN": "Bug Bite"
         },
 		"pokemon_move_202" : {
@@ -824,7 +824,7 @@
                 "EN": "Spark"
         },
 		"pokemon_move_207" : {
-                "DE": "Fuﬂkick",
+                "DE": "Fu√ükick",
                 "EN": "Low Kick"
         },
 		"pokemon_move_208" : {
@@ -836,7 +836,7 @@
                 "EN": "Ember"
         },
 		"pokemon_move_210" : {
-                "DE": "Fl¸gelschlag",
+                "DE": "Fl√ºgelschlag",
                 "EN": "Wing Attack"
         },
 		"pokemon_move_211" : {
@@ -896,7 +896,7 @@
                 "EN": "Poison Jab"
         },
 		"pokemon_move_225" : {
-                "DE": "S‰ure",
+                "DE": "S√§ure",
                 "EN": "Acid"
         },
 		"pokemon_move_226" : {
@@ -932,7 +932,7 @@
                 "EN": "Mud Slap"
         },
 		"pokemon_move_234" : {
-                "DE": "Zen-Kopfstoﬂ",
+                "DE": "Zen-Kopfsto√ü",
                 "EN": "Zen Headbutt"
         },
 		"pokemon_move_235" : {
@@ -952,7 +952,7 @@
                 "EN": "Feint Attack"
         },
 		"pokemon_move_239" : {
-                "DE": "Stahlfl¸gel",
+                "DE": "Stahlfl√ºgel",
                 "EN": "Steel Wing"
         },
 		"pokemon_move_240" : {
@@ -960,7 +960,7 @@
                 "EN": "Fire Fang"
         },
 		"pokemon_move_241" : {
-                "DE": "Zertr¸mmerer",
+                "DE": "Zertr√ºmmerer",
                 "EN": "Rock Smash"
         },
 		"pokemon_move_242" : {
@@ -984,7 +984,7 @@
                 "EN": "Dynamic Punch"
         },
 		"pokemon_move_247" : {
-                "DE": "Fokusstoﬂ",
+                "DE": "Fokussto√ü",
                 "EN": "Focus Blast"
         },
 		"pokemon_move_248" : {
@@ -1000,7 +1000,7 @@
                 "EN": "Volt Switch"
         },
 		"pokemon_move_251" : {
-                "DE": "Stromstoﬂ",
+                "DE": "Stromsto√ü",
                 "EN": "Wild Charge"
         },
 		"pokemon_move_252" : {
@@ -1040,7 +1040,7 @@
                 "EN": "Infestation"
         },
 		"pokemon_move_261" : {
-                "DE": "K‰fertrutz",
+                "DE": "K√§fertrutz",
                 "EN": "Struggle Bug"
         },
 		"pokemon_move_262" : {
@@ -1052,7 +1052,7 @@
                 "EN": "Astonish"
         },
 		"pokemon_move_264" : {
-                "DE": "B¸rde",
+                "DE": "B√ºrde",
                 "EN": "Hex"
         },
 		"pokemon_move_265" : {
@@ -1144,7 +1144,7 @@
                 "EN": "Doom Desire"
         },
 		"pokemon_move_287" : {
-                "DE": "G‰hner",
+                "DE": "G√§hner",
                 "EN": "Yawn"
         },
 		"pokemon_move_288" : {
@@ -1204,15 +1204,15 @@
                 "EN": "Meteor Mash"
         },
 		"pokemon_move_302" : {
-                "DE": "Sch‰delwumme",
+                "DE": "Sch√§delwumme",
                 "EN": "Skull Bash"
         },
 		"pokemon_move_303" : {
-                "DE": "S‰urespeier",
+                "DE": "S√§urespeier",
                 "EN": "Acid Spray"
         },
 		"pokemon_move_304" : {
-                "DE": "Erdkr‰fte",
+                "DE": "Erdkr√§fte",
                 "EN": "Earth Power"
         },
 		"pokemon_move_305" : {
@@ -1260,7 +1260,7 @@
                 "EN": "Shadow Bone"
         },
 		"pokemon_move_316" : {
-                "DE": "Lehmbr¸he",
+                "DE": "Lehmbr√ºhe",
                 "EN": "Muddy Water"
         },
 		"pokemon_move_317" : {
@@ -1280,7 +1280,7 @@
                 "EN": "Charm"
         },
 		"pokemon_move_321" : {
-                "DE": "Gigastoﬂ",
+                "DE": "Gigasto√ü",
                 "EN": "Giga Impact"
         },
 		"pokemon_move_322" : {
@@ -1288,11 +1288,11 @@
                 "EN": "Frustration"
         },
 		"pokemon_move_323" : {
-                "DE": "R¸ckkehr",
+                "DE": "R√ºckkehr",
                 "EN": "Return"
         },
 		"pokemon_move_324" : {
-                "DE": "Synchrol‰rm",
+                "DE": "Synchrol√§rm",
                 "EN": "Synchronoise"
         },
 		"pokemon_move_325" : {
