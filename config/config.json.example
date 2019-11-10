@@ -19,6 +19,7 @@
   "TIMEZONE":"Europe/Berlin",
   "MAPS_LOOKUP":"false",
   "MAPS_API_KEY":"",
+  "DISPLAY_DONE_CANCELLED":"true",
   "RAID_VIA_LOCATION":"true",
   "RAID_EGG_DURATION":"60",
   "RAID_POKEMON_DURATION_SHORT":"45",
