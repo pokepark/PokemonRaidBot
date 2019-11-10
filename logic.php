@@ -1056,7 +1056,7 @@ function raid_edit_gym_keys($first, $warn = true, $action = 'edit_raidlevel', $d
     // Get gyms from database
     $rs = my_query(
         "
-        SELECT    gyms.id, gyms.gym_name,
+        SELECT    gyms.id, gyms.gym_name, gyms.ex_gym,
                   CASE WHEN SUM(raids.end_time > UTC_TIMESTAMP() - INTERVAL 10 MINUTE) THEN 1 ELSE 0 END AS active_raid
         FROM      gyms
         LEFT JOIN raids
@@ -1080,16 +1080,31 @@ function raid_edit_gym_keys($first, $warn = true, $action = 'edit_raidlevel', $d
            $arg = $gym['id'];
         }
 
-        // No active raid
-        if($gym['active_raid'] == 0 || $warn = false) {
+        // No active raid, no ex raid gym
+        if(($gym['active_raid'] == 0 || $warn = false) && $gym['ex_gym'] == 0) {
             $keys[] = array(
                 'text'          => $gym['gym_name'],
                 'callback_data' => $first . ':' . $action . ':' . $arg
             );
-        // Add warning emoji for active raid
-        } else {
+        }
+        // No active raid, but ex raid gym
+        else if(($gym['active_raid'] == 0 || $warn = false) && $gym['ex_gym'] == 1) {
+            $keys[] = array(
+                'text'          => EMOJI_STAR . SP . $gym['gym_name'],
+                'callback_data' => $first . ':' . $action . ':' . $arg
+            );
+        }
+        // Add warning emoji for active raid and no ex raid gym
+        else if ($gym['active_raid'] == 1 && $gym['ex_gym'] == 0) {
             $keys[] = array(
                 'text'          => EMOJI_WARN . SP . $gym['gym_name'],
+                'callback_data' => $first . ':' . $action . ':' . $arg
+            );
+        }
+        // Add warning emoji for active raid and no ex raid gym
+        else if ($gym['active_raid'] == 1 && $gym['ex_gym'] == 1) {
+            $keys[] = array(
+                'text'          => EMOJI_WARN . SP . EMOJI_STAR . SP . $gym['gym_name'],
                 'callback_data' => $first . ':' . $action . ':' . $arg
             );
         }
