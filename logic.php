@@ -986,8 +986,8 @@ function raid_edit_gyms_first_letter_keys($action = 'raid_by_gym', $hidden = fal
                 SELECT UPPER(LEFT(gym_name, 1)) AS first_letter
                 FROM      gyms
                 WHERE     show_gym = {$show_gym} 
-                GROUP BY LEFT(gym_name, 1)
-                ORDER BY  gym_name
+                GROUP BY gym_name
+                ORDER BY gym_name
                 "
             );
     }
