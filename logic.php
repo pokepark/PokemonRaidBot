@@ -3015,6 +3015,13 @@ function show_raid_poll($raid)
 
     // Display raid boss name.
     $msg .= getPublicTranslation('raid_boss') . ': <b>' . get_local_pokemon_name($raid['pokemon'], true) . '</b>';
+    
+    // Display attacks.
+    if ($raid['move1'] > 1 && $raid['move2'] > 2 ) {
+        
+        $msg .= getPublicTranslation('pokemon_move_' . $raid['move1']) . '/' . getPublicTranslation('pokemon_move_' . $raid['move2']);
+        $msg .= CR;
+    }
 
     // Display raid boss weather.
     $pokemon_weather = get_pokemon_weather($raid['pokemon']);

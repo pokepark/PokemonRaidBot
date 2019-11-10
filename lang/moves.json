@@ -1,0 +1,1302 @@
+{
+		"pokemon_move_1" : {
+                "DE": "Donnerschock",
+                "EN": "Thunder Shock"
+        },
+		"pokemon_move_2" : {
+                "DE": "Ruckzuckhieb",
+                "EN": "Quick Attack"
+        },
+		"pokemon_move_3" : {
+                "DE": "Kratzer",
+                "EN": "Scratch"
+        },
+		"pokemon_move_4" : {
+                "DE": "Glut",
+                "EN": "Ember"
+        },
+		"pokemon_move_5" : {
+                "DE": "Rankenhieb",
+                "EN": "Vine Whip"
+        },
+		"pokemon_move_6" : {
+                "DE": "Tackle",
+                "EN": "Tackle"
+        },
+		"pokemon_move_7" : {
+                "DE": "Rasierblatt",
+                "EN": "Razor Leaf"
+        },
+		"pokemon_move_8" : {
+                "DE": "Bodycheck",
+                "EN": "Take Down"
+        },
+		"pokemon_move_9" : {
+                "DE": "Aquaknarre",
+                "EN": "Water Gun"
+        },
+		"pokemon_move_10" : {
+                "DE": "Biss",
+                "EN": "Bite"
+        },
+		"pokemon_move_11" : {
+                "DE": "Pfund",
+                "EN": "Pound"
+        },
+		"pokemon_move_12" : {
+                "DE": "Duplexhieb",
+                "EN": "Double Slap"
+        },
+		"pokemon_move_13" : {
+                "DE": "Wickel",
+                "EN": "Wrap"
+        },
+		"pokemon_move_14" : {
+                "DE": "Hyperstrahl",
+                "EN": "Hyper Beam"
+        },
+		"pokemon_move_15" : {
+                "DE": "Schlecker",
+                "EN": "Lick"
+        },
+		"pokemon_move_16" : {
+                "DE": "Finsteraura",
+                "EN": "Dark Pulse"
+        },
+		"pokemon_move_17" : {
+                "DE": "Smog",
+                "EN": "Smog"
+        },
+		"pokemon_move_18" : {
+                "DE": "Schlammbad",
+                "EN": "Sludge"
+        },
+		"pokemon_move_19" : {
+                "DE": "Metallklaue",
+                "EN": "Metal Claw"
+        },
+		"pokemon_move_20" : {
+                "DE": "Klammer",
+                "EN": "Vice Grip"
+        },
+		"pokemon_move_21" : {
+                "DE": "Flammenrad",
+                "EN": "Flame Wheel"
+        },
+		"pokemon_move_22" : {
+                "DE": "Vielender",
+                "EN": "Megahorn"
+        },
+		"pokemon_move_23" : {
+                "DE": "Flügelschlag",
+                "EN": "Wing Attack"
+        },
+		"pokemon_move_24" : {
+                "DE": "Flammenwurf",
+                "EN": "Flamethrower"
+        },
+		"pokemon_move_25" : {
+                "DE": "Tiefschlag",
+                "EN": "Sucker Punch"
+        },
+		"pokemon_move_26" : {
+                "DE": "Schaufler",
+                "EN": "Dig"
+        },
+		"pokemon_move_27" : {
+                "DE": "Fußkick",
+                "EN": "Low Kick"
+        },
+		"pokemon_move_28" : {
+                "DE": "Kreuzhieb",
+                "EN": "Cross Chop"
+        },
+		"pokemon_move_29" : {
+                "DE": "Psychoklinge",
+                "EN": "Psycho Cut"
+        },
+		"pokemon_move_30" : {
+                "DE": "Psystrahl",
+                "EN": "Psybeam"
+        },
+		"pokemon_move_31" : {
+                "DE": "Erdbeben",
+                "EN": "Earthquake"
+        },
+		"pokemon_move_32" : {
+                "DE": "Steinkante",
+                "EN": "Stone Edge"
+        },
+		"pokemon_move_33" : {
+                "DE": "Eishieb",
+                "EN": "Ice Punch"
+        },
+		"pokemon_move_34" : {
+                "DE": "Herzstempel",
+                "EN": "Heart Stamp"
+        },
+		"pokemon_move_35" : {
+                "DE": "Ladungsstoß",
+                "EN": "Discharge"
+        },
+		"pokemon_move_36" : {
+                "DE": "Lichtkanone",
+                "EN": "Flash Cannon"
+        },
+		"pokemon_move_37" : {
+                "DE": "Schlecker",
+                "EN": "Peck"
+        },
+		"pokemon_move_38" : {
+                "DE": "Bohrschnabel",
+                "EN": "Drill Peck"
+        },
+		"pokemon_move_39" : {
+                "DE": "Eisstrahl",
+                "EN": "Ice Beam"
+        },
+		"pokemon_move_40" : {
+                "DE": "Blizzard",
+                "EN": "Blizzard"
+        },
+		"pokemon_move_41" : {
+                "DE": "Luftschnitt",
+                "EN": "Air Slash"
+        },
+		"pokemon_move_42" : {
+                "DE": "Hitzewelle",
+                "EN": "Heat Wave"
+        },
+		"pokemon_move_43" : {
+                "DE": "Duonadel",
+                "EN": "Twineedle"
+        },
+		"pokemon_move_44" : {
+                "DE": "Gifthieb",
+                "EN": "Poison Jab"
+        },
+		"pokemon_move_45" : {
+                "DE": "Aero-Ass",
+                "EN": "Aerial Ace"
+        },
+		"pokemon_move_46" : {
+                "DE": "Schlagbohrer",
+                "EN": "Drill Run"
+        },
+		"pokemon_move_47" : {
+                "DE": "Blütenwirbel",
+                "EN": "Petal Blizzard"
+        },
+		"pokemon_move_48" : {
+                "DE": "Megasauger",
+                "EN": "Mega Drain"
+        },
+		"pokemon_move_49" : {
+                "DE": "Käfergebrumm",
+                "EN": "Bug Buzz"
+        },
+		"pokemon_move_50" : {
+                "DE": "Giftzahn",
+                "EN": "Poison Fang"
+        },
+		"pokemon_move_51" : {
+                "DE": "Nachthieb",
+                "EN": "Night Slash"
+        },
+		"pokemon_move_52" : {
+                "DE": "Schlitzer",
+                "EN": "Slash"
+        },
+		"pokemon_move_53" : {
+                "DE": "Blubbstrahl",
+                "EN": "Bubble Beam"
+        },
+		"pokemon_move_54" : {
+                "DE": "Überroller",
+                "EN": "Submission"
+        },
+		"pokemon_move_55" : {
+                "DE": "Karateschlag",
+                "EN": "Karate Chop"
+        },
+		"pokemon_move_56" : {
+                "DE": "Fußtritt",
+                "EN": "Low Sweep"
+        },
+		"pokemon_move_57" : {
+                "DE": "Wasserdüse",
+                "EN": "Aqua Jet"
+        },
+		"pokemon_move_58" : {
+                "DE": "Nassschweif",
+                "EN": "Aqua Tail"
+        },
+		"pokemon_move_59" : {
+                "DE": "Samenbomben",
+                "EN": "Seed Bomb"
+        },
+		"pokemon_move_60" : {
+                "DE": "Psychoschock",
+                "EN": "Psyshock"
+        },
+		"pokemon_move_61" : {
+                "DE": "Steinwurf",
+                "EN": "Rock Throw"
+        },
+		"pokemon_move_62" : {
+                "DE": "Antik-Kraft",
+                "EN": "Ancient Power"
+        },
+		"pokemon_move_63" : {
+                "DE": "Felsgrab",
+                "EN": "Rock Tomb"
+        },
+		"pokemon_move_64" : {
+                "DE": "Steinhagel",
+                "EN": "Rock Slide"
+        },
+		"pokemon_move_65" : {
+                "DE": "Juwelenkraft",
+                "EN": "Power Gem"
+        },
+		"pokemon_move_66" : {
+                "DE": "Schattenstoß",
+                "EN": "Shadow Sneak"
+        },
+		"pokemon_move_67" : {
+                "DE": "Finsterfaust",
+                "EN": "Shadow Punch"
+        },
+		"pokemon_move_68" : {
+                "DE": "Dunkelklaue",
+                "EN": "Shadow Claw"
+        },
+		"pokemon_move_69" : {
+                "DE": "Unheilböen",
+                "EN": "Ominous Wind"
+        },
+		"pokemon_move_70" : {
+                "DE": "Spukball",
+                "EN": "Shadow Ball"
+        },
+		"pokemon_move_71" : {
+                "DE": "Patronenhieb",
+                "EN": "Bullet Punch"
+        },
+		"pokemon_move_72" : {
+                "DE": "Magnetbombe",
+                "EN": "Magnet Bomb"
+        },
+		"pokemon_move_73" : {
+                "DE": "Stahlflügel",
+                "EN": "Steel Wing"
+        },
+		"pokemon_move_74" : {
+                "DE": "Eisenschädel",
+                "EN": "Iron Head"
+        },
+		"pokemon_move_75" : {
+                "DE": "Parabolladung",
+                "EN": "Parabolic Charge"
+        },
+		"pokemon_move_76" : {
+                "DE": "Funkensprung",
+                "EN": "Spark"
+        },
+		"pokemon_move_77" : {
+                "DE": "Donnerschlag",
+                "EN": "Thunder Punch"
+        },
+		"pokemon_move_78" : {
+                "DE": "Donner",
+                "EN": "Thunder"
+        },
+		"pokemon_move_79" : {
+                "DE": "Donnerblitz",
+                "EN": "Thunderbolt"
+        },
+		"pokemon_move_80" : {
+                "DE": "Windhose",
+                "EN": "Twister"
+        },
+		"pokemon_move_81" : {
+                "DE": "Feuerodem",
+                "EN": "Dragon Breath"
+        },
+		"pokemon_move_82" : {
+                "DE": "Drachenpuls",
+                "EN": "Dragon Pulse"
+        },
+		"pokemon_move_83" : {
+                "DE": "Drachenklaue",
+                "EN": "Dragon Claw"
+        },
+		"pokemon_move_84" : {
+                "DE": "Säuselstimme",
+                "EN": "Disarming Voice"
+        },
+		"pokemon_move_85" : {
+                "DE": "Diebeskuss",
+                "EN": "Draining Kiss"
+        },
+		"pokemon_move_86" : {
+                "DE": "Zauberschein",
+                "EN": "Dazzling Gleam"
+        },
+		"pokemon_move_87" : {
+                "DE": "Mondgewalt",
+                "EN": "Moonblast"
+        },
+		"pokemon_move_88" : {
+                "DE": "Knuddler",
+                "EN": "Play Rough"
+        },
+		"pokemon_move_89" : {
+                "DE": "Giftstreich",
+                "EN": "Cross Poison"
+        },
+		"pokemon_move_90" : {
+                "DE": "Matschbombe",
+                "EN": "Sludge Bomb"
+        },
+		"pokemon_move_91" : {
+                "DE": "Schlammwoge",
+                "EN": "Sludge Wave"
+        },
+		"pokemon_move_92" : {
+                "DE": "Mülltreffer",
+                "EN": "Gunk Shot"
+        },
+		"pokemon_move_93" : {
+                "DE": "Lehmschuss",
+                "EN": "Mud Shot"
+        },
+		"pokemon_move_94" : {
+                "DE": "Knochenkeule",
+                "EN": "Bone Club"
+        },
+		"pokemon_move_95" : {
+                "DE": "Dampfwalze",
+                "EN": "Bulldoze"
+        },
+		"pokemon_move_96" : {
+                "DE": "Schlammbombe",
+                "EN": "Mud Bomb"
+        },
+		"pokemon_move_97" : {
+                "DE": "Zornklinge",
+                "EN": "Fury Cutter"
+        },
+		"pokemon_move_98" : {
+                "DE": "Käferbiss",
+                "EN": "Bug Bite"
+        },
+		"pokemon_move_99" : {
+                "DE": "Ampelleuchte",
+                "EN": "Signal Beam"
+        },
+		"pokemon_move_100" : {
+                "DE": "Kreuzschere",
+                "EN": "X-Scissor"
+        },
+		"pokemon_move_101" : {
+                "DE": "Nitroladung",
+                "EN": "Flame Charge"
+        },
+		"pokemon_move_102" : {
+                "DE": "Funkenflug",
+                "EN": "Flame Burst"
+        },
+		"pokemon_move_103" : {
+                "DE": "Feuersturm",
+                "EN": "Fire Blast"
+        },
+		"pokemon_move_104" : {
+                "DE": "Lake",
+                "EN": "Brine"
+        },
+		"pokemon_move_105" : {
+                "DE": "Aquawelle",
+                "EN": "Water Pulse"
+        },
+		"pokemon_move_106" : {
+                "DE": "Siedewasser",
+                "EN": "Scald"
+        },
+		"pokemon_move_107" : {
+                "DE": "Hydropumpe",
+                "EN": "Hydro Pump"
+        },
+		"pokemon_move_108" : {
+                "DE": "Psychokinese",
+                "EN": "Psychic"
+        },
+		"pokemon_move_109" : {
+                "DE": "Psychostoß",
+                "EN": "Psystrike"
+        },
+		"pokemon_move_110" : {
+                "DE": "Eissplitter",
+                "EN": "Ice Shard"
+        },
+		"pokemon_move_111" : {
+                "DE": "Eissturm",
+                "EN": "Icy Wind"
+        },
+		"pokemon_move_112" : {
+                "DE": "Eisesodem",
+                "EN": "Frost Breath"
+        },
+		"pokemon_move_113" : {
+                "DE": "",
+                "EN": "Absorb"
+        },
+		"pokemon_move_114" : {
+                "DE": "Gigasauger",
+                "EN": "Giga Drain"
+        },
+		"pokemon_move_115" : {
+                "DE": "Feuerschlag",
+                "EN": "Fire Punch"
+        },
+		"pokemon_move_116" : {
+                "DE": "Solarstrahl",
+                "EN": "Solar Beam"
+        },
+		"pokemon_move_117" : {
+                "DE": "Laubklinge",
+                "EN": "Leaf Blade"
+        },
+		"pokemon_move_118" : {
+                "DE": "Blattgeißel",
+                "EN": "Power Whip"
+        },
+		"pokemon_move_119" : {
+                "DE": "Platscher",
+                "EN": "Splash"
+        },
+		"pokemon_move_120" : {
+                "DE": "Säure",
+                "EN": "Acid"
+        },
+		"pokemon_move_121" : {
+                "DE": "Windschnitt",
+                "EN": "Air Cutter"
+        },
+		"pokemon_move_122" : {
+                "DE": "Orkan",
+                "EN": "Hurricane"
+        },
+		"pokemon_move_123" : {
+                "DE": "Durchbruch",
+                "EN": "Brick Break"
+        },
+		"pokemon_move_124" : {
+                "DE": "Zerschneider",
+                "EN": "Cut"
+        },
+		"pokemon_move_125" : {
+                "DE": "Sternschauer",
+                "EN": "Swift"
+        },
+		"pokemon_move_126" : {
+                "DE": "Hornattacke",
+                "EN": "Horn Attack"
+        },
+		"pokemon_move_127" : {
+                "DE": "Stampfer",
+                "EN": "Stomp"
+        },
+		"pokemon_move_128" : {
+                "DE": "Kopfnuss",
+                "EN": "Headbutt"
+        },
+		"pokemon_move_129" : {
+                "DE": "Hyperzahn",
+                "EN": "Hyper Fang"
+        },
+		"pokemon_move_130" : {
+                "DE": "Slam",
+                "EN": "Slam"
+        },
+		"pokemon_move_131" : {
+                "DE": "Bodyslam",
+                "EN": "Body Slam"
+        },
+		"pokemon_move_132" : {
+                "DE": "Erholung",
+                "EN": "Rest"
+        },
+		"pokemon_move_133" : {
+                "DE": "Käfertrutz",
+                "EN": "Struggle"
+        },
+		"pokemon_move_134" : {
+                "DE": "Siedewasser",
+                "EN": "Scald (Blastoise)"
+        },
+		"pokemon_move_135" : {
+                "DE": "Hydropumpe",
+                "EN": "Hydro Pump (Blastoise)"
+        },
+		"pokemon_move_136" : {
+                "DE": "Wickel (Grün)",
+                "EN": "Wrap (Green)"
+        },
+		"pokemon_move_137" : {
+                "DE": "Wickel (Pink)",
+                "EN": "Wrap (Pink)"
+        },
+		"pokemon_move_138" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_139" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_140" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_141" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_142" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_143" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_144" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_145" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_146" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_147" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_148" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_149" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_150" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_151" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_152" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_153" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_154" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_155" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_156" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_157" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_158" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_159" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_160" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_161" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_162" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_163" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_164" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_165" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_166" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_167" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_168" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_169" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_170" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_171" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_172" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_173" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_174" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_175" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_176" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_177" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_178" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_179" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_180" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_181" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_182" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_183" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_184" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_185" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_186" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_187" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_188" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_189" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_190" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_191" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_192" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_193" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_194" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_195" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_196" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_197" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_198" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_199" : {
+                "DE": "",
+                "EN": ""
+        },
+		"pokemon_move_200" : {
+                "DE": "Zornklinge",
+                "EN": "Fury Cutter"
+        },
+		"pokemon_move_201" : {
+                "DE": "Käferbiss",
+                "EN": "Bug Bite"
+        },
+		"pokemon_move_202" : {
+                "DE": "Biss",
+                "EN": "Bite"
+        },
+		"pokemon_move_203" : {
+                "DE": "Tiefschlag",
+                "EN": "Sucker Punch"
+        },
+		"pokemon_move_204" : {
+                "DE": "Feuerodem",
+                "EN": "Dragon Breath"
+        },
+		"pokemon_move_205" : {
+                "DE": "Donnerschock",
+                "EN": "Thunder Shock"
+        },
+		"pokemon_move_206" : {
+                "DE": "Funkensprung",
+                "EN": "Spark"
+        },
+		"pokemon_move_207" : {
+                "DE": "Fußkick",
+                "EN": "Low Kick"
+        },
+		"pokemon_move_208" : {
+                "DE": "Karateschlag",
+                "EN": "Karate Chop"
+        },
+		"pokemon_move_209" : {
+                "DE": "Glut",
+                "EN": "Ember"
+        },
+		"pokemon_move_210" : {
+                "DE": "Flügelschlag",
+                "EN": "Wing Attack"
+        },
+		"pokemon_move_211" : {
+                "DE": "Schlecker",
+                "EN": "Peck"
+        },
+		"pokemon_move_212" : {
+                "DE": "Schlecker",
+                "EN": "Lick"
+        },
+		"pokemon_move_213" : {
+                "DE": "Dunkelklaue",
+                "EN": "Shadow Claw"
+        },
+		"pokemon_move_214" : {
+                "DE": "Rankenhieb",
+                "EN": "Vine Whip"
+        },
+		"pokemon_move_215" : {
+                "DE": "Rasierblatt",
+                "EN": "Razor Leaf"
+        },
+		"pokemon_move_216" : {
+                "DE": "Lehmschuss",
+                "EN": "Mud Shot"
+        },
+		"pokemon_move_217" : {
+                "DE": "Eissplitter",
+                "EN": "Ice Shard"
+        },
+		"pokemon_move_218" : {
+                "DE": "Eisesodem",
+                "EN": "Frost Breath"
+        },
+		"pokemon_move_219" : {
+                "DE": "Ruckzuckhieb",
+                "EN": "Quick Attack"
+        },
+		"pokemon_move_220" : {
+                "DE": "Kratzer",
+                "EN": "Scratch"
+        },
+		"pokemon_move_221" : {
+                "DE": "Tackle",
+                "EN": "Tackle"
+        },
+		"pokemon_move_222" : {
+                "DE": "Pfund",
+                "EN": "Pound"
+        },
+		"pokemon_move_223" : {
+                "DE": "Zerschneider",
+                "EN": "Cut"
+        },
+		"pokemon_move_224" : {
+                "DE": "Gifthieb",
+                "EN": "Poison Jab"
+        },
+		"pokemon_move_225" : {
+                "DE": "Säure",
+                "EN": "Acid"
+        },
+		"pokemon_move_226" : {
+                "DE": "Psychoklinge",
+                "EN": "Psycho Cut"
+        },
+		"pokemon_move_227" : {
+                "DE": "Steinwurf",
+                "EN": "Rock Throw"
+        },
+		"pokemon_move_228" : {
+                "DE": "Metallklaue",
+                "EN": "Metal Claw"
+        },
+		"pokemon_move_229" : {
+                "DE": "Patronenhieb",
+                "EN": "Bullet Punch"
+        },
+		"pokemon_move_230" : {
+                "DE": "Aquaknarre",
+                "EN": "Water Gun"
+        },
+		"pokemon_move_231" : {
+                "DE": "Platscher",
+                "EN": "Splash"
+        },
+		"pokemon_move_232" : {
+                "DE": "Aquaknarre",
+                "EN": "Water Gun (Blastoise)"
+        },
+		"pokemon_move_233" : {
+                "DE": "Lehmschelle",
+                "EN": "Mud Slap"
+        },
+		"pokemon_move_234" : {
+                "DE": "Zen-Kopfstoß",
+                "EN": "Zen Headbutt"
+        },
+		"pokemon_move_235" : {
+                "DE": "Konfusion",
+                "EN": "Confusion"
+        },
+		"pokemon_move_236" : {
+                "DE": "Giftstachel",
+                "EN": "Poison Sting"
+        },
+		"pokemon_move_237" : {
+                "DE": "Blubber",
+                "EN": "Bubble"
+        },
+		"pokemon_move_238" : {
+                "DE": "Finte",
+                "EN": "Feint Attack"
+        },
+		"pokemon_move_239" : {
+                "DE": "Stahlflügel",
+                "EN": "Steel Wing"
+        },
+		"pokemon_move_240" : {
+                "DE": "Feuerzahn",
+                "EN": "Fire Fang"
+        },
+		"pokemon_move_241" : {
+                "DE": "Zertrümmerer",
+                "EN": "Rock Smash"
+        },
+		"pokemon_move_242" : {
+                "DE": "Wandler",
+                "EN": "Transform"
+        },
+		"pokemon_move_243" : {
+                "DE": "Konter",
+                "EN": "Counter"
+        },
+		"pokemon_move_244" : {
+                "DE": "Pulverschnee",
+                "EN": "Powder Snow"
+        },
+		"pokemon_move_245" : {
+                "DE": "Nahkampf",
+                "EN": "Close Combat"
+        },
+		"pokemon_move_246" : {
+                "DE": "Wuchtschlag",
+                "EN": "Dynamic Punch"
+        },
+		"pokemon_move_247" : {
+                "DE": "Fokusstoß",
+                "EN": "Focus Blast"
+        },
+		"pokemon_move_248" : {
+                "DE": "Aurorastrahl",
+                "EN": "Aurora Beam"
+        },
+		"pokemon_move_249" : {
+                "DE": "Ladestrahl",
+                "EN": "Charge Beam"
+        },
+		"pokemon_move_250" : {
+                "DE": "Voltwechsel",
+                "EN": "Volt Switch"
+        },
+		"pokemon_move_251" : {
+                "DE": "Stromstoß",
+                "EN": "Wild Charge"
+        },
+		"pokemon_move_252" : {
+                "DE": "Blitzkanone",
+                "EN": "Zap Cannon"
+        },
+		"pokemon_move_253" : {
+                "DE": "Drachenrute",
+                "EN": "Dragon Tail"
+        },
+		"pokemon_move_254" : {
+                "DE": "Lawine",
+                "EN": "Avalanche"
+        },
+		"pokemon_move_255" : {
+                "DE": "Luftschnitt",
+                "EN": "Air Slash"
+        },
+		"pokemon_move_256" : {
+                "DE": "Sturzflug",
+                "EN": "Brave Bird"
+        },
+		"pokemon_move_257" : {
+                "DE": "Himmelsfeger",
+                "EN": "Sky Attack"
+        },
+		"pokemon_move_258" : {
+                "DE": "Sandgrab",
+                "EN": "Sand Tomb"
+        },
+		"pokemon_move_259" : {
+                "DE": "Felswurf",
+                "EN": "Rock Blast"
+        },
+		"pokemon_move_260" : {
+                "DE": "Plage",
+                "EN": "Infestation"
+        },
+		"pokemon_move_261" : {
+                "DE": "Käfertrutz",
+                "EN": "Struggle Bug"
+        },
+		"pokemon_move_262" : {
+                "DE": "Silberhauch",
+                "EN": "Silver Wind"
+        },
+		"pokemon_move_263" : {
+                "DE": "Erstauner",
+                "EN": "Astonish"
+        },
+		"pokemon_move_264" : {
+                "DE": "Bürde",
+                "EN": "Hex"
+        },
+		"pokemon_move_265" : {
+                "DE": "Nachtnebel",
+                "EN": "Night Shade"
+        },
+		"pokemon_move_266" : {
+                "DE": "Eisenschweif",
+                "EN": "Iron Tail"
+        },
+		"pokemon_move_267" : {
+                "DE": "Gyroball",
+                "EN": "Gyro Ball"
+        },
+		"pokemon_move_268" : {
+                "DE": "Rammboss",
+                "EN": "Heavy Slam"
+        },
+		"pokemon_move_269" : {
+                "DE": "Feuerwirbel",
+                "EN": "Fire Spin"
+        },
+		"pokemon_move_270" : {
+                "DE": "Hitzekoller",
+                "EN": "Overheat"
+        },
+		"pokemon_move_271" : {
+                "DE": "Kugelsaat",
+                "EN": "Bullet Seed"
+        },
+		"pokemon_move_272" : {
+                "DE": "Strauchler",
+                "EN": "Grass Knot"
+        },
+		"pokemon_move_273" : {
+                "DE": "Energieball",
+                "EN": "Energy Ball"
+        },
+		"pokemon_move_274" : {
+                "DE": "Sondersensor",
+                "EN": "Extrasensory"
+        },
+		"pokemon_move_275" : {
+                "DE": "Seher",
+                "EN": "Future Sight"
+        },
+		"pokemon_move_276" : {
+                "DE": "Spiegelcape",
+                "EN": "Mirror Coat"
+        },
+		"pokemon_move_277" : {
+                "DE": "Wutanfall",
+                "EN": "Outrage"
+        },
+		"pokemon_move_278" : {
+                "DE": "Standpauke",
+                "EN": "Snarl"
+        },
+		"pokemon_move_279" : {
+                "DE": "Knirscher",
+                "EN": "Crunch"
+        },
+		"pokemon_move_280" : {
+                "DE": "Schmarotzer",
+                "EN": "Foul Play"
+        },
+		"pokemon_move_281" : {
+                "DE": "Kraftreserve",
+                "EN": "Hidden Power"
+        },
+		"pokemon_move_282" : {
+                "DE": "Bodycheck",
+                "EN": "Take Down"
+        },
+		"pokemon_move_283" : {
+                "DE": "Kaskade",
+                "EN": "Waterfall"
+        },
+		"pokemon_move_284" : {
+                "DE": "Surfer",
+                "EN": "Surf"
+        },
+		"pokemon_move_285" : {
+                "DE": "Draco Meteor",
+                "EN": "Draco Meteor"
+        },
+		"pokemon_move_286" : {
+                "DE": "Kismetwunsch",
+                "EN": "Doom Desire"
+        },
+		"pokemon_move_287" : {
+                "DE": "Gähner",
+                "EN": "Yawn"
+        },
+		"pokemon_move_288" : {
+                "DE": "Psyschub",
+                "EN": "Psycho Boost"
+        },
+		"pokemon_move_289" : {
+                "DE": "Ursprungswoge",
+                "EN": "Origin Pulse"
+        },
+		"pokemon_move_290" : {
+                "DE": "Abgrundsklinge",
+                "EN": "Precipice Blades"
+        },
+		"pokemon_move_291" : {
+                "DE": "Geschenk",
+                "EN": "Present"
+        },
+		"pokemon_move_292" : {
+                "DE": "Meteorologe (Feuer)",
+                "EN": "Weather Ball (Fire)"
+        },
+		"pokemon_move_293" : {
+                "DE": "Meteorologe (Eis)",
+                "EN": "Weather Ball (Ice)"
+        },
+		"pokemon_move_294" : {
+                "DE": "Meteorologe",
+                "EN": "Weather Ball"
+        },
+		"pokemon_move_295" : {
+                "DE": "Meteorologe (Wasser)",
+                "EN": "Weather Ball (Water)"
+        },
+		"pokemon_move_296" : {
+                "DE": "Flora-Statue",
+                "EN": "Frenzy Plant"
+        },
+		"pokemon_move_297" : {
+                "DE": "Katapult",
+                "EN": "Smack Down"
+        },
+		"pokemon_move_298" : {
+                "DE": "Lohekanonade",
+                "EN": "Blast Burn"
+        },
+		"pokemon_move_299" : {
+                "DE": "Aquahaubitze",
+                "EN": "Hydro Cannon"
+        },
+		"pokemon_move_300" : {
+                "DE": "Zuflucht",
+                "EN": "Last Resort"
+        },
+		"pokemon_move_301" : {
+                "DE": "Sternenhieb",
+                "EN": "Meteor Mash"
+        },
+		"pokemon_move_302" : {
+                "DE": "Schädelwumme",
+                "EN": "Skull Bash"
+        },
+		"pokemon_move_303" : {
+                "DE": "Säurespeier",
+                "EN": "Acid Spray"
+        },
+		"pokemon_move_304" : {
+                "DE": "Erdkräfte",
+                "EN": "Earth Power"
+        },
+		"pokemon_move_305" : {
+                "DE": "Krabbhammer",
+                "EN": "Crabhammer"
+        },
+		"pokemon_move_306" : {
+                "DE": "Anfallen",
+                "EN": "Lunge"
+        },
+		"pokemon_move_307" : {
+                "DE": "Zermalmklaue",
+                "EN": "Crush Claw"
+        },
+		"pokemon_move_308" : {
+                "DE": "Octazooka",
+                "EN": "Octazooka"
+        },
+		"pokemon_move_309" : {
+                "DE": "Spiegelsalve",
+                "EN": "Mirror Shot"
+        },
+		"pokemon_move_310" : {
+                "DE": "Kraftkoloss",
+                "EN": "Superpower"
+        },
+		"pokemon_move_311" : {
+                "DE": "Stachelfinale",
+                "EN": "Fell Stinger"
+        },
+		"pokemon_move_312" : {
+                "DE": "Grasmixer",
+                "EN": "Leaf Tornado"
+        },
+		"pokemon_move_313" : {
+                "DE": "Blutsauger",
+                "EN": "Leech Life"
+        },
+		"pokemon_move_314" : {
+                "DE": "Ableithieb",
+                "EN": "Drain Punch"
+        },
+		"pokemon_move_315" : {
+                "DE": "Schattenknochen",
+                "EN": "Shadow Bone"
+        },
+		"pokemon_move_316" : {
+                "DE": "Lehmbrühe",
+                "EN": "Muddy Water"
+        },
+		"pokemon_move_317" : {
+                "DE": "Feuerfeger",
+                "EN": "Blaze Kick"
+        },
+		"pokemon_move_318" : {
+                "DE": "Kalkklinge",
+                "EN": "Razor Shell"
+        },
+		"pokemon_move_319" : {
+                "DE": "Steigerungshieb",
+                "EN": "Power-Up Punch"
+        },
+		"pokemon_move_320" : {
+                "DE": "Charme",
+                "EN": "Charm"
+        },
+		"pokemon_move_321" : {
+                "DE": "Gigastoß",
+                "EN": "Giga Impact"
+        },
+		"pokemon_move_322" : {
+                "DE": "Frustration",
+                "EN": "Frustration"
+        },
+		"pokemon_move_323" : {
+                "DE": "Rückkehr",
+                "EN": "Return"
+        },
+		"pokemon_move_324" : {
+                "DE": "Synchrolärm",
+                "EN": "Synchronoise"
+        },
+		"pokemon_move_325" : {
+                "DE": "Zielschuss",
+                "EN": "Lock-On"
+        }
+}
