@@ -1064,7 +1064,7 @@ function raid_edit_gym_keys($first, $warn = true, $action = 'edit_raidlevel', $d
         WHERE     UPPER(LEFT(gym_name, $first_length)) = UPPER('{$first}')
         $not
         AND       gyms.show_gym = {$show_gym}
-        GROUP BY  gym_name 
+        GROUP BY  gym_name, raids.gym_id, gyms.id
         ORDER BY  gym_name
         "
     );
