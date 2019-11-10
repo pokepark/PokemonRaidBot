@@ -3079,7 +3079,8 @@ function show_raid_poll($raid)
                         sum(pokemon = '0')                   AS count_any_pokemon,
                         sum(pokemon = '{$raid['pokemon']}')  AS count_raid_pokemon,
                         sum(pokemon != '{$raid['pokemon']}' AND pokemon != '0')  AS count_other_pokemon,
-                        attend_time
+                        attend_time,
+                        pokemon
         FROM            attendance
         LEFT JOIN       users
           ON            attendance.user_id = users.user_id
@@ -3087,7 +3088,7 @@ function show_raid_poll($raid)
             AND         attend_time IS NOT NULL
             AND         raid_done != 1
             AND         cancel != 1
-          GROUP BY      attend_time
+          GROUP BY      attend_time, pokemon
           ORDER BY      attend_time, pokemon
         "
     );
