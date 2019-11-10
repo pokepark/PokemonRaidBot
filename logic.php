@@ -3283,7 +3283,7 @@ function show_raid_poll($raid)
     debug_log($cnt_done, 'Done count:');
 
     // Canceled or done?
-    if(defined(DISPLAY_DONE_CANCELLED) && DISPLAY_DONE_CANCELLED == true && ($cnt_cancel > 0 || $cnt_done > 0)) {
+    if(DISPLAY_DONE_CANCELLED == true && ($cnt_cancel > 0 || $cnt_done > 0)) {
         // Get done and canceled attendances
 
         $rs_att = my_query(
