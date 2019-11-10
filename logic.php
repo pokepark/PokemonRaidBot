@@ -952,7 +952,7 @@ function raid_edit_gyms_first_letter_keys($action = 'raid_by_gym', $hidden = fal
         {
             $letter = trim($letter);
             debug_log($letter, 'Special gym letter:');
-            $length = strlen($letter);
+            $length = strlen(utf8_decode($letter));
             $case .= SP . "WHEN UPPER(LEFT(gym_name, " . $length . ")) = '" . $letter . "' THEN UPPER(LEFT(gym_name, " . $length . "))" . SP;
         }
     }
@@ -1029,7 +1029,7 @@ function raid_edit_gyms_first_letter_keys($action = 'raid_by_gym', $hidden = fal
 function raid_edit_gym_keys($first, $warn = true, $action = 'edit_raidlevel', $delete = false, $hidden = false)
 {
     // Length of first letter.
-    $first_length = strlen($first);
+    $first_length = strlen(utf8_decode($first));
 
     // Special/Custom gym letters?
     $not = '';
@@ -1041,7 +1041,7 @@ function raid_edit_gym_keys($first, $warn = true, $action = 'edit_raidlevel', $d
         {
             $letter = trim($letter);
             debug_log($letter, 'Special gym letter:');
-            $length = strlen($letter);
+            $length = strlen(utf8_decode($letter));
             $not .= SP . "AND UPPER(LEFT(gym_name, " . $length . ")) != UPPER('" . $letter . "')" . SP;
         }
     }
