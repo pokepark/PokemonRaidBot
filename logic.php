@@ -983,11 +983,10 @@ function raid_edit_gyms_first_letter_keys($action = 'raid_by_gym', $hidden = fal
         // Get gyms from database
         $rs = my_query(
                 "
-                SELECT UPPER(LEFT(gym_name, 1)) AS first_letter
+                SELECT DISTINCT UPPER(SUBSTR(gym_name, 1, 1)) AS first_letter
                 FROM      gyms
-                WHERE     show_gym = {$show_gym} 
-                GROUP BY gym_name
-                ORDER BY gym_name
+                WHERE     show_gym = {$show_gym}
+                ORDER BY 1
                 "
             );
     }
