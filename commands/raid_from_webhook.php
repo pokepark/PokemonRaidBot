@@ -201,6 +201,7 @@ foreach ($update as $raid) {
             $dbh = null;
             exit;
         }
+        send_response_vote($update, $data);
         continue;
     }
     
