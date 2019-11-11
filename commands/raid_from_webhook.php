@@ -149,7 +149,7 @@ foreach ($update as $raid) {
     }
     $move_1 = 0;
     $move_2 = 0;
-    if ($pokemon > 9900) {
+    if ($pokemon < 9900) {
      
        $move_1 = $raid['message']['move_1'];
        $move_2 = $raid['message']['move_2'];   
