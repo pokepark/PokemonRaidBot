@@ -142,11 +142,18 @@ foreach ($update as $raid) {
     // TODO: Translate Form
     $form = 0;
     if ( isset($raid['message']['form']) ) {}
-    // TODO: Translate Gender
-    $gender = '';
-    if ( isset($raid['message']['gender']) ) {}
-    $move_1 = $raid['message']['move_1'];
-    $move_2 = $raid['message']['move_2'];
+    $gender = 0;
+    if ( isset($raid['message']['gender']) ) {
+        
+        $gender = $raid['message']['gender'];
+    }
+    $move_1 = 0;
+    $move_2 = 0;
+    if ($pokemon > 9900) {
+     
+       $move_1 = $raid['message']['move_1'];
+       $move_2 = $raid['message']['move_2'];   
+    }
     $pokemon = $pokemon . '-normal';
     $start_timestamp = $raid['message']['start'];
     $end_timestamp = $raid['message']['end'];
@@ -201,7 +208,7 @@ foreach ($update as $raid) {
             $dbh = null;
             exit;
         }
-        send_response_vote($update, $data);
+//        send_response_vote($update, $data);
         continue;
     }
     
