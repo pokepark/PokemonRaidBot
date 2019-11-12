@@ -61,7 +61,7 @@ $nav_keys[] = universal_inner_key($keys, '0', 'exit', '0', getTranslation('abort
 $keys[] = $nav_keys;
 
 // Answer callback.
-answerCallbackQuery($update['callback_query']['id'], $callback_response);
+answerCallbackQuery($update['callback_query']['id'], 'OK');
 
 // Edit message.
 edit_message($update, $msg, $keys, false);
