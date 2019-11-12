@@ -16,6 +16,7 @@ if($access && (is_file(ROOT_PATH . '/access/' . $access) || $access == 'BOT_ADMI
         $permissions[] = 'overview';
         $permissions[] = 'delete-all';
         $permissions[] = 'pokemon-all';
+        $permissions[] = 'trainer';
         $permissions[] = 'gym-details';
         $permissions[] = 'gym-edit';
         $permissions[] = 'gym-name';

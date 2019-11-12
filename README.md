@@ -228,9 +228,19 @@ Set `RAID_LATE_MSG` to true to enable the message hinting that some participants
 
 Set `RAID_LATE_TIME` to the amount of minutes the local community will may be wait for the late participants.
 
+Set `RAID_POLL_HIDE_USERS_TIME` to the amount of minutes when a previous raid slot should be hidden. For example if there are 2 slots, 18:00 and 18:15, and you set the time to 10 minutes the first group of participants from 18:00 will be hidden once we reach 18:10. This helps to keep the raid poll message smaller and clearer if there are multiple groups. Set the value to 0 to always show all slots.
+
 Set `RAID_POLL_UI_ORDER` to the customize the order of the buttons rows for the raid polls. The default is 'extra,teamlvl,time,pokemon,status' but can be changed to any other order, e.g. 'time,pokemon,extra,status,teamlvl'.
 
+Set `RAID_POLL_HIDE_BUTTONS_RAID_LEVEL` to the raid levels (1-5 and X) for which the voting buttons under the raid poll should be hidden. For example a level 1 raid can be done by a single player, but it is maybe interesting to be shared as some pokemon are only available in raids.
+
+Set `RAID_POLL_HIDE_BUTTONS_POKEMON` to the pokedex IDs (e.g. '1' for Bulbasaur) or pokedex ID and form combined by a minus sign (e.g. '386-normal' for Deoxys Normal form or '386-attack' for Deoxys Attack form) for which the voting buttons under the raid poll should be hidden.
+
+Set `RAID_POLL_HIDE_BUTTONS_TEAM_LVL` to true to hide the team and level+/- buttons below each raid poll. That users are still able to set their team and level when the buttons are hidden, take a look at the '/trainer' command. 
+
 Set `RAID_EX_GYM_MARKER` to set the marker for ex-raid gyms. You can use a predefined icon using the value 'icon' or any own marker, e.g. 'EX'.
+
+Set `RAID_CREATION_EX_GYM_MARKER` to true to show the marker for ex-raid gyms during raid creation.
 
 ## Raid sharing
 
@@ -254,6 +264,18 @@ Examples:
 
 `"SHARE_CHATS":"-100111222333,-100444555666"`
 `"SHARE_CHATS_LEVEL_5":"-100444555666"`
+
+## Trainer settings
+
+The command '/trainer' allows users of the bot to change their trainer data like team and level. It is also used to share a message that allows trainers to modify their trainer data like team and level to another chat. To share this message, every chat specified in the raid sharing list like SHARE_CHATS are used.
+
+With `TRAINER_CHATS` you can specify additional chats which should appear as buttons too for sharing the trainer message.
+
+Set `TRAINER_BUTTONS_TOGGLE` to true to enable the toggle which shows/hides the team and level+/- buttons under the trainer message. To disable the toggle button and always show the team and level+/- buttons set it to false.
+
+#### Add additional chats -100999555111 and -100888444222 to share the trainer message
+
+`"TRAINER_CHATS":"-100999555111,-100888444222"`
 
 ## Raid overview
 
@@ -416,6 +438,9 @@ A few examples for access files can be found below the permission overview table
 |            | Edit gym note `/gymnote`                                         | `gym-note`                               |
 |            | Add a gym `/addgym`                                              | `gym-add`                                |
 |            | Delete a gym `/deletegym`                                        | `gym-delete`                             |
+|            |                                                                  |                                          |
+| Trainer    | Set trainer data `/trainer`                                      | `trainer`                                |
+|            | Share trainer data message `/trainer`                            | `trainer-share`                          |
 |            |                                                                  |                                          |
 | Portal     | Import portals via inline search from other bots                 | `portal-import`                          |
 |            |                                                                  |                                          |
@@ -645,6 +670,9 @@ The bot will set the team to Mystic/Valor/Instinct for the last created raid bas
 
 Example input: `/team Mystic`
 
+### Command: /trainer
+
+The bot will give you a list of chats to share the trainer message which allows users to set team and level+/- data. You can also delete the shared trainer messages via the `/trainer` command.
 
 ### Command: /gym
 

@@ -741,134 +741,10 @@ function get_user($user_id)
 
     // Add level.
     if ($row['level'] != 0) {
-        $msg .= 'Level: ' . $row['level'] . CR;
+        $msg .= 'Level: <b>' . $row['level'] . '</b>' . CR;
     }
 
     return $msg;
-}
-
-/**
- * Moderator keys.
- * @param $limit
- * @param $action
- * @return array
- */
-function edit_moderator_keys($limit, $action)
-{
-    // Number of entries to display at once.
-    $entries = 10;
-
-    // Number of entries to skip with skip-back and skip-next buttons
-    $skip = 50;
-
-    // Module for back and next keys
-    $module = "mods";
-
-    // Init empty keys array.
-    $keys = [];
-
-    // Get moderators from database
-    if ($action == "list" || $action == "delete") {
-        $rs = my_query(
-                "
-                SELECT    *
-                FROM      users
-                WHERE     moderator = 1 
-	        ORDER BY  name
-	        LIMIT     $limit, $entries
-                "
-            );
-
-	// Number of entries
-        $cnt = my_query(
-                "
-                SELECT    COUNT(*)
-                FROM      users
-                WHERE     moderator = 1 
-                "
-            );
-    } else if ($action == "add") {
-        $rs = my_query(
-                "
-                SELECT    *
-                FROM      users
-                WHERE     (moderator = 0 OR moderator IS NULL)
-                ORDER BY  name
-                LIMIT     $limit, $entries
-                "
-            );
-
-	// Number of entries
-        $cnt = my_query(
-                "
-                SELECT    COUNT(*)
-                FROM      users
-                WHERE     (moderator = 0 OR moderator IS NULL)
-                "
-            );
-    }
-
-    // Number of database entries found.
-    $sum = $cnt->fetch_row();
-    $count = $sum['0'];
-
-    // List users / moderators
-    while ($mod = $rs->fetch_assoc()) {
-        $keys[] = array(
-            'text'          => $mod['name'],
-            'callback_data' => '0:mods_' . $action . ':' . $mod['user_id']
-        );
-    }
-
-    // Empty backs and next keys
-    $keys_back = [];
-    $keys_next = [];
-
-    // Add back key.
-    if ($limit > 0) {
-        $new_limit = $limit - $entries;
-        $empty_back_key = [];
-        $back = universal_key($empty_back_key, $new_limit, $module, $action, getTranslation('back') . " (-" . $entries . ")");
-        $keys_back[] = $back[0][0];
-    }
-
-    // Add skip back key.
-    if ($limit - $skip > 0) {
-        $new_limit = $limit - $skip - $entries;
-        $empty_back_key = [];
-        $back = universal_key($empty_back_key, $new_limit, $module, $action, getTranslation('back') . " (-" . $skip . ")");
-        $keys_back[] = $back[0][0];
-    }
-
-    // Add next key.
-    if (($limit + $entries) < $count) {
-        $new_limit = $limit + $entries;
-        $empty_next_key = [];
-        $next = universal_key($empty_next_key, $new_limit, $module, $action, getTranslation('next') . " (+" . $entries . ")");
-        $keys_next[] = $next[0][0];
-    }
-
-    // Add skip next key.
-    if (($limit + $skip + $entries) < $count) {
-        $new_limit = $limit + $skip + $entries;
-        $empty_next_key = [];
-        $next = universal_key($empty_next_key, $new_limit, $module, $action, getTranslation('next') . " (+" . $skip . ")");
-        $keys_next[] = $next[0][0];
-    }
-
-    // Exit key
-    $empty_exit_key = [];
-    $key_exit = universal_key($empty_exit_key, "0", "exit", "0", getTranslation('abort'));
-
-    // Get the inline key array.
-    $keys = inline_key_array($keys, 1);
-    $keys_back = inline_key_array($keys_back, 2);
-    $keys_next = inline_key_array($keys_next, 2);
-    $keys = array_merge($keys_back, $keys);
-    $keys = array_merge($keys, $keys_next);
-    $keys = array_merge($keys, $key_exit);
-
-    return $keys;
 }
 
 /**
@@ -952,7 +828,8 @@ function raid_edit_gyms_first_letter_keys($action = 'raid_by_gym', $hidden = fal
         {
             $letter = trim($letter);
             debug_log($letter, 'Special gym letter:');
-            $length = strlen($letter);
+            // Fix chinese chars, prior: $length = strlen($letter);
+            $length = strlen(utf8_decode($first));
             $case .= SP . "WHEN UPPER(LEFT(gym_name, " . $length . ")) = '" . $letter . "' THEN UPPER(LEFT(gym_name, " . $length . "))" . SP;
         }
     }
@@ -1029,7 +906,8 @@ function raid_edit_gyms_first_letter_keys($action = 'raid_by_gym', $hidden = fal
 function raid_edit_gym_keys($first, $warn = true, $action = 'edit_raidlevel', $delete = false, $hidden = false)
 {
     // Length of first letter.
-    $first_length = strlen($first);
+    // Fix chinese chars, prior: $first_length = strlen($first);
+    $first_length = strlen(utf8_decode($first));
 
     // Special/Custom gym letters?
     $not = '';
@@ -1041,7 +919,8 @@ function raid_edit_gym_keys($first, $warn = true, $action = 'edit_raidlevel', $d
         {
             $letter = trim($letter);
             debug_log($letter, 'Special gym letter:');
-            $length = strlen($letter);
+            // Fix chinese chars, prior: $length = strlen($letter);
+            $length = strlen(utf8_decode($letter));
             $not .= SP . "AND UPPER(LEFT(gym_name, " . $length . ")) != UPPER('" . $letter . "')" . SP;
         }
     }
@@ -1056,7 +935,7 @@ function raid_edit_gym_keys($first, $warn = true, $action = 'edit_raidlevel', $d
     // Get gyms from database
     $rs = my_query(
         "
-        SELECT    gyms.id, gyms.gym_name,
+        SELECT    gyms.id, gyms.gym_name, gyms.ex_gym,
                   CASE WHEN SUM(raids.end_time > UTC_TIMESTAMP() - INTERVAL 10 MINUTE) THEN 1 ELSE 0 END AS active_raid
         FROM      gyms
         LEFT JOIN raids
@@ -1082,8 +961,16 @@ function raid_edit_gym_keys($first, $warn = true, $action = 'edit_raidlevel', $d
 
         // No active raid
         if($gym['active_raid'] == 0 || $warn = false) {
+            // Show Ex-Gym-Marker?
+            if(RAID_CREATION_EX_GYM_MARKER && $gym['ex_gym'] == 1) {
+                $ex_raid_gym_marker = (strtolower(RAID_EX_GYM_MARKER) == 'icon') ? EMOJI_STAR : RAID_EX_GYM_MARKER;
+                $gym_name = $ex_raid_gym_marker . SP . $gym['gym_name'];
+            } else {
+                $gym_name = $gym['gym_name'];
+            }
+
             $keys[] = array(
-                'text'          => $gym['gym_name'],
+                'text'          => $gym_name,
                 'callback_data' => $first . ':' . $action . ':' . $arg
             );
         // Add warning emoji for active raid
@@ -1810,6 +1697,69 @@ function run_cleanup ($telegram = 2, $database = 2) {
 }
 
 /**
+ * Keys trainer info.
+ * @show bool
+ * @return array
+ */
+function keys_trainerinfo($show = false)
+{
+    // Toggle state.
+    $status = 'show';
+    if($show || TRAINER_BUTTONS_TOGGLE == false) { 
+        // Always show buttons?
+        if(($show == true && TRAINER_BUTTONS_TOGGLE == false) || TRAINER_BUTTONS_TOGGLE == true) {
+            $status = 'hide';
+        }
+
+        // Keys to set team and level
+        $keys = [
+            [
+                [
+                    'text'          => getPublicTranslation('trainerinfo'),
+                    'callback_data' => 'trainer:vote_level:' . $status
+                ],
+            ],
+            [
+                [
+                    'text'          => getPublicTranslation('team') . SP . TEAM_B,
+                    'callback_data' => 'trainer:vote_team:mystic'
+                ],
+                [
+                    'text'          => getPublicTranslation('team') . SP . TEAM_R,
+                    'callback_data' => 'trainer:vote_team:valor'
+                ],
+                [
+                    'text'          => getPublicTranslation('team') . SP . TEAM_Y,
+                    'callback_data' => 'trainer:vote_team:instinct'
+                ],
+            ],
+            [
+                [
+                    'text'          => getPublicTranslation('level') . ' +',
+                    'callback_data' => 'trainer:vote_level:up'
+                ],
+                [
+                    'text'          => getPublicTranslation('level') . ' -',
+                    'callback_data' => 'trainer:vote_level:down'
+                ]
+            ]
+        ];
+    } else {
+        // Key to show/hide trainer info.
+        $keys = [
+            [
+                [
+                    'text'          => getPublicTranslation('trainerinfo'),
+                    'callback_data' => 'trainer:vote_level:' . $status
+                ],
+            ]
+        ];
+    }
+
+    return $keys;
+}
+
+/**
  * Keys vote.
  * @param $raid
  * @return array
@@ -1852,22 +1802,26 @@ function keys_vote($raid)
     ];
 
     // Team and level keys.
-    $buttons_teamlvl = [
-        [
+    if(RAID_POLL_HIDE_BUTTONS_TEAM_LVL == true) {
+        $buttons_teamlvl = [];
+    } else {
+        $buttons_teamlvl = [
             [
-                'text'          => 'Team',
-                'callback_data' => $raid['id'] . ':vote_team:0'
-            ],
-            [
-                'text'          => 'Lvl +',
-                'callback_data' => $raid['id'] . ':vote_level:up'
-            ],
-            [
-                'text'          => 'Lvl -',
-                'callback_data' => $raid['id'] . ':vote_level:down'
+                [
+                    'text'          => 'Team',
+                    'callback_data' => $raid['id'] . ':vote_team:0'
+                ],
+                [
+                    'text'          => 'Lvl +',
+                    'callback_data' => $raid['id'] . ':vote_level:up'
+                ],
+                [
+                    'text'          => 'Lvl -',
+                    'callback_data' => $raid['id'] . ':vote_level:down'
+                ]
             ]
-        ]
-    ];
+        ];
+    }
 
     // Ex-Raid Invite key
     $button_invite = [
@@ -1939,415 +1893,439 @@ function keys_vote($raid)
         ];
     // Raid is still running.
     } else {
-        // Attend raid at any time
-        if(RAID_ANYTIME == true)
-        {
-            $keys_time[] = array(
-                'text'          => getPublicTranslation('anytime'),
-                'callback_data' => $raid['id'] . ':vote_time:0'
-            );
-        }
-
-        // Get current time.
-        $now_helper = new DateTimeImmutable('now', new DateTimeZone('UTC'));
-        $now_helper = $now_helper->format('Y-m-d H:i') . ':00';
-        $dt_now = new DateTimeImmutable($now_helper, new DateTimeZone('UTC'));
-
-        // Get direct start slot
-        $direct_slot = new DateTimeImmutable($start_time, new DateTimeZone('UTC'));
-
-        // Get first raidslot rounded up to the next 5 minutes
-        // Get minute and convert modulo raidslot
-        $five_slot = new DateTimeImmutable($start_time, new DateTimeZone('UTC'));
-        $minute = $five_slot->format("i");
-        $minute = $minute % 5;
-
-        // Count minutes to next 5 multiple minutes if necessary
-        if($minute != 0)
-        {
-            // Count difference
-            $diff = 5 - $minute;
-            // Add difference
-            $five_slot = $five_slot->add(new DateInterval("PT".$diff."M"));
-        }
-
-        // Add RAID_FIRST_START minutes to five minutes slot
-        //$five_plus_slot = new DateTime($five_slot, new DateTimeZone('UTC'));
-        $five_plus_slot = $five_slot;
-        $five_plus_slot = $five_plus_slot->add(new DateInterval("PT".RAID_FIRST_START."M")); 
-
-        // Get first regular raidslot
-	// Get minute and convert modulo raidslot
-        $first_slot = new DateTimeImmutable($start_time, new DateTimeZone('UTC'));
-        $minute = $first_slot->format("i");
-        $minute = $minute % RAID_SLOTS;
-
-        // Count minutes to next raidslot multiple minutes if necessary
-        if($minute != 0)
-        {
-            // Count difference
-            $diff = RAID_SLOTS - $minute;
-            // Add difference
-            $first_slot = $first_slot->add(new DateInterval("PT".$diff."M"));
-        } 
-
-        // Compare times slots to add them to keys.
-        // Example Scenarios:
-        // Raid 1: Start = 17:45, RAID_FIRST_START = 10, RAID_SLOTS = 15
-        // Raid 2: Start = 17:36, RAID_FIRST_START = 10, RAID_SLOTS = 15
-        // Raid 3: Start = 17:35, RAID_FIRST_START = 10, RAID_SLOTS = 15
-        // Raid 4: Start = 17:31, RAID_FIRST_START = 10, RAID_SLOTS = 15
-        // Raid 5: Start = 17:40, RAID_FIRST_START = 10, RAID_SLOTS = 15
-        // Raid 6: Start = 17:32, RAID_FIRST_START = 5, RAID_SLOTS = 5
-
-        // Write slots to log.
-        debug_log($direct_slot, 'Direct start slot:');
-        debug_log($five_slot, 'Next 5 Minute slot:');
-        debug_log($first_slot, 'First regular slot:');
-
-        // Add first slot only, as all slot times are identical
-        if($direct_slot == $five_slot && $direct_slot == $first_slot) {
-            // Raid 1: 17:45 (17:45 == 17:45 && 17:45 == 17:45)
-
-            // Add first slot
-            if($first_slot >= $dt_now) {
-                $slot = $first_slot->format('Y-m-d H:i:s');
-                $keys_time[] = array(
-                    'text'          => dt2time($slot),
-                    'callback_data' => $raid['id'] . ':vote_time:' . utctime($slot, 'YmdHis')
-                );
-            }
-
-        // Add either five and first slot or only first slot based on RAID_FIRST_START
-        } else if($direct_slot == $five_slot && $five_slot < $first_slot) {
-            // Raid 3: 17:35 == 17:35 && 17:35 < 17:45
-            // Raid 5: 17:40 == 17:40 && 17:40 < 17:45
-
-            // Add next five minutes slot and first regular slot
-            if($five_plus_slot <= $first_slot) {
-                // Raid 3: 17:35, 17:45 (17:35 + 10min <= 17:45)
-
-                // Add five minutes slot
-                if($five_slot >= $dt_now) {
-                    $slot = $five_slot->format('Y-m-d H:i:s');
-                    $keys_time[] = array(
-                        'text'          => dt2time($slot),
-                        'callback_data' => $raid['id'] . ':vote_time:' . utctime($slot, 'YmdHis')
-                    );
-                }
-
-                // Add first slot
-                if($first_slot >= $dt_now) {
-                    $slot = $first_slot->format('Y-m-d H:i:s');
-                    $keys_time[] = array(
-                        'text'          => dt2time($slot),
-                        'callback_data' => $raid['id'] . ':vote_time:' . utctime($slot, 'YmdHis')
-                    );
-                }
-
-            // Add only first regular slot
-            } else {
-                // Raid 5: 17:45
-
-                // Add first slot
-                if($first_slot >= $dt_now) {
-                    $slot = $first_slot->format('Y-m-d H:i:s');
-                    $keys_time[] = array(
-                        'text'          => dt2time($slot),
-                        'callback_data' => $raid['id'] . ':vote_time:' . utctime($slot, 'YmdHis')
-                    );
-                }
-            }
-
-        // Add direct slot and first slot
-        } else if($direct_slot < $five_slot && $five_slot == $first_slot) {
-            // Raid 6: 17:32 < 17:35 && 17:35 == 17:35
-            // Some kind of special case for a low value of RAID_SLOTS
-
-            // Add direct slot?
-            if(RAID_DIRECT_START == true) {
-                if($direct_slot >= $dt_now) {
-                    $slot = $direct_slot->format('Y-m-d H:i:s');
-                    $keys_time[] = array(
-                        'text'          => dt2time($slot),
-                        'callback_data' => $raid['id'] . ':vote_time:' . utctime($slot, 'YmdHis')
-                    );
-                }
-            }
-
-            // Add first slot
-            if($first_slot >= $dt_now) {
-                $slot = $first_slot->format('Y-m-d H:i:s');
-                $keys_time[] = array(
-                    'text'          => dt2time($slot),
-                    'callback_data' => $raid['id'] . ':vote_time:' . utctime($slot, 'YmdHis')
-                );
-            }
-
-
-        // Add either all 3 slots (direct slot, five minutes slot and first regular slot) or
-        // 2 slots (direct slot and first slot) as RAID_FIRST_START does not allow the five minutes slot to be added
-        } else if($direct_slot < $five_slot && $five_slot < $first_slot) {
-            // Raid 2: 17:36 < 17:40 && 17:40 < 17:45
-            // Raid 4: 17:31 < 17:35 && 17:35 < 17:45
-
-            // Add all 3 slots
-            if($five_plus_slot <= $first_slot) {
-                // Raid 4: 17:31, 17:35, 17:45
-
-                // Add direct slot?
-                if(RAID_DIRECT_START == true) {
-                    if($direct_slot >= $dt_now) {
-                        $slot = $direct_slot->format('Y-m-d H:i:s');
-                        $keys_time[] = array(
-                            'text'          => dt2time($slot),
-                            'callback_data' => $raid['id'] . ':vote_time:' . utctime($slot, 'YmdHis')
-                        );
-                    }
-                }
-
-                // Add five minutes slot
-                if($five_slot >= $dt_now) {
-                    $slot = $five_slot->format('Y-m-d H:i:s');
-                    $keys_time[] = array(
-                        'text'          => dt2time($slot),
-                        'callback_data' => $raid['id'] . ':vote_time:' . utctime($slot, 'YmdHis')
-                    );
-                }
-
-                // Add first slot
-                if($first_slot >= $dt_now) {
-                    $slot = $first_slot->format('Y-m-d H:i:s');
-                    $keys_time[] = array(
-                        'text'          => dt2time($slot),
-                        'callback_data' => $raid['id'] . ':vote_time:' . utctime($slot, 'YmdHis')
-                    );
-                }
-            // Add direct slot and first regular slot
-            } else {
-                // Raid 2: 17:36, 17:45
-
-                // Add direct slot?
-                if(RAID_DIRECT_START == true) {
-                    if($direct_slot >= $dt_now) {
-                        $slot = $direct_slot->format('Y-m-d H:i:s');
-                        $keys_time[] = array(
-                            'text'          => dt2time($slot),
-                            'callback_data' => $raid['id'] . ':vote_time:' . utctime($slot, 'YmdHis')
-                        );
-                    }
-                }
-
-                // Add first slot
-                if($first_slot >= $dt_now) {
-                    $slot = $first_slot->format('Y-m-d H:i:s');
-                    $keys_time[] = array(
-                        'text'          => dt2time($slot),
-                        'callback_data' => $raid['id'] . ':vote_time:' . utctime($slot, 'YmdHis')
-                    );
-                }
-            }
-
-        // We missed all possible cases or forgot to include them in future else-if-clauses :D
-        // Try to add at least the direct slot.
-        } else {
-            // Add direct slot?
-            if(RAID_DIRECT_START == true) {
-                if($first_slot >= $dt_now) {
-                    $slot = $direct_slot->format('Y-m-d H:i:s');
-                    $keys_time[] = array(
-                        'text'          => dt2time($slot),
-                        'callback_data' => $raid['id'] . ':vote_time:' . utctime($slot, 'YmdHis')
-                    );
-                }
-            }
-        }
-
-
-        // Init last slot time.
-        $last_slot = new DateTimeImmutable($start_time, new DateTimeZone('UTC'));
-
-        // Get regular slots
-        // Start with second slot as first slot is already added to keys.
-        $second_slot = $first_slot->add(new DateInterval("PT".RAID_SLOTS."M"));
-        $dt_end = new DateTimeImmutable($end_time, new DateTimeZone('UTC'));
-        $regular_slots = new DatePeriod($second_slot, new DateInterval('PT'.RAID_SLOTS.'M'), $dt_end);
-
-        // Add regular slots.
-        foreach($regular_slots as $slot){
-            $slot_end = $slot->add(new DateInterval('PT'.RAID_LAST_START.'M'));
-            // Slot + RAID_LAST_START before end_time?
-            if($slot_end < $dt_end) {
-                debug_log($slot, 'Regular slot:');
-                // Add regular slot.
-                if($slot >= $dt_now) {
-                    $slot = $slot->format('Y-m-d H:i:s');
-                    $keys_time[] = array(
-                        'text'          => dt2time($slot),
-                        'callback_data' => $raid['id'] . ':vote_time:' . utctime($slot, 'YmdHis')
-                    );
-
-                    // Set last slot for later.
-                    $last_slot = new DateTimeImmutable($slot, new DateTimeZone('UTC'));
-                } else {
-                    // Set last slot for later.
-                    $slot = $slot->format('Y-m-d H:i:s');
-                    $last_slot = new DateTimeImmutable($slot, new DateTimeZone('UTC'));
-                }
-            }
-        }
-
-        // Add raid last start slot
-        // Set end_time to last extra slot, subtract RAID_LAST_START minutes and round down to earlier 5 minutes.
-        $last_extra_slot = $dt_end;
-        $last_extra_slot = $last_extra_slot->sub(new DateInterval('PT'.RAID_LAST_START.'M'));
-        $s = 5 * 60;
-        $last_extra_slot = $last_extra_slot->setTimestamp($s * floor($last_extra_slot->getTimestamp() / $s));
-        //$time_to_last_slot = $last_extra_slot->diff($last_slot)->format("%a");
-
-        // Last extra slot not conflicting with last slot and time to last regular slot larger than RAID_LAST_START?
-        //if($last_extra_slot > $last_slot && $time_to_last_slot > RAID_LAST_START) {
-
-        // Log last and last extra slot.
-        debug_log($last_slot, 'Last slot:');
-        debug_log($last_extra_slot, 'Last extra slot:');
-
-        // Last extra slot not conflicting with last slot
-        if($last_extra_slot > $last_slot) {
-            // Add last extra slot
-            if($last_extra_slot >= $dt_now) {
-                $slot = $last_extra_slot->format('Y-m-d H:i:s');
-                $keys_time[] = array(
-                    'text'          => dt2time($slot),
-                    'callback_data' => $raid['id'] . ':vote_time:' . utctime($slot, 'YmdHis')
-                );
-            }
-        }
-
-        // Add time keys.
-        $buttons_time = inline_key_array($keys_time, 4);
-
-        // Init keys pokemon array.
-        $buttons_pokemon = [];
-
         // Get current pokemon
         $raid_pokemon = $raid['pokemon'];
+        $raid_pokemon_id = explode('-',$raid_pokemon)[0];
 
         // Get raid level
         $raid_level = '0';
         $raid_level = get_raid_level($raid_pokemon);
 
-        // Get participants
-        $rs = my_query(
-            "
-            SELECT    count(attend_time)                  AS count,
-                      sum(pokemon = '0')                  AS count_any_pokemon,
-                      sum(pokemon = '{$raid_pokemon}')    AS count_raid_pokemon
-            FROM      attendance
-              WHERE   raid_id = {$raid['id']}
-              AND     attend_time IS NOT NULL
-              AND     raid_done != 1
-              AND     cancel != 1
-             "
-        );
+        // Hide buttons for raid levels and pokemon
+        $hide_buttons_raid_level = explode(',', RAID_POLL_HIDE_BUTTONS_RAID_LEVEL);
+        $hide_buttons_pokemon = explode(',', RAID_POLL_HIDE_BUTTONS_POKEMON);
 
-        $row = $rs->fetch_assoc();
-
-        // Count participants and participants by pokemon
-        $count_pp = $row['count'];
-        $count_any_pokemon = $row['count_any_pokemon'];
-        $count_raid_pokemon = $row['count_raid_pokemon'];
-
-        // Write to log.
-        debug_log('Participants for raid with ID ' . $raid['id'] . ': ' . $count_pp);
-        debug_log('Participants who voted for any pokemon: ' . $count_any_pokemon);
-        debug_log('Participants who voted for ' . $raid_pokemon . ': ' . $count_raid_pokemon);
-    
-        // Split pokemon id and form
-        $raid_pokemon_id = explode('-',$raid_pokemon)[0];
-
-        // Hide keys for specific cases
-        $show_keys = true;
-        // Make sure raid boss is not an egg
-        if(!in_array($raid_pokemon_id, $GLOBALS['eggs'])) {
-            // Make sure we either have no participants
-            // OR all participants voted for "any" raid boss
-            // OR all participants voted for the hatched raid boss 
-            // OR all participants voted for "any" or the hatched raid boss
-            if($count_pp == 0 || $count_pp == $count_any_pokemon || $count_pp == $count_raid_pokemon || $count_pp == ($count_any_pokemon + $count_raid_pokemon)) {
-                $show_keys = false;
+        // Show buttons to users?
+        if(in_array($raid_level, $hide_buttons_raid_level) || in_array($raid_pokemon, $hide_buttons_pokemon) || in_array($raid_pokemon_id, $hide_buttons_pokemon)) {
+            $keys = [];
+        } else {
+            // Attend raid at any time
+            if(RAID_ANYTIME == true)
+            {
+                $keys_time[] = array(
+                    'text'          => getPublicTranslation('anytime'),
+                    'callback_data' => $raid['id'] . ':vote_time:0'
+                );
             }
-        }
 
-        // Add pokemon keys if we found the raid boss
-        if ($raid_level != '0' && $show_keys) {
-            // Get pokemon from database
+            // Get current time.
+            $now_helper = new DateTimeImmutable('now', new DateTimeZone('UTC'));
+            $now_helper = $now_helper->format('Y-m-d H:i') . ':00';
+            $dt_now = new DateTimeImmutable($now_helper, new DateTimeZone('UTC'));
+
+            // Get direct start slot
+            $direct_slot = new DateTimeImmutable($start_time, new DateTimeZone('UTC'));
+
+            // Get first raidslot rounded up to the next 5 minutes
+            // Get minute and convert modulo raidslot
+            $five_slot = new DateTimeImmutable($start_time, new DateTimeZone('UTC'));
+            $minute = $five_slot->format("i");
+            $minute = $minute % 5;
+
+            // Count minutes to next 5 multiple minutes if necessary
+            if($minute != 0)
+            {
+                // Count difference
+                $diff = 5 - $minute;
+                // Add difference
+                $five_slot = $five_slot->add(new DateInterval("PT".$diff."M"));
+            }
+
+            // Add RAID_FIRST_START minutes to five minutes slot
+            //$five_plus_slot = new DateTime($five_slot, new DateTimeZone('UTC'));
+            $five_plus_slot = $five_slot;
+            $five_plus_slot = $five_plus_slot->add(new DateInterval("PT".RAID_FIRST_START."M")); 
+
+            // Get first regular raidslot
+	    // Get minute and convert modulo raidslot
+            $first_slot = new DateTimeImmutable($start_time, new DateTimeZone('UTC'));
+            $minute = $first_slot->format("i");
+            $minute = $minute % RAID_SLOTS;
+
+            // Count minutes to next raidslot multiple minutes if necessary
+            if($minute != 0)
+            {
+                // Count difference
+                $diff = RAID_SLOTS - $minute;
+                // Add difference
+                $first_slot = $first_slot->add(new DateInterval("PT".$diff."M"));
+            } 
+
+            // Compare times slots to add them to keys.
+            // Example Scenarios:
+            // Raid 1: Start = 17:45, RAID_FIRST_START = 10, RAID_SLOTS = 15
+            // Raid 2: Start = 17:36, RAID_FIRST_START = 10, RAID_SLOTS = 15
+            // Raid 3: Start = 17:35, RAID_FIRST_START = 10, RAID_SLOTS = 15
+            // Raid 4: Start = 17:31, RAID_FIRST_START = 10, RAID_SLOTS = 15
+            // Raid 5: Start = 17:40, RAID_FIRST_START = 10, RAID_SLOTS = 15
+            // Raid 6: Start = 17:32, RAID_FIRST_START = 5, RAID_SLOTS = 5
+
+            // Write slots to log.
+            debug_log($direct_slot, 'Direct start slot:');
+            debug_log($five_slot, 'Next 5 Minute slot:');
+            debug_log($first_slot, 'First regular slot:');
+
+            // Add first slot only, as all slot times are identical
+            if($direct_slot == $five_slot && $direct_slot == $first_slot) {
+                // Raid 1: 17:45 (17:45 == 17:45 && 17:45 == 17:45)
+
+                // Add first slot
+                if($first_slot >= $dt_now) {
+                    $slot = $first_slot->format('Y-m-d H:i:s');
+                    $keys_time[] = array(
+                        'text'          => dt2time($slot),
+                        'callback_data' => $raid['id'] . ':vote_time:' . utctime($slot, 'YmdHis')
+                    );
+                }
+
+            // Add either five and first slot or only first slot based on RAID_FIRST_START
+            } else if($direct_slot == $five_slot && $five_slot < $first_slot) {
+                // Raid 3: 17:35 == 17:35 && 17:35 < 17:45
+                // Raid 5: 17:40 == 17:40 && 17:40 < 17:45
+
+                // Add next five minutes slot and first regular slot
+                if($five_plus_slot <= $first_slot) {
+                    // Raid 3: 17:35, 17:45 (17:35 + 10min <= 17:45)
+
+                    // Add five minutes slot
+                    if($five_slot >= $dt_now) {
+                        $slot = $five_slot->format('Y-m-d H:i:s');
+                        $keys_time[] = array(
+                            'text'          => dt2time($slot),
+                            'callback_data' => $raid['id'] . ':vote_time:' . utctime($slot, 'YmdHis')
+                        );
+                    }
+
+                    // Add first slot
+                    if($first_slot >= $dt_now) {
+                        $slot = $first_slot->format('Y-m-d H:i:s');
+                        $keys_time[] = array(
+                            'text'          => dt2time($slot),
+                            'callback_data' => $raid['id'] . ':vote_time:' . utctime($slot, 'YmdHis')
+                        );
+                    }
+
+                // Add only first regular slot
+                } else {
+                    // Raid 5: 17:45
+
+                    // Add first slot
+                    if($first_slot >= $dt_now) {
+                        $slot = $first_slot->format('Y-m-d H:i:s');
+                        $keys_time[] = array(
+                            'text'          => dt2time($slot),
+                            'callback_data' => $raid['id'] . ':vote_time:' . utctime($slot, 'YmdHis')
+                        );
+                    }
+                }
+
+            // Add direct slot and first slot
+            } else if($direct_slot < $five_slot && $five_slot == $first_slot) {
+                // Raid 6: 17:32 < 17:35 && 17:35 == 17:35
+                // Some kind of special case for a low value of RAID_SLOTS
+
+                // Add direct slot?
+                if(RAID_DIRECT_START == true) {
+                    if($direct_slot >= $dt_now) {
+                        $slot = $direct_slot->format('Y-m-d H:i:s');
+                        $keys_time[] = array(
+                            'text'          => dt2time($slot),
+                            'callback_data' => $raid['id'] . ':vote_time:' . utctime($slot, 'YmdHis')
+                        );
+                    }
+                }
+
+                // Add first slot
+                if($first_slot >= $dt_now) {
+                    $slot = $first_slot->format('Y-m-d H:i:s');
+                    $keys_time[] = array(
+                        'text'          => dt2time($slot),
+                        'callback_data' => $raid['id'] . ':vote_time:' . utctime($slot, 'YmdHis')
+                    );
+                }
+
+
+            // Add either all 3 slots (direct slot, five minutes slot and first regular slot) or
+            // 2 slots (direct slot and first slot) as RAID_FIRST_START does not allow the five minutes slot to be added
+            } else if($direct_slot < $five_slot && $five_slot < $first_slot) {
+                // Raid 2: 17:36 < 17:40 && 17:40 < 17:45
+                // Raid 4: 17:31 < 17:35 && 17:35 < 17:45
+
+                // Add all 3 slots
+                if($five_plus_slot <= $first_slot) {
+                    // Raid 4: 17:31, 17:35, 17:45
+
+                    // Add direct slot?
+                    if(RAID_DIRECT_START == true) {
+                        if($direct_slot >= $dt_now) {
+                            $slot = $direct_slot->format('Y-m-d H:i:s');
+                            $keys_time[] = array(
+                                'text'          => dt2time($slot),
+                                'callback_data' => $raid['id'] . ':vote_time:' . utctime($slot, 'YmdHis')
+                            );
+                        }
+                    }
+
+                    // Add five minutes slot
+                    if($five_slot >= $dt_now) {
+                        $slot = $five_slot->format('Y-m-d H:i:s');
+                        $keys_time[] = array(
+                            'text'          => dt2time($slot),
+                            'callback_data' => $raid['id'] . ':vote_time:' . utctime($slot, 'YmdHis')
+                        );
+                    }
+
+                    // Add first slot
+                    if($first_slot >= $dt_now) {
+                        $slot = $first_slot->format('Y-m-d H:i:s');
+                        $keys_time[] = array(
+                            'text'          => dt2time($slot),
+                            'callback_data' => $raid['id'] . ':vote_time:' . utctime($slot, 'YmdHis')
+                        );
+                    }
+                // Add direct slot and first regular slot
+                } else {
+                    // Raid 2: 17:36, 17:45
+
+                    // Add direct slot?
+                    if(RAID_DIRECT_START == true) {
+                        if($direct_slot >= $dt_now) {
+                            $slot = $direct_slot->format('Y-m-d H:i:s');
+                            $keys_time[] = array(
+                                'text'          => dt2time($slot),
+                                'callback_data' => $raid['id'] . ':vote_time:' . utctime($slot, 'YmdHis')
+                            );
+                        }
+                    }
+
+                    // Add first slot
+                    if($first_slot >= $dt_now) {
+                        $slot = $first_slot->format('Y-m-d H:i:s');
+                        $keys_time[] = array(
+                            'text'          => dt2time($slot),
+                            'callback_data' => $raid['id'] . ':vote_time:' . utctime($slot, 'YmdHis')
+                        );
+                    }
+                }
+
+            // We missed all possible cases or forgot to include them in future else-if-clauses :D
+            // Try to add at least the direct slot.
+            } else {
+                // Add direct slot?
+                if(RAID_DIRECT_START == true) {
+                    if($first_slot >= $dt_now) {
+                        $slot = $direct_slot->format('Y-m-d H:i:s');
+                        $keys_time[] = array(
+                            'text'          => dt2time($slot),
+                            'callback_data' => $raid['id'] . ':vote_time:' . utctime($slot, 'YmdHis')
+                        );
+                    }
+                }
+            }
+
+
+            // Init last slot time.
+            $last_slot = new DateTimeImmutable($start_time, new DateTimeZone('UTC'));
+
+            // Get regular slots
+            // Start with second slot as first slot is already added to keys.
+            $second_slot = $first_slot->add(new DateInterval("PT".RAID_SLOTS."M"));
+            $dt_end = new DateTimeImmutable($end_time, new DateTimeZone('UTC'));
+            $regular_slots = new DatePeriod($second_slot, new DateInterval('PT'.RAID_SLOTS.'M'), $dt_end);
+
+            // Add regular slots.
+            foreach($regular_slots as $slot){
+                $slot_end = $slot->add(new DateInterval('PT'.RAID_LAST_START.'M'));
+                // Slot + RAID_LAST_START before end_time?
+                if($slot_end < $dt_end) {
+                    debug_log($slot, 'Regular slot:');
+                    // Add regular slot.
+                    if($slot >= $dt_now) {
+                        $slot = $slot->format('Y-m-d H:i:s');
+                        $keys_time[] = array(
+                            'text'          => dt2time($slot),
+                            'callback_data' => $raid['id'] . ':vote_time:' . utctime($slot, 'YmdHis')
+                        );
+
+                        // Set last slot for later.
+                        $last_slot = new DateTimeImmutable($slot, new DateTimeZone('UTC'));
+                    } else {
+                        // Set last slot for later.
+                        $slot = $slot->format('Y-m-d H:i:s');
+                        $last_slot = new DateTimeImmutable($slot, new DateTimeZone('UTC'));
+                    }
+                }
+            }
+
+            // Add raid last start slot
+            // Set end_time to last extra slot, subtract RAID_LAST_START minutes and round down to earlier 5 minutes.
+            $last_extra_slot = $dt_end;
+            $last_extra_slot = $last_extra_slot->sub(new DateInterval('PT'.RAID_LAST_START.'M'));
+            $s = 5 * 60;
+            $last_extra_slot = $last_extra_slot->setTimestamp($s * floor($last_extra_slot->getTimestamp() / $s));
+            //$time_to_last_slot = $last_extra_slot->diff($last_slot)->format("%a");
+
+            // Last extra slot not conflicting with last slot and time to last regular slot larger than RAID_LAST_START?
+            //if($last_extra_slot > $last_slot && $time_to_last_slot > RAID_LAST_START) 
+
+            // Log last and last extra slot.
+            debug_log($last_slot, 'Last slot:');
+            debug_log($last_extra_slot, 'Last extra slot:');
+
+            // Last extra slot not conflicting with last slot
+            if($last_extra_slot > $last_slot) {
+                // Add last extra slot
+                if($last_extra_slot >= $dt_now) {
+                    $slot = $last_extra_slot->format('Y-m-d H:i:s');
+                    $keys_time[] = array(
+                        'text'          => dt2time($slot),
+                        'callback_data' => $raid['id'] . ':vote_time:' . utctime($slot, 'YmdHis')
+                    );
+                }
+            }
+
+            // Add time keys.
+            $buttons_time = inline_key_array($keys_time, 4);
+
+            // Hidden participants?
+            if(RAID_POLL_HIDE_USERS_TIME > 0) {
+                $hide_users_sql = "AND attend_time > (UTC_TIMESTAMP() - INTERVAL " . RAID_POLL_HIDE_USERS_TIME . " MINUTE)";
+            } else {
+                $hide_users_sql = "";
+            }
+
+            // Get participants
             $rs = my_query(
                 "
-                SELECT    pokedex_id, pokemon_form
-                FROM      pokemon
-                WHERE     raid_level = '$raid_level'
-                "
+                SELECT    count(attend_time)                  AS count,
+                          sum(pokemon = '0')                  AS count_any_pokemon,
+                          sum(pokemon = '{$raid_pokemon}')    AS count_raid_pokemon
+                FROM      attendance
+                  WHERE   raid_id = {$raid['id']}
+                          $hide_users_sql
+                  AND     attend_time IS NOT NULL
+                  AND     raid_done != 1
+                  AND     cancel != 1
+                 "
             );
 
-            // Init counter. 
-            $count = 0;
+            $row = $rs->fetch_assoc();
 
-            // Get eggs.
-            $eggs = $GLOBALS['eggs'];
+            // Count participants and participants by pokemon
+            $count_pp = $row['count'];
+            $count_any_pokemon = $row['count_any_pokemon'];
+            $count_raid_pokemon = $row['count_raid_pokemon'];
 
-            // Add key for each raid level
-            while ($pokemon = $rs->fetch_assoc()) {
-                if(in_array($pokemon['pokedex_id'], $eggs)) continue;
-                $buttons_pokemon[] = array(
-                    'text'          => get_local_pokemon_name($pokemon['pokedex_id'] . '-' . $pokemon['pokemon_form'], true),
-                    'callback_data' => $raid['id'] . ':vote_pokemon:' . $pokemon['pokedex_id'] . '-' . $pokemon['pokemon_form']
-                );
-
-                // Counter
-                $count = $count + 1;
-            }
-
-            // Add pokemon keys if we have two or more pokemon
-            if($count >= 2) {
-                // Add button if raid boss does not matter
-                $buttons_pokemon[] = array(
-                    'text'          => getPublicTranslation('any_pokemon'),
-                    'callback_data' => $raid['id'] . ':vote_pokemon:0'
-                );
-
-                // Finally add pokemon to keys
-                $buttons_pokemon = inline_key_array($buttons_pokemon, 3);
+            // Write to log.
+            debug_log('Participants for raid with ID ' . $raid['id'] . ': ' . $count_pp);
+            debug_log('Participants who voted for any pokemon: ' . $count_any_pokemon);
+            debug_log('Participants who voted for ' . $raid_pokemon . ': ' . $count_raid_pokemon);
+    
+            // Zero Participants? Show only time buttons!
+            if($count_pp == 0) {
+                $keys = $buttons_time;
             } else {
-                // Reset pokemon buttons.
+                // Init keys pokemon array.
                 $buttons_pokemon = [];
+
+                // Hide keys for specific cases
+                $show_keys = true;
+                // Make sure raid boss is not an egg
+                if(!in_array($raid_pokemon_id, $GLOBALS['eggs'])) {
+                    // Make sure we either have no participants
+                    // OR all participants voted for "any" raid boss
+                    // OR all participants voted for the hatched raid boss 
+                    // OR all participants voted for "any" or the hatched raid boss
+                    if($count_pp == 0 || $count_pp == $count_any_pokemon || $count_pp == $count_raid_pokemon || $count_pp == ($count_any_pokemon + $count_raid_pokemon)) {
+                        $show_keys = false;
+                    }
+                }
+
+                // Add pokemon keys if we found the raid boss
+                if ($raid_level != '0' && $show_keys) {
+                    // Get pokemon from database
+                    $rs = my_query(
+                        "
+                        SELECT    pokedex_id, pokemon_form
+                        FROM      pokemon
+                        WHERE     raid_level = '$raid_level'
+                        "
+                    );
+
+                    // Init counter. 
+                    $count = 0;
+
+                    // Get eggs.
+                    $eggs = $GLOBALS['eggs'];
+
+                    // Add key for each raid level
+                    while ($pokemon = $rs->fetch_assoc()) {
+                        if(in_array($pokemon['pokedex_id'], $eggs)) continue;
+                        $buttons_pokemon[] = array(
+                            'text'          => get_local_pokemon_name($pokemon['pokedex_id'] . '-' . $pokemon['pokemon_form'], true),
+                            'callback_data' => $raid['id'] . ':vote_pokemon:' . $pokemon['pokedex_id'] . '-' . $pokemon['pokemon_form']
+                        );
+
+                        // Counter
+                        $count = $count + 1;
+                    }
+
+                    // Add pokemon keys if we have two or more pokemon
+                    if($count >= 2) {
+                        // Add button if raid boss does not matter
+                        $buttons_pokemon[] = array(
+                            'text'          => getPublicTranslation('any_pokemon'),
+                            'callback_data' => $raid['id'] . ':vote_pokemon:0'
+                        );
+
+                        // Finally add pokemon to keys
+                        $buttons_pokemon = inline_key_array($buttons_pokemon, 3);
+                    } else {
+                        // Reset pokemon buttons.
+                        $buttons_pokemon = [];
+                    }
+                }
+
+                // Init keys array
+                $keys = [];
+
+                // Get UI order from config and apply if nothing is missing!
+                $keys_UI_config = explode(',', RAID_POLL_UI_ORDER);
+                $keys_default = explode(',', 'extra,teamlvl,time,pokemon,status');
+
+                //debug_log($keys_UI_config);
+                //debug_log($keys_default);
+
+                // Add Ex-Raid Invite button for raid level X
+                if ($raid_level == 'X') {
+                    if(RAID_POLL_HIDE_BUTTONS_TEAM_LVL == true) {
+                        $buttons_extra[0] = array_merge($buttons_extra[0], $button_invite[0]);
+                    } else {
+                        $buttons_teamlvl[0] = array_merge($buttons_teamlvl[0], $button_invite[0]);
+                    }
+                }
+
+                // Compare if arrays have the same key/value pairs
+                if(count($keys_UI_config) == count($keys_default) && count(array_diff($keys_UI_config, $keys_default)) == 0){
+                    // Custom keys order
+                    foreach ($keys_UI_config as $keyname) {
+                        $keys = array_merge($keys, ${'buttons_' . $keyname});
+                    }
+                } else {
+                    // Default keys order
+                    $keys = array_merge($buttons_extra,$buttons_teamlvl,$buttons_time,$buttons_pokemon,$buttons_status);
+                }
             }
-        }
-
-        // Init keys array
-        $keys = [];
-
-        // Get UI order from config and apply if nothing is missing!
-        $keys_UI_config = explode(',', RAID_POLL_UI_ORDER);
-        $keys_default = explode(',', 'extra,teamlvl,time,pokemon,status');
-
-        //debug_log($keys_UI_config);
-        //debug_log($keys_default);
-
-        // Add Ex-Raid Invite button for raid level X
-        if ($raid_level == 'X') {
-                $buttons_teamlvl[0] = array_merge($buttons_teamlvl[0], $button_invite[0]);
-        }
-
-        // Compare if arrays have the same key/value pairs
-        if(count($keys_UI_config) == count($keys_default) && count(array_diff($keys_UI_config, $keys_default)) == 0){
-            // Custom keys order
-            foreach ($keys_UI_config as $keyname) {
-                $keys = array_merge($keys, ${'buttons_' . $keyname});
-            }
-        } else {
-            // Default keys order
-            $keys = array_merge($buttons_extra,$buttons_teamlvl,$buttons_time,$buttons_pokemon,$buttons_status);
         }
     }
 
@@ -2390,7 +2368,7 @@ function send_response_vote($update, $data, $new = false)
 
     } else {
         // Change message string.
-        $callback_msg = getTranslation('vote_updated');
+        $callback_msg = getPublicTranslation('vote_updated');
 
         // Telegram JSON array.
         $tg_json = array();
@@ -2410,18 +2388,124 @@ function send_response_vote($update, $data, $new = false)
 }
 
 /**
+ * Send response vote.
+ * @param $update
+ * @param $show
+ */
+function send_trainerinfo($update, $show = false)
+{   
+    // Get text and keys.
+    $msg = show_trainerinfo($update, $show);
+    $keys = keys_trainerinfo($show);
+    
+    // Write to log.
+    // debug_log($keys);
+    
+    // Change message string.
+    $callback_msg = getPublicTranslation('updated');
+        
+    // Telegram JSON array.
+    $tg_json = array();
+        
+    // Answer the callback.
+    $tg_json[] = answerCallbackQuery($update['callback_query']['id'], $callback_msg, true, true);
+        
+    // Edit the message.
+    $tg_json[] = edit_message($update, $msg, $keys, ['disable_web_page_preview' => 'true'], true);
+    
+    // Telegram multicurl request.
+    curl_json_multi_request($tg_json);
+
+    // Exit.
+    exit();
+}
+
+/**
  * Send please vote for a time first.
  * @param $update
  */
 function send_vote_time_first($update)
 {
     // Set the message.
-    $msg = getTranslation('vote_time_first');
+    $msg = getPublicTranslation('vote_time_first');
 
     // Answer the callback.
     answerCallbackQuery($update['callback_query']['id'], $msg);
 
     exit();
+}
+
+/**
+ * Send vote for a future time.
+ * @param $update
+ */
+function send_vote_time_future($update)
+{
+    // Set the message.
+    $msg = getPublicTranslation('vote_time_future');
+
+    // Answer the callback.
+    answerCallbackQuery($update['callback_query']['id'], $msg);
+}
+
+/**
+ * Insert trainer info.
+ * @param $chat_id
+ * @param $message_id
+ */
+function insert_trainerinfo($chat_id, $message_id)
+{
+    global $db;
+
+    // Build query to check if trainer info details are already in database or not
+    $rs = my_query(
+        "
+        SELECT    COUNT(*)
+        FROM      trainerinfo
+          WHERE   chat_id = '{$chat_id}'
+         "
+        );
+
+    $row = $rs->fetch_row();
+
+    // Trainer info already in database or new
+    if (empty($row['0'])) {
+        // Build query for trainerinfo table to add trainer info to database
+        debug_log('Adding new trainer information to database trainer info list!');
+        $rs = my_query(
+            "
+            INSERT INTO   trainerinfo
+            SET           chat_id = '{$chat_id}',
+                          message_id = '{$message_id}'
+            "
+        );
+    } else {
+        // Nothing to do - trainer information is already in database.
+        debug_log('Trainer information is already in database! Nothing to do...');
+    }
+}
+
+/**
+ * Delete trainerinfo.
+ * @param $chat_id
+ * @param $message_id
+ */
+function delete_trainerinfo($chat_id, $message_id)
+{
+    global $db;
+
+    // Delete telegram message.
+    debug_log('Deleting trainer info telegram message ' . $message_id . ' from chat ' . $chat_id);
+    delete_message($chat_id, $message_id);
+
+    // Delete trainer info from database.
+    debug_log('Deleting trainer information from database for Chat_ID: ' . $chat_id);
+    $rs = my_query(
+        "
+        DELETE FROM   trainerinfo 
+        WHERE   chat_id = '{$chat_id}'
+        "
+    );
 }
 
 /**
@@ -2954,8 +3038,19 @@ function show_raid_poll($raid)
     // Init empty message string.
     $msg = '';
 
+    // Get current pokemon
+    $raid_pokemon = $raid['pokemon'];
+    $raid_pokemon_id = explode('-',$raid_pokemon)[0];
+    
+    // Get raid level
+    $raid_level = get_raid_level($raid_pokemon);
+        
     // Get raid times.
     $msg .= get_raid_times($raid);
+
+    // Get current time and time left.
+    $time_now = utcnow();
+    $time_left = $raid['t_left'];
 
     // Display gym details.
     if ($raid['gym_name'] || $raid['gym_team']) {
@@ -3006,37 +3101,11 @@ function show_raid_poll($raid)
     $msg .= ($pokemon_weather != 0) ? (' ' . get_weather_icons($pokemon_weather)) : '';
     $msg .= CR;
 
-    // Display raid boss CP values.
-    $pokemon_cp = get_formatted_pokemon_cp($raid['pokemon'], true);
-    $msg .= (!empty($pokemon_cp)) ? ($pokemon_cp . CR) : ''; 
-
-    // Get current time and time left.
-    $time_now = utcnow();
-    $time_left = $raid['t_left'];
-
-    // Raid has started?
-    if ($time_now > $raid['start_time']) {
-
-        // Add raid is done message.
-        if ($time_now > $raid['end_time']) {
-        //if ($time_left < 0) {
-            $msg .= '<b>' . getPublicTranslation('raid_done') . '</b>' . CR;
-
-        // Add time left message.
-        } else {
-            $msg .= getPublicTranslation('raid') . ' — <b>' . getPublicTranslation('still') . ' ' . $time_left . 'h</b>' . CR;
-        }
-    }
-
-    // Gym note?
-    if(!empty($raid['gym_note'])) {
-        $msg .= EMOJI_INFO . SP . $raid['gym_note'] . CR;
-    }
-
-    // Add Ex-Raid Message if Pokemon is in Ex-Raid-List.
-    $raid_level = get_raid_level($raid['pokemon']);
-    if($raid_level == 'X') {
-        $msg .= CR . EMOJI_WARN . ' <b>' . getPublicTranslation('exraid_pass') . '</b> ' . EMOJI_WARN . CR;
+    // Hide participants?
+    if(RAID_POLL_HIDE_USERS_TIME > 0) {
+        $hide_users_sql = "AND attend_time > (UTC_TIMESTAMP() - INTERVAL " . RAID_POLL_HIDE_USERS_TIME . " MINUTE)";
+    } else {
+        $hide_users_sql = "";
     }
 
     // Get counts and sums for the raid
@@ -3061,6 +3130,7 @@ function show_raid_poll($raid)
         LEFT JOIN       users
           ON            attendance.user_id = users.user_id
           WHERE         raid_id = {$raid['id']}
+                        $hide_users_sql
             AND         attend_time IS NOT NULL
             AND         raid_done != 1
             AND         cancel != 1
@@ -3083,267 +3153,314 @@ function show_raid_poll($raid)
     // Write to log.
     debug_log($cnt);
 
-    // Add no attendance found message.
-    if ($cnt_all > 0) {
-        // Get counts and sums for the raid
-        // 2 - Grouped by attend_time and pokemon
-        $rs_cnt_pokemon = my_query(
+    // Buttons for raid levels and pokemon hidden?
+    $hide_buttons_raid_level = explode(',', RAID_POLL_HIDE_BUTTONS_RAID_LEVEL);
+    $hide_buttons_pokemon = explode(',', RAID_POLL_HIDE_BUTTONS_POKEMON);
+    $buttons_hidden = false;
+    if(in_array($raid_level, $hide_buttons_raid_level) || in_array($raid_pokemon, $hide_buttons_pokemon) || in_array($raid_pokemon_id, $hide_buttons_pokemon)) {
+        $buttons_hidden = true;
+    }
+
+    // Raid has started and has participants
+    if($time_now > $raid['start_time'] && $cnt_all > 0) {
+        // Display raid boss CP values.
+        $pokemon_cp = get_formatted_pokemon_cp($raid['pokemon'], true);
+        $msg .= (!empty($pokemon_cp)) ? ($pokemon_cp . CR) : '';
+
+        // Add raid is done message.
+        if($time_now > $raid['end_time']) {
+            $msg .= '<b>' . getPublicTranslation('raid_done') . '</b>' . CR;
+
+        // Add time left message.
+        } else {
+            $msg .= getPublicTranslation('raid') . ' — <b>' . getPublicTranslation('still') . ' ' . $time_left . 'h</b>' . CR;
+        }
+    // Buttons are hidden?
+    } else if($buttons_hidden) {
+        // Display raid boss CP values.
+        $pokemon_cp = get_formatted_pokemon_cp($raid['pokemon'], true);
+        $msg .= (!empty($pokemon_cp)) ? ($pokemon_cp . CR) : '';
+    }
+
+    // Hide info if buttons are hidden
+    if($buttons_hidden) {
+        // Show message that voting is not possible!
+        $msg .= CR . '<b>' . getPublicTranslation('raid_info_no_voting') . '</b> ' . CR;
+    } else {
+        // Gym note?
+        if(!empty($raid['gym_note'])) {
+            $msg .= EMOJI_INFO . SP . $raid['gym_note'] . CR;
+        }
+
+        // Add Ex-Raid Message if Pokemon is in Ex-Raid-List.
+        if($raid_level == 'X') {
+            $msg .= CR . EMOJI_WARN . ' <b>' . getPublicTranslation('exraid_pass') . '</b> ' . EMOJI_WARN . CR;
+        }
+
+        // Add attendances message.
+        if ($cnt_all > 0) {
+            // Get counts and sums for the raid
+            // 2 - Grouped by attend_time and pokemon
+            $rs_cnt_pokemon = my_query(
+                "
+                SELECT DISTINCT DATE_FORMAT(attend_time, '%Y%m%d%H%i%s') AS ts_att, 
+                                count(attend_time)          AS count,
+                                sum(team = 'mystic')        AS count_mystic,
+                                sum(team = 'valor')         AS count_valor,
+                                sum(team = 'instinct')      AS count_instinct,
+                                sum(team IS NULL)           AS count_no_team,
+                                sum(extra_mystic)           AS extra_mystic,
+                                sum(extra_valor)            AS extra_valor,
+                                sum(extra_instinct)         AS extra_instinct,
+                                sum(IF(late = '1', (late = '1') + extra_mystic + extra_valor + extra_instinct, 0)) AS count_late,
+                                sum(pokemon = '0')                   AS count_any_pokemon,
+                                sum(pokemon = '{$raid['pokemon']}')  AS count_raid_pokemon,
+                                attend_time,
+                                pokemon
+                FROM            attendance
+                LEFT JOIN       users
+                  ON            attendance.user_id = users.user_id
+                  WHERE         raid_id = {$raid['id']}
+                                $hide_users_sql
+                    AND         attend_time IS NOT NULL
+                    AND         raid_done != 1
+                    AND         cancel != 1
+                  GROUP BY      attend_time, pokemon
+                  ORDER BY      attend_time, pokemon
+                "
+            );
+
+            // Init empty count array and count sum.
+            $cnt_pokemon = [];
+
+            while ($cnt_rowpoke = $rs_cnt_pokemon->fetch_assoc()) {
+                $cnt_pokemon[$cnt_rowpoke['ts_att'] . '_' . $cnt_rowpoke['pokemon']] = $cnt_rowpoke;
+            }
+
+            // Write to log.
+            debug_log($cnt_pokemon);
+
+            // Get attendance for this raid.
+            $rs_att = my_query(
+                "
+                SELECT      attendance.*,
+                            users.name,
+                            users.level,
+                            users.team,
+                            DATE_FORMAT(attend_time, '%Y%m%d%H%i%s') AS ts_att
+                FROM        attendance
+                LEFT JOIN   users
+                ON          attendance.user_id = users.user_id
+                  WHERE     raid_id = {$raid['id']}
+                            $hide_users_sql
+                    AND     raid_done != 1
+                    AND     cancel != 1
+                  ORDER BY  attend_time,
+                            pokemon,
+                            users.team,
+                            arrived,
+                            users.level desc,
+                            users.name
+                "
+            );
+
+            // Init previous attend time and pokemon
+            $previous_att_time = 'FIRST_RUN';
+            $previous_pokemon = 'FIRST_RUN';
+
+            // For each attendance.
+            while ($row = $rs_att->fetch_assoc()) {
+                // Set current attend time and pokemon
+                $current_att_time = $row['ts_att'];
+                $dt_att_time = dt2time($row['attend_time']);
+                $current_pokemon = $row['pokemon'];
+
+                // Add hint for late attendances.
+                if(RAID_LATE_MSG && $previous_att_time == 'FIRST_RUN' && $cnt_latewait > 0) {
+                    $late_wait_msg = str_replace('RAID_LATE_TIME', RAID_LATE_TIME, getPublicTranslation('late_participants_wait'));
+                    $msg .= CR . EMOJI_LATE . '<i>' . getPublicTranslation('late_participants') . ' ' . $late_wait_msg . '</i>' . CR;
+                }
+
+                // Add section/header for time
+                if($previous_att_time != $current_att_time) {
+                    // Add to message.
+                    $count_att_time_extrapeople = $cnt[$current_att_time]['extra_mystic'] + $cnt[$current_att_time]['extra_valor'] + $cnt[$current_att_time]['extra_instinct'];
+                    $msg .= CR . '<b>' . (($current_att_time == 0) ? (getPublicTranslation('anytime')) : ($dt_att_time)) . '</b>';
+
+                    // Hide if other pokemon got selected. Show attendances for each pokemon instead of each attend time.
+                    $msg .= (($cnt[$current_att_time]['count_other_pokemon'] == 0) ? (' [' . ($cnt[$current_att_time]['count'] + $count_att_time_extrapeople) . ']') : '');
+
+                    // Add attendance counts by team - hide if other pokemon got selected.
+                    if ($cnt[$current_att_time]['count'] > 0 && $cnt[$current_att_time]['count_other_pokemon'] == 0) {
+                        // Attendance counts by team.
+                        $count_mystic = $cnt[$current_att_time]['count_mystic'] + $cnt[$current_att_time]['extra_mystic'];
+                        $count_valor = $cnt[$current_att_time]['count_valor'] + $cnt[$current_att_time]['extra_valor'];
+                        $count_instinct = $cnt[$current_att_time]['count_instinct'] + $cnt[$current_att_time]['extra_instinct'];
+                        $count_late = $cnt[$current_att_time]['count_late'];
+
+                        // Add to message.
+                        $msg .= ' — ';
+                        $msg .= (($count_mystic > 0) ? TEAM_B . $count_mystic . '  ' : '');
+                        $msg .= (($count_valor > 0) ? TEAM_R . $count_valor . '  ' : '');
+                        $msg .= (($count_instinct > 0) ? TEAM_Y . $count_instinct . '  ' : '');
+                        $msg .= (($cnt[$current_att_time]['count_no_team'] > 0) ? TEAM_UNKNOWN . $cnt[$current_att_time]['count_no_team'] . '  ' : '');
+                        $msg .= (($count_late > 0) ? EMOJI_LATE . $count_late . '  ' : '');
+                    }
+                    $msg .= CR;
+                }
+
+                // Add section/header for pokemon
+                if($previous_pokemon != $current_pokemon || $previous_att_time != $current_att_time) {
+                    // Get counts for pokemons
+                    $count_all = $cnt[$current_att_time]['count'];
+                    $count_any_pokemon = $cnt[$current_att_time]['count_any_pokemon'];
+                    $count_raid_pokemon = $cnt[$current_att_time]['count_raid_pokemon'];
+
+                    // Show attendances when multiple pokemon are selected, unless all attending users voted for the raid boss + any pokemon
+                    if($count_all != ($count_any_pokemon + $count_raid_pokemon)) {
+                        // Add pokemon name.
+                        $msg .= ($current_pokemon == 0) ? ('<b>' . getPublicTranslation('any_pokemon') . '</b>') : ('<b>' . get_local_pokemon_name($current_pokemon, true) . '</b>');
+
+                        // Attendance counts by team.
+                        $current_att_time_poke = $cnt_pokemon[$current_att_time . '_' . $current_pokemon];
+                        $count_att_time_poke_extrapeople = $current_att_time_poke['extra_mystic'] + $current_att_time_poke['extra_valor'] + $current_att_time_poke['extra_instinct'];
+                        $poke_count_mystic = $current_att_time_poke['count_mystic'] + $current_att_time_poke['extra_mystic'];
+                        $poke_count_valor = $current_att_time_poke['count_valor'] + $current_att_time_poke['extra_valor'];
+                        $poke_count_instinct = $current_att_time_poke['count_instinct'] + $current_att_time_poke['extra_instinct'];
+                        $poke_count_late = $current_att_time_poke['count_late'];
+
+                        // Add to message.
+                        $msg .= ' [' . ($current_att_time_poke['count'] + $count_att_time_poke_extrapeople) . '] — ';
+                        $msg .= (($poke_count_mystic > 0) ? TEAM_B . $poke_count_mystic . '  ' : '');
+                        $msg .= (($poke_count_valor > 0) ? TEAM_R . $poke_count_valor . '  ' : '');
+                        $msg .= (($poke_count_instinct > 0) ? TEAM_Y . $poke_count_instinct . '  ' : '');
+                        $msg .= (($current_att_time_poke['count_no_team'] > 0) ? TEAM_UNKNOWN . ($current_att_time_poke['count_no_team']) : '');
+                        $msg .= (($poke_count_late > 0) ? EMOJI_LATE . $poke_count_late . '  ' : '');
+                        $msg .= CR;
+                    }
+                }
+
+                // Add users: ARRIVED --- TEAM -- LEVEL -- NAME -- INVITE -- EXTRAPEOPLE
+                $msg .= ($row['arrived']) ? (EMOJI_HERE . ' ') : (($row['late']) ? (EMOJI_LATE . ' ') : '└ ');
+                $msg .= ($row['team'] === NULL) ? ($GLOBALS['teams']['unknown'] . ' ') : ($GLOBALS['teams'][$row['team']] . ' ');
+                $msg .= ($row['level'] == 0) ? ('<b>00</b> ') : (($row['level'] < 10) ? ('<b>0' . $row['level'] . '</b> ') : ('<b>' . $row['level'] . '</b> '));
+                $msg .= '<a href="tg://user?id=' . $row['user_id'] . '">' . htmlspecialchars($row['name']) . '</a> ';
+                $msg .= ($raid_level == 'X' && $row['invite']) ? (EMOJI_INVITE . ' ') : '';
+                $msg .= ($row['extra_mystic']) ? ('+' . $row['extra_mystic'] . TEAM_B . ' ') : '';
+                $msg .= ($row['extra_valor']) ? ('+' . $row['extra_valor'] . TEAM_R . ' ') : '';
+                $msg .= ($row['extra_instinct']) ? ('+' . $row['extra_instinct'] . TEAM_Y . ' ') : '';
+                $msg .= CR;
+
+                // Prepare next result
+                $previous_att_time = $current_att_time;
+                $previous_pokemon = $current_pokemon; 
+            }
+        }
+
+        // Get sums canceled/done for the raid
+        $rs_cnt_cancel_done = my_query(
             "
-            SELECT DISTINCT DATE_FORMAT(attend_time, '%Y%m%d%H%i%s') AS ts_att, 
-                            count(attend_time)          AS count,
-                            sum(team = 'mystic')        AS count_mystic,
-                            sum(team = 'valor')         AS count_valor,
-                            sum(team = 'instinct')      AS count_instinct,
-                            sum(team IS NULL)           AS count_no_team,
-                            sum(extra_mystic)           AS extra_mystic,
-                            sum(extra_valor)            AS extra_valor,
-                            sum(extra_instinct)         AS extra_instinct,
-                            sum(IF(late = '1', (late = '1') + extra_mystic + extra_valor + extra_instinct, 0)) AS count_late,
-                            sum(pokemon = '0')                   AS count_any_pokemon,
-                            sum(pokemon = '{$raid['pokemon']}')  AS count_raid_pokemon,
-                            attend_time,
-                            pokemon
+            SELECT DISTINCT sum(DISTINCT raid_done = '1')  AS count_done,
+                            sum(DISTINCT cancel = '1')     AS count_cancel,
+                            sum(DISTINCT extra_mystic)     AS extra_mystic,
+                            sum(DISTINCT extra_valor)      AS extra_valor,
+                            sum(DISTINCT extra_instinct)   AS extra_instinct,
+                            attendance.user_id
             FROM            attendance
-            LEFT JOIN       users
-              ON            attendance.user_id = users.user_id
               WHERE         raid_id = {$raid['id']}
-                AND         attend_time IS NOT NULL
-                AND         raid_done != 1
-                AND         cancel != 1
-              GROUP BY      attend_time, pokemon
-              ORDER BY      attend_time, pokemon
+                AND         (raid_done = 1
+                            OR cancel = 1)
+              GROUP BY      attendance.user_id
+              ORDER BY      attendance.user_id, attend_time, raid_done
             "
         );
 
         // Init empty count array and count sum.
-        $cnt_pokemon = [];
+        $cnt_cancel_done = [];
 
-        while ($cnt_rowpoke = $rs_cnt_pokemon->fetch_assoc()) {
-            $cnt_pokemon[$cnt_rowpoke['ts_att'] . '_' . $cnt_rowpoke['pokemon']] = $cnt_rowpoke;
-        }
+        // Counter for cancel and done.
+        $cnt_cancel = 0;
+        $cnt_done = 0;
 
-        // Write to log.
-        debug_log($cnt_pokemon);
-
-        // Get attendance for this raid.
-        $rs_att = my_query(
-            "
-            SELECT      attendance.*,
-                        users.name,
-                        users.level,
-                        users.team,
-                        DATE_FORMAT(attend_time, '%Y%m%d%H%i%s') AS ts_att
-            FROM        attendance
-            LEFT JOIN   users
-            ON          attendance.user_id = users.user_id
-              WHERE     raid_id = {$raid['id']}
-                AND     raid_done != 1
-                AND     cancel != 1
-              ORDER BY  attend_time,
-                        pokemon,
-                        users.team,
-                        arrived,
-                        users.level desc,
-                        users.name
-            "
-        );
-
-        // Init previous attend time and pokemon
-        $previous_att_time = 'FIRST_RUN';
-        $previous_pokemon = 'FIRST_RUN';
-
-        // For each attendance.
-        while ($row = $rs_att->fetch_assoc()) {
-            // Set current attend time and pokemon
-            $current_att_time = $row['ts_att'];
-            $dt_att_time = dt2time($row['attend_time']);
-            $current_pokemon = $row['pokemon'];
-
-            // Add hint for late attendances.
-            if(RAID_LATE_MSG && $previous_att_time == 'FIRST_RUN' && $cnt_latewait > 0) {
-                $late_wait_msg = str_replace('RAID_LATE_TIME', RAID_LATE_TIME, getPublicTranslation('late_participants_wait'));
-                $msg .= CR . EMOJI_LATE . '<i>' . getPublicTranslation('late_participants') . ' ' . $late_wait_msg . '</i>' . CR;
+        while ($cnt_row_cancel_done = $rs_cnt_cancel_done->fetch_assoc()) {
+            // Cancel count
+            if($cnt_row_cancel_done['count_cancel'] > 0) {
+                $cnt_cancel = $cnt_cancel + $cnt_row_cancel_done['count_cancel'] + $cnt_row_cancel_done['extra_mystic'] + $cnt_row_cancel_done['extra_valor'] + $cnt_row_cancel_done['extra_instinct'];
             }
 
-            // Add section/header for time
-            if($previous_att_time != $current_att_time) {
-                // Add to message.
-                $count_att_time_extrapeople = $cnt[$current_att_time]['extra_mystic'] + $cnt[$current_att_time]['extra_valor'] + $cnt[$current_att_time]['extra_instinct'];
-                $msg .= CR . '<b>' . (($current_att_time == 0) ? (getPublicTranslation('anytime')) : ($dt_att_time)) . '</b>';
+            // Done count
+            if($cnt_row_cancel_done['count_done'] > 0) {
+                $cnt_done = $cnt_done + $cnt_cancel_done['count_done'] = $cnt_row_cancel_done['count_done'] + $cnt_row_cancel_done['extra_mystic'] + $cnt_row_cancel_done['extra_valor'] + $cnt_row_cancel_done['extra_instinct'];
+            }
+        }
+    
+        // Write to log.
+        debug_log($cnt_cancel, 'Cancel count:');
+        debug_log($cnt_done, 'Done count:');
 
-                // Hide if other pokemon got selected. Show attendances for each pokemon instead of each attend time.
-                $msg .= (($cnt[$current_att_time]['count_other_pokemon'] == 0) ? (' [' . ($cnt[$current_att_time]['count'] + $count_att_time_extrapeople) . ']') : '');
+        // Canceled or done?
+        if($cnt_cancel > 0 || $cnt_done > 0) {
+            // Get done and canceled attendances
 
-                // Add attendance counts by team - hide if other pokemon got selected.
-                if ($cnt[$current_att_time]['count'] > 0 && $cnt[$current_att_time]['count_other_pokemon'] == 0) {
-                    // Attendance counts by team.
-                    $count_mystic = $cnt[$current_att_time]['count_mystic'] + $cnt[$current_att_time]['extra_mystic'];
-                    $count_valor = $cnt[$current_att_time]['count_valor'] + $cnt[$current_att_time]['extra_valor'];
-                    $count_instinct = $cnt[$current_att_time]['count_instinct'] + $cnt[$current_att_time]['extra_instinct'];
-                    $count_late = $cnt[$current_att_time]['count_late'];
+            $rs_att = my_query(
+                "
+                SELECT      attendance.*,
+                            users.name,
+                            users.level,
+                            users.team,
+                            DATE_FORMAT(attend_time, '%Y%m%d%H%i%s') AS ts_att
+                FROM        attendance
+                LEFT JOIN   users
+                ON          attendance.user_id = users.user_id
+                  WHERE     raid_id = {$raid['id']}
+                    AND     (raid_done = 1
+                            OR cancel = 1)
+                  GROUP BY  attendance.user_id, raid_done
+                  ORDER BY  raid_done,
+                            users.team,
+                            users.level desc,
+                            users.name
+                "
+            );
 
-                    // Add to message.
-                    $msg .= ' — ';
-                    $msg .= (($count_mystic > 0) ? TEAM_B . $count_mystic . '  ' : '');
-                    $msg .= (($count_valor > 0) ? TEAM_R . $count_valor . '  ' : '');
-                    $msg .= (($count_instinct > 0) ? TEAM_Y . $count_instinct . '  ' : '');
-                    $msg .= (($cnt[$current_att_time]['count_no_team'] > 0) ? TEAM_UNKNOWN . $cnt[$current_att_time]['count_no_team'] . '  ' : '');
-                    $msg .= (($count_late > 0) ? EMOJI_LATE . $count_late . '  ' : '');
+            // Init cancel_done value.
+            $cancel_done = 'CANCEL';
+
+            // For each canceled / done.
+            while ($row = $rs_att->fetch_assoc()) {
+                // Attend time.
+                $dt_att_time = dt2time($row['attend_time']);
+
+                // Add section/header for canceled
+                if($row['cancel'] == 1 && $cancel_done == 'CANCEL') {
+                    $msg .= CR . TEAM_CANCEL . ' <b>' . getPublicTranslation('cancel') . ': </b>' . '[' . $cnt_cancel . ']' . CR;
+                    $cancel_done = 'DONE';
                 }
+
+                // Add section/header for canceled
+                if($row['raid_done'] == 1 && $cancel_done == 'CANCEL' || $row['raid_done'] == 1 && $cancel_done == 'DONE') {
+                    $msg .= CR . TEAM_DONE . ' <b>' . getPublicTranslation('finished') . ': </b>' . '[' . $cnt_done . ']' . CR;
+                    $cancel_done = 'END';
+                }
+
+                // Add users: TEAM -- LEVEL -- NAME -- CANCELED/DONE -- EXTRAPEOPLE
+                $msg .= ($row['team'] === NULL) ? ('└ ' . $GLOBALS['teams']['unknown'] . ' ') : ('└ ' . $GLOBALS['teams'][$row['team']] . ' ');
+                $msg .= ($row['level'] == 0) ? ('<b>00</b> ') : (($row['level'] < 10) ? ('<b>0' . $row['level'] . '</b> ') : ('<b>' . $row['level'] . '</b> '));
+                $msg .= '<a href="tg://user?id=' . $row['user_id'] . '">' . htmlspecialchars($row['name']) . '</a> ';
+                $msg .= ($raid_level == 'X' && $row['invite']) ? (EMOJI_INVITE . ' ') : '';
+                $msg .= ($row['cancel'] == 1) ? ('[' . (($row['ts_att'] == 0) ? (getPublicTranslation('anytime')) : ($dt_att_time)) . '] ') : '';
+                $msg .= ($row['raid_done'] == 1) ? ('[' . (($row['ts_att'] == 0) ? (getPublicTranslation('anytime')) : ($dt_att_time)) . '] ') : '';
+                $msg .= ($row['extra_mystic']) ? ('+' . $row['extra_mystic'] . TEAM_B . ' ') : '';
+                $msg .= ($row['extra_valor']) ? ('+' . $row['extra_valor'] . TEAM_R . ' ') : '';
+                $msg .= ($row['extra_instinct']) ? ('+' . $row['extra_instinct'] . TEAM_Y . ' ') : '';
                 $msg .= CR;
             }
+        } 
 
-            // Add section/header for pokemon
-            if($previous_pokemon != $current_pokemon || $previous_att_time != $current_att_time) {
-                // Get counts for pokemons
-                $count_all = $cnt[$current_att_time]['count'];
-                $count_any_pokemon = $cnt[$current_att_time]['count_any_pokemon'];
-                $count_raid_pokemon = $cnt[$current_att_time]['count_raid_pokemon'];
-
-                // Show attendances when multiple pokemon are selected, unless all attending users voted for the raid boss + any pokemon
-                if($count_all != ($count_any_pokemon + $count_raid_pokemon)) {
-                    // Add pokemon name.
-                    $msg .= ($current_pokemon == 0) ? ('<b>' . getPublicTranslation('any_pokemon') . '</b>') : ('<b>' . get_local_pokemon_name($current_pokemon, true) . '</b>');
-
-                    // Attendance counts by team.
-                    $current_att_time_poke = $cnt_pokemon[$current_att_time . '_' . $current_pokemon];
-                    $count_att_time_poke_extrapeople = $current_att_time_poke['extra_mystic'] + $current_att_time_poke['extra_valor'] + $current_att_time_poke['extra_instinct'];
-                    $poke_count_mystic = $current_att_time_poke['count_mystic'] + $current_att_time_poke['extra_mystic'];
-                    $poke_count_valor = $current_att_time_poke['count_valor'] + $current_att_time_poke['extra_valor'];
-                    $poke_count_instinct = $current_att_time_poke['count_instinct'] + $current_att_time_poke['extra_instinct'];
-                    $poke_count_late = $current_att_time_poke['count_late'];
-
-                    // Add to message.
-                    $msg .= ' [' . ($current_att_time_poke['count'] + $count_att_time_poke_extrapeople) . '] — ';
-                    $msg .= (($poke_count_mystic > 0) ? TEAM_B . $poke_count_mystic . '  ' : '');
-                    $msg .= (($poke_count_valor > 0) ? TEAM_R . $poke_count_valor . '  ' : '');
-                    $msg .= (($poke_count_instinct > 0) ? TEAM_Y . $poke_count_instinct . '  ' : '');
-                    $msg .= (($current_att_time_poke['count_no_team'] > 0) ? TEAM_UNKNOWN . ($current_att_time_poke['count_no_team']) : '');
-                    $msg .= (($poke_count_late > 0) ? EMOJI_LATE . $poke_count_late . '  ' : '');
-                    $msg .= CR;
-                }
-            }
-
-            // Add users: ARRIVED --- TEAM -- LEVEL -- NAME -- INVITE -- EXTRAPEOPLE
-            $msg .= ($row['arrived']) ? (EMOJI_HERE . ' ') : (($row['late']) ? (EMOJI_LATE . ' ') : '└ ');
-            $msg .= ($row['team'] === NULL) ? ($GLOBALS['teams']['unknown'] . ' ') : ($GLOBALS['teams'][$row['team']] . ' ');
-            $msg .= ($row['level'] == 0) ? ('<b>00</b> ') : (($row['level'] < 10) ? ('<b>0' . $row['level'] . '</b> ') : ('<b>' . $row['level'] . '</b> '));
-            $msg .= '<a href="tg://user?id=' . $row['user_id'] . '">' . htmlspecialchars($row['name']) . '</a> ';
-            $msg .= ($raid_level == 'X' && $row['invite']) ? (EMOJI_INVITE . ' ') : '';
-            $msg .= ($row['extra_mystic']) ? ('+' . $row['extra_mystic'] . TEAM_B . ' ') : '';
-            $msg .= ($row['extra_valor']) ? ('+' . $row['extra_valor'] . TEAM_R . ' ') : '';
-            $msg .= ($row['extra_instinct']) ? ('+' . $row['extra_instinct'] . TEAM_Y . ' ') : '';
-            $msg .= CR;
-
-            // Prepare next result
-            $previous_att_time = $current_att_time;
-            $previous_pokemon = $current_pokemon; 
+        // Add no attendance found message.
+        if ($cnt_all + $cnt_cancel + $cnt_done == 0) {
+            $msg .= CR . getPublicTranslation('no_participants_yet') . CR;
         }
-    }
-
-    // Get sums canceled/done for the raid
-    $rs_cnt_cancel_done = my_query(
-        "
-        SELECT DISTINCT sum(DISTINCT raid_done = '1')  AS count_done,
-                        sum(DISTINCT cancel = '1')     AS count_cancel,
-                        sum(DISTINCT extra_mystic)     AS extra_mystic,
-                        sum(DISTINCT extra_valor)      AS extra_valor,
-                        sum(DISTINCT extra_instinct)   AS extra_instinct,
-                        attendance.user_id
-        FROM            attendance
-          WHERE         raid_id = {$raid['id']}
-            AND         (raid_done = 1
-                        OR cancel = 1)
-          GROUP BY      attendance.user_id
-          ORDER BY      attendance.user_id, attend_time, raid_done
-        "
-    );
-
-    // Init empty count array and count sum.
-    $cnt_cancel_done = [];
-
-    // Counter for cancel and done.
-    $cnt_cancel = 0;
-    $cnt_done = 0;
-
-    while ($cnt_row_cancel_done = $rs_cnt_cancel_done->fetch_assoc()) {
-        // Cancel count
-        if($cnt_row_cancel_done['count_cancel'] > 0) {
-            $cnt_cancel = $cnt_cancel + $cnt_row_cancel_done['count_cancel'] + $cnt_row_cancel_done['extra_mystic'] + $cnt_row_cancel_done['extra_valor'] + $cnt_row_cancel_done['extra_instinct'];
-        }
-
-        // Done count
-        if($cnt_row_cancel_done['count_done'] > 0) {
-            $cnt_done = $cnt_done + $cnt_cancel_done['count_done'] = $cnt_row_cancel_done['count_done'] + $cnt_row_cancel_done['extra_mystic'] + $cnt_row_cancel_done['extra_valor'] + $cnt_row_cancel_done['extra_instinct'];
-        }
-    }
-    
-    // Write to log.
-    debug_log($cnt_cancel, 'Cancel count:');
-    debug_log($cnt_done, 'Done count:');
-
-    // Canceled or done?
-    if($cnt_cancel > 0 || $cnt_done > 0) {
-        // Get done and canceled attendances
-
-        $rs_att = my_query(
-            "
-            SELECT      attendance.*,
-                        users.name,
-                        users.level,
-                        users.team,
-                        DATE_FORMAT(attend_time, '%Y%m%d%H%i%s') AS ts_att
-            FROM        attendance
-            LEFT JOIN   users
-            ON          attendance.user_id = users.user_id
-              WHERE     raid_id = {$raid['id']}
-                AND     (raid_done = 1
-                        OR cancel = 1)
-              GROUP BY  attendance.user_id, raid_done
-              ORDER BY  raid_done,
-                        users.team,
-                        users.level desc,
-                        users.name
-            "
-        );
-
-        // Init cancel_done value.
-        $cancel_done = 'CANCEL';
-
-        // For each canceled / done.
-        while ($row = $rs_att->fetch_assoc()) {
-            // Attend time.
-            $dt_att_time = dt2time($row['attend_time']);
-
-            // Add section/header for canceled
-            if($row['cancel'] == 1 && $cancel_done == 'CANCEL') {
-                $msg .= CR . TEAM_CANCEL . ' <b>' . getPublicTranslation('cancel') . ': </b>' . '[' . $cnt_cancel . ']' . CR;
-                $cancel_done = 'DONE';
-            }
-
-            // Add section/header for canceled
-            if($row['raid_done'] == 1 && $cancel_done == 'CANCEL' || $row['raid_done'] == 1 && $cancel_done == 'DONE') {
-                $msg .= CR . TEAM_DONE . ' <b>' . getPublicTranslation('finished') . ': </b>' . '[' . $cnt_done . ']' . CR;
-                $cancel_done = 'END';
-            }
-
-            // Add users: TEAM -- LEVEL -- NAME -- CANCELED/DONE -- EXTRAPEOPLE
-            $msg .= ($row['team'] === NULL) ? ('└ ' . $GLOBALS['teams']['unknown'] . ' ') : ('└ ' . $GLOBALS['teams'][$row['team']] . ' ');
-            $msg .= ($row['level'] == 0) ? ('<b>00</b> ') : (($row['level'] < 10) ? ('<b>0' . $row['level'] . '</b> ') : ('<b>' . $row['level'] . '</b> '));
-            $msg .= '<a href="tg://user?id=' . $row['user_id'] . '">' . htmlspecialchars($row['name']) . '</a> ';
-            $msg .= ($raid_level == 'X' && $row['invite']) ? (EMOJI_INVITE . ' ') : '';
-            $msg .= ($row['cancel'] == 1) ? ('[' . (($row['ts_att'] == 0) ? (getPublicTranslation('anytime')) : ($dt_att_time)) . '] ') : '';
-            $msg .= ($row['raid_done'] == 1) ? ('[' . (($row['ts_att'] == 0) ? (getPublicTranslation('anytime')) : ($dt_att_time)) . '] ') : '';
-            $msg .= ($row['extra_mystic']) ? ('+' . $row['extra_mystic'] . TEAM_B . ' ') : '';
-            $msg .= ($row['extra_valor']) ? ('+' . $row['extra_valor'] . TEAM_R . ' ') : '';
-            $msg .= ($row['extra_instinct']) ? ('+' . $row['extra_instinct'] . TEAM_Y . ' ') : '';
-            $msg .= CR;
-        }
-    } 
-
-    // Add no attendance found message.
-    if ($cnt_all + $cnt_cancel + $cnt_done == 0) {
-        $msg .= CR . getPublicTranslation('no_participants_yet') . CR;
     }
 
     //Add custom message from the config.
@@ -3355,7 +3472,9 @@ function show_raid_poll($raid)
     $msg .= ($raid['user_id'] && $raid['name']) ? (CR . getPublicTranslation('created_by') . ': <a href="tg://user?id=' . $raid['user_id'] . '">' . htmlspecialchars($raid['name']) . '</a>') : '';
 
     // Add update time and raid id to message.
-    $msg .= CR . '<i>' . getPublicTranslation('updated') . ': ' . dt2time('now', 'H:i:s') . '</i>';
+    if(!$buttons_hidden) {
+        $msg .= CR . '<i>' . getPublicTranslation('updated') . ': ' . dt2time('now', 'H:i:s') . '</i>';
+    }
     $msg .= '  ' . substr(strtoupper(BOT_ID), 0, 1) . '-ID = ' . $raid['id']; // DO NOT REMOVE! --> NEEDED FOR CLEANUP PREPARATION!
 
     // Return the message.
@@ -3433,6 +3552,30 @@ function show_raid_poll_small($raid, $override_language = false)
     } else {
         $msg .= getTranslation('no_participants') . CR;
     }
+
+    return $msg;
+}
+
+/**
+ * Show trainer info.
+ * @param $update
+ * @param $show
+ * @return string
+ */
+function show_trainerinfo($update, $show = false)
+{
+    // Instructions
+    $msg = '<b>' . getPublicTranslation('trainerinfo') . ':</b>' . CR;
+    $msg .= getPublicTranslation('trainer_set_your_info') . CR . CR;
+    $msg .= getPublicTranslation('trainer_set_your_info_done') . CR . CR;
+
+    // Show user info?
+    if($show) {
+        $msg .= '<b>' . getPublicTranslation('your_trainer_info') . '</b>' . CR;
+        $msg .= get_user($update['callback_query']['from']['id']) . CR;
+    }
+
+    $msg .= '<i>' . getPublicTranslation('updated') . ': ' . dt2time('now', 'H:i:s') . '</i>';
 
     return $msg;
 }
@@ -3565,29 +3708,41 @@ function curl_json_response($json_response, $json)
             // Write to log that message was shared with channel or supergroup
             debug_log('Message was shared with ' . $response['result']['chat']['type'] . ' ' . $response['result']['chat']['title']);
             debug_log('Checking input for cleanup info now...');
-
-	    // Check if callback_data is present to get the raid_id and reply_to_message_id is set to filter only raid messages
-            if (!empty($json_message['reply_markup']['inline_keyboard']['0']['0']['callback_data']) && !empty($json_message['reply_to_message_id'])) {
-                $split_callback_data = explode(':', $json_message['reply_markup']['inline_keyboard']['0']['0']['callback_data']);
+            
+	    // Check if callback_data is present to get the cleanup id
+            if (!empty($response['result']['reply_markup']['inline_keyboard']['0']['0']['callback_data'])) {
+                debug_log('Callback Data of this message likely contains cleanup info!');
+                $split_callback_data = explode(':', $response['result']['reply_markup']['inline_keyboard']['0']['0']['callback_data']);
 	        // Get raid_id, but check for BRIDGE_MODE first
 	        if(defined('BRIDGE_MODE') && BRIDGE_MODE == true) {
 		    $cleanup_id = $split_callback_data[1];
-		    } else {
+		} else {
 		    $cleanup_id = $split_callback_data[0];
 	        }
 
             // Check if it's a venue and get raid id
             } else if (!empty($response['result']['venue']['address'])) {
                 // Get raid_id from address.
-                $cleanup_id = substr(strrchr($response['result']['venue']['address'], substr(strtoupper(BOT_ID), 0, 1) . '-ID = '), 7);
+                debug_log('Venue address message likely contains cleanup info!');
+                if(strpos($response['result']['venue']['address'], substr(strtoupper(BOT_ID), 0, 1) . '-ID = ') !== false) {
+                    $cleanup_id = substr(strrchr($response['result']['venue']['address'], substr(strtoupper(BOT_ID), 0, 1) . '-ID = '), 7);
+                } else {
+                    debug_log('BOT_ID ' . BOT_ID . ' not found in venue address message!');
+                }
 
             // Check if it's a text and get raid id
             } else if (!empty($response['result']['text'])) {
-                $cleanup_id = substr(strrchr($response['result']['text'], substr(strtoupper(BOT_ID), 0, 1) . '-ID = '), 7);
+                debug_log('Text message likely contains cleanup info!');
+                if(strpos($response['result']['venue']['address'], substr(strtoupper(BOT_ID), 0, 1) . '-ID = ') !== false) {
+                    $cleanup_id = substr(strrchr($response['result']['text'], substr(strtoupper(BOT_ID), 0, 1) . '-ID = '), 7);
+                } else {
+                    debug_log('BOT_ID ' . BOT_ID . ' not found in text message!');
+                }
             }
+                debug_log('Cleanup ID: ' . $cleanup_id);
 
             // Trigger Cleanup when raid_id was found
-            if($cleanup_id != 0) {
+            if($cleanup_id != 0 && $cleanup_id != 'trainer') {
                 debug_log('Found ID for cleanup preparation from callback_data or venue!');
                 debug_log('Cleanup ID: ' . $cleanup_id);
                 debug_log('Chat_ID: ' . $chat_id);
@@ -3600,6 +3755,18 @@ function curl_json_response($json_response, $json)
 	        } else {
 		    debug_log('Missing input! Cannot call cleanup preparation!');
 		}
+            } else if($cleanup_id == 'trainer') {
+                debug_log('Detected trainer info message from callback_data!');
+                debug_log('Chat_ID: ' . $chat_id);
+                debug_log('Message_ID: ' . $message_id);
+
+                // Add trainer info message details to database.
+                if (!empty($chat_id) && !empty($message_id)) {
+                    debug_log('Adding trainer info to database now!');
+                    //insert_trainerinfo($chat_id, $message_id);
+                } else {
+                    debug_log('Missing input! Cannot add trainer info!');
+                }
             } else {
                 debug_log('No cleanup info found! Skipping cleanup preparation!');
             }
