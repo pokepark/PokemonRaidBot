@@ -62,8 +62,6 @@ $chat_list = explode(',', $chat_list);
 $chats = array_unique($chat_list);
 
 // Get chats already in the database.
-// TODO - Create database stuff, then uncomment the block below.
-/*
 debug_log('Searching and removing chats already having the trainer message');
 $rs = my_query(
     "
@@ -81,7 +79,6 @@ $log_chats_db = implode(',', $chats_db);
 debug_log($log_chats_db, 'Chats already having the trainer message:');
 
 $chats = array_diff($chats, $chats_db);
-*/
 $chats = implode(',', $chats);
 debug_log($chats, 'Chat list without duplicates:');
 

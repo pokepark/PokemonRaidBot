@@ -3809,7 +3809,7 @@ function curl_json_response($json_response, $json)
                 // Add trainer info message details to database.
                 if (!empty($chat_id) && !empty($message_id)) {
                     debug_log('Adding trainer info to database now!');
-                    //insert_trainerinfo($chat_id, $message_id);
+                    insert_trainerinfo($chat_id, $message_id);
                 } else {
                     debug_log('Missing input! Cannot add trainer info!');
                 }

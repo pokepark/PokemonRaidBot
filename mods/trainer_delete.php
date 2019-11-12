@@ -49,15 +49,19 @@ if($action == 0 || $trainer_chat == 0) {
 
     // Add abort key.
     if($keys) {
+        // Inline key array.
+        $keys = inline_key_array($keys, 1);
+
         // Add back navigation key.
         $nav_keys = [];
+        $nav_keys[] = universal_inner_key($keys, '0', 'trainer', '0', getTranslation('back'));
         $nav_keys[] = universal_inner_key($keys, '0', 'exit', '0', getTranslation('abort'));
 
         // Get the inline key array.
         $keys[] = $nav_keys;
 
         // Set message.
-        $msg = '<b>' . getTranslation('trainer_message_delete') . '</b>';
+        $msg = '<b>' . getTranslation('trainer_message_delete') . '?</b>';
     } else {
         // Set message.
         $msg = '<b>' . getTranslation('trainer_info_no_chats') . '</b>';
@@ -80,7 +84,7 @@ if($action == 0 || $trainer_chat == 0) {
 
     // Set message
     $msg = $chat_title . CR . CR;
-    $msg = EMOJI_WARN . SP . '<b>' . getTranslation('delete_trainer_message_from_chat') . '</b>' . SP . EMOJI_WARN;
+    $msg .= EMOJI_WARN . SP . '<b>' . getTranslation('delete_trainer_message_from_chat') . '</b>' . SP . EMOJI_WARN;
 
     // Create the keys.
     $keys = [

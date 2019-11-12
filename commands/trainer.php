@@ -17,12 +17,13 @@ $keys = [];
 
 // Create keys array.
 $keys = [
-    [
+/*    [
         [
             'text'          => getTranslation('name'),
             'callback_data' => '0:trainer_name:0'
         ]
     ],
+*/
     [
 	[
             'text'          => getTranslation('team'),
