@@ -67,6 +67,7 @@ function active_raid_duplication_check($gym_id)
         FROM   raids
         WHERE  end_time > (UTC_TIMESTAMP() - INTERVAL 10 MINUTE)
         AND    gym_id = {$gym_id}
+        GROUP BY id
         "
     );
 
@@ -829,7 +830,7 @@ function raid_edit_gyms_first_letter_keys($action = 'raid_by_gym', $hidden = fal
             $letter = trim($letter);
             debug_log($letter, 'Special gym letter:');
             // Fix chinese chars, prior: $length = strlen($letter);
-            $length = strlen(utf8_decode($first));
+            $length = strlen(utf8_decode($letter));
             $case .= SP . "WHEN UPPER(LEFT(gym_name, " . $length . ")) = '" . $letter . "' THEN UPPER(LEFT(gym_name, " . $length . "))" . SP;
         }
     }
@@ -859,11 +860,10 @@ function raid_edit_gyms_first_letter_keys($action = 'raid_by_gym', $hidden = fal
         // Get gyms from database
         $rs = my_query(
                 "
-                SELECT UPPER(LEFT(gym_name, 1)) AS first_letter
+                SELECT DISTINCT UPPER(SUBSTR(gym_name, 1, 1)) AS first_letter
                 FROM      gyms
-                WHERE     show_gym = {$show_gym} 
-                GROUP BY LEFT(gym_name, 1)
-                ORDER BY  gym_name
+                WHERE     show_gym = {$show_gym}
+                ORDER BY 1
                 "
             );
     }
@@ -943,7 +943,7 @@ function raid_edit_gym_keys($first, $warn = true, $action = 'edit_raidlevel', $d
         WHERE     UPPER(LEFT(gym_name, $first_length)) = UPPER('{$first}')
         $not
         AND       gyms.show_gym = {$show_gym}
-        GROUP BY  gym_name 
+        GROUP BY  gym_name, raids.gym_id, gyms.id
         ORDER BY  gym_name
         "
     );
@@ -973,10 +973,25 @@ function raid_edit_gym_keys($first, $warn = true, $action = 'edit_raidlevel', $d
                 'text'          => $gym_name,
                 'callback_data' => $first . ':' . $action . ':' . $arg
             );
-        // Add warning emoji for active raid
-        } else {
+        }
+        // No active raid, but ex raid gym
+        else if(($gym['active_raid'] == 0 || $warn = false) && $gym['ex_gym'] == 1) {
+            $keys[] = array(
+                'text'          => EMOJI_STAR . SP . $gym['gym_name'],
+                'callback_data' => $first . ':' . $action . ':' . $arg
+            );
+        }
+        // Add warning emoji for active raid and no ex raid gym
+        else if ($gym['active_raid'] == 1 && $gym['ex_gym'] == 0) {
             $keys[] = array(
                 'text'          => EMOJI_WARN . SP . $gym['gym_name'],
+                'callback_data' => $first . ':' . $action . ':' . $arg
+            );
+        }
+        // Add warning emoji for active raid and no ex raid gym
+        else if ($gym['active_raid'] == 1 && $gym['ex_gym'] == 1) {
+            $keys[] = array(
+                'text'          => EMOJI_WARN . SP . EMOJI_STAR . SP . $gym['gym_name'],
                 'callback_data' => $first . ':' . $action . ':' . $arg
             );
         }
@@ -3100,6 +3115,13 @@ function show_raid_poll($raid)
     $pokemon_weather = get_pokemon_weather($raid['pokemon']);
     $msg .= ($pokemon_weather != 0) ? (' ' . get_weather_icons($pokemon_weather)) : '';
     $msg .= CR;
+    
+    // Display attacks.
+    if ($raid['move1'] > 1 && $raid['move2'] > 2 ) {
+        
+        $msg .= getPublicTranslation('pokemon_move_' . $raid['move1']) . '/' . getPublicTranslation('pokemon_move_' . $raid['move2']);
+        $msg .= CR;
+    }
 
     // Hide participants?
     if(RAID_POLL_HIDE_USERS_TIME > 0) {
@@ -3125,7 +3147,8 @@ function show_raid_poll($raid)
                         sum(pokemon = '0')                   AS count_any_pokemon,
                         sum(pokemon = '{$raid['pokemon']}')  AS count_raid_pokemon,
                         sum(pokemon != '{$raid['pokemon']}' AND pokemon != '0')  AS count_other_pokemon,
-                        attend_time
+                        attend_time,
+                        pokemon
         FROM            attendance
         LEFT JOIN       users
           ON            attendance.user_id = users.user_id
@@ -3134,7 +3157,7 @@ function show_raid_poll($raid)
             AND         attend_time IS NOT NULL
             AND         raid_done != 1
             AND         cancel != 1
-          GROUP BY      attend_time
+          GROUP BY      attend_time, pokemon
           ORDER BY      attend_time, pokemon
         "
     );
@@ -3357,6 +3380,8 @@ function show_raid_poll($raid)
             }
         }
 
+/*
+<<<<<<< HEAD
         // Get sums canceled/done for the raid
         $rs_cnt_cancel_done = my_query(
             "
@@ -3374,6 +3399,28 @@ function show_raid_poll($raid)
               ORDER BY      attendance.user_id, attend_time, raid_done
             "
         );
+=======
+*/
+    // Get sums canceled/done for the raid
+    $rs_cnt_cancel_done = my_query(
+        "
+        SELECT DISTINCT sum(DISTINCT raid_done = '1')  AS count_done,
+                        sum(DISTINCT cancel = '1')     AS count_cancel,
+                        sum(DISTINCT extra_mystic)     AS extra_mystic,
+                        sum(DISTINCT extra_valor)      AS extra_valor,
+                        sum(DISTINCT extra_instinct)   AS extra_instinct,
+                        attend_time,
+                        raid_done,
+                        attendance.user_id
+        FROM            attendance
+          WHERE         raid_id = {$raid['id']}
+            AND         (raid_done = 1
+                        OR cancel = 1)
+          GROUP BY      attendance.user_id, attend_time, raid_done
+          ORDER BY      attendance.user_id, attend_time, raid_done
+        "
+    );
+//>>>>>>> origin/master
 
         // Init empty count array and count sum.
         $cnt_cancel_done = [];
@@ -3399,9 +3446,8 @@ function show_raid_poll($raid)
         debug_log($cnt_done, 'Done count:');
 
         // Canceled or done?
-        if($cnt_cancel > 0 || $cnt_done > 0) {
+        if(RAID_POLL_HIDE_DONE_CANCELED == false && ($cnt_cancel > 0 || $cnt_done > 0)) {
             // Get done and canceled attendances
-
             $rs_att = my_query(
                 "
                 SELECT      attendance.*,
