@@ -244,7 +244,7 @@ foreach ($update as $raid) {
         //debug_log($const,'CONSTANT NAME:');
         //debug_log($const_chats),'CONSTANT VALUE:');
 
-        if($level == $i && defined($const) && !empty($const) && !empty($const_chats) {
+        if($level == $i && defined($const) && !empty($const) && !empty($const_chats)) {
             $chats = explode(',', $const);
         }
     }
