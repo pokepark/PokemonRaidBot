@@ -37,7 +37,6 @@ $keys = [
 ];
 
 // Check access.
-//$access = bot_access_check($update, 'trainer-share', false, true);
 $access = bot_access_check($update, 'trainer-share', true, true);
 
 // Display sharing options for admins and users with trainer-share permissions
