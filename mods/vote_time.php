@@ -41,7 +41,7 @@ $now = new DateTime('now', new DateTimeZone('UTC'));
 $now = $now->format('Y-m-d H:i') . ':00';
 
 // Vote time in the future or Raid anytime?
-if($now <= $attend_time || $arg = 0) {
+if($now <= $attend_time || $arg == 0) {
     // User has voted before.
     if (!empty($answer)) {
         // Update attendance.
