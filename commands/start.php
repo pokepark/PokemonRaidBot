@@ -7,7 +7,45 @@ debug_log('START()');
 //debug_log($data);
 
 // Check access.
-bot_access_check($update, 'create');
+$access = bot_access_check($update, 'create', false, true);
+
+// Raid event?
+if(RAID_POKEMON_DURATION_EVENT != RAID_POKEMON_DURATION_SHORT) {
+    // Always allow for Admins.
+    if($access && $access == 'BOT_ADMINS') {
+        debug_log('Bot Admin detected. Allowing further raid creation during the raid hour');
+    } else {
+        // Get number of raids for the current user.
+        $rs = my_query(
+            "
+            SELECT     count(id) AS created_raids_count
+            FROM       raids
+            WHERE      end_time>UTC_TIMESTAMP()
+            AND        user_id = {$update['message']['chat']['id']}
+            "
+        );
+
+        $info = $rs->fetch_assoc();
+        $creation_limit = RAID_EVENT_CREATION_LIMIT - 1;
+
+        // Check raid count
+        if($info['created_raids_count'] > $creation_limit) {
+            // Set message and keys.
+            if(RAID_EVENT_CREATION_LIMIT == 1) {
+                $msg = '<b>' . getTranslation('raid_event_creation_limit_one') . '</b>';
+            } else {
+                $msg = '<b>' . str_replace('RAID_EVENT_CREATION_LIMIT', RAID_EVENT_CREATION_LIMIT, getPublicTranslation('raid_event_creation_limit')) . '</b>';
+            }
+            $keys = [];
+
+            // Send message.
+            send_message($update['message']['chat']['id'], $msg, $keys, ['reply_markup' => ['selective' => true, 'one_time_keyboard' => true]]);
+
+            // Exit.
+            exit();
+        }
+    }
+}
 
 // Get gym by name.
 // Trim away everything before "/start "

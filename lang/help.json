@@ -109,6 +109,17 @@
     "FR":"TRANSLATE",
     "PL":"TRANSLATE"
   },
+  "help_trainer":{  
+    "NL":"TRANSLATE",
+    "DE":"/trainer - Trainerdaten bearbeiten",
+    "EN":"/trainer - Edit trainer data",
+    "IT":"TRANSLATE",
+    "PT-BR":"TRANSLATE",
+    "RU":"TRANSLATE",
+    "NO":"TRANSLATE",
+    "FR":"TRANSLATE",
+    "PL":"TRANSLATE"
+  },
   "help_gym-details":{  
     "NL":"/gym - Laat gym info zien",
     "DE":"/gym - Arena-Details anzeigen",

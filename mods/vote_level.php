@@ -35,7 +35,21 @@ if ($action == 'down') {
     );
 }
 
-// Send vote response.
-send_response_vote($update, $data);
+// Message coming from raid or trainer info?
+if($data['id'] == 'trainer') {
+    if($action == 'hide') {
+        // Send trainer info update.
+        send_trainerinfo($update, false);
+    } else if($action == 'show') {
+        // Send trainer info update.
+        send_trainerinfo($update, true);
+    } else {
+        // Send trainer info update.
+        send_trainerinfo($update, true);
+    }
+} else {
+    // Send vote response.
+    send_response_vote($update, $data);
+}
 
 exit();

@@ -36,33 +36,44 @@ if($arg == 0) {
     $attend_time = $dt_attend->format('Y-m-d H:i:s');
 }
 
-// User has voted before.
-if (!empty($answer)) {
-    // Update attendance.
-    my_query(
-        "
-        UPDATE    attendance
-        SET       attend_time = '{$attend_time}',
-                  cancel = 0,
-                  arrived = 0,
-                  raid_done = 0,
-                  late = 0
-          WHERE   raid_id = {$data['id']}
-            AND   user_id = {$update['callback_query']['from']['id']}
-        "
-    );
+// Get current time.
+$now = new DateTime('now', new DateTimeZone('UTC'));
+$now = $now->format('Y-m-d H:i') . ':00';
 
-// User has not voted before.
+// Vote time in the future or Raid anytime?
+if($now <= $attend_time || $arg = 0) {
+    // User has voted before.
+    if (!empty($answer)) {
+        // Update attendance.
+        my_query(
+            "
+            UPDATE    attendance
+            SET       attend_time = '{$attend_time}',
+                      cancel = 0,
+                      arrived = 0,
+                      raid_done = 0,
+                      late = 0
+              WHERE   raid_id = {$data['id']}
+                AND   user_id = {$update['callback_query']['from']['id']}
+            "
+        );
+
+    // User has not voted before.
+    } else {
+        // Create attendance.
+        my_query(
+            "
+            INSERT INTO   attendance
+            SET           raid_id = {$data['id']},
+                          user_id = {$update['callback_query']['from']['id']},
+                          attend_time = '{$attend_time}'
+            "
+        );
+    }
 } else {
-    // Create attendance.
-    my_query(
-        "
-        INSERT INTO   attendance
-        SET           raid_id = {$data['id']},
-                      user_id = {$update['callback_query']['from']['id']},
-                      attend_time = '{$attend_time}'
-        "
-    );
+    // Send vote time first.
+    send_vote_time_future($update);
+    send_response_vote($update, $data);
 }
 
 // Send vote response.

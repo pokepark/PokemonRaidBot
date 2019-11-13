@@ -119,26 +119,10 @@ foreach ($update as $raid) {
 
     // Create raid if not exists otherwise update if changes are detected
     // Just an egg
-    if ( $pokemon == 0 ) {
-        
-        switch ($level) {
-            case (1):
-                $pokemon = '9991';
-                break;
-            case (2):
-                $pokemon = '9992';
-                break;
-            case (3):
-                $pokemon = '9993';
-                break;
-            case (4):
-                $pokemon = '9994';
-                break;
-            case (5):
-                $pokemon = '9995';
-                break;
-            }
+    if ($pokemon == 0) {
+        $pokemon = '999' . $level;
     }
+        
     // TODO: Translate Form
     $form = 0;
     if ( isset($raid['message']['form']) ) {}
@@ -250,27 +234,22 @@ foreach ($update as $raid) {
     // Set keys.
     $keys = keys_vote($created_raid);
 
+    // Get chats
     $chats = explode(',', WEBHOOK_CHATS);
-    if ($level == 1 && defined(WEBHOOK_CHATS_LEVEL_1) && !empty(WEBHOOK_CHATS_LEVEL_1)) {
-        
-        $chats = explode(',', WEBHOOK_CHATS_LEVEL_1);
+    for($i = 1; $i <= 5; $i++) {
+        $const = 'WEBHOOK_CHATS_LEVEL_' . $i;
+        $const_chats = constant($const);
+
+        // Debug.
+        //debug_log($const,'CONSTANT NAME:');
+        //debug_log($const_chats),'CONSTANT VALUE:');
+
+        if($level == $i && defined($const) && !empty($const) && !empty($const_chats) {
+            $chats = explode(',', $const);
+        }
     }
-    if ($level == 2 && defined(WEBHOOK_CHATS_LEVEL_2) && !empty(WEBHOOK_CHATS_LEVEL_2)) {
-        
-        $chats = explode(',', WEBHOOK_CHATS_LEVEL_2);
-    }
-    if ($level == 3 && defined(WEBHOOK_CHATS_LEVEL_3) && !empty(WEBHOOK_CHATS_LEVEL_3)) {
-        
-        $chats = explode(',', WEBHOOK_CHATS_LEVEL_3);
-    }
-    if ($level == 4 && defined(WEBHOOK_CHATS_LEVEL_4) && !empty(WEBHOOK_CHATS_LEVEL_4)) {
-        
-        $chats = explode(',', WEBHOOK_CHATS_LEVEL_4);
-    }
-    if ($level == 5 && defined(WEBHOOK_CHATS_LEVEL_5) && !empty(WEBHOOK_CHATS_LEVEL_5)) {
-        
-        $chats = explode(',', WEBHOOK_CHATS_LEVEL_5);
-    }
+
+    // Post raid polls.
     foreach ($chats as $chat) {
     
         // Send location.
