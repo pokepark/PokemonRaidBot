@@ -3785,12 +3785,11 @@ function curl_json_response($json_response, $json)
                     debug_log('BOT_ID ' . BOT_ID . ' not found in text message!');
                 }
             }
-                debug_log('Cleanup ID: ' . $cleanup_id);
+            debug_log('Cleanup ID: ' . $cleanup_id);
 
             // Trigger Cleanup when raid_id was found
             if($cleanup_id != 0 && $cleanup_id != 'trainer') {
                 debug_log('Found ID for cleanup preparation from callback_data or venue!');
-                debug_log('Cleanup ID: ' . $cleanup_id);
                 debug_log('Chat_ID: ' . $chat_id);
                 debug_log('Message_ID: ' . $message_id);
 
@@ -3801,7 +3800,7 @@ function curl_json_response($json_response, $json)
 	        } else {
 		    debug_log('Missing input! Cannot call cleanup preparation!');
 		}
-            } else if($cleanup_id == 'trainer') {
+            } else if($cleanup_id != '0' && $cleanup_id == 'trainer') {
                 debug_log('Detected trainer info message from callback_data!');
                 debug_log('Chat_ID: ' . $chat_id);
                 debug_log('Message_ID: ' . $message_id);
