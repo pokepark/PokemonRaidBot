@@ -242,7 +242,7 @@
     "PL":"TRANSLATE"
   },
   "raid_info_no_voting":{  
-    "NL":"TRANSLATE",
+    "NL":"Dit is alleen raid info.",
     "DE":"Dies ist eine Raid-Info. Keine Raid-Abstimmung möglich!",
     "EN":"This is a raid info. Voting is not possible!",
     "IT":"TRANSLATE",
@@ -253,7 +253,7 @@
     "PL":"TRANSLATE"
   },
   "raid_event_creation_limit_one":{  
-    "NL":"TRANSLATE",
+    "NL":"Gedurende raid hour kan je maar 1 raid aanmaken!",
     "DE":"Während der Raidstunde kannst du nur 1 Raid anlegen!",
     "EN":"During the raid hour you can only create 1 raid!",
     "IT":"TRANSLATE",
@@ -264,7 +264,7 @@
     "PL":"TRANSLATE"
   },
   "raid_event_creation_limit":{  
-    "NL":"TRANSLATE",
+    "NL":"Gedurende raid hour kan je alleen RAID_EVENT_CREATION_LIMIT minuten raids aanmaken!",
     "DE":"Während der Raidstunde kannst du nur RAID_EVENT_CREATION_LIMIT Raids anlegen!",
     "EN":"During the raid hour you can only create RAID_EVENT_CREATION_LIMIT raids!",
     "IT":"TRANSLATE",
@@ -539,7 +539,7 @@
     "PL":"TRANSLATE"
   },
   "your_trainer_info":{  
-    "NL":"TRANSLATE",
+    "NL":"Jou trainer informatie:",
     "DE":"Deine Trainer-Daten:",
     "EN":"Your trainer data:",
     "IT":"TRANSLATE",
@@ -550,7 +550,7 @@
     "PL":"TRANSLATE"
   },
   "trainer_message_share":{  
-    "NL":"TRANSLATE",
+    "NL":"Trainer informatie delen",
     "DE":"Trainer-Nachricht teilen",
     "EN":"Share trainer message",
     "IT":"TRANSLATE",
@@ -561,7 +561,7 @@
     "PL":"TRANSLATE"
   },
   "trainer_message_delete":{  
-    "NL":"TRANSLATE",
+    "NL":"Trainer informatie verwijderen",
     "DE":"Trainer-Nachricht löschen",
     "EN":"Delete trainer message",
     "IT":"TRANSLATE",
@@ -572,7 +572,7 @@
     "PL":"TRANSLATE"
   },
   "delete_trainer_message_from_chat":{  
-    "NL":"TRANSLATE",
+    "NL":"Verwijder het trainer bericht van de chat?",
     "DE":"Die Trainer-Nachricht aus dem Chat löschen?",
     "EN":"Delete the trainer message from the chat?",
     "IT":"TRANSLATE",
@@ -583,7 +583,7 @@
     "PL":"TRANSLATE"
   },
   "deleted_trainer_message":{  
-    "NL":"TRANSLATE",
+    "NL":"Verwijder het trainer bericht!",
     "DE":"Trainer-Nachricht wurde gelöscht!",
     "EN":"Deleted the trainer message!",
     "IT":"TRANSLATE",
@@ -594,7 +594,7 @@
     "PL":"TRANSLATE"
   },
   "trainer_message_share_or_delete":{  
-    "NL":"TRANSLATE",
+    "NL":"Je kan ook je trainer bericht delen of verwijderen.",
     "DE":"Du kannst die Trainer-Nachricht auch mit einem Chat teilen oder löschen.",
     "EN":"You can also share or delete the trainer message with a chat.",
     "IT":"TRANSLATE",
@@ -605,7 +605,7 @@
     "PL":"TRANSLATE"
   },
   "trainerinfo_set_yours":{  
-    "NL":"TRANSLATE",
+    "NL":"Geef je trainer informatie:",
     "DE":"Setze deine Trainerdaten:",
     "EN":"Set your trainer data:",
     "IT":"TRANSLATE",
@@ -616,7 +616,7 @@
     "PL":"TRANSLATE"
   },
   "trainer_set_your_info":{  
-    "NL":"TRANSLATE",
+    "NL":"Via 'Trainerinfo' kan je, je trainer data inzien en veranderen via de 'Team' en 'Level' knoppen.",
     "DE":"Über 'Trainer-Info' kannst du deine Trainerdaten anzeigen lassen. Mit den 'Team'- & 'Level'-Schaltflächen passt du die Daten an.",
     "EN":"Via 'Trainerinfo' you can view your trainer data. Adjust the data with the 'Team'- and 'Level'-Buttons.",
     "IT":"TRANSLATE",
@@ -627,7 +627,7 @@
     "PL":"TRANSLATE"
   },
   "trainer_set_your_info_done":{  
-    "NL":"TRANSLATE",
+    "NL":"Als je klaar ben, druk je nogmaals op 'Trainerinfo'. Je trainer data zal dan worden verborgen.",
     "DE":"Wenn du fertig bist, drücke nochmal auf 'Trainer-Info'. Deine Trainerdaten werden dann wieder ausgeblendet.",
     "EN":"Once you are done, press again on 'Trainerinfo'. Your trainer data will then be hidden again.",
     "IT":"TRANSLATE",
@@ -638,7 +638,7 @@
     "PL":"TRANSLATE"
   },
   "trainer_info_share_with_chat":{  
-    "NL":"TRANSLATE",
+    "NL":"Deel het bericht met een chat, om je tainer data in te zien of te veranderen ",
     "DE":"Nachricht zum Anzeigen und Bearbeiten der Trainerdaten mit einem Chat teilen:",
     "EN":"Share the message to show and adjust trainer data with a chat:",
     "IT":"TRANSLATE",
@@ -649,7 +649,7 @@
     "PL":"TRANSLATE"
   },
   "trainer_info_no_chats":{  
-    "NL":"TRANSLATE",
+    "NL":"Geen chat gevonden! Geen chat gevonden om je trainer data mee te delen.",
     "DE":"Keine Chats gefunden! Nachricht zum Anzeigen und Bearbeiten der Trainerdaten kann nicht geteilt werden!",
     "EN":"No chats found! Cannot share the message to show and adjust trainer data!",
     "IT":"TRANSLATE",
@@ -660,7 +660,7 @@
     "PL":"TRANSLATE"
   },
   "name":{  
-    "NL":"TRANSLATE",
+    "NL":"Naam",
     "DE":"Name",
     "EN":"Name",
     "IT":"TRANSLATE",
@@ -682,7 +682,7 @@
     "PL":"TRANSLATE"
   },
   "team_saved":{  
-    "NL":"TRANSLATE",
+    "NL":"Team opgeslagen!",
     "DE":"Team gespeichert!",
     "EN":"Team saved!",
     "IT":"TRANSLATE",
@@ -693,7 +693,7 @@
     "PL":"TRANSLATE"
   },
   "team_select":{  
-    "NL":"TRANSLATE",
+    "NL":"Selecteer een team:",
     "DE":"Wähle dein Team aus:",
     "EN":"Select your team:",
     "IT":"TRANSLATE",
@@ -715,7 +715,7 @@
     "PL":"TRANSLATE"
   },
   "level_saved":{  
-    "NL":"TRANSLATE",
+    "NL":"Level opgeslagen!",
     "DE":"Level gespeichert!",
     "EN":"Level saved!",
     "IT":"TRANSLATE",
@@ -726,7 +726,7 @@
     "PL":"TRANSLATE"
   },
   "level_select":{  
-    "NL":"TRANSLATE",
+    "NL":"Selecteer je level:",
     "DE":"Wähle dein Level aus:",
     "EN":"Select your level:",
     "IT":"TRANSLATE",
