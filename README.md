@@ -137,7 +137,8 @@ Authentication against the proxy server by username and password is currently no
 To tie the bot installation to the Telegram bot API it needs to be submitted as a webhook. This is done by visiting the 
 provided webhook.html form in a web browser.
 
-Navigate to https://yourdomain.com/botdir/webhook.html and fill in the form. After submit success test your bot by sending it a /start command. If this does not work, see [Debugging](#debugging)
+Navigate to https://yourdomain.com/botdir/webhook.html and fill in the form.
+After submit success test your bot by sending it a /help command. If this does not work, see [Debugging](#debugging)
 
 ## Languages
 
