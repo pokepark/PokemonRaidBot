@@ -16,6 +16,9 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
       * [Bot token](#bot-token)
       * [Database](#database)
       * [Config](#config)
+         * [Referring to groups, channels and users](#referring-to-groups-channels-and-users)
+            * [Finding public IDs](#finding-public-ids)
+            * [Finding private IDs](#finding-private-ids)
          * [Database connection](#database-connection)
          * [General config and log files](#general-config-and-log-files)
       * [Installing the Webhook](#installing-the-webhook)
@@ -73,7 +76,7 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
          * [raid-boss-pokedex.sql](#raid-boss-pokedexsql)
          * [gohub-raid-boss-pokedex.sql](#gohub-raid-boss-pokedexsql)
 
-<!-- Added by: artanicus, at: Mon Nov 18 18:26:42 EET 2019 -->
+<!-- Added by: artanicus, at: Mon Nov 18 20:31:37 EET 2019 -->
 
 <!--te-->
 
@@ -179,6 +182,100 @@ Inside the config folder, copy the example config.json.example to your own confi
 Don't forget to change the file permissions of your config file to 0600 (e.g. `chmod 0600 config.json`) afterwards. You need to change the ownerchip of all files to the webserver user - otherwise the config is not readable. Normally this: `chown www-data:www-data -R *`
 
 Some values are missing as the bot has default values. If you like to change those, you need to add and define them in your config.json file, e.g. `"DDOS_MAXIMUM":"10"`.
+
+### Referring to groups, channels and users
+The most reliable and secure way to refer to individuals, channels, groups and supergroups private or public is with a numeric ID.
+While in some contexts public groups, channels and supergroups could use their public id (e.g. @PublicGroup) this wouldn't work for every call.
+
+*Example IDs:*
+
+| Type       | Example        | Notes                                                  |
+|------------|----------------|--------------------------------------------------------|
+| User       | 12345678       | Positive number, no set length                         |
+| Group      | -998877665     | Negative number, no set length                         |
+| Channel    | -1001122334455 | Negative number padded to 13 characters (prepend -100) |
+| Supergroup | -1001122334455 | Negative number padded to 13 characters (prepend -100) |
+
+#### Finding public IDs
+Counterintuitively getting the ID of a public user, group, channel or supergroup is more difficult since most ways will replace the @name where a numeric ID would be visible. These methods will also work for private versions but will cause spam to the group. The easiest way is via @RawDataBot:
+
+**Group or supergroup:**
+
+Add @RawDataBot the the group which will cause it to report data about the group. Use the id value as-is,
+it's already prepended to the right length.
+```
+{
+*snip*
+        "chat": {
+            "id": -1002233445566,
+            "title": "Pokemon Group",
+            "username": "PokemonGroup",
+            "type": "supergroup"
+        },
+*snip*
+```
+
+**Channel or user:**
+
+Forward a message to @RawDataBot which will get you a data package:
+
+*Channel:*
+
+```
+*snip*
+        "forward_from_chat": {
+            "id": -1001122334455,
+            "title": "Pokemon Channel",
+            "username": "PokemonChannel",
+            "type": "channel"
+        },
+```
+
+*User:*
+
+```
+*snip*
+        "forward_from": {
+            "id": 112233445,
+            "is_bot": false,
+            "first_name": "Edwin",
+            "last_name": "Example"
+        },
+*snip*
+```
+
+#### Finding private IDs
+The above method works fine for private groups as well but if you don't want to spam the group there are less intrusive ways.
+One of the least intrusive ways is to use https://web.telegram.org to log in and select the entity in question in your chat list.
+The URL displayed in your browser can be converted into a usable ID.
+
+**Examples:**
+
+*Private user:*
+```
+https://web.telegram.org/#/im?p=u12345678_1122334455667788990011
+=> use 12345678
+```
+
+*Private group:*
+```
+https://web.telegram.org/#/im?p=g998877665
+=> use -998877665
+```
+
+*Private channel:*
+```
+https://web.telegram.org/#/im?p=c112233445566_1122334455667788990
+=> use -1112233445566 (notice the extra 1 prepended to pad to 13)
+```
+
+*Private supergroup:*
+```
+https://web.telegram.org/#/im?p=s1122334455_11223344556677889900
+=> use -1001122334455 (notice the extra 100 prepended to pad to 13)
+```
+
+
 
 ### Database connection
 
@@ -368,7 +465,6 @@ With `TRAINER_CHATS` you can specify additional chats which should appear as but
 
 Set `TRAINER_BUTTONS_TOGGLE` to true to enable the toggle which shows/hides the team and level+/- buttons under the trainer message. To disable the toggle button and always show the team and level+/- buttons set it to false.
 
-#### 
 Add additional chats -100999555111 and -100888444222 to share the trainer message
 
 `"TRAINER_CHATS":"-100999555111,-100888444222"`
