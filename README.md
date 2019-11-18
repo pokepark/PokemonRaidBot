@@ -181,7 +181,7 @@ Some values are missing as the bot has default values. If you like to change tho
 
 ### Database connection
 
-Enter the details for the database connection to the config.php file via `DB_HOST`, `DB_NAME`, `DB_USER` and `DB_PASSWORD`.
+Enter the details for the database connection to the config.json file via `DB_HOST`, `DB_NAME`, `DB_USER` and `DB_PASSWORD`.
 
 ### General config and log files
 
@@ -412,7 +412,7 @@ Finally set up a cronjob to trigger the cleanup. You can also trigger telegram /
 
 Make sure to replace the URL with yours.
 
-Cronjob using cleanup values from config.php for raid polls: Just the secret without telegram/database OR telegram = 2 and database = 2
+Cronjob using cleanup values from config.json for raid polls: Just the secret without telegram/database OR telegram = 2 and database = 2
 
 `curl -k -d '{"cleanup":{"secret":"your-cleanup-secret/passphrase"}}' https://localhost/index.php?apikey=111111111:AABBCCDDEEFFGGHHIIJJKKLLMMNNOOPP123`
 
