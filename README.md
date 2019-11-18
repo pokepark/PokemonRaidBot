@@ -13,9 +13,10 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
       * [Git clone](#git-clone)
          * [Core module inside bot folder](#core-module-inside-bot-folder)
          * [Core module outside bot folder](#core-module-outside-bot-folder)
-      * [Bot token](#bot-token)
-      * [Database](#database)
       * [Config](#config)
+         * [Referring to groups, channels and users](#referring-to-groups-channels-and-users)
+            * [Finding public IDs](#finding-public-ids)
+            * [Finding private IDs](#finding-private-ids)
          * [Database connection](#database-connection)
          * [General config and log files](#general-config-and-log-files)
       * [Installing the Webhook](#installing-the-webhook)
@@ -40,31 +41,32 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
          * [Access and permissions](#access-and-permissions)
          * [Permissions overview](#permissions-overview)
             * [Examples](#examples-1)
-      * [Customization](#customization)
-         * [Custom icons](#custom-icons)
-         * [Custom translation](#custom-translation)
-      * [Bot usage](#bot-usage)
-         * [Send your location to the bot](#send-your-location-to-the-bot)
-         * [Using inline search of @PortalMapBot or @Ingressportalbot](#using-inline-search-of-portalmapbot-or-ingressportalbot)
-         * [Command: /start](#command-start)
-         * [Command: /help](#command-help)
-         * [Command: /raid](#command-raid)
-         * [Command: /pokemon](#command-pokemon)
-         * [Command: /pokedex](#command-pokedex)
-         * [Command: /list](#command-list)
-         * [Command: /overview](#command-overview)
-         * [Command: /delete](#command-delete)
-         * [Command: /team](#command-team)
-         * [Command: /trainer](#command-trainer)
-         * [Command: /gym](#command-gym)
-         * [Command: /addgym](#command-addgym)
-         * [Command: /gymname](#command-gymname)
-         * [Command: /gymaddress](#command-gymaddress)
-         * [Command: /gymgps](#command-gymgps)
-         * [Command: /gymnote](#command-gymnote)
-         * [Command: /deletegym](#command-deletegym)
-      * [Debugging](#debugging)
-      * [Updates](#updates)
+   * [Customization](#customization)
+      * [Custom icons](#custom-icons)
+      * [Custom translation](#custom-translation)
+   * [Bot usage](#bot-usage)
+      * [Send your location to the bot](#send-your-location-to-the-bot)
+      * [Using inline search of @PortalMapBot or @Ingressportalbot](#using-inline-search-of-portalmapbot-or-ingressportalbot)
+      * [Command: /start](#command-start)
+      * [Command: /help](#command-help)
+      * [Command: /raid](#command-raid)
+      * [Command: /pokemon](#command-pokemon)
+      * [Command: /pokedex](#command-pokedex)
+      * [Command: /list](#command-list)
+      * [Command: /overview](#command-overview)
+      * [Command: /delete](#command-delete)
+      * [Command: /team](#command-team)
+      * [Command: /trainer](#command-trainer)
+      * [Command: /gym](#command-gym)
+      * [Command: /addgym](#command-addgym)
+      * [Command: /gymname](#command-gymname)
+      * [Command: /gymaddress](#command-gymaddress)
+      * [Command: /gymgps](#command-gymgps)
+      * [Command: /gymnote](#command-gymnote)
+      * [Command: /deletegym](#command-deletegym)
+   * [Debugging](#debugging)
+   * [Updates](#updates)
+   * [Development](#development)
       * [Git Hooks](#git-hooks)
          * [pre-commit](#pre-commit)
       * [SQL Files](#sql-files)
@@ -72,7 +74,7 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
          * [raid-boss-pokedex.sql](#raid-boss-pokedexsql)
          * [gohub-raid-boss-pokedex.sql](#gohub-raid-boss-pokedexsql)
 
-<!-- Added by: artanicus, at: Sun Nov 17 23:10:52 EET 2019 -->
+<!-- Added by: artanicus, at: Mon Nov 18 20:31:37 EET 2019 -->
 
 <!--te-->
 
@@ -179,9 +181,103 @@ Don't forget to change the file permissions of your config file to 0600 (e.g. `c
 
 Some values are missing as the bot has default values. If you like to change those, you need to add and define them in your config.json file, e.g. `"DDOS_MAXIMUM":"10"`.
 
+### Referring to groups, channels and users
+The most reliable and secure way to refer to individuals, channels, groups and supergroups private or public is with a numeric ID.
+While in some contexts public groups, channels and supergroups could use their public id (e.g. @PublicGroup) this wouldn't work for every call.
+
+*Example IDs:*
+
+| Type       | Example        | Notes                                                  |
+|------------|----------------|--------------------------------------------------------|
+| User       | 12345678       | Positive number, no set length                         |
+| Group      | -998877665     | Negative number, no set length                         |
+| Channel    | -1001122334455 | Negative number padded to 13 characters (prepend -100) |
+| Supergroup | -1001122334455 | Negative number padded to 13 characters (prepend -100) |
+
+#### Finding public IDs
+Counterintuitively getting the ID of a public user, group, channel or supergroup is more difficult since most ways will replace the @name where a numeric ID would be visible. These methods will also work for private versions but will cause spam to the group. The easiest way is via @RawDataBot:
+
+**Group or supergroup:**
+
+Add @RawDataBot the the group which will cause it to report data about the group. Use the id value as-is,
+it's already prepended to the right length.
+```
+{
+*snip*
+        "chat": {
+            "id": -1002233445566,
+            "title": "Pokemon Group",
+            "username": "PokemonGroup",
+            "type": "supergroup"
+        },
+*snip*
+```
+
+**Channel or user:**
+
+Forward a message to @RawDataBot which will get you a data package:
+
+*Channel:*
+
+```
+*snip*
+        "forward_from_chat": {
+            "id": -1001122334455,
+            "title": "Pokemon Channel",
+            "username": "PokemonChannel",
+            "type": "channel"
+        },
+```
+
+*User:*
+
+```
+*snip*
+        "forward_from": {
+            "id": 112233445,
+            "is_bot": false,
+            "first_name": "Edwin",
+            "last_name": "Example"
+        },
+*snip*
+```
+
+#### Finding private IDs
+The above method works fine for private groups as well but if you don't want to spam the group there are less intrusive ways.
+One of the least intrusive ways is to use https://web.telegram.org to log in and select the entity in question in your chat list.
+The URL displayed in your browser can be converted into a usable ID.
+
+**Examples:**
+
+*Private user:*
+```
+https://web.telegram.org/#/im?p=u12345678_1122334455667788990011
+=> use 12345678
+```
+
+*Private group:*
+```
+https://web.telegram.org/#/im?p=g998877665
+=> use -998877665
+```
+
+*Private channel:*
+```
+https://web.telegram.org/#/im?p=c112233445566_1122334455667788990
+=> use -1112233445566 (notice the extra 1 prepended to pad to 13)
+```
+
+*Private supergroup:*
+```
+https://web.telegram.org/#/im?p=s1122334455_11223344556677889900
+=> use -1001122334455 (notice the extra 100 prepended to pad to 13)
+```
+
+
+
 ### Database connection
 
-Enter the details for the database connection to the config.php file via `DB_HOST`, `DB_NAME`, `DB_USER` and `DB_PASSWORD`.
+Enter the details for the database connection to the config.json file via `DB_HOST`, `DB_NAME`, `DB_USER` and `DB_PASSWORD`.
 
 ### General config and log files
 
@@ -367,7 +463,6 @@ With `TRAINER_CHATS` you can specify additional chats which should appear as but
 
 Set `TRAINER_BUTTONS_TOGGLE` to true to enable the toggle which shows/hides the team and level+/- buttons under the trainer message. To disable the toggle button and always show the team and level+/- buttons set it to false.
 
-#### 
 Add additional chats -100999555111 and -100888444222 to share the trainer message
 
 `"TRAINER_CHATS":"-100999555111,-100888444222"`
@@ -412,7 +507,7 @@ Finally set up a cronjob to trigger the cleanup. You can also trigger telegram /
 
 Make sure to replace the URL with yours.
 
-Cronjob using cleanup values from config.php for raid polls: Just the secret without telegram/database OR telegram = 2 and database = 2
+Cronjob using cleanup values from config.json for raid polls: Just the secret without telegram/database OR telegram = 2 and database = 2
 
 `curl -k -d '{"cleanup":{"secret":"your-cleanup-secret/passphrase"}}' https://localhost/index.php?apikey=111111111:AABBCCDDEEFFGGHHIIJJKKLLMMNNOOPP123`
 
@@ -572,11 +667,11 @@ share-own
 share-any-chat
 ```
 
-## Customization
+# Customization
 
 The bot allows you to customize things and therefore has a folder 'custom' for your customizations.
 
-### Custom icons
+## Custom icons
 
 In case you do not like some of the predefined icons and might like to change them to other/own icons:
 - Create a file named `constants.php` in the custom folder
@@ -590,7 +685,7 @@ defined('EMOJI_WARN')           or define('EMOJI_WARN',    iconv('UCS-4LE', 'UTF
 - Make sure to not miss the first line which declares the file as php file!
 - To get the codes (here: 0x2757) of the icons/emojis, take a look at one of the large emoji databases in the web. They ususally have them mentioned and also show how the icons look like on different systems.
 
-### Custom translation
+## Custom translation
 
 To change translations you can do the following:
 - Create a file named `language.json` in the custom folder
@@ -608,15 +703,15 @@ To change translations you can do the following:
 - Make sure to create a valid JSON file for your custom translations
 - To verify your custom language.json you can use several apps, programs and web services.
 
-## Bot usage
+# Bot usage
 
-### Send your location to the bot
+## Send your location to the bot
 
 The bot will guide you through the creation of a raid poll based on the settings in the config file.
 
 In case of a raid poll the bot will ask you for the raid level, the pokemon raid boss, the time until the raids starts and the time left for the raid. Afterwards you can set the gym name and gym team by using the /gym and /team commands.
 
-### Using inline search of @PortalMapBot or @Ingressportalbot
+## Using inline search of @PortalMapBot or @Ingressportalbot
 
 You can add new gyms to the bot using the inline search of one of the bots mentioned above. Just search for a portal name, e.g. `Brandenburger Tor`, and select one of the portals shown as result of your search.
 
@@ -626,7 +721,7 @@ In case the portal is already in your gym list / database, it will get updated w
 
 Example: `@PortalMapBot Brandenburger Tor`
 
-### Command: /start
+## Command: /start
 
 The bot will guide you through the creation of the raid poll by asking you for the gym, raid level, the pokemon raid boss, the time until the raid starts and the time left for the raid. Afterwards you can set the gym team by using the /team command.
 
@@ -656,12 +751,12 @@ Raid poll is created. Delete or share it:
 
 ![Command: /start](/screens/commands-start-raid-saved.png?raw=true "Command: /start")
 
-### Command: /help
+## Command: /help
 
 The bot will give a personal help based on the permissions you have to access and use it.
 
 
-### Command: /raid
+## Command: /raid
 
 Create a new raid by gomap-notifier or other input. The raid command expects 8 parameters and an optional 9th parameter as input seperated by comma.
 
@@ -672,14 +767,14 @@ Parameters: Pokemon raid boss id and form (combine with minus), latitude, longit
 Example input: `/raid 244-normal,52.516263,13.377755,45,Mystic,Brandenburger Tor,Pariser Platz 1, 10117 Berlin,30`
 
 
-### Command: /pokemon
+## Command: /pokemon
 
 Update pokemon of an existing raid poll. With this command you can change the pokemon raid boss from e.g. "Level 5 Egg" to "Lugia" once the egg has hatched.
 
 Based on your access to the bot, you may can only change the pokemon raid boss of raid polls you created yourself and cannot modify the pokemon of raid polls from other bot users.
 
 
-### Command: /pokedex
+## Command: /pokedex
 
 Show and update any pokemon raid boss. You can change the raid level (select raid level 0 to disable a raid boss), pokemon CP values and weather information of any pokemon raid boss.
 
@@ -722,7 +817,7 @@ Edit the weather:
 ![Command: /pokedex](/screens/commands-pokedex-set-weather.png?raw=true "Command: /pokedex")
 
 
-### Command: /list
+## Command: /list
 
 The bot will allow you to get a list of the last 20 active raids and re-share or delete them.
 
@@ -734,7 +829,7 @@ List existing raid polls with the `/list` command:
 ![Command: /list](/screens/commands-list-active-raids.png?raw=true "Command: /list")
 
 
-### Command: /overview
+## Command: /overview
 
 Share and delete the raid overview message.
 
@@ -746,7 +841,7 @@ Delete the shared overview message:
 
 ![Command: /overview](/screens/commands-list-delete-overview.png?raw=true "Command: /overview")
 
-### Command: /delete
+## Command: /delete
 
 Delete an existing raid poll. With this command you can delete a raid poll from telegram and the database. Use with care!
 
@@ -757,31 +852,31 @@ Delete an existing raid poll with the `/delete` command:
 ![Command: /delete](/screens/command-delete.png?raw=true "Command: /delete")
 ![Command: /delete](/screens/commands-delete-raid-deleted.png?raw=true "Command: /delete")
 
-### Command: /team
+## Command: /team
 
 The bot will set the team to Mystic/Valor/Instinct for the last created raid based on your input.
 
 Example input: `/team Mystic`
 
-### Command: /trainer
+## Command: /trainer
 
 The bot will give you a list of chats to share the trainer message which allows users to set team and level+/- data. You can also delete the shared trainer messages via the `/trainer` command.
 
-### Command: /gym
+## Command: /gym
 
 The bot will show the details of each gym. Additionally you can change the extended gym details to hide/show gyms under `/start` as well as mark/un-mark them as ex-raid gym.
 
 Example input: `/gym`
 
 
-### Command: /addgym
+## Command: /addgym
 
 The bot will add a gym under the coordinates you're submitting. First latitude, then longitude. The gym is added under the name '#YourTelegramID' (e.g. '#111555777') and you need to change the name afterwards using the `/gymname` command. You cannot submit a second gym unless you changed the name of the first gym. In case you submit a second gym without changing the name of the previously submitted gym, the first gym coordinates will be overwritten!
 
 Example input: `/addgym 52.5145434,13.3501189`
 
 
-### Command: /gymname
+## Command: /gymname
 
 The bot will set the name of gym to your input. If you submitted a gym via location sharing you can use it without an id. Otherwise the id of the gym is required.
 
@@ -790,7 +885,7 @@ Example input: `/gymname Siegessäule`
 Example input with gym id: `/gymname 34, Siegessäule`
 
 
-### Command: /gymaddress
+## Command: /gymaddress
 
 The bot will set the address of gym to your input. The id of the gym is required. You can delete the gym address using the keyword 'reset'.
 
@@ -799,14 +894,14 @@ Example input: `/gymaddress 34, Großer Stern, 10557 Berlin`
 Example input to delete the gym address: `/gymaddress 34, reset`
 
 
-### Command: /gymgps
+## Command: /gymgps
 
 The bot will set the gps coordinates of gym to your input. The id of the gym is required.
 
 Example input: `/gymgps 34, 52.5145434,13.3501189`
 
 
-### Command: /gymnote
+## Command: /gymnote
 
 The bot will set the note for gym to your input. The id of the gym is required. You can delete the gym note using the keyword 'reset'.
 
@@ -815,18 +910,18 @@ Example input: `/gymnote 34, Meeting point: Behind the buildung`
 Example input to delete the gym note: `/gymnote 34, reset`
 
 
-### Command: /deletegym
+## Command: /deletegym
 
 The bot will show all gyms. Select a gym and confirm the deletion to remove it from the database.
 
 Example input: `/deletegym`
 
 
-## Debugging
+# Debugging
 
 Check your bot logfile and other related log files, e.g. apache/httpd log, php log, and so on.
 
-## Updates
+# Updates
 
 The bot has a version system and checks for updates to the database automatically.
 
@@ -838,13 +933,18 @@ After any upgrade you need to make sure to change the bot version in your config
 
 Updates to the config file are NOT checked automatically. Therefore always check for changes to the config.json.example and add new config variables to your own config.json then too!
 
+# Development
+
 ## Git Hooks
 
-In the needed core repository we provide a folder with git hooks which can be used to automate several processes. Copy them to the `.git/hooks/` folder of this bot and make them executable (e.g. `chmod +x .git/hooks/pre-commit`) to use them.
+In the needed core repository we provide a folder with git hooks which can be used to automate development processes. Copy them to the `.git/hooks/` folder of this bot and make them executable (e.g. `chmod +x .git/hooks/pre-commit`) to use them, or set your local git config to use them directly:
+```
+git config --local core.hooksPath core/hooks
+```
 
 ### pre-commit
 
-The pre-commit git hook will automatically update the VERSION file whenever you do a `git commit`.
+The pre-commit git hook will automatically update the VERSION file and table of contents whenever you do a `git commit`.
 
 The bot version is automatically generated when using the pre-commit hook according to the following scheme consisting of 4 parts separated by dots:
  - Current decade (1 char)
