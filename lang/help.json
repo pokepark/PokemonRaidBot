@@ -110,7 +110,7 @@
     "PL":"TRANSLATE"
   },
   "help_trainer":{  
-    "NL":"TRANSLATE",
+    "NL":"/trainer - Verander trainer data",
     "DE":"/trainer - Trainerdaten bearbeiten",
     "EN":"/trainer - Edit trainer data",
     "IT":"TRANSLATE",
