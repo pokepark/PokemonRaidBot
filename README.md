@@ -13,8 +13,6 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
       * [Git clone](#git-clone)
          * [Core module inside bot folder](#core-module-inside-bot-folder)
          * [Core module outside bot folder](#core-module-outside-bot-folder)
-      * [Bot token](#bot-token)
-      * [Database](#database)
       * [Config](#config)
          * [Referring to groups, channels and users](#referring-to-groups-channels-and-users)
             * [Finding public IDs](#finding-public-ids)
@@ -939,11 +937,14 @@ Updates to the config file are NOT checked automatically. Therefore always check
 
 ## Git Hooks
 
-In the needed core repository we provide a folder with git hooks which can be used to automate several processes. Copy them to the `.git/hooks/` folder of this bot and make them executable (e.g. `chmod +x .git/hooks/pre-commit`) to use them.
+In the needed core repository we provide a folder with git hooks which can be used to automate development processes. Copy them to the `.git/hooks/` folder of this bot and make them executable (e.g. `chmod +x .git/hooks/pre-commit`) to use them, or set your local git config to use them directly:
+```
+git config --local core.hooksPath core/hooks
+```
 
 ### pre-commit
 
-The pre-commit git hook will automatically update the VERSION file whenever you do a `git commit`.
+The pre-commit git hook will automatically update the VERSION file and table of contents whenever you do a `git commit`.
 
 The bot version is automatically generated when using the pre-commit hook according to the following scheme consisting of 4 parts separated by dots:
  - Current decade (1 char)
