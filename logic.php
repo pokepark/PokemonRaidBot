@@ -2214,7 +2214,11 @@ function keys_vote($raid)
 
             // Hidden participants?
             if(RAID_POLL_HIDE_USERS_TIME > 0) {
-                $hide_users_sql = "AND attend_time > (UTC_TIMESTAMP() - INTERVAL " . RAID_POLL_HIDE_USERS_TIME . " MINUTE)";
+                if(RAID_ANYTIME == true) {
+                    $hide_users_sql = "AND (attend_time > (UTC_TIMESTAMP() - INTERVAL " . RAID_POLL_HIDE_USERS_TIME . " MINUTE) OR attend_time = 0)";
+                } else {
+                    $hide_users_sql = "AND attend_time > (UTC_TIMESTAMP() - INTERVAL " . RAID_POLL_HIDE_USERS_TIME . " MINUTE)";
+                }
             } else {
                 $hide_users_sql = "";
             }
@@ -3125,7 +3129,11 @@ function show_raid_poll($raid)
 
     // Hide participants?
     if(RAID_POLL_HIDE_USERS_TIME > 0) {
-        $hide_users_sql = "AND attend_time > (UTC_TIMESTAMP() - INTERVAL " . RAID_POLL_HIDE_USERS_TIME . " MINUTE)";
+        if(RAID_ANYTIME == true) {
+            $hide_users_sql = "AND (attend_time > (UTC_TIMESTAMP() - INTERVAL " . RAID_POLL_HIDE_USERS_TIME . " MINUTE) OR attend_time = 0)";
+        } else {
+            $hide_users_sql = "AND attend_time > (UTC_TIMESTAMP() - INTERVAL " . RAID_POLL_HIDE_USERS_TIME . " MINUTE)";
+        }
     } else {
         $hide_users_sql = "";
     }
