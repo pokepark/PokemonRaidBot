@@ -423,6 +423,15 @@ Set `RAID_EX_GYM_MARKER` to set the marker for ex-raid gyms. You can use a prede
 
 Set `RAID_CREATION_EX_GYM_MARKER` to true to show the marker for ex-raid gyms during raid creation.
 
+### Raid Picture
+
+Set `RAID_PICTURE` to true and set the url in `RAID_PICTURE` to the location of raidpicture.php.
+When you do this the max characters will change from 4096 to 1024.
+
+You also need to get the Pokemon sprites from ZeChrales and put them in the images/pokemon_icons folder.
+Link: https://github.com/ZeChrales/PogoAssets/tree/master/pokemon_icons
+
+
 ### Portal Import
 
 Set `PORTAL_IMPORT` to `true` to enable the possibility to import portals from Telegram Ingress Bots.
