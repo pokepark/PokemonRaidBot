@@ -36,8 +36,12 @@ if (RAID_LOCATION == true) {
 // Telegram JSON array.
 $tg_json = array();
 
+// Raid picture
+	$picture_url = PICTURE_URL . "?pokemon=".$raid['pokemon']."&gym=".$raid['gym_id']."&raid=".$id;
+	debug_log('PictureUrl: '.$picture_url);
+
 // Send the message.
-$tg_json[] = send_message($chat, $text, $keys, ['reply_to_message_id' => $chat, 'disable_web_page_preview' => 'true'], true);
+$tg_json[] = send_message($chat, $text, $keys, ['reply_to_message_id' => $chat, 'disable_web_page_preview' => 'true'], true, $picture_url);
 
 // Set callback keys and message
 $callback_msg = getTranslation('successfully_shared');
