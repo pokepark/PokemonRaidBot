@@ -63,7 +63,7 @@ function active_raid_duplication_check($gym_id)
     // Build query.
     $rs = my_query(
         "
-        SELECT id, count(gym_id) AS active_raid
+        SELECT id, pokemon, count(gym_id) AS active_raid
         FROM   raids
         WHERE  end_time > (UTC_TIMESTAMP() - INTERVAL 10 MINUTE)
         AND    gym_id = {$gym_id}
@@ -71,13 +71,38 @@ function active_raid_duplication_check($gym_id)
         "
     );
 
-    // Get row.
-    $raid = $rs->fetch_assoc();
-    $active_counter = $raid['active_raid'];
+    // Init counter and raid id.
+    $active_counter = 0;
+    $active_raid_id = 0;
+
+    // Get row - allow normal and ex-raid at the gym.
+    if(RAID_EXCLUDE_EXRAID_DUPLICATION == true) {
+        while ($raid = $rs->fetch_assoc()) {
+            $active = $raid['active_raid'];
+            if ($active > 0) {
+                // Exclude ex-raid pokemon.
+                $raid_level = get_raid_level($raid['pokemon']);
+                if($raid_level == 'X') {
+                    continue;
+                } else {
+                    $active_raid_id = $raid['id'];
+                    $active_counter = $active_counter + 1;
+                    break;
+                }
+            // No active raids.
+            } else {
+                break;
+            }
+        }
+    } else {
+        $raid = $rs->fetch_assoc();
+        $active_counter = $raid['active_raid'];
+        $active_raid_id = $raid['id'];
+   }
 
     // Return 0 or raid id
     if ($active_counter > 0) {
-        return $raid['id'];
+        return $active_raid_id;
     } else {
         return 0;
     }
@@ -932,14 +957,22 @@ function raid_edit_gym_keys($first, $warn = true, $action = 'edit_raidlevel', $d
         $show_gym = 1;
     }
 
+    // Exclude ex-raids?
+    $exraid_exclude = '';
+    if(RAID_EXCLUDE_EXRAID_DUPLICATION == true) {
+        $exraid_exclude = "pokemon.raid_level <> 'X' AND ";
+    }
+
     // Get gyms from database
     $rs = my_query(
         "
         SELECT    gyms.id, gyms.gym_name, gyms.ex_gym,
-                  CASE WHEN SUM(raids.end_time > UTC_TIMESTAMP() - INTERVAL 10 MINUTE) THEN 1 ELSE 0 END AS active_raid
+                  CASE WHEN SUM($exraid_exclude raids.end_time > UTC_TIMESTAMP() - INTERVAL 10 MINUTE) THEN 1 ELSE 0 END AS active_raid
         FROM      gyms
         LEFT JOIN raids
         ON        raids.gym_id = gyms.id 
+        LEFT JOIN pokemon
+        ON        raids.pokemon = CONCAT(pokemon.pokedex_id, '-', pokemon.pokemon_form)
         WHERE     UPPER(LEFT(gym_name, $first_length)) = UPPER('{$first}')
         $not
         AND       gyms.show_gym = {$show_gym}
@@ -959,7 +992,10 @@ function raid_edit_gym_keys($first, $warn = true, $action = 'edit_raidlevel', $d
            $arg = $gym['id'];
         }
 
-        // No active raid
+        // Write to log.
+        // debug_log($gym);
+
+        // No active raid OR only active ex-raid
         if($gym['active_raid'] == 0 || $warn = false) {
             // Show Ex-Gym-Marker?
             if(RAID_CREATION_EX_GYM_MARKER && $gym['ex_gym'] == 1) {
@@ -988,7 +1024,7 @@ function raid_edit_gym_keys($first, $warn = true, $action = 'edit_raidlevel', $d
                 'callback_data' => $first . ':' . $action . ':' . $arg
             );
         }
-        // Add warning emoji for active raid and no ex raid gym
+        // Add warning emoji for active raid and ex raid gym
         else if ($gym['active_raid'] == 1 && $gym['ex_gym'] == 1) {
             $keys[] = array(
                 'text'          => EMOJI_WARN . SP . EMOJI_STAR . SP . $gym['gym_name'],
@@ -2214,7 +2250,11 @@ function keys_vote($raid)
 
             // Hidden participants?
             if(RAID_POLL_HIDE_USERS_TIME > 0) {
-                $hide_users_sql = "AND attend_time > (UTC_TIMESTAMP() - INTERVAL " . RAID_POLL_HIDE_USERS_TIME . " MINUTE)";
+                if(RAID_ANYTIME == true) {
+                    $hide_users_sql = "AND (attend_time > (UTC_TIMESTAMP() - INTERVAL " . RAID_POLL_HIDE_USERS_TIME . " MINUTE) OR attend_time = 0)";
+                } else {
+                    $hide_users_sql = "AND attend_time > (UTC_TIMESTAMP() - INTERVAL " . RAID_POLL_HIDE_USERS_TIME . " MINUTE)";
+                }
             } else {
                 $hide_users_sql = "";
             }
@@ -3125,7 +3165,11 @@ function show_raid_poll($raid)
 
     // Hide participants?
     if(RAID_POLL_HIDE_USERS_TIME > 0) {
-        $hide_users_sql = "AND attend_time > (UTC_TIMESTAMP() - INTERVAL " . RAID_POLL_HIDE_USERS_TIME . " MINUTE)";
+        if(RAID_ANYTIME == true) {
+            $hide_users_sql = "AND (attend_time > (UTC_TIMESTAMP() - INTERVAL " . RAID_POLL_HIDE_USERS_TIME . " MINUTE) OR attend_time = 0)";
+        } else {
+            $hide_users_sql = "AND attend_time > (UTC_TIMESTAMP() - INTERVAL " . RAID_POLL_HIDE_USERS_TIME . " MINUTE)";
+        }
     } else {
         $hide_users_sql = "";
     }

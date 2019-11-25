@@ -116,8 +116,8 @@ CREATE TABLE `users` (
   `user_id` bigint(20) DEFAULT NULL,
   `nick` varchar(100) CHARACTER SET utf8mb4 DEFAULT NULL,
   `name` varchar(200) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `trainername` varchar(200) CHARACTER SET utf8mb4 DEFAULT NULL,
   `team` enum('mystic','valor','instinct') DEFAULT NULL,
-  `moderator` tinyint(1) unsigned DEFAULT NULL,
   `level` int(10) unsigned DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `i_userid` (`user_id`)
