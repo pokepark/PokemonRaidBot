@@ -38,7 +38,7 @@ $tg_json = array();
 
 // Raid picture
 if(RAID_PICTURE == true) {
-	$picture_url = PICTURE_URL . "?pokemon=".$raid['pokemon']."&gym=".$raid['gym_id']."&raid=".$id;
+	$picture_url = RAID_PICTURE_URL . "?pokemon=".$raid['pokemon']."&gym=".$raid['gym_id']."&raid=".$id;
 	debug_log('PictureUrl: '.$picture_url);
 }
 
