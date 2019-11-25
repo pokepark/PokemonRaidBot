@@ -2354,7 +2354,7 @@ function keys_vote($raid)
  * @param $data
  * @param bool $new
  */
-function send_response_vote($update, $data, $new = false)
+function send_response_vote($update, $data, $new = false,$text = true)
 {
     // Get the raid data by id.
     $raid = get_raid($data['id']);
@@ -2390,9 +2390,13 @@ function send_response_vote($update, $data, $new = false)
 
         // Answer the callback.
         $tg_json[] = answerCallbackQuery($update['callback_query']['id'], $callback_msg, true, true);
-
-        // Edit the message.
-        $tg_json[] = edit_message($update, $msg, $keys, ['disable_web_page_preview' => 'true'], true);
+		if($text) {
+			// Edit the message.
+			$tg_json[] = edit_message($update, $msg, $keys, ['disable_web_page_preview' => 'true'], true);
+		}else {
+			// Edit the message.
+			$tg_json[] = edit_message($update, $msg, $keys, ['disable_web_page_preview' => 'true'], true, 'caption');
+		}
     }
 
     // Telegram multicurl request.
