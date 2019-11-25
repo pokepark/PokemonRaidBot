@@ -379,6 +379,8 @@ Set `RAID_DURATION_CLOCK_STYLE` to customize the default style for the raid star
 
 Set `RAID_CUSTOM_GYM_LETTERS` to further split gyms by their first letter. For example if you have a lot of gyms starting with 'St' as there are a lot of churches like St. Helen, St. Jospeh, etc. in your area and the gym list under the letter 'S' is too long, you can tell the bot to put the gyms starting with 'St' under 'St' and exclude them from the letter 'S'. There is no limitation in length, so even 'Berlin' would work to split gyms, but the recommendation is to use as less chars as possible to split the gyms. You can add multiple custom gym letters, just separate them by comma. Example: `"RAID_CUSTOM_GYM_LETTERS":"Ber,Sch,St,Wi"`
 
+Set `RAID_EXCLUDE_EXRAID_DUPLICATION` to true to exclude ex-raids from the duplication check which allows to create an ex-raid and a normal raid.
+
 ### Raid time customization
 
 There are several options to configure the times related to the raid polls:
