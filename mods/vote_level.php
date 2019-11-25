@@ -49,7 +49,7 @@ if($data['id'] == 'trainer') {
     }
 } else {
     // Send vote response.
-    send_response_vote($update, $data);
+    send_response_vote($update, $data,false,false);
 }
 
 exit();
