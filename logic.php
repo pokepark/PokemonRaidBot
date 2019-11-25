@@ -3065,13 +3065,17 @@ function show_raid_poll($raid)
     $raid_level = get_raid_level($raid_pokemon);
         
     // Get raid times.
+if(RAID_PICTURE == false) {
     $msg .= get_raid_times($raid);
+}
 
     // Get current time and time left.
     $time_now = utcnow();
     $time_left = $raid['t_left'];
 
+
     // Display gym details.
+if(RAID_PICTURE == false) {
     if ($raid['gym_name'] || $raid['gym_team']) {
         // Add gym name to message.
         if ($raid['gym_name']) {
@@ -3086,6 +3090,7 @@ function show_raid_poll($raid)
 
         $msg .= CR;
     }
+}
 
     // Add maps link to message.
     if (!empty($raid['address'])) {
@@ -3112,13 +3117,16 @@ function show_raid_poll($raid)
         }	
     }
 
+
     // Display raid boss name.
+if(RAID_PICTURE == false) {
     $msg .= getPublicTranslation('raid_boss') . ': <b>' . get_local_pokemon_name($raid['pokemon'], true) . '</b>';
 
     // Display raid boss weather.
     $pokemon_weather = get_pokemon_weather($raid['pokemon']);
     $msg .= ($pokemon_weather != 0) ? (' ' . get_weather_icons($pokemon_weather)) : '';
     $msg .= CR;
+}
     
     // Display attacks.
     if ($raid['move1'] > 1 && $raid['move2'] > 2 ) {
