@@ -77,6 +77,10 @@ if($now <= $attend_time || $arg == 0) {
 }
 
 // Send vote response.
-send_response_vote($update, $data,false,false);
+   if(RAID_PICTURE == true) {
+	    send_response_vote($update, $data,false,false);
+    } else {
+	    send_response_vote($update, $data);
+    } 
 
 exit();
