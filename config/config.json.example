@@ -40,6 +40,8 @@
   "RAID_VOTE_TEXT":"false",
   "RAID_LATE_MSG":"true",
   "RAID_LATE_TIME":"3",
+  "RAID_PICTURE":"false",
+  "RAID_PICTURE_URL":"https://your.server.com/raid/raidpicture.php",  
   "RAID_POLL_UI_ORDER":"extra,teamlvl,time,pokemon,status",
   "RAID_POLL_HIDE_USERS_TIME":"10",
   "RAID_POLL_HIDE_BUTTONS_RAID_LEVEL":"1,2,3",

@@ -78,9 +78,16 @@ $updated_msg = show_raid_poll($raid);
 $updated_keys = keys_vote($raid);
 
 // Update the shared raid polls.
-while ($raidmsg = $rs->fetch_assoc()) {
-    $tg_json[] = editMessageText($raidmsg['message_id'], $updated_msg, $updated_keys, $raidmsg['chat_id'], ['disable_web_page_preview' => 'true'], true);
-} 
+if(RAID_PICTURE == true) {
+    while ($raidmsg = $rs->fetch_assoc()) {
+   	    $picture_url = RAID_PICTURE_URL."?gym=".$raid['gym_id']."&pokemon=".$raid['pokemon']."&raid=".$id;
+	    $tg_json[] = editMessageMedia($raidmsg['message_id'], $updated_msg, $updated_keys, $raidmsg['chat_id'], ['disable_web_page_preview' => 'true'], false, $picture_url);
+    } 
+} else {
+    while ($raidmsg = $rs->fetch_assoc()) {
+	    $tg_json[] = editMessageText($raidmsg['message_id'], $updated_msg, $updated_keys, $raidmsg['chat_id'], ['disable_web_page_preview' => 'true'], true);    
+    }
+}
 
 // Telegram multicurl request.
 curl_json_multi_request($tg_json);
