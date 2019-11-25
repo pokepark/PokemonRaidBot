@@ -83,7 +83,7 @@ imageellipse($canvas,$new_w/2,$new_w/2,$new_w-9,$new_w-9,$color_ellipse);
 // Is ex gym?
 if($gym['ex_gym']==1) {
 	// Load ex gym icon
-	$img_exgym = imagecreatefrompng("raidpicture/exgym.png");
+	$img_exgym = imagecreatefrompng("images/exgym.png");
 	// Save transparency
 	imagesavealpha($img_exgym,true);
 	// Get icon's size
@@ -175,7 +175,7 @@ switch($pokemon_form_text) {
 	$pokemon_id = $zeroes.$pokedex_id_short;
 
 	// Getting the actual icon
-	$img_pokemon	= imagecreatefrompng("raidpicture/pokemon_icons/pokemon_icon_".$pokemon_id."_".$pokemon_form.".png");
+	$img_pokemon	= imagecreatefrompng("images/pokemon_icons/pokemon_icon_".$pokemon_id."_".$pokemon_form.".png");
 	imagesavealpha($img_pokemon,true);
 
 	//Position the picture of a pokemon or raid egg
@@ -187,15 +187,15 @@ switch($pokemon_form_text) {
 		imagecopyresampled($canvas,$img_pokemon,100,100,0,0,256,256,256,256);
 	}
 }else {
-	$raidwon_img = imagecreatefrompng("raidpicture/raidwon.png");
+	$raidwon_img = imagecreatefrompng("images/raidwon.png");
 	imagesavealpha($raidwon_img,true);
 	$won_width = 150;
 	imagecopyresampled($canvas,$raidwon_img,160,160,0,0,$won_width,$won_width/444*512,444,512);
 }
 
 // Adding the gym name to the image
-$font_gym = "raidpicture/calibrib.ttf";					// Path to the font file
-$font_text = "raidpicture/calibri.ttf";					// Path to the font file
+$font_gym = "images/calibrib.ttf";					// Path to the font file
+$font_text = "images/calibri.ttf";					// Path to the font file
 $font_color = imagecolorallocate($canvas,0,0,0);	// Font color (white)
 $gym_text_size = 26;								// Font size of gym text
 $text_size = 18;									// Font size of additional text
@@ -263,7 +263,7 @@ if($pokedex_id_short<9990 && $_GET['pokemon']!="ended") {
 
 	for($i=0;$i<strlen($pokemon['weather']);$i++) {
 		$we = substr($pokemon['weather'],$i,1);
-		$weather_icon = imagecreatefrompng("raidpicture/".$we.".png"); // 64x64
+		$weather_icon = imagecreatefrompng("images/".$we.".png"); // 64x64
 		imagecopyresampled($canvas,$weather_icon,$left_tab+($i*40),$poke_text_top+5,0,0,38,38,64,64);
 	}
 }
