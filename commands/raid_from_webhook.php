@@ -185,6 +185,27 @@ foreach ($update as $raid) {
             $statement->bindValue(':gender', $gender, PDO::PARAM_STR);
             $statement->bindValue(':id', $raid_id, PDO::PARAM_INT);
             $statement->execute();
+			
+			
+			// Get raid info for updating 
+			$raid_info = get_raid($raid_id);
+			
+			$updated_msg = show_raid_poll($raid_info);
+			$updated_keys = keys_vote($raid_info);
+			
+			$cleanup_query = ' 
+				SELECT    *
+				FROM      cleanup
+					WHERE   raid_id = :id
+			';
+            $cleanup_statement = $dbh->prepare( $cleanup_query );
+            $cleanup_statement->bindValue(':id', $raid_id, PDO::PARAM_STR);
+			$cleanup_statement->execute();
+			
+			while ($row = $cleanup_statement->fetch()) {
+				$url = RAID_PICTURE_URL."?gym=".$raid_info['gym_id']."&pokemon=".$raid_info['pokemon']."&raid=".$raid_id;
+				editMessageMedia($row['message_id'], $updated_msg, $updated_keys, $row['chat_id'], ['disable_web_page_preview' => 'true'],false, $url);
+			}
         }
         catch (PDOException $exception) {
 
