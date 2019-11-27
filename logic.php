@@ -3859,7 +3859,7 @@ function curl_json_response($json_response, $json)
 	        }
 
             // Check if it's a venue and get raid id
-            } else if (!empty($response['result']['venue']['address'])) {
+            } else if (isset($response['result']['venue']['address']) && !empty($response['result']['venue']['address'])) {
                 // Get raid_id from address.
                 debug_log('Venue address message likely contains cleanup info!');
                 if(strpos($response['result']['venue']['address'], substr(strtoupper(BOT_ID), 0, 1) . '-ID = ') !== false) {
@@ -3871,7 +3871,7 @@ function curl_json_response($json_response, $json)
             // Check if it's a text and get raid id
             } else if (!empty($response['result']['text'])) {
                 debug_log('Text message likely contains cleanup info!');
-                if(strpos($response['result']['venue']['address'], substr(strtoupper(BOT_ID), 0, 1) . '-ID = ') !== false) {
+                if(isset($response['result']['venue']['address']) && strpos($response['result']['venue']['address'], substr(strtoupper(BOT_ID), 0, 1) . '-ID = ') !== false) {
                     $cleanup_id = substr(strrchr($response['result']['text'], substr(strtoupper(BOT_ID), 0, 1) . '-ID = '), 7);
                 } else {
                     debug_log('BOT_ID ' . BOT_ID . ' not found in text message!');

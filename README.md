@@ -427,12 +427,14 @@ Set `RAID_CREATION_EX_GYM_MARKER` to true to show the marker for ex-raid gyms du
 
 ### Raid Picture
 
-Set `RAID_PICTURE` to true and set the url in `RAID_PICTURE` to the location of raidpicture.php.
-When you do this the max characters will change from 4096 to 1024.
+Set `RAID_PICTURE` to true and set the url in `RAID_PICTURE_URL` to the location of raidpicture.php.
 
-You also need to get the Pokemon sprites from ZeChrales and put them in the images/pokemon_icons folder.
+You also need to get the Pokemon sprites from ZeChrales and put them in the images/pokemon folder.
 Link: https://github.com/ZeChrales/PogoAssets/tree/master/pokemon_icons
 
+To easily download you can use a special download script on the CLI: `php getZeCharles.php`
+
+Set `RAID_DEFAULT_PICTURE` to the url of a default gym picture in case no gym image url is stored in the database for a gym.
 
 ### Portal Import
 
