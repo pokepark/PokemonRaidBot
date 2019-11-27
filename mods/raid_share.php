@@ -38,16 +38,16 @@ $tg_json = array();
 
 // Raid picture
 if(RAID_PICTURE == true) {
-	$picture_url = RAID_PICTURE_URL . "?pokemon=".$raid['pokemon']."&gym=".$raid['gym_id']."&raid=".$id;
-	debug_log('PictureUrl: '.$picture_url);
+    $picture_url = RAID_PICTURE_URL . "?pokemon=" . $raid['pokemon'] . "&raid=". $id;
+    debug_log('PictureUrl: ' . $picture_url);
 }
 
 // Send the message.
-	if(RAID_PICTURE == true) {
-		$tg_json[] = send_message($chat, $text, $keys, ['reply_to_message_id' => $chat, 'disable_web_page_preview' => 'true'], true, $picture_url);
-    } else {
-		$tg_json[] = send_message($chat, $text, $keys, ['reply_to_message_id' => $chat, 'disable_web_page_preview' => 'true'], true);
-	}
+if(RAID_PICTURE == true) {
+    $tg_json[] = send_message($chat, $text, $keys, ['reply_to_message_id' => $chat, 'disable_web_page_preview' => 'true'], true, $picture_url);
+} else {
+    $tg_json[] = send_message($chat, $text, $keys, ['reply_to_message_id' => $chat, 'disable_web_page_preview' => 'true'], true);
+}
 
 // Set callback keys and message
 $callback_msg = getTranslation('successfully_shared');

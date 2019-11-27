@@ -243,12 +243,47 @@ function get_raid($raid_id)
 }
 
 /**
- * Get last 20 active raids.
+ * Get raid data with pokemon.
+ * @param $raid_id
+ * @return array
+ */
+function get_raid_with_pokemon($raid_id)
+{
+    // Get the raid data by id.
+    $rs = my_query(
+        "
+        SELECT     raids.*,
+                   gyms.lat, gyms.lon, gyms.address, gyms.gym_name, gyms.ex_gym, gyms.gym_note, gyms.gym_id, gyms.img_url,
+                   pokemon.pokedex_id, pokemon.pokemon_name, pokemon.pokemon_form, pokemon.raid_level, pokemon.min_cp, pokemon.max_cp, pokemon.min_weather_cp, pokemon.max_weather_cp, pokemon.weather,
+                   users.name,
+                   TIME_FORMAT(TIMEDIFF(end_time, UTC_TIMESTAMP()) + INTERVAL 1 MINUTE, '%k:%i') AS t_left,
+                   TIMESTAMPDIFF(MINUTE,raids.start_time,raids.end_time) as t_duration
+        FROM       raids
+        LEFT JOIN  gyms
+        ON         raids.gym_id = gyms.id
+        LEFT JOIN  pokemon
+        ON         raids.pokemon = CONCAT(pokemon.pokedex_id, '-', pokemon.pokemon_form)
+        LEFT JOIN  users
+        ON         raids.user_id = users.user_id
+        WHERE      raids.id = {$raid_id}
+        "
+    );
+
+    // Get the row.
+    $raid = $rs->fetch_assoc();
+
+    debug_log($raid);
+
+    return $raid;
+}
+
+/**
+ * Get last 50 active raids.
  * @return array
  */
 function get_active_raids()
 {
-    // Get last 20 active raids data.
+    // Get last 50 active raids data.
     $rs = my_query(
         "
         SELECT     raids.*,
@@ -259,7 +294,7 @@ function get_active_raids()
         LEFT JOIN  gyms
         ON         raids.gym_id = gyms.id
         WHERE      end_time>UTC_TIMESTAMP()
-        ORDER BY   end_time ASC LIMIT 20
+        ORDER BY   end_time ASC LIMIT 50
         "
     );
 
@@ -1938,7 +1973,7 @@ function keys_vote($raid)
             [
                 [
                     'text'          => getPublicTranslation('raid_done'),
-                    'callback_data' => $raid['id'] . ':vote_refresh:0'
+                    'callback_data' => $raid['id'] . ':vote_refresh:1'
                 ]
             ]
         ];
@@ -2394,7 +2429,7 @@ function keys_vote($raid)
  * @param $data
  * @param bool $new
  */
-function send_response_vote($update, $data, $new = false,$text = true)
+function send_response_vote($update, $data, $new = false, $text = true)
 {
     // Get the raid data by id.
     $raid = get_raid($data['id']);
@@ -2430,13 +2465,21 @@ function send_response_vote($update, $data, $new = false,$text = true)
 
         // Answer the callback.
         $tg_json[] = answerCallbackQuery($update['callback_query']['id'], $callback_msg, true, true);
-		if($text) {
-			// Edit the message.
-			$tg_json[] = edit_message($update, $msg, $keys, ['disable_web_page_preview' => 'true'], true);
-		}else {
-			// Edit the message.
-			$tg_json[] = edit_message($update, $msg, $keys, ['disable_web_page_preview' => 'true'], true, 'caption');
-		}
+
+	if($text) {
+            // Edit the message.
+            $tg_json[] = edit_message($update, $msg, $keys, ['disable_web_page_preview' => 'true'], true);
+        } else {
+            // Edit the message.
+            $tg_json[] = edit_message($update, $msg, $keys, ['disable_web_page_preview' => 'true'], true, 'caption');
+
+            // Edit the picture - raid ended.
+            $time_now = utcnow();
+            if($time_now > $raid['end_time'] && $data['arg'] == 0) {
+                $picture_url = RAID_PICTURE_URL . "?pokemon=ended&raid=". $raid['id'];
+	        $tg_json[] = editMessageMedia($update['callback_query']['message']['message_id'], $msg, $keys, $update['callback_query']['message']['chat']['id'], ['disable_web_page_preview' => 'true'], false, $picture_url);
+            }
+	}
     }
 
     // Telegram multicurl request.
@@ -3023,9 +3066,10 @@ function delete_raid($raid_id)
  * @param $raid
  * @param override_language
  * @param pokemon
+ * @param unformatted
  * @return string
  */
-function get_raid_times($raid, $override_language = true, $pokemon = false)
+function get_raid_times($raid, $override_language = true, $pokemon = false, $unformatted = false)
 {
 
     // Get translation type
@@ -3069,20 +3113,33 @@ function get_raid_times($raid, $override_language = true, $pokemon = false)
     // Is the raid in the same week?
     if($week_now == $week_start && $date_now == $date_raid) {
         // Output: Raid egg opens up 17:00
-        $msg .= '<b>' . dt2time($raid['start_time']);
+        if($unformatted == false) {
+            $msg .= '<b>';
+        }
+        $msg .= dt2time($raid['start_time']);
     } else {
         if($days_to_raid > 6) {
         // Output: Raid egg opens on Friday, 13 April (2018)
-            $msg .= '<b>' .  $raid_day . ', ' . $day_start . ' ' . $raid_month . (($year_start > $year_now) ? $year_start : '');
+            if($unformatted == false) {
+                $msg .= '<b>';
+            }
+            $msg .= $raid_day . ', ' . $day_start . ' ' . $raid_month . (($year_start > $year_now) ? $year_start : '');
         } else {
             // Output: Raid egg opens on Friday
-            $msg .= '<b>' .  $raid_day;
+            if($unformatted == false) {
+                $msg .= '<b>';
+            }
+            $msg .= $raid_day;
         }
         // Adds 'at 17:00' to the output.
         $msg .= ' ' . $getTypeTranslation('raid_egg_opens_at') . ' ' . dt2time($raid['start_time']);
     }
     // Add endtime
-    $msg .= SP . $getTypeTranslation('to') . SP . dt2time($raid['end_time']) . '</b>' . CR;
+    $msg .= SP . $getTypeTranslation('to') . SP . dt2time($raid['end_time']);
+    if($unformatted == false) {
+        $msg .= '</b>';
+    }
+    $msg .= CR;
 
     return $msg;
 }
@@ -3105,32 +3162,31 @@ function show_raid_poll($raid)
     $raid_level = get_raid_level($raid_pokemon);
         
     // Get raid times.
-if(RAID_PICTURE == false) {
-    $msg .= get_raid_times($raid);
-}
+    if(RAID_PICTURE == false) {
+        $msg .= get_raid_times($raid);
+    }
 
     // Get current time and time left.
     $time_now = utcnow();
     $time_left = $raid['t_left'];
 
-
     // Display gym details.
-if(RAID_PICTURE == false) {
-    if ($raid['gym_name'] || $raid['gym_team']) {
-        // Add gym name to message.
-        if ($raid['gym_name']) {
-            $ex_raid_gym_marker = (strtolower(RAID_EX_GYM_MARKER) == 'icon') ? EMOJI_STAR : '<b>' . RAID_EX_GYM_MARKER . '</b>';
-            $msg .= getPublicTranslation('gym') . ': ' . ($raid['ex_gym'] ? $ex_raid_gym_marker . SP : '') . '<b>' . $raid['gym_name'] . '</b>';
-        }
+    if(RAID_PICTURE == false) {
+        if ($raid['gym_name'] || $raid['gym_team']) {
+            // Add gym name to message.
+            if ($raid['gym_name']) {
+                $ex_raid_gym_marker = (strtolower(RAID_EX_GYM_MARKER) == 'icon') ? EMOJI_STAR : '<b>' . RAID_EX_GYM_MARKER . '</b>';
+                $msg .= getPublicTranslation('gym') . ': ' . ($raid['ex_gym'] ? $ex_raid_gym_marker . SP : '') . '<b>' . $raid['gym_name'] . '</b>';
+            }
 
-        // Add team to message.
-        if ($raid['gym_team']) {
-            $msg .= ' ' . $GLOBALS['teams'][$raid['gym_team']];
-        }
+            // Add team to message.
+            if ($raid['gym_team']) {
+                $msg .= ' ' . $GLOBALS['teams'][$raid['gym_team']];
+            }
 
-        $msg .= CR;
+            $msg .= CR;
+        }
     }
-}
 
     // Add maps link to message.
     if (!empty($raid['address'])) {
@@ -3157,20 +3213,18 @@ if(RAID_PICTURE == false) {
         }	
     }
 
-
     // Display raid boss name.
-if(RAID_PICTURE == false) {
-    $msg .= getPublicTranslation('raid_boss') . ': <b>' . get_local_pokemon_name($raid['pokemon'], true) . '</b>';
+    if(RAID_PICTURE == false) {
+        $msg .= getPublicTranslation('raid_boss') . ': <b>' . get_local_pokemon_name($raid['pokemon'], true) . '</b>';
 
-    // Display raid boss weather.
-    $pokemon_weather = get_pokemon_weather($raid['pokemon']);
-    $msg .= ($pokemon_weather != 0) ? (' ' . get_weather_icons($pokemon_weather)) : '';
-    $msg .= CR;
-}
+        // Display raid boss weather.
+        $pokemon_weather = get_pokemon_weather($raid['pokemon']);
+        $msg .= ($pokemon_weather != 0) ? (' ' . get_weather_icons($pokemon_weather)) : '';
+        $msg .= CR;
+    }
     
     // Display attacks.
     if ($raid['move1'] > 1 && $raid['move2'] > 2 ) {
-        
         $msg .= getPublicTranslation('pokemon_move_' . $raid['move1']) . '/' . getPublicTranslation('pokemon_move_' . $raid['move2']);
         $msg .= CR;
     }
@@ -3242,9 +3296,11 @@ if(RAID_PICTURE == false) {
 
     // Raid has started and has participants
     if($time_now > $raid['start_time'] && $cnt_all > 0) {
-        // Display raid boss CP values.
-        $pokemon_cp = get_formatted_pokemon_cp($raid['pokemon'], true);
-        $msg .= (!empty($pokemon_cp)) ? ($pokemon_cp . CR) : '';
+        if(RAID_PICTURE == false) {
+            // Display raid boss CP values.
+            $pokemon_cp = get_formatted_pokemon_cp($raid['pokemon'], true);
+            $msg .= (!empty($pokemon_cp)) ? ($pokemon_cp . CR) : '';
+        }
 
         // Add raid is done message.
         if($time_now > $raid['end_time']) {
@@ -3256,9 +3312,11 @@ if(RAID_PICTURE == false) {
         }
     // Buttons are hidden?
     } else if($buttons_hidden) {
-        // Display raid boss CP values.
-        $pokemon_cp = get_formatted_pokemon_cp($raid['pokemon'], true);
-        $msg .= (!empty($pokemon_cp)) ? ($pokemon_cp . CR) : '';
+        if(RAID_PICTURE == false) {
+            // Display raid boss CP values.
+            $pokemon_cp = get_formatted_pokemon_cp($raid['pokemon'], true);
+            $msg .= (!empty($pokemon_cp)) ? ($pokemon_cp . CR) : '';
+        }
     }
 
     // Hide info if buttons are hidden
@@ -3436,8 +3494,6 @@ if(RAID_PICTURE == false) {
             }
         }
 
-/*
-<<<<<<< HEAD
         // Get sums canceled/done for the raid
         $rs_cnt_cancel_done = my_query(
             "
@@ -3446,37 +3502,17 @@ if(RAID_PICTURE == false) {
                             sum(DISTINCT extra_mystic)     AS extra_mystic,
                             sum(DISTINCT extra_valor)      AS extra_valor,
                             sum(DISTINCT extra_instinct)   AS extra_instinct,
+                            attend_time,
+                            raid_done,
                             attendance.user_id
             FROM            attendance
               WHERE         raid_id = {$raid['id']}
                 AND         (raid_done = 1
                             OR cancel = 1)
-              GROUP BY      attendance.user_id
+              GROUP BY      attendance.user_id, attend_time, raid_done
               ORDER BY      attendance.user_id, attend_time, raid_done
             "
         );
-=======
-*/
-    // Get sums canceled/done for the raid
-    $rs_cnt_cancel_done = my_query(
-        "
-        SELECT DISTINCT sum(DISTINCT raid_done = '1')  AS count_done,
-                        sum(DISTINCT cancel = '1')     AS count_cancel,
-                        sum(DISTINCT extra_mystic)     AS extra_mystic,
-                        sum(DISTINCT extra_valor)      AS extra_valor,
-                        sum(DISTINCT extra_instinct)   AS extra_instinct,
-                        attend_time,
-                        raid_done,
-                        attendance.user_id
-        FROM            attendance
-          WHERE         raid_id = {$raid['id']}
-            AND         (raid_done = 1
-                        OR cancel = 1)
-          GROUP BY      attendance.user_id, attend_time, raid_done
-          ORDER BY      attendance.user_id, attend_time, raid_done
-        "
-    );
-//>>>>>>> origin/master
 
         // Init empty count array and count sum.
         $cnt_cancel_done = [];
