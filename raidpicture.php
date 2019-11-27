@@ -28,7 +28,7 @@ $offset = 0;
 $img_gym = imagecreatefromjpeg($raid['img_url']);
 
 //If img_url is empty load a default picture.
-if (empty($gym['img_url'])) {
+if (empty($raid['img_url'])) {
     $img_gym = imagecreatefromjpeg(RAID_DEFAULT_PICTURE);
 }
 
