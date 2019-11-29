@@ -2431,10 +2431,33 @@ function keys_vote($raid)
  */
 function send_response_vote($update, $data, $new = false, $text = true)
 {
+    // Initial text status
+    $initial_text = $text;
+
     // Get the raid data by id.
     $raid = get_raid($data['id']);
 
+    // Message - make sure to not exceed Telegrams 1024 characters limit for caption
     $msg = show_raid_poll($raid);
+    $full_msg = $msg['full'];
+    $msg_full_len = strlen(utf8_decode($msg['full']));
+    debug_log($msg_full_len, 'Raid poll full message length:');
+    if(array_key_exists('short', $msg)) {
+        $msg_short_len = strlen(utf8_decode($msg['short']));
+        debug_log($msg_short_len, 'Raid poll short message length:');
+        // Message short enough?
+        if($msg_short_len < 1024) {
+            $msg = $msg['short'];
+        } else {
+            // Use full text and reset text to true regardless of prior value
+            $msg = $msg['full'];
+            $text = true;
+        }
+    } else {
+        // Use full text and reset text to true regardless of prior value
+        $msg = $msg['full'];
+        $text = true;
+    }
     $keys = keys_vote($raid);
 
     // Write to log.
@@ -2451,7 +2474,7 @@ function send_response_vote($update, $data, $new = false, $text = true)
         $tg_json = array();
 
         // Send the message.
-        $tg_json[] = send_message($update['callback_query']['message']['chat']['id'], $msg . "\n", $keys, ['reply_to_message_id' => $loc['result']['message_id']], true);
+        $tg_json[] = send_message($update['callback_query']['message']['chat']['id'], $msg . "\n", $keys, ['disable_web_page_preview' => 'true', 'reply_to_message_id' => $loc['result']['message_id']], true);
 
         // Answer the callback.
         $tg_json[] = answerCallbackQuery($update['callback_query']['id'], $msg, true);
@@ -2467,17 +2490,33 @@ function send_response_vote($update, $data, $new = false, $text = true)
         $tg_json[] = answerCallbackQuery($update['callback_query']['id'], $callback_msg, true, true);
 
 	if($text) {
-            // Edit the message.
-            $tg_json[] = edit_message($update, $msg, $keys, ['disable_web_page_preview' => 'true'], true);
-        } else {
-            // Edit the message.
-            $tg_json[] = edit_message($update, $msg, $keys, ['disable_web_page_preview' => 'true'], true, 'caption');
+            // Make sure to only send if picture with caption and not text message
+            if($initial_text == false && !(isset($update['callback_query']['message']['text']))) {
+                // Delete raid picture and caption.
+                //delete_message($chat_id, $message_id);
 
-            // Edit the picture - raid ended.
-            $time_now = utcnow();
-            if($time_now > $raid['end_time'] && $data['arg'] == 0) {
-                $picture_url = RAID_PICTURE_URL . "?pokemon=ended&raid=". $raid['id'];
-	        $tg_json[] = editMessageMedia($update['callback_query']['message']['message_id'], $msg, $keys, $update['callback_query']['message']['chat']['id'], ['disable_web_page_preview' => 'true'], false, $picture_url);
+                // Resend raid poll as text message.
+                $tg_json[] = send_message($update['callback_query']['message']['chat']['id'], $full_msg . "\n", $keys, ['disable_web_page_preview' => 'true'], true);
+            } else {
+                // Edit the message.
+                $tg_json[] = edit_message($update, $full_msg, $keys, ['disable_web_page_preview' => 'true'], true);
+            }
+        } else {
+            // Make sure it's a picture with caption.
+            if(isset($update['callback_query']['message']['text'])) {
+                // Do not switch back to picture with caption. Only allow switch from picture with caption to text message.
+                // Edit the message.
+                $tg_json[] = edit_message($update, $full_msg, $keys, ['disable_web_page_preview' => 'true'], true);
+            } else {
+                // Edit the caption.
+                $tg_json[] = edit_caption($update, $msg, $keys, ['disable_web_page_preview' => 'true'], true);
+
+                // Edit the picture - raid ended.
+                $time_now = utcnow();
+                if($time_now > $raid['end_time'] && $data['arg'] == 0) {
+                    $picture_url = RAID_PICTURE_URL . "?pokemon=ended&raid=". $raid['id'];
+	            $tg_json[] = editMessageMedia($update['callback_query']['message']['message_id'], $msg, $keys, $update['callback_query']['message']['chat']['id'], ['disable_web_page_preview' => 'true'], false, $picture_url);
+                }
             }
 	}
     }
@@ -3105,10 +3144,12 @@ function get_raid_times($raid, $override_language = true, $pokemon = false, $unf
     $days_to_raid = $date_raid->diff($date_now)->format("%a");
 
     // Raid times.
-    if($pokemon == true) {
-        $msg .= get_local_pokemon_name($raid['pokemon'], $override_language) . ':' . SP;
-    } else {
-        $msg .= $getTypeTranslation('raid') . ':' . SP;
+    if($unformatted == false) {
+        if($pokemon == true) {
+            $msg .= get_local_pokemon_name($raid['pokemon'], $override_language) . ':' . SP;
+        } else {
+            $msg .= $getTypeTranslation('raid') . ':' . SP;
+        }
     }
     // Is the raid in the same week?
     if($week_now == $week_start && $date_now == $date_raid) {
@@ -3119,29 +3160,60 @@ function get_raid_times($raid, $override_language = true, $pokemon = false, $unf
         $msg .= dt2time($raid['start_time']);
     } else {
         if($days_to_raid > 6) {
-        // Output: Raid egg opens on Friday, 13 April (2018)
+        // Output: Raid egg opens on Friday, 13. April (2018) at 17:00
             if($unformatted == false) {
                 $msg .= '<b>';
             }
-            $msg .= $raid_day . ', ' . $day_start . ' ' . $raid_month . (($year_start > $year_now) ? $year_start : '');
+            $msg .= $raid_day . ', ' . $day_start . '. ' . $raid_month . (($year_start > $year_now) ? $year_start : '');
+
+            // Adds 'at 17:00' to the output.
+            $msg .= ' ' . $getTypeTranslation('raid_egg_opens_at') . ' ' . dt2time($raid['start_time']);
         } else {
-            // Output: Raid egg opens on Friday
+            // Output: Raid egg opens on Friday, 17:00
             if($unformatted == false) {
                 $msg .= '<b>';
             }
             $msg .= $raid_day;
+            $msg .= ', ' . dt2time($raid['start_time']);
         }
-        // Adds 'at 17:00' to the output.
-        $msg .= ' ' . $getTypeTranslation('raid_egg_opens_at') . ' ' . dt2time($raid['start_time']);
     }
     // Add endtime
-    $msg .= SP . $getTypeTranslation('to') . SP . dt2time($raid['end_time']);
+    //$msg .= SP . $getTypeTranslation('to') . SP . dt2time($raid['end_time']);
+    $msg .= SP . '-' . SP . dt2time($raid['end_time']);
     if($unformatted == false) {
         $msg .= '</b>';
     }
     $msg .= CR;
 
     return $msg;
+}
+
+/**
+ * Full and partial raid poll message.
+ * @param $msg_array
+ * @param $append
+ * @param $skip
+ * @return array
+ */
+function raid_poll_message($msg_array, $append, $skip = false)
+{
+    // Array key full already created?
+    if(!(array_key_exists('full', $msg_array))) {
+        $msg_array['full'] = '';
+    }
+
+    //Raid picture?
+    $msg_array['full'] .= $append;
+    if(RAID_PICTURE == true && $skip == false) {
+        // Array key short already created?
+        if(!(array_key_exists('short', $msg_array))) {
+            $msg_array['short'] = '';
+        }
+
+        $msg_array['short'] .= $append;
+    }
+
+    return $msg_array;
 }
 
 /**
@@ -3152,7 +3224,8 @@ function get_raid_times($raid, $override_language = true, $pokemon = false, $unf
 function show_raid_poll($raid)
 {
     // Init empty message string.
-    $msg = '';
+    //$msg = '';
+    $msg = array();
 
     // Get current pokemon
     $raid_pokemon = $raid['pokemon'];
@@ -3162,35 +3235,41 @@ function show_raid_poll($raid)
     $raid_level = get_raid_level($raid_pokemon);
         
     // Get raid times.
+    $msg = raid_poll_message($msg, get_raid_times($raid), true);
+/*
     if(RAID_PICTURE == false) {
         $msg .= get_raid_times($raid);
     }
+*/
 
     // Get current time and time left.
     $time_now = utcnow();
     $time_left = $raid['t_left'];
 
     // Display gym details.
-    if(RAID_PICTURE == false) {
+    //if(RAID_PICTURE == false) {
         if ($raid['gym_name'] || $raid['gym_team']) {
             // Add gym name to message.
             if ($raid['gym_name']) {
                 $ex_raid_gym_marker = (strtolower(RAID_EX_GYM_MARKER) == 'icon') ? EMOJI_STAR : '<b>' . RAID_EX_GYM_MARKER . '</b>';
-                $msg .= getPublicTranslation('gym') . ': ' . ($raid['ex_gym'] ? $ex_raid_gym_marker . SP : '') . '<b>' . $raid['gym_name'] . '</b>';
+                //$msg .= getPublicTranslation('gym') . ': ' . ($raid['ex_gym'] ? $ex_raid_gym_marker . SP : '') . '<b>' . $raid['gym_name'] . '</b>';
+                $msg = raid_poll_message($msg, getPublicTranslation('gym') . ': ' . ($raid['ex_gym'] ? $ex_raid_gym_marker . SP : '') . '<b>' . $raid['gym_name'] . '</b>', true);
             }
 
             // Add team to message.
             if ($raid['gym_team']) {
-                $msg .= ' ' . $GLOBALS['teams'][$raid['gym_team']];
+                //$msg .= ' ' . $GLOBALS['teams'][$raid['gym_team']];
+                $msg = raid_poll_message($msg, SP . $GLOBALS['teams'][$raid['gym_team']], true);
             }
 
-            $msg .= CR;
+            //$msg .= CR;
+            $msg = raid_poll_message($msg, CR, true);
         }
-    }
+    //}
 
     // Add maps link to message.
     if (!empty($raid['address'])) {
-        $msg .= '<a href="https://maps.google.com/?daddr=' . $raid['lat'] . ',' . $raid['lon'] . '">' . $raid['address'] . '</a>' . CR;
+        $msg = raid_poll_message($msg, '<a href="https://maps.google.com/?daddr=' . $raid['lat'] . ',' . $raid['lon'] . '">' . $raid['address'] . '</a>' . CR);
     } else {
         // Get the address.
         $addr = get_address($raid['lat'], $raid['lon']);
@@ -3206,27 +3285,27 @@ function show_raid_poll($raid)
 	            "
             );    
             //Use new address
-	    $msg .= '<a href="https://maps.google.com/?daddr=' . $raid['lat'] . ',' . $raid['lon'] . '">' . $address . '</a>' . CR;
+	    $msg = raid_poll_message($msg, '<a href="https://maps.google.com/?daddr=' . $raid['lat'] . ',' . $raid['lon'] . '">' . $address . '</a>' . CR);
         } else {
             //If no address is found show maps link
-            $msg .= '<a href="http://maps.google.com/maps?q=' . $raid['lat'] . ',' . $raid['lon'] . '">http://maps.google.com/maps?q=' . $raid['lat'] . ',' . $raid['lon'] . '</a>' . CR;
+            $msg = raid_poll_message($msg, '<a href="http://maps.google.com/maps?q=' . $raid['lat'] . ',' . $raid['lon'] . '">http://maps.google.com/maps?q=' . $raid['lat'] . ',' . $raid['lon'] . '</a>' . CR);
         }	
     }
 
     // Display raid boss name.
-    if(RAID_PICTURE == false) {
-        $msg .= getPublicTranslation('raid_boss') . ': <b>' . get_local_pokemon_name($raid['pokemon'], true) . '</b>';
+    //if(RAID_PICTURE == false) {
+        $msg = raid_poll_message($msg, getPublicTranslation('raid_boss') . ': <b>' . get_local_pokemon_name($raid['pokemon'], true) . '</b>', true);
 
         // Display raid boss weather.
         $pokemon_weather = get_pokemon_weather($raid['pokemon']);
-        $msg .= ($pokemon_weather != 0) ? (' ' . get_weather_icons($pokemon_weather)) : '';
-        $msg .= CR;
-    }
+        $msg = raid_poll_message($msg, ($pokemon_weather != 0) ? (' ' . get_weather_icons($pokemon_weather)) : '', true);
+        $msg = raid_poll_message($msg, CR, true);
+    //}
     
     // Display attacks.
     if ($raid['move1'] > 1 && $raid['move2'] > 2 ) {
-        $msg .= getPublicTranslation('pokemon_move_' . $raid['move1']) . '/' . getPublicTranslation('pokemon_move_' . $raid['move2']);
-        $msg .= CR;
+        $msg = raid_poll_message($msg, getPublicTranslation('pokemon_move_' . $raid['move1']) . '/' . getPublicTranslation('pokemon_move_' . $raid['move2']));
+        $msg = raid_poll_message($msg, CR);
     }
 
     // Hide participants?
@@ -3296,42 +3375,42 @@ function show_raid_poll($raid)
 
     // Raid has started and has participants
     if($time_now > $raid['start_time'] && $cnt_all > 0) {
-        if(RAID_PICTURE == false) {
+        //if(RAID_PICTURE == false) {
             // Display raid boss CP values.
             $pokemon_cp = get_formatted_pokemon_cp($raid['pokemon'], true);
-            $msg .= (!empty($pokemon_cp)) ? ($pokemon_cp . CR) : '';
-        }
+            $msg = raid_poll_message($msg, (!empty($pokemon_cp)) ? ($pokemon_cp . CR) : '', true);
+        //}
 
         // Add raid is done message.
         if($time_now > $raid['end_time']) {
-            $msg .= '<b>' . getPublicTranslation('raid_done') . '</b>' . CR;
+            $msg = raid_poll_message($msg, '<b>' . getPublicTranslation('raid_done') . '</b>' . CR);
 
         // Add time left message.
         } else {
-            $msg .= getPublicTranslation('raid') . ' — <b>' . getPublicTranslation('still') . ' ' . $time_left . 'h</b>' . CR;
+            $msg = raid_poll_message($msg, getPublicTranslation('raid') . ' — <b>' . getPublicTranslation('still') . ' ' . $time_left . 'h</b>' . CR);
         }
     // Buttons are hidden?
     } else if($buttons_hidden) {
-        if(RAID_PICTURE == false) {
+        //if(RAID_PICTURE == false) {
             // Display raid boss CP values.
             $pokemon_cp = get_formatted_pokemon_cp($raid['pokemon'], true);
-            $msg .= (!empty($pokemon_cp)) ? ($pokemon_cp . CR) : '';
-        }
+            $msg = raid_poll_message($msg, (!empty($pokemon_cp)) ? ($pokemon_cp . CR) : '', true);
+        //}
     }
 
     // Hide info if buttons are hidden
     if($buttons_hidden) {
         // Show message that voting is not possible!
-        $msg .= CR . '<b>' . getPublicTranslation('raid_info_no_voting') . '</b> ' . CR;
+        $msg = raid_poll_message($msg, CR . '<b>' . getPublicTranslation('raid_info_no_voting') . '</b> ' . CR);
     } else {
         // Gym note?
         if(!empty($raid['gym_note'])) {
-            $msg .= EMOJI_INFO . SP . $raid['gym_note'] . CR;
+            $msg = raid_poll_message($msg, EMOJI_INFO . SP . $raid['gym_note'] . CR);
         }
 
         // Add Ex-Raid Message if Pokemon is in Ex-Raid-List.
         if($raid_level == 'X') {
-            $msg .= CR . EMOJI_WARN . ' <b>' . getPublicTranslation('exraid_pass') . '</b> ' . EMOJI_WARN . CR;
+            $msg = raid_poll_message($msg, CR . EMOJI_WARN . ' <b>' . getPublicTranslation('exraid_pass') . '</b> ' . EMOJI_WARN . CR);
         }
 
         // Add attendances message.
@@ -3415,17 +3494,17 @@ function show_raid_poll($raid)
                 // Add hint for late attendances.
                 if(RAID_LATE_MSG && $previous_att_time == 'FIRST_RUN' && $cnt_latewait > 0) {
                     $late_wait_msg = str_replace('RAID_LATE_TIME', RAID_LATE_TIME, getPublicTranslation('late_participants_wait'));
-                    $msg .= CR . EMOJI_LATE . '<i>' . getPublicTranslation('late_participants') . ' ' . $late_wait_msg . '</i>' . CR;
+                    $msg = raid_poll_message($msg, CR . EMOJI_LATE . '<i>' . getPublicTranslation('late_participants') . ' ' . $late_wait_msg . '</i>' . CR);
                 }
 
                 // Add section/header for time
                 if($previous_att_time != $current_att_time) {
                     // Add to message.
                     $count_att_time_extrapeople = $cnt[$current_att_time]['extra_mystic'] + $cnt[$current_att_time]['extra_valor'] + $cnt[$current_att_time]['extra_instinct'];
-                    $msg .= CR . '<b>' . (($current_att_time == 0) ? (getPublicTranslation('anytime')) : ($dt_att_time)) . '</b>';
+                    $msg = raid_poll_message($msg, CR . '<b>' . (($current_att_time == 0) ? (getPublicTranslation('anytime')) : ($dt_att_time)) . '</b>');
 
                     // Hide if other pokemon got selected. Show attendances for each pokemon instead of each attend time.
-                    $msg .= (($cnt[$current_att_time]['count_other_pokemon'] == 0) ? (' [' . ($cnt[$current_att_time]['count'] + $count_att_time_extrapeople) . ']') : '');
+                    $msg = raid_poll_message($msg, (($cnt[$current_att_time]['count_other_pokemon'] == 0) ? (' [' . ($cnt[$current_att_time]['count'] + $count_att_time_extrapeople) . ']') : ''));
 
                     // Add attendance counts by team - hide if other pokemon got selected.
                     if ($cnt[$current_att_time]['count'] > 0 && $cnt[$current_att_time]['count_other_pokemon'] == 0) {
@@ -3436,14 +3515,14 @@ function show_raid_poll($raid)
                         $count_late = $cnt[$current_att_time]['count_late'];
 
                         // Add to message.
-                        $msg .= ' — ';
-                        $msg .= (($count_mystic > 0) ? TEAM_B . $count_mystic . '  ' : '');
-                        $msg .= (($count_valor > 0) ? TEAM_R . $count_valor . '  ' : '');
-                        $msg .= (($count_instinct > 0) ? TEAM_Y . $count_instinct . '  ' : '');
-                        $msg .= (($cnt[$current_att_time]['count_no_team'] > 0) ? TEAM_UNKNOWN . $cnt[$current_att_time]['count_no_team'] . '  ' : '');
-                        $msg .= (($count_late > 0) ? EMOJI_LATE . $count_late . '  ' : '');
+                        $msg = raid_poll_message($msg, ' — ');
+                        $msg = raid_poll_message($msg, (($count_mystic > 0) ? TEAM_B . $count_mystic . '  ' : ''));
+                        $msg = raid_poll_message($msg, (($count_valor > 0) ? TEAM_R . $count_valor . '  ' : ''));
+                        $msg = raid_poll_message($msg, (($count_instinct > 0) ? TEAM_Y . $count_instinct . '  ' : ''));
+                        $msg = raid_poll_message($msg, (($cnt[$current_att_time]['count_no_team'] > 0) ? TEAM_UNKNOWN . $cnt[$current_att_time]['count_no_team'] . '  ' : ''));
+                        $msg = raid_poll_message($msg, (($count_late > 0) ? EMOJI_LATE . $count_late . '  ' : ''));
                     }
-                    $msg .= CR;
+                    $msg = raid_poll_message($msg, CR);
                 }
 
                 // Add section/header for pokemon
@@ -3456,7 +3535,7 @@ function show_raid_poll($raid)
                     // Show attendances when multiple pokemon are selected, unless all attending users voted for the raid boss + any pokemon
                     if($count_all != ($count_any_pokemon + $count_raid_pokemon)) {
                         // Add pokemon name.
-                        $msg .= ($current_pokemon == 0) ? ('<b>' . getPublicTranslation('any_pokemon') . '</b>') : ('<b>' . get_local_pokemon_name($current_pokemon, true) . '</b>');
+                        $msg = raid_poll_message($msg, ($current_pokemon == 0) ? ('<b>' . getPublicTranslation('any_pokemon') . '</b>') : ('<b>' . get_local_pokemon_name($current_pokemon, true) . '</b>'));
 
                         // Attendance counts by team.
                         $current_att_time_poke = $cnt_pokemon[$current_att_time . '_' . $current_pokemon];
@@ -3467,26 +3546,26 @@ function show_raid_poll($raid)
                         $poke_count_late = $current_att_time_poke['count_late'];
 
                         // Add to message.
-                        $msg .= ' [' . ($current_att_time_poke['count'] + $count_att_time_poke_extrapeople) . '] — ';
-                        $msg .= (($poke_count_mystic > 0) ? TEAM_B . $poke_count_mystic . '  ' : '');
-                        $msg .= (($poke_count_valor > 0) ? TEAM_R . $poke_count_valor . '  ' : '');
-                        $msg .= (($poke_count_instinct > 0) ? TEAM_Y . $poke_count_instinct . '  ' : '');
-                        $msg .= (($current_att_time_poke['count_no_team'] > 0) ? TEAM_UNKNOWN . ($current_att_time_poke['count_no_team']) : '');
-                        $msg .= (($poke_count_late > 0) ? EMOJI_LATE . $poke_count_late . '  ' : '');
-                        $msg .= CR;
+                        $msg = raid_poll_message($msg, ' [' . ($current_att_time_poke['count'] + $count_att_time_poke_extrapeople) . '] — ');
+                        $msg = raid_poll_message($msg, (($poke_count_mystic > 0) ? TEAM_B . $poke_count_mystic . '  ' : ''));
+                        $msg = raid_poll_message($msg, (($poke_count_valor > 0) ? TEAM_R . $poke_count_valor . '  ' : ''));
+                        $msg = raid_poll_message($msg, (($poke_count_instinct > 0) ? TEAM_Y . $poke_count_instinct . '  ' : ''));
+                        $msg = raid_poll_message($msg, (($current_att_time_poke['count_no_team'] > 0) ? TEAM_UNKNOWN . ($current_att_time_poke['count_no_team']) : ''));
+                        $msg = raid_poll_message($msg, (($poke_count_late > 0) ? EMOJI_LATE . $poke_count_late . '  ' : ''));
+                        $msg = raid_poll_message($msg, CR);
                     }
                 }
 
                 // Add users: ARRIVED --- TEAM -- LEVEL -- NAME -- INVITE -- EXTRAPEOPLE
-                $msg .= ($row['arrived']) ? (EMOJI_HERE . ' ') : (($row['late']) ? (EMOJI_LATE . ' ') : '└ ');
-                $msg .= ($row['team'] === NULL) ? ($GLOBALS['teams']['unknown'] . ' ') : ($GLOBALS['teams'][$row['team']] . ' ');
-                $msg .= ($row['level'] == 0) ? ('<b>00</b> ') : (($row['level'] < 10) ? ('<b>0' . $row['level'] . '</b> ') : ('<b>' . $row['level'] . '</b> '));
-                $msg .= '<a href="tg://user?id=' . $row['user_id'] . '">' . htmlspecialchars($row['name']) . '</a> ';
-                $msg .= ($raid_level == 'X' && $row['invite']) ? (EMOJI_INVITE . ' ') : '';
-                $msg .= ($row['extra_mystic']) ? ('+' . $row['extra_mystic'] . TEAM_B . ' ') : '';
-                $msg .= ($row['extra_valor']) ? ('+' . $row['extra_valor'] . TEAM_R . ' ') : '';
-                $msg .= ($row['extra_instinct']) ? ('+' . $row['extra_instinct'] . TEAM_Y . ' ') : '';
-                $msg .= CR;
+                $msg = raid_poll_message($msg, ($row['arrived']) ? (EMOJI_HERE . ' ') : (($row['late']) ? (EMOJI_LATE . ' ') : '└ '));
+                $msg = raid_poll_message($msg, ($row['team'] === NULL) ? ($GLOBALS['teams']['unknown'] . ' ') : ($GLOBALS['teams'][$row['team']] . ' '));
+                $msg = raid_poll_message($msg, ($row['level'] == 0) ? ('<b>00</b> ') : (($row['level'] < 10) ? ('<b>0' . $row['level'] . '</b> ') : ('<b>' . $row['level'] . '</b> ')));
+                $msg = raid_poll_message($msg, '<a href="tg://user?id=' . $row['user_id'] . '">' . htmlspecialchars($row['name']) . '</a> ');
+                $msg = raid_poll_message($msg, ($raid_level == 'X' && $row['invite']) ? (EMOJI_INVITE . ' ') : '');
+                $msg = raid_poll_message($msg, ($row['extra_mystic']) ? ('+' . $row['extra_mystic'] . TEAM_B . ' ') : '');
+                $msg = raid_poll_message($msg, ($row['extra_valor']) ? ('+' . $row['extra_valor'] . TEAM_R . ' ') : '');
+                $msg = raid_poll_message($msg, ($row['extra_instinct']) ? ('+' . $row['extra_instinct'] . TEAM_Y . ' ') : '');
+                $msg = raid_poll_message($msg, CR);
 
                 // Prepare next result
                 $previous_att_time = $current_att_time;
@@ -3571,49 +3650,59 @@ function show_raid_poll($raid)
 
                 // Add section/header for canceled
                 if($row['cancel'] == 1 && $cancel_done == 'CANCEL') {
-                    $msg .= CR . TEAM_CANCEL . ' <b>' . getPublicTranslation('cancel') . ': </b>' . '[' . $cnt_cancel . ']' . CR;
+                    $msg = raid_poll_message($msg, CR . TEAM_CANCEL . ' <b>' . getPublicTranslation('cancel') . ': </b>' . '[' . $cnt_cancel . ']' . CR);
                     $cancel_done = 'DONE';
                 }
 
                 // Add section/header for canceled
                 if($row['raid_done'] == 1 && $cancel_done == 'CANCEL' || $row['raid_done'] == 1 && $cancel_done == 'DONE') {
-                    $msg .= CR . TEAM_DONE . ' <b>' . getPublicTranslation('finished') . ': </b>' . '[' . $cnt_done . ']' . CR;
+                    $msg = raid_poll_message($msg, CR . TEAM_DONE . ' <b>' . getPublicTranslation('finished') . ': </b>' . '[' . $cnt_done . ']' . CR);
                     $cancel_done = 'END';
                 }
 
                 // Add users: TEAM -- LEVEL -- NAME -- CANCELED/DONE -- EXTRAPEOPLE
-                $msg .= ($row['team'] === NULL) ? ('└ ' . $GLOBALS['teams']['unknown'] . ' ') : ('└ ' . $GLOBALS['teams'][$row['team']] . ' ');
-                $msg .= ($row['level'] == 0) ? ('<b>00</b> ') : (($row['level'] < 10) ? ('<b>0' . $row['level'] . '</b> ') : ('<b>' . $row['level'] . '</b> '));
-                $msg .= '<a href="tg://user?id=' . $row['user_id'] . '">' . htmlspecialchars($row['name']) . '</a> ';
-                $msg .= ($raid_level == 'X' && $row['invite']) ? (EMOJI_INVITE . ' ') : '';
-                $msg .= ($row['cancel'] == 1) ? ('[' . (($row['ts_att'] == 0) ? (getPublicTranslation('anytime')) : ($dt_att_time)) . '] ') : '';
-                $msg .= ($row['raid_done'] == 1) ? ('[' . (($row['ts_att'] == 0) ? (getPublicTranslation('anytime')) : ($dt_att_time)) . '] ') : '';
-                $msg .= ($row['extra_mystic']) ? ('+' . $row['extra_mystic'] . TEAM_B . ' ') : '';
-                $msg .= ($row['extra_valor']) ? ('+' . $row['extra_valor'] . TEAM_R . ' ') : '';
-                $msg .= ($row['extra_instinct']) ? ('+' . $row['extra_instinct'] . TEAM_Y . ' ') : '';
-                $msg .= CR;
+                $msg = raid_poll_message($msg, ($row['team'] === NULL) ? ('└ ' . $GLOBALS['teams']['unknown'] . ' ') : ('└ ' . $GLOBALS['teams'][$row['team']] . ' '));
+                $msg = raid_poll_message($msg, ($row['level'] == 0) ? ('<b>00</b> ') : (($row['level'] < 10) ? ('<b>0' . $row['level'] . '</b> ') : ('<b>' . $row['level'] . '</b> ')));
+                $msg = raid_poll_message($msg, '<a href="tg://user?id=' . $row['user_id'] . '">' . htmlspecialchars($row['name']) . '</a> ');
+                $msg = raid_poll_message($msg, ($raid_level == 'X' && $row['invite']) ? (EMOJI_INVITE . ' ') : '');
+                $msg = raid_poll_message($msg, ($row['cancel'] == 1) ? ('[' . (($row['ts_att'] == 0) ? (getPublicTranslation('anytime')) : ($dt_att_time)) . '] ') : '');
+                $msg = raid_poll_message($msg, ($row['raid_done'] == 1) ? ('[' . (($row['ts_att'] == 0) ? (getPublicTranslation('anytime')) : ($dt_att_time)) . '] ') : '');
+                $msg = raid_poll_message($msg, ($row['extra_mystic']) ? ('+' . $row['extra_mystic'] . TEAM_B . ' ') : '');
+                $msg = raid_poll_message($msg, ($row['extra_valor']) ? ('+' . $row['extra_valor'] . TEAM_R . ' ') : '');
+                $msg = raid_poll_message($msg, ($row['extra_instinct']) ? ('+' . $row['extra_instinct'] . TEAM_Y . ' ') : '');
+                $msg = raid_poll_message($msg, CR);
             }
         } 
 
         // Add no attendance found message.
         if ($cnt_all + $cnt_cancel + $cnt_done == 0) {
-            $msg .= CR . getPublicTranslation('no_participants_yet') . CR;
+            $msg = raid_poll_message($msg, CR . getPublicTranslation('no_participants_yet') . CR);
         }
     }
 
     //Add custom message from the config.
     if (defined('MAP_URL') && !empty(MAP_URL)) {
-        $msg .= CR . MAP_URL ;
+        $msg = raid_poll_message($msg, CR . MAP_URL);
     }	
 	
     // Display creator.
-    $msg .= ($raid['user_id'] && $raid['name']) ? (CR . getPublicTranslation('created_by') . ': <a href="tg://user?id=' . $raid['user_id'] . '">' . htmlspecialchars($raid['name']) . '</a>') : '';
+    $msg = raid_poll_message($msg, ($raid['user_id'] && $raid['name']) ? (CR . getPublicTranslation('created_by') . ': <a href="tg://user?id=' . $raid['user_id'] . '">' . htmlspecialchars($raid['name']) . '</a>') : '');
 
     // Add update time and raid id to message.
     if(!$buttons_hidden) {
-        $msg .= CR . '<i>' . getPublicTranslation('updated') . ': ' . dt2time('now', 'H:i:s') . '</i>';
+        $msg = raid_poll_message($msg, CR . '<i>' . getPublicTranslation('updated') . ': ' . dt2time('now', 'H:i:s') . '</i>');
     }
-    $msg .= '  ' . substr(strtoupper(BOT_ID), 0, 1) . '-ID = ' . $raid['id']; // DO NOT REMOVE! --> NEEDED FOR CLEANUP PREPARATION!
+    $msg = raid_poll_message($msg, SP . SP . substr(strtoupper(BOT_ID), 0, 1) . '-ID = ' . $raid['id']); // DO NOT REMOVE! --> NEEDED FOR CLEANUP PREPARATION!
+
+/*
+    $msg = raid_poll_message($msg, 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+    $msg = raid_poll_message($msg, 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+    $msg = raid_poll_message($msg, 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+    $msg = raid_poll_message($msg, 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+    $msg = raid_poll_message($msg, 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+    $msg = raid_poll_message($msg, 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+    $msg = raid_poll_message($msg, 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+*/
 
     // Return the message.
     return $msg;
@@ -3796,7 +3885,7 @@ function raid_list($update)
     // For each rows.
     foreach ($rows as $key => $row) {
             // Get raid poll.
-            $contents[$key]['text'] = show_raid_poll($row);
+            $contents[$key]['text'] = show_raid_poll($row['full']);
 
             // Set the title.
             $contents[$key]['title'] = get_local_pokemon_name($row['pokemon'], true) . ' ' . getPublicTranslation('from') . ' ' . dt2time($row['start_time'])  . ' ' . getPublicTranslation('to') . ' ' . dt2time($row['end_time']);

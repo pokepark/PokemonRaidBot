@@ -203,8 +203,8 @@ foreach ($update as $raid) {
 			$cleanup_statement->execute();
 			
 			while ($row = $cleanup_statement->fetch()) {
-				$url = RAID_PICTURE_URL."?gym=".$raid_info['gym_id']."&pokemon=".$raid_info['pokemon']."&raid=".$raid_id;
-				editMessageMedia($row['message_id'], $updated_msg, $updated_keys, $row['chat_id'], ['disable_web_page_preview' => 'true'],false, $url);
+				$url = RAID_PICTURE_URL."&pokemon=".$raid_info['pokemon']."&raid=".$raid_id;
+				editMessageMedia($row['message_id'], $updated_msg['short'], $updated_keys, $row['chat_id'], ['disable_web_page_preview' => 'true'],false, $url);
 			}
         }
         catch (PDOException $exception) {
@@ -270,6 +270,12 @@ foreach ($update as $raid) {
         }
     }
 
+    // Raid picture
+    if(RAID_PICTURE == true) {
+        $picture_url = RAID_PICTURE_URL . "?pokemon=" . $created_raid['pokemon'] . "&raid=". $created_raid['id'];
+        debug_log('PictureUrl: ' . $picture_url);
+    }
+
     // Post raid polls.
     foreach ($chats as $chat) {
     
@@ -288,7 +294,13 @@ foreach ($update as $raid) {
         $reply_to = $chat; //$update['message']['chat']['id'];
     
         // Send the message.
-        send_message($chat, $text, $keys, ['reply_to_message_id' => $reply_to, 'reply_markup' => ['selective' => true, 'one_time_keyboard' => true], 'disable_web_page_preview' => 'true']);
+        //send_message($chat, $text, $keys, ['reply_to_message_id' => $reply_to, 'reply_markup' => ['selective' => true, 'one_time_keyboard' => true], 'disable_web_page_preview' => 'true']);
+        // Send the message.
+        if(RAID_PICTURE == true) {
+            send_photo($chat, $picture_url, $text['short'], $keys, ['reply_to_message_id' => $reply_to, 'reply_markup' => ['selective' => true, 'one_time_keyboard' => true], 'disable_web_page_preview' => 'true']);
+        } else {
+            send_message($chat, $text['full'], $keys, ['reply_to_message_id' => $reply_to, 'reply_markup' => ['selective' => true, 'one_time_keyboard' => true], 'disable_web_page_preview' => 'true']);
+        }
     }
 }
 ?>
