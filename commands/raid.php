@@ -191,6 +191,13 @@ if (RAID_LOCATION == true) {
 // Set text.
 $text = show_raid_poll($raid);
 
+// Raid picture
+if(RAID_PICTURE == true) {
+    $picture_url = RAID_PICTURE_URL . "?pokemon=" . $raid['pokemon'] . "&raid=". $raid['id'];
+    debug_log('PictureUrl: ' . $picture_url);
+}
+
+
 // Private chat type.
 if ($update['message']['chat']['type'] == 'private' || $update['callback_query']['message']['chat']['type'] == 'private') {
     // Set keys.
@@ -204,7 +211,16 @@ if ($update['message']['chat']['type'] == 'private' || $update['callback_query']
     ];
 
     // Send the message.
-    send_message($update['message']['chat']['id'], $text, $keys, ['disable_web_page_preview' => 'true']);
+    //send_message($update['message']['chat']['id'], $text, $keys, ['disable_web_page_preview' => 'true']);
+    $chat = $update['message']['chat']['id']);
+
+    // Send the message.
+    if(RAID_PICTURE == true) {
+        send_photo($chat, $picture_url, $text['short'], $keys, ['disable_web_page_preview' => 'true']);
+    } else {
+        send_message($chat, $text['full'], $keys, ['disable_web_page_preview' => 'true']);
+    }
+
 
 } else {
     // Set reply to.
@@ -218,7 +234,14 @@ if ($update['message']['chat']['type'] == 'private' || $update['callback_query']
     }
 
     // Send the message.
-    send_message($update['message']['chat']['id'], $text, $keys, ['reply_to_message_id' => $reply_to, 'reply_markup' => ['selective' => true, 'one_time_keyboard' => true], 'disable_web_page_preview' => 'true']);
+    // send_message($update['message']['chat']['id'], $text, $keys, ['reply_to_message_id' => $reply_to, 'reply_markup' => ['selective' => true, 'one_time_keyboard' => true], 'disable_web_page_preview' => 'true']);
+    $chat = $update['message']['chat']['id'];
+    // Send the message.
+    if(RAID_PICTURE == true) {
+        send_photo($chat, $picture_url, $text['short'], $keys, ['reply_to_message_id' => $reply_to, 'reply_markup' => ['selective' => true, 'one_time_keyboard' => true], 'disable_web_page_preview' => 'true']);
+    } else {
+        send_message($chat, $text['full'], $keys, ['reply_to_message_id' => $reply_to, 'reply_markup' => ['selective' => true, 'one_time_keyboard' => true], 'disable_web_page_preview' => 'true']);
+    }
 }
 
 ?>
