@@ -2493,7 +2493,7 @@ function send_response_vote($update, $data, $new = false, $text = true)
             // Make sure to only send if picture with caption and not text message
             if($initial_text == false && !(isset($update['callback_query']['message']['text']))) {
                 // Delete raid picture and caption.
-                //delete_message($chat_id, $message_id);
+                delete_message($update['callback_query']['message']['chat']['id'], $update['callback_query']['message']['message_id']);
 
                 // Resend raid poll as text message.
                 $tg_json[] = send_message($update['callback_query']['message']['chat']['id'], $full_msg . "\n", $keys, ['disable_web_page_preview' => 'true'], true);
