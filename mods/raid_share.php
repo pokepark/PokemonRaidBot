@@ -44,9 +44,9 @@ if(RAID_PICTURE == true) {
 
 // Send the message.
 if(RAID_PICTURE == true) {
-    $tg_json[] = send_message($chat, $text, $keys, ['reply_to_message_id' => $chat, 'disable_web_page_preview' => 'true'], true, $picture_url);
+    $tg_json[] = send_photo($chat, $picture_url, $text['short'], $keys, ['reply_to_message_id' => $chat, 'disable_web_page_preview' => 'true'], true);
 } else {
-    $tg_json[] = send_message($chat, $text, $keys, ['reply_to_message_id' => $chat, 'disable_web_page_preview' => 'true'], true);
+    $tg_json[] = send_message($chat, $text['full'], $keys, ['reply_to_message_id' => $chat, 'disable_web_page_preview' => 'true'], true);
 }
 
 // Set callback keys and message

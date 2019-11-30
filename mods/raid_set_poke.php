@@ -81,11 +81,11 @@ $updated_keys = keys_vote($raid);
 if(RAID_PICTURE == true) {
     while ($raidmsg = $rs->fetch_assoc()) {
         $picture_url = RAID_PICTURE_URL . "?pokemon=" . $raid['pokemon'] . "&raid=". $id;
-	$tg_json[] = editMessageMedia($raidmsg['message_id'], $updated_msg, $updated_keys, $raidmsg['chat_id'], ['disable_web_page_preview' => 'true'], false, $picture_url);
+	$tg_json[] = editMessageMedia($raidmsg['message_id'], $updated_msg['short'], $updated_keys, $raidmsg['chat_id'], ['disable_web_page_preview' => 'true'], false, $picture_url);
     } 
 } else {
     while ($raidmsg = $rs->fetch_assoc()) {
-        $tg_json[] = editMessageText($raidmsg['message_id'], $updated_msg, $updated_keys, $raidmsg['chat_id'], ['disable_web_page_preview' => 'true'], true);    
+        $tg_json[] = editMessageText($raidmsg['message_id'], $updated_msg['full'], $updated_keys, $raidmsg['chat_id'], ['disable_web_page_preview' => 'true'], true);    
     }
 }
 

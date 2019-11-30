@@ -26,6 +26,13 @@ if(defined('PORTAL_IMPORT') && PORTAL_IMPORT == true) {
             $gym_name = '#' . $update['message']['from']['id'];
         }
 
+        // Gym image.
+        $no_spaces_gym_name = str_replace(' ', '_', $gym_name) . '.png';
+        $gym_image = download_Portal_Image($portal_image, PORTAL_IMAGES_PATH, $no_spaces_gym_name);
+        if($gym_image) {
+            $gym_image = "file://" . $gym_image;
+        }
+
         // Build query to check if gym is already in database or not
         $rs = my_query("
         SELECT    id, COUNT(*)
@@ -40,8 +47,8 @@ if(defined('PORTAL_IMPORT') && PORTAL_IMPORT == true) {
             // insert gym in table.
             debug_log('Gym not found in database gym list! Inserting gym "' . $gym_name . '" now.');
             $query = '
-            INSERT INTO gyms (gym_name, lat, lon, address, show_gym)
-            VALUES (:gym_name, :lat, :lon, :address, 0)
+            INSERT INTO gyms (gym_name, lat, lon, address, show_gym, img_url)
+            VALUES (:gym_name, :lat, :lon, :address, 0, :gym_image)
             ';
             $msg = getTranslation('gym_added');
 
@@ -52,7 +59,8 @@ if(defined('PORTAL_IMPORT') && PORTAL_IMPORT == true) {
                 UPDATE        gyms
                 SET           lat = :lat,
                               lon = :lon,
-                              address = :address
+                              address = :address,
+                              img_url = :gym_image
                 WHERE      gym_name = :gym_name
                 ';
             $msg = getTranslation('gym_updated');
@@ -66,6 +74,7 @@ if(defined('PORTAL_IMPORT') && PORTAL_IMPORT == true) {
         $statement->bindValue(':lat', $lat, PDO::PARAM_STR);
         $statement->bindValue(':lon', $lon, PDO::PARAM_STR);
         $statement->bindValue(':address', $address, PDO::PARAM_STR);
+        $statement->bindValue(':gym_image', $gym_image, PDO::PARAM_STR);
         $statement->execute();
     } catch (PDOException $exception) {
         error_log($exception->getMessage());
@@ -82,6 +91,11 @@ if(defined('PORTAL_IMPORT') && PORTAL_IMPORT == true) {
     if($gym_id > 0) {
         $gym = get_gym($gym_id);
         $msg .= CR . CR . get_gym_details($gym);
+    }
+
+    // Gym photo.
+    if($gym_image) {
+        $msg .= EMOJI_CAMERA . SP . $no_spaces_gym_name;
     }
 
     // Set keys.

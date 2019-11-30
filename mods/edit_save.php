@@ -174,8 +174,24 @@ if ($update['callback_query']['message']['chat']['type'] == 'private') {
     // Answer callback.
     $tg_json[] = answerCallbackQuery($update['callback_query']['id'], $callback_response, true);
 
+    // Old Edit message.
+    /*
+    if(RAID_PICTURE == true) {
+        $tg_json[] = edit_caption($update, $text['short'], $keys, false, true);
+    } else {
+        $tg_json[] = edit_message($update, $text['full'], $keys, false, true);
+    }
+    */
+
+    // Older Edit message.
+    //$tg_json[] = edit_message($update, $text, $keys, false, true);
+
     // Edit message.
-    $tg_json[] = edit_message($update, $text, $keys, false, true);
+    if(RAID_PICTURE == true) {
+       send_response_vote($update, $data,false,false);
+    } else {
+       send_response_vote($update, $data);
+    }
 }
 
 // Telegram multicurl request.
