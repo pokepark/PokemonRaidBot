@@ -9,7 +9,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Jaa sijainti - Luo raidi"
   },
   "help_create": {
     "NL": "/start - Raid aanmaken",
@@ -21,7 +21,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "/start - Luo raidi"
   },
   "help_ex-raids": {
     "NL": "/start - Ex-Raid aanmaken",
@@ -33,7 +33,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "/start - Luo ex-raidi"
   },
   "help_raid-duration": {
     "NL": "/start - verander de raid tijdsduur",
@@ -45,7 +45,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "/start - Vaihda raidin kestoa"
   },
   "help_list": {
     "NL": "/list - alle actieve Raids",
@@ -57,7 +57,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "/list - Kaikki aktiiviset raidit"
   },
   "help_overview": {
     "NL": "/overview - Beheer raid overzicht",
@@ -69,7 +69,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "/overview - Hallinnoi raidiyhteenvetoa"
   },
   "help_delete-own": {
     "NL": "/delete - Verwijderen eigen Raids",
@@ -81,7 +81,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "/delete - Poista omia raidejasi"
   },
   "help_delete-all": {
     "NL": "/delete - Verwijder alle raids",
@@ -93,7 +93,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "/delete - Poista kaikki raidit"
   },
   "help_pokemon-own": {
     "NL": "/pokemon - Update pokemon (eigen raids)",
@@ -105,7 +105,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "/pokemon - Muuta pokemonia (omat raidisi)"
   },
   "help_pokemon-all": {
     "NL": "/pokemon - Update pokemon (alle raids)",
@@ -117,7 +117,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "/pokemon - Muuta pokemonia (kaikki raidit)"
   },
   "help_trainer": {
     "NL": "/trainer - Verander trainer data",
@@ -129,7 +129,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "/trainer - Muuta kouluttajatietojasi"
   },
   "help_gym-details": {
     "NL": "/gym - Laat gym info zien",
@@ -141,7 +141,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "/gym - Näytä salin tiedot"
   },
   "help_gym-edit": {
     "NL": "/gym - Verander alle gym informatie",
@@ -153,7 +153,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "/gym - Muuta salin lisätietoja"
   },
   "help_gym-name": {
     "NL": "/gymname - Verander de gym naam",
@@ -165,7 +165,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "/gymname - Muuta salin nimeä"
   },
   "help_gym-address": {
     "NL": "/gymaddress - Verander gym adres",
@@ -177,7 +177,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "/gymaddress - Muuta salin osoitetta"
   },
   "help_gym-gps": {
     "NL": "/gymgps - Verander gym coordinaten",
@@ -189,7 +189,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "/gymgps - Muuta salin koordinaatteja"
   },
   "help_gym-note": {
     "NL": "/gymnote - Verander extra gym informatie",
@@ -201,7 +201,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "/gymnote - Muuta salin muistiinpanoja"
   },
   "help_gym-add": {
     "NL": "/addgym - Gym toevoegen",
@@ -213,7 +213,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "/addgym - Lisää sali"
   },
   "help_gym-delete": {
     "NL": "/deletegym - Verwijder een gym",
@@ -225,7 +225,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "/deletegym - Poista sali"
   },
   "help_portal-import": {
     "NL": "@PortalMapBot of @Ingressportalbot - Importeer gym",
@@ -237,7 +237,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "@PortalMapBot tai @Ingressportalbot - Tuo sali"
   },
   "help_pokedex": {
     "NL": "/pokedex - Verander raid bazen",
@@ -249,7 +249,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "/pokedex - Hallinnoi raidibosseja"
   },
   "help_config-get": {
     "NL": "/getconfig - Laat de bot configuratie zien",
@@ -261,7 +261,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "/getconfig - Näytä botin asetukset"
   },
   "help_config-set": {
     "NL": "/setconfig - Verander de bot configuratie",
@@ -273,7 +273,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "/setconfig - Muuta botin asetuksia"
   },
   "help_help": {
     "NL": "/help - laat help zien",
@@ -285,6 +285,6 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "/help - Näytä ohjeet"
   }
 }
