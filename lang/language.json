@@ -609,7 +609,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "Jaa kouluttaja viesti"
+    "FI": "Jaa kouluttajaviesti"
   },
   "trainer_message_delete": {
     "NL": "Trainer informatie verwijderen",
@@ -621,7 +621,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "Poista kouluttaja viesti"
+    "FI": "Poista kouluttajaviesti"
   },
   "delete_trainer_message_from_chat": {
     "NL": "Verwijder het trainer bericht van de chat?",
