@@ -3167,7 +3167,10 @@ function get_raid_times($raid, $override_language = true, $pokemon = false, $unf
             $msg .= $raid_day . ', ' . $day_start . '. ' . $raid_month . (($year_start > $year_now) ? $year_start : '');
 
             // Adds 'at 17:00' to the output.
-            $msg .= ' ' . $getTypeTranslation('raid_egg_opens_at') . ' ' . dt2time($raid['start_time']);
+            if($unformatted == false) {
+                $msg .= SP . $getTypeTranslation('raid_egg_opens_at');
+            }
+            $msg .= SP . dt2time($raid['start_time']);
         } else {
             // Output: Raid egg opens on Friday, 17:00
             if($unformatted == false) {
