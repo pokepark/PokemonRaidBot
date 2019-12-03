@@ -648,6 +648,7 @@ A few examples for access files can be found below the permission overview table
 |            |                                                                  |                                          |
 | Trainer    | Set trainer data `/trainer`                                      | `trainer`                                |
 |            | Share trainer data message `/trainer`                            | `trainer-share`                          |
+|            | Delete trainer data message `/trainer`                           | `trainer-delete`                         |
 |            |                                                                  |                                          |
 | Portal     | Import portals via inline search from other bots                 | `portal-import`                          |
 |            |                                                                  |                                          |
