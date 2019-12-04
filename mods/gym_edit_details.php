@@ -60,7 +60,7 @@ if($action == 'show' || $action == 'ex') {
     ];
 
 } else if($action == 'confirmshow' || $action == 'confirmex') {
-    debug_log('Changging the details for the gym with ID ' . $id);
+    debug_log('Changing the details for the gym with ID ' . $id);
     // Show or ex?
     $table = 'show_gym';
     if($action == 'confirmex') {

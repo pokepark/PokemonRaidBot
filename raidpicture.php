@@ -12,6 +12,12 @@ include_once(CORE_BOT_PATH . '/db.php');
 // Get language
 include_once(CORE_BOT_PATH . '/userlanguage.php');
 
+// Debug switch
+$debug = false;
+if($_GET['debug'] == 1) {
+    $debug = true;
+}
+
 // Background color
 $config_bg_color = explode(',',RAID_PICTURE_BG_COLOR);
 if(count($config_bg_color)!=3) {
@@ -165,7 +171,24 @@ if($time_now < $raid['end_time']) {
         '412-sandy' => '12',
         '412-trash' => '13',
         '487-altered' => '11',
-        '487-origin' => '12'
+        '487-origin' => '12',
+        '493-fighting' => '12',
+        '493-flying' => '13',
+        '493-poison' => '14',
+        '493-ground' => '15',
+        '493-rock' => '16',
+        '493-bug' => '17',
+        '493-ghost' => '18',
+        '493-steel' => '19',
+        '493-fire' => '20',
+        '493-water' => '21',
+        '493-grass' => '22',
+        '493-electric' => '23',
+        '493-psychic' => '24',
+        '493-ice' => '25',
+        '493-dragon' => '26',
+        '493-dark' => '27',
+        '493-fairy' => '28'
     );
 
     // Map pokemon form for filename
@@ -196,6 +219,12 @@ if($time_now < $raid['end_time']) {
         $img_pokemon = imagecreatefrompng(IMAGES_PATH . "/raid_eggs/pokemon_icon_" . $pokemon_id . "_" . $pokemon_form . ".png");
         imagesavealpha($img_pokemon,true);
  
+        // Debug - Add border around pokemon image
+        if($debug) {
+            $im = imagecreate(128,128);
+            $black = imagecolorallocate($im,0,0,0);
+            imagerectangle($img_pokemon,0,0,127,127,$black);
+        }
         imagecopyresampled($canvas,$img_pokemon,150,150,0,0,200,200,128,128);
 
     //Pokemon
@@ -204,14 +233,41 @@ if($time_now < $raid['end_time']) {
         $img_pokemon = imagecreatefrompng(IMAGES_PATH . "/pokemon/pokemon_icon_" . $pokemon_id . "_" . $pokemon_form . ".png");
         imagesavealpha($img_pokemon,true);
 
+        // Debug - Add border around pokemon image
+        if($debug) {
+            $im = imagecreate(256,256);
+            $black = imagecolorallocate($im,0,0,0);
+            imagerectangle($img_pokemon,0,0,255,255,$black);
+        }
         imagecopyresampled($canvas,$img_pokemon,100,100,0,0,256,256,256,256);
     }
 // Raid ended
 } else {
-    $raidwon_img = imagecreatefrompng(IMAGES_PATH . "/raidwon.png");
-    imagesavealpha($raidwon_img,true);
+    $img_raidwon = imagecreatefrompng(IMAGES_PATH . "/raidwon.png");
+    imagesavealpha($img_raidwon,true);
     $won_width = 150;
-    imagecopyresampled($canvas,$raidwon_img,160,160,0,0,$won_width,$won_width/444*512,444,512);
+
+    // Debug - Add border around raid won image
+    if($debug) {
+        $im = imagecreate(444,512);
+        $black = imagecolorallocate($im,0,0,0);
+        imagerectangle($img_raidwon,0,0,443,511,$black);
+    }
+    imagecopyresampled($canvas,$img_raidwon,160,160,0,0,$won_width,$won_width/444*512,444,512);
+}
+
+// Ex-Raid?
+if($raid['raid_level'] == 'X') {
+    $img_expass = imagecreatefrompng(IMAGES_PATH . "/expass.png");
+    imagesavealpha($img_expass,true);
+ 
+    // Debug - Add border around expass image
+    if($debug) {
+        $im = imagecreate(256,256);
+        $black = imagecolorallocate($im,0,0,0);
+        imagerectangle($img_expass,0,0,255,255,$black);
+    }
+    imagecopyresampled($canvas,$img_expass,0,225,0,0,100,100,256,256);
 }
 
 // Adding the gym name to the image
@@ -220,8 +276,11 @@ $font_text = FONTS_PATH . "/calibri.ttf";			// Path to the font file
 $font_color = imagecolorallocate($canvas,$font_rgb[0],$font_rgb[1],$font_rgb[2]);	 // Font color
 $gym_text_size = 26;								// Font size of gym text
 $text_size = 23;									// Font size of additional text
+$text_size_raid_time = 30;									// Font size of raid time if only e.g. 18:00 - 18:45
+$text_size_cp_weather = 20;									// Font size of weather cp text
 $left = 500;										// Position of the text from left
 $left_tab = 325;									// Position of the text from left
+$left_after_poke = 356; // First left position behind the pokemon icon.
 $top = 45;											// Position of the text from top
 $angle = 0;											// Angle of the text
 $spacing = 10;										// Spacing between lines
@@ -234,13 +293,16 @@ $gym_text_lines = explode(PHP_EOL,wordwrap(trim($raid['gym_name']),22,PHP_EOL));
 if(count($gym_text_lines) == 1) {
     // ...and draw them to image
     $box = imagettfbbox($gym_text_size,$angle,$font_gym,$gym_text_lines[0]);
-    imagettftext($canvas,$gym_text_size,$angle,$left_tab,$top,$font_color,$font_gym,$gym_text_lines[0]);
+    //imagettftext($canvas,$gym_text_size,$angle,$left_tab,$top,$font_color,$font_gym,$gym_text_lines[0]);
+    imagettftext($canvas,$gym_text_size,$angle,$left_after_poke,$top,$font_color,$font_gym,$gym_text_lines[0]);
 } else {
     for($y=0;$y<count($gym_text_lines);$y++){
         // ...and draw them to image
         $gym_text_top = ($top+($y*($gym_text_size+$spacing)));
         $box = imagettfbbox($gym_text_size,$angle,$font_gym,$gym_text_lines[$y]);
-        $gym_left = $left-($box[2]/2);
+        $textWidth = abs($box[4] - $box[0]);
+        //$gym_left = $left-($box[2]/2);
+        $gym_left = $left_after_poke + (((imagesx($canvas) - $left_after_poke - $spacing_right) - $textWidth)/2);
         imagettftext($canvas,$gym_text_size,$angle,$gym_left,$gym_text_top,$font_color,$font_gym,$gym_text_lines[$y]);
     }
 }
@@ -250,6 +312,13 @@ if($time_now < $raid['end_time']) {
     $time_text = get_raid_times($raid, true, false, true);
 } else {
     $time_text = getPublicTranslation('raid_done');
+}
+
+// Short time string? Use bigger text size!
+if(strlen($time_text) <= 14) {
+    $time_text_size = $text_size_raid_time;
+} else {
+    $time_text_size = $text_size;
 }
 
 // Wrapping the time text if too long (to 25 letters)
@@ -262,26 +331,59 @@ $time_top = ($num_text_lines>2) ? (175-($num_text_lines-2)*$text_size) : 175;
 // Go through every line...
 for($ya=0;$ya<$num_text_lines;$ya++){
     // ...and draw them to image
-    $time_text_top = ($time_top+($ya*($text_size+$spacing)));
-    $box = imagettfbbox($text_size,$angle,$font_gym,$time_text_lines[$ya]);
-    $time_left = $left-($box[2]/2);
-    imagettftext($canvas,$text_size,$angle,$time_left,$time_text_top,$font_color,$font_text,$time_text_lines[$ya]);
+    $time_text_top = ($time_top+($ya*($time_text_size+$spacing)));
+    //$box = imagettfbbox($text_size,$angle,$font_gym,$time_text_lines[$ya]);
+    //$time_left = $left-($box[2]/2);
+
+    // Align text to center between pokemon icon and right edge
+    $dimensions = imagettfbbox($time_text_size, $angle, $font_text, $time_text_lines[$ya]);
+    $textWidth = abs($dimensions[4] - $dimensions[0]);
+    $time_left = $left_after_poke + (((imagesx($canvas) - $left_after_poke - $spacing_right) - $textWidth)/2);
+    // Alternative: Align text to the right
+    //$time_left = imagesx($canvas) - $spacing - $textWidth;
+    //$time_left = ($left_after_poke + $textWidth);
+
+    imagettftext($canvas,$time_text_size,$angle,$time_left,$time_text_top,$font_color,$font_text,$time_text_lines[$ya]);
 }
 
 // Raid boss
 $poke_text_top = 300;
 $pokemon_name = get_local_pokemon_name($raid['pokemon'], true);
-imagettftext($canvas,$text_size,$angle,$left_tab,$poke_text_top,$font_color,$font_text,$pokemon_name);
+//imagettftext($canvas,$text_size,$angle,$left_tab,$poke_text_top,$font_color,$font_text,$pokemon_name);
+
+// Pokemon name and form?
+$pokemon_text_lines = explode(SP,$pokemon_name);
+$num_pokemon_lines = count($pokemon_text_lines);
+
+// Wrapping the time text if too long (to 20 letters)
+$pokemon_wrap_lines = explode(PHP_EOL,wordwrap(trim($pokemon_name),20,PHP_EOL));
+$num_wrap_lines = count($pokemon_wrap_lines);
+
+// Pokemon name and form (to 22 letters)
+if($num_pokemon_lines > 1 && $num_wrap_lines > 1) {
+    $poke_text_top = 272;
+    // Pokemon name and form in 2 rows
+    for($pa=0;$pa<$num_pokemon_lines;$pa++){
+        $poke_text_top = ($poke_text_top+($pa*($text_size+$spacing)));
+        imagettftext($canvas,$text_size,$angle,$left_after_poke,$poke_text_top,$font_color,$font_text,$pokemon_text_lines[$pa]);
+    }
+} else {
+    // Pokemon name and form(?) in 1 row
+    $poke_text_top = 305;
+    imagettftext($canvas,$text_size,$angle,$left_after_poke,$poke_text_top,$font_color,$font_text,$pokemon_name);
+}
 
 // Pokemon CP
 if($raid['pokedex_id'] < 9990) {
     $cp_text_top = $poke_text_top+$text_size+$spacing;
     $cp_text = $raid['min_cp']." - ".$raid['max_cp'];
-    $cp_text2 =  "(".$raid['min_weather_cp']." - ".$raid['max_weather_cp'].")";
+    $cp_text2 =  "(".$raid['min_weather_cp']."-".$raid['max_weather_cp'].")";
 
-    imagettftext($canvas,$text_size,$angle,$left_tab,$cp_text_top,$font_color,$font_text,$cp_text);
+    imagettftext($canvas,$text_size,$angle,$left_after_poke,$cp_text_top,$font_color,$font_text,$cp_text);
     $cp_text_box = imagettfbbox($text_size,$angle,$font_text,$cp_text2);
-    imagettftext($canvas,$text_size,$angle,($canvas_width-$cp_text_box[2]-$spacing_right),$cp_text_top,$font_color,$font_text,$cp_text2);
+    $cp_weather_text_box = imagettfbbox($text_size_cp_weather,$angle,$font_text,$cp_text2);
+    imagettftext($canvas,$text_size_cp_weather,$angle,($canvas_width-$cp_weather_text_box[2]-$spacing_right),$cp_text_top,$font_color,$font_text,$cp_text2);
+    //imagettftext($canvas,$text_size,$angle,($canvas_width-$cp_text_box[2]-$spacing_right),$cp_text_top,$font_color,$font_text,$cp_text2);
 
     $count_weather = strlen($raid['weather']);
     for($i=0;$i<$count_weather;$i++) {
