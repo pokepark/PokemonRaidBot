@@ -27,10 +27,14 @@ if(defined('PORTAL_IMPORT') && PORTAL_IMPORT == true) {
         }
 
         // Gym image.
-        $no_spaces_gym_name = str_replace(' ', '_', $gym_name) . '.png';
-        $gym_image = download_Portal_Image($portal_image, PORTAL_IMAGES_PATH, $no_spaces_gym_name);
-        if($gym_image) {
-            $gym_image = "file://" . $gym_image;
+        if(PORTAL_PICTURE_IMPORT == true) {
+            $no_spaces_gym_name = str_replace(' ', '_', $gym_name) . '.png';
+            $gym_image = download_Portal_Image($portal_image, PORTAL_IMAGES_PATH, $no_spaces_gym_name);
+            if($gym_image) {
+                $gym_image = "file://" . $gym_image;
+            }
+        } else {
+            $gym_image = $portal_image;
         }
 
         // Build query to check if gym is already in database or not

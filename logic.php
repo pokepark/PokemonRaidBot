@@ -1995,15 +1995,6 @@ function keys_vote($raid)
         if(in_array($raid_level, $hide_buttons_raid_level) || in_array($raid_pokemon, $hide_buttons_pokemon) || in_array($raid_pokemon_id, $hide_buttons_pokemon)) {
             $keys = [];
         } else {
-            // Attend raid at any time
-            if(RAID_ANYTIME == true)
-            {
-                $keys_time[] = array(
-                    'text'          => getPublicTranslation('anytime'),
-                    'callback_data' => $raid['id'] . ':vote_time:0'
-                );
-            }
-
             // Get current time.
             $now_helper = new DateTimeImmutable('now', new DateTimeZone('UTC'));
             $now_helper = $now_helper->format('Y-m-d H:i') . ':00';
@@ -2278,6 +2269,15 @@ function keys_vote($raid)
                         'callback_data' => $raid['id'] . ':vote_time:' . utctime($slot, 'YmdHis')
                     );
                 }
+            }
+
+            // Attend raid at any time
+            if(RAID_ANYTIME == true)
+            {
+                $keys_time[] = array(
+                    'text'          => getPublicTranslation('anytime'),
+                    'callback_data' => $raid['id'] . ':vote_time:0'
+                );
             }
 
             // Add time keys.
