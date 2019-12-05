@@ -16,7 +16,7 @@ $arg = $data['arg'];
 $id = $data['id'];
 
 // ID or Arg = 0 ?
-if($arg == 0 || $id == '0') {
+if($arg == 0 || $id == '0' || $id == '1') {
     // Get hidden gyms?
     if($id == 0) {
         $hidden = true;

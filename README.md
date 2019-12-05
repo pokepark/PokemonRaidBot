@@ -13,6 +13,8 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
       * [Git clone](#git-clone)
          * [Core module inside bot folder](#core-module-inside-bot-folder)
          * [Core module outside bot folder](#core-module-outside-bot-folder)
+      * [Bot token](#bot-token)
+      * [Database](#database)
       * [Config](#config)
          * [Referring to groups, channels and users](#referring-to-groups-channels-and-users)
             * [Finding public IDs](#finding-public-ids)
@@ -27,6 +29,7 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
          * [Raid creation options](#raid-creation-options)
          * [Raid time customization](#raid-time-customization)
          * [Raid poll design and layout](#raid-poll-design-and-layout)
+         * [Raid Picture](#raid-picture)
          * [Portal Import](#portal-import)
          * [Raid sharing](#raid-sharing)
             * [Sharing all raids to two chats](#sharing-all-raids-to-two-chats)
@@ -73,8 +76,11 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
          * [pokemon-raid-bot.sql](#pokemon-raid-botsql)
          * [raid-boss-pokedex.sql](#raid-boss-pokedexsql)
          * [gohub-raid-boss-pokedex.sql](#gohub-raid-boss-pokedexsql)
+      * [Translations](#translations)
+         * [translate.py](#translatepy)
+            * [Usage](#usage)
 
-<!-- Added by: artanicus, at: Mon Nov 18 20:31:37 EET 2019 -->
+<!-- Added by: artanicus, at: Sat Nov 30 19:11:58 EET 2019 -->
 
 <!--te-->
 
@@ -652,6 +658,7 @@ A few examples for access files can be found below the permission overview table
 |            |                                                                  |                                          |
 | Trainer    | Set trainer data `/trainer`                                      | `trainer`                                |
 |            | Share trainer data message `/trainer`                            | `trainer-share`                          |
+|            | Delete trainer data message `/trainer`                           | `trainer-delete`                         |
 |            |                                                                  |                                          |
 | Portal     | Import portals via inline search from other bots                 | `portal-import`                          |
 |            |                                                                  |                                          |
@@ -998,3 +1005,35 @@ Export command: `mysqldump -u USERNAME -p --skip-extended-insert --skip-comments
 ### gohub-raid-boss-pokedex.sql
 
 CLI creation command: `php getGOHubDB.php`
+
+## Translations
+
+Translations are mainly stored in `lang/language.json`. Any string marked as `TRANSLATE` hasn't been translated yet. These can be changed by hand but if you want to add a new language or do large scale translation, using translate.py is recommended.
+
+### translate.py
+
+To help in adding a new translation or improving an existing one the `lang/` folder has a tool called `translate.py`
+It will add placeholders for a new language and allow you to incrementally and interatively translate strings. All changes are saved as you go.
+
+#### Usage
+
+By default:
+  * Translations are read from and saved directly into language.json but any other file(s) can be specified with `--input` and `--output`
+  * The current English translation is shown as context. The language can be chosen with `--from_language`
+  * Only missing translations are prompted (incremental mode), use `--noincremental` or `--incremental=False` to prompt every string.
+  * No default language to translate into is specified, it must be given with `--to <language_code>`
+
+We'll run through an example, for full options see `translate.py --help`
+
+```shell
+% cd lang/
+% pip3 install -r requirements.txt # install required libraries
+% ./translate.py --to=FI # FI here is the language code of the new or existing language
+I1130 18:29:47.547245 139886869309248 translate.py:21] Creating placeholders for missing strings for language FI
+Press ^D or ^C to stop. Leave a translation empty to skip.
+I1130 18:29:47.556554 139886869309248 translate.py:30] Iterating over strings that have not been translated to language FI
+raid[EN]: Raid
+raid[FI]:
+```
+
+Enter translations as long as you want. You can skip translating a string by just leaving it empty, i.e. pressing enter. Press Ctrl-C or Ctrl-D to exit the tool, you won't lose any translations you've already made.
