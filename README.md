@@ -434,11 +434,21 @@ Link: https://github.com/ZeChrales/PogoAssets/tree/master/pokemon_icons
 
 To easily download you can use a special download script on the CLI: `php getZeCharles.php`
 
+Set `RAID_PICTURE_BG_COLOR` to an RGB value to specify the background color of the raid picture.
+
+Set `RAID_PICTURE_TEXT_COLOR` to an RGB value to specify the text color of the raid picture.
+
+Set `RAID_PICTURE_ICONS_WHITE` to true to use white weather icons for the raid picture. Especially useful when you defined a dark background color.
+
+Set `RAID_PICTURE_FILE_FORMAT` to either `gif`, `jpeg`, `jpg` or `png` to specify the output format of the raid picture.
+
 Set `RAID_DEFAULT_PICTURE` to the url of a default gym picture in case no gym image url is stored in the database for a gym.
 
 ### Portal Import
 
 Set `PORTAL_IMPORT` to `true` to enable the possibility to import portals from Telegram Ingress Bots.
+
+Set `PORTAL_PICTURE_IMPORT` to `true` to download the portal image from Telegram Ingress Bots. When set to `false` the URL of the portal image is stored in the database.
 
 
 ### Raid sharing
