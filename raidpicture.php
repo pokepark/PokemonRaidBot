@@ -14,7 +14,7 @@ include_once(CORE_BOT_PATH . '/userlanguage.php');
 
 // Debug switch
 $debug = false;
-if($_GET['debug'] == 1) {
+if(isset($_GET['debug']) && $_GET['debug'] == 1) {
     $debug = true;
 }
 
@@ -214,9 +214,9 @@ if($time_now < $raid['end_time']) {
     }
 
     // Raid Egg
-    if($pokemon_id > 9990) {
+    if($raid['pokedex_id'] > 9990) {
         // Getting the actual icon
-        $img_pokemon = imagecreatefrompng(IMAGES_PATH . "/raid_eggs/pokemon_icon_" . $pokemon_id . "_" . $pokemon_form . ".png");
+        $img_pokemon = imagecreatefrompng(IMAGES_PATH . "/raid_eggs/pokemon_icon_" . $raid['pokedex_id'] . "_" . $pokemon_form . ".png");
 
         // Position and size of the picture
 	$dst_x = $dst_y = 150;
