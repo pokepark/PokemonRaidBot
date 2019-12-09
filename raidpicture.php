@@ -65,7 +65,7 @@ if (!empty($raid['img_url'])) {
 } else if(is_file(RAID_DEFAULT_PICTURE)) {
     $img_gym = imagecreatefromjpeg(RAID_DEFAULT_PICTURE);
 } else {
-    $img_gym = imagecreatefromjpeg(IMAGES_PATH . "/gym_default.png");
+    $img_gym = imagecreatefrompng(IMAGES_PATH . "/gym_default.png");
 }
 
 // Get the width and height of the gym picture
