@@ -65,7 +65,7 @@ if (!empty($raid['img_url'])) {
 } else if(is_file(RAID_DEFAULT_PICTURE)) {
     $img_gym = imagecreatefromjpeg(RAID_DEFAULT_PICTURE);
 } else {
-    $img_gym = imagecreatefromjpeg(IMAGES_PATH . "/gym_default.png");
+    $img_gym = imagecreatefrompng(IMAGES_PATH . "/gym_default.png");
 }
 
 // Get the width and height of the gym picture
@@ -304,14 +304,20 @@ $gym_name_total_chars = strlen(utf8_decode($gym_name));
 
 // Number of rows based on number of words or total chars
 $gym_name_rows = 1;
-if(count($gym_name_words) > 1 && $gym_name_total_chars > 20 && $gym_name_total_chars <= 50)  {
+if(count($gym_name_words) > 1 && $gym_name_total_chars >= 18 && $gym_name_total_chars <= 50)  {
     $gym_name_rows = 2;
-} else if(count($gym_name_words) > 2 && $gym_name_total_chars > 50)  {
+} else if($gym_name_total_chars > 50)  {
     $gym_name_rows = 3;
 }
 
 // Wrap gym name to multiple lines if too long
-$gym_name_lines = explode(PHP_EOL,wordwrap(trim($gym_name),(($gym_name_total_chars+($gym_name_word_largest-$gym_name_word_shortest))/$gym_name_rows),PHP_EOL,true));
+$gym_name_lines = explode(PHP_EOL,wordwrap(trim($gym_name),($gym_name_total_chars+$gym_name_word_largest)/$gym_name_rows,PHP_EOL));
+
+// Write to log.
+debug_log($gym_name_total_chars, 'Gym name length:');
+debug_log($gym_name_lines, 'Gym name lines:');
+
+// Target width and height
 $targetWidth = imagesx($canvas) - imagesx($mask) - $spacing_right;
 $targetHeight = 95;
 $targetHeight = $targetHeight/$gym_name_rows;
