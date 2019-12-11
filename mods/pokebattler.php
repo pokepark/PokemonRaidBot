@@ -227,6 +227,12 @@ if($id == 0) {
                 // Counter.
                 $bosscount = $bosscount + 1;
 
+                // Shiny?
+                $shiny = 0;
+                if($raid['shiny'] == 'true') {
+                    $shiny = 1;
+                }
+
                 // Save to database?
                 if(strpos($arg, 'save#') === 0) {
                     // Update raid level of pokemon
@@ -236,7 +242,8 @@ if($id == 0) {
                     $rs = my_query(
                             "
                             UPDATE    pokemon
-                            SET       raid_level = '{$rl}'
+                            SET       raid_level = '{$rl}', 
+                                      shiny = {$shiny}
                             WHERE     pokedex_id = {$dex_id}
                             AND       (pokemon_form = '{$dex_form}'
                                       OR pokemon_form LIKE '{$dex_form}_')
