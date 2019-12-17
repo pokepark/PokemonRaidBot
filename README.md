@@ -184,13 +184,15 @@ Important: The raid level is NOT set when importing the raid bosses from the goh
 
 You can just copy & paste this to do what is written below:
 ```
+cd /var/ && \
 mkdir docker && \
-mkdir wwwdir && \
-mkdir raidbot && \
-cd /var/docker/wwwdir/raidbot && \
+mkdir docker/wwwdir && \
+mkdir docker/wwwdir/raidbot && \
+cd docker/wwwdir/raidbot && \
 mkdir access && \
 mkdir config && \
 mkdir custom && \
+mkdir docker-custom && \
 mkdir sql && \
 wget -O sql/1pokemon-raid-bot.sql https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/sql/pokemon-raid-bot.sql && \
 wget -O sql/2raid-boss-pokedex.sql https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/sql/raid-boss-pokedex.sql && \
@@ -199,14 +201,14 @@ wget -O config/.gitignore https://raw.githubusercontent.com/florianbecker/Pokemo
 wget -O config/config.json https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/config/config.json.example && \
 wget -O config/telegram.json https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/config/telegram.json.example && \
 wget -O custom/.gitignore https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/custom/.gitignore  && \
-cd mad/configs/ && \
 wget -O access/.gitignore https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/access/.gitignore  && \
 wget -O Dockerfile https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/docker-compose.yml && \
 wget -O docker-custom/cronjob https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/docker-custom/cronjob  && \
 wget -O docker-custom/Dockerfile https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/docker-custom/Dockerfile  && \
+chown -R www-data:www-data config/ && \
+cd config/ && \
 chmod 0600 config.json  && \
-chmod 0600 telegram.json  && \
-chown -R www-data:www-data /var/docker/wwwdir/raidbot/config
+chmod 0600 telegram.json
 ```
 
 This will:
