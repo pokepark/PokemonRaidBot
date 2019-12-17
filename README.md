@@ -214,7 +214,7 @@ chmod 0600 telegram.json
 This will:
 1. Create a directory `raidbot`.
 2. Create a file `docker-compose.yml`.
-3. Create a directory `access`. (here we store Access Permissions #access-permissions)
+3. Create a directory `access`. (here we store Access Permissions https://github.com/florianbecker/PokemonRaidBot#access-permissions)
 4. Create a directory `config`. (here we store config files for the raidbot).
 Here you store your `config.json` and `telegram.json`.
 Examples for these files can be found @github https://github.com/florianbecker/PokemonRaidBot/tree/master/config
@@ -245,10 +245,10 @@ Your directory should now look like this:
  ```
 
 - Check the `docker-compose.yml` for your customization. Change the `MYSQL_ROOT_PASSWORD`.
-- The `cronjob` should be changed according the cleanup #cleanup and Raid-Overview #raid-overview.
+- The `cronjob` should be changed according the cleanup https://github.com/florianbecker/PokemonRaidBot#cleanup and Raid-Overview https://github.com/florianbecker/PokemonRaidBot#raid-overview.
 - Comment the Line 29 in `Dockerfile`, if you don't want to download the images, it takes a bit longer on build.
 - Change the config.json to your needs.
-- Add some user-rights to the `access-Folder`.
+- Add some user-rights to the `access-Folder` https://github.com/florianbecker/PokemonRaidBot#access-permissions.
 
 Now you are ready to start the Docker.
 
