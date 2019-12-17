@@ -1,0 +1,38 @@
+version: "3.4"
+services:
+  raidbot:
+    build:
+      context: ./docker-custom
+      dockerfile: Dockerfile
+    container_name: raidbot
+    ports:
+      - 80:80
+    depends_on:
+      - raidbot-db
+    restart: always
+    volumes:
+      - /var/docker/wwwdir/raidbot/log/:/var/log/
+      - /var/docker/wwwdir/raidbot/config/:/var/www/html/config/
+      - /var/docker/wwwdir/raidbot/access/:/var/www/html/access/
+      - /var/docker/wwwdir/raidbot/custom/:/var/www/html/custom/
+    logging:
+      options:
+        max-size: 10m
+    networks:
+      - default
+
+  raidbot-db:
+    image: mariadb:latest
+    container_name: raidbot_db
+    restart: always
+    volumes:
+      - /var/docker/datadir/raidbot/:/var/lib/mysql/
+      - /var/docker/wwwdir/raidbot/sql/:/docker-entrypoint-initdb.d/
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: securePassword
+      MYSQL_DATABASE: raidbot
+    command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
+    networks:
+      - default
