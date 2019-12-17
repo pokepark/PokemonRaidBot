@@ -38,7 +38,8 @@ COPY ./cronjob /etc/cron.d/cronjob
 RUN chmod 0644 /etc/cron.d/cronjob
 
 # Starting Cronjob-Task
-RUN service cron start
+RUN crontab /etc/cron.d/cronjob
+CMD ["cron", "-f"]
 
 # Removing old downloaded files
 RUN rm -f -r master.zip PokemonRaidBot-master/ php.core.telegram-master/
