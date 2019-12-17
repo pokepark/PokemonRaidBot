@@ -15,6 +15,7 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
          * [Core module outside bot folder](#core-module-outside-bot-folder)
       * [Bot token](#bot-token)
       * [Database](#database)
+      * [Docker](#docker)
       * [Config](#config)
          * [Referring to groups, channels and users](#referring-to-groups-channels-and-users)
             * [Finding public IDs](#finding-public-ids)
@@ -178,6 +179,87 @@ To get the latest raid bosses via the GOHub API, you can use getGOHubDB.php whic
 Command gohub raid bosses: `mysql -u USERNAME -p DATABASENAME < sql/gohub-raid-boss-pokedex.sql`
 
 Important: The raid level is NOT set when importing the raid bosses from the gohub sql file! Set them via the /pokedex command, explained below in this readme.
+
+## Docker
+
+You can just copy & paste this to do what is written below:
+```
+mkdir docker && \
+mkdir wwwdir && \
+mkdir raidbot && \
+cd /var/docker/wwwdir/raidbot && \
+mkdir access && \
+mkdir config && \
+mkdir custom && \
+mkdir sql && \
+wget -O sql/1pokemon-raid-bot.sql https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/sql/pokemon-raid-bot.sql && \
+wget -O sql/2raid-boss-pokedex.sql https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/sql/raid-boss-pokedex.sql && \
+wget -O sql/3gohub-raid-boss-pokedex.sql https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/sql/gohub-raid-boss-pokedex.sql && \
+wget -O config/.gitignore https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/config/.gitignore && \
+wget -O config/config.json https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/config/config.json.example && \
+wget -O config/telegram.json https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/config/telegram.json.example && \
+wget -O custom/.gitignore https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/custom/.gitignore  && \
+cd mad/configs/ && \
+wget -O access/.gitignore https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/access/.gitignore  && \
+wget -O Dockerfile https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/docker-compose.yml && \
+wget -O docker-custom/cronjob https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/docker-custom/cronjob  && \
+wget -O docker-custom/Dockerfile https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/docker-custom/Dockerfile  && \
+chmod 0600 config.json  && \
+chmod 0600 telegram.json  && \
+chown -R www-data:www-data /var/docker/wwwdir/raidbot/config
+```
+
+This will:
+1. Create a directory `raidbot`.
+2. Create a file `docker-compose.yml`.
+3. Create a directory `access`. (here we store Access Permissions #access-permissions)
+4. Create a directory `config`. (here we store config files for the raidbot).
+Here you store your `config.json` and `telegram.json`.
+Examples for these files can be found @github https://github.com/florianbecker/PokemonRaidBot/tree/master/config
+5. Create a directory `custom` for your custom translations etc.
+6. Download the Raidbot Database Schema: https://github.com/florianbecker/PokemonRaidBot/tree/master/sql and store it
+in the directory `sql`.
+7. Download Docker-configs and example Config-Files for the Raidbot
+
+Your directory should now look like this:
+ ```
+ --raidbot/
+  |-- docker-compose.yml
+  |-- access
+    |-- .gitignore
+  |-- config
+    |-- .gitignore
+    |-- config.json
+    |-- telegram.json
+  |-- custom
+    |-- .gitignore
+  |-- docker-custom/
+    |-- cronjob
+    |-- Dockerfile
+  |-- sql/
+    |-- 1pokemon-raid-bot.sql
+    |-- 2raid-boss-pokedex.sql
+    |-- 3gohub-raid-boss-pokedex.sql
+ ```
+
+- Check the `docker-compose.yml` for your customization. Change the `MYSQL_ROOT_PASSWORD`.
+- The `cronjob` should be changed according the cleanup #cleanup and Raid-Overview #raid-overview.
+- Comment the Line 29 in `Dockerfile`, if you don't want to download the images, it takes a bit longer on build.
+- Change the config.json to your needs.
+- Add some user-rights to the `access-Folder`.
+
+Now you are ready to start the Docker.
+
+To deploy the Raidbot and Database you just execute in the folder `/var/docker/wwwdir/raidbot/`
+```
+docker-compose up --build -d
+```
+Look at the logs with:
+```
+docker-compose logs -f raidbot
+
+docker-compose logs -f raidbot-db
+```
 
 ## Config
 
