@@ -3888,7 +3888,7 @@ function raid_list($update)
     // For each rows.
     foreach ($rows as $key => $row) {
             // Get raid poll.
-            $contents[$key]['text'] = show_raid_poll($row['full']);
+	    $contents[$key]['text'] = show_raid_poll($row)['full'];
 
             // Set the title.
             $contents[$key]['title'] = get_local_pokemon_name($row['pokemon'], true) . ' ' . getPublicTranslation('from') . ' ' . dt2time($row['start_time'])  . ' ' . getPublicTranslation('to') . ' ' . dt2time($row['end_time']);
