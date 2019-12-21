@@ -194,6 +194,10 @@ mkdir config && \
 mkdir custom && \
 mkdir docker-custom && \
 mkdir sql && \
+mkdir log && \
+mkdir log/tg-bots && \
+touch log/tg-bots/dev-raid-bot-cleanup.log && \
+touch log/tg-bots/dev-raid-bot.log && \
 wget -O sql/1pokemon-raid-bot.sql https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/sql/pokemon-raid-bot.sql && \
 wget -O sql/2raid-boss-pokedex.sql https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/sql/raid-boss-pokedex.sql && \
 wget -O sql/3gohub-raid-boss-pokedex.sql https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/sql/gohub-raid-boss-pokedex.sql && \
@@ -205,7 +209,20 @@ wget -O access/.gitignore https://raw.githubusercontent.com/florianbecker/Pokemo
 wget -O docker-compose.yml https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/docker-compose.yml && \
 wget -O docker-custom/cronjob https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/docker-custom/cronjob  && \
 wget -O docker-custom/Dockerfile https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/docker-custom/Dockerfile  && \
+wget -O docker-custom/apache2.conf https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/docker-custom/apache2.conf  && \
+wget -O docker-custom/app.conf https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/docker-custom/app.conf  && \
+wget -O docker-custom/entrypoint.sh https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/docker-custom/entrypoint.sh  && \
+wget -O docker-custom/php.ini https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/docker-custom/php.ini  && \
 chown -R www-data:www-data config/ && \
+chown -R www-data:www-data access/ && \
+chown -R www-data:www-data custom/ && \
+find config/ -type d -exec chmod 755 {} \; && \
+find config/ -type f -exec chmod 644 {} \; && \
+find access/ -type f -exec chmod 644 {} \; && \
+find access/ -type d -exec chmod 755 {} \; && \
+find custom/ -type f -exec chmod 644 {} \; && \
+find custom/ -type d -exec chmod 755 {} \; && \
+chown -R www-data:www-data log/tg-bots/ && \
 cd config/ && \
 chmod 0600 config.json  && \
 chmod 0600 telegram.json
@@ -236,8 +253,16 @@ Your directory should now look like this:
   |-- custom
     |-- .gitignore
   |-- docker-custom/
+    |-- apache2.conf
+    |-- app.conf
     |-- cronjob
     |-- Dockerfile
+    |-- entrypoint.sh
+    |-- php.ini
+  |-- log/
+    |-- tg-bots/
+      |-- dev-raid-bot-cleanup.log
+      |-- dev-raid-bot.log
   |-- sql/
     |-- 1pokemon-raid-bot.sql
     |-- 2raid-boss-pokedex.sql
@@ -261,6 +286,25 @@ Look at the logs with:
 docker-compose logs -f raidbot
 
 docker-compose logs -f raidbot-db
+```
+
+List all running Dockers:
+```
+docker ps -a
+```
+
+Restart all Docker-Container:
+```
+docker container restart $(docker container ls -aq)
+```
+
+Stop and Delete one Docker-Container:
+```
+docker rm -f raidbot
+
+or more
+
+docker rm -f raidbot raidbot_db
 ```
 
 ## Config
