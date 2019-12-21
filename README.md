@@ -203,6 +203,7 @@ mkdir docker-custom && \
 mkdir sql && \
 mkdir log && \
 mkdir log/tg-bots && \
+mkdir log/apache2 && \
 touch log/tg-bots/dev-raid-bot-cleanup.log && \
 touch log/tg-bots/dev-raid-bot.log && \
 wget -O sql/1pokemon-raid-bot.sql https://raw.githubusercontent.com/studplus/PokemonRaidBot-1/master/sql/pokemon-raid-bot.sql && \
@@ -267,6 +268,7 @@ Your directory should now look like this:
     |-- entrypoint.sh
     |-- php.ini
   |-- log/
+    |-- apache2
     |-- tg-bots/
       |-- dev-raid-bot-cleanup.log
       |-- dev-raid-bot.log
