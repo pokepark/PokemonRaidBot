@@ -182,7 +182,7 @@ Important: The raid level is NOT set when importing the raid bosses from the goh
 
 ## Docker
 
-You can just copy & paste this to do what is written below:
+You can just copy & paste this to the shell to prepare your docker-deployment:
 ```
 cd /var/ && \
 mkdir docker && \
@@ -202,7 +202,7 @@ wget -O config/config.json https://raw.githubusercontent.com/florianbecker/Pokem
 wget -O config/telegram.json https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/config/telegram.json.example && \
 wget -O custom/.gitignore https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/custom/.gitignore  && \
 wget -O access/.gitignore https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/access/.gitignore  && \
-wget -O Dockerfile https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/docker-compose.yml && \
+wget -O docker-compose.yml https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/docker-compose.yml && \
 wget -O docker-custom/cronjob https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/docker-custom/cronjob  && \
 wget -O docker-custom/Dockerfile https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/docker-custom/Dockerfile  && \
 chown -R www-data:www-data config/ && \
