@@ -288,7 +288,7 @@
     "FI": "TRANSLATE"
   },
   "raid_event_creation_limit": {
-    "NL": "Gedurende raid hour kan je alleen RAID_EVENT_CREATION_LIMIT minuten raids aanmaken!",
+    "NL": "Gedurende raid hour kan je maar RAID_EVENT_CREATION_LIMIT raids aanmaken!",
     "DE": "Während der Raidstunde kannst du nur RAID_EVENT_CREATION_LIMIT Raids anlegen!",
     "EN": "During the raid hour you can only create RAID_EVENT_CREATION_LIMIT raids!",
     "IT": "TRANSLATE",
