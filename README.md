@@ -118,11 +118,11 @@ The following apache packages need to be installed:
 
 For git 2.13 and above:
 
-`git clone --recurse-submodules https://github.com/florianbecker/PokemonRaidBot.git`
+`git clone --recurse-submodules https://github.com/studplus/PokemonRaidBot-1.git`
 
 If you're running an older version of git use the deprecated recursive command:
 
-`git clone --recursive https://github.com/florianbecker/PokemonRaidBot.git`
+`git clone --recursive https://github.com/studplus/PokemonRaidBot-1.git`
 
 ### Core module outside bot folder
 
@@ -130,7 +130,7 @@ If you like to keep the core repo outside the bot folder so multiple bots can ac
 
 Clone the bot repo to e.g. `var/www/html`:
 
-`git clone https://github.com/florianbecker/PokemonRaidBot.git`
+`git clone https://github.com/studplus/PokemonRaidBot-1.git`
 
 Clone the core repo to e.g. `var/www/html`:
 
@@ -182,6 +182,13 @@ Important: The raid level is NOT set when importing the raid bosses from the goh
 
 ## Docker
 
+Installation of Docker:
+```
+curl -L https://github.com/docker/compose/releases/download/1.25.1-rc1/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+chmod +x /usr/local/bin/docker-compose
+service docker start
+```
+
 You can just copy & paste this to the shell to prepare your docker-deployment:
 ```
 cd /var/ && \
@@ -194,18 +201,36 @@ mkdir config && \
 mkdir custom && \
 mkdir docker-custom && \
 mkdir sql && \
-wget -O sql/1pokemon-raid-bot.sql https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/sql/pokemon-raid-bot.sql && \
-wget -O sql/2raid-boss-pokedex.sql https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/sql/raid-boss-pokedex.sql && \
-wget -O sql/3gohub-raid-boss-pokedex.sql https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/sql/gohub-raid-boss-pokedex.sql && \
-wget -O config/.gitignore https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/config/.gitignore && \
-wget -O config/config.json https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/config/config.json.example && \
-wget -O config/telegram.json https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/config/telegram.json.example && \
-wget -O custom/.gitignore https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/custom/.gitignore  && \
-wget -O access/.gitignore https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/access/.gitignore  && \
-wget -O docker-compose.yml https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/docker-compose.yml && \
-wget -O docker-custom/cronjob https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/docker-custom/cronjob  && \
-wget -O docker-custom/Dockerfile https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/docker-custom/Dockerfile  && \
+mkdir log && \
+mkdir log/tg-bots && \
+mkdir log/apache2 && \
+touch log/tg-bots/dev-raid-bot-cleanup.log && \
+touch log/tg-bots/dev-raid-bot.log && \
+wget -O sql/1pokemon-raid-bot.sql https://raw.githubusercontent.com/studplus/PokemonRaidBot-1/master/sql/pokemon-raid-bot.sql && \
+wget -O sql/2raid-boss-pokedex.sql https://raw.githubusercontent.com/studplus/PokemonRaidBot-1/master/sql/raid-boss-pokedex.sql && \
+wget -O sql/3gohub-raid-boss-pokedex.sql https://raw.githubusercontent.com/studplus/PokemonRaidBot-1/master/sql/gohub-raid-boss-pokedex.sql && \
+wget -O config/.gitignore https://raw.githubusercontent.com/studplus/PokemonRaidBot-1/master/config/.gitignore && \
+wget -O config/config.json https://raw.githubusercontent.com/studplus/PokemonRaidBot-1/master/config/config.json.example && \
+wget -O config/telegram.json https://raw.githubusercontent.com/studplus/PokemonRaidBot-1/master/config/telegram.json.example && \
+wget -O custom/.gitignore https://raw.githubusercontent.com/studplus/PokemonRaidBot-1/master/custom/.gitignore  && \
+wget -O access/.gitignore https://raw.githubusercontent.com/studplus/PokemonRaidBot-1/master/access/.gitignore  && \
+wget -O docker-compose.yml https://raw.githubusercontent.com/studplus/PokemonRaidBot-1/master/docker-compose.yml && \
+wget -O docker-custom/cronjob https://raw.githubusercontent.com/studplus/PokemonRaidBot-1/master/docker-custom/cronjob  && \
+wget -O docker-custom/Dockerfile https://raw.githubusercontent.com/studplus/PokemonRaidBot-1/master/docker-custom/Dockerfile  && \
+wget -O docker-custom/apache2.conf https://raw.githubusercontent.com/studplus/PokemonRaidBot-1/master/docker-custom/apache2.conf  && \
+wget -O docker-custom/app.conf https://raw.githubusercontent.com/studplus/PokemonRaidBot-1/master/docker-custom/app.conf  && \
+wget -O docker-custom/entrypoint.sh https://raw.githubusercontent.com/studplus/PokemonRaidBot-1/master/docker-custom/entrypoint.sh  && \
+wget -O docker-custom/php.ini https://raw.githubusercontent.com/studplus/PokemonRaidBot-1/master/docker-custom/php.ini  && \
 chown -R www-data:www-data config/ && \
+chown -R www-data:www-data access/ && \
+chown -R www-data:www-data custom/ && \
+find config/ -type d -exec chmod 755 {} \; && \
+find config/ -type f -exec chmod 644 {} \; && \
+find access/ -type f -exec chmod 644 {} \; && \
+find access/ -type d -exec chmod 755 {} \; && \
+find custom/ -type f -exec chmod 644 {} \; && \
+find custom/ -type d -exec chmod 755 {} \; && \
+chown -R www-data:www-data log/tg-bots/ && \
 cd config/ && \
 chmod 0600 config.json  && \
 chmod 0600 telegram.json
@@ -214,12 +239,12 @@ chmod 0600 telegram.json
 This will:
 1. Create a directory `raidbot`.
 2. Create a file `docker-compose.yml`.
-3. Create a directory `access`. (here we store Access Permissions https://github.com/florianbecker/PokemonRaidBot#access-permissions)
+3. Create a directory `access`. (here we store Access Permissions https://github.com/studplus/PokemonRaidBot-1#access-permissions)
 4. Create a directory `config`. (here we store config files for the raidbot).
 Here you store your `config.json` and `telegram.json`.
-Examples for these files can be found @github https://github.com/florianbecker/PokemonRaidBot/tree/master/config
+Examples for these files can be found @github https://github.com/studplus/PokemonRaidBot-1/tree/master/config
 5. Create a directory `custom` for your custom translations etc.
-6. Download the Raidbot Database Schema: https://github.com/florianbecker/PokemonRaidBot/tree/master/sql and store it
+6. Download the Raidbot Database Schema: https://github.com/studplus/PokemonRaidBot-1/tree/master/sql and store it
 in the directory `sql`.
 7. Download Docker-configs and example Config-Files for the Raidbot
 
@@ -236,8 +261,17 @@ Your directory should now look like this:
   |-- custom
     |-- .gitignore
   |-- docker-custom/
+    |-- apache2.conf
+    |-- app.conf
     |-- cronjob
     |-- Dockerfile
+    |-- entrypoint.sh
+    |-- php.ini
+  |-- log/
+    |-- apache2
+    |-- tg-bots/
+      |-- dev-raid-bot-cleanup.log
+      |-- dev-raid-bot.log
   |-- sql/
     |-- 1pokemon-raid-bot.sql
     |-- 2raid-boss-pokedex.sql
@@ -245,10 +279,10 @@ Your directory should now look like this:
  ```
 
 - Check the `docker-compose.yml` for your customization. Change the `MYSQL_ROOT_PASSWORD`.
-- The `cronjob` should be changed according the cleanup https://github.com/florianbecker/PokemonRaidBot#cleanup and Raid-Overview https://github.com/florianbecker/PokemonRaidBot#raid-overview.
+- The `cronjob` should be changed according the cleanup https://github.com/studplus/PokemonRaidBot-1#cleanup and Raid-Overview https://github.com/studplus/PokemonRaidBot-1#raid-overview.
 - Comment the Line 29 in `Dockerfile`, if you don't want to download the images, it takes a bit longer on build.
 - Change the config.json to your needs.
-- Add some user-rights to the `access-Folder` https://github.com/florianbecker/PokemonRaidBot#access-permissions.
+- Add some user-rights to the `access-Folder` https://github.com/studplus/PokemonRaidBot-1#access-permissions.
 
 Now you are ready to start the Docker.
 
@@ -261,6 +295,25 @@ Look at the logs with:
 docker-compose logs -f raidbot
 
 docker-compose logs -f raidbot-db
+```
+
+List all running Dockers:
+```
+docker ps -a
+```
+
+Restart all Docker-Container:
+```
+docker container restart $(docker container ls -aq)
+```
+
+Stop and Delete one Docker-Container:
+```
+docker rm -f raidbot
+
+or more
+
+docker rm -f raidbot raidbot_db
 ```
 
 ## Config
