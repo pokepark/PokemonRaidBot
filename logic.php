@@ -1094,6 +1094,7 @@ function raid_get_gyms_list_keys($searchterm)
                 FROM      gyms
                 WHERE     gym_name LIKE '$searchterm%'
                 OR        gym_name LIKE '%$searchterm%'
+		AND       show_gym LIKE 1
                 ORDER BY
                   CASE
                     WHEN  gym_name LIKE '$searchterm%' THEN 1
