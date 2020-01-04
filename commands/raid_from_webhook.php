@@ -203,7 +203,7 @@ foreach ($update as $raid) {
 			$cleanup_statement->execute();
 			
 			while ($row = $cleanup_statement->fetch()) {
-				$url = RAID_PICTURE_URL."&pokemon=".$raid_info['pokemon']."&raid=".$raid_id;
+				$url = RAID_PICTURE_URL."?pokemon=".$raid_info['pokemon']."&raid=".$raid_id;
 				editMessageMedia($row['message_id'], $updated_msg['short'], $updated_keys, $row['chat_id'], ['disable_web_page_preview' => 'true'],false, $url);
 			}
         }
