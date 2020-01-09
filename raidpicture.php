@@ -229,8 +229,12 @@ if($time_now < $raid['end_time']) {
         $pokemon_id = str_pad($raid['pokedex_id'], 3, '0', STR_PAD_LEFT);
 
         // Getting the actual icon
-        $img_pokemon = imagecreatefrompng(IMAGES_PATH . "/pokemon/pokemon_icon_" . $pokemon_id . "_" . $pokemon_form . ".png");
-
+        if($raid['shiny'] == 1) {
+        	$img_pokemon = imagecreatefrompng(IMAGES_PATH . "/pokemon/pokemon_icon_" . $pokemon_id . "_" . $pokemon_form . "_shiny.png");    
+        } else {
+        	$img_pokemon = imagecreatefrompng(IMAGES_PATH . "/pokemon/pokemon_icon_" . $pokemon_id . "_" . $pokemon_form . ".png");
+        }
+	    
         // Position and size of the picture
         $dst_x = $dst_y = 100;
         $dst_w = $dst_h = $src_w = $src_h = 256;
