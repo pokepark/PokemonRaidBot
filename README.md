@@ -463,6 +463,7 @@ Authentication against the proxy server by username and password is currently no
 You can set several languages for the bot. Available languages are (A-Z):
  - DE (German)
  - EN (English)
+ - FI (Finnish)
  - FR (French)
  - IT (Italian)
  - NL (Dutch)
