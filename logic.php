@@ -1093,6 +1093,7 @@ function raid_get_gyms_list_keys($searchterm)
                 SELECT    id, gym_name
                 FROM      gyms
                 WHERE     gym_name LIKE '$searchterm%'
+		AND       show_gym LIKE 1
                 OR        gym_name LIKE '%$searchterm%'
 		AND       show_gym LIKE 1
                 ORDER BY
