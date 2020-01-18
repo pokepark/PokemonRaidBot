@@ -9,7 +9,7 @@
     "NO": "Raid",
     "FR": "Raid",
     "PL": "Rajd",
-    "FI": "TRANSLATE"
+    "FI": "Raidi"
   },
   "Xstars": {
     "NL": "Ex-Raid",
@@ -21,7 +21,7 @@
     "NO": "Ex-Raid",
     "FR": "Raid Ex",
     "PL": "Ex-Rajd",
-    "FI": "TRANSLATE"
+    "FI": "Ex-Raidi"
   },
   "5stars": {
     "NL": "5 Sterren",
@@ -33,7 +33,7 @@
     "NO": "Level 5",
     "FR": "Niveau 5",
     "PL": "5 poziom",
-    "FI": "TRANSLATE"
+    "FI": "5 tähden"
   },
   "4stars": {
     "NL": "4 Sterren",
@@ -45,7 +45,7 @@
     "NO": "Level 4",
     "FR": "Niveau 4",
     "PL": "4 poziom",
-    "FI": "TRANSLATE"
+    "FI": "4 tähden"
   },
   "3stars": {
     "NL": "3 Sterren",
@@ -57,7 +57,7 @@
     "NO": "Level 3",
     "FR": "Niveau 3",
     "PL": "3 poziom",
-    "FI": "TRANSLATE"
+    "FI": "3 tähden"
   },
   "2stars": {
     "NL": "2 Sterren",
@@ -69,7 +69,7 @@
     "NO": "Level 2",
     "FR": "Niveau 2",
     "PL": "2 poziom",
-    "FI": "TRANSLATE"
+    "FI": "2 tähden"
   },
   "1stars": {
     "NL": "1 Sterren",
@@ -81,7 +81,7 @@
     "NO": "Level 1",
     "FR": "Niveau 1",
     "PL": "1 poziom",
-    "FI": "TRANSLATE"
+    "FI": "1 tähden"
   },
   "0stars": {
     "NL": "Uitgeschakeld",
@@ -93,7 +93,7 @@
     "NO": "Deaktivert",
     "FR": "Désactivé",
     "PL": "Nieaktywny",
-    "FI": "TRANSLATE"
+    "FI": "Pois käytöstä"
   },
   "egg_5": {
     "NL": "Level 5 Ei",
@@ -105,7 +105,7 @@
     "NO": "Level 5 Egg",
     "FR": "Oeuf 5",
     "PL": "Jajko 5 poziom",
-    "FI": "TRANSLATE"
+    "FI": "Tason 5 Muna"
   },
   "egg_4": {
     "NL": "Level 4 Ei",
@@ -117,7 +117,7 @@
     "NO": "Level 4 Egg",
     "FR": "Oeuf 4",
     "PL": "Jajko 4 poziom",
-    "FI": "TRANSLATE"
+    "FI": "Tason 4 Muna"
   },
   "egg_3": {
     "NL": "Level 3 Ei",
@@ -129,7 +129,7 @@
     "NO": "Level 3 Egg",
     "FR": "Oeuf 3",
     "PL": "Jajko 3 poziom",
-    "FI": "TRANSLATE"
+    "FI": "Tason 3 Muna"
   },
   "egg_2": {
     "NL": "Level 2 Ei",
@@ -141,7 +141,7 @@
     "NO": "Level 2 Egg",
     "FR": "Oeuf 2",
     "PL": "Jajko 2 poziom",
-    "FI": "TRANSLATE"
+    "FI": "Tason 2 Muna"
   },
   "egg_1": {
     "NL": "Level 1 Ei",
@@ -153,7 +153,7 @@
     "NO": "Level 1 Egg",
     "FR": "Oeuf 1",
     "PL": "Jajko 1 poziom",
-    "FI": "TRANSLATE"
+    "FI": "Tason 1 Muna"
   },
   "egg_0": {
     "NL": "Raid Ei",
@@ -165,7 +165,7 @@
     "NO": "Level 0 Egg",
     "FR": "Oeuf 0",
     "PL": "Jajo",
-    "FI": "TRANSLATE"
+    "FI": "Raidi Muna"
   },
   "alone": {
     "NL": "Alleen",
@@ -177,7 +177,7 @@
     "NO": "Alene",
     "FR": "Tout seul",
     "PL": "Jestem sam",
-    "FI": "TRANSLATE"
+    "FI": "Yksin"
   },
   "here": {
     "NL": "Ben er",
@@ -189,7 +189,7 @@
     "NO": "Er her",
     "FR": "Sur place",
     "PL": "Na miejscu",
-    "FI": "TRANSLATE"
+    "FI": "Paikalla"
   },
   "late": {
     "NL": "Laat",
@@ -201,7 +201,7 @@
     "NO": "Sen",
     "FR": "En retard",
     "PL": "Spóźnie się",
-    "FI": "TRANSLATE"
+    "FI": "Myöhässä"
   },
   "cancellation": {
     "NL": "Afwezig",
@@ -213,7 +213,7 @@
     "NO": "Avlysning",
     "FR": "Finalement je ne viens pas",
     "PL": "Nie mogę przyjsć",
-    "FI": "TRANSLATE"
+    "FI": "Peruutus"
   },
   "raid_done": {
     "NL": "Raid beëindigd",
@@ -225,7 +225,7 @@
     "NO": "Raidet er ferdig",
     "FR": "Raid terminé",
     "PL": "Rajd skończony",
-    "FI": "TRANSLATE"
+    "FI": "Raidi tehty"
   },
   "vote_updated": {
     "NL": "Stem geüpdatet",
@@ -237,7 +237,7 @@
     "NO": "Stemme oppdatert",
     "FR": "Mise à jour du vote",
     "PL": "Głos zaktualizowany",
-    "FI": "TRANSLATE"
+    "FI": "Äänestys päivitetty"
   },
   "vote_time_first": {
     "NL": "Kies eerst een tijd!",
@@ -249,7 +249,7 @@
     "NO": "Foreslå tid først",
     "FR": "Votez pour une heure en premier !",
     "PL": "Wybierz najpierw godzinę",
-    "FI": "TRANSLATE"
+    "FI": "Äänestä ensin aikaa!"
   },
   "vote_time_future": {
     "NL": "Kies een toekomstige tijd!",
@@ -261,7 +261,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Äänestä tulevaa aikaa!"
   },
   "raid_info_no_voting": {
     "NL": "Dit is alleen raid info.",
@@ -273,7 +273,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Tämä on raidi info. Äänestys ei ole mahdollista!"
   },
   "raid_event_creation_limit_one": {
     "NL": "Gedurende raid hour kan je maar 1 raid aanmaken!",
@@ -285,7 +285,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Raiditunnin aikana voit luoda vain yhden raidin!"
   },
   "raid_event_creation_limit": {
     "NL": "Gedurende raid hour kan je maar RAID_EVENT_CREATION_LIMIT raids aanmaken!",
@@ -297,7 +297,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Raiditunnin aikana voit luoda vain RAID_EVENT_CREATION_LIMIT raidia!"
   },
   "still": {
     "NL": "nog",
@@ -309,7 +309,7 @@
     "NO": "fortsatt",
     "FR": "encore",
     "PL": "nadal",
-    "FI": "TRANSLATE"
+    "FI": "edelleen"
   },
   "raid_egg_opens": {
     "NL": "Gaat open",
@@ -321,7 +321,7 @@
     "NO": "Egget klekker",
     "FR": "POP",
     "PL": "Wyklucie",
-    "FI": "TRANSLATE"
+    "FI": "Avautuu"
   },
   "raid_egg_opens_day": {
     "NL": "Gaat open",
@@ -333,7 +333,7 @@
     "NO": "Klekker",
     "FR": "RDV",
     "PL": "Wykluje się",
-    "FI": "TRANSLATE"
+    "FI": "Avautuu"
   },
   "raid_egg_opens_at": {
     "NL": "om",
@@ -345,7 +345,7 @@
     "NO": "",
     "FR": "à",
     "PL": "o",
-    "FI": "TRANSLATE"
+    "FI": "klo"
   },
   "raid_until": {
     "NL": "Raid tot",
@@ -357,7 +357,7 @@
     "NO": "Raid fram til",
     "FR": "DEPOP",
     "PL": "Rajd trwa do",
-    "FI": "TRANSLATE"
+    "FI": "Raidi kunnes"
   },
   "exraid_pass": {
     "NL": "DEELNAME IS ALLEEN MOGELIJK MET EX-RAID PASS",
@@ -369,7 +369,7 @@
     "NO": "DET ER BARE MULIG Å DELTA OM DU HAR ETT EX-RAID PASS FOR DENNE GYMMEN",
     "FR": "PARTICIPATION POSSIBLE SEULEMENT SI VOUS AVEZ UN PASS RAID EX",
     "PL": "Rajdowanie możliwe tylko z zaproszeniem na EX-Rajd",
-    "FI": "TRANSLATE"
+    "FI": "VOIT OSALLISTUA VAIN EX-RAIDI PASSILLA"
   },
   "no_participants_yet": {
     "NL": "Nog geen deelnemers",
@@ -381,7 +381,7 @@
     "NO": "Ingen deltaker ennå",
     "FR": "Aucun participant",
     "PL": "Brak chętnych",
-    "FI": "TRANSLATE"
+    "FI": "Ei osallistujia"
   },
   "import": {
     "NL": "Import",
@@ -393,7 +393,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Tuo"
   },
   "finished": {
     "NL": "Klaar",
@@ -405,7 +405,7 @@
     "NO": "Ferdig",
     "FR": "terminé",
     "PL": "Skończony",
-    "FI": "TRANSLATE"
+    "FI": "Valmis"
   },
   "cancel": {
     "NL": "Annuleren",
@@ -417,7 +417,7 @@
     "NO": "Avbryt",
     "FR": "Annuler",
     "PL": "Odwołany",
-    "FI": "TRANSLATE"
+    "FI": "Peruuta"
   },
   "from": {
     "NL": "van",
@@ -453,7 +453,7 @@
     "NO": "Ingen deltakere",
     "FR": "Aucun participant",
     "PL": "Brak uczestników",
-    "FI": "TRANSLATE"
+    "FI": "Ei osallistujia"
   },
   "late_participants": {
     "NL": "Let op er zijn spelers later.",
@@ -465,7 +465,7 @@
     "NO": "Noen deltakere er forsinket",
     "FR": "Certains participants sont en retard",
     "PL": "Ktoś się spóźni",
-    "FI": "TRANSLATE"
+    "FI": "Osa osallistujista ovat myöhässä."
   },
   "late_participants_wait": {
     "NL": "A.u.b RAID_LATE_TIME wachten!",
@@ -477,7 +477,7 @@
     "NO": "Vær grei og vent RAID_LATE_TIME minutter!",
     "FR": "Attendez s'il vous plaît RAID_LATE_TIME minutes !",
     "PL": "Poczekaj RAID_LATE_TIME minut!",
-    "FI": "TRANSLATE"
+    "FI": "Odottakaa RAID_LATE_TIME minuuttia!"
   },
   "select_gym_first_letter": {
     "NL": "Selecteer alstublieft de eerste letter van de gym:",
@@ -489,7 +489,7 @@
     "NO": "Hva er den første bokstaven i gym navnet",
     "FR": "Sélectionne la première lettre de l'arène",
     "PL": "Wybierz pierwszą litere nazwy Areny",
-    "FI": "TRANSLATE"
+    "FI": "Valitse salin ensimmäinen kirjain:"
   },
   "select_gym": {
     "NL": "Beginletter geselecteerd.",
@@ -501,7 +501,7 @@
     "NO": "Første bokstav er valgt",
     "FR": "Première lettre sélectionnée",
     "PL": "Pierwsza litera wybrana",
-    "FI": "TRANSLATE"
+    "FI": "Ensimmäinen kirjain valittu."
   },
   "raid_already_exists": {
     "NL": "Raid bestaat al!",
@@ -513,7 +513,7 @@
     "NO": "Raidet finnes allerede!",
     "FR": "Ce raid existe déjà",
     "PL": "Rajd już istnieje",
-    "FI": "TRANSLATE"
+    "FI": "Raidi on jo olemassa!"
   },
   "create_raid": {
     "NL": "Begin Raid in",
@@ -525,7 +525,7 @@
     "NO": "Opprett raid i",
     "FR": "Créer un raid",
     "PL": "Utwórz Rajd w",
-    "FI": "TRANSLATE"
+    "FI": "Luo Raidi"
   },
   "select_raid_level_to_continue": {
     "NL": "Om echt door te gaan, selecteer een raid level",
@@ -537,7 +537,7 @@
     "NO": "Velg raid level for å fortsette",
     "FR": "Pour continuer, sélectionne un niveau de raid",
     "PL": "Żeby kontynuować, wybierz poziom Rajdu",
-    "FI": "TRANSLATE"
+    "FI": "Jatkaaksesi valitse raidin taso"
   },
   "select_raid_level": {
     "NL": "Selecteer Raid level",
@@ -549,7 +549,7 @@
     "NO": "Velg raid level",
     "FR": "Sélectionne un niveau de raid",
     "PL": "Wybierz poziom Rajdu",
-    "FI": "TRANSLATE"
+    "FI": "Valitse raidin taso"
   },
   "disable_raid_level": {
     "NL": "Zet raid level uit",
@@ -561,7 +561,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Poista raidi taso käytöstä"
   },
   "disabled_raid_level": {
     "NL": "Uitgezette raid levels",
@@ -573,7 +573,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Raidi taso ei käytössä"
   },
   "trainerinfo": {
     "NL": "Trainerinfo",
@@ -585,7 +585,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Kouluttajatieto"
   },
   "your_trainer_info": {
     "NL": "Jou trainer informatie:",
@@ -597,7 +597,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Kouluttajatietosi:"
   },
   "trainer_message_share": {
     "NL": "Trainer informatie delen",
@@ -609,7 +609,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Jaa kouluttajaviesti"
   },
   "trainer_message_delete": {
     "NL": "Trainer informatie verwijderen",
@@ -621,7 +621,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Poista kouluttajaviesti"
   },
   "delete_trainer_message_from_chat": {
     "NL": "Verwijder het trainer bericht van de chat?",
@@ -633,7 +633,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Poista kouluttajaviesti chatista?"
   },
   "deleted_trainer_message": {
     "NL": "Verwijder het trainer bericht!",
@@ -645,7 +645,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Kouluttajaviesti poistettu!"
   },
   "trainer_message_share_or_delete": {
     "NL": "Je kan ook je trainer bericht delen of verwijderen.",
@@ -657,7 +657,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Voit myos jakaa kouluttajaviestin chatin kanssa."
   },
   "trainerinfo_set_yours": {
     "NL": "Geef je trainer informatie:",
@@ -669,7 +669,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Aseta trainer datasi:"
   },
   "trainer_set_your_info": {
     "NL": "Via 'Trainerinfo' kan je, je trainer data inzien en veranderen via de 'Team' en 'Level' knoppen.",
@@ -681,7 +681,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Voit tarkastella kouluttajatietojasi 'kouluttajatieto' komennolla. Muuta tietojasi 'Joukkue' ja 'Taso' -napeilla."
   },
   "trainer_set_your_info_done": {
     "NL": "Als je klaar ben, druk je nogmaals op 'Trainerinfo'. Je trainer data zal dan worden verborgen.",
@@ -693,7 +693,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Kun olet valmis, paina uudelleen 'Kouluttajatieto'. Kouluttajatietosi ovat jälleen piilossa."
   },
   "trainer_info_share_with_chat": {
     "NL": "Deel het bericht met een chat, om je tainer data in te zien of te veranderen ",
@@ -705,7 +705,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Jaa viesti kouluttajatietojen näyttämistä ja muuttamista varten chatin kanssa:"
   },
   "trainer_info_no_chats": {
     "NL": "Geen chat gevonden! Geen chat gevonden om je trainer data mee te delen.",
@@ -717,7 +717,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Chatteja ei löytynyt! Et voi jakaa viestiä tietojen näyttämiseen ja muuttamiseen!"
   },
   "name": {
     "NL": "Naam",
@@ -729,7 +729,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Nimi"
   },
   "team": {
     "NL": "Team",
@@ -741,7 +741,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Joukkue"
   },
   "team_saved": {
     "NL": "Team opgeslagen!",
@@ -753,7 +753,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Joukkue tallennettu!"
   },
   "team_select": {
     "NL": "Selecteer een team:",
@@ -765,7 +765,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Valitse joukkueesi:"
   },
   "level": {
     "NL": "Level",
@@ -777,7 +777,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Taso"
   },
   "level_saved": {
     "NL": "Level opgeslagen!",
@@ -789,7 +789,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Taso tallennettu!"
   },
   "level_select": {
     "NL": "Selecteer je level:",
@@ -801,7 +801,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Valitse tasosi:"
   },
   "gym": {
     "NL": "Gym",
@@ -813,7 +813,7 @@
     "NO": "Gym",
     "FR": "Arène",
     "PL": "Arena",
-    "FI": "TRANSLATE"
+    "FI": "Sali"
   },
   "gym_saved": {
     "NL": "Gym opgeslagen.",
@@ -825,7 +825,7 @@
     "NO": "Gym lagret",
     "FR": "Arène sauvegardée",
     "PL": "Arena zapisana",
-    "FI": "TRANSLATE"
+    "FI": "Sali tallennettu."
   },
   "hidden_gym": {
     "NL": "Verborgen gym",
@@ -837,7 +837,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Piilotettu sali"
   },
   "hidden_gyms": {
     "NL": "Verborgen gyms",
@@ -849,7 +849,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Piilotetut salit"
   },
   "no_hidden_gyms": {
     "NL": "Geen verborgen gyms gevonden",
@@ -861,7 +861,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Piilotettuja saleja ei löytynyt!"
   },
   "show_gym": {
     "NL": "Laat gym zien",
@@ -873,7 +873,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Näytä sali"
   },
   "hide_gym": {
     "NL": "Verberg gym",
@@ -885,7 +885,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Piilota sali"
   },
   "normal_gym": {
     "NL": "Normale gym",
@@ -897,7 +897,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Tavallinen sali"
   },
   "ex_gym": {
     "NL": "Ex-raid gym",
@@ -909,7 +909,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Ex-raidi sali"
   },
   "extended_gym_details": {
     "NL": "Extra gym informatie:",
@@ -921,7 +921,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Salin lisätiedot:"
   },
   "change_extended_gym_details": {
     "NL": "Verander de extra gym informatie?",
@@ -933,7 +933,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Muuta salin lisätietoja?"
   },
   "new_extended_gym_detail": {
     "NL": "Nieuwe extra gym informatie:",
@@ -945,7 +945,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Salin uudet lisätiedot:"
   },
   "gym_not_found": {
     "NL": "Error! Geen gym gevonden!",
@@ -957,7 +957,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Virhe! Salia ei löytynyt!"
   },
   "gym_coordinates_format_error": {
     "NL": "Error! Stuur de coordinaten in het volgende formaat <code>Latitude,Longitude</code> om de nieuwe gym toe te voegen!",
@@ -969,7 +969,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Virhe! Anna koordinaatit muotossa <code>Leveysaste,Pituusaste</code> lisätäksesi uuden salin!"
   },
   "gym_coordinates_format_example": {
     "NL": "Als voorbeeld: <code>/addgym 51.516263,4.377755</code>",
@@ -981,7 +981,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Esimerkiksi: <code>/addgym 52.516263,13.377755</code>"
   },
   "gym_gps_coordinates_format_error": {
     "NL": "Error! Stuur de coordinaten in het volgende formaat: <code>Latitude,Longitude</code>",
@@ -993,7 +993,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Virhe!  Virhe! Anna koordinaatit seuraavassa muodossa: <code>Leveysaste,Pituusaste</code>"
   },
   "gym_gps_instructions": {
     "NL": "Om de gym coordinaten te veranderen stuur /gymgps <code>gym id, nieuwe gym coordinaten</code>!",
@@ -1005,7 +1005,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Muuttaaksesi salin koordinaatteja komenna gymgps <code>salin id, uudet koordinaatit</code>!"
   },
   "gym_gps_example": {
     "NL": "Als voorbeeld: <code>/gymgps 34, 51.516263,4.377755</code>",
@@ -1017,7 +1017,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Esimerkiksi: <code>/gymgps 34, 52.516263,13.377755</code>"
   },
   "gym_gps_added": {
     "NL": "Gym coordinaten succesvol toegevoegd!",
@@ -1029,7 +1029,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Salin koordinaatit lisätty onnistuneesti!"
   },
   "gym_id_gps_missing": {
     "NL": "Error! gym id of coordinaten mist!",
@@ -1041,7 +1041,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Virhe! Salin id tai koordinaatit puuttuvat!"
   },
   "gymname_then_location": {
     "NL": "Gebruik het commando /gymname <code>Naam van de gym</code> om deze aan de coordinaten vast te zetten. Daarna kan je weer een locatie delen!",
@@ -1053,7 +1053,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Käytä komentoa /gymname <code>Salin nimi</code> asettaaksesi salinimen aiemmin annetuille koordinaateille. Sitten voit antaa jälleen sijainnin!"
   },
   "gym_added": {
     "NL": "De gym is succesvol toegevoegd!",
@@ -1065,7 +1065,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Sali lisätty onnistuneesti!"
   },
   "gym_updated": {
     "NL": "De gym is succesvol aangepast!",
@@ -1077,7 +1077,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Sali päivitetty onnistuneesti!"
   },
   "gym_delete": {
     "NL": "Verwijder gym",
@@ -1089,7 +1089,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Poista sali"
   },
   "delete_this_gym": {
     "NL": "Wilt u echt de gym verwijderen?",
@@ -1101,7 +1101,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Vahvista salin poisto?"
   },
   "deleted_this_gym": {
     "NL": "Gym succesvol verwijderd!",
@@ -1113,7 +1113,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Sali poistettu onnistuneesti!"
   },
   "gym_details": {
     "NL": "Gym gegevens",
@@ -1125,7 +1125,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Salin yksityiskohdat"
   },
   "show_gym_details": {
     "NL": "Laat de gym gegevens zien",
@@ -1137,7 +1137,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Näytä salin yksityiskohdat"
   },
   "gym_note_added": {
     "NL": "Gym info toegevoegd!",
@@ -1149,7 +1149,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Salin muistiinpano tallennettu onnistuneesti!"
   },
   "gym_note_deleted": {
     "NL": "Gym info verwijderd!",
@@ -1161,7 +1161,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "alin muistiinpano poistettu onnistuneesti!"
   },
   "gym_note_new": {
     "NL": "Nieuwe gym info:",
@@ -1173,7 +1173,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Uusi sali muistiinpano:"
   },
   "gym_id_note_missing": {
     "NL": "Error! Gym id of info mist!",
@@ -1185,7 +1185,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Virhe! Salin id tai muistiinpano puuttuu!"
   },
   "gym_note_instructions": {
     "NL": "Om de gym info te veranderen stuur /gymnote <code>gym id, nieuwe gym info</code>!",
@@ -1197,7 +1197,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Vaihtaaksesi salin muistiinpanoa komenna /gymnote <code>salin id, uusi muistiinpano</code>!"
   },
   "gym_note_example": {
     "NL": "Als voorbeeld: <code>/gymnote 34, ontmoetingsplek: achter het gebouw</code>!",
@@ -1209,7 +1209,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Esimerkiksi: <code>/gymnote 34, Tapaamispiste: Rakennuksen takana</code>!"
   },
   "gym_note_reset": {
     "NL": "Om de gym info te verwijderen stuur /gymnote <code>gym id, reset</code>.",
@@ -1221,7 +1221,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Poistaaksesi salin muistiinpanon komenna /gymnote <code>salin id, reset</code>."
   },
   "gym_note_reset_example": {
     "NL": "Als voorbeeld: <code>/gymnote 34, reset</code>.",
@@ -1233,7 +1233,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Esimerkiksi: <code>/gymnote 34, reset</code>"
   },
   "gym_address_instructions": {
     "NL": "Om het adres aan te passen stuur /gymaddress <code>gym id, het nieuwe gym adres</code>!",
@@ -1245,7 +1245,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Vaihtaaksesi salin osoitetta komenna /gymaddress <code>salin id, uusi salin osoite</code>!"
   },
   "gym_address_example": {
     "NL": "Als voorbeeld <code>/gymaddress 34, Markt 61, 3131 CR Vlaardingen </code>!",
@@ -1257,7 +1257,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Esimeriksi: <code>/gymaddress 34, Mannerheiminkatu, 49400 Hamina</code>!"
   },
   "gym_address_reset": {
     "NL": "Om het gym adres te verwijderen stuur /gymaddress <code>gym id, reset</code>.",
@@ -1269,7 +1269,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Poistaaksesi salin osoitteen komenna /gymaddress <code>salin id, reset</code>."
   },
   "gym_address_reset_example": {
     "NL": "Als voorbeeld <code>/gymaddress 34, reset</code>",
@@ -1281,7 +1281,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Esimerkiksi: <code>/gymaddress 34, reset</code>"
   },
   "gym_address_added": {
     "NL": "Gym adres succesvol toegevoegd!",
@@ -1293,7 +1293,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Salin osoite tallennettu onnistuneesti!"
   },
   "gym_id_address_missing": {
     "NL": "Error! gym id of adres mist!",
@@ -1305,7 +1305,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Virhe! Salin id tai osoite puuttuu!"
   },
   "gym_address_deleted": {
     "NL": "Gym adres succesvol verwijderd!",
@@ -1317,7 +1317,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Salin osoite poistettu onnistuneesti!"
   },
   "select_raid_boss": {
     "NL": "Selecteer Raid baas",
@@ -1329,7 +1329,7 @@
     "NO": "Velg raid boss",
     "FR": "Sélectionne un boss de raid",
     "PL": "Wybierz Bossa Rajdu",
-    "FI": "TRANSLATE"
+    "FI": "Valitse raidibossi"
   },
   "select_pokemon": {
     "NL": "Selecteer Pokemon",
@@ -1341,7 +1341,7 @@
     "NO": "Velg Pokemon",
     "FR": "Sélectionne un Pokémon",
     "PL": "Wybierz Pokemona",
-    "FI": "TRANSLATE"
+    "FI": "Valitse Pokemoni"
   },
   "raid_saved": {
     "NL": "Raid opgeslagen:",
@@ -1353,7 +1353,7 @@
     "NO": "Raid lagret",
     "FR": "Raid sauvegardé",
     "PL": "Rajd zapisany",
-    "FI": "TRANSLATE"
+    "FI": "Raidi tallennettu:"
   },
   "raid_boss": {
     "NL": "Raid baas",
@@ -1365,7 +1365,7 @@
     "NO": "Raidboss",
     "FR": "Boss de raid",
     "PL": "Boss Rajdu",
-    "FI": "TRANSLATE"
+    "FI": "Raidibossi"
   },
   "raid_boss_saved": {
     "NL": "Raid baas opgeslagen!",
@@ -1377,7 +1377,7 @@
     "NO": "Raid boss lagret!",
     "FR": "Boss de raid sauvegardé",
     "PL": "Boss Rajdu zapisany!",
-    "FI": "TRANSLATE"
+    "FI": "Raidibossi tallennettu!"
   },
   "excluded_raid_bosses": {
     "NL": "De volgende raid bazen worden niet overgezet:",
@@ -1389,7 +1389,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Tuonnista poissuljetut raidibossit:"
   },
   "exclude_raid_boss_or_import": {
     "NL": "Selecteer raid bazen om ze niet over te zetten of importeer via 'Save'",
@@ -1401,7 +1401,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Valitse tuonnista poissuljettavat raidibossit tai lopeta tuonti valitsemalla 'Tallenna'"
   },
   "import_raid_bosses": {
     "NL": "Raid bazen importeren?",
@@ -1413,7 +1413,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Tuo raidibossit?"
   },
   "import_done": {
     "NL": "Import klaar!",
@@ -1425,7 +1425,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Tuonti valmis!"
   },
   "set_gym_name_and_team": {
     "NL": "Optioneel - Gym naam and Gym Team:",
@@ -1437,7 +1437,7 @@
     "NO": "Valgfri - Gym navn og gym team:",
     "FR": "Optionnel - Couleur de l'arène",
     "PL": "Opcjonalnie - Nazwa Areny i kolor Areny",
-    "FI": "TRANSLATE"
+    "FI": "Valinnainen - Salin nimi ja salin joukkue:"
   },
   "set_gym_name_command": {
     "NL": "/gymname <code>Naam van de Gym</code>",
@@ -1449,7 +1449,7 @@
     "NO": "/gymname <code>Navn på gymmen</code>",
     "FR": "/gymname <code>Nom de l'arène</code>",
     "PL": "/gymname <code>Nazwa Areny</code>",
-    "FI": "TRANSLATE"
+    "FI": "/gymname <code>Salin nimi</code>"
   },
   "set_gym_team": {
     "NL": "Optioneel - zet Gym en Team",
@@ -1461,7 +1461,7 @@
     "NO": "Valgfri - Fortell hvilken Gym og Team",
     "FR": "Optionnel - choisir la couleur de l'arène",
     "PL": "Opcjonalnie - Wybierz kolor Areny",
-    "FI": "TRANSLATE"
+    "FI": "Valinnainen - aseta sali ja joukkue"
   },
   "set_gym_team_command": {
     "NL": "/team <code>Mystic/Valor/Instinct/Blauw/Rood/Geel</code>",
@@ -1473,7 +1473,7 @@
     "NO": "/team <code>Mystic/Valor/Instinct/Blue/Red/Yellow</code>",
     "FR": "/team <code>Sagesse/Bravoure/Intuition/Bleu/Rouge/Jaune</code>",
     "PL": "/team <code>Niebieski/Czerowny/Żółty</code>",
-    "FI": "TRANSLATE"
+    "FI": "/team <code>Mystic/Valor/Instinct/Blue/Red/Yellow</code>"
   },
   "start_date_time": {
     "NL": "Starttijd gezet op",
@@ -1485,7 +1485,7 @@
     "NO": "Startid satt til",
     "FR": "Heure de début réglée à",
     "PL": "Czas startu ustawiony na",
-    "FI": "TRANSLATE"
+    "FI": "Aloitusaika asetettu klo"
   },
   "end_time": {
     "NL": "Eindtijd gezet op ",
@@ -1497,7 +1497,7 @@
     "NO": "Ferdig klokken",
     "FR": "Heure de fin réglée à",
     "PL": "Czas zakończenia ustawiony na",
-    "FI": "TRANSLATE"
+    "FI": "Loppuaika asetettu klo"
   },
   "raid_select_date": {
     "NL": "Selecteer de <b>datum</b> van de raid:",
@@ -1509,7 +1509,7 @@
     "NO": "Velg <b>dato</b> for raidet:",
     "FR": "Sélectionne la <b>date</b> du raid",
     "PL": "Wybierz <b>date</b> Rajdu",
-    "FI": "TRANSLATE"
+    "FI": "Valitse raidin <b>päivämäärä</b>:"
   },
   "raid_select_hour": {
     "NL": "Selecteer het <b>uur</b> van de raid:",
@@ -1521,7 +1521,7 @@
     "NO": "Velg <b>tid>/b> for raidet:",
     "FR": "Sélectionne l'<b>heure</b> du raid",
     "PL": "Wybierz <b>godzinę</b> rajdu:",
-    "FI": "TRANSLATE"
+    "FI": "Valitse raidin <b>tunti</b>:"
   },
   "raid_select_start_time": {
     "NL": "Selecteer de <b>start tijd</b> van de raid:",
@@ -1533,7 +1533,7 @@
     "NO": "Velg <b>når</b> raidet starter:",
     "FR": "Sélectionne l'<b>heure de POP</b> du raid",
     "PL": "WYbierz <b>czas startu</b> Rajdu",
-    "FI": "TRANSLATE"
+    "FI": "Valitse raidin <b>aloitusaika</b>:"
   },
   "minutes": {
     "NL": "minuten",
@@ -1545,7 +1545,7 @@
     "NO": "Minutter",
     "FR": "minutes",
     "PL": "minuty",
-    "FI": "TRANSLATE"
+    "FI": "minuuttia"
   },
   "minutes_short": {
     "NL": "min",
@@ -1557,7 +1557,7 @@
     "NO": "min",
     "FR": "min",
     "PL": "min",
-    "FI": "TRANSLATE"
+    "FI": "min"
   },
   "raid_starts_when": {
     "NL": "Wanneer gaat het Raid ei <b>open</b>?",
@@ -1569,7 +1569,7 @@
     "NO": "Når <b>starter</b> raidet?",
     "FR": "Quand <b>démarre</b> le raid ?",
     "PL": "Kiedy Rajd się <b>zaczyna</b>?",
-    "FI": "TRANSLATE"
+    "FI": "Mihin aikaan raidi <b>alkaa</b>?"
   },
   "raid_starts_when_minutes": {
     "NL": "Wanneer <b>begint</b> de Raid?",
@@ -1581,7 +1581,7 @@
     "NO": "Hvor mange minutter til raidet <b>starter</b>?",
     "FR": "Dans combien de minutes le raid <b>commence</b> ?",
     "PL": "Za ile minut <b>zacznie się</b> Rajd?",
-    "FI": "TRANSLATE"
+    "FI": "Monenko minuutin päästä raidi <b>alkaa</b>?"
   },
   "raid_starts_when_clocktime_view": {
     "NL": "klok",
@@ -1593,7 +1593,7 @@
     "NO": "Klokkevisning",
     "FR": "Voir l'heure",
     "PL": "Widok zegara",
-    "FI": "TRANSLATE"
+    "FI": "Kellonaika näkymä"
   },
   "raid_starts_when_minutes_view": {
     "NL": "Minuten",
@@ -1605,7 +1605,7 @@
     "NO": "Minuttvisning",
     "FR": "Voir les minutes",
     "PL": "Pokaż minuty",
-    "FI": "TRANSLATE"
+    "FI": "Minuutti näkymä"
   },
   "raid_starts_when_view_changed": {
     "NL": "Overzicht verandert!",
@@ -1617,7 +1617,7 @@
     "NO": "Visning endret!",
     "FR": "L'affichage du temps à changé !",
     "PL": "Widok zmieniony!",
-    "FI": "TRANSLATE"
+    "FI": "Näkymä vaihdettu!"
   },
   "is_raid_active": {
     "NL": "Raid is al actief!",
@@ -1629,7 +1629,7 @@
     "NO": "Raidet er allerede aktivt!",
     "FR": "Le raid est déjà en cours",
     "PL": "Rajd się już zaczął",
-    "FI": "TRANSLATE"
+    "FI": "Raidi on jo aktiivinen!"
   },
   "raid_access_denied": {
     "NL": "Je hebt geen rechten om deze raid aan te passen!",
@@ -1641,7 +1641,7 @@
     "NO": "Du har ikke tillatelse til å redigere dette raidet!",
     "FR": "Tu n'es pas autorisé à modifier ce raid",
     "PL": "Nie masz uprawnień aby edytować Rajd!",
-    "FI": "TRANSLATE"
+    "FI": "Et voi muuttaa tätä raidia!"
   },
   "no_active_raids_found": {
     "NL": "Geen actieve raids gevonden!",
@@ -1653,7 +1653,7 @@
     "NO": "Ingen aktive raid i systemet!",
     "FR": "Aucun raid en cours trouvé dans le système",
     "PL": "W tym momencie nie ma żadnych aktywnych Rajdów w systemie",
-    "FI": "TRANSLATE"
+    "FI": "Järjestelmästä ei löytynyt aktiivisia raideja!"
   },
   "no_active_raids_shared": {
     "NL": "Geen van de actieve raid is gedeeld!",
@@ -1665,7 +1665,7 @@
     "NO": "Ingen av de aktive raidene ble delt!",
     "FR": "Aucun raid en cours n'a été partagé",
     "PL": "Żaden z aktywnych rajdów nie został udostępniony!",
-    "FI": "TRANSLATE"
+    "FI": "Yhtäkään aktiivista raidia ei jaettu!"
   },
   "no_active_raids": {
     "NL": "Geen actieve raids!",
@@ -1677,7 +1677,7 @@
     "NO": "Det er ingen aktive raid akkurat nå!",
     "FR": "Aucun raid en cours",
     "PL": "Brak aktywnych Rajdów w tej chwili!",
-    "FI": "TRANSLATE"
+    "FI": "Ai aktiivisia raideja tällähetkellä!"
   },
   "pokemon_saved": {
     "NL": "Pokemon opgeslagen: ",
@@ -1689,7 +1689,7 @@
     "NO": "Pokemon lagret:",
     "FR": "Pokémon enregistré",
     "PL": "Pokemon zapisany:",
-    "FI": "TRANSLATE"
+    "FI": "Pokemoni tallennettu:"
   },
   "edit_pokemon": {
     "NL": "Pokemon aanpassen",
@@ -1701,7 +1701,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Muuta Pokemonia"
   },
   "pokedex_start": {
     "NL": "Raid bazen lijst aanpassen",
@@ -1713,7 +1713,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Listaa, muuta ja tuo raidibosseja"
   },
   "pokedex_raid_pokemon": {
     "NL": "Lijst actuele Raid bazen",
@@ -1725,7 +1725,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Listaa tämänhetkiset raidibossit"
   },
   "pokedex_list_of_all": {
     "NL": "Lijst met alle pokemon.",
@@ -1737,7 +1737,7 @@
     "NO": "Liste over alle pokemon",
     "FR": "Liste de tous les Pokémon",
     "PL": "Lista wszystkich Pokemonów.",
-    "FI": "TRANSLATE"
+    "FI": "Listaa kaikki Pokemonit."
   },
   "pokedex_not_found": {
     "NL": "Error! Geen Pokemon gevonden!",
@@ -1749,7 +1749,7 @@
     "NO": "Feil: Ingen pokemon funnet!",
     "FR": "Erreur, aucun Pokémon trouvé !",
     "PL": "Błąd! Pokemona nie znaleziono!",
-    "FI": "TRANSLATE"
+    "FI": "Virhe! Pokemoneja ei löytynyt!"
   },
   "pokedex_edit_pokemon": {
     "NL": "Selecteer een Pokemon / Raid baas om hem te bewerken",
@@ -1761,7 +1761,7 @@
     "NO": "Velg pokemon / raid boss som skal redigeres:",
     "FR": "Sélectionne un Pokémon / boss de raid à modifier",
     "PL": "Wybierz Bossa Rajdu / Pokemona żeby edytować:",
-    "FI": "TRANSLATE"
+    "FI": "Valitse Pokemoni / raidibossi muokattavaksi:"
   },
   "pokedex_raid_level": {
     "NL": "Raid level",
@@ -1773,7 +1773,7 @@
     "NO": "Raid level",
     "FR": "Niveau du raid",
     "PL": "Poziom Rajdu",
-    "FI": "TRANSLATE"
+    "FI": "Raidin taso"
   },
   "pokedex_all_raid_level": {
     "NL": "Alle Raid level",
@@ -1785,7 +1785,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Kaikki raiditasot"
   },
   "pokedex_new_raid_level": {
     "NL": "Nieuw Raid level",
@@ -1797,7 +1797,7 @@
     "NO": "Ny raid level",
     "FR": "Nouveau niveau de raid",
     "PL": "Nowy poziom Rajdu",
-    "FI": "TRANSLATE"
+    "FI": "Uusi raiditaso"
   },
   "pokedex_current_raid_level": {
     "NL": "Actuele Raid level:",
@@ -1809,7 +1809,7 @@
     "NO": "Nåværende raid level:",
     "FR": "Niveau actuel du raid",
     "PL": "Aktualny poziom Rajdu:",
-    "FI": "TRANSLATE"
+    "FI": "Nykyinen raiditaso:"
   },
   "pokedex_select_action": {
     "NL": "Selecteer een eigenschap om deze aan te passen:",
@@ -1821,7 +1821,7 @@
     "NO": "Velg egenskap som skal endres:",
     "FR": "Sélectionne l'option à changer",
     "PL": "Wybierz aby edytować:",
-    "FI": "TRANSLATE"
+    "FI": "Valitse muutettava ominaisuus:"
   },
   "pokedex_cp": {
     "NL": "CP:",
@@ -1833,7 +1833,7 @@
     "NO": "CP:",
     "FR": "PC",
     "PL": "CP",
-    "FI": "TRANSLATE"
+    "FI": "CP:"
   },
   "pokedex_min_cp": {
     "NL": "Min CP",
@@ -1845,7 +1845,7 @@
     "NO": "Min CP",
     "FR": "PC Min",
     "PL": "Min CP",
-    "FI": "TRANSLATE"
+    "FI": "Min CP"
   },
   "pokedex_max_cp": {
     "NL": "Max CP",
@@ -1857,7 +1857,7 @@
     "NO": "Maks CP",
     "FR": "PC Max",
     "PL": "Max CP",
-    "FI": "TRANSLATE"
+    "FI": "Max CP"
   },
   "pokedex_min_weather_cp": {
     "NL": "Min boosted CP",
@@ -1869,7 +1869,7 @@
     "NO": "Min boostet CP",
     "FR": "PC Min boosté",
     "PL": "Min boosted CP",
-    "FI": "TRANSLATE"
+    "FI": "Min buustattu CP"
   },
   "pokedex_max_weather_cp": {
     "NL": "Max boosted CP",
@@ -1881,7 +1881,7 @@
     "NO": "Maks boostet CP",
     "FR": "PC Max boosté",
     "PL": "Max Boosted CP",
-    "FI": "TRANSLATE"
+    "FI": "Max buustattu CP"
   },
   "pokedex_current_cp": {
     "NL": "Actuele CP:",
@@ -1893,7 +1893,7 @@
     "NO": "Nåværende CP:",
     "FR": "PC actuel",
     "PL": "Aktualne CP",
-    "FI": "TRANSLATE"
+    "FI": "Nykyinen CP:"
   },
   "pokedex_weather": {
     "NL": "Weer",
@@ -1905,7 +1905,7 @@
     "NO": "Vær",
     "FR": "Météo",
     "PL": "Pogoda",
-    "FI": "TRANSLATE"
+    "FI": "Sää"
   },
   "pokedex_current_weather": {
     "NL": "Actuele weer:",
@@ -1917,7 +1917,7 @@
     "NO": "Værforhold:",
     "FR": "Météo actuelle",
     "PL": "Aktualna pogoda:",
-    "FI": "TRANSLATE"
+    "FI": "Tämänhetkinen sää:"
   },
   "pokedex_new_weather": {
     "NL": "Nieuw weer:",
@@ -1929,7 +1929,7 @@
     "NO": "Været har endret seg:",
     "FR": "Nouvelle météo",
     "PL": "Nowa pogoda:",
-    "FI": "TRANSLATE"
+    "FI": "Uusi sää:"
   },
   "how_long_raid": {
     "NL": "Hoe lang <b>duurt</b> de Raid?",
@@ -1941,7 +1941,7 @@
     "NO": "Hvor lenge varer raidet?",
     "FR": "Dans combien de temps <b>termine</b> le raid ?",
     "PL": "Jak długo Rajd <b>będzie trwać</b>?",
-    "FI": "TRANSLATE"
+    "FI": "Kauanko raidi <b>kestää</b>?"
   },
   "lead_time_set_to": {
     "NL": "Doorlooptijd ingesteld op",
@@ -1953,7 +1953,7 @@
     "NO": "Ledetid er satt til",
     "FR": "Délai réglé sur",
     "PL": "Czas realizacji ustawiony na",
-    "FI": "TRANSLATE"
+    "FI": "Ennakkoajaksi asetettu"
   },
   "select_gym_name": {
     "NL": "Selecteer Gym:",
@@ -1965,7 +1965,7 @@
     "NO": "Velg Gym:",
     "FR": "Sélectionne l'arène",
     "PL": "Wybierz Arene:",
-    "FI": "TRANSLATE"
+    "FI": "Valitse sali:"
   },
   "here_we_go": {
     "NL": "Hier gaan we!",
@@ -1977,7 +1977,7 @@
     "NO": "Kjør på!",
     "FR": "C'est parti !",
     "PL": "Zaczynamy!",
-    "FI": "TRANSLATE"
+    "FI": "Nyt mennään!"
   },
   "create_a_raid": {
     "NL": "Maak een Raid",
@@ -1989,7 +1989,7 @@
     "NO": "Opprett raid",
     "FR": "Créer un raid",
     "PL": "Wygeneruj Rajd",
-    "FI": "TRANSLATE"
+    "FI": "Luo Raidi"
   },
   "coordination_succes": {
     "NL": "Coördinatie geslaagd!",
@@ -2001,7 +2001,7 @@
     "NO": "Koordinater ble lagt til!",
     "FR": "Coordonnées créés avec succès ",
     "PL": "Koordynaty dodano pomyślnie!",
-    "FI": "TRANSLATE"
+    "FI": "Koordinaatit lähetetty onnistuneesti!"
   },
   "update_raid_boss": {
     "NL": "Raid baas vernieuwen",
@@ -2013,7 +2013,7 @@
     "NO": "Oppdater raid boss",
     "FR": "Mise à jour boss de raid",
     "PL": "Aktualizacja Bossa Rajdu",
-    "FI": "TRANSLATE"
+    "FI": "Päivitä raidibossi"
   },
   "update_pokemon": {
     "NL": "Pokemon vernieuwen",
@@ -2025,7 +2025,7 @@
     "NO": "Oppdater Pokemon",
     "FR": "Mise à jour Pokémon",
     "PL": "Aktualizacja Pokemona",
-    "FI": "TRANSLATE"
+    "FI": "Päivitä Pokemoni"
   },
   "change_raid_duration": {
     "NL": "Verander raid tijd",
@@ -2037,7 +2037,7 @@
     "NO": "TRANSLATE",
     "FR": "Modifier la durée du raid",
     "PL": "Zmień czas trwania Rajdu",
-    "FI": "TRANSLATE"
+    "FI": "Muuta raidin kestoa"
   },
   "send_location": {
     "NL": "Of stuur me alsjeblieft een locatie.",
@@ -2049,7 +2049,7 @@
     "NO": "Eller send meg lokasjonen din ved å trykke på bindersen",
     "FR": "Ou envoi moi la localisation",
     "PL": "Albo wyślij mi swoje położenie",
-    "FI": "TRANSLATE"
+    "FI": "Tai lähetä minulle sijainti."
   },
   "raid_by_gym": {
     "NL": "Maak een raid door een Gym te selecteren:",
@@ -2061,7 +2061,7 @@
     "NO": "Opprett raid ved å velge fra gym listen",
     "FR": "Faire une sélection de raid par arène",
     "PL": "Wygeneruj nowy Rajd, wybierając Arene:",
-    "FI": "TRANSLATE"
+    "FI": "Luo raidi salivalinnan mukaan:"
   },
   "red": {
     "NL": "rood",
@@ -2073,7 +2073,7 @@
     "NO": "rød",
     "FR": "rouge",
     "PL": "czerowny",
-    "FI": "TRANSLATE"
+    "FI": "punainen"
   },
   "yellow": {
     "NL": "geel",
@@ -2085,7 +2085,7 @@
     "NO": "gul",
     "FR": "jaune",
     "PL": "żółty",
-    "FI": "TRANSLATE"
+    "FI": "keltainen"
   },
   "blue": {
     "NL": "blauw",
@@ -2097,7 +2097,7 @@
     "NO": "blå",
     "FR": "bleu",
     "PL": "niebieski",
-    "FI": "TRANSLATE"
+    "FI": "sininen"
   },
   "gym_team_set_to": {
     "NL": "Gym Team gezet op:",
@@ -2109,7 +2109,7 @@
     "NO": "Gym Team endret til:",
     "FR": "Couleur d'arène réglée sur",
     "PL": "Kolor Areny zmieniony na:",
-    "FI": "TRANSLATE"
+    "FI": "Salin joukkueeksi asetettu:"
   },
   "invalid_team": {
     "NL": "Ongeldige team naam: schrijf: Mystic, Valor, Instinct or Blauw, Rood, Geel ",
@@ -2121,7 +2121,7 @@
     "NO": "Ugyldig team navn - skriv: Mystic, Valor, Instinct or Blue, Red, Yellow",
     "FR": "Couleur invalide - écrit : Sagesse, Bravoure, Intuition ou Bleu, Rouge, Jaune",
     "PL": "Zła nazwa Teamu - napisz: niebieski, czerwony albo żółty",
-    "FI": "TRANSLATE"
+    "FI": "Virheellinen joukkueen nimi - kirjoita: Mystic, Valor, Instinct tai Blue, Red, Yellow"
   },
   "gym_instructions": {
     "NL": "Gebruik de volgende commando's om de gym te wijzigen:",
@@ -2133,7 +2133,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Käytä seuraavia komentoja muokataksesi salia enemmän:"
   },
   "gym_get_id_details": {
     "NL": "Om de ID en extra informatie te krijgen stuur /gym.",
@@ -2145,7 +2145,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Saataksesi salin id numeron tai muita tietoja, käytä /gym -komentoa."
   },
   "gym_name_instructions": {
     "NL": "Om de gym naam aan te passen stuur /gymname <code>gym id, nieuwe gym naam</code>!",
@@ -2157,7 +2157,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Vaihtaaksesi salin nimeä komenna /gymname <code>salin id, uusi salin nimi</code>!"
   },
   "gym_name_example": {
     "NL": "Als voorbeeld: <code>/gymname 34, Markt 61, 3131 CR Vlaardingen </code>",
@@ -2169,7 +2169,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Esimerkiksi: <code>/gymname 34, Vapauden Muistomerkki</code>!"
   },
   "gym_id_name_missing": {
     "NL": "Error! Gym id of naam mist!",
@@ -2181,7 +2181,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Virhe! Salin id numero tai nimi puuttuu!"
   },
   "gym_name_updated": {
     "NL": "Gym naam aangepast.",
@@ -2193,7 +2193,7 @@
     "NO": "Gym navn oppdatert.",
     "FR": "Nom de l'arène mis à jour",
     "PL": "Nazwa Areny zaktualizowana",
-    "FI": "TRANSLATE"
+    "FI": "Salin nimi päivitetty."
   },
   "overview_share": {
     "NL": "Overzicht delen",
@@ -2205,7 +2205,7 @@
     "NO": "Del oversikt",
     "FR": "Partager l'aperçu",
     "PL": "Udostępnij podgląd",
-    "FI": "TRANSLATE"
+    "FI": "Jaa yleiskatsaus"
   },
   "overview_delete": {
     "NL": "Vewijder overzicht",
@@ -2217,7 +2217,7 @@
     "NO": "Slett oversikt",
     "FR": "Supprimer l'aperçu",
     "PL": "Usuń podgląd",
-    "FI": "TRANSLATE"
+    "FI": "Poista yleiskatsaus"
   },
   "raids_list": {
     "NL": "Geef de actieve raid weer als een lijst",
@@ -2229,7 +2229,7 @@
     "NO": "Vis aktive raid som liste",
     "FR": "Voir les raids en cours",
     "PL": "Pokaż liste aktywnych rajdów",
-    "FI": "TRANSLATE"
+    "FI": "Näytä aktiiviset raidit listana"
   },
   "raids_share_overview": {
     "NL": "Deel / verwijder het raid overzicht",
@@ -2241,7 +2241,7 @@
     "NO": "Del / slett raid oversikten per chat",
     "FR": "Partager / supprimer l'aperçu des raids par conversation",
     "PL": "Udostępnij / usuń liste przez czat",
-    "FI": "TRANSLATE"
+    "FI": "Jaa / poista raidiyleiskatsaus per chatti"
   },
   "list_all_active_raids": {
     "NL": "Alle actieve raids",
@@ -2253,7 +2253,7 @@
     "NO": "Alle aktive raid",
     "FR": "Tous les raids en cours",
     "PL": "Wszystkie aktywne Rajdy",
-    "FI": "TRANSLATE"
+    "FI": "Kaikki aktiiviset raidit"
   },
   "list_all_overviews": {
     "NL": "Totaal raid overzicht",
@@ -2265,7 +2265,7 @@
     "NO": "Alle raid oversikter",
     "FR": "Tous les aperçus de raid",
     "PL": "Wszystkie podglądy Rajdów",
-    "FI": "TRANSLATE"
+    "FI": "Kaikki raidi yleiskatsaukset"
   },
   "delete_raid_overview_for_chat": {
     "NL": "Verwijder raid overzicht voor",
@@ -2277,7 +2277,7 @@
     "NO": "Slett raid oversikt for",
     "FR": "Supprimer l'aperçu du raid pour",
     "PL": "Usuń podgląd Rajdu dla",
-    "FI": "TRANSLATE"
+    "FI": "Poista raidiyleiskatsaus chatista"
   },
   "no_overviews_found": {
     "NL": "Geen raid overzicht gevonden in het systeem!",
@@ -2289,7 +2289,7 @@
     "NO": "Ingen oppsummering funnet i systemet!",
     "FR": "Aucun aperçu de raid trouvé dans le système",
     "PL": "Brak podglądów Rajdów w systemie!",
-    "FI": "TRANSLATE"
+    "FI": "Järjestelmästä ei löytynyt raidi yleiskatsauksia!"
   },
   "overview_successfully_deleted": {
     "NL": "Raid overzicht is succesvol verwijderd!",
@@ -2301,7 +2301,7 @@
     "NO": "Raid oppsummeringen ble slettet!",
     "FR": "L'aperçu de raid a été supprimé",
     "PL": "Podgląd Rajdu usunięty!",
-    "FI": "TRANSLATE"
+    "FI": "Raidi yleiskatsaus poistettu onnistuneesti!"
   },
   "overview_deletion_was_canceled": {
     "NL": "Het verwijderen van het raid overzicht is gestopt!",
@@ -2313,7 +2313,7 @@
     "NO": "Sletting av raid oppsummeringen ble avbrutt!",
     "FR": "La suppression de l'aperçu du raid a été annulée",
     "PL": "Usuwanie podglądu anulowane!",
-    "FI": "TRANSLATE"
+    "FI": "Raidi yleisktsauksen poisto peruutettiin!"
   },
   "raid_overview_for_chat": {
     "NL": "Raid overzicht voor",
@@ -2325,7 +2325,7 @@
     "NO": "Oppsummering av raid for",
     "FR": "Aperçu des raids pour",
     "PL": "Podgląd Rajdu dla",
-    "FI": "TRANSLATE"
+    "FI": "Yleiskatsaus raideista"
   },
   "delete_this_raid": {
     "NL": "Verwijder deze raid?",
@@ -2337,7 +2337,7 @@
     "NO": "Skal du virkelig slette raidet?",
     "FR": "Supprimer ce raid ?",
     "PL": "Na pewno usunąć ten Rajd?",
-    "FI": "TRANSLATE"
+    "FI": "Varmasti poista tämä raidi?"
   },
   "raid_deletion_was_canceled": {
     "NL": "Het verwijderen van het raid is gestopt!",
@@ -2349,7 +2349,7 @@
     "NO": "Sletting av raidet ble avbrutt!",
     "FR": "La suppression du raid a été annulée",
     "PL": "Usuwanie Rajdu anulowane!",
-    "FI": "TRANSLATE"
+    "FI": "Raidin poisto peruutettiin!"
   },
   "raid_successfully_deleted": {
     "NL": "Raid is succesvol verwijderd!",
@@ -2361,7 +2361,7 @@
     "NO": "Raidet ble slettet",
     "FR": "Le raid a été annulé",
     "PL": "Rajd usunięty!",
-    "FI": "TRANSLATE"
+    "FI": "Raidi poistettiin onnistuneesti!"
   },
   "anytime": {
     "NL": "Elke tijd",
@@ -2373,7 +2373,7 @@
     "NO": "Alle tider passer",
     "FR": "A tout moment",
     "PL": "W każdej chwili",
-    "FI": "TRANSLATE"
+    "FI": "Milloin tahansa"
   },
   "any_pokemon": {
     "NL": "Elke raid baas",
@@ -2385,6 +2385,6 @@
     "NO": "Uansett raidboss",
     "FR": "Peu importe le boss",
     "PL": "Obojętnie jaki Boss Rajdu",
-    "FI": "TRANSLATE"
+    "FI": "Mikä tahansa raidibossi"
   }
 }
