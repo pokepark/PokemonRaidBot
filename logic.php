@@ -3967,8 +3967,18 @@ function curl_json_response($json_response, $json)
                 debug_log('Text message likely contains cleanup info!');
                 if(isset($response['result']['venue']['address']) && strpos($response['result']['venue']['address'], substr(strtoupper(BOT_ID), 0, 1) . '-ID = ') !== false) {
                     $cleanup_id = substr(strrchr($response['result']['text'], substr(strtoupper(BOT_ID), 0, 1) . '-ID = '), 7);
-                } else {
+                } else if(strpos($response['result']['text'], substr(strtoupper(BOT_ID), 0, 1) . '-ID = ') !== false) {
+                    $cleanup_id = substr(strrchr($response['result']['text'], substr(strtoupper(BOT_ID), 0, 1) . '-ID = '), 7);
+                }else {
                     debug_log('BOT_ID ' . BOT_ID . ' not found in text message!');
+                }
+            // Check if it's a caption and get raid id
+            } else if (!empty($response['result']['caption'])) {
+                debug_log('Caption in a message likely contains cleanup info!');
+                if(strpos($response['result']['caption'], substr(strtoupper(BOT_ID), 0, 1) . '-ID = ') !== false) {
+                    $cleanup_id = substr(strrchr($response['result']['caption'], substr(strtoupper(BOT_ID), 0, 1) . '-ID = '), 7);
+                } else {
+                    debug_log('BOT_ID ' . BOT_ID . ' not found in caption of message!');
                 }
             }
             debug_log('Cleanup ID: ' . $cleanup_id);
