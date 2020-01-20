@@ -206,7 +206,7 @@ foreach ($update as $raid) {
 					$url = RAID_PICTURE_URL."?pokemon=".$raid_info['pokemon']."&raid=".$raid_id;
 					editMessageMedia($row['message_id'], $updated_msg['short'], $updated_keys, $row['chat_id'], ['disable_web_page_preview' => 'true'],false, $url);
 				}else {
-					editMessage($row['message_id'], $updated_msg['full'], $updated_keys, $row['chat_id'], ['disable_web_page_preview' => 'true'],false);
+					editMessageText($row['message_id'], $updated_msg['full'], $updated_keys, $row['chat_id'], ['disable_web_page_preview' => 'true'],false);
 				}
 			}
 				
