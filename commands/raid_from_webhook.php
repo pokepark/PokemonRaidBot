@@ -201,11 +201,15 @@ foreach ($update as $raid) {
             $cleanup_statement = $dbh->prepare( $cleanup_query );
             $cleanup_statement->bindValue(':id', $raid_id, PDO::PARAM_STR);
 			$cleanup_statement->execute();
-			
 			while ($row = $cleanup_statement->fetch()) {
-				$url = RAID_PICTURE_URL."?pokemon=".$raid_info['pokemon']."&raid=".$raid_id;
-				editMessageMedia($row['message_id'], $updated_msg['short'], $updated_keys, $row['chat_id'], ['disable_web_page_preview' => 'true'],false, $url);
+				if(RAID_PICTURE == true) {
+					$url = RAID_PICTURE_URL."?pokemon=".$raid_info['pokemon']."&raid=".$raid_id;
+					editMessageMedia($row['message_id'], $updated_msg['short'], $updated_keys, $row['chat_id'], ['disable_web_page_preview' => 'true'],false, $url);
+				}else {
+					editMessage($row['message_id'], $updated_msg['full'], $updated_keys, $row['chat_id'], ['disable_web_page_preview' => 'true'],false);
+				}
 			}
+				
         }
         catch (PDOException $exception) {
 
