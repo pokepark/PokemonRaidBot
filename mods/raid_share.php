@@ -43,7 +43,8 @@ if(RAID_PICTURE == true) {
 }
 
 // Send the message.
-if(RAID_PICTURE == true) {
+// Don't use raid picture if raid end time is more than 48h away (bot can still delete the message)
+if(RAID_PICTURE == true && strtotime($raid['end_time']) < (strtotime(utcnow()) + (48*60*60)) ) {
     $tg_json[] = send_photo($chat, $picture_url, $text['short'], $keys, ['reply_to_message_id' => $chat, 'disable_web_page_preview' => 'true'], true);
 } else {
     $tg_json[] = send_message($chat, $text['full'], $keys, ['reply_to_message_id' => $chat, 'disable_web_page_preview' => 'true'], true);
