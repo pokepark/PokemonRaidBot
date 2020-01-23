@@ -578,6 +578,10 @@ Link: https://github.com/ZeChrales/PogoAssets/tree/master/pokemon_icons
 
 To easily download you can use a special download script on the CLI: `php getZeCharles.php`
 
+Set `RAID_PICTURE_HIDE_LEVEL` to the raid levels (1-5 and X) for which the raid message is shared without the picture even if `RAID_PICTURE` is set to true.
+
+Set `RAID_PICTURE_HIDE_POKEMON` to the pokedex IDs (e.g. '1' for Bulbasaur) or pokedex ID and form combined by a minus sign (e.g. '386-normal' for Deoxys Normal form or '386-attack' for Deoxys Attack form) for which the raid message is shared without the picture even if `RAID_PICTURE` is set to true.
+
 Set `RAID_PICTURE_BG_COLOR` to an RGB value to specify the background color of the raid picture.
 
 Set `RAID_PICTURE_TEXT_COLOR` to an RGB value to specify the text color of the raid picture.
