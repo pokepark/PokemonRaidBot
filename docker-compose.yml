@@ -7,6 +7,7 @@ services:
     container_name: raidbot
     ports:
       - 80:80
+      - 443:443
     depends_on:
       - raidbot-db
     restart: always
@@ -15,6 +16,7 @@ services:
       - /var/docker/wwwdir/raidbot/config/:/var/www/html/config/
       - /var/docker/wwwdir/raidbot/access/:/var/www/html/access/
       - /var/docker/wwwdir/raidbot/custom/:/var/www/html/custom/
+      - /etc/ssl/localcerts/:/etc/ssl/
     networks:
       - default
 

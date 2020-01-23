@@ -26,6 +26,7 @@ RUN	\
     && cp /dev/null ${APACHE_CONF_DIR}/conf-available/other-vhosts-access-log.conf \
     && rm ${APACHE_CONF_DIR}/sites-enabled/000-default.conf ${APACHE_CONF_DIR}/sites-available/000-default.conf \
     && a2enmod rewrite php7.3 \
+    && a2enmod ssl \
 	# Install composer
 	&& curl -sS https://getcomposer.org/installer | php -- --version=1.8.4 --install-dir=/usr/local/bin --filename=composer \
 	# Cleaning
