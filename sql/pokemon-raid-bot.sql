@@ -25,6 +25,7 @@ CREATE TABLE `attendance` (
   `late` tinyint(1) unsigned DEFAULT '0',
   `invite` tinyint(1) unsigned DEFAULT '0',
   `pokemon` varchar(20) DEFAULT '0',
+  `alarm` int(11) unsigned NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `raid_id` (`raid_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -1951,6 +1951,10 @@ function keys_vote($raid)
                 'callback_data' => $raid['id'] . ':vote_refresh:0'
             ],
             [
+              'text'          => EMOJI_ALARM1,
+              'callback_data' => $raid['id'] . ':vote_status:alarm'
+            ],
+            [
                 'text'          => $text_here,
                 'callback_data' => $raid['id'] . ':vote_status:arrived'
             ],
@@ -4035,3 +4039,89 @@ function curl_json_response($json_response, $json)
     return $response;
 }
 
+function alarm($raid,$user,$action,$info = '')
+{
+	// Name of the user, which executes a status update
+	$request = my_query("SELECT * FROM users WHERE user_id = {$user}");
+	$answer_quests = $request->fetch_assoc();
+	$username = $answer_quests['name'];
+
+	// Get gym name
+	$request = my_query("SELECT * FROM raids as r left join gyms as g on r.gym_id = g.id WHERE r.id = {$raid}");
+	// my_query("SELECT * FROM raids WHERE id = {$raid}");
+
+	$answer_quests = $request->fetch_assoc();
+	$gymname = $answer_quests['gym_name'];
+	// Adding a guest
+	if($action == "extra")
+	{
+		// get color name
+		$color_old = array('mystic', 'valor', 'instinct');
+		$color_new = array (getTranslation($color_old[0]), getTranslation($color_old[1]), getTranslation($color_old[2]));
+		$color = str_replace($color_old, $color_new, $info);
+
+		// Sending message
+		sendalarm("<b>".$username."</b> ".getTranslation('alert_add_trainer')." (".$color.") ".getTranslation('gym').": <b>".$gymname."</b>.",$raid);
+	}
+	else if($action == "status")
+	{
+		// Wenn ein Trainer seinen Status ändert (zu spät oder Absage)
+		if($info == 'late')
+			sendalarm("<b>".$username."</b> ".getTranslation('alert_later').": <b>".$gymname."</b>.",$raid);
+		else if($info == 'cancel')
+			sendalarm("<b>".$username."</b> ".getTranslation('alert_canceled').": <b>".$gymname."</b>.",$raid);
+	}
+	else if($action == "pok_individual")
+	{
+    debug_log('Alarm Pokemon: ' . $info);
+  	if($info != '0'){
+      //$pokedex_id
+      $poke_name = get_local_pokemon_name($info);
+  		sendalarm("<b>".$username."</b> ". getTranslation('alert_indiviual_poke') .": <b>".$poke_name."</b> ".getTranslation('gym').": <b>".$gymname."</b>.",$raid);
+    }else{
+      sendalarm("<b>".$username."</b> ". getTranslation('alert_every_poke') ."! ".getTranslation('gym').": <b>".$gymname."</b>.",$raid);
+    }
+	}
+	else if($action == "new_att")
+	{
+      debug_log('Datetime_new_att: ' . $info);
+			// Will Attend
+			sendalarm("<b>".$username."</b> ".getTranslation('alert_new_att').": <b>".check_time($info)."</b> ".getTranslation('gym').": <b>".$gymname."</b>.",$raid);
+	}
+	else if($action == "change_time")
+	{
+      debug_log('Datetime_change_time: ' . $info);
+			// Changes Time
+			sendalarm("<b>".$username."</b> ".getTranslation('alert_change_time').": <b>".check_time($info)."</b> ".getTranslation('gym').": <b>".$gymname."</b>.",$raid);
+	}
+	else if($action == "extra_alone")
+	{
+    //$pokedex_id
+    debug_log('Alone Pokemon Name: ' . $info);
+    $poke_name = get_local_pokemon_name($info);
+    sendalarm("<b>".$username."</b> ".getTranslation('alert_extra_alone').": <b>".$poke_name."</b> ".getTranslation('gym').": <b>".$gymname."</b>.",$raid);
+	}
+}
+
+// Function for checking Attendance Time against everytime
+function check_time($time)
+{
+  if(strcmp($time,'0000-00-00 00:00:00')===0){
+    return getTranslation('anytime');
+  }else{
+    return dt2time($time);
+  }
+}
+
+// Function for sending the alarm
+function sendalarm($text, $raid)
+
+{
+	// Will fetch all Trainer, which has subscribed for an alarm and send the message
+	$request = my_query("SELECT DISTINCT user_id FROM attendance WHERE raid_id = {$raid} AND MOD(alarm, 2) = 1");
+	while($answer = $request->fetch_assoc())
+	{
+		sendmessage($answer['user_id'], $text);
+	}
+
+}

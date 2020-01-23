@@ -1475,6 +1475,42 @@
     "PL": "/team <code>Niebieski/Czerowny/Żółty</code>",
     "FI": "/team <code>Mystic/Valor/Instinct/Blue/Red/Yellow</code>"
   },
+  "mystic": {
+    "NL": "Mystic/Blauw",
+    "DE": "Weisheit/Blau",
+    "EN": "Mystic/Blue",
+    "IT": "Saggezza/Blu",
+    "PT-BR": "Mystic/Azul",
+    "RU": "Mystic/Синий",
+    "NO": "Mystic/Blue",
+    "FR": "Sagesse/Bleu",
+    "PL": "Niebieski",
+    "FI": "Mystic/Blue"
+  },
+  "valor": {
+    "NL": "Valor/Rood",
+    "DE": "Wagemut/Rot",
+    "EN": "Valor/Red",
+    "IT": "Valore/Giallo",
+    "PT-BR": "Valor/Vermelho",
+    "RU": "Valor/Красный",
+    "NO": "Valor/Red",
+    "FR": "Bravoure/Rouge",
+    "PL": "Czerowny",
+    "FI": "Valor/Red"
+  },
+  "instinct": {
+    "NL": "Instinct/Geel",
+    "DE": "Intuition/Gelb",
+    "EN": "Instinct/Yellow",
+    "IT": "Istinto/Rosso",
+    "PT-BR": "Instinct/Amarelo",
+    "RU": "Instinct/Желтый",
+    "NO": "Instinct/Yellow",
+    "FR": "Intuition/Jaune",
+    "PL": "Żółty",
+    "FI": "Instinct/Yellow"
+  },
   "start_date_time": {
     "NL": "Starttijd gezet op",
     "DE": "Startzeit gesetzt auf",
@@ -2386,5 +2422,125 @@
     "FR": "Peu importe le boss",
     "PL": "Obojętnie jaki Boss Rajdu",
     "FI": "Mikä tahansa raidibossi"
+  },
+  "alert_no_updates": {
+    "NL": "TRANSLATE",
+    "DE": "Ich werde dir <b>keine weiteren Infos</b> zum Raid an folgender Arena senden",
+    "EN": "I will not send further Information regarding raids at this gym",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "I will not send further Information regarding raids at this gym",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "I will not send further Information regarding raids at this gym"
+  },
+  "alert_updates_on": {
+    "NL": "TRANSLATE",
+    "DE": "Ich werde dich jetzt über <b>alle Änderungen</b> zum Raid an folgender Arena senden",
+    "EN": "I will send from now Information regarding raids at this gym",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "I will send from now Information regarding raids at this gym",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "I will send from now Information regarding raids at this gym"
+  },
+  "alert_add_trainer": {
+    "NL": "TRANSLATE",
+    "DE": "bringt zum Raid noch einen weiteren Trainer mit",
+    "EN": "will attend to the raid with an additional Trainer",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "will attend to the raid with an additional Trainer",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "will attend to the raid with an additional Trainer"
+  },
+  "alert_later": {
+    "NL": "TRANSLATE",
+    "DE": "verspätet sich zum Raid an der Arena",
+    "EN": "will be late to the Raid at the gym",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "will be late to the Raid at the gym",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "will be late to the Raid at the gym"
+  },
+  "alert_canceled": {
+    "NL": "TRANSLATE",
+    "DE": "hat seine Teilnahme am Raid abgesagt. Arena",
+    "EN": "has canceled the attendance at gym",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "has canceled the attendance at gym",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "has canceled the attendance at gym"
+  },
+  "alert_indiviual_poke": {
+    "NL": "TRANSLATE",
+    "DE": "nimmt am Raid nur beim folgendem Raidboss teil",
+    "EN": "will attend only with the following Raid-Boss",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "will attend only with the following Raid-Boss",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "will attend only with the following Raid-Boss"
+  },
+  "alert_new_att": {
+    "NL": "TRANSLATE",
+    "DE": "nimmt zu folgender Uhrzeit am Raid teil",
+    "EN": "will attend to the Raid at",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "will attend to the Raid at",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "will attend to the Raid at"
+  },
+  "alert_change_time": {
+    "NL": "TRANSLATE",
+    "DE": "hat die Uhrzeit für die Raid-Teilnahme geändert",
+    "EN": "has changed his/her raidtime to",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "has changed his/her raidtime to",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "has changed his/her raidtime to"
+  },
+  "alert_extra_alone": {
+    "NL": "TRANSLATE",
+    "DE": "kommt doch lieber allein zum Raid",
+    "EN": "will attend alone at the Raid",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "will attend alone at the Raid",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "will attend alone at the Raid"
+  },
+  "alert_every_poke": {
+    "NL": "TRANSLATE",
+    "DE": "nimmt am Raid mit jedem Pokemon teil",
+    "EN": "will attend at the Raid with every Pokemon",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "will attend at the Raid with every Pokemon",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "will attend at the Raid with every Pokemon"
   }
 }
