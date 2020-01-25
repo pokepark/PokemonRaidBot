@@ -1951,7 +1951,7 @@ function keys_vote($raid)
                 'callback_data' => $raid['id'] . ':vote_refresh:0'
             ],
             [
-              'text'          => EMOJI_ALARM1,
+              'text'          => EMOJI_ALARM,
               'callback_data' => $raid['id'] . ':vote_status:alarm'
             ],
             [
