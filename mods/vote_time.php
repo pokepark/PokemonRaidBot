@@ -45,6 +45,7 @@ if($now <= $attend_time || $arg == 0) {
     // User has voted before.
     if (!empty($answer)) {
         // Update attendance.
+        alarm($data['id'],$update['callback_query']['from']['id'],'change_time', $attend_time);
         my_query(
             "
             UPDATE    attendance
@@ -61,6 +62,7 @@ if($now <= $attend_time || $arg == 0) {
     // User has not voted before.
     } else {
         // Create attendance.
+        alarm($data['id'],$update['callback_query']['from']['id'],'new_att', $attend_time);
         my_query(
             "
             INSERT INTO   attendance
@@ -81,6 +83,6 @@ if($now <= $attend_time || $arg == 0) {
 	    send_response_vote($update, $data,false,false);
     } else {
 	    send_response_vote($update, $data);
-    } 
+    }
 
 exit();

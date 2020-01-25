@@ -233,7 +233,10 @@ find custom/ -type d -exec chmod 755 {} \; && \
 chown -R www-data:www-data log/tg-bots/ && \
 cd config/ && \
 chmod 0600 config.json  && \
-chmod 0600 telegram.json
+chmod 0600 telegram.json && \
+mkdir -p /etc/ssl/localcerts && \
+openssl req -newkey rsa:2048 -sha256 -nodes -keyout /etc/ssl/localcerts/apache.key -x509 -days 365 -out /etc/ssl/localcerts/apache.pem -subj "/C=US/ST=New York/L=Brooklyn/O=Example Brooklyn Company/CN=domain/ServerIP" && \
+chmod 600 /etc/ssl/localcerts/apache*
 ```
 
 This will:
@@ -247,6 +250,7 @@ Examples for these files can be found @github https://github.com/florianbecker/P
 6. Download the Raidbot Database Schema: https://github.com/florianbecker/PokemonRaidBot/tree/master/sql and store it
 in the directory `sql`.
 7. Download Docker-configs and example Config-Files for the Raidbot
+8. Create a self-singed Certificate for Telegram - Change your CN= to your Server IP or your Domain.com
 
 Your directory should now look like this:
  ```
