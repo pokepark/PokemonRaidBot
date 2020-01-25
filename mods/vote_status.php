@@ -34,7 +34,10 @@ if (!empty($answer)) {
 		my_query(
 		"
 		UPDATE    attendance
-		SET       alarm = alarm+1
+		SET    alarm = CASE
+             WHEN alarm = '0' THEN '1'
+             ELSE '0'
+           END
 		  WHERE   raid_id = {$data['id']}
 			AND   user_id = {$update['callback_query']['from']['id']}
 		"
@@ -57,7 +60,7 @@ if (!empty($answer)) {
 		);
 		$answer = $rs->fetch_assoc();
 		// If value is even
-		if($answer['alarm'] % 2 == 0)
+		if($answer['alarm'])
 		{
 			sendmessage($update['callback_query']['from']['id'], getTranslation('alert_no_updates').': <b>'.$gymname.'</b>');
 		}
