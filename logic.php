@@ -4065,7 +4065,7 @@ function alarm($raid,$user,$action,$info = '')
 	}
 	else if($action == "status")
 	{
-		// Wenn ein Trainer seinen Status ändert (zu spät oder Absage)
+		// If trainer changes state (to late or cancelation)
 		if($info == 'late')
 			sendalarm("<b>".$username."</b> ".getTranslation('alert_later').": <b>".$gymname."</b>.",$raid);
 		else if($info == 'cancel')
@@ -4118,7 +4118,7 @@ function sendalarm($text, $raid)
 
 {
 	// Will fetch all Trainer, which has subscribed for an alarm and send the message
-	$request = my_query("SELECT DISTINCT user_id FROM attendance WHERE raid_id = {$raid} AND MOD(alarm, 2) = 1");
+	$request = my_query("SELECT DISTINCT user_id FROM attendance WHERE raid_id = {$raid} AND alarm = 1");
 	while($answer = $request->fetch_assoc())
 	{
 		sendmessage($answer['user_id'], $text);
