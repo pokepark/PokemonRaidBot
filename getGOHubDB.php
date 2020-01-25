@@ -38,7 +38,8 @@ function formatPokemonData($pokemon, $DB_ID) {
     $poke_min_weather_cp = $pokemon['CPs']['raidCaptureBoostMin'];
     $poke_max_weather_cp = $pokemon['CPs']['raidCaptureBoostMax'];
     $poke_weather = implode(',',$pokemon['weatherInfluences']);
-
+	$poke_shiny = 0;
+	
     // Replace weather names with values.
     $poke_weather = str_replace('sunny',12,$poke_weather);
     $poke_weather = str_replace('rain',3,$poke_weather);
@@ -53,7 +54,7 @@ function formatPokemonData($pokemon, $DB_ID) {
     $SEP = ',';
     $QM = "'";
     $SQL_pokemon = 'INSERT INTO `pokemon` VALUES (' . $DB_ID . $SEP . $poke_id . $SEP . $QM . $poke_name . $QM . $SEP . $QM . $poke_form . $QM . $SEP . $QM . $poke_raid_level . $QM . $SEP;
-    $SQL_pokemon .= $poke_min_cp . $SEP . $poke_max_cp . $SEP . $poke_min_weather_cp . $SEP . $poke_max_weather_cp . $SEP . $poke_weather . ');' . PHP_EOL;
+    $SQL_pokemon .= $poke_min_cp . $SEP . $poke_max_cp . $SEP . $poke_min_weather_cp . $SEP . $poke_max_weather_cp . $SEP . $poke_weather . $SEP . $poke_shiny . ');' . PHP_EOL;
 
     // Return SQL;
     return $SQL_pokemon;
