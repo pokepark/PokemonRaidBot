@@ -2424,7 +2424,7 @@
     "FI": "Mikä tahansa raidibossi"
   },
   "alert_no_updates": {
-    "NL": "TRANSLATE",
+    "NL": "Ik stuur verder geen informatie over de raid bij deze gym.",
     "DE": "Ich werde dir <b>keine weiteren Infos</b> zum Raid an folgender Arena senden",
     "EN": "I will not send further Information regarding raids at this gym",
     "IT": "TRANSLATE",
@@ -2436,7 +2436,7 @@
     "FI": "I will not send further Information regarding raids at this gym"
   },
   "alert_updates_on": {
-    "NL": "TRANSLATE",
+    "NL": "Ik zal vanaf nu informatie over de raid bij deze gym sturen",
     "DE": "Ich werde dich jetzt über <b>alle Änderungen</b> zum Raid an folgender Arena senden",
     "EN": "I will send from now Information regarding raids at this gym",
     "IT": "TRANSLATE",
@@ -2448,7 +2448,7 @@
     "FI": "I will send from now Information regarding raids at this gym"
   },
   "alert_add_trainer": {
-    "NL": "TRANSLATE",
+    "NL": "zal bij de raid aanwezig zijn met extra spelers.",
     "DE": "bringt zum Raid noch einen weiteren Trainer mit",
     "EN": "will attend to the raid with an additional Trainer",
     "IT": "TRANSLATE",
@@ -2460,7 +2460,7 @@
     "FI": "will attend to the raid with an additional Trainer"
   },
   "alert_later": {
-    "NL": "TRANSLATE",
+    "NL": "zal te laat zijn voor de Raid bij de gym",
     "DE": "verspätet sich zum Raid an der Arena",
     "EN": "will be late to the Raid at the gym",
     "IT": "TRANSLATE",
@@ -2472,7 +2472,7 @@
     "FI": "will be late to the Raid at the gym"
   },
   "alert_canceled": {
-    "NL": "TRANSLATE",
+    "NL": "heeft de raid bij de gym geannuleerd",
     "DE": "hat seine Teilnahme am Raid abgesagt. Arena",
     "EN": "has canceled the attendance at gym",
     "IT": "TRANSLATE",
@@ -2484,7 +2484,7 @@
     "FI": "has canceled the attendance at gym"
   },
   "alert_indiviual_poke": {
-    "NL": "TRANSLATE",
+    "NL": "is alleen aanwezig als de het de volgende Raid baas",
     "DE": "nimmt am Raid nur beim folgendem Raidboss teil",
     "EN": "will attend only with the following Raid-Boss",
     "IT": "TRANSLATE",
@@ -2496,7 +2496,7 @@
     "FI": "will attend only with the following Raid-Boss"
   },
   "alert_new_att": {
-    "NL": "TRANSLATE",
+    "NL": "zal de Raid bijwonen om",
     "DE": "nimmt zu folgender Uhrzeit am Raid teil",
     "EN": "will attend to the Raid at",
     "IT": "TRANSLATE",
@@ -2508,7 +2508,7 @@
     "FI": "will attend to the Raid at"
   },
   "alert_change_time": {
-    "NL": "TRANSLATE",
+    "NL": "heeft zijn/haar raid tijd gewijzigd in",
     "DE": "hat die Uhrzeit für die Raid-Teilnahme geändert",
     "EN": "has changed his/her raidtime to",
     "IT": "TRANSLATE",
@@ -2520,7 +2520,7 @@
     "FI": "has changed his/her raidtime to"
   },
   "alert_extra_alone": {
-    "NL": "TRANSLATE",
+    "NL": "zal alleen de Raid bijwonen",
     "DE": "kommt doch lieber allein zum Raid",
     "EN": "will attend alone at the Raid",
     "IT": "TRANSLATE",
@@ -2532,7 +2532,7 @@
     "FI": "will attend alone at the Raid"
   },
   "alert_every_poke": {
-    "NL": "TRANSLATE",
+    "NL": "zal bij elke pokemon Raid aanwezig zijn",
     "DE": "nimmt am Raid mit jedem Pokemon teil",
     "EN": "will attend at the Raid with every Pokemon",
     "IT": "TRANSLATE",
