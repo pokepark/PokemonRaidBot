@@ -128,7 +128,7 @@ if(!empty($SQL)) {
         $DB_ID = (isset($DB_ID)) ? ($DB_ID + 1) : 1;
         $SEP = ',';
         $QM = "'";
-        $SQL .= 'INSERT INTO `pokemon` VALUES (' . $DB_ID . $SEP . '999' . $e . $SEP . $QM . 'Level ' . $e . ' Egg' . $QM . $SEP . $QM . 'normal' . $QM . $SEP . $QM . '0' . $QM . $SEP . '0,0,0,0,0);' . PHP_EOL;
+        $SQL .= 'INSERT INTO `pokemon` VALUES (' . $DB_ID . $SEP . '999' . $e . $SEP . $QM . 'Level ' . $e . ' Egg' . $QM . $SEP . $QM . 'normal' . $QM . $SEP . $QM . '0' . $QM . $SEP . '0,0,0,0,0,0);' . PHP_EOL;
     }
 
     // Add delete command to SQL data.
