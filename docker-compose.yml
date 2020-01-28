@@ -16,7 +16,7 @@ services:
       - /var/docker/wwwdir/raidbot/config/:/var/www/html/config/
       - /var/docker/wwwdir/raidbot/access/:/var/www/html/access/
       - /var/docker/wwwdir/raidbot/custom/:/var/www/html/custom/
-      - /etc/ssl/localcerts/:/etc/ssl/
+      - /etc/ssl/localcerts/:/etc/ssl/localcerts
     networks:
       - default
 

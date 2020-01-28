@@ -1,5 +1,5 @@
 # Cleanup-Job every 5 min. https://github.com/florianbecker/PokemonRaidBot#cleanup
 */5 * * * * /usr/bin/curl -k -d '{"cleanup":{"secret":"your-cleanup-secret/passphrase"}}' https://localhost/index.php?apikey=111111111:AABBCCDDEEFFGGHHIIJJKKLLMMNNOOPP123
 # Raid-Overview Update every minute https://github.com/florianbecker/PokemonRaidBot#raid-overview
-* * * * * /usr/bin/curl -k -d '{"callback_query":{"data":"raid:0:overview_refresh:0"}}' https://localhost/botdir/index.php?apikey=111111111:AABBccddEEFFggHHiijjKKLLmmnnOOPPqq
+* * * * * /usr/bin/curl -k -d '{"callback_query":{"data":"0:overview_refresh:0"}}' https://localhost/botdir/index.php?apikey=111111111:AABBccddEEFFggHHiijjKKLLmmnnOOPPqq
 # Don't remove the empty line at the end of this file. It is required to run the cron job
