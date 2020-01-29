@@ -1,9 +1,7 @@
 version: "3.4"
 services:
   raidbot:
-    build:
-      context: ./docker-custom
-      dockerfile: Dockerfile
+    image: florianbecker/pokemonraidbot
     container_name: raidbot
     ports:
       - 80:80

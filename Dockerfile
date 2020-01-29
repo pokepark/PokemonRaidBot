@@ -13,7 +13,7 @@ ENV APACHE_CONF_DIR=/etc/apache2 \
     WWW_DIR=/var/www/html/ \
     PHP_VER=php7.4
 
-COPY /docker-custom/entrypoint.sh /sbin/entrypoint.sh
+COPY /docker/entrypoint.sh /sbin/entrypoint.sh
 
 RUN	\
 	BUILD_DEPS='software-properties-common' \
@@ -57,15 +57,15 @@ RUN \
   && chmod 0600 ${WWW_DIR}config/config.json \
   && chmod 0600 ${WWW_DIR}config/telegram.json
 
-COPY /docker-custom/apache2.conf ${APACHE_CONF_DIR}/apache2.conf
-COPY /docker-custom/app.conf ${APACHE_CONF_DIR}/sites-enabled/app.conf
-COPY /docker-custom/php.ini  ${PHP_CONF_DIR}/apache2/conf.d/custom.inis
+COPY /docker/apache2.conf ${APACHE_CONF_DIR}/apache2.conf
+COPY /docker/app.conf ${APACHE_CONF_DIR}/sites-enabled/app.conf
+COPY /docker/php.ini  ${PHP_CONF_DIR}/apache2/conf.d/custom.inis
 
 WORKDIR ${WWW_DIR}
 
 EXPOSE 80
 
-ADD /docker-custom/cronjob /etc/cron.d/cronjob
+ADD /docker/cronjob /etc/cron.d/cronjob
 
 RUN \
   #Activate Cronjob
