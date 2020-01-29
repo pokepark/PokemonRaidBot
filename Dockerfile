@@ -48,9 +48,9 @@ RUN \
   # Download Pokemon-Images
   && php PokemonRaidBot/getZeCharles.php \
   # Copy Files to Web-Folder to make it available
-  && cp -r PokemonRaidBot/. ${WWW_DIR} \
+  && cp -r PokemonRaidBot/ ${WWW_DIR} \
   && rm -f -r /PokemonRaidBot/ \
-  && cp -r php.core.telegram/. ${WWW_DIR}core \
+  && cp -r php.core.telegram/ ${WWW_DIR}core \
   && rm -f -r php.core.telegram/ \
   && chown www-data:www-data ${WWW_DIR} -Rf \
 
