@@ -53,9 +53,7 @@ RUN \
   && cp -r php.core.telegram/. ${WWW_DIR}core \
   && rm -f -r php.core.telegram/ \
   && chown www-data:www-data ${WWW_DIR} -Rf \
-  # File Permissions
-  && chmod 0600 ${WWW_DIR}PokemonRaidBot/config/config.json \
-  && chmod 0600 ${WWW_DIR}PokemonRaidBot/config/telegram.json
+
 
 COPY /docker/apache2.conf ${APACHE_CONF_DIR}/apache2.conf
 COPY /docker/app.conf ${APACHE_CONF_DIR}/sites-enabled/app.conf
@@ -71,7 +69,10 @@ RUN \
   #Activate Cronjob
   chmod 0644 /etc/cron.d/cronjob \
   && crontab /etc/cron.d/cronjob \
-  && touch /var/log/cron.log
+  && touch /var/log/cron.log \
+  # File Permissions
+  && chmod 0600 ${WWW_DIR}PokemonRaidBot/config/config.json \
+  && chmod 0600 ${WWW_DIR}PokemonRaidBot/config/telegram.json
 
 # By default, simply start apache.
 CMD ["/sbin/entrypoint.sh"]

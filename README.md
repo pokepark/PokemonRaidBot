@@ -199,7 +199,7 @@ cd docker/wwwdir/raidbot && \
 mkdir access && \
 mkdir config && \
 mkdir custom && \
-mkdir docker-custom && \
+mkdir docker && \
 mkdir sql && \
 mkdir log && \
 mkdir log/tg-bots && \
@@ -215,12 +215,12 @@ wget -O config/telegram.json https://raw.githubusercontent.com/florianbecker/Pok
 wget -O custom/.gitignore https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/custom/.gitignore  && \
 wget -O access/.gitignore https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/access/.gitignore  && \
 wget -O docker-compose.yml https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/docker-compose.yml && \
-wget -O docker-custom/cronjob https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/docker-custom/cronjob  && \
-wget -O docker-custom/Dockerfile https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/docker-custom/Dockerfile  && \
-wget -O docker-custom/apache2.conf https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/docker-custom/apache2.conf  && \
-wget -O docker-custom/app.conf https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/docker-custom/app.conf  && \
-wget -O docker-custom/entrypoint.sh https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/docker-custom/entrypoint.sh  && \
-wget -O docker-custom/php.ini https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/docker-custom/php.ini  && \
+wget -O docker/cronjob https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/docker-custom/cronjob  && \
+wget -O docker/Dockerfile https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/docker-custom/Dockerfile  && \
+wget -O docker/apache2.conf https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/docker-custom/apache2.conf  && \
+wget -O docker/app.conf https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/docker-custom/app.conf  && \
+wget -O docker/entrypoint.sh https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/docker-custom/entrypoint.sh  && \
+wget -O docker/php.ini https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/docker-custom/php.ini  && \
 chown -R www-data:www-data config/ && \
 chown -R www-data:www-data access/ && \
 chown -R www-data:www-data custom/ && \
@@ -250,7 +250,8 @@ Examples for these files can be found @github https://github.com/florianbecker/P
 6. Download the Raidbot Database Schema: https://github.com/florianbecker/PokemonRaidBot/tree/master/sql and store it
 in the directory `sql`.
 7. Download Docker-configs and example Config-Files for the Raidbot
-8. Create a self-singed Certificate for Telegram - Change your CN= to your Server IP or your Domain.com
+8. Create a self-singed Certificate for Telegram - Change your CN= to your Server IP or your Domain.com - It is recommended to use yourdomain.com with a letsencrypt certifcate (for free)
+
 
 Your directory should now look like this:
  ```
@@ -264,7 +265,7 @@ Your directory should now look like this:
     |-- telegram.json
   |-- custom
     |-- .gitignore
-  |-- docker-custom/
+  |-- docker/
     |-- apache2.conf
     |-- app.conf
     |-- cronjob
