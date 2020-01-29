@@ -11,9 +11,9 @@ services:
     restart: always
     volumes:
       - /var/docker/wwwdir/raidbot/log/:/var/log/
-      - /var/docker/wwwdir/raidbot/config/:/var/www/html/config/
-      - /var/docker/wwwdir/raidbot/access/:/var/www/html/access/
-      - /var/docker/wwwdir/raidbot/custom/:/var/www/html/custom/
+      - /var/docker/wwwdir/raidbot/config/:/var/www/html/PokemonRaidBot/config/
+      - /var/docker/wwwdir/raidbot/access/:/var/www/html/PokemonRaidBot/access/
+      - /var/docker/wwwdir/raidbot/custom/:/var/www/html/PokemonRaidBot/custom/
       - /etc/ssl/localcerts/:/etc/ssl/localcerts
     networks:
       - default
