@@ -8,25 +8,27 @@ ENV LANG=${OS_LOCALE} \
     DEBIAN_FRONTEND=noninteractive
 
 ENV APACHE_CONF_DIR=/etc/apache2 \
-    PHP_CONF_DIR=/etc/php/7.3 \
+    PHP_CONF_DIR=/etc/php/7.4 \
     PHP_DATA_DIR=/var/lib/php \
-	WWW_DIR=/var/www/html
+    WWW_DIR=/var/www/html/ \
+    PHP_VER=php7.4
 
-COPY entrypoint.sh /sbin/entrypoint.sh
+COPY /docker-custom/entrypoint.sh /sbin/entrypoint.sh
 
 RUN	\
 	BUILD_DEPS='software-properties-common' \
-    && dpkg-reconfigure locales \
+  && dpkg-reconfigure locales \
+  && apt-get update \
 	&& apt-get install --no-install-recommends -y $BUILD_DEPS \
 	&& add-apt-repository -y ppa:ondrej/php \
 	&& add-apt-repository -y ppa:ondrej/apache2 \
 	&& apt-get update \
-    && apt-get install -y curl apache2 libapache2-mod-php7.3 php7.3-cli php7.3-readline php7.3-mbstring php7.3-zip php7.3-intl php7.3-xml php7.3-json php7.3-curl php7.3-gd php7.3-pgsql php7.3-mysql php-pear git cron \
-    # Apache settings
-    && cp /dev/null ${APACHE_CONF_DIR}/conf-available/other-vhosts-access-log.conf \
-    && rm ${APACHE_CONF_DIR}/sites-enabled/000-default.conf ${APACHE_CONF_DIR}/sites-available/000-default.conf \
-    && a2enmod rewrite php7.3 \
-    && a2enmod ssl \
+  && apt-get upgrade -y \
+  && apt-get install -y curl apache2 libapache2-mod-${PHP_VER} ${PHP_VER}-cli ${PHP_VER}-readline ${PHP_VER}-mbstring ${PHP_VER}-zip ${PHP_VER}-intl ${PHP_VER}-xml ${PHP_VER}-json ${PHP_VER}-curl ${PHP_VER}-gd ${PHP_VER}-pgsql ${PHP_VER}-mysql php-pear git cron \
+  # Apache settings
+  && cp /dev/null ${APACHE_CONF_DIR}/conf-available/other-vhosts-access-log.conf \
+  && rm ${APACHE_CONF_DIR}/sites-enabled/000-default.conf ${APACHE_CONF_DIR}/sites-available/000-default.conf \
+  && a2enmod rewrite ${PHP_VER} \
 	# Install composer
 	&& curl -sS https://getcomposer.org/installer | php -- --version=1.8.4 --install-dir=/usr/local/bin --filename=composer \
 	# Cleaning
@@ -40,33 +42,36 @@ RUN	\
 	&& chown www-data:www-data ${PHP_DATA_DIR} -Rf
 
 # Download latest Raidbot
-RUN git clone https://github.com/florianbecker/PokemonRaidBot.git
-RUN git clone https://github.com/florianbecker/php.core.telegram.git
+RUN \
+  git clone https://github.com/florianbecker/PokemonRaidBot.git \
+  && git clone https://github.com/florianbecker/php.core.telegram.git \
+  # Download Pokemon-Images
+  && php PokemonRaidBot/getZeCharles.php \
+  # Copy Files to Web-Folder to make it available
+  && cp -r PokemonRaidBot/. ${WWW_DIR} \
+  && rm -f -r /PokemonRaidBot/ \
+  && cp -r php.core.telegram/. ${WWW_DIR}/core \
+  && rm -f -r php.core.telegram/ \
+  && chown www-data:www-data ${WWW_DIR} -Rf
 
-# Copy Files to Web-Folder to make it available
-RUN cp -r ./PokemonRaidBot/. /var/www/html/
-RUN rm -f -r PokemonRaidBot/
-RUN cp -r ./php.core.telegram/. /var/www/html/core
-RUN rm -f -r php.core.telegram/
-RUN chown www-data:www-data ${WWW_DIR} -Rf
-
-# Download Pokemon-Images
-# Comment this line, if you don't want to download all images. -> Takes up to 10 min.
-RUN php /var/www/html/getZeCharles.php
-
-COPY ./apache2.conf ${APACHE_CONF_DIR}/apache2.conf
-COPY ./app.conf ${APACHE_CONF_DIR}/sites-enabled/app.conf
-COPY ./php.ini  ${PHP_CONF_DIR}/apache2/conf.d/custom.inis
+COPY /docker-custom/apache2.conf ${APACHE_CONF_DIR}/apache2.conf
+COPY /docker-custom/app.conf ${APACHE_CONF_DIR}/sites-enabled/app.conf
+COPY /docker-custom/php.ini  ${PHP_CONF_DIR}/apache2/conf.d/custom.inis
 
 WORKDIR ${WWW_DIR}
 
 EXPOSE 80
 
-#Activate Cronjob
-COPY cronjob /etc/cron.d/cronjob
-RUN chmod 0644 /etc/cron.d/cronjob
-RUN crontab /etc/cron.d/cronjob
+ADD /docker-custom/cronjob /etc/cron.d/cronjob
 
+RUN \
+  #Activate Cronjob
+  chmod 0644 /etc/cron.d/cronjob \
+  && crontab /etc/cron.d/cronjob \
+  && touch /var/log/cron.log \
+  # File Permissions
+  && chmod 0600 ${WWW_DIR}/config/config.json \
+  && chmod 0600 ${WWW_DIR}/config/telegram.json
 
 # By default, simply start apache.
 CMD ["/sbin/entrypoint.sh"]
