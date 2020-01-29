@@ -50,7 +50,7 @@ RUN \
   # Copy Files to Web-Folder to make it available
   && cp -r PokemonRaidBot/. ${WWW_DIR} \
   && rm -f -r /PokemonRaidBot/ \
-  && cp -r php.core.telegram/. ${WWW_DIR}/core \
+  && cp -r php.core.telegram/. ${WWW_DIR}core \
   && rm -f -r php.core.telegram/ \
   && chown www-data:www-data ${WWW_DIR} -Rf
 
@@ -70,8 +70,8 @@ RUN \
   && crontab /etc/cron.d/cronjob \
   && touch /var/log/cron.log \
   # File Permissions
-  && chmod 0600 ${WWW_DIR}/config/config.json \
-  && chmod 0600 ${WWW_DIR}/config/telegram.json
+  && chmod 0600 ${WWW_DIR}config/config.json \
+  && chmod 0600 ${WWW_DIR}config/telegram.json
 
 # By default, simply start apache.
 CMD ["/sbin/entrypoint.sh"]
