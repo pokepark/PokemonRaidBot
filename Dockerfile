@@ -39,7 +39,7 @@ RUN	\
 	&& ln -sf /dev/stdout /var/log/apache2/access.log \
 	&& ln -sf /dev/stderr /var/log/apache2/error.log \
 	&& chmod 755 /sbin/entrypoint.sh \
-	&& chown www-data:www-data ${PHP_DATA_DIR} -Rf
+	&& chown -Rf www-data:www-data ${PHP_DATA_DIR}
 
 # Download latest Raidbot
 RUN \
@@ -52,7 +52,7 @@ RUN \
   && rm -f -r /PokemonRaidBot/ \
   && cp -r php.core.telegram/ ${WWW_DIR}core \
   && rm -f -r php.core.telegram/ \
-  && chown www-data:www-data ${WWW_DIR} -Rf \
+  && chown -Rf www-data:www-data ${WWW_DIR}
 
 
 COPY /docker/apache2.conf ${APACHE_CONF_DIR}/apache2.conf
