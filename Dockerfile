@@ -54,14 +54,14 @@ RUN \
   && rm -f -r php.core.telegram/ \
   && chown www-data:www-data ${WWW_DIR} -Rf \
   # File Permissions
-  && chmod 0600 ${WWW_DIR}config/config.json \
-  && chmod 0600 ${WWW_DIR}config/telegram.json
+  && chmod 0600 ${WWW_DIR}PokemonRaidBot/config/config.json \
+  && chmod 0600 ${WWW_DIR}PokemonRaidBot/config/telegram.json
 
 COPY /docker/apache2.conf ${APACHE_CONF_DIR}/apache2.conf
 COPY /docker/app.conf ${APACHE_CONF_DIR}/sites-enabled/app.conf
 COPY /docker/php.ini  ${PHP_CONF_DIR}/apache2/conf.d/custom.inis
 
-WORKDIR ${WWW_DIR}
+WORKDIR ${WWW_DIR}PokemonRaidBot/
 
 EXPOSE 80
 
