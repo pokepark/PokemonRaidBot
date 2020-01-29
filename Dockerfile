@@ -65,8 +65,8 @@ EXPOSE 80
 
 ADD \ 
   && /docker/cronjob /etc/cron.d/cronjob \ 
-  && /docker/config.json ${WWW_DIR}PokemonRaidBot/config/ \ 
-  && /docker/telegram.json ${WWW_DIR}PokemonRaidBot/config/
+  && /config/config.json ${WWW_DIR}PokemonRaidBot/config/ \ 
+  && /config/telegram.json ${WWW_DIR}PokemonRaidBot/config/
 
 
 RUN \
