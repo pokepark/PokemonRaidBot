@@ -62,12 +62,12 @@ if (!empty($answer)) {
 		// If value is even
 		if($answer['alarm'])
 		{
-			sendmessage($update['callback_query']['from']['id'], getTranslation('alert_no_updates').': <b>'.$gymname.'</b>');
+			sendmessage($update['callback_query']['from']['id'], getTranslation('alert_updates_on').': <b>'.$gymname.'</b>');
 		}
 		else
 		{
 			// If value is uneven
-			sendmessage($update['callback_query']['from']['id'], getTranslation('alert_updates_on').': <b>'.$gymname.'</b>');
+			sendmessage($update['callback_query']['from']['id'], getTranslation('alert_no_updates').': <b>'.$gymname.'</b>');
 		}
 	}
 	else
