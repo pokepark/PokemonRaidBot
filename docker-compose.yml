@@ -1,37 +1,38 @@
 version: "3.4"
+
 services:
   raidbot:
     build:
-      context: ./docker-custom
-      dockerfile: Dockerfile
-    container_name: raidbot
+      context: ./pokemonraidbot/
     ports:
-      - 80:80
-      - 443:443
+      - 8088:80
     depends_on:
       - raidbot-db
     restart: always
     volumes:
-      - /var/docker/wwwdir/raidbot/log/:/var/log/
-      - /var/docker/wwwdir/raidbot/config/:/var/www/html/config/
-      - /var/docker/wwwdir/raidbot/access/:/var/www/html/access/
-      - /var/docker/wwwdir/raidbot/custom/:/var/www/html/custom/
-      - /etc/ssl/localcerts/:/etc/ssl/
-    networks:
-      - default
+      - ./PokemonRaidBot/config/:/var/www/html/config/
+      - ./PokemonRaidBot/access/:/var/www/html/access/
+      - ./PokemonRaidBot/custom/:/var/www/html/custom/
+      - ./tg-logs/:/var/log/tg-bots/
+    environment:
+      CRON_USER_1: ${CRON_USER_1}
+      CRON_SCHEDULE_1: ${CRON_SCHEDULE_1}
+      CRON_COMMAND_1: ${CRON_COMMAND_1}
+      CRON_USER_2: ${CRON_USER_2}
+      CRON_SCHEDULE_2: ${CRON_SCHEDULE_2}
+      CRON_COMMAND_2: ${CRON_COMMAND_2}
+      TEMPLATE_PHP_INI: production
+      PHP_INI_EXTENSION: gd
 
   raidbot-db:
-    image: mariadb:latest
-    container_name: raidbot_db
+    image: mariadb:10.3
     restart: always
-    volumes:
-      - /var/docker/datadir/raidbot/:/var/lib/mysql/
-      - /var/docker/wwwdir/raidbot/sql/:/docker-entrypoint-initdb.d/
-    ports:
-      - 3306:3306
-    environment:
-      MYSQL_ROOT_PASSWORD: securePassword
-      MYSQL_DATABASE: raidbot
     command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
-    networks:
-      - default
+    volumes:
+      - ./raidbot-db/:/var/lib/mysql/
+      - ./sql/:/docker-entrypoint-initdb.d/
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: 1
+      MYSQL_DATABASE: raidbot
+      MYSQL_USER: raidbot
+      MYSQL_PASSWORD: raidbot
