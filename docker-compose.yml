@@ -3,7 +3,7 @@ version: "3.4"
 services:
   raidbot:
     build:
-      context: ./pokemonraidbot/
+      context: ./PokemonRaidBot/
     ports:
       - 8088:80
     depends_on:
