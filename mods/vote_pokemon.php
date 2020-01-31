@@ -33,8 +33,10 @@ debug_log($atts);
 if(!empty($atts)) {
     // Any pokemon?
     if($data['arg'] == 0) {
-        // Update attendance.
+        // Send alarm
         alarm($data['id'],$update['callback_query']['from']['id'],'pok_individual',$data['arg']);
+
+        // Update attendance.
         my_query(
         "
         UPDATE    attendance
@@ -89,6 +91,9 @@ if(!empty($atts)) {
                     "
                     );
                 }
+                // Send alarm
+                alarm($data['id'],$update['callback_query']['from']['id'],'pok_cancel_individual',$data['arg']);
+
                 // Update count.
                 $count = $count - 1;
 
@@ -100,8 +105,10 @@ if(!empty($atts)) {
 
         // Not found? Insert!
         if(!$found) {
-            // Insert vote.
+            // Send alarm
             alarm($data['id'],$update['callback_query']['from']['id'],'pok_individual',$data['arg']);
+
+            // Insert vote.
             my_query(
             "
             INSERT INTO attendance
@@ -141,7 +148,7 @@ if(!empty($atts)) {
         }
     }
 
-    // Send vote response.
+   // Send vote response.
    if(RAID_PICTURE == true) {
 	    send_response_vote($update, $data,false,false);
     } else {
