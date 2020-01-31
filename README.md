@@ -191,7 +191,7 @@ service docker start
 
 ### Raidbot installation:
 
-Go to the directory where you want to install the raidbot. Make sure to not expose this directory to the internet as it contains sensitive informations!
+Go to the directory where you want to install the raidbot. **Make sure to not expose this directory to the internet as it contains sensitive informations!**
 
 You can just copy & paste this to the shell to prepare your docker-deployment:
 ```
@@ -232,8 +232,8 @@ Your directory should now look like this:
 └── docker-compose.yml
 ```
 
-- Check the `docker-compose.yml` for your customization. Change the two `CRON_COMMAND` variables and replace `changeme` with either your API key or your cleanup secret. Make sure to also edit the DB credentials at the bottom of the file. Basically, replace every `changeme`.
-- Now setup the Raidbot as usual. Change the `config.json` to your needs (remeber to use `raidbot-db` in the `DB_HOST` value field). Maybe maybe modify stuff in `config/telegram.json`, `custom/` or `access/`, etc.
+- Check the `docker-compose.yml` for adjusting it to your needs. Change the two `CRON_COMMAND` variables and replace `changeme` with either your API key or your cleanup secret. Make sure to also edit the DB credentials at the bottom of the file. Basically, replace every `changeme`.
+- Now setup the Raidbot as usual. Change the `config.json` to your needs (remeber to use `raidbot-db` in the `DB_HOST` value field). Maybe modify stuff in `config/telegram.json`, `custom/` or `access/`, etc.
 
 Change the file permissions:
 
@@ -244,9 +244,7 @@ chown -R 33:33 tg-logs/ && \
 chmod 0600 PokemonRaidBot/config/*.json
 ```
 
-Now you are ready to start the Docker.
-
-To deploy the Raidbot and Database you just need to build the Raidbot container and start it:
+To deploy the Raidbot and Database containers, you just need to build the Raidbot container and start them by running:
 
 ```
 docker-compose up --build -d
@@ -304,7 +302,6 @@ Connect to the running Raidbot container and run the php command:
 ```
 docker exec -it raidbot-docker_raidbot_1 php getZeCharles.php
 ```
-
 
 ## Config
 
