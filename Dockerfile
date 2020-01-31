@@ -64,9 +64,6 @@ WORKDIR ${WWW_DIR}PokemonRaidBot/
 EXPOSE 80
 
 ADD /docker/cronjob /etc/cron.d/cronjob
-ADD /config/config.json ${WWW_DIR}PokemonRaidBot/config/
-ADD /config/telegram.json ${WWW_DIR}PokemonRaidBot/config/
-
 
 RUN \
   #Activate Cronjob
