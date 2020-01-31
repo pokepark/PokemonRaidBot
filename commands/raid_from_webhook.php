@@ -2,6 +2,9 @@
 // Write to log.
 debug_log('RAID_FROM_WEBHOOK()');
 
+// Telegram JSON array.
+$tg_json = array();
+
 foreach ($update as $raid) {
 
     $level = $raid['message']['level'];
@@ -56,7 +59,7 @@ foreach ($update as $raid) {
         $dbh = null;
         exit;
     }
-    // Update gym name in raid table.
+    // Update gym info in raid table.
     if ($gym_internal_id > 0) {
         
         try {
@@ -74,12 +77,12 @@ foreach ($update as $raid) {
                     gym_id LIKE :gym_id
             ';
             $statement = $dbh->prepare( $query );
-            $statement->bindValue(':lat', $gym_lat_exist, PDO::PARAM_STR);
-            $statement->bindValue(':lon', $gym_lon_exist, PDO::PARAM_STR);
-            $statement->bindValue(':gym_name', $gym_name_exist, PDO::PARAM_STR);
-            $statement->bindValue(':ex_gym', $gym_is_ex_exist, PDO::PARAM_INT);
-            $statement->bindValue(':img_url', $gym_img_url_exist, PDO::PARAM_STR);
-            $statement->bindValue(':gym_id', $gym_internal_id, PDO::PARAM_STR);
+            $statement->bindValue(':lat', $gym_lat, PDO::PARAM_STR);
+            $statement->bindValue(':lon', $gym_lon, PDO::PARAM_STR);
+            $statement->bindValue(':gym_name', $gym_name, PDO::PARAM_STR);
+            $statement->bindValue(':ex_gym', $gym_is_ex, PDO::PARAM_INT);
+            $statement->bindValue(':img_url', $gym_img_url, PDO::PARAM_STR);
+            $statement->bindValue(':gym_id', $gym_id, PDO::PARAM_STR);
             $statement->execute();
         }
         catch (PDOException $exception) {
@@ -163,6 +166,7 @@ foreach ($update as $raid) {
     
     // Raid exists, do updates!
     if ( $raid_id > 0 ) {
+        // Update database
         
         try {
 
@@ -185,39 +189,37 @@ foreach ($update as $raid) {
             $statement->bindValue(':gender', $gender, PDO::PARAM_STR);
             $statement->bindValue(':id', $raid_id, PDO::PARAM_INT);
             $statement->execute();
-			
-			
-			// Get raid info for updating 
-			$raid_info = get_raid($raid_id);
-			
-			$updated_msg = show_raid_poll($raid_info);
-			$updated_keys = keys_vote($raid_info);
-			
-			$cleanup_query = ' 
-				SELECT    *
-				FROM      cleanup
-					WHERE   raid_id = :id
-			';
-            $cleanup_statement = $dbh->prepare( $cleanup_query );
-            $cleanup_statement->bindValue(':id', $raid_id, PDO::PARAM_STR);
-			$cleanup_statement->execute();
-			while ($row = $cleanup_statement->fetch()) {
-				if(RAID_PICTURE == true) {
-					$url = RAID_PICTURE_URL."?pokemon=".$raid_info['pokemon']."&raid=".$raid_id;
-					editMessageMedia($row['message_id'], $updated_msg['short'], $updated_keys, $row['chat_id'], ['disable_web_page_preview' => 'true'],false, $url);
-				}else {
-					editMessageText($row['message_id'], $updated_msg['full'], $updated_keys, $row['chat_id'], ['disable_web_page_preview' => 'true'],false);
-				}
-			}
-				
         }
         catch (PDOException $exception) {
-
             error_log($exception->getMessage());
             $dbh = null;
             exit;
         }
-//        send_response_vote($update, $data);
+        // If update was needed, send them to TG
+        if($statement->rowCount() > 0) {
+            // Get raid info for updating 
+            $raid_info = get_raid($raid_id);
+
+            $updated_msg = show_raid_poll($raid_info);
+            $updated_keys = keys_vote($raid_info);
+
+            $cleanup_query = ' 
+                SELECT    *
+                FROM      cleanup
+                    WHERE   raid_id = :id
+            ';
+            $cleanup_statement = $dbh->prepare( $cleanup_query );
+            $cleanup_statement->bindValue(':id', $raid_id, PDO::PARAM_STR);
+            $cleanup_statement->execute();
+            while ($row = $cleanup_statement->fetch()) {
+                if(RAID_PICTURE == true) {
+                    $url = RAID_PICTURE_URL."?pokemon=".$raid_info['pokemon']."&raid=".$raid_id;
+                    $tg_json[] = editMessageMedia($row['message_id'], $updated_msg['short'], $updated_keys, $row['chat_id'], ['disable_web_page_preview' => 'true'],true, $url);
+                }else {
+                    $tg_json[] = editMessageText($row['message_id'], $updated_msg['full'], $updated_keys, $row['chat_id'], ['disable_web_page_preview' => 'true'],true);
+                }
+            }
+        }
         continue;
     }
     
@@ -287,8 +289,8 @@ foreach ($update as $raid) {
         if (RAID_LOCATION == true) {
 
             $msg_text = !empty($created_raid['address']) ? $created_raid['address'] . ', ' . substr(strtoupper(BOT_ID), 0, 1) . '-ID = ' . $created_raid['id'] : $created_raid['pokemon'] . ', ' . substr(strtoupper(BOT_ID), 0, 1) . '-ID = ' . $created_raid['id']; // DO NOT REMOVE " ID = " --> NEEDED FOR CLEANUP PREPARATION!
-            $loc = send_venue($chat, $created_raid['lat'], $created_raid['lon'], "", $msg_text);
-
+            $loc = send_venue($chat, $created_raid['lat'], $created_raid['lon'], "", $msg_text, true);
+            $tg_json[] = $loc;
             // Write to log.
             debug_log('location:');
             debug_log($loc);
@@ -301,10 +303,14 @@ foreach ($update as $raid) {
         //send_message($chat, $text, $keys, ['reply_to_message_id' => $reply_to, 'reply_markup' => ['selective' => true, 'one_time_keyboard' => true], 'disable_web_page_preview' => 'true']);
         // Send the message.
         if(RAID_PICTURE == true) {
-            send_photo($chat, $picture_url, $text['short'], $keys, ['reply_to_message_id' => $reply_to, 'reply_markup' => ['selective' => true, 'one_time_keyboard' => true], 'disable_web_page_preview' => 'true']);
+            $tg_json[] = send_photo($chat, $picture_url, $text['short'], $keys, ['reply_to_message_id' => $reply_to, 'reply_markup' => ['selective' => true, 'one_time_keyboard' => true], 'disable_web_page_preview' => 'true'], true);
         } else {
-            send_message($chat, $text['full'], $keys, ['reply_to_message_id' => $reply_to, 'reply_markup' => ['selective' => true, 'one_time_keyboard' => true], 'disable_web_page_preview' => 'true']);
+            $tg_json[] = send_message($chat, $text['full'], $keys, ['reply_to_message_id' => $reply_to, 'reply_markup' => ['selective' => true, 'one_time_keyboard' => true], 'disable_web_page_preview' => 'true'], true);
         }
     }
 }
+
+// Telegram multicurl request.
+curl_json_multi_request($tg_json);
+
 ?>
