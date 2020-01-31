@@ -182,142 +182,125 @@ Important: The raid level is NOT set when importing the raid bosses from the goh
 
 ## Docker
 
-Installation of Docker:
+### Installation of Docker:
 ```
 curl -L https://github.com/docker/compose/releases/download/1.25.1-rc1/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-compose
 service docker start
 ```
 
+### Raidbot installation:
+
+Go to the directory where you want to install the raidbot. **Make sure to not expose this directory to the internet as it contains sensitive informations!**
+
 You can just copy & paste this to the shell to prepare your docker-deployment:
 ```
-cd /var/ && \
-mkdir docker && \
-mkdir docker/wwwdir && \
-mkdir docker/wwwdir/raidbot && \
-cd docker/wwwdir/raidbot && \
-mkdir access && \
-mkdir config && \
-mkdir custom && \
-mkdir docker-custom && \
+mkdir raidbot-docker && \
+cd raidbot-docker && \
 mkdir sql && \
-mkdir log && \
-mkdir log/tg-bots && \
-mkdir log/apache2 && \
-touch log/tg-bots/dev-raid-bot-cleanup.log && \
-touch log/tg-bots/dev-raid-bot.log && \
-wget -O sql/1pokemon-raid-bot.sql https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/sql/pokemon-raid-bot.sql && \
-wget -O sql/2raid-boss-pokedex.sql https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/sql/raid-boss-pokedex.sql && \
-wget -O sql/3gohub-raid-boss-pokedex.sql https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/sql/gohub-raid-boss-pokedex.sql && \
-wget -O config/.gitignore https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/config/.gitignore && \
-wget -O config/config.json https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/config/config.json.example && \
-wget -O config/telegram.json https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/config/telegram.json.example && \
-wget -O custom/.gitignore https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/custom/.gitignore  && \
-wget -O access/.gitignore https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/access/.gitignore  && \
-wget -O docker-compose.yml https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/docker-compose.yml && \
-wget -O docker-custom/cronjob https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/docker-custom/cronjob  && \
-wget -O docker-custom/Dockerfile https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/docker-custom/Dockerfile  && \
-wget -O docker-custom/apache2.conf https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/docker-custom/apache2.conf  && \
-wget -O docker-custom/app.conf https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/docker-custom/app.conf  && \
-wget -O docker-custom/entrypoint.sh https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/docker-custom/entrypoint.sh  && \
-wget -O docker-custom/php.ini https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/docker-custom/php.ini  && \
-chown -R www-data:www-data config/ && \
-chown -R www-data:www-data access/ && \
-chown -R www-data:www-data custom/ && \
-find config/ -type d -exec chmod 755 {} \; && \
-find config/ -type f -exec chmod 644 {} \; && \
-find access/ -type f -exec chmod 644 {} \; && \
-find access/ -type d -exec chmod 755 {} \; && \
-find custom/ -type f -exec chmod 644 {} \; && \
-find custom/ -type d -exec chmod 755 {} \; && \
-chown -R www-data:www-data log/tg-bots/ && \
-cd config/ && \
-chmod 0600 config.json  && \
-chmod 0600 telegram.json && \
-mkdir -p /etc/ssl/localcerts && \
-openssl req -newkey rsa:2048 -sha256 -nodes -keyout /etc/ssl/localcerts/apache.key -x509 -days 365 -out /etc/ssl/localcerts/apache.pem -subj "/C=US/ST=New York/L=Brooklyn/O=Example Brooklyn Company/CN=domain/ServerIP" && \
-chmod 600 /etc/ssl/localcerts/apache*
+mkdir tg-logs && \
+touch tg-logs/dev-raid-bot-cleanup.log && \
+touch tg-logs/dev-raid-bot.log && \
+git clone --recurse-submodules https://github.com/florianbecker/PokemonRaidBot.git && \
+cp PokemonRaidBot/sql/pokemon-raid-bot.sql sql/01_pokemon-raid-bot.sql && \
+cp PokemonRaidBot/sql/raid-boss-pokedex.sql sql/02_raid-boss-pokedex.sql && \
+cp PokemonRaidBot/sql/gohub-raid-boss-pokedex.sql sql/03_gohub-raid-boss-pokedex.sql && \
+cp PokemonRaidBot/docker-compose.yml .
 ```
 
 This will:
-1. Create a directory `raidbot`.
-2. Create a file `docker-compose.yml`.
-3. Create a directory `access`. (here we store Access Permissions https://github.com/florianbecker/PokemonRaidBot#access-permissions)
-4. Create a directory `config`. (here we store config files for the raidbot).
-Here you store your `config.json` and `telegram.json`.
-Examples for these files can be found @github https://github.com/florianbecker/PokemonRaidBot/tree/master/config
-5. Create a directory `custom` for your custom translations etc.
-6. Download the Raidbot Database Schema: https://github.com/florianbecker/PokemonRaidBot/tree/master/sql and store it
-in the directory `sql`.
-7. Download Docker-configs and example Config-Files for the Raidbot
-8. Create a self-singed Certificate for Telegram - Change your CN= to your Server IP or your Domain.com
+1. Create a directory `raidbot-docker`.
+2. Create a directory `sql`.
+3. Create a directory `tg-logs` and create the two logfiles in it.
+4. Clone the Raidbot Repository including the telegram-core.
+5. Copy and rename the required SQL files.
+6. Copy the docker-compose file.
 
 Your directory should now look like this:
- ```
- --raidbot/
-  |-- docker-compose.yml
-  |-- access
-    |-- .gitignore
-  |-- config
-    |-- .gitignore
-    |-- config.json
-    |-- telegram.json
-  |-- custom
-    |-- .gitignore
-  |-- docker-custom/
-    |-- apache2.conf
-    |-- app.conf
-    |-- cronjob
-    |-- Dockerfile
-    |-- entrypoint.sh
-    |-- php.ini
-  |-- log/
-    |-- apache2
-    |-- tg-bots/
-      |-- dev-raid-bot-cleanup.log
-      |-- dev-raid-bot.log
-  |-- sql/
-    |-- 1pokemon-raid-bot.sql
-    |-- 2raid-boss-pokedex.sql
-    |-- 3gohub-raid-boss-pokedex.sql
- ```
 
-- Check the `docker-compose.yml` for your customization. Change the `MYSQL_ROOT_PASSWORD`.
-- The `cronjob` should be changed according the cleanup https://github.com/florianbecker/PokemonRaidBot#cleanup and Raid-Overview https://github.com/florianbecker/PokemonRaidBot#raid-overview.
-- Comment the Line 29 in `Dockerfile`, if you don't want to download the images, it takes a bit longer on build.
-- Change the config.json to your needs.
-- Add some user-rights to the `access-Folder` https://github.com/florianbecker/PokemonRaidBot#access-permissions.
+```
+├── PokemonRaidBot
+│   └── The normal RaidBot Repository
+├── raidbot-db
+├── sql
+│   ├── 01_pokemon-raid-bot.sql
+│   ├── 02_raid-boss-pokedex.sql
+│   └── 03_gohub-raid-boss-pokedex.sql
+├── tg-logs
+│   ├── dev-raid-bot-cleanup.log
+│   └── dev-raid-bot.log
+└── docker-compose.yml
+```
 
-Now you are ready to start the Docker.
+- Check the `docker-compose.yml` for adjusting it to your needs. Change the two `CRON_COMMAND` variables and replace `changeme` with either your API key or your cleanup secret. Make sure to also edit the DB credentials at the bottom of the file. Basically, replace every `changeme`.
+- Now setup the Raidbot as usual. Change the `config.json` to your needs (remeber to use `raidbot-db` in the `DB_HOST` value field). Maybe modify stuff in `config/telegram.json`, `custom/` or `access/`, etc.
 
-To deploy the Raidbot and Database you just execute in the folder `/var/docker/wwwdir/raidbot/`
+Change the file permissions:
+
+```
+find . -type d -exec chmod 755 {} \; && \
+find . -type f -exec chmod 644 {} \; && \
+chown -R 33:33 tg-logs/ && \
+chmod 0600 PokemonRaidBot/config/*.json
+```
+
+To deploy the Raidbot and Database containers, you just need to build the Raidbot container and start them by running:
+
 ```
 docker-compose up --build -d
 ```
+
 Look at the logs with:
+
 ```
 docker-compose logs -f raidbot
 
 docker-compose logs -f raidbot-db
 ```
 
-List all running Dockers:
+Make sure that everything is running correctly by inspecting the logs. 
+
+### SSL with Docker
+
+The next step is to add some sort of SSL layer on top. There are dozens of ways to do that, but the recommended ways are ether a classic reverse proxy on the normal Hostsytem or adding a reverse proxy container (like the [companion container](https://github.com/JrCs/docker-letsencrypt-nginx-proxy-companion) or using [traefik](https://docs.traefik.io/)) to the docker-stack.yml. The Raidbot container is exposed at port `8088` by default.
+
+### Useful Docker commands
+
+List all running Docker containers:
 ```
 docker ps -a
 ```
 
-Restart all Docker-Container:
+Accessing the Database (remember to change `changeme`):
+
+```
+docker exec -it raidbot-docker_raidbot-db_1 mysql -uchangeme -pchangeme raidbot
+```
+
+Restart all Docker containers:
+
 ```
 docker container restart $(docker container ls -aq)
 ```
 
-Stop and Delete one Docker-Container:
+Stop and Delete one Docker container:
+
 ```
 docker rm -f raidbot
+```
 
-or more
+Or the database container as well:
 
+```
 docker rm -f raidbot raidbot_db
+```
+
+### Using getZeCharles.php with Docker
+
+Connect to the running Raidbot container and run the php command:
+
+```
+docker exec -it raidbot-docker_raidbot_1 php getZeCharles.php
 ```
 
 ## Config
