@@ -69,10 +69,7 @@ RUN \
   #Activate Cronjob
   chmod 0644 /etc/cron.d/cronjob \
   && crontab /etc/cron.d/cronjob \
-  && touch /var/log/cron.log \
-  # File Permissions
-  && chmod 0600 ${WWW_DIR}PokemonRaidBot/config/config.json \
-  && chmod 0600 ${WWW_DIR}PokemonRaidBot/config/telegram.json
+  && touch /var/log/cron.log
 
 # By default, simply start apache.
 CMD ["/sbin/entrypoint.sh"]
