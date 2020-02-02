@@ -24,17 +24,11 @@ foreach ($update as $raid) {
     $gym_img_url = $raid['message']['url'];
     $gym_is_ex = $raid['message']['is_ex_raid_eligible'];
     $gym_internal_id = 0;
-    
-    // Does gym exists?
-    $gym_lat_exist = 0;
-    $gym_lot_exist = 0;
-    $gym_name_exist = '';
-    $gym_is_ex_exist = 0;
-    $gym_img_url_exist = '';
+
     try {
 
         $query = '
-            SELECT id, lat, lon, gym_name, ex_gym, img_url
+            SELECT id
             FROM gyms
             WHERE
                 gym_id LIKE :gym_id
@@ -45,12 +39,7 @@ foreach ($update as $raid) {
         $statement->execute();
         while ($row = $statement->fetch()) {
 
-            $gym_internal_id = $row['id'];            
-            $gym_lat_exist = $row['lat'];
-            $gym_lon_exist = $row['lon'];
-            $gym_name_exist = $row['gym_name'];
-            $gym_is_ex_exist = $row['ex_gym'];
-            $gym_img_url_exist = $row['img_url'];
+            $gym_internal_id = $row['id'];
         }
     }
     catch (PDOException $exception) {
@@ -252,6 +241,11 @@ foreach ($update as $raid) {
         exit;
     }
     
+    if (WEBHOOK_CREATE_ONLY == true) {
+        
+        continue;
+    }
+    
     // Get raid data.
     $created_raid = get_raid($raid_id);
 
@@ -298,7 +292,7 @@ foreach ($update as $raid) {
     
         // Set reply to.
         $reply_to = $chat; //$update['message']['chat']['id'];
-    
+
         // Send the message.
         //send_message($chat, $text, $keys, ['reply_to_message_id' => $reply_to, 'reply_markup' => ['selective' => true, 'one_time_keyboard' => true], 'disable_web_page_preview' => 'true']);
         // Send the message.
