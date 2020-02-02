@@ -27,6 +27,7 @@ if (!empty($answer)) {
     if($data['arg'] == '0')
     {
         // Reset team extra people.
+        alarm($data['id'],$update['callback_query']['from']['id'],'extra_alone',$data['arg']);
         my_query(
             "
             UPDATE    attendance
@@ -40,7 +41,7 @@ if (!empty($answer)) {
     } else {
         // Get team.
         $team = 'extra_' . $data['arg'];
-
+        alarm($data['id'],$update['callback_query']['from']['id'],'extra',$data['arg']);
         // Increase team extra people.
         my_query(
             "
@@ -58,7 +59,7 @@ if (!empty($answer)) {
 	    send_response_vote($update, $data,false,false);
     } else {
 	    send_response_vote($update, $data);
-    } 
+    }
 } else {
     // Send vote time first.
     send_vote_time_first($update);

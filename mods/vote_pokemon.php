@@ -33,6 +33,9 @@ debug_log($atts);
 if(!empty($atts)) {
     // Any pokemon?
     if($data['arg'] == 0) {
+        // Send alarm
+        alarm($data['id'],$update['callback_query']['from']['id'],'pok_individual',$data['arg']);
+
         // Update attendance.
         my_query(
         "
@@ -81,13 +84,16 @@ if(!empty($atts)) {
                 } else {
                     my_query(
                     "
-                    DELETE FROM attendance 
+                    DELETE FROM attendance
                     WHERE  raid_id = {$data['id']}
                     AND   user_id = {$update['callback_query']['from']['id']}
                     AND   pokemon = '{$data['arg']}'
                     "
                     );
                 }
+                // Send alarm
+                alarm($data['id'],$update['callback_query']['from']['id'],'pok_cancel_individual',$data['arg']);
+
                 // Update count.
                 $count = $count - 1;
 
@@ -99,6 +105,9 @@ if(!empty($atts)) {
 
         // Not found? Insert!
         if(!$found) {
+            // Send alarm
+            alarm($data['id'],$update['callback_query']['from']['id'],'pok_individual',$data['arg']);
+
             // Insert vote.
             my_query(
             "
@@ -116,8 +125,9 @@ if(!empty($atts)) {
             '{$atts[0]['cancel']}',
             '{$atts[0]['late']}',
             '{$atts[0]['invite']}',
-            '{$data['arg']}'
-            )		
+            '{$data['arg']}',
+            '{$atts[0]['alarm']}'
+            )
             "
             );
 
@@ -129,7 +139,7 @@ if(!empty($atts)) {
         if($count > 0) {
             my_query(
             "
-            DELETE FROM attendance 
+            DELETE FROM attendance
             WHERE  raid_id = {$data['id']}
             AND   user_id = {$update['callback_query']['from']['id']}
             AND   pokemon = 0
@@ -138,12 +148,12 @@ if(!empty($atts)) {
         }
     }
 
-    // Send vote response.
+   // Send vote response.
    if(RAID_PICTURE == true) {
 	    send_response_vote($update, $data,false,false);
     } else {
 	    send_response_vote($update, $data);
-    } 
+    }
 } else {
     // Send vote time first.
     send_vote_time_first($update);

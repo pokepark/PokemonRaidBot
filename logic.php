@@ -1951,6 +1951,10 @@ function keys_vote($raid)
                 'callback_data' => $raid['id'] . ':vote_refresh:0'
             ],
             [
+              'text'          => EMOJI_ALARM,
+              'callback_data' => $raid['id'] . ':vote_status:alarm'
+            ],
+            [
                 'text'          => $text_here,
                 'callback_data' => $raid['id'] . ':vote_status:arrived'
             ],
@@ -3967,8 +3971,18 @@ function curl_json_response($json_response, $json)
                 debug_log('Text message likely contains cleanup info!');
                 if(isset($response['result']['venue']['address']) && strpos($response['result']['venue']['address'], substr(strtoupper(BOT_ID), 0, 1) . '-ID = ') !== false) {
                     $cleanup_id = substr(strrchr($response['result']['text'], substr(strtoupper(BOT_ID), 0, 1) . '-ID = '), 7);
-                } else {
+                } else if(strpos($response['result']['text'], substr(strtoupper(BOT_ID), 0, 1) . '-ID = ') !== false) {
+                    $cleanup_id = substr(strrchr($response['result']['text'], substr(strtoupper(BOT_ID), 0, 1) . '-ID = '), 7);
+                }else {
                     debug_log('BOT_ID ' . BOT_ID . ' not found in text message!');
+                }
+            // Check if it's a caption and get raid id
+            } else if (!empty($response['result']['caption'])) {
+                debug_log('Caption in a message likely contains cleanup info!');
+                if(strpos($response['result']['caption'], substr(strtoupper(BOT_ID), 0, 1) . '-ID = ') !== false) {
+                    $cleanup_id = substr(strrchr($response['result']['caption'], substr(strtoupper(BOT_ID), 0, 1) . '-ID = '), 7);
+                } else {
+                    debug_log('BOT_ID ' . BOT_ID . ' not found in caption of message!');
                 }
             }
             debug_log('Cleanup ID: ' . $cleanup_id);
@@ -4025,3 +4039,157 @@ function curl_json_response($json_response, $json)
     return $response;
 }
 
+/**
+ * Send raid alerts to user.
+ * @param $raid
+ * @param $user
+ * @param $action
+ * @param $info
+ */
+function alarm($raid, $user, $action, $info = '')
+{
+    // Name of the user, which executes a status update
+    $request = my_query("SELECT * FROM users WHERE user_id = {$user}");
+    $answer_quests = $request->fetch_assoc();
+    $username = $answer_quests['name'];
+
+    // Gym name and raid times
+    $request = my_query("SELECT * FROM raids as r left join gyms as g on r.gym_id = g.id WHERE r.id = {$raid}");
+    $answer = $request->fetch_assoc();
+    $gymname = $answer['gym_name'];
+    $raidtimes = str_replace(CR, '', str_replace(' ', '', get_raid_times($answer, false, false, true)));
+
+    // Get attend time.
+    $r = my_query("SELECT DISTINCT attend_time FROM attendance WHERE raid_id = {$raid} and user_id = {$user}");
+    $a = $r->fetch_assoc();
+    $attendtime = $a['attend_time'];
+
+    // Adding a guest
+    if($action == "extra") {
+        debug_log('Alarm additional trainer: ' . $info);
+        $color_old = array('mystic', 'valor', 'instinct');
+        $color_new = array (TEAM_B, TEAM_R, TEAM_Y);
+        $color = str_replace($color_old, $color_new, $info);
+
+        // Sending message
+        $msg_text = '<b>' . getTranslation('alert_add_trainer') . '</b>' . CR;
+        $msg_text .= EMOJI_HERE . SP . $gymname . SP . '(' . $raidtimes . ')' . CR;
+        $msg_text .= EMOJI_SINGLE . SP . $username . SP . '+' . $color . CR;
+        $msg_text .= EMOJI_CLOCK . SP . check_time($attendtime);
+        sendalarm($msg_text, $raid, $user);
+
+    // Updating status - here or cancel
+    } else if($action == "status") {
+        // If trainer changes state (to late or cancelation)
+        if($info == 'late') {
+            debug_log('Alarm late: ' . $info);
+            // Send message.
+            $msg_text = '<b>' . getTranslation('alert_later') . '</b>' . CR;
+            $msg_text .= EMOJI_HERE . SP . $gymname . SP . '(' . $raidtimes . ')' . CR;
+            $msg_text .= EMOJI_SINGLE . SP . $username . CR;
+            $msg_text .= EMOJI_CLOCK . SP . check_time($attendtime);
+            sendalarm($msg_text, $raid, $user);
+        } else if($info == 'cancel') {
+            debug_log('Alarm cancel: ' . $info);
+            $msg_text = '<b>' . getTranslation('alert_cancel') . '</b>' . CR;
+            $msg_text .= TEAM_CANCEL . SP . $gymname . SP . '(' . $raidtimes . ')' . CR;
+            $msg_text .= EMOJI_SINGLE . SP . $username . CR;
+            $msg_text .= EMOJI_CLOCK . SP . check_time($attendtime);
+            sendalarm($msg_text, $raid, $user);
+        }
+
+    // Updating pokemon
+    } else if($action == "pok_individual") {
+        debug_log('Alarm Pokemon: ' . $info);
+
+        // Only a specific pokemon
+        if($info != '0') {
+            $poke_name = get_local_pokemon_name($info);
+            $msg_text = '<b>' . getTranslation('alert_individual_poke') . SP . $poke_name . '</b>' . CR;
+            $msg_text .= EMOJI_HERE . SP . $gymname . SP . '(' . $raidtimes . ')' . CR;
+            $msg_text .= EMOJI_SINGLE . SP . $username . CR;
+            $msg_text .= EMOJI_CLOCK . SP . check_time($attendtime);
+            sendalarm($msg_text, $raid, $user);
+        // Any pokemon
+        } else {
+            $msg_text = '<b>' . getTranslation('alert_every_poke') . SP . $poke_name . '</b>' . CR;
+            $msg_text .= EMOJI_HERE . SP . $gymname . SP . '(' . $raidtimes . ')' . CR;
+            $msg_text .= EMOJI_SINGLE . SP . $username . CR;
+            $msg_text .= EMOJI_CLOCK . SP . check_time($attendtime);
+            sendalarm($msg_text, $raid, $user);
+        }
+
+    // Cancel pokemon
+    } else if($action == "pok_cancel_individual") {
+        debug_log('Alarm Pokemon: ' . $info);
+        $poke_name = get_local_pokemon_name($info);
+        $msg_text = '<b>' . getTranslation('alert_cancel_individual_poke') . SP . $poke_name . '</b>' . CR;
+        $msg_text .= EMOJI_HERE . SP . $gymname . SP . '(' . $raidtimes . ')' . CR;
+        $msg_text .= EMOJI_SINGLE . SP . $username . CR;
+        $msg_text .= EMOJI_CLOCK . SP . check_time($attendtime);
+        sendalarm($msg_text, $raid, $user);
+
+    // New attendance
+    } else if($action == "new_att") {
+        debug_log('Alarm new attendance: ' . $info);
+        // Will Attend
+        $msg_text = '<b>' . getTranslation('alert_new_att') . '</b>' . CR;
+        $msg_text .= EMOJI_HERE . SP . $gymname . SP . '(' . $raidtimes . ')' . CR;
+        $msg_text .= EMOJI_SINGLE . SP . $username . CR;
+        $msg_text .= EMOJI_CLOCK . SP . check_time($info);
+        sendalarm($msg_text, $raid, $user);
+
+    // Attendance time change
+    } else if($action == "change_time") {
+        debug_log('Alarm changed attendance time: ' . $info);
+        // Changes Time
+        $msg_text = '<b>' . getTranslation('alert_change_time') . '</b>' . CR;
+        $msg_text .= EMOJI_HERE . SP . $gymname . SP . '(' . $raidtimes . ')' . CR;
+        $msg_text .= EMOJI_SINGLE . SP . $username . CR;
+        $msg_text .= EMOJI_CLOCK . SP . '<b>' . check_time($info) . '</b>';
+        sendalarm($msg_text, $raid, $user);
+
+    // No additional trainer
+    } else if($action == "extra_alone") {
+        debug_log('Alarm no additional trainers: ' . $info);
+        $msg_text = '<b>' . getTranslation('alert_extra_alone') . '</b>' . CR;
+        $msg_text .= EMOJI_HERE . SP . $gymname . SP . '(' . $raidtimes . ')' . CR;
+        $msg_text .= EMOJI_SINGLE . SP . $username . CR;
+        $msg_text .= EMOJI_CLOCK . SP . check_time($attendtime);
+        sendalarm($msg_text, $raid, $user);
+    }
+}
+
+/**
+ * Check attendance time against anytime.
+ * @param $text
+ * @param $raid
+ */
+function check_time($time)
+{
+    // Raid anytime?
+    if(strcmp($time,'0000-00-00 00:00:00')===0){
+      return getTranslation('anytime');
+    } else {
+      return dt2time($time);
+    }
+}
+
+/**
+ * Sending the alert to the user.
+ * @param $text
+ * @param $raid
+ */
+function sendalarm($text, $raid, $user)
+{
+    // Will fetch all Trainer, which has subscribed for an alarm and send the message
+    $request = my_query("SELECT DISTINCT user_id FROM attendance WHERE raid_id = {$raid} AND alarm = 1");
+    while($answer = $request->fetch_assoc())
+    {
+        // Only send message for other users!
+        if($user != $answer['user_id']) {
+            sendmessage($answer['user_id'], $text);
+        }
+    }
+
+}
