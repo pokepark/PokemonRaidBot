@@ -2,6 +2,8 @@
 // Write to log.
 debug_log('RAID_FROM_WEBHOOK()');
 
+include_once(CORE_CLASS_PATH . '/pointLocation.php');
+
 // Telegram JSON array.
 $tg_json = array();
 
@@ -257,9 +259,39 @@ foreach ($update as $raid) {
 
     // Get chats
     $chats = explode(',', WEBHOOK_CHATS);
+    
     for($i = 1; $i <= 5; $i++) {
         $const = 'WEBHOOK_CHATS_LEVEL_' . $i;
         $const_chats = constant($const);
+
+        // Get geofence chats and geofences
+        $raw = file_get_contents(CONFIG_PATH . 'geoconfig.json');
+        $geofences = json_decode($raw, true);
+        foreach ($geofences as $geofence) {
+            
+            $const_geofence = 'WEBHOOK_CHATS_LEVEL_' . $i . '_' . $geofence['id'];
+            $const_geofence_chats = constant($const_geofence);
+
+            // Debug
+            //debug_log($const_geofence,'CONSTANT NAME:');
+            //debug_log($const_geofence_chats),'CONSTANT VALUE:');
+            
+            // if current raid inside path, add chats
+            $point = "$created_raid['lat'], $created_raid['lon']";
+            $polygon = array();
+            foreach ($geofence['path'] as $geopoint) {
+
+                array_push($polygon, "$geopoint[0] $geopoint[1]");
+            }
+            
+            $pointLocation = new pointLocation();
+            if ( $pointLocation->pointInPolygon($point, $polygon) === "inside" ) {
+
+                if($level == $i && defined($const_geofence) && !empty($const_geofence) && !empty($const_geofence_chats)) {
+                    $chats = explode(',', $const_geofence_chats);
+                }
+            }
+        }
 
         // Debug.
         //debug_log($const,'CONSTANT NAME:');
