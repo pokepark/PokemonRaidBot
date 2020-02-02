@@ -2493,7 +2493,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "Ilmoittautuneet, "
+    "FI": "Ilmoittautuneet,"
   },
   "alert_cancel_individual_poke": {
     "NL": "Komt niet voor",
@@ -2505,7 +2505,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "Peruuttaneet, "
+    "FI": "Peruuttaneet,"
   },
   "alert_every_poke": {
     "NL": "Komt voor",
