@@ -265,7 +265,7 @@ foreach ($update as $raid) {
         $const_chats = constant($const);
 
         // Get geofence chats and geofences
-        $raw = file_get_contents(CONFIG_PATH . 'geoconfig.json');
+        $raw = file_get_contents(CONFIG_PATH . '/geoconfig.json');
         $geofences = json_decode($raw, true);
         foreach ($geofences as $geofence) {
             
@@ -277,7 +277,7 @@ foreach ($update as $raid) {
             //debug_log($const_geofence_chats),'CONSTANT VALUE:');
             
             // if current raid inside path, add chats
-            $point = "$created_raid['lat'], $created_raid['lon']";
+            $point = $created_raid['lat'] . " " . $created_raid['lon'];
             $polygon = array();
             foreach ($geofence['path'] as $geopoint) {
 
