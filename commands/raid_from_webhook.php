@@ -20,12 +20,44 @@ foreach ($update as $raid) {
 
     // Create gym if not exists
     $gym_name = $raid['message']['name'];
+    if (WEBHOOK_EXCLUDE_UNKOWN == true && $gym_name === "unkown") {
+        
+        contiue;
+    }
     $gym_lat = $raid['message']['latitude'];
     $gym_lon = $raid['message']['longitude'];
     $gym_id = $raid['message']['gym_id'];
     $gym_img_url = $raid['message']['url'];
     $gym_is_ex = $raid['message']['is_ex_raid_eligible'];
     $gym_internal_id = 0;
+    
+    // Check geofence, if available and continue if not inside any fence
+    if (file_exists(CONFIG_PATH . '/geoconfig.json')) {
+
+        bool insideGeoFence = false;
+        $raw = file_get_contents(CONFIG_PATH . '/geoconfig.json');
+        $geofences = json_decode($raw, true);
+        foreach ($geofences as $geofence) {
+        
+            // if current raid inside path, add chats
+            $point = gym_lat . " " . gym_lon;
+            $polygon = array();
+            foreach ($geofence['path'] as $geopoint) {
+
+                array_push($polygon, "$geopoint[0] $geopoint[1]");
+            }
+            $pointLocation = new pointLocation();
+            if ( $pointLocation->pointInPolygon($point, $polygon) === "inside" ) {
+                
+                $insideGeoFence = true;
+                break;
+            }
+        }
+        if ($insideGeoFence === false) {
+            
+            continue;
+        }
+    }
 
     try {
 
@@ -70,7 +102,7 @@ foreach ($update as $raid) {
             $statement = $dbh->prepare( $query );
             $statement->bindValue(':lat', $gym_lat, PDO::PARAM_STR);
             $statement->bindValue(':lon', $gym_lon, PDO::PARAM_STR);
-            $statement->bindValue(':gym_name', $gym_name, PDO::PARAM_STR);
+            $statement->bindValue(':gym_name', dbh->quote($gym_name), PDO::PARAM_STR);
             $statement->bindValue(':ex_gym', $gym_is_ex, PDO::PARAM_INT);
             $statement->bindValue(':img_url', $gym_img_url, PDO::PARAM_STR);
             $statement->bindValue(':gym_id', $gym_id, PDO::PARAM_STR);
@@ -96,7 +128,7 @@ foreach ($update as $raid) {
             $statement = $dbh->prepare( $query );
             $statement->bindValue(':lat', $gym_lat, PDO::PARAM_STR);
             $statement->bindValue(':lon', $gym_lon, PDO::PARAM_STR);
-            $statement->bindValue(':gym_name', $gym_name, PDO::PARAM_STR);
+            $statement->bindValue(':gym_name', dbh->quote($gym_name), PDO::PARAM_STR);
             $statement->bindValue(':gym_id', $gym_id, PDO::PARAM_STR);
             $statement->bindValue(':ex_gym', $gym_is_ex, PDO::PARAM_INT);
             $statement->bindValue(':img_url', $gym_img_url, PDO::PARAM_STR);
@@ -213,7 +245,7 @@ foreach ($update as $raid) {
         }
         continue;
     }
-    
+
     // Create Raid and send messages
     try {
 
@@ -261,6 +293,7 @@ foreach ($update as $raid) {
     $chats = explode(',', WEBHOOK_CHATS);
     
     for($i = 1; $i <= 5; $i++) {
+
         $const = 'WEBHOOK_CHATS_LEVEL_' . $i;
         $const_chats = constant($const);
 
@@ -288,6 +321,7 @@ foreach ($update as $raid) {
             if ( $pointLocation->pointInPolygon($point, $polygon) === "inside" ) {
 
                 if($level == $i && defined($const_geofence) && !empty($const_geofence) && !empty($const_geofence_chats)) {
+
                     $chats = explode(',', $const_geofence_chats);
                 }
             }
@@ -298,6 +332,7 @@ foreach ($update as $raid) {
         //debug_log($const_chats),'CONSTANT VALUE:');
 
         if($level == $i && defined($const) && !empty($const) && !empty($const_chats)) {
+
             $chats = explode(',', $const_chats);
         }
     }
