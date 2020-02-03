@@ -40,7 +40,7 @@ foreach ($update as $raid) {
         foreach ($geofences as $geofence) {
         
             // if current raid inside path, add chats
-            $point = gym_lat . " " . gym_lon;
+            $point = $gym_lat . " " . $gym_lon;
             $polygon = array();
             foreach ($geofence['path'] as $geopoint) {
 
