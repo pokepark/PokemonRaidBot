@@ -4,6 +4,14 @@ debug_log('RAID_FROM_WEBHOOK()');
 
 include_once(CORE_CLASS_PATH . '/pointLocation.php');
 
+function escape($value){
+
+    $search = array("\\",  "\x00", "\n",  "\r",  "'",  '"', "\x1a");
+    $replace = array("\\\\","\\0","\\n", "\\r", "\'", '\"', "\\Z");
+
+    return str_replace($search, $replace, $value);
+}
+
 // Telegram JSON array.
 $tg_json = array();
 
@@ -102,7 +110,7 @@ foreach ($update as $raid) {
             $statement = $dbh->prepare( $query );
             $statement->bindValue(':lat', $gym_lat, PDO::PARAM_STR);
             $statement->bindValue(':lon', $gym_lon, PDO::PARAM_STR);
-            $statement->bindValue(':gym_name', $dbh->quote($gym_name), PDO::PARAM_STR);
+            $statement->bindValue(':gym_name', escape($gym_name), PDO::PARAM_STR);
             $statement->bindValue(':ex_gym', $gym_is_ex, PDO::PARAM_INT);
             $statement->bindValue(':img_url', $gym_img_url, PDO::PARAM_STR);
             $statement->bindValue(':gym_id', $gym_id, PDO::PARAM_STR);
@@ -128,7 +136,7 @@ foreach ($update as $raid) {
             $statement = $dbh->prepare( $query );
             $statement->bindValue(':lat', $gym_lat, PDO::PARAM_STR);
             $statement->bindValue(':lon', $gym_lon, PDO::PARAM_STR);
-            $statement->bindValue(':gym_name', $dbh->quote($gym_name), PDO::PARAM_STR);
+            $statement->bindValue(':gym_name', escape($gym_name), PDO::PARAM_STR);
             $statement->bindValue(':gym_id', $gym_id, PDO::PARAM_STR);
             $statement->bindValue(':ex_gym', $gym_is_ex, PDO::PARAM_INT);
             $statement->bindValue(':img_url', $gym_img_url, PDO::PARAM_STR);
