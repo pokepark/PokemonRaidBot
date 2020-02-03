@@ -34,7 +34,7 @@ foreach ($update as $raid) {
     // Check geofence, if available and continue if not inside any fence
     if (file_exists(CONFIG_PATH . '/geoconfig.json')) {
 
-        bool insideGeoFence = false;
+        bool $insideGeoFence = false;
         $raw = file_get_contents(CONFIG_PATH . '/geoconfig.json');
         $geofences = json_decode($raw, true);
         foreach ($geofences as $geofence) {
