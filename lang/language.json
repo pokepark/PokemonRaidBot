@@ -429,7 +429,7 @@
     "NO": "fra",
     "FR": "de",
     "PL": "od",
-    "FI": "TRANSLATE"
+    "FI": ""
   },
   "to": {
     "NL": "tot",
@@ -441,7 +441,7 @@
     "NO": "til",
     "FR": "DEPOP",
     "PL": "do",
-    "FI": "TRANSLATE"
+    "FI": "-"
   },
   "no_participants": {
     "NL": "Geen deelnemers",
@@ -2433,7 +2433,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Raidihäly pois käytöstä!"
   },
   "alert_updates_on": {
     "NL": "Raid alarm Aan!",
@@ -2445,7 +2445,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Raidihäly käytössä!"
   },
   "alert_add_trainer": {
     "NL": "Extra spelers!",
@@ -2457,7 +2457,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Uusi osallistuja!"
   },
   "alert_later": {
     "NL": "Late Speler!",
@@ -2469,7 +2469,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Myöhästyvä osallistuja!"
   },
   "alert_cancel": {
     "NL": "Gecancelled!",
@@ -2481,7 +2481,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Peruutus!"
   },
   "alert_individual_poke": {
     "NL": "Komt voor",
@@ -2493,7 +2493,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Ilmoittautuneet,"
   },
   "alert_cancel_individual_poke": {
     "NL": "Komt niet voor",
@@ -2505,7 +2505,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Peruuttaneet,"
   },
   "alert_every_poke": {
     "NL": "Komt voor",
@@ -2517,7 +2517,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Ilmoittautuneet,"
   },
   "alert_new_att": {
     "NL": "Nieuwe deelnemer!",
@@ -2529,7 +2529,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Uusi osallistuja!"
   },
   "alert_change_time": {
     "NL": "Deelnemer heeft de tijd aangepast!",
@@ -2541,7 +2541,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Uusi aika!"
   },
   "alert_raid_boss": {
     "NL": "Raid baas ge-update!",
@@ -2553,7 +2553,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Raidibossi päivitetty!"
   },
   "alert_extra_alone": {
     "NL": "Geen extra spelers!",
@@ -2565,6 +2565,6 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Ei ylimääräisiä kouluttajia!"
   }
 }
