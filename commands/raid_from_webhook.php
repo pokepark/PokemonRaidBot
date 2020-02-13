@@ -48,11 +48,11 @@ foreach ($update as $raid) {
         foreach ($geofences as $geofence) {
         
             // if current raid inside path, add chats
-            $point = $gym_lat . " " . $gym_lon;
+            $point = $gym_lon . " " . $gym_lat;
             $polygon = array();
             foreach ($geofence['path'] as $geopoint) {
 
-                array_push($polygon, "$geopoint[0] $geopoint[1]");
+                array_push($polygon, "$geopoint[1] $geopoint[0]");
             }
             $pointLocation = new pointLocation();
             if ( $pointLocation->pointInPolygon($point, $polygon) === "inside" ) {
@@ -318,11 +318,11 @@ foreach ($update as $raid) {
             //debug_log($const_geofence_chats),'CONSTANT VALUE:');
             
             // if current raid inside path, add chats
-            $point = $created_raid['lat'] . " " . $created_raid['lon'];
+            $point = $created_raid['lon'] . " " . $created_raid['lat'];
             $polygon = array();
             foreach ($geofence['path'] as $geopoint) {
 
-                array_push($polygon, "$geopoint[0] $geopoint[1]");
+                array_push($polygon, "$geopoint[1] $geopoint[0]");
             }
             
             $pointLocation = new pointLocation();
