@@ -87,10 +87,15 @@ if(is_array($content)) {
         // Filter by file extension
         $ext = '.' . pathinfo($c['path'], PATHINFO_EXTENSION);
         if($filter == $ext) {
+          // Filter by files that already exist
+          if(!is_file($destination . $c['path'])) {
             echo 'Downloading ' . $c['path'] . ': ';
             $download = downloadFile($repo_raw, $destination, $c['path']);
             echo filesize($download) . '/' . $c['size'] . ' bytes' . PHP_EOL;
             verifyDownload($download, $c['size']);
+          } else {
+              echo 'Skipping file: ' . $c['path'] . ' (Already exists)' . PHP_EOL;
+          }
         } else {
             echo 'Skipping file: ' . $c['path'] . ' (File extension filtering)' . PHP_EOL;
         }
