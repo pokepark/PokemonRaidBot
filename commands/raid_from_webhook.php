@@ -2,14 +2,40 @@
 // Write to log.
 debug_log('RAID_FROM_WEBHOOK()');
 
-include_once(CORE_CLASS_PATH . '/pointLocation.php');
-
 function escape($value){
 
     $search = array("\\",  "\x00", "\n",  "\r",  "'",  '"', "\x1a");
     $replace = array("\\\\","\\0","\\n", "\\r", "\'", '\"', "\\Z");
 
     return str_replace($search, $replace, $value);
+}
+
+function pointStringToCoordinates($pointString) {
+
+    $coordinates = explode(" ", $pointString);
+    return array("x" => $coordinates[0], "y" => $coordinates[1]);
+}
+
+function isPointInsidePolygon($point, $polygon) {
+
+    $point = pointStringToCoordinates($point);
+    $vertices = array(); 
+    foreach ($polygon as $vertex) {
+
+      $vertices[] = pointStringToCoordinates($vertex); 
+    }
+
+    $i = 0;
+    $j = 0;
+    $c = 0;
+    for ($i = 0, $j = count($vertices)-1 ; $i < count($vertices); $j = $i++) {
+
+        if ((($vertices[$i]['y'] > $point['y'] != ($vertices[$j]['y'] > $point['y'])) && ($point['x'] < ($vertices[$j]['x'] - $vertices[$i]['x']) * ($point['y'] - $vertices[$i]['y']) / ($vertices[$j]['y'] - $vertices[$i]['y']) + $vertices[$i]['x']) ) ) {
+
+            $c = !$c;
+        }
+    }
+    return $c;
 }
 
 // Telegram JSON array.
@@ -48,14 +74,13 @@ foreach ($update as $raid) {
         foreach ($geofences as $geofence) {
         
             // if current raid inside path, add chats
-            $point = $gym_lon . " " . $gym_lat;
+            $point = $gym_lat . " " . $gym_lon;
             $polygon = array();
             foreach ($geofence['path'] as $geopoint) {
 
-                array_push($polygon, "$geopoint[1] $geopoint[0]");
+                array_push($polygon, "$geopoint[0] $geopoint[1]");
             }
-            $pointLocation = new pointLocation();
-            if ( $pointLocation->pointInPolygon($point, $polygon) === "inside" ) {
+            if (isPointInsidePolygon($point, $polygon)) {
                 
                 $insideGeoFence = true;
                 break;
@@ -318,15 +343,14 @@ foreach ($update as $raid) {
             //debug_log($const_geofence_chats),'CONSTANT VALUE:');
             
             // if current raid inside path, add chats
-            $point = $created_raid['lon'] . " " . $created_raid['lat'];
+            $point = $created_raid['lat'] . " " . $created_raid['lon'];
             $polygon = array();
             foreach ($geofence['path'] as $geopoint) {
 
-                array_push($polygon, "$geopoint[1] $geopoint[0]");
+                array_push($polygon, "$geopoint[0] $geopoint[1]");
             }
             
-            $pointLocation = new pointLocation();
-            if ( $pointLocation->pointInPolygon($point, $polygon) === "inside" ) {
+            if (isPointInsidePolygon($point, $polygon)) {
 
                 if($level == $i && defined($const_geofence) && !empty($const_geofence) && !empty($const_geofence_chats)) {
 
