@@ -273,7 +273,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "Tämä on raidi info. Äänestys ei ole mahdollista!"
+    "FI": "Tämä on raid tiedote, ei äänestystä."
   },
   "raid_event_creation_limit_one": {
     "NL": "Gedurende raid hour kan je maar 1 raid aanmaken!",
@@ -1713,7 +1713,7 @@
     "NO": "Det er ingen aktive raid akkurat nå!",
     "FR": "Aucun raid en cours",
     "PL": "Brak aktywnych Rajdów w tej chwili!",
-    "FI": "Ai aktiivisia raideja tällähetkellä!"
+    "FI": "Ei aktiivisia raideja tällähetkellä!"
   },
   "pokemon_saved": {
     "NL": "Pokemon opgeslagen: ",
