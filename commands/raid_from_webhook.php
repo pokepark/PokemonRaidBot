@@ -328,7 +328,7 @@ foreach ($update as $raid) {
     for($i = 1; $i <= 5; $i++) {
 
         $const = 'WEBHOOK_CHATS_LEVEL_' . $i;
-        $const_chats = constant($const);
+        $const_chats = $config->{$const};
 
         // Get geofence chats and geofences
         $raw = file_get_contents(CONFIG_PATH . '/geoconfig.json');
@@ -336,7 +336,7 @@ foreach ($update as $raid) {
         foreach ($geofences as $geofence) {
             
             $const_geofence = 'WEBHOOK_CHATS_LEVEL_' . $i . '_' . $geofence['id'];
-            $const_geofence_chats = constant($const_geofence);
+            $const_geofence_chats = $config->{$const_geofence};
 
             // Debug
             //debug_log($const_geofence,'CONSTANT NAME:');

@@ -38,14 +38,10 @@ for($i = 1; $i <= 6; $i++) {
     }
     $const = 'SHARE_CHATS_LEVEL_' . $raid_level;
 
-    // Debug.
-    //debug_log($const,'CONSTANT NAME:');
-    //debug_log(constant($const),'CONSTANT VALUE:');
-
     // Sharing keys for this raid level?
-    if(defined($const) && !empty($const)) {
+    if(!empty($config->{$const})) {
         // Add chats. 
-        $const_chats = constant($const);
+        $const_chats = $config->{$const};
         if(!empty($const_chats) && !empty($chat_list)) {
             $chat_list .= ',' . $const_chats;
             debug_log($chat_list, 'Added ' . $const . ' chats to the chat list:');
