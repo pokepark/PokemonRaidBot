@@ -149,7 +149,7 @@ if(!empty($atts)) {
     }
 
    // Send vote response.
-   if(RAID_PICTURE == true) {
+   if($config->RAID_PICTURE) {
 	    send_response_vote($update, $data,false,false);
     } else {
 	    send_response_vote($update, $data);

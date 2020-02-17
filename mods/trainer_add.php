@@ -13,18 +13,18 @@ bot_access_check($update, 'trainer-share');
 $keys = [];
 $chat_list = '';
 
-// TRAINER_CHATS ?
-if(!empty(TRAINER_CHATS)) {
-    $chat_list = TRAINER_CHATS;
+// $config->TRAINER_CHATS ?
+if(!empty($config->TRAINER_CHATS)) {
+    $chat_list = $config->TRAINER_CHATS;
     debug_log($chat_list, 'Added trainer chats to the chat list:');
 }
 
-// SHARE_CHATS ?
-if(!empty(SHARE_CHATS) && !empty($chat_list)) {
-    $chat_list .= ',' . SHARE_CHATS;
+// $config->SHARE_CHATS ?
+if(!empty($config->SHARE_CHATS) && !empty($chat_list)) {
+    $chat_list .= ',' . $config->SHARE_CHATS;
     debug_log($chat_list, 'Added share chats to the chat list:');
-} else if(!empty(SHARE_CHATS) && empty($chat_list)) {
-    $chat_list = SHARE_CHATS;
+} else if(!empty($config->SHARE_CHATS) && empty($chat_list)) {
+    $chat_list = $config->SHARE_CHATS;
     debug_log($chat_list, 'Added share chats to the chat list:');
 }
 

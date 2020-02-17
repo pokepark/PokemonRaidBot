@@ -45,8 +45,8 @@ foreach ($update as $raid) {
 
     $level = $raid['message']['level'];
     $pokemon = $raid['message']['pokemon_id'];
-    $exclude_raid_levels = explode(',', WEBHOOK_EXCLUDE_RAID_LEVEL);
-    $exclude_pokemons = explode(',', WEBHOOK_EXCLUDE_POKEMON);
+    $exclude_raid_levels = explode(',', $config->WEBHOOK_EXCLUDE_RAID_LEVEL);
+    $exclude_pokemons = explode(',', $config->WEBHOOK_EXCLUDE_POKEMON);
     if ((!empty($level) && in_array($level, $exclude_raid_levels)) || (!empty($pokemon) && in_array($pokemon, $exclude_pokemons))) {
         
         continue;
@@ -54,7 +54,7 @@ foreach ($update as $raid) {
 
     // Create gym if not exists
     $gym_name = $raid['message']['name'];
-    if (WEBHOOK_EXCLUDE_UNKOWN == true && $gym_name === "unkown") {
+    if ($config->WEBHOOK_EXCLUDE_UNKOWN && $gym_name === "unkown") {
         
         contiue;
     }
@@ -268,8 +268,8 @@ foreach ($update as $raid) {
             $cleanup_statement->bindValue(':id', $raid_id, PDO::PARAM_STR);
             $cleanup_statement->execute();
             while ($row = $cleanup_statement->fetch()) {
-                if(RAID_PICTURE == true) {
-                    $url = RAID_PICTURE_URL."?pokemon=".$raid_info['pokemon']."&raid=".$raid_id;
+                if($config->RAID_PICTURE) {
+                    $url = $config->RAID_PICTURE_URL."?pokemon=".$raid_info['pokemon']."&raid=".$raid_id;
                     $tg_json[] = editMessageMedia($row['message_id'], $updated_msg['short'], $updated_keys, $row['chat_id'], ['disable_web_page_preview' => 'true'],true, $url);
                 }else {
                     $tg_json[] = editMessageText($row['message_id'], $updated_msg['full'], $updated_keys, $row['chat_id'], ['disable_web_page_preview' => 'true'],true);
@@ -289,7 +289,7 @@ foreach ($update as $raid) {
         ';
         $statement = $dbh->prepare( $query );
         $statement->bindValue(':pokemon', $pokemon, PDO::PARAM_STR);
-        $statement->bindValue(':user_id', WEBHOOK_CREATOR, PDO::PARAM_STR);
+        $statement->bindValue(':user_id', $config->WEBHOOK_CREATOR, PDO::PARAM_STR);
         $statement->bindValue(':first_seen', gmdate("Y-m-d H:i:s"), PDO::PARAM_STR);
         $statement->bindValue(':start_time', $start, PDO::PARAM_STR);
         $statement->bindValue(':end_time', $end, PDO::PARAM_STR);
@@ -308,7 +308,7 @@ foreach ($update as $raid) {
         exit;
     }
     
-    if (WEBHOOK_CREATE_ONLY == true) {
+    if ($config->WEBHOOK_CREATE_ONLY) {
         
         continue;
     }
@@ -323,7 +323,7 @@ foreach ($update as $raid) {
     $keys = keys_vote($created_raid);
 
     // Get chats
-    $chats = explode(',', WEBHOOK_CHATS);
+    $chats = explode(',', $config->WEBHOOK_CHATS);
     
     for($i = 1; $i <= 5; $i++) {
 
@@ -370,8 +370,8 @@ foreach ($update as $raid) {
     }
 
     // Raid picture
-    if(RAID_PICTURE == true) {
-        $picture_url = RAID_PICTURE_URL . "?pokemon=" . $created_raid['pokemon'] . "&raid=". $created_raid['id'];
+    if($config->RAID_PICTURE) {
+        $picture_url = $config->RAID_PICTURE_URL . "?pokemon=" . $created_raid['pokemon'] . "&raid=". $created_raid['id'];
         debug_log('PictureUrl: ' . $picture_url);
     }
 
@@ -379,9 +379,9 @@ foreach ($update as $raid) {
     foreach ($chats as $chat) {
     
         // Send location.
-        if (RAID_LOCATION == true) {
+        if ($config->RAID_LOCATION) {
 
-            $msg_text = !empty($created_raid['address']) ? $created_raid['address'] . ', ' . substr(strtoupper(BOT_ID), 0, 1) . '-ID = ' . $created_raid['id'] : $created_raid['pokemon'] . ', ' . substr(strtoupper(BOT_ID), 0, 1) . '-ID = ' . $created_raid['id']; // DO NOT REMOVE " ID = " --> NEEDED FOR CLEANUP PREPARATION!
+            $msg_text = !empty($created_raid['address']) ? $created_raid['address'] . ', ' . substr(strtoupper($config->BOT_ID), 0, 1) . '-ID = ' . $created_raid['id'] : $created_raid['pokemon'] . ', ' . substr(strtoupper($config->BOT_ID), 0, 1) . '-ID = ' . $created_raid['id']; // DO NOT REMOVE " ID = " --> NEEDED FOR $config->CLEANUP PREPARATION!
             $loc = send_venue($chat, $created_raid['lat'], $created_raid['lon'], "", $msg_text, true);
             $tg_json[] = $loc;
             // Write to log.
@@ -395,7 +395,7 @@ foreach ($update as $raid) {
         // Send the message.
         //send_message($chat, $text, $keys, ['reply_to_message_id' => $reply_to, 'reply_markup' => ['selective' => true, 'one_time_keyboard' => true], 'disable_web_page_preview' => 'true']);
         // Send the message.
-        if(RAID_PICTURE == true) {
+        if($config->RAID_PICTURE) {
             $tg_json[] = send_photo($chat, $picture_url, $text['short'], $keys, ['reply_to_message_id' => $reply_to, 'reply_markup' => ['selective' => true, 'one_time_keyboard' => true], 'disable_web_page_preview' => 'true'], true);
         } else {
             $tg_json[] = send_message($chat, $text['full'], $keys, ['reply_to_message_id' => $reply_to, 'reply_markup' => ['selective' => true, 'one_time_keyboard' => true], 'disable_web_page_preview' => 'true'], true);

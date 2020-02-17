@@ -39,7 +39,7 @@ if($raid_level == 'X') {
 
     // Current time from the user
     // We let the user pick the raid date and time and convert to UTC afterwards in edit_date.php
-    $tz = TIMEZONE;
+    $tz = $config->TIMEZONE;
     $today = new DateTimeImmutable('now', new DateTimeZone($tz));
 
     // Next 14 days.
@@ -69,7 +69,7 @@ if($raid_level == 'X') {
 } else if (true || $arg == "minutes" || $arg == "clocktime") {
     if ($arg != "minutes" && $arg != "clocktime") {
 	// Get default raid duration style from config
-	if (RAID_DURATION_CLOCK_STYLE == true) {
+	if ($config->RAID_DURATION_CLOCK_STYLE) {
 	    $arg = "clocktime";
 	} else {
 	    $arg = "minutes";
@@ -88,7 +88,7 @@ if($raid_level == 'X') {
 	$switch_view = "clocktime";
 	$key_count = 5;
 
-        for ($i = 1; $i <= RAID_EGG_DURATION; $i = $i + 1) {
+        for ($i = 1; $i <= $config->RAID_EGG_DURATION; $i = $i + 1) {
             // Create new DateTime object, add minutes and convert back to string.
             $now_plus_i = new DateTime($now, new DateTimeZone('UTC'));
             $now_plus_i->add(new DateInterval('PT'.$i.'M'));
@@ -107,7 +107,7 @@ if($raid_level == 'X') {
 	// Small screen fix
 	$key_count = 4;
 
-        for ($i = 1; $i <= RAID_EGG_DURATION; $i = $i + 1) {
+        for ($i = 1; $i <= $config->RAID_EGG_DURATION; $i = $i + 1) {
             // Create new DateTime object, add minutes and convert back to string.
             $now_plus_i = new DateTime($now, new DateTimeZone('UTC'));
             $now_plus_i->add(new DateInterval('PT'.$i.'M'));

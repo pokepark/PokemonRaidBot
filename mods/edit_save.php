@@ -26,7 +26,7 @@ if(substr_count($data['id'], ',') == 1) {
 $userid = $update['callback_query']['from']['id'];
 
 // Update only if time is not equal to RAID_POKEMON_DURATION_SHORT
-if($arg != RAID_POKEMON_DURATION_SHORT) {
+if($arg != $config->RAID_POKEMON_DURATION_SHORT) {
 
     // Build query.
     my_query(
@@ -90,7 +90,7 @@ if ($update['callback_query']['message']['chat']['type'] == 'private') {
 
     // Check access level prior allowing to change raid time
     $admin_access = bot_access_check($update, 'raid-duration', true);
-    if($admin_access && $arg == RAID_POKEMON_DURATION_SHORT) {
+    if($admin_access && $arg == $config->RAID_POKEMON_DURATION_SHORT) {
         // Add time change to keys.
         $keys_time = [
             [
@@ -129,9 +129,9 @@ if ($update['callback_query']['message']['chat']['type'] == 'private') {
     $keys = array_merge($keys, $keys_share);
 
     // Add event keys.
-    if(RAID_POKEMON_DURATION_EVENT != RAID_POKEMON_DURATION_SHORT) {
-        $prefix_text = EMOJI_CLOCK . SP . RAID_POKEMON_DURATION_EVENT . getTranslation('minutes_short') . SP . '+' . SP;
-        $keys_event = share_keys($id . ',' . RAID_POKEMON_DURATION_EVENT, 'edit_save', $update, $chats, $prefix_text, true);
+    if($config->RAID_POKEMON_DURATION_EVENT != $config->RAID_POKEMON_DURATION_SHORT) {
+        $prefix_text = EMOJI_CLOCK . SP . $config->RAID_POKEMON_DURATION_EVENT . getTranslation('minutes_short') . SP . '+' . SP;
+        $keys_event = share_keys($id . ',' . $config->RAID_POKEMON_DURATION_EVENT, 'edit_save', $update, $chats, $prefix_text, true);
         $keys = array_merge($keys, $keys_event);
     }
     // Build message string.
@@ -176,7 +176,7 @@ if ($update['callback_query']['message']['chat']['type'] == 'private') {
 
     // Old Edit message.
     /*
-    if(RAID_PICTURE == true) {
+    if($config->RAID_PICTURE) {
         $tg_json[] = edit_caption($update, $text['short'], $keys, false, true);
     } else {
         $tg_json[] = edit_message($update, $text['full'], $keys, false, true);
@@ -187,7 +187,7 @@ if ($update['callback_query']['message']['chat']['type'] == 'private') {
     //$tg_json[] = edit_message($update, $text, $keys, false, true);
 
     // Edit message.
-    if(RAID_PICTURE == true) {
+    if($config->RAID_PICTURE) {
        send_response_vote($update, $data,false,false);
     } else {
        send_response_vote($update, $data);

@@ -59,7 +59,7 @@ if (substr_count($raid_time, '-') == 2) {
     debug_log('Received the following date for the raid: ' . $raid_time);
 
     // Format date, e.g 14 April 2019, 15:15h
-    $tz = TIMEZONE;
+    $tz = $config->TIMEZONE;
     $tz_raid_time = DateTimeImmutable::createFromFormat('Y-m-d H-i-s', $raid_time, new DateTimeZone($tz));
     $date_tz = $tz_raid_time->format('Y-m-d');
     $text_split = explode('-', $date_tz);

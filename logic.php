@@ -76,7 +76,7 @@ function active_raid_duplication_check($gym_id)
     $active_raid_id = 0;
 
     // Get row - allow normal and ex-raid at the gym.
-    if(RAID_EXCLUDE_EXRAID_DUPLICATION == true) {
+    if($config->RAID_EXCLUDE_EXRAID_DUPLICATION) {
         while ($raid = $rs->fetch_assoc()) {
             $active = $raid['active_raid'];
             if ($active > 0) {
@@ -554,7 +554,7 @@ function get_gym_details($gym, $extended = false)
     $msg = '<b>' . getTranslation('gym_details') . ':</b>' . CR . CR;
     $msg .= '<b>ID = ' . $gym['id'] . '</b>' . CR;
     $msg .= getTranslation('gym') . ':' . SP;
-    $ex_raid_gym_marker = (strtolower(RAID_EX_GYM_MARKER) == 'icon') ? EMOJI_STAR : '<b>' . RAID_EX_GYM_MARKER . '</b>';
+    $ex_raid_gym_marker = (strtolower($config->RAID_EX_GYM_MARKER) == 'icon') ? EMOJI_STAR : '<b>' . $config->RAID_EX_GYM_MARKER . '</b>';
     $msg .= ($gym['ex_gym'] ? $ex_raid_gym_marker . SP : '') . '<b>' . $gym['gym_name'] . '</b>';
     $msg .= CR;
     // Add maps link to message.
@@ -833,7 +833,7 @@ function raid_edit_raidlevel_keys($gym_id, $gym_first_letter, $admin = false)
 
     // Add key for each raid level
     while ($level = $rs->fetch_assoc()) {
-        // Continue if user is not part of the BOT_ADMINS and raid_level is X
+        // Continue if user is not part of the $config->BOT_ADMINS and raid_level is X
         if($level['raid_level'] == 'X' && $admin === false) continue;
 
         // Add key for pokemon if we have just 1 pokemon for a level
@@ -882,9 +882,9 @@ function raid_edit_gyms_first_letter_keys($action = 'raid_by_gym', $hidden = fal
 {
     // Special/Custom gym letters?
     $case = '';
-    if(defined('RAID_CUSTOM_GYM_LETTERS') && !empty(RAID_CUSTOM_GYM_LETTERS)) {
+    if(!empty($config->RAID_CUSTOM_GYM_LETTERS)) {
         // Explode special letters.
-        $special_keys = explode(',', RAID_CUSTOM_GYM_LETTERS);
+        $special_keys = explode(',', $config->RAID_CUSTOM_GYM_LETTERS);
         foreach($special_keys as $id => $letter)
         {
             $letter = trim($letter);
@@ -971,9 +971,9 @@ function raid_edit_gym_keys($first, $warn = true, $action = 'edit_raidlevel', $d
 
     // Special/Custom gym letters?
     $not = '';
-    if(defined('RAID_CUSTOM_GYM_LETTERS') && !empty(RAID_CUSTOM_GYM_LETTERS) && $first_length == 1) {
+    if(!empty($config->RAID_CUSTOM_GYM_LETTERS) && $first_length == 1) {
         // Explode special letters.
-        $special_keys = explode(',', RAID_CUSTOM_GYM_LETTERS);
+        $special_keys = explode(',', $config->RAID_CUSTOM_GYM_LETTERS);
 
         foreach($special_keys as $id => $letter)
         {
@@ -994,7 +994,7 @@ function raid_edit_gym_keys($first, $warn = true, $action = 'edit_raidlevel', $d
 
     // Exclude ex-raids?
     $exraid_exclude = '';
-    if(RAID_EXCLUDE_EXRAID_DUPLICATION == true) {
+    if($config->RAID_EXCLUDE_EXRAID_DUPLICATION) {
         $exraid_exclude = "pokemon.raid_level <> 'X' AND ";
     }
 
@@ -1033,8 +1033,8 @@ function raid_edit_gym_keys($first, $warn = true, $action = 'edit_raidlevel', $d
         // No active raid OR only active ex-raid
         if($gym['active_raid'] == 0 || $warn = false) {
             // Show Ex-Gym-Marker?
-            if(RAID_CREATION_EX_GYM_MARKER && $gym['ex_gym'] == 1) {
-                $ex_raid_gym_marker = (strtolower(RAID_EX_GYM_MARKER) == 'icon') ? EMOJI_STAR : RAID_EX_GYM_MARKER;
+            if($config->RAID_CREATION_EX_GYM_MARKER && $gym['ex_gym'] == 1) {
+                $ex_raid_gym_marker = (strtolower($config->RAID_EX_GYM_MARKER) == 'icon') ? EMOJI_STAR : RAID_EX_GYM_MARKER;
                 $gym_name = $ex_raid_gym_marker . SP . $gym['gym_name'];
             } else {
                 $gym_name = $gym['gym_name'];
@@ -1513,7 +1513,7 @@ function insert_cleanup($chat_id, $message_id, $raid_id)
  */
 function run_cleanup ($telegram = 2, $database = 2) {
     // Check configuration, cleanup of telegram needs to happen before database cleanup!
-    if (CLEANUP_TIME_TG > CLEANUP_TIME_DB) {
+    if ($config->CLEANUP_TIME_TG > $config->CLEANUP_TIME_DB) {
 	cleanup_log('Configuration issue! Cleanup time for telegram messages needs to be lower or equal to database cleanup time!');
 	cleanup_log('Stopping cleanup process now!');
 	exit;
@@ -1527,11 +1527,11 @@ function run_cleanup ($telegram = 2, $database = 2) {
 
     // Get cleanup values from config per default.
     if ($telegram == 2) {
-	$telegram = (CLEANUP_TELEGRAM == true) ? 1 : 0;
+	$telegram = ($config->CLEANUP_TELEGRAM) ? 1 : 0;
     }
 
     if ($database == 2) {
-	$database = (CLEANUP_DATABASE == true) ? 1 : 0;
+	$database = ($config->CLEANUP_DATABASE) ? 1 : 0;
     }
 
     // Start cleanup when at least one parameter is set to trigger cleanup
@@ -1652,13 +1652,13 @@ function run_cleanup ($telegram = 2, $database = 2) {
 
 	        // Set cleanup time for telegram. 
                 $cleanup_time_tg = new DateTimeImmutable($raid['end_time'], new DateTimeZone('UTC'));
-                $cleanup_time_tg = $cleanup_time_tg->add(new DateInterval("PT".CLEANUP_TIME_TG."M"));
+                $cleanup_time_tg = $cleanup_time_tg->add(new DateInterval("PT".$config->CLEANUP_TIME_TG."M"));
                 $clean_tg = $cleanup_time_tg->format('YmdHis');
                 $log_clean_tg = $cleanup_time_tg->format('Y-m-d H:i:s');
 
 	        // Set cleanup time for database. 
                 $cleanup_time_db = new DateTimeImmutable($raid['end_time'], new DateTimeZone('UTC'));
-                $cleanup_time_db = $cleanup_time_db->add(new DateInterval("PT".CLEANUP_TIME_DB."M"));
+                $cleanup_time_db = $cleanup_time_db->add(new DateInterval("PT".$config->CLEANUP_TIME_DB."M"));
                 $clean_db = $cleanup_time_db->format('YmdHis');
                 $log_clean_db = $cleanup_time_db->format('Y-m-d H:i:s');
 
@@ -1793,9 +1793,9 @@ function keys_trainerinfo($show = false)
 {
     // Toggle state.
     $status = 'show';
-    if($show || TRAINER_BUTTONS_TOGGLE == false) { 
+    if($show || !$config->TRAINER_BUTTONS_TOGGLE) { 
         // Always show buttons?
-        if(($show == true && TRAINER_BUTTONS_TOGGLE == false) || TRAINER_BUTTONS_TOGGLE == true) {
+        if(($show == true && !$config->TRAINER_BUTTONS_TOGGLE) || $config->TRAINER_BUTTONS_TOGGLE) {
             $status = 'hide';
         }
 
@@ -1890,7 +1890,7 @@ function keys_vote($raid)
     ];
 
     // Team and level keys.
-    if(RAID_POLL_HIDE_BUTTONS_TEAM_LVL == true) {
+    if($config->RAID_POLL_HIDE_BUTTONS_TEAM_LVL) {
         $buttons_teamlvl = [];
     } else {
         $buttons_teamlvl = [
@@ -1924,13 +1924,13 @@ function keys_vote($raid)
 
     // Show icon, icon + text or just text.
     // Icon.
-    if(RAID_VOTE_ICONS == true && RAID_VOTE_TEXT == false) {
+    if($config->RAID_VOTE_ICONS && !$config->RAID_VOTE_TEXT) {
         $text_here = EMOJI_HERE;
         $text_late = EMOJI_LATE;
         $text_done = TEAM_DONE;
         $text_cancel = TEAM_CANCEL;
     // Icon + text.
-    } else if(RAID_VOTE_ICONS == true && RAID_VOTE_TEXT == true) {
+    } else if($config->RAID_VOTE_ICONS && $config->RAID_VOTE_TEXT) {
         $text_here = EMOJI_HERE . getPublicTranslation('here');
         $text_late = EMOJI_LATE . getPublicTranslation('late');
         $text_done = TEAM_DONE . getPublicTranslation('done');
@@ -1994,8 +1994,8 @@ function keys_vote($raid)
         $raid_level = get_raid_level($raid_pokemon);
 
         // Hide buttons for raid levels and pokemon
-        $hide_buttons_raid_level = explode(',', RAID_POLL_HIDE_BUTTONS_RAID_LEVEL);
-        $hide_buttons_pokemon = explode(',', RAID_POLL_HIDE_BUTTONS_POKEMON);
+        $hide_buttons_raid_level = explode(',', $config->RAID_POLL_HIDE_BUTTONS_RAID_LEVEL);
+        $hide_buttons_pokemon = explode(',', $config->RAID_POLL_HIDE_BUTTONS_POKEMON);
 
         // Show buttons to users?
         if(in_array($raid_level, $hide_buttons_raid_level) || in_array($raid_pokemon, $hide_buttons_pokemon) || in_array($raid_pokemon_id, $hide_buttons_pokemon)) {
@@ -2024,34 +2024,34 @@ function keys_vote($raid)
                 $five_slot = $five_slot->add(new DateInterval("PT".$diff."M"));
             }
 
-            // Add RAID_FIRST_START minutes to five minutes slot
+            // Add $config->RAID_FIRST_START minutes to five minutes slot
             //$five_plus_slot = new DateTime($five_slot, new DateTimeZone('UTC'));
             $five_plus_slot = $five_slot;
-            $five_plus_slot = $five_plus_slot->add(new DateInterval("PT".RAID_FIRST_START."M")); 
+            $five_plus_slot = $five_plus_slot->add(new DateInterval("PT".$config->RAID_FIRST_START."M")); 
 
             // Get first regular raidslot
 	    // Get minute and convert modulo raidslot
             $first_slot = new DateTimeImmutable($start_time, new DateTimeZone('UTC'));
             $minute = $first_slot->format("i");
-            $minute = $minute % RAID_SLOTS;
+            $minute = $minute % $config->RAID_SLOTS;
 
             // Count minutes to next raidslot multiple minutes if necessary
             if($minute != 0)
             {
                 // Count difference
-                $diff = RAID_SLOTS - $minute;
+                $diff = $config->RAID_SLOTS - $minute;
                 // Add difference
                 $first_slot = $first_slot->add(new DateInterval("PT".$diff."M"));
             } 
 
             // Compare times slots to add them to keys.
             // Example Scenarios:
-            // Raid 1: Start = 17:45, RAID_FIRST_START = 10, RAID_SLOTS = 15
-            // Raid 2: Start = 17:36, RAID_FIRST_START = 10, RAID_SLOTS = 15
-            // Raid 3: Start = 17:35, RAID_FIRST_START = 10, RAID_SLOTS = 15
-            // Raid 4: Start = 17:31, RAID_FIRST_START = 10, RAID_SLOTS = 15
-            // Raid 5: Start = 17:40, RAID_FIRST_START = 10, RAID_SLOTS = 15
-            // Raid 6: Start = 17:32, RAID_FIRST_START = 5, RAID_SLOTS = 5
+            // Raid 1: Start = 17:45, $config->RAID_FIRST_START = 10, $config->RAID_SLOTS = 15
+            // Raid 2: Start = 17:36, $config->RAID_FIRST_START = 10, $config->RAID_SLOTS = 15
+            // Raid 3: Start = 17:35, $config->RAID_FIRST_START = 10, $config->RAID_SLOTS = 15
+            // Raid 4: Start = 17:31, $config->RAID_FIRST_START = 10, $config->RAID_SLOTS = 15
+            // Raid 5: Start = 17:40, $config->RAID_FIRST_START = 10, $config->RAID_SLOTS = 15
+            // Raid 6: Start = 17:32, $config->RAID_FIRST_START = 5, $config->RAID_SLOTS = 5
 
             // Write slots to log.
             debug_log($direct_slot, 'Direct start slot:');
@@ -2118,7 +2118,7 @@ function keys_vote($raid)
                 // Some kind of special case for a low value of RAID_SLOTS
 
                 // Add direct slot?
-                if(RAID_DIRECT_START == true) {
+                if($config->RAID_DIRECT_START) {
                     if($direct_slot >= $dt_now) {
                         $slot = $direct_slot->format('Y-m-d H:i:s');
                         $keys_time[] = array(
@@ -2139,7 +2139,7 @@ function keys_vote($raid)
 
 
             // Add either all 3 slots (direct slot, five minutes slot and first regular slot) or
-            // 2 slots (direct slot and first slot) as RAID_FIRST_START does not allow the five minutes slot to be added
+            // 2 slots (direct slot and first slot) as $config->RAID_FIRST_START does not allow the five minutes slot to be added
             } else if($direct_slot < $five_slot && $five_slot < $first_slot) {
                 // Raid 2: 17:36 < 17:40 && 17:40 < 17:45
                 // Raid 4: 17:31 < 17:35 && 17:35 < 17:45
@@ -2149,7 +2149,7 @@ function keys_vote($raid)
                     // Raid 4: 17:31, 17:35, 17:45
 
                     // Add direct slot?
-                    if(RAID_DIRECT_START == true) {
+                    if($config->RAID_DIRECT_START) {
                         if($direct_slot >= $dt_now) {
                             $slot = $direct_slot->format('Y-m-d H:i:s');
                             $keys_time[] = array(
@@ -2181,7 +2181,7 @@ function keys_vote($raid)
                     // Raid 2: 17:36, 17:45
 
                     // Add direct slot?
-                    if(RAID_DIRECT_START == true) {
+                    if($config->RAID_DIRECT_START) {
                         if($direct_slot >= $dt_now) {
                             $slot = $direct_slot->format('Y-m-d H:i:s');
                             $keys_time[] = array(
@@ -2205,7 +2205,7 @@ function keys_vote($raid)
             // Try to add at least the direct slot.
             } else {
                 // Add direct slot?
-                if(RAID_DIRECT_START == true) {
+                if($config->RAID_DIRECT_START) {
                     if($first_slot >= $dt_now) {
                         $slot = $direct_slot->format('Y-m-d H:i:s');
                         $keys_time[] = array(
@@ -2222,14 +2222,14 @@ function keys_vote($raid)
 
             // Get regular slots
             // Start with second slot as first slot is already added to keys.
-            $second_slot = $first_slot->add(new DateInterval("PT".RAID_SLOTS."M"));
+            $second_slot = $first_slot->add(new DateInterval("PT".$config->RAID_SLOTS."M"));
             $dt_end = new DateTimeImmutable($end_time, new DateTimeZone('UTC'));
-            $regular_slots = new DatePeriod($second_slot, new DateInterval('PT'.RAID_SLOTS.'M'), $dt_end);
+            $regular_slots = new DatePeriod($second_slot, new DateInterval('PT'.$config->RAID_SLOTS.'M'), $dt_end);
 
             // Add regular slots.
             foreach($regular_slots as $slot){
-                $slot_end = $slot->add(new DateInterval('PT'.RAID_LAST_START.'M'));
-                // Slot + RAID_LAST_START before end_time?
+                $slot_end = $slot->add(new DateInterval('PT'.$config->RAID_LAST_START.'M'));
+                // Slot + $config->RAID_LAST_START before end_time?
                 if($slot_end < $dt_end) {
                     debug_log($slot, 'Regular slot:');
                     // Add regular slot.
@@ -2251,15 +2251,15 @@ function keys_vote($raid)
             }
 
             // Add raid last start slot
-            // Set end_time to last extra slot, subtract RAID_LAST_START minutes and round down to earlier 5 minutes.
+            // Set end_time to last extra slot, subtract $config->RAID_LAST_START minutes and round down to earlier 5 minutes.
             $last_extra_slot = $dt_end;
-            $last_extra_slot = $last_extra_slot->sub(new DateInterval('PT'.RAID_LAST_START.'M'));
+            $last_extra_slot = $last_extra_slot->sub(new DateInterval('PT'.$config->RAID_LAST_START.'M'));
             $s = 5 * 60;
             $last_extra_slot = $last_extra_slot->setTimestamp($s * floor($last_extra_slot->getTimestamp() / $s));
             //$time_to_last_slot = $last_extra_slot->diff($last_slot)->format("%a");
 
             // Last extra slot not conflicting with last slot and time to last regular slot larger than RAID_LAST_START?
-            //if($last_extra_slot > $last_slot && $time_to_last_slot > RAID_LAST_START) 
+            //if($last_extra_slot > $last_slot && $time_to_last_slot > $config->RAID_LAST_START) 
 
             // Log last and last extra slot.
             debug_log($last_slot, 'Last slot:');
@@ -2278,7 +2278,7 @@ function keys_vote($raid)
             }
 
             // Attend raid at any time
-            if(RAID_ANYTIME == true)
+            if($config->RAID_ANYTIME)
             {
                 $keys_time[] = array(
                     'text'          => getPublicTranslation('anytime'),
@@ -2290,11 +2290,11 @@ function keys_vote($raid)
             $buttons_time = inline_key_array($keys_time, 4);
 
             // Hidden participants?
-            if(RAID_POLL_HIDE_USERS_TIME > 0) {
-                if(RAID_ANYTIME == true) {
-                    $hide_users_sql = "AND (attend_time > (UTC_TIMESTAMP() - INTERVAL " . RAID_POLL_HIDE_USERS_TIME . " MINUTE) OR attend_time = 0)";
+            if($config->RAID_POLL_HIDE_USERS_TIME > 0) {
+                if($config->RAID_ANYTIME) {
+                    $hide_users_sql = "AND (attend_time > (UTC_TIMESTAMP() - INTERVAL " . $config->RAID_POLL_HIDE_USERS_TIME . " MINUTE) OR attend_time = 0)";
                 } else {
-                    $hide_users_sql = "AND attend_time > (UTC_TIMESTAMP() - INTERVAL " . RAID_POLL_HIDE_USERS_TIME . " MINUTE)";
+                    $hide_users_sql = "AND attend_time > (UTC_TIMESTAMP() - INTERVAL " . $config->RAID_POLL_HIDE_USERS_TIME . " MINUTE)";
                 }
             } else {
                 $hide_users_sql = "";
@@ -2396,7 +2396,7 @@ function keys_vote($raid)
                 $keys = [];
 
                 // Get UI order from config and apply if nothing is missing!
-                $keys_UI_config = explode(',', RAID_POLL_UI_ORDER);
+                $keys_UI_config = explode(',', $config->RAID_POLL_UI_ORDER);
                 $keys_default = explode(',', 'extra,teamlvl,time,pokemon,status');
 
                 //debug_log($keys_UI_config);
@@ -2404,7 +2404,7 @@ function keys_vote($raid)
 
                 // Add Ex-Raid Invite button for raid level X
                 if ($raid_level == 'X') {
-                    if(RAID_POLL_HIDE_BUTTONS_TEAM_LVL == true) {
+                    if($config->RAID_POLL_HIDE_BUTTONS_TEAM_LVL) {
                         $buttons_extra[0] = array_merge($buttons_extra[0], $button_invite[0]);
                     } else {
                         $buttons_teamlvl[0] = array_merge($buttons_teamlvl[0], $button_invite[0]);
@@ -2520,7 +2520,7 @@ function send_response_vote($update, $data, $new = false, $text = true)
                 // Edit the picture - raid ended.
                 $time_now = utcnow();
                 if($time_now > $raid['end_time'] && $data['arg'] == 0) {
-                    $picture_url = RAID_PICTURE_URL . "?pokemon=ended&raid=". $raid['id'];
+                    $picture_url = $config->RAID_PICTURE_URL . "?pokemon=ended&raid=". $raid['id'];
 	            $tg_json[] = editMessageMedia($update['callback_query']['message']['message_id'], $msg, $keys, $update['callback_query']['message']['chat']['id'], ['disable_web_page_preview' => 'true'], false, $picture_url);
                 }
             }
@@ -2771,8 +2771,8 @@ function get_overview($update, $chats_active, $raids_active, $action = 'refresh'
             $msg .= getPublicTranslation('no_active_raids');
 
             //Add custom message from the config.
-            if (defined('RAID_PIN_MESSAGE') && !empty(RAID_PIN_MESSAGE)) {
-                $msg .= CR . CR .RAID_PIN_MESSAGE . CR;
+            if (!empty($config->RAID_PIN_MESSAGE)) {
+                $msg .= CR . CR .$config->RAID_PIN_MESSAGE . CR;
             }
 
             // Edit the message, but disable the web preview!
@@ -2833,8 +2833,8 @@ function get_overview($update, $chats_active, $raids_active, $action = 'refresh'
 	    $keys = [];
         
             //Add custom message from the config.	
-            if (defined('RAID_PIN_MESSAGE') && !empty(RAID_PIN_MESSAGE)) {
-                $msg .= RAID_PIN_MESSAGE . CR;
+            if (!empty($config->RAID_PIN_MESSAGE)) {
+                $msg .= $config->RAID_PIN_MESSAGE . CR;
             }
 
             // Share or refresh?
@@ -2968,7 +2968,7 @@ function get_overview($update, $chats_active, $raids_active, $action = 'refresh'
         $pokemon = get_local_pokemon_name($pokemon, true);
         $gym = $raids_active[$raid_id]['gym_name'];
         $ex_gym = $raids_active[$raid_id]['ex_gym'];
-        $ex_raid_gym_marker = (strtolower(RAID_EX_GYM_MARKER) == 'icon') ? EMOJI_STAR : '<b>' . RAID_EX_GYM_MARKER . '</b>';
+        $ex_raid_gym_marker = (strtolower($config->RAID_EX_GYM_MARKER) == 'icon') ? EMOJI_STAR : '<b>' . $config->RAID_EX_GYM_MARKER . '</b>';
         $start_time = $raids_active[$raid_id]['start_time'];
         $end_time = $raids_active[$raid_id]['end_time'];
         $time_left = $raids_active[$raid_id]['t_left'];
@@ -3213,7 +3213,7 @@ function raid_poll_message($msg_array, $append, $skip = false)
 
     //Raid picture?
     $msg_array['full'] .= $append;
-    if(RAID_PICTURE == true && $skip == false) {
+    if($config->RAID_PICTURE && $skip == false) {
         // Array key short already created?
         if(!(array_key_exists('short', $msg_array))) {
             $msg_array['short'] = '';
@@ -3246,7 +3246,7 @@ function show_raid_poll($raid)
     // Get raid times.
     $msg = raid_poll_message($msg, get_raid_times($raid), true);
 /*
-    if(RAID_PICTURE == false) {
+    if(!$config->RAID_PICTURE) {
         $msg .= get_raid_times($raid);
     }
 */
@@ -3256,11 +3256,11 @@ function show_raid_poll($raid)
     $time_left = $raid['t_left'];
 
     // Display gym details.
-    //if(RAID_PICTURE == false) {
+    //if(!$config->RAID_PICTURE) {
         if ($raid['gym_name'] || $raid['gym_team']) {
             // Add gym name to message.
             if ($raid['gym_name']) {
-                $ex_raid_gym_marker = (strtolower(RAID_EX_GYM_MARKER) == 'icon') ? EMOJI_STAR : '<b>' . RAID_EX_GYM_MARKER . '</b>';
+                $ex_raid_gym_marker = (strtolower($config->RAID_EX_GYM_MARKER) == 'icon') ? EMOJI_STAR : '<b>' . $config->RAID_EX_GYM_MARKER . '</b>';
                 //$msg .= getPublicTranslation('gym') . ': ' . ($raid['ex_gym'] ? $ex_raid_gym_marker . SP : '') . '<b>' . $raid['gym_name'] . '</b>';
                 $msg = raid_poll_message($msg, getPublicTranslation('gym') . ': ' . ($raid['ex_gym'] ? $ex_raid_gym_marker . SP : '') . '<b>' . $raid['gym_name'] . '</b>', true);
             }
@@ -3302,7 +3302,7 @@ function show_raid_poll($raid)
     }
 
     // Display raid boss name.
-    //if(RAID_PICTURE == false) {
+    //if(!$config->RAID_PICTURE) {
         $msg = raid_poll_message($msg, getPublicTranslation('raid_boss') . ': <b>' . get_local_pokemon_name($raid['pokemon'], true) . '</b>', true);
 
         // Display raid boss weather.
@@ -3318,11 +3318,11 @@ function show_raid_poll($raid)
     }
 
     // Hide participants?
-    if(RAID_POLL_HIDE_USERS_TIME > 0) {
-        if(RAID_ANYTIME == true) {
-            $hide_users_sql = "AND (attend_time > (UTC_TIMESTAMP() - INTERVAL " . RAID_POLL_HIDE_USERS_TIME . " MINUTE) OR attend_time = 0)";
+    if($config->RAID_POLL_HIDE_USERS_TIME > 0) {
+        if($config->RAID_ANYTIME) {
+            $hide_users_sql = "AND (attend_time > (UTC_TIMESTAMP() - INTERVAL " . $config->RAID_POLL_HIDE_USERS_TIME . " MINUTE) OR attend_time = 0)";
         } else {
-            $hide_users_sql = "AND attend_time > (UTC_TIMESTAMP() - INTERVAL " . RAID_POLL_HIDE_USERS_TIME . " MINUTE)";
+            $hide_users_sql = "AND attend_time > (UTC_TIMESTAMP() - INTERVAL " . $config->RAID_POLL_HIDE_USERS_TIME . " MINUTE)";
         }
     } else {
         $hide_users_sql = "";
@@ -3375,8 +3375,8 @@ function show_raid_poll($raid)
     debug_log($cnt);
 
     // Buttons for raid levels and pokemon hidden?
-    $hide_buttons_raid_level = explode(',', RAID_POLL_HIDE_BUTTONS_RAID_LEVEL);
-    $hide_buttons_pokemon = explode(',', RAID_POLL_HIDE_BUTTONS_POKEMON);
+    $hide_buttons_raid_level = explode(',', $config->RAID_POLL_HIDE_BUTTONS_RAID_LEVEL);
+    $hide_buttons_pokemon = explode(',', $config->RAID_POLL_HIDE_BUTTONS_POKEMON);
     $buttons_hidden = false;
     if(in_array($raid_level, $hide_buttons_raid_level) || in_array($raid_pokemon, $hide_buttons_pokemon) || in_array($raid_pokemon_id, $hide_buttons_pokemon)) {
         $buttons_hidden = true;
@@ -3384,7 +3384,7 @@ function show_raid_poll($raid)
 
     // Raid has started and has participants
     if($time_now > $raid['start_time'] && $cnt_all > 0) {
-        //if(RAID_PICTURE == false) {
+        //if(!$config->RAID_PICTURE) {
             // Display raid boss CP values.
             $pokemon_cp = get_formatted_pokemon_cp($raid['pokemon'], true);
             $msg = raid_poll_message($msg, (!empty($pokemon_cp)) ? ($pokemon_cp . CR) : '', true);
@@ -3400,7 +3400,7 @@ function show_raid_poll($raid)
         }
     // Buttons are hidden?
     } else if($buttons_hidden) {
-        //if(RAID_PICTURE == false) {
+        //if(!$config->RAID_PICTURE) {
             // Display raid boss CP values.
             $pokemon_cp = get_formatted_pokemon_cp($raid['pokemon'], true);
             $msg = raid_poll_message($msg, (!empty($pokemon_cp)) ? ($pokemon_cp . CR) : '', true);
@@ -3501,8 +3501,8 @@ function show_raid_poll($raid)
                 $current_pokemon = $row['pokemon'];
 
                 // Add hint for late attendances.
-                if(RAID_LATE_MSG && $previous_att_time == 'FIRST_RUN' && $cnt_latewait > 0) {
-                    $late_wait_msg = str_replace('RAID_LATE_TIME', RAID_LATE_TIME, getPublicTranslation('late_participants_wait'));
+                if($config->RAID_LATE_MSG && $previous_att_time == 'FIRST_RUN' && $cnt_latewait > 0) {
+                    $late_wait_msg = str_replace('RAID_LATE_TIME', $config->RAID_LATE_TIME, getPublicTranslation('late_participants_wait'));
                     $msg = raid_poll_message($msg, CR . EMOJI_LATE . '<i>' . getPublicTranslation('late_participants') . ' ' . $late_wait_msg . '</i>' . CR);
                 }
 
@@ -3626,7 +3626,7 @@ function show_raid_poll($raid)
         debug_log($cnt_done, 'Done count:');
 
         // Canceled or done?
-        if(RAID_POLL_HIDE_DONE_CANCELED == false && ($cnt_cancel > 0 || $cnt_done > 0)) {
+        if(!$config->RAID_POLL_HIDE_DONE_CANCELED && ($cnt_cancel > 0 || $cnt_done > 0)) {
             // Get done and canceled attendances
             $rs_att = my_query(
                 "
@@ -3690,8 +3690,8 @@ function show_raid_poll($raid)
     }
 
     //Add custom message from the config.
-    if (defined('MAP_URL') && !empty(MAP_URL)) {
-        $msg = raid_poll_message($msg, CR . MAP_URL);
+    if (!empty($config->MAP_URL)) {
+        $msg = raid_poll_message($msg, CR . $config->MAP_URL);
     }	
 	
     // Display creator.
@@ -3701,7 +3701,7 @@ function show_raid_poll($raid)
     if(!$buttons_hidden) {
         $msg = raid_poll_message($msg, CR . '<i>' . getPublicTranslation('updated') . ': ' . dt2time('now', 'H:i:s') . '</i>');
     }
-    $msg = raid_poll_message($msg, SP . SP . substr(strtoupper(BOT_ID), 0, 1) . '-ID = ' . $raid['id']); // DO NOT REMOVE! --> NEEDED FOR CLEANUP PREPARATION!
+    $msg = raid_poll_message($msg, SP . SP . substr(strtoupper($config->BOT_ID), 0, 1) . '-ID = ' . $raid['id']); // DO NOT REMOVE! --> NEEDED FOR $config->CLEANUP PREPARATION!
 
 /*
     $msg = raid_poll_message($msg, 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
@@ -3949,8 +3949,8 @@ function curl_json_response($json_response, $json)
             if (!empty($response['result']['reply_markup']['inline_keyboard']['0']['0']['callback_data'])) {
                 debug_log('Callback Data of this message likely contains cleanup info!');
                 $split_callback_data = explode(':', $response['result']['reply_markup']['inline_keyboard']['0']['0']['callback_data']);
-	        // Get raid_id, but check for BRIDGE_MODE first
-	        if(defined('BRIDGE_MODE') && BRIDGE_MODE == true) {
+	        // Get raid_id, but check for $config->BRIDGE_MODE first
+	        if($config->BRIDGE_MODE) {
 		    $cleanup_id = $split_callback_data[1];
 		} else {
 		    $cleanup_id = $split_callback_data[0];
@@ -3960,29 +3960,29 @@ function curl_json_response($json_response, $json)
             } else if (isset($response['result']['venue']['address']) && !empty($response['result']['venue']['address'])) {
                 // Get raid_id from address.
                 debug_log('Venue address message likely contains cleanup info!');
-                if(strpos($response['result']['venue']['address'], substr(strtoupper(BOT_ID), 0, 1) . '-ID = ') !== false) {
-                    $cleanup_id = substr(strrchr($response['result']['venue']['address'], substr(strtoupper(BOT_ID), 0, 1) . '-ID = '), 7);
+                if(strpos($response['result']['venue']['address'], substr(strtoupper($config->BOT_ID), 0, 1) . '-ID = ') !== false) {
+                    $cleanup_id = substr(strrchr($response['result']['venue']['address'], substr(strtoupper($config->BOT_ID), 0, 1) . '-ID = '), 7);
                 } else {
-                    debug_log('BOT_ID ' . BOT_ID . ' not found in venue address message!');
+                    debug_log('BOT_ID ' . $config->BOT_ID . ' not found in venue address message!');
                 }
 
             // Check if it's a text and get raid id
             } else if (!empty($response['result']['text'])) {
                 debug_log('Text message likely contains cleanup info!');
-                if(isset($response['result']['venue']['address']) && strpos($response['result']['venue']['address'], substr(strtoupper(BOT_ID), 0, 1) . '-ID = ') !== false) {
-                    $cleanup_id = substr(strrchr($response['result']['text'], substr(strtoupper(BOT_ID), 0, 1) . '-ID = '), 7);
-                } else if(strpos($response['result']['text'], substr(strtoupper(BOT_ID), 0, 1) . '-ID = ') !== false) {
-                    $cleanup_id = substr(strrchr($response['result']['text'], substr(strtoupper(BOT_ID), 0, 1) . '-ID = '), 7);
+                if(isset($response['result']['venue']['address']) && strpos($response['result']['venue']['address'], substr(strtoupper($config->BOT_ID), 0, 1) . '-ID = ') !== false) {
+                    $cleanup_id = substr(strrchr($response['result']['text'], substr(strtoupper($config->BOT_ID), 0, 1) . '-ID = '), 7);
+                } else if(strpos($response['result']['text'], substr(strtoupper($config->BOT_ID), 0, 1) . '-ID = ') !== false) {
+                    $cleanup_id = substr(strrchr($response['result']['text'], substr(strtoupper($config->BOT_ID), 0, 1) . '-ID = '), 7);
                 }else {
-                    debug_log('BOT_ID ' . BOT_ID . ' not found in text message!');
+                    debug_log('BOT_ID ' . $config->BOT_ID . ' not found in text message!');
                 }
             // Check if it's a caption and get raid id
             } else if (!empty($response['result']['caption'])) {
                 debug_log('Caption in a message likely contains cleanup info!');
-                if(strpos($response['result']['caption'], substr(strtoupper(BOT_ID), 0, 1) . '-ID = ') !== false) {
-                    $cleanup_id = substr(strrchr($response['result']['caption'], substr(strtoupper(BOT_ID), 0, 1) . '-ID = '), 7);
+                if(strpos($response['result']['caption'], substr(strtoupper($config->BOT_ID), 0, 1) . '-ID = ') !== false) {
+                    $cleanup_id = substr(strrchr($response['result']['caption'], substr(strtoupper($config->BOT_ID), 0, 1) . '-ID = '), 7);
                 } else {
-                    debug_log('BOT_ID ' . BOT_ID . ' not found in caption of message!');
+                    debug_log('BOT_ID ' . $config->BOT_ID . ' not found in caption of message!');
                 }
             }
             debug_log('Cleanup ID: ' . $cleanup_id);
@@ -4017,7 +4017,7 @@ function curl_json_response($json_response, $json)
             }
 
             // Check if text starts with getTranslation('raid_overview_for_chat') and inline keyboard is empty
-            $translation = defined('LANGUAGE_PUBLIC') ? getPublicTranslation('raid_overview_for_chat') : '';
+            $translation = !empty($config->LANGUAGE_PUBLIC) ? getPublicTranslation('raid_overview_for_chat') : '';
             $translation_length = strlen($translation);
             $text = !empty($response['result']['text']) ? substr($response['result']['text'], 0, $translation_length) : '';
             // Add overview message details to database.
