@@ -3751,7 +3751,7 @@ function show_raid_poll_small($raid, $override_language = false)
     // Count attendances
     $rs = my_query(
         "
-        SELECT          count(attend_time)          AS count,
+        SELECT          count(a.attend_time)          AS count,
                         sum(team = 'mystic')        AS count_mystic,
                         sum(team = 'valor')         AS count_valor,
                         sum(team = 'instinct')      AS count_instinct,
@@ -3759,9 +3759,9 @@ function show_raid_poll_small($raid, $override_language = false)
                         sum(extra_mystic)           AS extra_mystic,
                         sum(extra_valor)            AS extra_valor,
                         sum(extra_instinct)         AS extra_instinct
-        FROM            attendance
+        FROM            (SELECT distinct user_id,extra_mystic,extra_valor,extra_instinct,raid_id,attend_time,raid_done,cancel FROM attendance WHERE raid_id = {$raid['id']}) a
         LEFT JOIN       users
-          ON            attendance.user_id = users.user_id
+          ON            a.user_id = users.user_id
           WHERE         raid_id = {$raid['id']}
             AND         attend_time IS NOT NULL
             AND         raid_done != 1
