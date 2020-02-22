@@ -58,6 +58,7 @@ function raid_access_check($update, $data, $permission, $return_result = false)
  */
 function active_raid_duplication_check($gym_id)
 {
+    global $config;
     debug_log('Running duplication check');
 
     // Build query.
@@ -550,6 +551,7 @@ function delete_gym($id)
  */
 function get_gym_details($gym, $extended = false)
 {
+    global $config;
     // Add gym name to message.
     $msg = '<b>' . getTranslation('gym_details') . ':</b>' . CR . CR;
     $msg .= '<b>ID = ' . $gym['id'] . '</b>' . CR;
@@ -817,6 +819,7 @@ function get_user($user_id)
  */
 function raid_edit_raidlevel_keys($gym_id, $gym_first_letter, $admin = false)
 {
+    global $config;
     // Get all raid levels from database
     $rs = my_query(
             "
@@ -880,6 +883,7 @@ function raid_edit_raidlevel_keys($gym_id, $gym_first_letter, $admin = false)
  */
 function raid_edit_gyms_first_letter_keys($action = 'raid_by_gym', $hidden = false)
 {
+    global $config;
     // Special/Custom gym letters?
     $case = '';
     if(!empty($config->RAID_CUSTOM_GYM_LETTERS)) {
@@ -965,6 +969,7 @@ function raid_edit_gyms_first_letter_keys($action = 'raid_by_gym', $hidden = fal
  */
 function raid_edit_gym_keys($first, $warn = true, $action = 'edit_raidlevel', $delete = false, $hidden = false)
 {
+    global $config;
     // Length of first letter.
     // Fix chinese chars, prior: $first_length = strlen($first);
     $first_length = strlen(utf8_decode($first));
@@ -1512,6 +1517,7 @@ function insert_cleanup($chat_id, $message_id, $raid_id)
  * @param $database
  */
 function run_cleanup ($telegram = 2, $database = 2) {
+    global $config;
     // Check configuration, cleanup of telegram needs to happen before database cleanup!
     if ($config->CLEANUP_TIME_TG > $config->CLEANUP_TIME_DB) {
 	cleanup_log('Configuration issue! Cleanup time for telegram messages needs to be lower or equal to database cleanup time!');
@@ -1791,6 +1797,7 @@ function run_cleanup ($telegram = 2, $database = 2) {
  */
 function keys_trainerinfo($show = false)
 {
+    global $config;
     // Toggle state.
     $status = 'show';
     if($show || !$config->TRAINER_BUTTONS_TOGGLE) { 
@@ -1854,6 +1861,7 @@ function keys_trainerinfo($show = false)
  */
 function keys_vote($raid)
 {
+    global $config;
     // Init keys_time array.
     $keys_time = [];
 
@@ -2437,6 +2445,7 @@ function keys_vote($raid)
  */
 function send_response_vote($update, $data, $new = false, $text = true)
 {
+    global $config;
     // Initial text status
     $initial_text = $text;
 
@@ -2725,6 +2734,7 @@ function delete_overview($chat_id, $message_id)
  */
 function get_overview($update, $chats_active, $raids_active, $action = 'refresh', $chat_id = 0)
 {
+    global $config;
     // Add pseudo array for last run to active chats array
     $last_run = [];
     $last_run['chat_id'] = 'LAST_RUN';
@@ -3206,6 +3216,7 @@ function get_raid_times($raid, $override_language = true, $pokemon = false, $unf
  */
 function raid_poll_message($msg_array, $append, $skip = false)
 {
+    global $config;
     // Array key full already created?
     if(!(array_key_exists('full', $msg_array))) {
         $msg_array['full'] = '';
@@ -3232,6 +3243,7 @@ function raid_poll_message($msg_array, $append, $skip = false)
  */
 function show_raid_poll($raid)
 {
+    global $config;
     // Init empty message string.
     //$msg = '';
     $msg = array();
@@ -3918,6 +3930,7 @@ function raid_list($update)
  */
 function curl_json_response($json_response, $json)
 {
+    global $config;
     // Write to log.
     debug_log($json_response, '<-');
 
