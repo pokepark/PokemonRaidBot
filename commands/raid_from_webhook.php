@@ -54,9 +54,9 @@ foreach ($update as $raid) {
 
     // Create gym if not exists
     $gym_name = $raid['message']['name'];
-    if (WEBHOOK_EXCLUDE_UNKOWN == true && $gym_name === "unkown") {
+    if (WEBHOOK_EXCLUDE_UNKOWN == true && $gym_name === "unknown") {
         
-        contiue;
+        continue;
     }
     $gym_lat = $raid['message']['latitude'];
     $gym_lon = $raid['message']['longitude'];
