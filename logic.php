@@ -59,7 +59,6 @@ function raid_access_check($update, $data, $permission, $return_result = false)
 function active_raid_duplication_check($gym_id)
 {
     global $config;
-    debug_log('Running duplication check');
 
     // Build query.
     $rs = my_query(
