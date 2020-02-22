@@ -5,6 +5,7 @@
   "DB_USER":"PokemonRaidBot",
   "DB_PASSWORD":"",
   "DEBUG": false,
+  "DEBUG_QUERIES": false,
   "DEBUG_LOGFILE":"/var/log/tg-bots/dev-raid-bot.log",
   "APIKEY_HASH":"",
   "DDOS_MAXIMUM":"10",
