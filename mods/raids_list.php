@@ -39,8 +39,11 @@ $keys = [
 
 // Add keys to share.
 $keys_share = share_keys($raid['id'], 'raid_share', $update);
-$keys = array_merge($keys, $keys_share);
-
+if(is_array($keys_share)) {
+    $keys = array_merge($keys, $keys_share);
+} else {
+    debug_log('There are no groups to share to, is SHARE_CHATS set?');
+}
 // Exit key
 $empty_exit_key = [];
 $key_exit = universal_key($empty_exit_key, '0', 'exit', '1', getTranslation('done'));
