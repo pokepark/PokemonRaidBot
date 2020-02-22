@@ -18,7 +18,7 @@ function escape($value){
 }
 
 // Import allowed?
-if(defined('PORTAL_IMPORT') && $config->PORTAL_IMPORT) {
+if($config->PORTAL_IMPORT) {
 
     // Process message for portal information.
     require_once(CORE_BOT_PATH . '/importal.php');
