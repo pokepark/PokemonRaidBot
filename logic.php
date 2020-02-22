@@ -3364,9 +3364,14 @@ function show_raid_poll($raid)
     $cnt = [];
     $cnt_all = 0;
     $cnt_latewait = 0;
-
+	$cnt_by_att_time = [];
+	
     while ($cnt_row = $rs_cnt->fetch_assoc()) {
         $cnt[$cnt_row['ts_att']] = $cnt_row;
+		$cnt_by_att_time[$cnt_row['ts_att']] += $cnt_row['count'];
+		$cnt_any_pokemon[$cnt_row['ts_att']] += $cnt_row['count_any_pokemon'];
+		$cnt_raid_pokemon[$cnt_row['ts_att']] += $cnt_row['count_raid_pokemon'];
+		$cnt_other_pokemon[$cnt_row['ts_att']] += $cnt_row['count_other_pokemon'];
         $cnt_all = $cnt_all + $cnt_row['count'];
         $cnt_latewait = $cnt_latewait + $cnt_row['count_late'];
     }
@@ -3513,7 +3518,7 @@ function show_raid_poll($raid)
                     $msg = raid_poll_message($msg, CR . '<b>' . (($current_att_time == 0) ? (getPublicTranslation('anytime')) : ($dt_att_time)) . '</b>');
 
                     // Hide if other pokemon got selected. Show attendances for each pokemon instead of each attend time.
-                    $msg = raid_poll_message($msg, (($cnt[$current_att_time]['count_other_pokemon'] == 0) ? (' [' . ($cnt[$current_att_time]['count'] + $count_att_time_extrapeople) . ']') : ''));
+                    $msg = raid_poll_message($msg, (($cnt[$current_att_time]['count_other_pokemon'] == 0) ? (' [' . ($cnt[$current_att_time]['count']) . ']') : ''));
 
                     // Add attendance counts by team - hide if other pokemon got selected.
                     if ($cnt[$current_att_time]['count'] > 0 && $cnt[$current_att_time]['count_other_pokemon'] == 0) {
@@ -3521,6 +3526,7 @@ function show_raid_poll($raid)
                         $count_mystic = $cnt[$current_att_time]['count_mystic'] + $cnt[$current_att_time]['extra_mystic'];
                         $count_valor = $cnt[$current_att_time]['count_valor'] + $cnt[$current_att_time]['extra_valor'];
                         $count_instinct = $cnt[$current_att_time]['count_instinct'] + $cnt[$current_att_time]['extra_instinct'];
+						$count_no_team = $cnt[$current_att_time]['count_no_team'] + $cnt[0]['count_no_team'];
                         $count_late = $cnt[$current_att_time]['count_late'];
 
                         // Add to message.
@@ -3528,7 +3534,7 @@ function show_raid_poll($raid)
                         $msg = raid_poll_message($msg, (($count_mystic > 0) ? TEAM_B . $count_mystic . '  ' : ''));
                         $msg = raid_poll_message($msg, (($count_valor > 0) ? TEAM_R . $count_valor . '  ' : ''));
                         $msg = raid_poll_message($msg, (($count_instinct > 0) ? TEAM_Y . $count_instinct . '  ' : ''));
-                        $msg = raid_poll_message($msg, (($cnt[$current_att_time]['count_no_team'] > 0) ? TEAM_UNKNOWN . $cnt[$current_att_time]['count_no_team'] . '  ' : ''));
+                        $msg = raid_poll_message($msg, (($count_no_team > 0) ? TEAM_UNKNOWN . $count_no_team . '  ' : ''));
                         $msg = raid_poll_message($msg, (($count_late > 0) ? EMOJI_LATE . $count_late . '  ' : ''));
                     }
                     $msg = raid_poll_message($msg, CR);
@@ -3537,9 +3543,9 @@ function show_raid_poll($raid)
                 // Add section/header for pokemon
                 if($previous_pokemon != $current_pokemon || $previous_att_time != $current_att_time) {
                     // Get counts for pokemons
-                    $count_all = $cnt[$current_att_time]['count'];
-                    $count_any_pokemon = $cnt[$current_att_time]['count_any_pokemon'];
-                    $count_raid_pokemon = $cnt[$current_att_time]['count_raid_pokemon'];
+                    $count_all = $cnt_by_att_time[$current_att_time];
+                    $count_any_pokemon = $cnt_any_pokemon[$current_att_time];
+                    $count_raid_pokemon = $cnt_raid_pokemon[$current_att_time];
 
                     // Show attendances when multiple pokemon are selected, unless all attending users voted for the raid boss + any pokemon
                     if($count_all != ($count_any_pokemon + $count_raid_pokemon)) {
