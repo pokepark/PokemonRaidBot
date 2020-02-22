@@ -331,30 +331,32 @@ foreach ($update as $raid) {
         $const_chats = $config->{$const};
 
         // Get geofence chats and geofences
-        $raw = file_get_contents(CONFIG_PATH . '/geoconfig.json');
-        $geofences = json_decode($raw, true);
-        foreach ($geofences as $geofence) {
-            
-            $const_geofence = 'WEBHOOK_CHATS_LEVEL_' . $i . '_' . $geofence['id'];
-            $const_geofence_chats = $config->{$const_geofence};
+        if(is_file(CONFIG_PATH . '/geoconfig.json')) {
+            $raw = file_get_contents(CONFIG_PATH . '/geoconfig.json');
+            $geofences = json_decode($raw, true);
+            foreach ($geofences as $geofence) {
+                
+                $const_geofence = 'WEBHOOK_CHATS_LEVEL_' . $i . '_' . $geofence['id'];
+                $const_geofence_chats = $config->{$const_geofence};
 
-            // Debug
-            //debug_log($const_geofence,'CONSTANT NAME:');
-            //debug_log($const_geofence_chats),'CONSTANT VALUE:');
-            
-            // if current raid inside path, add chats
-            $point = $created_raid['lat'] . " " . $created_raid['lon'];
-            $polygon = array();
-            foreach ($geofence['path'] as $geopoint) {
+                // Debug
+                //debug_log($const_geofence,'CONSTANT NAME:');
+                //debug_log($const_geofence_chats),'CONSTANT VALUE:');
+                
+                // if current raid inside path, add chats
+                $point = $created_raid['lat'] . " " . $created_raid['lon'];
+                $polygon = array();
+                foreach ($geofence['path'] as $geopoint) {
 
-                array_push($polygon, "$geopoint[0] $geopoint[1]");
-            }
-            
-            if (isPointInsidePolygon($point, $polygon)) {
+                    array_push($polygon, "$geopoint[0] $geopoint[1]");
+                }
+                
+                if (isPointInsidePolygon($point, $polygon)) {
 
-                if($level == $i && defined($const_geofence) && !empty($const_geofence) && !empty($const_geofence_chats)) {
+                    if($level == $i && defined($const_geofence) && !empty($const_geofence) && !empty($const_geofence_chats)) {
 
-                    $chats = explode(',', $const_geofence_chats);
+                        $chats = explode(',', $const_geofence_chats);
+                    }
                 }
             }
         }
