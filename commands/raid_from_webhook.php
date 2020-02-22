@@ -353,19 +353,18 @@ foreach ($update as $raid) {
                 
                 if (isPointInsidePolygon($point, $polygon)) {
 
-                    if($level == $i && defined($const_geofence) && !empty($const_geofence) && !empty($const_geofence_chats)) {
+                    if($level == $i && !empty($const_geofence_chats)) {
 
                         $chats = explode(',', $const_geofence_chats);
                     }
                 }
             }
         }
-
         // Debug.
         //debug_log($const,'CONSTANT NAME:');
         //debug_log($const_chats),'CONSTANT VALUE:');
 
-        if($level == $i && defined($const) && !empty($const) && !empty($const_chats)) {
+        if($level == $i && !empty($const_chats)) {
 
             $chats = explode(',', $const_chats);
         }
@@ -379,6 +378,7 @@ foreach ($update as $raid) {
 
     // Post raid polls.
     foreach ($chats as $chat) {
+        debug_log('Posting poll to chat: ' . $chat);
     
         // Send location.
         if ($config->RAID_LOCATION) {
