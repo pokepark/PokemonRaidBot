@@ -182,6 +182,7 @@ function disable_raid_level($id)
  */
 function get_raid_level($pokedex_id)
 {
+    debug_log($pokedex_id, 'Finding level for:');
     // Split pokedex_id and form
     $dex_id_form = explode('-',$pokedex_id);
     $dex_id = $dex_id_form[0];
@@ -203,7 +204,9 @@ function get_raid_level($pokedex_id)
         while ($level = $rs->fetch_assoc()) {
             $raid_level = $level['raid_level'];
         }
+        debug_log($raid_level, 'Per db, level is:');
     } else {
+        debug_log('Faulty dex_id, defaulting to level 0.');
         $raid_level = '0';
     }
 
