@@ -16,6 +16,11 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
       * [Bot token](#bot-token)
       * [Database](#database)
       * [Docker](#docker)
+         * [Installation of Docker:](#installation-of-docker)
+         * [Raidbot installation:](#raidbot-installation)
+         * [SSL with Docker](#ssl-with-docker)
+         * [Useful Docker commands](#useful-docker-commands)
+         * [Using getZeCharles.php with Docker](#using-getzecharlesphp-with-docker)
       * [Config](#config)
          * [Referring to groups, channels and users](#referring-to-groups-channels-and-users)
             * [Finding public IDs](#finding-public-ids)
@@ -71,6 +76,7 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
    * [Debugging](#debugging)
    * [Updates](#updates)
    * [Development](#development)
+      * [Adding new config values](#adding-new-config-values)
       * [Git Hooks](#git-hooks)
          * [pre-commit](#pre-commit)
       * [SQL Files](#sql-files)
@@ -81,7 +87,7 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
          * [translate.py](#translatepy)
             * [Usage](#usage)
 
-<!-- Added by: artanicus, at: Sat Nov 30 19:11:58 EET 2019 -->
+<!-- Added by: artanicus, at: Sun Feb 23 12:43:55 EET 2020 -->
 
 <!--te-->
 
@@ -1099,6 +1105,7 @@ Updates to the config file are NOT checked automatically. Therefore always check
  - Any previously undefined config value needs a sane default value in `config/defaults-config.json`. Anyone updating will get that default!
  - If the new config item is something people will likely want to override, add it to `config/config.json.example`.
  - You can access the new config item in code with `$config->CONFIG_ITEM_NAME` but if inside a function, remember to specify `global $config;`
+ - Don't break backwards compatibility if you can.
 
 ## Git Hooks
 
