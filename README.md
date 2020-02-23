@@ -1094,6 +1094,12 @@ Updates to the config file are NOT checked automatically. Therefore always check
 
 # Development
 
+## Adding new config values
+
+ - Any previously undefined config value needs a sane default value in `config/defaults-config.json`. Anyone updating will get that default!
+ - If the new config item is something people will likely want to override, add it to `config/config.json.example`.
+ - You can access the new config item in code with `$config->CONFIG_ITEM_NAME` but if inside a function, remember to specify `global $config;`
+
 ## Git Hooks
 
 In the needed core repository we provide a folder with git hooks which can be used to automate development processes. Copy them to the `.git/hooks/` folder of this bot and make them executable (e.g. `chmod +x .git/hooks/pre-commit`) to use them, or set your local git config to use them directly:
