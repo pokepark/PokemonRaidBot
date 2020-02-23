@@ -38,7 +38,8 @@ $keys = [
 ];
 
 // Add keys to share.
-$keys_share = share_keys($raid['id'], 'raid_share', $update);
+debug_log($raid, 'raw raid data for share: ');
+$keys_share = share_keys($raid['id'], 'raid_share', $update, '', '', false, $raid['level']);
 if(is_array($keys_share)) {
     $keys = array_merge($keys, $keys_share);
 } else {

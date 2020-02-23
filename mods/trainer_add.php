@@ -37,15 +37,16 @@ for($i = 1; $i <= 6; $i++) {
         $raid_level = $i;
     }
     $const = 'SHARE_CHATS_LEVEL_' . $raid_level;
+    $const_chats = $config->{$const};
 
     // Sharing keys for this raid level?
-    if(!empty($config->{$const})) {
+    if(!empty($const_chats)) {
+        debug_log('Found chats by level, adding them')
         // Add chats. 
-        $const_chats = $config->{$const};
-        if(!empty($const_chats) && !empty($chat_list)) {
+        if(!empty($chat_list)) {
             $chat_list .= ',' . $const_chats;
             debug_log($chat_list, 'Added ' . $const . ' chats to the chat list:');
-        } else if(!empty($const_chats) && empty($chat_list)) {
+        } else {
             $chat_list = $const_chats;
             debug_log($chat_list, 'Added ' . $const . ' chats to the chat list:');
         }
