@@ -2879,9 +2879,9 @@ function get_overview($update, $chats_active, $raids_active, $action = 'refresh'
                         "
                     );
 
-                    $row = $rs->fetch_row();
+                    $dup_row = $rs->fetch_row();
 
-                    if (empty($row['0'])) {
+                    if (empty($dup_row['0'])) {
                         // Not shared yet - Share button
                         $keys[] = [
                             [
@@ -3003,6 +3003,7 @@ function get_overview($update, $chats_active, $raids_active, $action = 'refresh'
         $end_time = $raids_active[$raid_id]['end_time'];
         $time_left = $raids_active[$raid_id]['t_left'];
 
+        debug_log($pokemon . '@' . $gym . ' found for overview.');
         // Build message and add each gym in this format - link gym_name to raid poll chat_id + message_id if possible
         /* Example:
          * Raid Overview from 18:18h
