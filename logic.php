@@ -2729,6 +2729,22 @@ function delete_overview($chat_id, $message_id)
     );
 }
 
+function get_chat_title($chat_id){
+    // Get info about chat for title.
+    debug_log('Getting chat object for chat_id: ' . $row_overview['chat_id']);
+    $chat_obj = get_chat($chat_id);
+    $chat_title = '<unknown chat>';
+
+    // Set title.
+    if ($chat_obj['ok'] == 'true' && !empty($chat_obj['result']['title'])) {
+        $chat_title = $chat_obj['result']['title'];
+        debug_log('Title of the chat: ' . $chat_obj['result']['title']);
+    } else {
+        debug_log($chat_obj, 'Unable to find title for ' . $chat_id  . ' from:');
+    }
+    return $chat_title;
+}
+
 /**
  * Get overview data to Share or refresh.
  * @param $update
@@ -2770,16 +2786,7 @@ function get_overview($update, $chats_active, $raids_active, $action = 'refresh'
             $chat_id = $row_overview['chat_id'];
             $message_id = $row_overview['message_id'];
 
-            // Get info about chat for title.
-            debug_log('Getting chat object for chat_id: ' . $row_overview['chat_id']);
-            $chat_obj = get_chat($row_overview['chat_id']);
-            $chat_title = '';
-
-            // Set title.
-            if ($chat_obj['ok'] == 'true') {
-                $chat_title = $chat_obj['result']['title'];
-                debug_log('Title of the chat: ' . $chat_obj['result']['title']);
-            }
+            $chat_title = get_chat_id($row_overview['chat_id']);
 
             // Set the message.
             $msg = '<b>' . getPublicTranslation('raid_overview_for_chat') . ' ' . $chat_title . ' '. getPublicTranslation('from') .' '. dt2time('now') . '</b>' .  CR . CR;
@@ -2817,9 +2824,16 @@ function get_overview($update, $chats_active, $raids_active, $action = 'refresh'
         exit;
     }
 
+    // Beyond here we do have specified raids_active
     // Share or refresh each chat.
     foreach ($chats_active as $row) {
+        debug_log($row, 'Operating on chat:');
         $current = $row['chat_id'];
+
+        $chat_title = $current;
+        if($current != 'LAST_RUN'){
+          $chat_title = get_chat_title($current);
+        }
 
         // Telegram JSON array.
         $tg_json = array();
@@ -2854,6 +2868,7 @@ function get_overview($update, $chats_active, $raids_active, $action = 'refresh'
 
             // Share or refresh?
             if ($action == 'share') {
+                // no specific chat_id given?
                 if ($chat_id == 0) {
                     // Make sure it's not already shared
                     $rs = my_query(
@@ -2870,7 +2885,7 @@ function get_overview($update, $chats_active, $raids_active, $action = 'refresh'
                         // Not shared yet - Share button
                         $keys[] = [
                             [
-                                'text'          => getTranslation('share_with') . ' ' . $chat_obj['result']['title'],
+                                'text'          => getTranslation('share_with') . ' ' . $chat_title,
                                 'callback_data' => '0:overview_share:' . $previous
                             ]
                         ];
@@ -2973,8 +2988,8 @@ function get_overview($update, $chats_active, $raids_active, $action = 'refresh'
                 $chat_username = $chat_obj['result']['username'];
                 debug_log('Username of the chat: ' . $chat_obj['result']['username']);
             }
-
-            $msg = '<b>' . getPublicTranslation('raid_overview_for_chat') . ' ' . $chat_obj['result']['title'] . ' ' . getPublicTranslation('from') . ' '. dt2time('now') . '</b>' .  CR . CR;
+            $chat_title = get_chat_title($current);
+            $msg = '<b>' . getPublicTranslation('raid_overview_for_chat') . ' ' . $chat_title . ' ' . getPublicTranslation('from') . ' '. dt2time('now') . '</b>' .  CR . CR;
         }
 
         // Set variables for easier message building.
