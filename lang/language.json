@@ -465,7 +465,7 @@
     "NO": "Noen deltakere er forsinket",
     "FR": "Certains participants sont en retard",
     "PL": "Ktoś się spóźni",
-    "FI": "Osa osallistujista ovat myöhässä."
+    "FI": "Osa osallistujista on myöhässä."
   },
   "late_participants_wait": {
     "NL": "A.u.b RAID_LATE_TIME wachten!",
