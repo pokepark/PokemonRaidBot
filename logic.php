@@ -3364,14 +3364,14 @@ function show_raid_poll($raid)
     $cnt = [];
     $cnt_all = 0;
     $cnt_latewait = 0;
-	$cnt_by_att_time = [];
-	
+    $cnt_by_att_time = [];
+    
     while ($cnt_row = $rs_cnt->fetch_assoc()) {
         $cnt[$cnt_row['ts_att']] = $cnt_row;
-		$cnt_by_att_time[$cnt_row['ts_att']] += $cnt_row['count'];
-		$cnt_any_pokemon[$cnt_row['ts_att']] += $cnt_row['count_any_pokemon'];
-		$cnt_raid_pokemon[$cnt_row['ts_att']] += $cnt_row['count_raid_pokemon'];
-		$cnt_other_pokemon[$cnt_row['ts_att']] += $cnt_row['count_other_pokemon'];
+        $cnt_by_att_time[$cnt_row['ts_att']] += $cnt_row['count'];
+        $cnt_any_pokemon[$cnt_row['ts_att']] += $cnt_row['count_any_pokemon'];
+        $cnt_raid_pokemon[$cnt_row['ts_att']] += $cnt_row['count_raid_pokemon'];
+        $cnt_other_pokemon[$cnt_row['ts_att']] += $cnt_row['count_other_pokemon'];
         $cnt_all = $cnt_all + $cnt_row['count'];
         $cnt_latewait = $cnt_latewait + $cnt_row['count_late'];
     }
@@ -3526,7 +3526,7 @@ function show_raid_poll($raid)
                         $count_mystic = $cnt[$current_att_time]['count_mystic'] + $cnt[$current_att_time]['extra_mystic'];
                         $count_valor = $cnt[$current_att_time]['count_valor'] + $cnt[$current_att_time]['extra_valor'];
                         $count_instinct = $cnt[$current_att_time]['count_instinct'] + $cnt[$current_att_time]['extra_instinct'];
-						$count_no_team = $cnt[$current_att_time]['count_no_team'] + $cnt[0]['count_no_team'];
+                        $count_no_team = $cnt[$current_att_time]['count_no_team'] + $cnt[0]['count_no_team'];
                         $count_late = $cnt[$current_att_time]['count_late'];
 
                         // Add to message.
@@ -3967,7 +3967,7 @@ function curl_json_response($json_response, $json)
                 // Get raid_id from address.
                 debug_log('Venue address message likely contains cleanup info!');
                 if(strpos($response['result']['venue']['address'], substr(strtoupper(BOT_ID), 0, 1) . '-ID = ') !== false) {
-                    $cleanup_id = substr(strrchr($response['result']['venue']['address'], substr(strtoupper(BOT_ID), 0, 1) . '-ID = '), 7);
+                    $cleanup_id = substr($response['result']['venue']['address'],strpos($response['result']['venue']['address'], substr(strtoupper(BOT_ID), 0, 1) . '-ID = ') + 7);
                 } else {
                     debug_log('BOT_ID ' . BOT_ID . ' not found in venue address message!');
                 }
@@ -3976,17 +3976,17 @@ function curl_json_response($json_response, $json)
             } else if (!empty($response['result']['text'])) {
                 debug_log('Text message likely contains cleanup info!');
                 if(isset($response['result']['venue']['address']) && strpos($response['result']['venue']['address'], substr(strtoupper(BOT_ID), 0, 1) . '-ID = ') !== false) {
-                    $cleanup_id = substr(strrchr($response['result']['text'], substr(strtoupper(BOT_ID), 0, 1) . '-ID = '), 7);
+                    $cleanup_id = substr($response['result']['text'],strpos($response['result']['text'], substr(strtoupper(BOT_ID), 0, 1) . '-ID = ') + 7);
                 } else if(strpos($response['result']['text'], substr(strtoupper(BOT_ID), 0, 1) . '-ID = ') !== false) {
-                    $cleanup_id = substr(strrchr($response['result']['text'], substr(strtoupper(BOT_ID), 0, 1) . '-ID = '), 7);
-                }else {
+                    $cleanup_id = substr($response['result']['text'],strpos($response['result']['text'], substr(strtoupper(BOT_ID), 0, 1) . '-ID = ') + 7);
+               }else {
                     debug_log('BOT_ID ' . BOT_ID . ' not found in text message!');
                 }
             // Check if it's a caption and get raid id
             } else if (!empty($response['result']['caption'])) {
                 debug_log('Caption in a message likely contains cleanup info!');
                 if(strpos($response['result']['caption'], substr(strtoupper(BOT_ID), 0, 1) . '-ID = ') !== false) {
-                    $cleanup_id = substr(strrchr($response['result']['caption'], substr(strtoupper(BOT_ID), 0, 1) . '-ID = '), 7);
+                    $cleanup_id = substr($response['result']['caption'],strpos($response['result']['caption'], substr(strtoupper(BOT_ID), 0, 1) . '-ID = ') + 7);
                 } else {
                     debug_log('BOT_ID ' . BOT_ID . ' not found in caption of message!');
                 }
