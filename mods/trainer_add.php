@@ -41,7 +41,7 @@ for($i = 1; $i <= 6; $i++) {
 
     // Sharing keys for this raid level?
     if(!empty($const_chats)) {
-        debug_log('Found chats by level, adding them')
+        debug_log('Found chats by level, adding them');
         // Add chats. 
         if(!empty($chat_list)) {
             $chat_list .= ',' . $const_chats;

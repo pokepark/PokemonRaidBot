@@ -2786,7 +2786,7 @@ function get_overview($update, $chats_active, $raids_active, $action = 'refresh'
             $chat_id = $row_overview['chat_id'];
             $message_id = $row_overview['message_id'];
 
-            $chat_title = get_chat_id($row_overview['chat_id']);
+            $chat_title = get_chat_title($row_overview['chat_id']);
 
             // Set the message.
             $msg = '<b>' . getPublicTranslation('raid_overview_for_chat') . ' ' . $chat_title . ' '. getPublicTranslation('from') .' '. dt2time('now') . '</b>' .  CR . CR;
