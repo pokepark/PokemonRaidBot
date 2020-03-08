@@ -274,7 +274,9 @@ if($id == 0) {
         }
 
         // Add raid egg?
-        if($bosscount > 1) {
+        if($config->POKEBATTLER_IMPORT_DISABLE_REDUNDANT_EGGS && $bosscount <= 1) {
+            debug_log('Not creating egg for level ' . $rl . ' since there are not 2 or more bosses.');
+        } else {
             // Add pokemon to message.
             $msg .= getTranslation('egg_' . $rl) . SP . '(#999' . $rl . ')' . CR;
             $egg_id = '999'  . $rl;
