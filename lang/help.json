@@ -261,7 +261,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "/getconfig - Näytä botin asetukset"
+    "FI": "/get - Näytä botin asetukset"
   },
   "help_config-set": {
     "NL": "/set - Verander de bot configuratie",
@@ -273,7 +273,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "/setconfig - Muuta botin asetuksia"
+    "FI": "/set - Muuta botin asetuksia"
   },
   "help_help": {
     "NL": "/help - laat help zien",
