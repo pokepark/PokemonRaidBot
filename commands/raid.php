@@ -178,9 +178,9 @@ debug_log('ID=' . $id);
 $raid = get_raid($id);
 
 // Send location.
-if (RAID_LOCATION == true) {
+if ($config->RAID_LOCATION) {
     //$loc = send_location($update['message']['chat']['id'], $raid['lat'], $raid['lon']);
-    $msg_text = !empty($raid['address']) ? $raid['address'] . ', ' . substr(strtoupper(BOT_ID), 0, 1) . '-ID = ' . $raid['id'] : $raid['pokemon'] . ', ' . $raid['id']; // DO NOT REMOVE " ID = " --> NEEDED FOR CLEANUP PREPARATION!
+    $msg_text = !empty($raid['address']) ? $raid['address'] . ', ' . substr(strtoupper($config->BOT_ID), 0, 1) . '-ID = ' . $raid['id'] : $raid['pokemon'] . ', ' . $raid['id']; // DO NOT REMOVE " ID = " --> NEEDED FOR $config->CLEANUP PREPARATION!
     $loc = send_venue($update['message']['chat']['id'], $raid['lat'], $raid['lon'], "", $msg_text);
 
     // Write to log.
@@ -192,8 +192,8 @@ if (RAID_LOCATION == true) {
 $text = show_raid_poll($raid);
 
 // Raid picture
-if(RAID_PICTURE == true) {
-    $picture_url = RAID_PICTURE_URL . "?pokemon=" . $raid['pokemon'] . "&raid=". $raid['id'];
+if($config->RAID_PICTURE) {
+    $picture_url = $config->RAID_PICTURE_URL . "?pokemon=" . $raid['pokemon'] . "&raid=". $raid['id'];
     debug_log('PictureUrl: ' . $picture_url);
 }
 
@@ -215,7 +215,7 @@ if ($update['message']['chat']['type'] == 'private' || $update['callback_query']
     $chat = $update['message']['chat']['id']);
 
     // Send the message.
-    if(RAID_PICTURE == true) {
+    if($config->RAID_PICTURE) {
         send_photo($chat, $picture_url, $text['short'], $keys, ['disable_web_page_preview' => 'true']);
     } else {
         send_message($chat, $text['full'], $keys, ['disable_web_page_preview' => 'true']);
@@ -237,7 +237,7 @@ if ($update['message']['chat']['type'] == 'private' || $update['callback_query']
     // send_message($update['message']['chat']['id'], $text, $keys, ['reply_to_message_id' => $reply_to, 'reply_markup' => ['selective' => true, 'one_time_keyboard' => true], 'disable_web_page_preview' => 'true']);
     $chat = $update['message']['chat']['id'];
     // Send the message.
-    if(RAID_PICTURE == true) {
+    if($config->RAID_PICTURE) {
         send_photo($chat, $picture_url, $text['short'], $keys, ['reply_to_message_id' => $reply_to, 'reply_markup' => ['selective' => true, 'one_time_keyboard' => true], 'disable_web_page_preview' => 'true']);
     } else {
         send_message($chat, $text['full'], $keys, ['reply_to_message_id' => $reply_to, 'reply_markup' => ['selective' => true, 'one_time_keyboard' => true], 'disable_web_page_preview' => 'true']);

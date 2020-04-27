@@ -105,7 +105,7 @@
     "NO": "Level 5 Egg",
     "FR": "Oeuf 5",
     "PL": "Jajko 5 poziom",
-    "FI": "Tason 5 Muna"
+    "FI": "Tason 5 muna"
   },
   "egg_4": {
     "NL": "Level 4 Ei",
@@ -117,7 +117,7 @@
     "NO": "Level 4 Egg",
     "FR": "Oeuf 4",
     "PL": "Jajko 4 poziom",
-    "FI": "Tason 4 Muna"
+    "FI": "Tason 4 muna"
   },
   "egg_3": {
     "NL": "Level 3 Ei",
@@ -129,7 +129,7 @@
     "NO": "Level 3 Egg",
     "FR": "Oeuf 3",
     "PL": "Jajko 3 poziom",
-    "FI": "Tason 3 Muna"
+    "FI": "Tason 3 muna"
   },
   "egg_2": {
     "NL": "Level 2 Ei",
@@ -141,7 +141,7 @@
     "NO": "Level 2 Egg",
     "FR": "Oeuf 2",
     "PL": "Jajko 2 poziom",
-    "FI": "Tason 2 Muna"
+    "FI": "Tason 2 muna"
   },
   "egg_1": {
     "NL": "Level 1 Ei",
@@ -153,7 +153,7 @@
     "NO": "Level 1 Egg",
     "FR": "Oeuf 1",
     "PL": "Jajko 1 poziom",
-    "FI": "Tason 1 Muna"
+    "FI": "Tason 1 muna"
   },
   "egg_0": {
     "NL": "Raid Ei",
@@ -165,7 +165,7 @@
     "NO": "Level 0 Egg",
     "FR": "Oeuf 0",
     "PL": "Jajo",
-    "FI": "Raidi Muna"
+    "FI": "Raid-muna"
   },
   "alone": {
     "NL": "Alleen",
@@ -213,7 +213,7 @@
     "NO": "Avlysning",
     "FR": "Finalement je ne viens pas",
     "PL": "Nie mogę przyjsć",
-    "FI": "Peruutus"
+    "FI": "Peru"
   },
   "raid_done": {
     "NL": "Raid beëindigd",
@@ -273,7 +273,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "Tämä on raid tiedote, ei äänestystä."
+    "FI": "Tämä on raid-tiedote, ei äänestystä."
   },
   "raid_event_creation_limit_one": {
     "NL": "Gedurende raid hour kan je maar 1 raid aanmaken!",
@@ -465,7 +465,7 @@
     "NO": "Noen deltakere er forsinket",
     "FR": "Certains participants sont en retard",
     "PL": "Ktoś się spóźni",
-    "FI": "Osa osallistujista ovat myöhässä."
+    "FI": "Osa osallistujista on myöhässä."
   },
   "late_participants_wait": {
     "NL": "A.u.b RAID_LATE_TIME wachten!",

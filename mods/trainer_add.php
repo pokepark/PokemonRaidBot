@@ -13,18 +13,18 @@ bot_access_check($update, 'trainer-share');
 $keys = [];
 $chat_list = '';
 
-// TRAINER_CHATS ?
-if(!empty(TRAINER_CHATS)) {
-    $chat_list = TRAINER_CHATS;
+// $config->TRAINER_CHATS ?
+if(!empty($config->TRAINER_CHATS)) {
+    $chat_list = $config->TRAINER_CHATS;
     debug_log($chat_list, 'Added trainer chats to the chat list:');
 }
 
-// SHARE_CHATS ?
-if(!empty(SHARE_CHATS) && !empty($chat_list)) {
-    $chat_list .= ',' . SHARE_CHATS;
+// $config->SHARE_CHATS ?
+if(!empty($config->SHARE_CHATS) && !empty($chat_list)) {
+    $chat_list .= ',' . $config->SHARE_CHATS;
     debug_log($chat_list, 'Added share chats to the chat list:');
-} else if(!empty(SHARE_CHATS) && empty($chat_list)) {
-    $chat_list = SHARE_CHATS;
+} else if(!empty($config->SHARE_CHATS) && empty($chat_list)) {
+    $chat_list = $config->SHARE_CHATS;
     debug_log($chat_list, 'Added share chats to the chat list:');
 }
 
@@ -37,19 +37,16 @@ for($i = 1; $i <= 6; $i++) {
         $raid_level = $i;
     }
     $const = 'SHARE_CHATS_LEVEL_' . $raid_level;
-
-    // Debug.
-    //debug_log($const,'CONSTANT NAME:');
-    //debug_log(constant($const),'CONSTANT VALUE:');
+    $const_chats = $config->{$const};
 
     // Sharing keys for this raid level?
-    if(defined($const) && !empty($const)) {
+    if(!empty($const_chats)) {
+        debug_log('Found chats by level, adding them');
         // Add chats. 
-        $const_chats = constant($const);
-        if(!empty($const_chats) && !empty($chat_list)) {
+        if(!empty($chat_list)) {
             $chat_list .= ',' . $const_chats;
             debug_log($chat_list, 'Added ' . $const . ' chats to the chat list:');
-        } else if(!empty($const_chats) && empty($chat_list)) {
+        } else {
             $chat_list = $const_chats;
             debug_log($chat_list, 'Added ' . $const . ' chats to the chat list:');
         }

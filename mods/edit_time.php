@@ -79,7 +79,7 @@ if ($raid_id == 0 && $gym_id != 0) {
     }
 
     // Duration and end time.
-    $duration = RAID_POKEMON_DURATION_SHORT;
+    $duration = $config->RAID_POKEMON_DURATION_SHORT;
     $end = date('Y-m-d H:i:s', strtotime('+' . $duration . ' minutes', strtotime($start_date_time)));
 
     // Check for duplicate raid
@@ -161,14 +161,14 @@ $keys = [];
 if($opt_arg == 'more') {
     if ($slot_switch == 0) {
         // Event running?
-        if(RAID_POKEMON_DURATION_EVENT != RAID_POKEMON_DURATION_SHORT) {
-	    $slotmax = RAID_POKEMON_DURATION_EVENT;
+        if($config->RAID_POKEMON_DURATION_EVENT != $config->RAID_POKEMON_DURATION_SHORT) {
+	    $slotmax = $config->RAID_POKEMON_DURATION_EVENT;
         } else {
-	    $slotmax = RAID_POKEMON_DURATION_SHORT;
+	    $slotmax = $config->RAID_POKEMON_DURATION_SHORT;
         }
 	$slotsize = 1;
     } else {
-	$slotmax = RAID_POKEMON_DURATION_LONG;
+	$slotmax = $config->RAID_POKEMON_DURATION_LONG;
 	$slotsize = 5;
     }
 
@@ -192,7 +192,7 @@ if($opt_arg == 'more') {
         $data = [];
         $data['id'] = $raid_id;
         $data['action'] = 'edit_save';
-        $data['arg'] = RAID_POKEMON_DURATION_SHORT;
+        $data['arg'] = $config->RAID_POKEMON_DURATION_SHORT;
 
         // Write to log.
         debug_log($data, '* NEW DATA= ');
@@ -213,8 +213,8 @@ if($opt_arg == 'more') {
 
         // Use raid pokemon duration short.
         $keys[] = array(
-            'text'          => '0:' . RAID_POKEMON_DURATION_SHORT,
-            'callback_data' => $raid_id . ':edit_save:' . RAID_POKEMON_DURATION_SHORT
+            'text'          => '0:' . $config->RAID_POKEMON_DURATION_SHORT,
+            'callback_data' => $raid_id . ':edit_save:' . $config->RAID_POKEMON_DURATION_SHORT
         );
 
         // Button for more options.

@@ -6,7 +6,7 @@ $parent = __DIR__;
 include_once(__DIR__ . '/core/bot/requirements.php');
 
 // Start logging.
-debug_log("RAID-BOT '" . BOT_ID . "'");
+debug_log("RAID-BOT '" . $config->BOT_ID . "'");
 
 // Check API Key and get input from telegram
 include_once(CORE_BOT_PATH . '/apikey.php');

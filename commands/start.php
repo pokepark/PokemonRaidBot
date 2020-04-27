@@ -10,7 +10,7 @@ debug_log('START()');
 $access = bot_access_check($update, 'create', false, true);
 
 // Raid event?
-if(RAID_POKEMON_DURATION_EVENT != RAID_POKEMON_DURATION_SHORT) {
+if($config->RAID_POKEMON_DURATION_EVENT != $config->RAID_POKEMON_DURATION_SHORT) {
     // Always allow for Admins.
     if($access && $access == 'BOT_ADMINS') {
         debug_log('Bot Admin detected. Allowing further raid creation during the raid hour');
@@ -26,15 +26,15 @@ if(RAID_POKEMON_DURATION_EVENT != RAID_POKEMON_DURATION_SHORT) {
         );
 
         $info = $rs->fetch_assoc();
-        $creation_limit = RAID_EVENT_CREATION_LIMIT - 1;
+        $creation_limit = $config->RAID_EVENT_CREATION_LIMIT - 1;
 
         // Check raid count
         if($info['created_raids_count'] > $creation_limit) {
             // Set message and keys.
-            if(RAID_EVENT_CREATION_LIMIT == 1) {
+            if($config->RAID_EVENT_CREATION_LIMIT == 1) {
                 $msg = '<b>' . getTranslation('raid_event_creation_limit_one') . '</b>';
             } else {
-                $msg = '<b>' . str_replace('RAID_EVENT_CREATION_LIMIT', RAID_EVENT_CREATION_LIMIT, getPublicTranslation('raid_event_creation_limit')) . '</b>';
+                $msg = '<b>' . str_replace('RAID_EVENT_CREATION_LIMIT', $config->RAID_EVENT_CREATION_LIMIT, getPublicTranslation('raid_event_creation_limit')) . '</b>';
             }
             $keys = [];
 
@@ -77,7 +77,7 @@ if (!$keys) {
 }
 
 // Set message.
-$msg = '<b>' . getTranslation('select_gym_first_letter') . '</b>' . (RAID_VIA_LOCATION == true ? (CR2 . CR .  getTranslation('send_location')) : '');
+$msg = '<b>' . getTranslation('select_gym_first_letter') . '</b>' . ($config->RAID_VIA_LOCATION ? (CR2 . CR .  getTranslation('send_location')) : '');
 
 // Send message.
 send_message($update['message']['chat']['id'], $msg, $keys, ['reply_markup' => ['selective' => true, 'one_time_keyboard' => true]]);

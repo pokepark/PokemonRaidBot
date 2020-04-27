@@ -10,7 +10,7 @@ debug_log('raid_by_location()');
 bot_access_check($update, 'create');
 
 // Enabled?
-if(RAID_VIA_LOCATION == false) {
+if(!$config->RAID_VIA_LOCATION) {
     debug_log('Creating raids by sharing a location is not enabled in config! Exiting!');
     sendMessage($update['message']['chat']['id'], '<b>' . getTranslation('bot_access_denied') . '</b>');
     exit();

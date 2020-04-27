@@ -78,9 +78,9 @@ $updated_msg = show_raid_poll($raid);
 $updated_keys = keys_vote($raid);
 
 // Update the shared raid polls.
-if(RAID_PICTURE == true) {
+if($config->RAID_PICTURE) {
     while ($raidmsg = $rs->fetch_assoc()) {
-        $picture_url = RAID_PICTURE_URL . "?pokemon=" . $raid['pokemon'] . "&raid=". $id;
+        $picture_url = $config->RAID_PICTURE_URL . "?pokemon=" . $raid['pokemon'] . "&raid=". $id;
 	$tg_json[] = editMessageMedia($raidmsg['message_id'], $updated_msg['short'], $updated_keys, $raidmsg['chat_id'], ['disable_web_page_preview' => 'true'], false, $picture_url);
     } 
 } else {

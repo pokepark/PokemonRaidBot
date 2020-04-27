@@ -18,7 +18,7 @@ function escape($value){
 }
 
 // Import allowed?
-if(defined('PORTAL_IMPORT') && PORTAL_IMPORT == true) {
+if($config->PORTAL_IMPORT) {
 
     // Process message for portal information.
     require_once(CORE_BOT_PATH . '/importal.php');
@@ -35,7 +35,7 @@ if(defined('PORTAL_IMPORT') && PORTAL_IMPORT == true) {
         }
 
         // Gym image.
-        if(PORTAL_PICTURE_IMPORT == true) {
+        if($config->PORTAL_PICTURE_IMPORT) {
             $no_spaces_gym_name = str_replace(' ', '_', $gym_name) . '.png';
             $gym_image = download_Portal_Image($portal_image, PORTAL_IMAGES_PATH, $no_spaces_gym_name);
             if($gym_image) {

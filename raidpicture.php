@@ -39,7 +39,7 @@ imagesavealpha($canvas,true);
 // Background color
 // Default: White
 $bg_rgb = [255,255,255];
-$config_bg_color = explode(',',RAID_PICTURE_BG_COLOR);
+$config_bg_color = explode(',',$config->RAID_PICTURE_BG_COLOR);
 if(count($config_bg_color) == 3) {
     $bg_rgb = $config_bg_color;
 }
@@ -49,7 +49,7 @@ imagefill($canvas, 0, 0, $bg_color);
 // Text / Font color
 // Default: Black
 $font_rgb = [0,0,0];
-$config_font_color = explode(',',RAID_PICTURE_TEXT_COLOR);
+$config_font_color = explode(',',$config->RAID_PICTURE_TEXT_COLOR);
 if(count($config_font_color) == 3) {
     $font_rgb = $config_font_color;
 }
@@ -62,8 +62,8 @@ $transparent_rgb = [0,255,0];
 // Gym image
 if (!empty($raid['img_url'])) {
     $img_gym = imagecreatefromjpeg($raid['img_url']);
-} else if(is_file(RAID_DEFAULT_PICTURE)) {
-    $img_gym = imagecreatefromjpeg(RAID_DEFAULT_PICTURE);
+} else if(is_file($config->RAID_DEFAULT_PICTURE)) {
+    $img_gym = imagecreatefromjpeg($config->RAID_DEFAULT_PICTURE);
 } else {
     $img_gym = imagecreatefrompng(IMAGES_PATH . "/gym_default.png");
 }
@@ -496,7 +496,7 @@ if($raid['pokedex_id'] < 9990) {
         $we = substr($raid['weather'],$i,1);
         $weather_icon_path = IMAGES_PATH . "/weather/";
         // Use white icons?
-        if(RAID_PICTURE_ICONS_WHITE == true) {
+        if($config->RAID_PICTURE_ICONS_WHITE) {
             $weather_icon_path = IMAGES_PATH . "/weather_white/";
         }
         $weather_icon = imagecreatefrompng($weather_icon_path . $we . ".png"); // 64x64
@@ -508,12 +508,12 @@ if($raid['pokedex_id'] < 9990) {
 
 // Define and print picture
 // PNG
-if(RAID_PICTURE_FILE_FORMAT == 'png') {
+if($config->RAID_PICTURE_FILE_FORMAT == 'png') {
    header("Content-type: image/png");
    imagepng($canvas);
 
 // JPEG
-} else if(RAID_PICTURE_FILE_FORMAT == 'jpeg' || RAID_PICTURE_FILE_FORMAT == 'jpg') {
+} else if($config->RAID_PICTURE_FILE_FORMAT == 'jpeg' || $config->RAID_PICTURE_FILE_FORMAT == 'jpg') {
     header("Content-type: image/jpeg");
     imagejpeg($canvas, NULL, 90);
 

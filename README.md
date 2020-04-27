@@ -16,6 +16,11 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
       * [Bot token](#bot-token)
       * [Database](#database)
       * [Docker](#docker)
+         * [Installation of Docker:](#installation-of-docker)
+         * [Raidbot installation:](#raidbot-installation)
+         * [SSL with Docker](#ssl-with-docker)
+         * [Useful Docker commands](#useful-docker-commands)
+         * [Using getZeCharles.php with Docker](#using-getzecharlesphp-with-docker)
       * [Config](#config)
          * [Referring to groups, channels and users](#referring-to-groups-channels-and-users)
             * [Finding public IDs](#finding-public-ids)
@@ -71,6 +76,7 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
    * [Debugging](#debugging)
    * [Updates](#updates)
    * [Development](#development)
+      * [Adding new config values](#adding-new-config-values)
       * [Git Hooks](#git-hooks)
          * [pre-commit](#pre-commit)
       * [SQL Files](#sql-files)
@@ -81,7 +87,7 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
          * [translate.py](#translatepy)
             * [Usage](#usage)
 
-<!-- Added by: artanicus, at: Sat Nov 30 19:11:58 EET 2019 -->
+<!-- Added by: artanicus, at: Sun Feb 23 12:43:55 EET 2020 -->
 
 <!--te-->
 
@@ -241,7 +247,7 @@ Change the file permissions:
 find . -type d -exec chmod 755 {} \; && \
 find . -type f -exec chmod 644 {} \; && \
 chown -R 33:33 tg-logs/ && \
-chmod 0600 PokemonRaidBot/config/*.json
+chmod 0600 PokemonRaidBot/config/config.json
 ```
 
 To deploy the Raidbot and Database containers, you just need to build the Raidbot container and start them by running:
@@ -305,7 +311,7 @@ docker exec -it raidbot-docker_raidbot_1 php getZeCharles.php
 
 ## Config
 
-Inside the config folder, copy the example config.json.example to your own config.json and edit the values (explained further).
+Inside the config folder, copy the example config.json.example to your own config.json and edit the values (explained further). The example only contains the most common values people want to change, refer to defaults-config.json for all available values. Any value set in config.json will override the default from defaults-config.json.
 
 Don't forget to change the file permissions of your config file to 0600 (e.g. `chmod 0600 config.json`) afterwards. You need to change the ownerchip of all files to the webserver user - otherwise the config is not readable. Normally this: `chown www-data:www-data -R *`
 
@@ -1090,9 +1096,16 @@ Required SQL upgrades files can be found under the `sql/upgrade` folder and need
 
 After any upgrade you need to make sure to change the bot version in your config.json as that version is used for comparison against the latest bot version in the `VERSION` file.
 
-Updates to the config file are NOT checked automatically. Therefore always check for changes to the config.json.example and add new config variables to your own config.json then too!
+Updates to the config file are NOT checked automatically. Therefore always check for changes to the config.json.example and add any new config variables you want to override to your own config.json. Most new variables should get added to defaults-config.json so you'll get the new default automatically on update.
 
 # Development
+
+## Adding new config values
+
+ - Any previously undefined config value needs a sane default value in `config/defaults-config.json`. Anyone updating will get that default!
+ - If the new config item is something people will likely want to override, add it to `config/config.json.example`.
+ - You can access the new config item in code with `$config->CONFIG_ITEM_NAME` but if inside a function, remember to specify `global $config;`
+ - Don't break backwards compatibility if you can.
 
 ## Git Hooks
 

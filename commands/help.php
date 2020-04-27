@@ -43,7 +43,7 @@ if($access && (is_file(ROOT_PATH . '/access/' . $access) || $access == 'BOT_ADMI
     $msg = '<b>' . getTranslation('personal_help') . '</b>' . CR . CR;
 
     // Raid via location?
-    if(RAID_VIA_LOCATION == true) {
+    if($config->RAID_VIA_LOCATION) {
         $msg .= EMOJI_CLIPPY . SP . getTranslation('help_create_via_location') . CR . CR;
     }
 
