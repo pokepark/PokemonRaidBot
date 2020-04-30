@@ -263,6 +263,18 @@
     "PL": "TRANSLATE",
     "FI": "Äänestä tulevaa aikaa!"
   },
+  "vote_remote_users_limit_reached": {
+    "NL": "TRANSLATE",
+    "DE": "Keine Fern-Teilnahme mehr möglich!",
+    "EN": "Attending remote is no longer possible!",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "TRANSLATE"
+  },
   "raid_info_no_voting": {
     "NL": "Dit is alleen raid info.",
     "DE": "Dies ist eine Raid-Info. Keine Raid-Abstimmung möglich!",
@@ -478,6 +490,66 @@
     "FR": "Attendez s'il vous plaît RAID_LATE_TIME minutes !",
     "PL": "Poczekaj RAID_LATE_TIME minut!",
     "FI": "Odottakaa RAID_LATE_TIME minuuttia!"
+  },
+  "remote_participants": {
+    "NL": "TRANSLATE",
+    "DE": "Einige Teilnehmer nehmen aus der Ferne teil.",
+    "EN": "Some participants attending from remote.",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "TRANSLATE"
+  },
+  "remote_participants_private_group": {
+    "NL": "TRANSLATE",
+    "DE": "Bitte erstellt eine private Raidgruppe und teilt den Gruppencode über den Bot!",
+    "EN": "Please raid as a private group and share the raid group code using the bot!",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "TRANSLATE"
+  },
+  "remote_participants_max": {
+    "NL": "TRANSLATE",
+    "DE": "Max. REMOTE_MAX_USERS Fern-Teilnahmen pro Uhrzeit möglich!",
+    "EN": "Max. REMOTE_MAX_USERS remote participations possible!",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "TRANSLATE"
+  },
+  "group_code": {
+    "NL": "TRANSLATE",
+    "DE": "Gruppencode",
+    "EN": "Group code",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "TRANSLATE"
+  },
+  "code_send": {
+    "NL": "TRANSLATE",
+    "DE": "Gruppencode verschickt!",
+    "EN": "Group code send!",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "TRANSLATE"
   },
   "select_gym_first_letter": {
     "NL": "Selecteer alstublieft de eerste letter van de gym:",
@@ -2530,6 +2602,42 @@
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
     "FI": "Uusi osallistuja!"
+  },
+  "alert_remote": {
+    "NL": "TRANSLATE",
+    "DE": "Fern-Teilnahme!",
+    "EN": "Remote participation!",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "TRANSLATE"
+  },
+  "alert_no_remote": {
+    "NL": "TRANSLATE",
+    "DE": "Keine Fern-Teilnahme mehr!",
+    "EN": "No more remote participation!",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "TRANSLATE"
+  },
+  "alert_group_code": {
+    "NL": "TRANSLATE",
+    "DE": "Private Raidgruppe!",
+    "EN": "Private raid group!",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "TRANSLATE"
   },
   "alert_change_time": {
     "NL": "Deelnemer heeft de tijd aangepast!",

@@ -313,6 +313,44 @@ function get_active_raids()
 }
 
 /**
+ * Get current remote users count.
+ * @param $raid_id
+ * @param $user_id
+ * @return int
+ */
+function get_remote_users_count($raid_id, $user_id, $report_zero = false)
+{
+    global $config;
+    // Get remote users even if remote = 0 as user wants to switch to remote = 1
+    $rval = 1;
+    if($report_zero) {
+        $rval = 0;
+    }
+    // Check if max remote users limit is already reached!
+    $rs = my_query(
+        "
+        SELECT    sum(IF(remote = '$rval', (remote = '1') + extra_mystic + extra_valor + extra_instinct, 0)) AS remote_users
+        FROM      attendance
+        WHERE     attend_time = (
+                    SELECT attend_time
+                    FROM   attendance
+                    WHERE  raid_id = {$raid_id}
+                    AND   user_id = {$user_id}
+                  )
+        "
+    );
+
+    // Get the answer.
+    $answer = $rs->fetch_assoc();
+
+    // Write to log.
+    debug_log($answer['remote_users'], 'Remote participants so far:');
+    debug_log($config->RAID_REMOTEPASS_USERS_LIMIT, 'Maximum remote participants:');
+
+    return $answer['remote_users'];
+}
+
+/**
  * Get pokedex id by name of pokemon.
  * @param $pokemon_name
  * @return string
@@ -1452,6 +1490,71 @@ function cp_keys($pokedex_id, $action, $arg)
     return $keys;
 }
 
+/**
+ * Group code keys.
+ * @param $raid_id
+ * @param $action
+ * @param $arg
+ * @return array
+ */
+function group_code_keys($raid_id, $action, $arg)
+{
+    global $config;
+
+    // Get current group code
+    $data = explode("-", $arg);
+    $poke1 = $data[0];
+    $poke2 = $data[1];
+    $poke3 = $data[2];
+    $code_action = $data[3];
+
+    // Send and reset values
+    $reset_arg = '0-0-0-add';
+    $send_arg = $poke1 . '-' . $poke2 . '-' . $poke3 . '-send';
+
+    // Init empty keys array.
+    $keys = [];
+
+    // Show group code buttons?
+    if($poke3 == 0) {
+
+        // Add keys 1 to 9, where 1 = first pokemon, 9 = last pokemon
+        /**
+         * 1 2 3
+         * 4 5 6
+         * 7 8 9
+        */
+
+        $rc_poke = (explode(',',$config->RAID_CODE_POKEMON));
+        foreach($rc_poke as $i) {
+            // New code
+            $new_code = ($poke1 == 0) ? ($i . '-0-0-add') : (($poke2 == 0) ? ($poke1 . '-' . $i . '-0-add') : (($poke3 == 0) ? ($poke1 . '-' . $poke2 . '-' . $i . '-add') : ($poke1 . '-' . $poke2 . '-' . $poke3 . '-send')));
+            // Set keys.
+            $keys[] = array(
+                'text'          => get_local_pokemon_name($i),
+                'callback_data' => $raid_id . ':' . $action . ':' . $new_code
+            );
+        }
+    } else {
+        // Send
+        $keys[] = array(
+            'text'          => EMOJI_INVITE,
+            'callback_data' => $raid_id . ':' . $action . ':' . $send_arg
+        );
+    }
+
+    // Reset
+    $keys[] = array(
+        'text'          => getTranslation('reset'),
+        'callback_data' => $raid_id . ':' . $action . ':' . $reset_arg
+    );
+
+    // Get the inline key array.
+    $keys = inline_key_array($keys, 3);
+
+    return $keys;
+}
+
 
 /**
  * Insert raid cleanup info to database.
@@ -1884,7 +1987,7 @@ function keys_vote($raid)
     $buttons_extra = [
         [
             [
-                'text'          => getPublicTranslation('alone'),
+                'text'          => EMOJI_SINGLE,
                 'callback_data' => $raid['id'] . ':vote_extra:0'
             ],
             [
@@ -1901,6 +2004,21 @@ function keys_vote($raid)
             ]
         ]
     ];
+
+    // Remote Raid Pass key
+    $button_remote = [
+        [
+            [
+                'text'          => EMOJI_REMOTE,
+                'callback_data' => $raid['id'] . ':vote_remote:0'
+            ]
+        ]
+    ];
+
+
+    if($config->RAID_REMOTEPASS_USERS) {
+        $buttons_extra[0] = array_merge($buttons_extra[0], $button_remote[0]);
+    }
 
     // Team and level keys.
     if($config->RAID_POLL_HIDE_BUTTONS_TEAM_LVL) {
@@ -1933,7 +2051,6 @@ function keys_vote($raid)
             ]
         ]
     ];
-
 
     // Show icon, icon + text or just text.
     // Icon.
@@ -2604,6 +2721,19 @@ function send_vote_time_future($update)
 {
     // Set the message.
     $msg = getPublicTranslation('vote_time_future');
+
+    // Answer the callback.
+    answerCallbackQuery($update['callback_query']['id'], $msg);
+}
+
+/**
+ * Send remote pass user limit reached.
+ * @param $update
+ */
+function send_vote_remote_users_limit_reached($update)
+{
+    // Set the message.
+    $msg = getPublicTranslation('vote_remote_users_limit_reached');
 
     // Answer the callback.
     answerCallbackQuery($update['callback_query']['id'], $msg);
@@ -3374,6 +3504,7 @@ function show_raid_poll($raid)
                         sum(extra_mystic)           AS extra_mystic,
                         sum(extra_valor)            AS extra_valor,
                         sum(extra_instinct)         AS extra_instinct,
+                        sum(IF(remote = '1', (remote = '1') + extra_mystic + extra_valor + extra_instinct, 0)) AS count_remote,
                         sum(IF(late = '1', (late = '1') + extra_mystic + extra_valor + extra_instinct, 0)) AS count_late,
                         sum(pokemon = '0')                   AS count_any_pokemon,
                         sum(pokemon = '{$raid['pokemon']}')  AS count_raid_pokemon,
@@ -3397,11 +3528,13 @@ function show_raid_poll($raid)
     $cnt = [];
     $cnt_all = 0;
     $cnt_latewait = 0;
+    $cnt_remote = 0;
 
     while ($cnt_row = $rs_cnt->fetch_assoc()) {
         $cnt[$cnt_row['ts_att']] = $cnt_row;
         $cnt_all = $cnt_all + $cnt_row['count'];
         $cnt_latewait = $cnt_latewait + $cnt_row['count_late'];
+        $cnt_remote = $cnt_remote + $cnt_row['count_remote'];
     }
 
     // Write to log.
@@ -3470,6 +3603,7 @@ function show_raid_poll($raid)
                                 sum(extra_mystic)           AS extra_mystic,
                                 sum(extra_valor)            AS extra_valor,
                                 sum(extra_instinct)         AS extra_instinct,
+                                sum(IF(remote = '1', (remote = '1') + extra_mystic + extra_valor + extra_instinct, 0)) AS count_remote,
                                 sum(IF(late = '1', (late = '1') + extra_mystic + extra_valor + extra_instinct, 0)) AS count_late,
                                 sum(pokemon = '0')                   AS count_any_pokemon,
                                 sum(pokemon = '{$raid['pokemon']}')  AS count_raid_pokemon,
@@ -3533,6 +3667,13 @@ function show_raid_poll($raid)
                 $dt_att_time = dt2time($row['attend_time']);
                 $current_pokemon = $row['pokemon'];
 
+                // Add hint for remote attendances.
+                if($config->RAID_REMOTEPASS_USERS && $previous_att_time == 'FIRST_RUN' && $cnt_remote > 0) {
+                    $msg = raid_poll_message($msg, CR . EMOJI_REMOTE . '<i>' . getPublicTranslation('remote_participants') . SP . getPublicTranslation('remote_participants_private_group') . '</i>' . CR);
+                    $remote_max_msg = str_replace('REMOTE_MAX_USERS', $config->RAID_REMOTEPASS_USERS_LIMIT, getPublicTranslation('remote_participants_max'));
+                    $msg = raid_poll_message($msg, '<b>' . $remote_max_msg . '</b>' . CR);
+                }
+
                 // Add hint for late attendances.
                 if($config->RAID_LATE_MSG && $previous_att_time == 'FIRST_RUN' && $cnt_latewait > 0) {
                     $late_wait_msg = str_replace('RAID_LATE_TIME', $config->RAID_LATE_TIME, getPublicTranslation('late_participants_wait'));
@@ -3554,6 +3695,7 @@ function show_raid_poll($raid)
                         $count_mystic = $cnt[$current_att_time]['count_mystic'] + $cnt[$current_att_time]['extra_mystic'];
                         $count_valor = $cnt[$current_att_time]['count_valor'] + $cnt[$current_att_time]['extra_valor'];
                         $count_instinct = $cnt[$current_att_time]['count_instinct'] + $cnt[$current_att_time]['extra_instinct'];
+                        $count_remote = $cnt[$current_att_time]['count_remote'];
                         $count_late = $cnt[$current_att_time]['count_late'];
 
                         // Add to message.
@@ -3562,6 +3704,7 @@ function show_raid_poll($raid)
                         $msg = raid_poll_message($msg, (($count_valor > 0) ? TEAM_R . $count_valor . '  ' : ''));
                         $msg = raid_poll_message($msg, (($count_instinct > 0) ? TEAM_Y . $count_instinct . '  ' : ''));
                         $msg = raid_poll_message($msg, (($cnt[$current_att_time]['count_no_team'] > 0) ? TEAM_UNKNOWN . $cnt[$current_att_time]['count_no_team'] . '  ' : ''));
+                        $msg = raid_poll_message($msg, (($count_remote > 0) ? EMOJI_REMOTE . $count_remote . '  ' : ''));
                         $msg = raid_poll_message($msg, (($count_late > 0) ? EMOJI_LATE . $count_late . '  ' : ''));
                     }
                     $msg = raid_poll_message($msg, CR);
@@ -3585,6 +3728,7 @@ function show_raid_poll($raid)
                         $poke_count_mystic = $current_att_time_poke['count_mystic'] + $current_att_time_poke['extra_mystic'];
                         $poke_count_valor = $current_att_time_poke['count_valor'] + $current_att_time_poke['extra_valor'];
                         $poke_count_instinct = $current_att_time_poke['count_instinct'] + $current_att_time_poke['extra_instinct'];
+                        $poke_count_remote = $current_att_time_poke['count_remote'];
                         $poke_count_late = $current_att_time_poke['count_late'];
 
                         // Add to message.
@@ -3593,16 +3737,19 @@ function show_raid_poll($raid)
                         $msg = raid_poll_message($msg, (($poke_count_valor > 0) ? TEAM_R . $poke_count_valor . '  ' : ''));
                         $msg = raid_poll_message($msg, (($poke_count_instinct > 0) ? TEAM_Y . $poke_count_instinct . '  ' : ''));
                         $msg = raid_poll_message($msg, (($current_att_time_poke['count_no_team'] > 0) ? TEAM_UNKNOWN . ($current_att_time_poke['count_no_team']) : ''));
+                        $msg = raid_poll_message($msg, (($poke_count_remote > 0) ? EMOJI_REMOTE . $poke_count_remote . '  ' : ''));
                         $msg = raid_poll_message($msg, (($poke_count_late > 0) ? EMOJI_LATE . $poke_count_late . '  ' : ''));
                         $msg = raid_poll_message($msg, CR);
                     }
                 }
 
                 // Add users: ARRIVED --- TEAM -- LEVEL -- NAME -- INVITE -- EXTRAPEOPLE
-                $msg = raid_poll_message($msg, ($row['arrived']) ? (EMOJI_HERE . ' ') : (($row['late']) ? (EMOJI_LATE . ' ') : '└ '));
+                //$msg = raid_poll_message($msg, ($row['arrived']) ? (EMOJI_HERE . ' ') : (($row['late']) ? (EMOJI_LATE . ' ') : '└ '));
+                $msg = raid_poll_message($msg, ($row['arrived']) ? (($row['remote']) ? (EMOJI_REMOTE . ' ') : (EMOJI_HERE . ' ')) : (($row['late']) ? (EMOJI_LATE . ' ') : '└ '));
                 $msg = raid_poll_message($msg, ($row['team'] === NULL) ? ($GLOBALS['teams']['unknown'] . ' ') : ($GLOBALS['teams'][$row['team']] . ' '));
                 $msg = raid_poll_message($msg, ($row['level'] == 0) ? ('<b>00</b> ') : (($row['level'] < 10) ? ('<b>0' . $row['level'] . '</b> ') : ('<b>' . $row['level'] . '</b> ')));
                 $msg = raid_poll_message($msg, '<a href="tg://user?id=' . $row['user_id'] . '">' . htmlspecialchars($row['name']) . '</a> ');
+                $msg = raid_poll_message($msg, ($row['remote']) ? (($row['arrived']) ? '' : (EMOJI_REMOTE . ' ')) : '');
                 $msg = raid_poll_message($msg, ($raid_level == 'X' && $row['invite']) ? (EMOJI_INVITE . ' ') : '');
                 $msg = raid_poll_message($msg, ($row['extra_mystic']) ? ('+' . $row['extra_mystic'] . TEAM_B . ' ') : '');
                 $msg = raid_poll_message($msg, ($row['extra_valor']) ? ('+' . $row['extra_valor'] . TEAM_R . ' ') : '');
@@ -4183,6 +4330,26 @@ function alarm($raid, $user, $action, $info = '')
         $msg_text .= EMOJI_CLOCK . SP . '<b>' . check_time($info) . '</b>';
         sendalarm($msg_text, $raid, $user);
 
+    // Attendance from remote
+    } else if($action == "remote") {
+        debug_log('Alarm remote attendance changed: ' . $info);
+        // Changes Time
+        $msg_text = '<b>' . getTranslation('alert_remote') . '</b>' . CR;
+        $msg_text .= EMOJI_REMOTE . SP . $gymname . SP . '(' . $raidtimes . ')' . CR;
+        $msg_text .= EMOJI_SINGLE . SP . $username . CR;
+        $msg_text .= EMOJI_CLOCK . SP . '<b>' . check_time($info) . '</b>';
+        sendalarm($msg_text, $raid, $user);
+
+    // Attendance no longer from remote
+    } else if($action == "no_remote") {
+        debug_log('Alarm remote attendance changed: ' . $info);
+        // Changes Time
+        $msg_text = '<b>' . getTranslation('alert_no_remote') . '</b>' . CR;
+        $msg_text .= EMOJI_REMOTE . SP . $gymname . SP . '(' . $raidtimes . ')' . CR;
+        $msg_text .= EMOJI_SINGLE . SP . $username . CR;
+        $msg_text .= EMOJI_CLOCK . SP . '<b>' . check_time($info) . '</b>';
+        sendalarm($msg_text, $raid, $user);
+
     // No additional trainer
     } else if($action == "extra_alone") {
         debug_log('Alarm no additional trainers: ' . $info);
@@ -4191,6 +4358,16 @@ function alarm($raid, $user, $action, $info = '')
         $msg_text .= EMOJI_SINGLE . SP . $username . CR;
         $msg_text .= EMOJI_CLOCK . SP . check_time($attendtime);
         sendalarm($msg_text, $raid, $user);
+
+    // Group code
+    } else if($action == "group_code") {
+        debug_log('Alarm for group code: ' . $info);
+        $msg_text = '<b>' . getTranslation('alert_group_code') . '</b>' . CR;
+        $msg_text .= EMOJI_HERE . SP . $gymname . SP . '(' . $raidtimes . ')' . CR;
+        $msg_text .= EMOJI_SINGLE . SP . $username . CR;
+        //$msg_text .= EMOJI_REMOTE . SP . getTranslation('group_code') . ':<b>' . CR . $info . '</b>';
+        $msg_text .= EMOJI_REMOTE . SP . '<b>' . $info . '</b>';
+        sendcode($msg_text, $raid, $user);
     }
 }
 
@@ -4213,6 +4390,7 @@ function check_time($time)
  * Sending the alert to the user.
  * @param $text
  * @param $raid
+ * @param $user
  */
 function sendalarm($text, $raid, $user)
 {
@@ -4226,4 +4404,23 @@ function sendalarm($text, $raid, $user)
         }
     }
 
+}
+
+/**
+ * Sending group code to the user.
+ * @param $text
+ * @param $raid
+ * @param $user
+ */
+function sendcode($text, $raid, $user)
+{
+    // Will fetch all Trainer which attend the raid from remote and send the message
+    $request = my_query("SELECT DISTINCT user_id FROM attendance WHERE raid_id = {$raid} AND remote = 1");
+    while($answer = $request->fetch_assoc())
+    {
+        // Only send message for other users!
+        //if($user != $answer['user_id']) {
+            sendmessage($answer['user_id'], $text);
+        //}
+    }
 }

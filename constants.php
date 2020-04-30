@@ -12,6 +12,7 @@ defined('TEAM_UNKNOWN')		or define('TEAM_UNKNOWN',  iconv('UCS-4LE', 'UTF-8', pa
 defined('EMOJI_REFRESH')	or define('EMOJI_REFRESH', iconv('UCS-4LE', 'UTF-8', pack('V', 0x1F504)));
 defined('EMOJI_HERE') 		or define('EMOJI_HERE',    iconv('UCS-4LE', 'UTF-8', pack('V', 0x1F4CD)));
 defined('EMOJI_LATE') 		or define('EMOJI_LATE',    iconv('UCS-4LE', 'UTF-8', pack('V', 0x1F40C)));
+defined('EMOJI_REMOTE') 	or define('EMOJI_REMOTE',  iconv('UCS-4LE', 'UTF-8', pack('V', 0x1F3E0)));
 defined('EMOJI_SINGLE') 	or define('EMOJI_SINGLE',  iconv('UCS-4LE', 'UTF-8', pack('V', 0x1F464)));
 defined('EMOJI_GROUP') 		or define('EMOJI_GROUP',   iconv('UCS-4LE', 'UTF-8', pack('V', 0x1F465)));
 defined('EMOJI_STAR') 		or define('EMOJI_STAR',    iconv('UCS-4LE', 'UTF-8', pack('V', 0x2B50)));

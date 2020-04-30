@@ -32,30 +32,37 @@ if (!empty($answer)) {
             "
             UPDATE    attendance
             SET       extra_mystic = 0,
-                      extra_valor = 0,
-                      extra_instinct = 0
-              WHERE   raid_id = {$data['id']}
-                AND   user_id = {$update['callback_query']['from']['id']}
+                    extra_valor = 0,
+                    extra_instinct = 0
+            WHERE   raid_id = {$data['id']}
+            AND   user_id = {$update['callback_query']['from']['id']}
             "
         );
     } else {
-        // Get team.
-        $team = 'extra_' . $data['arg'];
-        alarm($data['id'],$update['callback_query']['from']['id'],'extra',$data['arg']);
-        // Increase team extra people.
-        my_query(
-            "
-            UPDATE    attendance
-            SET       {$team} = {$team}+1
-              WHERE   raid_id = {$data['id']}
-                AND   user_id = {$update['callback_query']['from']['id']}
-                AND   {$team} < 5
-            "
-        );
+        // Check if max remote users limit is already reached!
+        $remote_users = get_remote_users_count($data['id'], $update['callback_query']['from']['id']);
+        if ($remote_users < $config->RAID_REMOTEPASS_USERS_LIMIT) {
+            // Get team.
+            $team = 'extra_' . $data['arg'];
+            alarm($data['id'],$update['callback_query']['from']['id'],'extra',$data['arg']);
+            // Increase team extra people.
+            my_query(
+                "
+                UPDATE    attendance
+                SET       {$team} = {$team}+1
+                WHERE   raid_id = {$data['id']}
+                    AND   user_id = {$update['callback_query']['from']['id']}
+                    AND   {$team} < 5
+                "
+            );
+        } else {
+            // Send max remote users reached.
+            send_vote_remote_users_limit_reached($update);
+        }
     }
 
     // Send vote response.
-   if($config->RAID_PICTURE) {
+    if($config->RAID_PICTURE) {
 	    send_response_vote($update, $data,false,false);
     } else {
 	    send_response_vote($update, $data);
