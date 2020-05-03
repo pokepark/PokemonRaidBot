@@ -6,8 +6,9 @@ debug_log('code()');
 //debug_log($update);
 //debug_log($data);
 
+// Allow anyone to use /code
 // Check access.
-bot_access_check($update, 'list');
+//bot_access_check($update, 'list');
 
 // Set the raid id.
 $raid_id = $data['id'];
@@ -45,7 +46,7 @@ $now = utcnow();
 $today = dt2date($now);
 $start = dt2time($raid['start_time']);
 $end = dt2time($raid['end_time']);
-$msg .= get_local_pokemon_name($raid['pokemon']) . SP . '—' . SP . (($raid_day == $today) ? '' : ($raid_day . ', ')) . $start . SP . getTranslation('to') . SP . $end . CR . CR;
+$msg .= get_local_pokemon_name($raid['pokemon']) . SP . '-' . SP . (($raid_day == $today) ? '' : ($raid_day . ', ')) . $start . SP . getTranslation('to') . SP . $end . CR . CR;
 
 // Add digits to cp
 if($action == 'add') {

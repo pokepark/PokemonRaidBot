@@ -42,7 +42,7 @@ if ($remote_users < $config->RAID_REMOTEPASS_USERS_LIMIT || $remote_status == 1)
         "
     );
 
-    if($remote['remote'] == 1) {
+    if($remote_status == 0) {
         alarm($data['id'],$update['callback_query']['from']['id'],'remote');
     } else {
         alarm($data['id'],$update['callback_query']['from']['id'],'no_remote');

@@ -6,28 +6,29 @@ debug_log('code_gym()');
 //debug_log($update);
 //debug_log($data);
 
+// Allow anyone to use /code
 // Check access.
-bot_access_check($update, 'list');
+//bot_access_check($update, 'list');
 
 // Build query.
 $rs = my_query(
     "
-    SELECT     DISTINCT raids.*,
-               attendance.arrived,
-               gyms.lat, gyms.lon, gyms.address, gyms.gym_name, gyms.ex_gym,
-               users.name
-    FROM       raids
-    LEFT JOIN  gyms
-    ON         raids.gym_id = gyms.id
-    LEFT JOIN  users
-    ON         raids.user_id = users.user_id
-    LEFT JOIN  attendance
-    ON         raids.user_id = attendance.user_id
-    WHERE      raids.end_time>UTC_TIMESTAMP()
-    AND        raids.start_time<UTC_TIMESTAMP()
-    AND        attendance.user_id = {$update['callback_query']['from']['id']}
-    AND        attendance.arrived = 1
-    ORDER BY   attendance.attend_time ASC LIMIT 20
+    SELECT      DISTINCT attendance.user_id, attendance.raid_id, attendance.arrived,
+                raids.id, raids.pokemon, raids.start_time, raids.end_time, raids.gym_id,
+                gyms.lat, gyms.lon, gyms.address, gyms.gym_name, gyms.ex_gym,
+                users.name
+    FROM        attendance
+    LEFT JOIN   raids
+    ON          attendance.raid_id = raids.id
+    LEFT JOIN   gyms
+    ON          raids.gym_id = gyms.id
+    LEFT JOIN   users
+    ON          raids.user_id = users.user_id
+    WHERE       raids.end_time>UTC_TIMESTAMP()
+    AND         raids.start_time<UTC_TIMESTAMP()
+    AND         attendance.user_id = {$update['message']['chat']['id']}
+    AND         attendance.arrived = 1
+    ORDER BY    attendance.attend_time ASC LIMIT 20
     "
 );
 
@@ -52,7 +53,7 @@ while ($raid = $rs->fetch_assoc()) {
     $today = dt2date($now);
     $start = dt2time($raid['start_time']);
     $end = dt2time($raid['end_time']);
-    $text .= get_local_pokemon_name($raid['pokemon']) . SP . '—' . SP . (($raid_day == $today) ? '' : ($raid_day . ', ')) . $start . SP . getTranslation('to') . SP . $end . CR . CR;
+    $text .= get_local_pokemon_name($raid['pokemon']) . SP . '-' . SP . (($raid_day == $today) ? '' : ($raid_day . ', ')) . $start . SP . getTranslation('to') . SP . $end . CR . CR;
 
     // Split pokemon and form to get the pokedex id.
     $pokedex_id = explode('-', $raid['pokemon'])[0];
@@ -76,7 +77,8 @@ while ($raid = $rs->fetch_assoc()) {
 
 // Set message.
 if($count == 0) {
-    $msg = '<b>' . getTranslation('no_active_raids_found') . '</b>';
+    $msg = '<b>' . getTranslation('group_code_share') . ':</b>' . CR;
+    $msg .= '<b>' . getTranslation('no_active_raids_found') . '</b>';
 } else {
     // Get the inline key array.
     $keys = inline_key_array($keys, 1);
@@ -90,7 +92,7 @@ if($count == 0) {
     ];
 
     // Build message.
-    $msg = '<b>' . getTranslation('list_all_active_raids') . ':</b>' . CR;
+    $msg = '<b>' . getTranslation('group_code_share') . ':</b>' . CR;
     $msg .= $text;
     $msg .= '<b>' . getTranslation('select_gym_name') . '</b>' . CR;
 }

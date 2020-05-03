@@ -3669,7 +3669,8 @@ function show_raid_poll($raid)
 
                 // Add hint for remote attendances.
                 if($config->RAID_REMOTEPASS_USERS && $previous_att_time == 'FIRST_RUN' && $cnt_remote > 0) {
-                    $msg = raid_poll_message($msg, CR . EMOJI_REMOTE . '<i>' . getPublicTranslation('remote_participants') . SP . getPublicTranslation('remote_participants_private_group') . '</i>' . CR);
+                    $remote_group_msg = str_replace('START_CODE', '<a href="https://t.me/' . str_replace('@', '', $config->BOT_NAME) . '?start=c0de">' . getTranslation('telegram_bot_start') . '</a>', getPublicTranslation('remote_participants_private_group'));
+                    $msg = raid_poll_message($msg, CR . EMOJI_REMOTE . '<i>' . getPublicTranslation('remote_participants') . SP . $remote_group_msg . '</i>' . CR);
                     $remote_max_msg = str_replace('REMOTE_MAX_USERS', $config->RAID_REMOTEPASS_USERS_LIMIT, getPublicTranslation('remote_participants_max'));
                     $msg = raid_poll_message($msg, '<b>' . $remote_max_msg . '</b>' . CR);
                 }
@@ -4337,7 +4338,7 @@ function alarm($raid, $user, $action, $info = '')
         $msg_text = '<b>' . getTranslation('alert_remote') . '</b>' . CR;
         $msg_text .= EMOJI_REMOTE . SP . $gymname . SP . '(' . $raidtimes . ')' . CR;
         $msg_text .= EMOJI_SINGLE . SP . $username . CR;
-        $msg_text .= EMOJI_CLOCK . SP . '<b>' . check_time($info) . '</b>';
+        $msg_text .= EMOJI_CLOCK . SP . '<b>' . check_time($attendtime) . '</b>';
         sendalarm($msg_text, $raid, $user);
 
     // Attendance no longer from remote
@@ -4347,7 +4348,7 @@ function alarm($raid, $user, $action, $info = '')
         $msg_text = '<b>' . getTranslation('alert_no_remote') . '</b>' . CR;
         $msg_text .= EMOJI_REMOTE . SP . $gymname . SP . '(' . $raidtimes . ')' . CR;
         $msg_text .= EMOJI_SINGLE . SP . $username . CR;
-        $msg_text .= EMOJI_CLOCK . SP . '<b>' . check_time($info) . '</b>';
+        $msg_text .= EMOJI_CLOCK . SP . '<b>' . check_time($attendtime) . '</b>';
         sendalarm($msg_text, $raid, $user);
 
     // No additional trainer
@@ -4365,7 +4366,6 @@ function alarm($raid, $user, $action, $info = '')
         $msg_text = '<b>' . getTranslation('alert_group_code') . '</b>' . CR;
         $msg_text .= EMOJI_HERE . SP . $gymname . SP . '(' . $raidtimes . ')' . CR;
         $msg_text .= EMOJI_SINGLE . SP . $username . CR;
-        //$msg_text .= EMOJI_REMOTE . SP . getTranslation('group_code') . ':<b>' . CR . $info . '</b>';
         $msg_text .= EMOJI_REMOTE . SP . '<b>' . $info . '</b>';
         sendcode($msg_text, $raid, $user);
     }
@@ -4419,8 +4419,8 @@ function sendcode($text, $raid, $user)
     while($answer = $request->fetch_assoc())
     {
         // Only send message for other users!
-        //if($user != $answer['user_id']) {
+        if($user != $answer['user_id']) {
             sendmessage($answer['user_id'], $text);
-        //}
+        }
     }
 }

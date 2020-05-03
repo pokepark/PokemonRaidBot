@@ -505,8 +505,8 @@
   },
   "remote_participants_private_group": {
     "NL": "TRANSLATE",
-    "DE": "Bitte erstellt eine private Raidgruppe und teilt den Gruppencode über den Bot!",
-    "EN": "Please raid as a private group and share the raid group code using the bot!",
+    "DE": "Bitte spielt als private Raidgruppe und teilt den Gruppencode via START_CODE über den Bot!",
+    "EN": "Please raid as a private group and share the raid group code via START_CODE using the bot!",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
@@ -517,8 +517,8 @@
   },
   "remote_participants_max": {
     "NL": "TRANSLATE",
-    "DE": "Max. REMOTE_MAX_USERS Fern-Teilnahmen pro Uhrzeit möglich!",
-    "EN": "Max. REMOTE_MAX_USERS remote participations possible!",
+    "DE": "Max. REMOTE_MAX_USERS Fern-Teilnahmen pro Uhrzeit!",
+    "EN": "Max. REMOTE_MAX_USERS remote participations per time!",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
@@ -539,10 +539,34 @@
     "PL": "TRANSLATE",
     "FI": "TRANSLATE"
   },
+  "group_code_share": {
+    "NL": "TRANSLATE",
+    "DE": "Gruppencode teilen",
+    "EN": "Share group code",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "TRANSLATE"
+  },
   "code_send": {
     "NL": "TRANSLATE",
     "DE": "Gruppencode verschickt!",
     "EN": "Group code send!",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "TRANSLATE"
+  },
+  "telegram_bot_start": {
+    "NL": "TRANSLATE",
+    "DE": "STARTEN",
+    "EN": "START",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",

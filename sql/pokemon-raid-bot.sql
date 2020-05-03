@@ -23,6 +23,7 @@ CREATE TABLE `attendance` (
   `raid_done` tinyint(1) unsigned DEFAULT '0',
   `cancel` tinyint(1) unsigned DEFAULT '0',
   `late` tinyint(1) unsigned DEFAULT '0',
+  `remote` tinyint(1) unsigned DEFAULT '0',
   `invite` tinyint(1) unsigned DEFAULT '0',
   `pokemon` varchar(20) DEFAULT '0',
   `alarm` tinyint(1) unsigned DEFAULT '0',
