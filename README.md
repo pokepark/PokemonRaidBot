@@ -87,7 +87,7 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
          * [translate.py](#translatepy)
             * [Usage](#usage)
 
-<!-- Added by: artanicus, at: Sun Feb 23 12:43:55 EET 2020 -->
+<!-- Added by: artanicus, at: Sun Mar  8 15:46:47 EET 2020 -->
 
 <!--te-->
 
@@ -943,7 +943,7 @@ Based on your access to the bot, you may can only change the pokemon raid boss o
 
 Show and update any pokemon raid boss. You can change the raid level (select raid level 0 to disable a raid boss), pokemon CP values and weather information of any pokemon raid boss.
 
-There is also a possibility to import the raids bosses from Pokebattler and disable all raid bosses for all or just a specific raid level which makes raid boss management pretty easy.
+There is also a possibility to import the raids bosses from Pokebattler and disable all raid bosses for all or just a specific raid level which makes raid boss management pretty easy. By default the import will disable eggs for levels that only contain 1 raid boss. To disable this set `POKEBATTLER_IMPORT_DISABLE_REDUNDANT_EGGS` to `false`.
 
 To quickly get to a specific pokemon raid boss, you can use the /pokedex command with the local name of the pokemon. A few examples:
 
