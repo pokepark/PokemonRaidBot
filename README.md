@@ -75,6 +75,7 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
       * [Command: /deletegym](#command-deletegym)
    * [Debugging](#debugging)
    * [Updates](#updates)
+   * [Config reference](#config-reference)
    * [Development](#development)
       * [Adding new config values](#adding-new-config-values)
       * [Git Hooks](#git-hooks)
@@ -87,7 +88,7 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
          * [translate.py](#translatepy)
             * [Usage](#usage)
 
-<!-- Added by: artanicus, at: Sun Mar  8 15:46:47 EET 2020 -->
+<!-- Added by: artanicus, at: Sun May 31 15:24:40 EEST 2020 -->
 
 <!--te-->
 
@@ -1097,6 +1098,124 @@ Required SQL upgrades files can be found under the `sql/upgrade` folder and need
 After any upgrade you need to make sure to change the bot version in your config.json as that version is used for comparison against the latest bot version in the `VERSION` file.
 
 Updates to the config file are NOT checked automatically. Therefore always check for changes to the config.json.example and add any new config variables you want to override to your own config.json. Most new variables should get added to defaults-config.json so you'll get the new default automatically on update.
+
+
+# Config reference
+
+* For default values, see `config/defaults-config.json`.
+* Most values are strings.
+* Boolean values should use `true` & `false`, not strings.
+* Any lists are given as a comma separated string.
+* For raid levels, valid values are 1,2,3,4,5,X where X stands for Ex-Raid.
+* If your config is not valid json, the bot will not work. Use a jslinter if in doubt.
+
+| Option | Description |
+|--------|------------ |
+| APIKEY_HASH | Telegram API key hashed in sha256 |
+| BOT_ADMINS| List of admin identifiers |
+| BOT_ID| One letter ID for the bot used in debug logging. Mostly useful if you run multiple. |
+| BOT_NAME| Name of the bot. |
+| BRIDGE_MODE| Bool, whether to enable bridge mode. |
+| CLEANUP_DATABASE| Bool, whether to clean up finished raids from DB if cleanup is enabled. |
+| CLEANUP_LOGFILE| Full path to Log file where cleanup operations are logged. |
+| CLEANUP_SECRET| Plain text passphrase to protect cleanup calls. |
+| CLEANUP_TELEGRAM| Bool, whether to clean up raid polls posted by the bot if cleanup is enabled. |
+| CLEANUP_TIME_DB| In minutes how old DB entries (past raid end-time) need to be to be eligible for cleanup |
+| CLEANUP_TIME_TG| In minutes how old TG posts (past raid end-time) need to be to be eligible for cleanup |
+| CLEANUP| Bool, whether to accept cleanup calls |
+| CURL_PROXYSERVER| Address of curl proxy |
+| CURL_USEPROXY| Bool, enable curl via proxy |
+| DB_HOST | Host or ip address of MySQL server |
+| DB_NAME | Name of DB |
+| DB_PASSWORD | Password of dedicated RaidBot DB user|
+| DB_USER | Username of dedicated RaidBot DB user|
+| DDOS_MAXIMUM | ? |
+| DEBUG | Output helpful debugging messages to `DEBUG_LOGFILE`|
+| DEBUG_LOGFILE | Full path to debug logfile|
+| DEBUG_SQL | Also output details on DB queries, quite verbose! |
+| DEFAULTS_WARNING | json files don't support comments, this is just a comment warning you not to edit defaults. |
+| LANGUAGE_PRIVATE| Language to use in private messages. Leave empty to infer language from users Telegram language |
+| LANGUAGE_PUBLIC| Language to use in groups |
+| MAINTAINER_ID| Telegram ID of main maintainer |
+| MAINTAINER| Name of main maintainer |
+| MAPS_API_KEY| Google Maps API key for `MAPS_LOOKUP` |
+| MAPS_LOOKUP| Boolean, resolve missing gym addresses via Google Maps |
+| MAP_URL| ? |
+| POKEBATTLER_IMPORT_DISABLE_REDUNDANT_EGGS| Boolean, when importing Pokedex from Pokebattler, disable creating an Egg raid for any level that only has one boss available. |
+| PORTAL_IMPORT| Bool, allow importing gyms via portal import Telegram bots |
+| PORTAL_PICTURE_IMPORT| Bool, download and use a local copy of gym pictures on import |
+| RAID_ANYTIME| Bool, ? |
+| RAID_CODE_POKEMON | List of Pokemon dex IDs in use for private group codes |
+| RAID_CREATION_EX_GYM_MARKER| Highlight gyms eligible for Ex-Raids in raid polls |
+| RAID_CUSTOM_GYM_LETTERS| List of custom "letters" to include in gym selector, e.g. "St." or "The" |
+| RAID_DEFAULT_PICTURE| URL of image to use for raids if the portal photo is unknown. Only relevant for `RAID_PICTURE` |
+| RAID_DIRECT_START| Bool, Allow voting for starting raids as soon as it opens |
+| RAID_DURATION_CLOCK_STYLE| Bool, enable showing the time a raid starts vs. duration until start |
+| RAID_EGG_DURATION| In minutes the maximum length of the egg phase a user is allowed to give. |
+| RAID_EVENT_CREATION_LIMIT| ? |
+| RAID_EXCLUDE_EXRAID_DUPLICATION| ? |
+| RAID_EX_GYM_MARKER| Enum, "icon" or ? |
+| RAID_FIRST_START| In minutes what the earliest timeslot is after egg has opened |
+| RAID_LAST_START| In minutes what the last timeslot is before the raid ends |
+| RAID_LATE_MSG| Bool, add a message to the raidpoll if anyone has signaled they are late. |
+| RAID_LATE_TIME| How many minutes to advise waiting in `RAID_LATE_MSG` |
+| RAID_LOCATION| Bool, Send a separate attached location message in addition to a raid poll |
+| RAID_PICTURE | Bool, enable picture based raid polls instead of default text mode |
+| RAID_PICTURE_BG_COLOR| List of RGB values for `RAID_PICTURE` poll background color, e.g. "0,0,0" for black |
+| RAID_PICTURE_FILE_FORMAT| Format for raid pictures for `RAID_PICTURE`, valid values are gif, jpg, jpeg, png |
+| RAID_PICTURE_HIDE_LEVEL| List of levels to exclude from `RAID_PICTURE` (will fall back to text mode)|
+| RAID_PICTURE_HIDE_POKEMON| List of Pokemon dex IDs to exclude from `RAID_PICTURE` (will fall back to text mode) |
+| RAID_PICTURE_ICONS_WHITE| Bool, use white icons in `RAID_PICTURE` instead of black |
+| RAID_PICTURE_TEXT_COLOR| List of RGB values for `RAID_PICTURE` poll text color, e.g "255,255,255" for white |
+| RAID_PICTURE_URL| Fully qualified HTTPS URL to `raidpicture.php`, for example `https://example.com/raidbot/raidpicture.php` |
+| RAID_PIN_MESSAGE| ? |
+| RAID_POKEMON_DURATION_EVENT| ? |
+| RAID_POKEMON_DURATION_LONG| ? |
+| RAID_POKEMON_DURATION_SHORT| ? |
+| RAID_POLL_HIDE_BUTTONS_POKEMON| List of Pokemon dex IDs for which voting buttons are disabled |
+| RAID_POLL_HIDE_BUTTONS_RAID_LEVEL| List of raid levels for which voting buttons are disabled |
+| RAID_POLL_HIDE_BUTTONS_TEAM_LVL| Bool, ? |
+| RAID_POLL_HIDE_DONE_CANCELED| Bool, hide the Done and Cancel buttons from raid polls |
+| RAID_POLL_HIDE_USERS_TIME| ? |
+| RAID_POLL_UI_ORDER| Order of elements in text based raid polls. Valid elements are: `extra, teamll, time, pokemon, status` |
+| RAID_REMOTEPASS_USERS | Bool, allow participation to raid polls with a remote pass |
+| RAID_REMOTEPASS_USERS_LIMIT | Integer, How many remote participants to allow into a single raid |
+| RAID_SLOTS| Amount of minutes between raid poll voting slots |
+| RAID_VIA_LOCATION| Bool, enable creating raids by sharing a location with the bot |
+| RAID_VOTE_ICONS| Bool, use icons on raid poll buttons |
+| RAID_VOTE_TEXT| Bool, use text on raid poll buttons |
+| SHARE_CHATS_LEVEL_1| List of Telegram group IDs available for sharing raids of level 1 |
+| SHARE_CHATS_LEVEL_2| List of Telegram group IDs available for sharing raids of level 2 |
+| SHARE_CHATS_LEVEL_3| List of Telegram group IDs available for sharing raids of level 3 |
+| SHARE_CHATS_LEVEL_4| List of Telegram group IDs available for sharing raids of level 4 |
+| SHARE_CHATS_LEVEL_5| List of Telegram group IDs available for sharing raids of level 5 |
+| SHARE_CHATS_LEVEL_X| List of Telegram group IDs available for sharing Ex-Raids |
+| SHARE_CHATS| List of Telegram group IDs available for sharing any raids |
+| TIMEZONE| Timezone definition to use as per [TZ database names](https://www.wikiwand.com/en/List_of_tz_database_time_zones#/List) |
+| TRAINER_BUTTONS_TOGGLE| Bool, ? |
+| TRAINER_CHATS| List of chats where trainer data setup messages can be shared |
+| WEBHOOK_CHATS_LEVEL_1_0| ? |
+| WEBHOOK_CHATS_LEVEL_1_1| ? |
+| WEBHOOK_CHATS_LEVEL_1| List of Telegram group IDs to autoshare raids of level 1 |
+| WEBHOOK_CHATS_LEVEL_2_0| ? |
+| WEBHOOK_CHATS_LEVEL_2_1| ? |
+| WEBHOOK_CHATS_LEVEL_2| List of Telegram group IDs to autoshare raids of level 2 |
+| WEBHOOK_CHATS_LEVEL_3_0| ? |
+| WEBHOOK_CHATS_LEVEL_3_1| ? |
+| WEBHOOK_CHATS_LEVEL_3| List of Telegram group IDs to autoshare raids of level 3 |
+| WEBHOOK_CHATS_LEVEL_4_0| ? |
+| WEBHOOK_CHATS_LEVEL_4_1| ? |
+| WEBHOOK_CHATS_LEVEL_4| List of Telegram group IDs to autoshare raids of level 4 |
+| WEBHOOK_CHATS_LEVEL_5_0| ? |
+| WEBHOOK_CHATS_LEVEL_5_1| ? |
+| WEBHOOK_CHATS_LEVEL_5| List of Telegram group IDs to autoshare raids of level 5 |
+| WEBHOOK_CHATS| List of Telegram group IDs to autoshare raids of any level  |
+| WEBHOOK_CREATE_ONLY| Bool, only create raids, don't autoshare them to any group |
+| WEBHOOK_CREATOR| Telegram ID of the bot or user to credit as having created webhook raids |
+| WEBHOOK_EXCLUDE_POKEMON| List of Pokemon dex IDs to exclude from webhook raid creation |
+| WEBHOOK_EXCLUDE_RAID_LEVEL| List of raid levels to exclude from webhook raid creation |
+| WEBHOOK_EXCLUDE_UNKOWN| Bool, create raids for Pokemon not currently enabled in the pokedex |
+
 
 # Development
 
