@@ -19,9 +19,16 @@ if(strpos($searchterm , 'c0de-') === 0) {
     exit();
 } 
 
-// Check access.
-$access = bot_access_check($update, 'create', false, true);
+// Check access, don't die if no access.
+$access = bot_access_check($update, 'create', true);
 
+if(!$access && bot_access_check($update, 'list', true)){
+  debug_log('No access to create, will do a list instead');
+  require('list.php');
+  exit;
+} else {
+  $access = bot_access_check($update, 'create', false, true);
+}
 // Raid event?
 if($config->RAID_POKEMON_DURATION_EVENT != $config->RAID_POKEMON_DURATION_SHORT) {
     // Always allow for Admins.
