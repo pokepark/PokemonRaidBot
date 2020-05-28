@@ -273,7 +273,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Osallistuminen etänä ei ole enää mahdollista!"
   },
   "raid_info_no_voting": {
     "NL": "Dit is alleen raid info.",
@@ -513,7 +513,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Ilmoita kaikille osallistujille raidin alkamisesta"
   },
   "start_raid_info": {
     "NL": "TRANSLATE",
@@ -525,7 +525,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "(viesti kaikille)"
   },
   "start_raid_private": {
     "NL": "TRANSLATE",
@@ -537,7 +537,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Privaattiryhmä"
   },
   "start_raid_public": {
     "NL": "TRANSLATE",
@@ -549,7 +549,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Julkinen"
   },
   "remote_participants": {
     "NL": "TRANSLATE",
@@ -561,9 +561,9 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Etäosallistujia!"
   },
-    "remote_participants_max": {
+  "remote_participants_max": {
     "NL": "TRANSLATE",
     "DE": "(max. REMOTE_MAX_USERS pro Uhrzeit)",
     "EN": "(max. REMOTE_MAX_USERS per time)",
@@ -573,7 +573,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "(max. REMOTE_MAX_USERS kerrallaan)"
   },
   "group_code": {
     "NL": "TRANSLATE",
@@ -585,7 +585,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Ryhmäkoodi"
   },
   "no_group_code": {
     "NL": "TRANSLATE",
@@ -597,7 +597,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "(ei ryhmäkoodia)"
   },
   "group_code_only_for_remote_raiders": {
     "NL": "TRANSLATE",
@@ -609,7 +609,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Et ole rekisteröity etäosallistujaksi, pyydä koodi paikanpäällä!"
   },
   "group_code_share": {
     "NL": "TRANSLATE",
@@ -621,7 +621,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Jaa ryhmäkoodi"
   },
   "code_send": {
     "NL": "TRANSLATE",
@@ -633,7 +633,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Lähetä ryhmäkoodi!"
   },
   "telegram_bot_start": {
     "NL": "TRANSLATE",
@@ -645,7 +645,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "ALOITA"
   },
   "select_gym_first_letter": {
     "NL": "Selecteer alstublieft de eerste letter van de gym:",
@@ -2709,7 +2709,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Etäosallistuminen!"
   },
   "alert_no_remote": {
     "NL": "TRANSLATE",
@@ -2721,7 +2721,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Ei enää etäosallistujia!"
   },
   "alert_raid_starts_now": {
     "NL": "TRANSLATE",
@@ -2733,7 +2733,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Raidi alkaa nyt!"
   },
   "alert_raid_get_in": {
     "NL": "TRANSLATE",
@@ -2745,7 +2745,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Näin pääset taisteluun:"
   },
   "alert_private_group": {
     "NL": "TRANSLATE",
@@ -2757,7 +2757,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Yksityinen raidiryhmä!"
   },
   "alert_public_group": {
     "NL": "TRANSLATE",
@@ -2769,7 +2769,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Julkinen raidiryhmä!"
   },
   "alert_change_time": {
     "NL": "Deelnemer heeft de tijd aangepast!",
