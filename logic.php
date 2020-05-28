@@ -4433,8 +4433,8 @@ function sendcode($text, $raid, $user, $who)
     while($answer = $request->fetch_assoc())
     {
         // Only send message for other users!
-        //if($user != $answer['user_id']) {
+        if($user != $answer['user_id']) {
             sendmessage($answer['user_id'], $text);
-        //}
+        }
     }
 }
