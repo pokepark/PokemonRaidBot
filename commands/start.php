@@ -6,6 +6,19 @@ debug_log('START()');
 //debug_log($update);
 //debug_log($data);
 
+// Get gym by name.
+// Trim away everything before "/start "
+$searchterm = $update['message']['text'];
+$searchterm = substr($searchterm, 7);
+debug_log($searchterm, 'SEARCHTERM');
+
+// Start raid message.
+if(strpos($searchterm , 'c0de-') === 0) {
+    $code_raid_id = explode("-", $searchterm, 2)[1];
+    require_once(ROOT_PATH . '/mods/code_start.php');
+    exit();
+} 
+
 // Check access, don't die if no access.
 $access = bot_access_check($update, 'create', true);
 
