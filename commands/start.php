@@ -12,10 +12,10 @@ $searchterm = $update['message']['text'];
 $searchterm = substr($searchterm, 7);
 debug_log($searchterm, 'SEARCHTERM');
 
-// Get the keys by gym name search.
-if($searchterm == 'c0de') {
-    //$keys = raid_get_gyms_list_keys($searchterm);
-    require_once(ROOT_PATH . '/commands/code.php');
+// Start raid message.
+if(strpos($searchterm , 'c0de-') === 0) {
+    $code_raid_id = explode("-", $searchterm, 2)[1];
+    require_once(ROOT_PATH . '/mods/code_start.php');
     exit();
 } 
 

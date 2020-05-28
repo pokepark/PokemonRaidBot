@@ -3408,36 +3408,29 @@ function show_raid_poll($raid)
         
     // Get raid times.
     $msg = raid_poll_message($msg, get_raid_times($raid), true);
-/*
-    if(!$config->RAID_PICTURE) {
-        $msg .= get_raid_times($raid);
-    }
-*/
 
     // Get current time and time left.
     $time_now = utcnow();
     $time_left = $raid['t_left'];
 
     // Display gym details.
-    //if(!$config->RAID_PICTURE) {
-        if ($raid['gym_name'] || $raid['gym_team']) {
-            // Add gym name to message.
-            if ($raid['gym_name']) {
-                $ex_raid_gym_marker = (strtolower($config->RAID_EX_GYM_MARKER) == 'icon') ? EMOJI_STAR : '<b>' . $config->RAID_EX_GYM_MARKER . '</b>';
-                //$msg .= getPublicTranslation('gym') . ': ' . ($raid['ex_gym'] ? $ex_raid_gym_marker . SP : '') . '<b>' . $raid['gym_name'] . '</b>';
-                $msg = raid_poll_message($msg, getPublicTranslation('gym') . ': ' . ($raid['ex_gym'] ? $ex_raid_gym_marker . SP : '') . '<b>' . $raid['gym_name'] . '</b>', true);
-            }
-
-            // Add team to message.
-            if ($raid['gym_team']) {
-                //$msg .= ' ' . $GLOBALS['teams'][$raid['gym_team']];
-                $msg = raid_poll_message($msg, SP . $GLOBALS['teams'][$raid['gym_team']], true);
-            }
-
-            //$msg .= CR;
-            $msg = raid_poll_message($msg, CR, true);
+    if ($raid['gym_name'] || $raid['gym_team']) {
+        // Add gym name to message.
+        if ($raid['gym_name']) {
+            $ex_raid_gym_marker = (strtolower($config->RAID_EX_GYM_MARKER) == 'icon') ? EMOJI_STAR : '<b>' . $config->RAID_EX_GYM_MARKER . '</b>';
+            //$msg .= getPublicTranslation('gym') . ': ' . ($raid['ex_gym'] ? $ex_raid_gym_marker . SP : '') . '<b>' . $raid['gym_name'] . '</b>';
+            $msg = raid_poll_message($msg, getPublicTranslation('gym') . ': ' . ($raid['ex_gym'] ? $ex_raid_gym_marker . SP : '') . '<b>' . $raid['gym_name'] . '</b>', true);
         }
-    //}
+
+        // Add team to message.
+        if ($raid['gym_team']) {
+            //$msg .= ' ' . $GLOBALS['teams'][$raid['gym_team']];
+            $msg = raid_poll_message($msg, SP . $GLOBALS['teams'][$raid['gym_team']], true);
+        }
+
+        //$msg .= CR;
+        $msg = raid_poll_message($msg, CR, true);
+    }
 
     // Add maps link to message.
     if (!empty($raid['address'])) {
@@ -3465,14 +3458,12 @@ function show_raid_poll($raid)
     }
 
     // Display raid boss name.
-    //if(!$config->RAID_PICTURE) {
-        $msg = raid_poll_message($msg, getPublicTranslation('raid_boss') . ': <b>' . get_local_pokemon_name($raid['pokemon'], true) . '</b>', true);
+    $msg = raid_poll_message($msg, getPublicTranslation('raid_boss') . ': <b>' . get_local_pokemon_name($raid['pokemon'], true) . '</b>', true);
 
-        // Display raid boss weather.
-        $pokemon_weather = get_pokemon_weather($raid['pokemon']);
-        $msg = raid_poll_message($msg, ($pokemon_weather != 0) ? (' ' . get_weather_icons($pokemon_weather)) : '', true);
-        $msg = raid_poll_message($msg, CR, true);
-    //}
+    // Display raid boss weather.
+    $pokemon_weather = get_pokemon_weather($raid['pokemon']);
+    $msg = raid_poll_message($msg, ($pokemon_weather != 0) ? (' ' . get_weather_icons($pokemon_weather)) : '', true);
+    $msg = raid_poll_message($msg, CR, true);
     
     // Display attacks.
     if ($raid['move1'] > 1 && $raid['move2'] > 2 ) {
@@ -3550,11 +3541,9 @@ function show_raid_poll($raid)
 
     // Raid has started and has participants
     if($time_now > $raid['start_time'] && $cnt_all > 0) {
-        //if(!$config->RAID_PICTURE) {
-            // Display raid boss CP values.
-            $pokemon_cp = get_formatted_pokemon_cp($raid['pokemon'], true);
-            $msg = raid_poll_message($msg, (!empty($pokemon_cp)) ? ($pokemon_cp . CR) : '', true);
-        //}
+        // Display raid boss CP values.
+        $pokemon_cp = get_formatted_pokemon_cp($raid['pokemon'], true);
+        $msg = raid_poll_message($msg, (!empty($pokemon_cp)) ? ($pokemon_cp . CR) : '', true);
 
         // Add raid is done message.
         if($time_now > $raid['end_time']) {
@@ -3566,11 +3555,9 @@ function show_raid_poll($raid)
         }
     // Buttons are hidden?
     } else if($buttons_hidden) {
-        //if(!$config->RAID_PICTURE) {
-            // Display raid boss CP values.
-            $pokemon_cp = get_formatted_pokemon_cp($raid['pokemon'], true);
-            $msg = raid_poll_message($msg, (!empty($pokemon_cp)) ? ($pokemon_cp . CR) : '', true);
-        //}
+        // Display raid boss CP values.
+        $pokemon_cp = get_formatted_pokemon_cp($raid['pokemon'], true);
+        $msg = raid_poll_message($msg, (!empty($pokemon_cp)) ? ($pokemon_cp . CR) : '', true);
     }
 
     // Hide info if buttons are hidden
@@ -3669,11 +3656,10 @@ function show_raid_poll($raid)
 
                 // Add hint for remote attendances.
                 if($config->RAID_REMOTEPASS_USERS && $previous_att_time == 'FIRST_RUN' && $cnt_remote > 0) {
-                    $remote_group_msg = str_replace('START_CODE', '<a href="https://t.me/' . str_replace('@', '', $config->BOT_NAME) . '?start=c0de">' . getTranslation('telegram_bot_start') . '</a>', getPublicTranslation('remote_participants_private_group'));
-                    $msg = raid_poll_message($msg, CR . EMOJI_REMOTE . '<i>' . getPublicTranslation('remote_participants') . SP . $remote_group_msg . '</i>' . CR);
                     $remote_max_msg = str_replace('REMOTE_MAX_USERS', $config->RAID_REMOTEPASS_USERS_LIMIT, getPublicTranslation('remote_participants_max'));
-                    $msg = raid_poll_message($msg, '<b>' . $remote_max_msg . '</b>' . CR);
+                    $msg = raid_poll_message($msg, CR . EMOJI_REMOTE . SP . getPublicTranslation('remote_participants') . SP . '<i>' . $remote_max_msg . '</i>' . CR);
                 }
+                $msg = raid_poll_message($msg, CR . '<b>' . str_replace('START_CODE', '<a href="https://t.me/' . str_replace('@', '', $config->BOT_NAME) . '?start=c0de-' . $raid['id'] . '">' . getTranslation('telegram_bot_start') . '</a>', getPublicTranslation('start_raid')) . '</b>' . SP . '<i>' . getPublicTranslation('start_raid_info') . '</i>' . CR);
 
                 // Add hint for late attendances.
                 if($config->RAID_LATE_MSG && $previous_att_time == 'FIRST_RUN' && $cnt_latewait > 0) {
@@ -3745,12 +3731,12 @@ function show_raid_poll($raid)
                 }
 
                 // Add users: ARRIVED --- TEAM -- LEVEL -- NAME -- INVITE -- EXTRAPEOPLE
-                //$msg = raid_poll_message($msg, ($row['arrived']) ? (EMOJI_HERE . ' ') : (($row['late']) ? (EMOJI_LATE . ' ') : '└ '));
-                $msg = raid_poll_message($msg, ($row['arrived']) ? (($row['remote']) ? (EMOJI_REMOTE . ' ') : (EMOJI_HERE . ' ')) : (($row['late']) ? (EMOJI_LATE . ' ') : '└ '));
+                $msg = raid_poll_message($msg, ($row['arrived']) ? (EMOJI_HERE . ' ') : (($row['late']) ? (EMOJI_LATE . ' ') : '└ '));
+                //$msg = raid_poll_message($msg, ($row['arrived']) ? (($row['remote']) ? (EMOJI_REMOTE . ' ') : (EMOJI_HERE . ' ')) : (($row['late']) ? (EMOJI_LATE . ' ') : '└ '));
                 $msg = raid_poll_message($msg, ($row['team'] === NULL) ? ($GLOBALS['teams']['unknown'] . ' ') : ($GLOBALS['teams'][$row['team']] . ' '));
                 $msg = raid_poll_message($msg, ($row['level'] == 0) ? ('<b>00</b> ') : (($row['level'] < 10) ? ('<b>0' . $row['level'] . '</b> ') : ('<b>' . $row['level'] . '</b> ')));
                 $msg = raid_poll_message($msg, '<a href="tg://user?id=' . $row['user_id'] . '">' . htmlspecialchars($row['name']) . '</a> ');
-                $msg = raid_poll_message($msg, ($row['remote']) ? (($row['arrived']) ? '' : (EMOJI_REMOTE . ' ')) : '');
+                $msg = raid_poll_message($msg, ($row['remote']) ? (EMOJI_REMOTE) : '');
                 $msg = raid_poll_message($msg, ($raid_level == 'X' && $row['invite']) ? (EMOJI_INVITE . ' ') : '');
                 $msg = raid_poll_message($msg, ($row['extra_mystic']) ? ('+' . $row['extra_mystic'] . TEAM_B . ' ') : '');
                 $msg = raid_poll_message($msg, ($row['extra_valor']) ? ('+' . $row['extra_valor'] . TEAM_R . ' ') : '');
@@ -4360,14 +4346,33 @@ function alarm($raid, $user, $action, $info = '')
         $msg_text .= EMOJI_CLOCK . SP . check_time($attendtime);
         sendalarm($msg_text, $raid, $user);
 
-    // Group code
-    } else if($action == "group_code") {
+    // Group code public
+    } else if($action == "group_code_public") {
         debug_log('Alarm for group code: ' . $info);
-        $msg_text = '<b>' . getTranslation('alert_group_code') . '</b>' . CR;
+        $msg_text = '<b>' . getTranslation('alert_raid_starts_now') . CR . getTranslation('alert_raid_get_in') . '</b>' . CR . CR;
+        $msg_text .= '<b>' . getTranslation('alert_public_group') . '</b>' . CR;
         $msg_text .= EMOJI_HERE . SP . $gymname . SP . '(' . $raidtimes . ')' . CR;
         $msg_text .= EMOJI_SINGLE . SP . $username . CR;
-        $msg_text .= EMOJI_REMOTE . SP . '<b>' . $info . '</b>';
-        sendcode($msg_text, $raid, $user);
+        $msg_text .= EMOJI_REMOTE . SP . $info;
+        sendcode($msg_text, $raid, $user, 'public');
+
+    // Group code private
+    } else if($action == "group_code_private") {
+        debug_log('Alarm for group code: ' . $info);
+        $msg_text = '<b>' . getTranslation('alert_raid_starts_now') . CR . getTranslation('alert_raid_get_in') . '</b>' . CR . CR;
+        $msg_text .= '<b>' . getTranslation('alert_private_group') . '</b>' . CR;
+        $msg_text .= EMOJI_HERE . SP . $gymname . SP . '(' . $raidtimes . ')' . CR;
+        $msg_text .= EMOJI_SINGLE . SP . $username . CR;
+
+        // Send code to remote raiders
+        $msg_text_remote = $msg_text;
+        $msg_text_remote .= EMOJI_REMOTE . SP . '<b>' . $info . '</b>';
+        sendcode($msg_text_remote, $raid, $user, 'remote');
+
+        // Send message to local raiders
+        $msg_text_local = $msg_text;
+        $msg_text_local .= EMOJI_REMOTE . SP . '<b>' . getTranslation('group_code_only_for_remote_raiders') . '</b>';
+        sendcode($msg_text_local, $raid, $user, 'local');
     }
 }
 
@@ -4411,16 +4416,25 @@ function sendalarm($text, $raid, $user)
  * @param $text
  * @param $raid
  * @param $user
+ * @param $who
  */
-function sendcode($text, $raid, $user)
+function sendcode($text, $raid, $user, $who)
 {
-    // Will fetch all Trainer which attend the raid from remote and send the message
-    $request = my_query("SELECT DISTINCT user_id FROM attendance WHERE raid_id = {$raid} AND remote = 1");
+    // Will fetch all Trainer which attend the raid and send the message
+    if($who == 'public') {
+        $sql_remote = '';
+    } else if($who == 'remote') {
+        $sql_remote = 'AND remote = 1';
+    } else if($who == 'local') {
+        $sql_remote = 'AND remote = 0';
+    }
+
+    $request = my_query("SELECT DISTINCT user_id FROM attendance WHERE raid_id = {$raid} $sql_remote");
     while($answer = $request->fetch_assoc())
     {
         // Only send message for other users!
-        if($user != $answer['user_id']) {
+        //if($user != $answer['user_id']) {
             sendmessage($answer['user_id'], $text);
-        }
+        //}
     }
 }
