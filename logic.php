@@ -3659,7 +3659,11 @@ function show_raid_poll($raid)
                     $remote_max_msg = str_replace('REMOTE_MAX_USERS', $config->RAID_REMOTEPASS_USERS_LIMIT, getPublicTranslation('remote_participants_max'));
                     $msg = raid_poll_message($msg, CR . EMOJI_REMOTE . SP . getPublicTranslation('remote_participants') . SP . '<i>' . $remote_max_msg . '</i>' . CR);
                 }
-                $msg = raid_poll_message($msg, CR . '<b>' . str_replace('START_CODE', '<a href="https://t.me/' . str_replace('@', '', $config->BOT_NAME) . '?start=c0de-' . $raid['id'] . '">' . getTranslation('telegram_bot_start') . '</a>', getPublicTranslation('start_raid')) . '</b>' . SP . '<i>' . getPublicTranslation('start_raid_info') . '</i>' . CR);
+
+                // Add start raid message
+                if($previous_att_time == 'FIRST_RUN') {
+                    $msg = raid_poll_message($msg, CR . '<b>' . str_replace('START_CODE', '<a href="https://t.me/' . str_replace('@', '', $config->BOT_NAME) . '?start=c0de-' . $raid['id'] . '">' . getTranslation('telegram_bot_start') . '</a>', getPublicTranslation('start_raid')) . '</b>' . SP . '<i>' . getPublicTranslation('start_raid_info') . '</i>' . CR);
+                }
 
                 // Add hint for late attendances.
                 if($config->RAID_LATE_MSG && $previous_att_time == 'FIRST_RUN' && $cnt_latewait > 0) {
@@ -4429,7 +4433,7 @@ function sendcode($text, $raid, $user, $who)
         $sql_remote = 'AND remote = 0';
     }
 
-    $request = my_query("SELECT DISTINCT user_id FROM attendance WHERE raid_id = {$raid} $sql_remote");
+    $request = my_query("SELECT DISTINCT user_id FROM attendance WHERE raid_id = {$raid} $sql_remote AND attend_time = (SELECT attend_time from attendance WHERE raid_id = {$raid} AND user_id = $user)");
     while($answer = $request->fetch_assoc())
     {
         // Only send message for other users!
