@@ -2861,7 +2861,7 @@ function delete_overview($chat_id, $message_id)
 
 function get_chat_title($chat_id){
     // Get info about chat for title.
-    debug_log('Getting chat object for chat_id: ' . $row_overview['chat_id']);
+    debug_log('Getting chat object for chat_id: ' . $chat_id);
     $chat_obj = get_chat($chat_id);
     $chat_title = '<unknown chat>';
 
