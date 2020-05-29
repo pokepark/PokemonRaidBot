@@ -470,6 +470,10 @@ function get_pokemon_id_by_name($pokemon_name)
  */
 function get_local_pokemon_name($pokemon_id_form, $override_language = false)
 {
+    if(! $pokemon_id_form) {
+      error_log('Internal error, invalid pokemon_id_form given to get_local_pokemon_name from: ' . print_r(debug_backtrace(), true));
+      return 'InternalErrorMon';
+    }
     // Split pokedex_id and form
     $dex_id_form = explode('-',$pokemon_id_form);
     $pokedex_id = $dex_id_form[0];
