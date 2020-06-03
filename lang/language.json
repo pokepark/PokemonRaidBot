@@ -264,7 +264,7 @@
     "FI": "Äänestä tulevaa aikaa!"
   },
   "vote_remote_users_limit_reached": {
-    "NL": "TRANSLATE",
+    "NL": "Op afstand meedoen is niet meer mogelijk!",
     "DE": "Keine Fern-Teilnahme mehr möglich!",
     "EN": "Attending remote is no longer possible!",
     "IT": "TRANSLATE",
@@ -492,7 +492,7 @@
     "FI": "Odottakaa RAID_LATE_TIME minuuttia!"
   },
   "start_raid": {
-    "NL": "TRANSLATE",
+    "NL": "START_CODE raid",
     "DE": "Raid START_CODE",
     "EN": "START_CODE raid",
     "IT": "TRANSLATE",
@@ -504,7 +504,7 @@
     "FI": "TRANSLATE"
   },
   "start_raid_now": {
-    "NL": "TRANSLATE",
+    "NL": "Stuur een bericht naar alle deelnemers over de start van de raid",
     "DE": "Alle Teilnehmer über den Raid-Start informieren",
     "EN": "Notify all participants about the raid start",
     "IT": "TRANSLATE",
@@ -516,7 +516,7 @@
     "FI": "Ilmoita kaikille osallistujille raidin alkamisesta"
   },
   "start_raid_info": {
-    "NL": "TRANSLATE",
+    "NL": "(Stuur iedereen een bericht)",
     "DE": "(Nachricht an alle)",
     "EN": "(message everyone)",
     "IT": "TRANSLATE",
@@ -528,7 +528,7 @@
     "FI": "(viesti kaikille)"
   },
   "start_raid_private": {
-    "NL": "TRANSLATE",
+    "NL": "Prive Groep",
     "DE": "Private Gruppe",
     "EN": "Private group",
     "IT": "TRANSLATE",
@@ -540,7 +540,7 @@
     "FI": "Privaattiryhmä"
   },
   "start_raid_public": {
-    "NL": "TRANSLATE",
+    "NL": "Publiek",
     "DE": "Öffentlich",
     "EN": "Public",
     "IT": "TRANSLATE",
@@ -552,7 +552,7 @@
     "FI": "Julkinen"
   },
   "remote_participants": {
-    "NL": "TRANSLATE",
+    "NL": "Deelnemers op afstand!",
     "DE": "Fern-Teilnahmen!",
     "EN": "Remote participations!",
     "IT": "TRANSLATE",
@@ -564,7 +564,7 @@
     "FI": "Etäosallistujia!"
   },
   "remote_participants_max": {
-    "NL": "TRANSLATE",
+    "NL": "(max. REMOTE_MAX_USERS per tijd)",
     "DE": "(max. REMOTE_MAX_USERS pro Uhrzeit)",
     "EN": "(max. REMOTE_MAX_USERS per time)",
     "IT": "TRANSLATE",
@@ -576,7 +576,7 @@
     "FI": "(max. REMOTE_MAX_USERS kerrallaan)"
   },
   "group_code": {
-    "NL": "TRANSLATE",
+    "NL": "Groep code",
     "DE": "Gruppencode",
     "EN": "Group code",
     "IT": "TRANSLATE",
@@ -588,7 +588,7 @@
     "FI": "Ryhmäkoodi"
   },
   "no_group_code": {
-    "NL": "TRANSLATE",
+    "NL": "(geen groep code nodig)",
     "DE": "(kein Gruppencode notwendig)",
     "EN": "(no group code necessary)",
     "IT": "TRANSLATE",
@@ -600,7 +600,7 @@
     "FI": "(ei ryhmäkoodia)"
   },
   "group_code_only_for_remote_raiders": {
-    "NL": "TRANSLATE",
+    "NL": "Je bent geregisteerd als raider op afstand! Vraag om de groep code!",
     "DE": "Du bist NICHT als Fern-Teilnehmer angemeldet! Frage nach dem Gruppencode vor Ort!",
     "EN": "You are NOT registered as a remote participant! Ask for the group code on site!",
     "IT": "TRANSLATE",
@@ -612,7 +612,7 @@
     "FI": "Et ole rekisteröity etäosallistujaksi, pyydä koodi paikanpäällä!"
   },
   "group_code_share": {
-    "NL": "TRANSLATE",
+    "NL": "Deel de groep code",
     "DE": "Gruppencode teilen",
     "EN": "Share group code",
     "IT": "TRANSLATE",
@@ -624,7 +624,7 @@
     "FI": "Jaa ryhmäkoodi"
   },
   "code_send": {
-    "NL": "TRANSLATE",
+    "NL": "Groep code verzonden!",
     "DE": "Gruppencode verschickt!",
     "EN": "Group code send!",
     "IT": "TRANSLATE",
@@ -636,7 +636,7 @@
     "FI": "Lähetä ryhmäkoodi!"
   },
   "telegram_bot_start": {
-    "NL": "TRANSLATE",
+    "NL": "START",
     "DE": "STARTEN",
     "EN": "START",
     "IT": "TRANSLATE",
@@ -2700,7 +2700,7 @@
     "FI": "Uusi osallistuja!"
   },
   "alert_remote": {
-    "NL": "TRANSLATE",
+    "NL": "Deelnemer vanaf afstand!",
     "DE": "Fern-Teilnahme!",
     "EN": "Remote participation!",
     "IT": "TRANSLATE",
@@ -2712,7 +2712,7 @@
     "FI": "Etäosallistuminen!"
   },
   "alert_no_remote": {
-    "NL": "TRANSLATE",
+    "NL": "Geen deelnemers meer vanaf afstand!",
     "DE": "Keine Fern-Teilnahme mehr!",
     "EN": "No more remote participation!",
     "IT": "TRANSLATE",
@@ -2724,7 +2724,7 @@
     "FI": "Ei enää etäosallistujia!"
   },
   "alert_raid_starts_now": {
-    "NL": "TRANSLATE",
+    "NL": "De raid start NU!",
     "DE": "Der Raid beginnt jetzt!",
     "EN": "The raid starts now!",
     "IT": "TRANSLATE",
@@ -2736,7 +2736,7 @@
     "FI": "Raidi alkaa nyt!"
   },
   "alert_raid_get_in": {
-    "NL": "TRANSLATE",
+    "NL": "Zo kom je in de raid battle:",
     "DE": "So geht's in den Kampf:",
     "EN": "Here's how to get into the battle:",
     "IT": "TRANSLATE",
@@ -2748,7 +2748,7 @@
     "FI": "Näin pääset taisteluun:"
   },
   "alert_private_group": {
-    "NL": "TRANSLATE",
+    "NL": "Prive raid groep!",
     "DE": "Private Raidgruppe!",
     "EN": "Private raid group!",
     "IT": "TRANSLATE",
@@ -2760,7 +2760,7 @@
     "FI": "Yksityinen raidiryhmä!"
   },
   "alert_public_group": {
-    "NL": "TRANSLATE",
+    "NL": "Publieke raid groep!",
     "DE": "Öffentliche Raidgruppe!",
     "EN": "Public raid group!",
     "IT": "TRANSLATE",
