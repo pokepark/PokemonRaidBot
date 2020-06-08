@@ -36,7 +36,7 @@ if($config->PORTAL_IMPORT) {
 
         // Gym image.
         if($config->PORTAL_PICTURE_IMPORT) {
-            $no_spaces_gym_name = str_replace(' ', '_', $gym_name) . '.png';
+			$no_spaces_gym_name = str_replace(array(' ', '\''), array('_', ''), $gym_name) . '.png';
             $gym_image = download_Portal_Image($portal_image, PORTAL_IMAGES_PATH, $no_spaces_gym_name);
             if($gym_image) {
                 $gym_image = "file://" . $gym_image;
@@ -44,13 +44,14 @@ if($config->PORTAL_IMPORT) {
         } else {
             $gym_image = $portal_image;
         }
-
+		
+		$gym_name_no_spec = escape($portal); // Convert special characters in gym name
         // Build query to check if gym is already in database or not
         // TODO: Use PDO here
         $rs = my_query("
         SELECT    id, COUNT(*)
         FROM      gyms
-          WHERE   gym_name = '{$gym_name}'
+          WHERE   gym_name = '{$gym_name_no_spec}'
          ");
 
         $row = $rs->fetch_row();
@@ -77,13 +78,13 @@ if($config->PORTAL_IMPORT) {
                 WHERE      gym_name = :gym_name
                 ';
             $msg = getTranslation('gym_updated');
-            $gym_id = get_gym_by_telegram_id($gym_name);
+            $gym_id = get_gym_by_telegram_id(escape($gym_name));
             $gym_id = $gym_id['id'];
         }
 
         // Insert / Update.
         $statement = $dbh->prepare($query);
-        $statement->bindValue(':gym_name', escape($gym_name), PDO::PARAM_STR);
+        $statement->bindValue(':gym_name', $gym_name, PDO::PARAM_STR);
         $statement->bindValue(':lat', $lat, PDO::PARAM_STR);
         $statement->bindValue(':lon', $lon, PDO::PARAM_STR);
         $statement->bindValue(':address', $address, PDO::PARAM_STR);
