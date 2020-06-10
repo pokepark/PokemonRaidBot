@@ -212,7 +212,7 @@ if ($update['message']['chat']['type'] == 'private' || $update['callback_query']
 
     // Send the message.
     //send_message($update['message']['chat']['id'], $text, $keys, ['disable_web_page_preview' => 'true']);
-    $chat = $update['message']['chat']['id']);
+    $chat = $update['message']['chat']['id'];
 
     // Send the message.
     if($config->RAID_PICTURE) {
