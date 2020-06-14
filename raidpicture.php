@@ -107,12 +107,8 @@ imagecopymerge($canvas, $mask, 0, 0, 0, 0, $new_w, $new_h, 100);
 
 // Creating the orange circle around the gym photo
 $color_ellipse = imagecolorallocate($img_gym,254,193,161);
-imageellipse($canvas,$new_w/2,$new_w/2,$new_w-13,$new_w-13,$color_ellipse);
-imageellipse($canvas,$new_w/2,$new_w/2,$new_w-12,$new_w-12,$color_ellipse);
-imageellipse($canvas,$new_w/2,$new_w/2,$new_w-11,$new_w-11,$color_ellipse);
-imageellipse($canvas,$new_w/2,$new_w/2,$new_w-10,$new_w-10,$color_ellipse);
-imageellipse($canvas,$new_w/2,$new_w/2,$new_w-9,$new_w-9,$color_ellipse);
-
+imagefilledellipse($mask,$new_w/2,$new_h/2,$new_w-9,$new_h-9,$color_ellipse);
+imagefilledellipse($mask,$new_w/2,$new_h/2,$new_w-15,$new_h-15,$bg);
 
 
 // Is ex gym?
