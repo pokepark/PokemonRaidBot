@@ -322,7 +322,9 @@ function get_active_raids()
 function get_remote_users_count($raid_id, $user_id, $attend_time = false)
 {
     global $config;
+    
     if(!$attend_time) {
+        // If attend time is not given, get the one user has already voted for from database
         $att_sql = "(
                                 SELECT    attend_time
                                 FROM      attendance
@@ -331,12 +333,15 @@ function get_remote_users_count($raid_id, $user_id, $attend_time = false)
                                 LIMIT     1
                             )";
     }else {
+        // Use given attend time (needed when voting for new time)
         $att_sql = "'{$attend_time}'";
     }
+    
     // Check if max remote users limit is already reached!
+    // Ignore max limit if attend time is 'Anytime'
     $rs = my_query(
         "
-        SELECT    sum(1 + extra_mystic + extra_valor + extra_instinct) AS remote_users
+        SELECT    IF(attend_time = '0000-00-00 00:00:00',0,sum(1 + extra_mystic + extra_valor + extra_instinct)) AS remote_users
         FROM      (SELECT DISTINCT user_id, extra_mystic, extra_valor, extra_instinct, remote, attend_time FROM attendance WHERE remote = 1) as T
         WHERE     attend_time = {$att_sql}
         "

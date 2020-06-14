@@ -42,7 +42,9 @@ $now = $now->format('Y-m-d H:i') . ':00';
 
 // Vote time in the future or Raid anytime?
 if($now <= $attend_time || $arg == 0) {
+    // Get the number of remote users already attending
     $remote_users = get_remote_users_count($data['id'], $update['callback_query']['from']['id'], $attend_time);
+    // Check if max remote users limit is already reached, unless voting for 'Anytime'
     if ($remote_users + $answer['user_count'] <= $config->RAID_REMOTEPASS_USERS_LIMIT || $arg == 0) {
         // User has voted before.
         if (!empty($answer)) {
