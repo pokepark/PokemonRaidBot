@@ -318,24 +318,20 @@ function get_active_raids()
  * @param $user_id
  * @return int
  */
-function get_remote_users_count($raid_id, $user_id, $report_zero = false)
+function get_remote_users_count($raid_id, $user_id)
 {
     global $config;
-    // Get remote users even if remote = 0 as user wants to switch to remote = 1
-    $rval = 1;
-    if($report_zero) {
-        $rval = 0;
-    }
     // Check if max remote users limit is already reached!
     $rs = my_query(
         "
-        SELECT    sum(IF(remote = '$rval', (remote = '1') + extra_mystic + extra_valor + extra_instinct, 0)) AS remote_users
-        FROM      attendance
+        SELECT    sum(1 + extra_mystic + extra_valor + extra_instinct) AS remote_users
+        FROM      (SELECT DISTINCT user_id, extra_mystic, extra_valor, extra_instinct, remote, attend_time FROM attendance WHERE remote = 1) as T
         WHERE     attend_time = (
-                    SELECT attend_time
-                    FROM   attendance
-                    WHERE  raid_id = {$raid_id}
-                    AND   user_id = {$user_id}
+                    SELECT DISTINCT     attend_time
+                    FROM                attendance
+                    WHERE               raid_id = {$raid_id}
+                        AND             user_id = {$user_id}
+                    LIMIT   1
                   )
         "
     );
