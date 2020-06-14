@@ -327,11 +327,11 @@ function get_remote_users_count($raid_id, $user_id)
         SELECT    sum(1 + extra_mystic + extra_valor + extra_instinct) AS remote_users
         FROM      (SELECT DISTINCT user_id, extra_mystic, extra_valor, extra_instinct, remote, attend_time FROM attendance WHERE remote = 1) as T
         WHERE     attend_time = (
-                    SELECT DISTINCT     attend_time
-                    FROM                attendance
-                    WHERE               raid_id = {$raid_id}
-                        AND             user_id = {$user_id}
-                    LIMIT   1
+                    SELECT    attend_time
+                    FROM      attendance
+                    WHERE     raid_id = {$raid_id}
+                        AND   user_id = {$user_id}
+                    LIMIT     1
                   )
         "
     );
