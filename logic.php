@@ -316,23 +316,29 @@ function get_active_raids()
  * Get current remote users count.
  * @param $raid_id
  * @param $user_id
+ * @param $attend_time
  * @return int
  */
-function get_remote_users_count($raid_id, $user_id)
+function get_remote_users_count($raid_id, $user_id, $attend_time = false)
 {
     global $config;
+    if(!$attend_time) {
+        $att_sql = "(
+                                SELECT    attend_time
+                                FROM      attendance
+                                WHERE     raid_id = {$raid_id}
+                                    AND   user_id = {$user_id}
+                                LIMIT     1
+                            )";
+    }else {
+        $att_sql = "'{$attend_time}'";
+    }
     // Check if max remote users limit is already reached!
     $rs = my_query(
         "
         SELECT    sum(1 + extra_mystic + extra_valor + extra_instinct) AS remote_users
         FROM      (SELECT DISTINCT user_id, extra_mystic, extra_valor, extra_instinct, remote, attend_time FROM attendance WHERE remote = 1) as T
-        WHERE     attend_time = (
-                    SELECT    attend_time
-                    FROM      attendance
-                    WHERE     raid_id = {$raid_id}
-                        AND   user_id = {$user_id}
-                    LIMIT     1
-                  )
+        WHERE     attend_time = {$att_sql}
         "
     );
 
