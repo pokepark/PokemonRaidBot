@@ -604,7 +604,7 @@ function get_gym_details($gym, $extended = false)
     $msg .= CR;
     // Add maps link to message.
     if (!empty($gym['address'])) {
-        $msg .= '<a href="https://maps.google.com/?daddr=' . $gym['lat'] . ',' . $gym['lon'] . '">' . $gym['address'] . '</a>' . CR;
+        $msg .= mapslink($gym) . CR;
     } else {
         // Get the address.
         $addr = get_address($gym['lat'], $gym['lon']);
@@ -613,10 +613,10 @@ function get_gym_details($gym, $extended = false)
         //Only store address if not empty
         if(!empty($address)) {
             //Use new address
-            $msg .= '<a href="https://maps.google.com/?daddr=' . $gym['lat'] . ',' . $gym['lon'] . '">' . $address . '</a>' . CR;
+            $msg .= mapslink($gym,$address) . CR;
         } else {
             //If no address is found show maps link
-            $msg .= '<a href="http://maps.google.com/maps?q=' . $gym['lat'] . ',' . $gym['lon'] . '">http://maps.google.com/maps?q=' . $gym['lat'] . ',' . $gym['lon'] . '</a>' . CR;
+            $msg .= mapslink($gym,'1') . CR;
         }
     }
 
@@ -3151,13 +3151,13 @@ function get_overview($update, $chats_active, $raids_active, $action = 'refresh'
 
         // Raid has not started yet - adjust time left message
         if ($now < $start_time) {
-            $msg .= get_raid_times($raids_active[$raid_id], true, true);
+            $msg .= get_raid_times($raids_active[$raid_id], true);
         // Raid has started already
         } else {
             // Add time left message.
             $msg .= $pokemon . ' — <b>' . getPublicTranslation('still') . SP . $time_left . 'h</b>' . CR;
         }
-        
+
         if ( $raid_id ) {
 
         // Count attendances
@@ -3275,9 +3275,9 @@ function delete_raid($raid_id)
  * @param unformatted
  * @return string
  */
-function get_raid_times($raid, $override_language = true, $pokemon = false, $unformatted = false)
+function get_raid_times($raid, $override_language = true, $unformatted = false)
 {
-
+    global $config;
     // Get translation type
     if($override_language == true) {
         $getTypeTranslation = 'getPublicTranslation';
@@ -3312,7 +3312,7 @@ function get_raid_times($raid, $override_language = true, $pokemon = false, $unf
 
     // Raid times.
     if($unformatted == false) {
-        if($pokemon == true) {
+        if($config->RAID_POLL_POKEMON_NAME_FIRST_LINE == true) {
             $msg .= get_local_pokemon_name($raid['pokemon'], $override_language) . ':' . SP;
         } else {
             $msg .= $getTypeTranslation('raid') . ':' . SP;
@@ -3434,12 +3434,12 @@ function show_raid_poll($raid)
 
     // Add maps link to message.
     if (!empty($raid['address'])) {
-        $msg = raid_poll_message($msg, '<a href="https://maps.google.com/?daddr=' . $raid['lat'] . ',' . $raid['lon'] . '">' . $raid['address'] . '</a>' . CR);
+        $msg = raid_poll_message($msg, ($config->RAID_PICTURE ? $raid['gym_name'].': ' : ''). mapslink($raid) . CR);
     } else {
         // Get the address.
         $addr = get_address($raid['lat'], $raid['lon']);
         $address = format_address($addr);
-		
+
         //Only store address if not empty
         if(!empty($address)) {
             my_query(
@@ -3448,13 +3448,13 @@ function show_raid_poll($raid)
 	            SET     address = '{$address}'
 	            WHERE   id = {$raid['gym_id']}
 	            "
-            );    
+            );
             //Use new address
-	    $msg = raid_poll_message($msg, '<a href="https://maps.google.com/?daddr=' . $raid['lat'] . ',' . $raid['lon'] . '">' . $address . '</a>' . CR);
+	    $msg = raid_poll_message($msg, ($config->RAID_PICTURE ? $raid['gym_name'].': ' : ''). mapslink($raid,$address) . CR);
         } else {
             //If no address is found show maps link
-            $msg = raid_poll_message($msg, '<a href="http://maps.google.com/maps?q=' . $raid['lat'] . ',' . $raid['lon'] . '">http://maps.google.com/maps?q=' . $raid['lat'] . ',' . $raid['lon'] . '</a>' . CR);
-        }	
+            $msg = raid_poll_message($msg, ($config->RAID_PICTURE ? $raid['gym_name'].': ' : ''). mapslink($raid,'1') . CR);
+        }
     }
 
     // Display raid boss name.
@@ -4229,7 +4229,7 @@ function alarm($raid, $user, $action, $info = '')
     $request = my_query("SELECT * FROM raids as r left join gyms as g on r.gym_id = g.id WHERE r.id = {$raid}");
     $answer = $request->fetch_assoc();
     $gymname = $answer['gym_name'];
-    $raidtimes = str_replace(CR, '', str_replace(' ', '', get_raid_times($answer, false, false, true)));
+    $raidtimes = str_replace(CR, '', str_replace(' ', '', get_raid_times($answer, false, true)));
 
     // Get attend time.
     $r = my_query("SELECT DISTINCT attend_time FROM attendance WHERE raid_id = {$raid} and user_id = {$user}");
@@ -4382,8 +4382,7 @@ function alarm($raid, $user, $action, $info = '')
 
 /**
  * Check attendance time against anytime.
- * @param $text
- * @param $raid
+ * @param $time
  */
 function check_time($time)
 {
@@ -4441,4 +4440,46 @@ function sendcode($text, $raid, $user, $who)
             sendmessage($answer['user_id'], $text);
         }
     }
+}
+
+/**
+ * Return Google Maps Link with Address of gym
+ * @param $gym
+ * @param $gym_address
+ * @return string
+ */
+function mapslink($gym, $gym_address = '0'){
+
+  global $config;
+  $maps_route = true;
+  $maps_link = '';
+  //Getting Info from Config, if Route should be calculated on click the address in raid poll message
+  if(isset($config->RAID_POLL_CALCULATE_MAPS_ROUTE)){
+    $maps_route = $config->RAID_POLL_CALCULATE_MAPS_ROUTE;
+  }
+
+  //setting up alternative gym_address
+  switch ($gym_address) {
+    case '1':
+      //using gym address as maps link
+      $gym['address'] = 'https://maps.google.com/maps?q=' . $gym['lat'] . ',' . $gym['lon'];
+      break;
+    case '0':
+      // do nothing -> getting default address from gym/raid
+      break;
+    default: //using address from variable
+      $gym['address'] = $gym_address;
+      break;
+  }
+
+  if($maps_route){
+    // getting link for route calculation
+    $maps_link = '<a href="https://maps.google.com/maps?q=' . $gym['lat'] . ',' . $gym['lon'] . '">' . $gym['address'] . '</a>';
+  }else{
+    // getting link for normal maps point
+    $maps_link = '<a href="https://maps.google.com/maps?ll=' . $gym['lat'] . ',' . $gym['lon'] . '&q=' . $gym['lat'] . ',' . $gym['lon'] . ' ">' . $gym['address'] . '</a>';
+  }
+
+  // returning Maps Link
+  return $maps_link;
 }

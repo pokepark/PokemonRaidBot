@@ -376,7 +376,7 @@ for($y=0;$y<count($gym_name_lines);$y++){
 
 // Raid times
 if($time_now < $raid['end_time']) {
-    $time_text = get_raid_times($raid, true, false, true);
+    $time_text = get_raid_times($raid, true, true);
 } else {
     $time_text = getPublicTranslation('raid_done');
 }
