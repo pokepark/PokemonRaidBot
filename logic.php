@@ -4464,7 +4464,7 @@ function mapslink($gym, $gym_address = '0'){
   switch ($gym_address) {
     case '1':
       //using gym address as maps link
-      $gym['address'] = 'https://maps.google.com/maps?q=' . $gym['lat'] . ',' . $gym['lon'];
+      $gym['address'] = 'https://maps.google.com/maps?daddr=' . $gym['lat'] . ',' . $gym['lon'];
       break;
     case '0':
       // do nothing -> getting default address from gym/raid
@@ -4476,7 +4476,7 @@ function mapslink($gym, $gym_address = '0'){
 
   if($maps_route){
     // getting link for route calculation
-    $maps_link = '<a href="https://maps.google.com/maps?q=' . $gym['lat'] . ',' . $gym['lon'] . '">' . $gym['address'] . '</a>';
+    $maps_link = '<a href="https://maps.google.com/maps?daddr=' . $gym['lat'] . ',' . $gym['lon'] . '">' . $gym['address'] . '</a>';
   }else{
     // getting link for normal maps point
     $maps_link = '<a href="https://maps.google.com/maps?ll=' . $gym['lat'] . ',' . $gym['lon'] . '&q=' . $gym['lat'] . ',' . $gym['lon'] . ' ">' . $gym['address'] . '</a>';
