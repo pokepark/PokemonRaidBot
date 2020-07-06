@@ -67,7 +67,7 @@ function active_raid_duplication_check($gym_id)
         FROM   raids
         WHERE  end_time > (UTC_TIMESTAMP() - INTERVAL 10 MINUTE)
         AND    gym_id = {$gym_id}
-        GROUP BY id
+        GROUP BY id, pokemon
         "
     );
 
@@ -342,7 +342,7 @@ function get_remote_users_count($raid_id, $user_id, $attend_time = false)
     $rs = my_query(
         "
         SELECT    IF(attend_time = '0000-00-00 00:00:00',0,sum(1 + extra_mystic + extra_valor + extra_instinct)) AS remote_users
-        FROM      (SELECT DISTINCT user_id, extra_mystic, extra_valor, extra_instinct, remote, attend_time FROM attendance WHERE remote = 1) as T
+        FROM      (SELECT DISTINCT user_id, extra_mystic, extra_valor, extra_instinct, remote, attend_time FROM attendance WHERE remote = 1 AND cancel = 0 AND raid_done = 0) as T
         WHERE     attend_time = {$att_sql}
         GROUP BY  attend_time
         "
@@ -1067,7 +1067,7 @@ function raid_edit_gym_keys($first, $warn = true, $action = 'edit_raidlevel', $d
         WHERE     UPPER(LEFT(gym_name, $first_length)) = UPPER('{$first}')
         $not
         AND       gyms.show_gym = {$show_gym}
-        GROUP BY  gym_name, raids.gym_id, gyms.id
+        GROUP BY  gym_name, raids.gym_id, gyms.id, gyms.ex_gym
         ORDER BY  gym_name
         "
     );
