@@ -344,6 +344,7 @@ function get_remote_users_count($raid_id, $user_id, $attend_time = false)
         SELECT    IF(attend_time = '0000-00-00 00:00:00',0,sum(1 + extra_mystic + extra_valor + extra_instinct)) AS remote_users
         FROM      (SELECT DISTINCT user_id, extra_mystic, extra_valor, extra_instinct, remote, attend_time FROM attendance WHERE remote = 1) as T
         WHERE     attend_time = {$att_sql}
+        GROUP BY  attend_time
         "
     );
 
@@ -3808,7 +3809,14 @@ function show_raid_poll($raid)
             // Get done and canceled attendances
             $rs_att = my_query(
                 "
-                SELECT      attendance.*,
+                SELECT      attendance.user_id,
+                            attendance.attend_time,
+                            attendance.cancel,
+                            attendance.raid_done,
+                            attendance.raid_id,
+                            attendance.extra_valor,
+                            attendance.extra_mystic,
+                            attendance.extra_instinct,
                             users.name,
                             users.level,
                             users.team,
@@ -3819,7 +3827,7 @@ function show_raid_poll($raid)
                   WHERE     raid_id = {$raid['id']}
                     AND     (raid_done = 1
                             OR cancel = 1)
-                  GROUP BY  attendance.user_id, raid_done, attendance.id
+                  GROUP BY  attendance.user_id, attendance.raid_done, attendance.attend_time, attendance.raid_done, attendance.cancel, attendance.raid_id, users.name, users.level, users.team, attendance.extra_valor, attendance.extra_mystic, attendance.extra_instinct
                   ORDER BY  raid_done,
                             users.team,
                             users.level desc,
