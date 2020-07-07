@@ -624,7 +624,7 @@ Predefine sharing all raids to the chats -100111222333 and -100444555666, except
 
 #### Raids from Webhook
 
-You can receive Raids from Scanner like MAD via Webhook.
+You can receive Raids from a mapping system such as MAD via Webhook.
 For that you need to setup
 `"WEBHOOK_CHATS":"-100444555666"`
 or by Raidlevel `"WEBHOOK_CHATS_LEVEL_5":"-100444555666"`
@@ -632,8 +632,8 @@ All raids will be published in these chats.
 
 #### Filter Raids from Webhook / geoconfig.json
 
-If you got different Chats for different Areas you can setup them in
-`"WEBHOOK_CHATS_LEVEL_5_0":"-100444555666"` regarding to your configuration in the geoconfig.json.
+If you have multiple Chats for different Areas you can setup them in
+`"WEBHOOK_CHATS_LEVEL_5_0":"-100444555666"` matching with your configuration in the geoconfig.json.
 Go to http://geo.jasparke.net/ and create an Area (Geofence), where your gyms are.
 When you are finished, click on 'exp' and save the coordinates to your geoconfig.json. And for the ID 0 you use "WEBHOOK_CHATS_LEVEL_5_0", for ID 1 "WEBHOOK_CHATS_LEVEL_5_1" and so on.
 The raids will only be posted into the defined chats.
