@@ -255,6 +255,9 @@ function get_raid($raid_id)
  */
 function get_raid_with_pokemon($raid_id)
 {
+    // Remove all non-numeric characters
+    $raidid = preg_replace( '/[^0-9]/', '', $raid_id );
+
     // Get the raid data by id.
     $rs = my_query(
         "
@@ -271,7 +274,7 @@ function get_raid_with_pokemon($raid_id)
         ON         raids.pokemon = CONCAT(pokemon.pokedex_id, '-', pokemon.pokemon_form)
         LEFT JOIN  users
         ON         raids.user_id = users.user_id
-        WHERE      raids.id = {$raid_id}
+        WHERE      raids.id = {$raidid}
         "
     );
 
