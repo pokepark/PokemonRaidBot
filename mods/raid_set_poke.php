@@ -94,7 +94,7 @@ curl_json_multi_request($tg_json);
 
 // Alert users.
 debug_log('Alarm raid boss updated: ' . $raid['pokemon']);
-$raidtimes = str_replace(CR, '', str_replace(' ', '', get_raid_times($raid, false, false, true)));
+$raidtimes = str_replace(CR, '', str_replace(' ', '', get_raid_times($raid, false, true)));
 $msg_text = '<b>' . getTranslation('alert_raid_boss') . '</b>' . CR;
 $msg_text .= EMOJI_HERE . SP . $raid['gym_name'] . SP . '(' . $raidtimes . ')' . CR;
 $msg_text .= EMOJI_EGG . SP . '<b>' . get_local_pokemon_name($raid['pokemon']) . '</b>' . CR;
