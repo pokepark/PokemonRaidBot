@@ -45,7 +45,7 @@ $config_bg_color = explode(',',$config->RAID_PICTURE_BG_COLOR);
 if(count($config_bg_color) == 3) {
     $bg_rgb = $config_bg_color;
 }
-$bg_color = imagecolorallocate($canvas,$bg_rgb[0],$bg_rgb[1], $bg_rgb[2]);	
+$bg_color = imagecolorallocate($canvas,$bg_rgb[0],$bg_rgb[1], $bg_rgb[2]);
 imagefill($canvas, 0, 0, $bg_color);
 
 // Text / Font color
@@ -229,7 +229,7 @@ if($time_now < $raid['end_time']) {
 	$dst_x = $dst_y = 150;
         $dst_w = $dst_h = 200;
         $src_w = $src_h = 128;
- 
+
     //Pokemon
     } else {
         // Formatting the id from 1 digit to 3 digit (1 -> 001)
@@ -237,11 +237,11 @@ if($time_now < $raid['end_time']) {
 
         // Getting the actual icon
         if($raid['shiny'] == 1) {
-        	$img_pokemon = imagecreatefrompng(IMAGES_PATH . "/pokemon/pokemon_icon_" . $pokemon_id . "_" . $pokemon_form . "_shiny.png");    
+                $img_pokemon = imagecreatefrompng(IMAGES_PATH . "/pokemon/pokemon_icon_" . $pokemon_id . "_" . $pokemon_form . "_shiny.png");
         } else {
-        	$img_pokemon = imagecreatefrompng(IMAGES_PATH . "/pokemon/pokemon_icon_" . $pokemon_id . "_" . $pokemon_form . ".png");
+                $img_pokemon = imagecreatefrompng(IMAGES_PATH . "/pokemon/pokemon_icon_" . $pokemon_id . "_" . $pokemon_form . ".png");
         }
-	    
+
         // Position and size of the picture
         $dst_x = $dst_y = 100;
         $dst_w = $dst_h = $src_w = $src_h = 256;
@@ -279,7 +279,7 @@ imagecopyresampled($canvas,$img_pokemon,$dst_x,$dst_y,0,0,$dst_w,$dst_h,$src_w,$
 if($raid['raid_level'] == 'X') {
     $img_expass = imagecreatefrompng(IMAGES_PATH . "/expass.png");
     imagesavealpha($img_expass,true);
- 
+
     // Debug - Add border around expass image
     if($debug) {
         $im = imagecreate(256,256);
@@ -336,8 +336,7 @@ $targetHeight = $targetHeight/$gym_name_rows;
 // Get largest possible fontsize for each gym name line
 for($l=0; $l<count($gym_name_lines); $l++) {
     for($s=1; $s<70/count($gym_name_lines); $s=$s+0.5){
-        //$box = imagettfbbox($s, 0, $font_gym, $gym_name);	
-        $box = imagettfbbox($s, 0, $font_gym, $gym_name_lines[$l]);	
+        $box = imagettfbbox($s, 0, $font_gym, $gym_name_lines[$l]);
         $min_x = min(array($box[0], $box[2], $box[4], $box[6]));
         $max_x = max(array($box[0], $box[2], $box[4], $box[6]));
         $min_y = min(array($box[1], $box[3], $box[5], $box[7]));
@@ -465,10 +464,10 @@ for($p=0; $p<($num_pokemon_lines); $p++) {
 
     // Gym name font size and spacing
     if($p == 0 || $targetsize < $fontsize_poke) {
-        $fontsize_poke = $targetsize; 
+        $fontsize_poke = $targetsize;
     }
 }
-    
+
 // Pokemon name (and form) in 1 row
 $poke_text_top = 310;
 
