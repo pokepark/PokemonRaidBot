@@ -25,8 +25,10 @@ if($_GET['raid']!="") {
 }
 
 // Fonts
-$font_gym = FONTS_PATH . "/calibrib.ttf";
-$font_text = FONTS_PATH . "/calibri.ttf";
+$font_gym = FONTS_PATH . '/' . $config->RAID_PICTURE_FONT_GYM;
+$font_text = FONTS_PATH . '/' . $config->RAID_PICTURE_FONT_TEXT;
+$font_ex_gym = FONTS_PATH . '/' . $config->RAID_PICTURE_FONT_EX_GYM;
+
 
 // Canvas size
 $canvas_width = 700;
@@ -117,7 +119,6 @@ imageellipse($canvas,$new_w/2,$new_w/2,$new_w-9,$new_w-9,$color_ellipse);
 
 // Is ex gym?
 if($raid['ex_gym'] == 1) {
-    $font_ex_gym = FONTS_PATH . "/calibri.ttf";			// Path to the font file
     $ex_text_size = 20;
     $ex_text_angle = 0;
     $corner = 16;										// Roundness of the corners
