@@ -124,6 +124,7 @@ if(!empty($atts)) {
             '{$atts[0]['raid_done']}',
             '{$atts[0]['cancel']}',
             '{$atts[0]['late']}',
+            '{$atts[0]['remote']}',
             '{$atts[0]['invite']}',
             '{$data['arg']}',
             '{$atts[0]['alarm']}'

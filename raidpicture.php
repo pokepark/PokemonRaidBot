@@ -197,8 +197,11 @@ if($time_now < $raid['end_time']) {
         '493-dark' => '27',
         '493-fairy' => '28',
         '641-normal' => '11',
-	'642-normal' => '11',
-	'645-normal' => '11'
+        '642-normal' => '11',
+        '645-normal' => '11',
+        '646-normal' => '11',
+        '646-white' => '12',
+        '646-black' => '13'
     );
 
     // Map pokemon form for filename
@@ -373,7 +376,7 @@ for($y=0;$y<count($gym_name_lines);$y++){
 
 // Raid times
 if($time_now < $raid['end_time']) {
-    $time_text = get_raid_times($raid, true, false, true);
+    $time_text = get_raid_times($raid, true, true);
 } else {
     $time_text = getPublicTranslation('raid_done');
 }

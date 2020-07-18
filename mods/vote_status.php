@@ -46,7 +46,7 @@ if (!empty($answer)) {
         $request = my_query("SELECT * FROM raids as r left join gyms as g on r.gym_id = g.id WHERE r.id = {$data['id']}");
         $answer = $request->fetch_assoc();
         $gymname = '<b>' . $answer['gym_name'] . '</b>';
-                $raidtimes = str_replace(CR, '', str_replace(' ', '', get_raid_times($answer, false, false, true)));
+                $raidtimes = str_replace(CR, '', str_replace(' ', '', get_raid_times($answer, false, true)));
 
         // Get the new value
         $rs = my_query(
