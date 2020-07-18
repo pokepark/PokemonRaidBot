@@ -112,8 +112,23 @@ if(!empty($atts)) {
             my_query(
             "
             INSERT INTO attendance
+            (
+              user_id,
+              raid_id,
+              attend_time,
+              extra_mystic,
+              extra_valor,
+              extra_instinct,
+              arrived,
+              raid_done,
+              cancel,
+              late,
+              remote,
+              invite,
+              pokemon,
+              alarm
+            )
             VALUES(
-            NULL,
             '{$atts[0]['user_id']}',
             '{$atts[0]['raid_id']}',
             '{$atts[0]['attend_time']}',
