@@ -2870,6 +2870,11 @@ function delete_overview($chat_id, $message_id)
     );
 }
 
+/**
+ * Return the title of the given chat_id.
+ * @param $chat_id
+ * @return string
+ */
 function get_chat_title($chat_id){
     // Get info about chat for title.
     debug_log('Getting chat object for chat_id: ' . $chat_id);
