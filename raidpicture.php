@@ -98,6 +98,11 @@ imagefill($mask,0,0,$bg);
 $transparent = imagecolorallocate($mask,$transparent_rgb[0],$transparent_rgb[1],$transparent_rgb[2]);
 imagecolortransparent($mask,$transparent);
 
+// Creating the orange circle around the gym photo
+$color_ellipse = imagecolorallocate($mask,254,193,161);
+imagefilledellipse($mask,$new_w/2,$new_h/2,$new_w-9,$new_h-9,$color_ellipse);
+imagefilledellipse($mask,$new_w/2,$new_h/2,$new_w-16,$new_h-16,$bg);
+
 // Creating a circle that is filled with transparent color
 imagefilledellipse($mask,$new_w/2,$new_h/2,$new_w-30,$new_h-30,$transparent);
 
@@ -106,14 +111,6 @@ imagecopyresampled($canvas,$img_gym,0,0,$crop_x,$crop_y,$new_w,$new_h, $size,$si
 
 // Merging the mask with a circular cutout to the canvas
 imagecopymerge($canvas, $mask, 0, 0, 0, 0, $new_w, $new_h, 100);
-
-// Creating the orange circle around the gym photo
-$color_ellipse = imagecolorallocate($img_gym,254,193,161);
-imageellipse($canvas,$new_w/2,$new_w/2,$new_w-13,$new_w-13,$color_ellipse);
-imageellipse($canvas,$new_w/2,$new_w/2,$new_w-12,$new_w-12,$color_ellipse);
-imageellipse($canvas,$new_w/2,$new_w/2,$new_w-11,$new_w-11,$color_ellipse);
-imageellipse($canvas,$new_w/2,$new_w/2,$new_w-10,$new_w-10,$color_ellipse);
-imageellipse($canvas,$new_w/2,$new_w/2,$new_w-9,$new_w-9,$color_ellipse);
 
 
 
