@@ -67,7 +67,7 @@ function active_raid_duplication_check($gym_id)
         FROM   raids
         WHERE  end_time > (UTC_TIMESTAMP() - INTERVAL 10 MINUTE)
         AND    gym_id = {$gym_id}
-        GROUP BY id
+        GROUP BY id, pokemon
         "
     );
 
@@ -319,27 +319,35 @@ function get_active_raids()
  * Get current remote users count.
  * @param $raid_id
  * @param $user_id
+ * @param $attend_time
  * @return int
  */
-function get_remote_users_count($raid_id, $user_id, $report_zero = false)
+function get_remote_users_count($raid_id, $user_id, $attend_time = false)
 {
     global $config;
-    // Get remote users even if remote = 0 as user wants to switch to remote = 1
-    $rval = 1;
-    if($report_zero) {
-        $rval = 0;
+    
+    if(!$attend_time) {
+        // If attend time is not given, get the one user has already voted for from database
+        $att_sql = "(
+                                SELECT    attend_time
+                                FROM      attendance
+                                WHERE     raid_id = {$raid_id}
+                                    AND   user_id = {$user_id}
+                                LIMIT     1
+                            )";
+    }else {
+        // Use given attend time (needed when voting for new time)
+        $att_sql = "'{$attend_time}'";
     }
+    
     // Check if max remote users limit is already reached!
+    // Ignore max limit if attend time is 'Anytime'
     $rs = my_query(
         "
-        SELECT    sum(IF(remote = '$rval', (remote = '1') + extra_mystic + extra_valor + extra_instinct, 0)) AS remote_users
-        FROM      attendance
-        WHERE     attend_time = (
-                    SELECT attend_time
-                    FROM   attendance
-                    WHERE  raid_id = {$raid_id}
-                    AND   user_id = {$user_id}
-                  )
+        SELECT    IF(attend_time = '0000-00-00 00:00:00',0,sum(1 + extra_mystic + extra_valor + extra_instinct)) AS remote_users
+        FROM      (SELECT DISTINCT user_id, extra_mystic, extra_valor, extra_instinct, remote, attend_time FROM attendance WHERE remote = 1 AND cancel = 0 AND raid_done = 0) as T
+        WHERE     attend_time = {$att_sql}
+        GROUP BY  attend_time
         "
     );
 
@@ -1062,7 +1070,7 @@ function raid_edit_gym_keys($first, $warn = true, $action = 'edit_raidlevel', $d
         WHERE     UPPER(LEFT(gym_name, $first_length)) = UPPER('{$first}')
         $not
         AND       gyms.show_gym = {$show_gym}
-        GROUP BY  gym_name, raids.gym_id, gyms.id
+        GROUP BY  gym_name, raids.gym_id, gyms.id, gyms.ex_gym
         ORDER BY  gym_name
         "
     );
@@ -3804,7 +3812,14 @@ function show_raid_poll($raid)
             // Get done and canceled attendances
             $rs_att = my_query(
                 "
-                SELECT      attendance.*,
+                SELECT      attendance.user_id,
+                            attendance.attend_time,
+                            attendance.cancel,
+                            attendance.raid_done,
+                            attendance.raid_id,
+                            attendance.extra_valor,
+                            attendance.extra_mystic,
+                            attendance.extra_instinct,
                             users.name,
                             users.level,
                             users.team,
@@ -3815,7 +3830,7 @@ function show_raid_poll($raid)
                   WHERE     raid_id = {$raid['id']}
                     AND     (raid_done = 1
                             OR cancel = 1)
-                  GROUP BY  attendance.user_id, raid_done, attendance.id
+                  GROUP BY  attendance.user_id, attendance.raid_done, attendance.attend_time, attendance.raid_done, attendance.cancel, attendance.raid_id, users.name, users.level, users.team, attendance.extra_valor, attendance.extra_mystic, attendance.extra_instinct
                   ORDER BY  raid_done,
                             users.team,
                             users.level desc,

@@ -6,10 +6,10 @@ debug_log('vote()');
 //debug_log($update);
 //debug_log($data);
 
-// Check if the user has voted for this raid before.
+// Check if the user has voted for this raid before and check if they are attending remotely.
 $rs = my_query(
     "
-    SELECT    user_id
+    SELECT    user_id, remote, (1 + extra_valor + extra_instinct + extra_mystic) as user_count
     FROM      attendance
       WHERE   raid_id = {$data['id']}
         AND   user_id = {$update['callback_query']['from']['id']}
@@ -41,7 +41,10 @@ if (!empty($answer)) {
     } else {
         // Check if max remote users limit is already reached!
         $remote_users = get_remote_users_count($data['id'], $update['callback_query']['from']['id']);
-        if ($remote_users < $config->RAID_REMOTEPASS_USERS_LIMIT) {
+        // Skip remote user limit check if user is not attending remotely. 
+        // If they are, check if attend time already has max number of remote users. 
+        // Also prevent user from adding more than max number of remote players even if 'Anytime' is selected
+        if ($answer['remote'] == 0 or ($remote_users < $config->RAID_REMOTEPASS_USERS_LIMIT && $answer['user_count'] < $config->RAID_REMOTEPASS_USERS_LIMIT)) {
             // Get team.
             $team = 'extra_' . $data['arg'];
             alarm($data['id'],$update['callback_query']['from']['id'],'extra',$data['arg']);
