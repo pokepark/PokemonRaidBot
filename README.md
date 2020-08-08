@@ -91,7 +91,7 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
          * [translate.py](#translatepy)
             * [Usage](#usage)
 
-<!-- Added by: artanicus, at: Thu Jul 16 17:37:42 EEST 2020 -->
+<!-- Added by: artanicus, at: Sat Aug  8 14:05:13 EEST 2020 -->
 
 <!--te-->
 
@@ -1225,6 +1225,7 @@ Updates to the config file are NOT checked automatically. Therefore always check
 | TIMEZONE| Timezone definition to use as per [TZ database names](https://www.wikiwand.com/en/List_of_tz_database_time_zones#/List) |
 | TRAINER_BUTTONS_TOGGLE| Bool, ? |
 | TRAINER_CHATS| List of chats where trainer data setup messages can be shared |
+| UPGRADE_SQL_AUTO | When a DB schema upgrade is detected, run it automatically and bump config version to match. |
 | WEBHOOK_CHATS_LEVEL_1_0| ? |
 | WEBHOOK_CHATS_LEVEL_1_1| ? |
 | WEBHOOK_CHATS_LEVEL_1| List of Telegram group IDs to autoshare raids of level 1 |
