@@ -35,7 +35,8 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
          * [Raid creation options](#raid-creation-options)
          * [Raid time customization](#raid-time-customization)
          * [Raid poll design and layout](#raid-poll-design-and-layout)
-         * [Raid Picture](#raid-picture)
+         * [Raid Picture mode](#raid-picture-mode)
+            * [Font support](#font-support)
          * [Portal Import](#portal-import)
          * [Raid sharing](#raid-sharing)
             * [Sharing all raids to two chats](#sharing-all-raids-to-two-chats)
@@ -90,7 +91,7 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
          * [translate.py](#translatepy)
             * [Usage](#usage)
 
-<!-- Added by: artanicus, at: Sun May 31 15:24:40 EEST 2020 -->
+<!-- Added by: artanicus, at: Thu Jul 16 17:37:42 EEST 2020 -->
 
 <!--te-->
 
@@ -267,7 +268,7 @@ docker-compose logs -f raidbot
 docker-compose logs -f raidbot-db
 ```
 
-Make sure that everything is running correctly by inspecting the logs. 
+Make sure that everything is running correctly by inspecting the logs.
 
 ### SSL with Docker
 
@@ -565,14 +566,23 @@ Set `RAID_EX_GYM_MARKER` to set the marker for ex-raid gyms. You can use a prede
 
 Set `RAID_CREATION_EX_GYM_MARKER` to true to show the marker for ex-raid gyms during raid creation.
 
-### Raid Picture
+### Raid Picture mode
 
-Set `RAID_PICTURE` to true and set the url in `RAID_PICTURE_URL` to the location of raidpicture.php.
+To enable raid announcements as images set `RAID_PICTURE` to true and set the url in `RAID_PICTURE_URL` to the location of raidpicture.php.
 
 You also need to get the Pokemon sprites from ZeChrales and put them in the images/pokemon folder.
 Link: https://github.com/ZeChrales/PogoAssets/tree/master/pokemon_icons
 
 To easily download you can use a special download script on the CLI: `php getZeCharles.php`
+
+#### Font support
+
+If we included support for every unicode glyph under the sun the fonts alone would be over 1GB, thus we only ship the base Noto Sans fonts. If you need support for example for CJK glyphs, download a better suited font from [google.com/get/noto](https://www.google.com/get/noto/), place the `Regular` & `Bold` font files in `fonts/` and override them in `config/config.json`, for example:
+```
+  "RAID_PICTURE_FONT_GYM": "NotoSansCJKjp-Bold.otf",
+  "RAID_PICTURE_FONT_EX_GYM": "NotoSansCJKjp-Regular.otf",
+  "RAID_PICTURE_FONT_TEXT": "NotoSansCJKjp-Regular.otf"
+```
 
 Set `RAID_PICTURE_HIDE_LEVEL` to the raid levels (1-5 and X) for which the raid message is shared without the picture even if `RAID_PICTURE` is set to true.
 
@@ -1181,6 +1191,9 @@ Updates to the config file are NOT checked automatically. Therefore always check
 | RAID_PICTURE | Bool, enable picture based raid polls instead of default text mode |
 | RAID_PICTURE_BG_COLOR| List of RGB values for `RAID_PICTURE` poll background color, e.g. "0,0,0" for black |
 | RAID_PICTURE_FILE_FORMAT| Format for raid pictures for `RAID_PICTURE`, valid values are gif, jpg, jpeg, png |
+| RAID_PICTURE_FONT_GYM | Font used for gym names for regular raids. must match a ttf or otf file under `fonts/`. Probably should be of weight Bold. |
+| RAID_PICTURE_FONT_EX_GYM | Font used for gym names for ex-raids. must match a ttf or otf file under `fonts/`. Probably should be of weight Regular. |
+| RAID_PICTURE_FONT_TEXT | Font used for most text in raid pictures. must match a ttf or otf file under `fonts/`. Probably should be of weight Regular. |
 | RAID_PICTURE_HIDE_LEVEL| List of levels to exclude from `RAID_PICTURE` (will fall back to text mode)|
 | RAID_PICTURE_HIDE_POKEMON| List of Pokemon dex IDs to exclude from `RAID_PICTURE` (will fall back to text mode) |
 | RAID_PICTURE_ICONS_WHITE| Bool, use white icons in `RAID_PICTURE` instead of black |
