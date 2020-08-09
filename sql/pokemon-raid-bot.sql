@@ -55,7 +55,8 @@ CREATE TABLE `gyms` (
   `gym_note` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL,
   `gym_id` varchar(40) DEFAULT NULL,
   `img_url` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `gym_lat_lon` (`lat`, `lon`)
 ) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
