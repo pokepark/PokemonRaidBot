@@ -36,7 +36,7 @@ function get_overview($update, $chats_active, $raids_active, $action = 'refresh'
         );
 
         // Refresh active overview messages.
-        while ($row_overview = $rs->fetch_assoc()) {
+        while ($row_overview = $rs->fetch()) {
             $chat_id = $row_overview['chat_id'];
             $message_id = $row_overview['message_id'];
 
@@ -204,7 +204,7 @@ function get_overview($update, $chats_active, $raids_active, $action = 'refresh'
                 );
 
                 // Edit text for all messages, but disable the web preview!
-                while ($row_msg_id = $rs->fetch_assoc()) {
+                while ($row_msg_id = $rs->fetch()) {
                     // Set message_id.
                     $message_id = $row_msg_id['message_id'];
                     debug_log('Updating overview:' . CR . 'Chat_ID: ' . $previous . CR . 'Message_ID: ' . $message_id);
@@ -305,7 +305,7 @@ function get_overview($update, $chats_active, $raids_active, $action = 'refresh'
             "
         );
 
-        $att = $rs_att->fetch_assoc();
+        $att = $rs_att->fetch();
 
         // Add to message.
         if ($att['count'] > 0) {

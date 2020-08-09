@@ -42,7 +42,7 @@ function edit_pokedex_keys($limit, $action)
     $count = $sum['0'];
 
     // List users / moderators
-    while ($mon = $rs->fetch_assoc()) {
+    while ($mon = $rs->fetch()) {
         $pokemon_name = get_local_pokemon_name($mon['pokedex_id'] . '-' . $mon['pokemon_form']);
         $keys[] = array(
             'text'          => $mon['pokedex_id'] . SP . $pokemon_name,

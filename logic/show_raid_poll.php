@@ -133,7 +133,7 @@ function show_raid_poll($raid)
     $cnt_latewait = 0;
     $cnt_remote = 0;
 
-    while ($cnt_row = $rs_cnt->fetch_assoc()) {
+    while ($cnt_row = $rs_cnt->fetch()) {
         $cnt[$cnt_row['ts_att']] = $cnt_row;
         $cnt_all = $cnt_all + $cnt_row['count'];
         $cnt_latewait = $cnt_latewait + $cnt_row['count_late'];
@@ -224,7 +224,7 @@ function show_raid_poll($raid)
             // Init empty count array and count sum.
             $cnt_pokemon = [];
 
-            while ($cnt_rowpoke = $rs_cnt_pokemon->fetch_assoc()) {
+            while ($cnt_rowpoke = $rs_cnt_pokemon->fetch()) {
                 $cnt_pokemon[$cnt_rowpoke['ts_att'] . '_' . $cnt_rowpoke['pokemon']] = $cnt_rowpoke;
             }
 
@@ -260,7 +260,7 @@ function show_raid_poll($raid)
             $previous_pokemon = 'FIRST_RUN';
 
             // For each attendance.
-            while ($row = $rs_att->fetch_assoc()) {
+            while ($row = $rs_att->fetch()) {
                 // Set current attend time and pokemon
                 $current_att_time = $row['ts_att'];
                 $dt_att_time = dt2time($row['attend_time']);
@@ -392,7 +392,7 @@ function show_raid_poll($raid)
         $cnt_cancel = 0;
         $cnt_done = 0;
 
-        while ($cnt_row_cancel_done = $rs_cnt_cancel_done->fetch_assoc()) {
+        while ($cnt_row_cancel_done = $rs_cnt_cancel_done->fetch()) {
             // Cancel count
             if($cnt_row_cancel_done['count_cancel'] > 0) {
                 $cnt_cancel = $cnt_cancel + $cnt_row_cancel_done['count_cancel'] + $cnt_row_cancel_done['extra_mystic'] + $cnt_row_cancel_done['extra_valor'] + $cnt_row_cancel_done['extra_instinct'];
@@ -443,7 +443,7 @@ function show_raid_poll($raid)
             $cancel_done = 'CANCEL';
 
             // For each canceled / done.
-            while ($row = $rs_att->fetch_assoc()) {
+            while ($row = $rs_att->fetch()) {
                 // Attend time.
                 $dt_att_time = dt2time($row['attend_time']);
 

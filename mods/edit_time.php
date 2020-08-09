@@ -128,7 +128,7 @@ if ($raid_id == 0 && $gym_id != 0) {
             "
         );
 
-        $shared = $rs_share->fetch_assoc();
+        $shared = $rs_share->fetch();
 
         // Add keys for sharing the raid.
         if($shared['raid_count'] == 0) {

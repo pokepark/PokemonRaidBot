@@ -23,7 +23,7 @@ function get_pokemon_weather($pokemon_id_form)
             );
 
         // Fetch the row.
-        $ww = $rs->fetch_assoc();
+        $ww = $rs->fetch();
 
         return $ww['weather'];
     } else {

@@ -17,7 +17,7 @@ function get_gym_by_telegram_id($id)
             "
         );
 
-    $gym = $rs->fetch_assoc();
+    $gym = $rs->fetch();
 
     return $gym;
 }

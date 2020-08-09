@@ -111,7 +111,7 @@ if ($raid_id > 0) {
     );
 
     // Get row.
-    $row_ex_raid = $rs_ex_raid->fetch_assoc();
+    $row_ex_raid = $rs_ex_raid->fetch();
     $poke_name = $row_ex_raid['pokemon'];
     debug_log('Comparing the current pokemon to pokemons from ex-raid list now...');
     debug_log('Current Pokemon in database for this raid: ' . $poke_name);

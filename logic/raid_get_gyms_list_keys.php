@@ -30,7 +30,7 @@ function raid_get_gyms_list_keys($searchterm)
                 "
             );
 
-        while ($gym = $rs->fetch_assoc()) {
+        while ($gym = $rs->fetch()) {
             $first = strtoupper(substr($gym['gym_name'], 0, 1));
 	    $keys[] = array(
                 'text'          => $gym['gym_name'],

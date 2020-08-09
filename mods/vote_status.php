@@ -17,7 +17,7 @@ $rs = my_query(
 );
 
 // Get the answer.
-$answer = $rs->fetch_assoc();
+$answer = $rs->fetch();
 
 // Write to log.
 debug_log($answer);
@@ -44,7 +44,7 @@ if (!empty($answer)) {
 
         // request gym name
         $request = my_query("SELECT * FROM raids as r left join gyms as g on r.gym_id = g.id WHERE r.id = {$data['id']}");
-        $answer = $request->fetch_assoc();
+        $answer = $request->fetch();
         $gymname = '<b>' . $answer['gym_name'] . '</b>';
                 $raidtimes = str_replace(CR, '', str_replace(' ', '', get_raid_times($answer, false, true)));
 
@@ -57,7 +57,7 @@ if (!empty($answer)) {
 	        AND   user_id = {$update['callback_query']['from']['id']}
         "
         );
-        $answer = $rs->fetch_assoc();
+        $answer = $rs->fetch();
 
         // Enable alerts message.
         if($answer['alarm']) {

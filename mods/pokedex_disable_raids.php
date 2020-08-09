@@ -72,7 +72,7 @@ if($arg == 0) {
     $keys = [];
 
     // Add key for each raid level
-    while ($pokemon = $rs->fetch_assoc()) {
+    while ($pokemon = $rs->fetch()) {
         $plevels[$pokemon['pokedex_id'].'-'.$pokemon['pokemon_form']] = $pokemon['raid_level'];
     }
 

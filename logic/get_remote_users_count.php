@@ -36,7 +36,7 @@ function get_remote_users_count($raid_id, $user_id, $attend_time = false)
     );
 
     // Get the answer.
-    $answer = $rs->fetch_assoc();
+    $answer = $rs->fetch();
 
     // Write to log.
     debug_log($answer['remote_users'], 'Remote participants so far:');
