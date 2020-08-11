@@ -11,6 +11,10 @@ function raid_list($update)
     // Init raid id.
     $iqq = 0;
 
+    // Need db functions real_escape_string and use config
+    global $db;
+    global $config;
+
     // Botname:raid_id received?
     if (substr_count($update['inline_query']['query'], ':') == 1) {
         // Botname: received, is there a raid_id after : or not?
@@ -21,7 +25,7 @@ function raid_list($update)
     }
 
     // Inline list polls.
-    if ($iqq != 0) {
+    if ($iqq != 0 or strstr($update['inline_query']['query'],':') == false   ) {
 
         // Raid by ID.
         $request = my_query(
@@ -35,9 +39,12 @@ function raid_list($update)
                     LEFT JOIN   gyms
                     ON          raids.gym_id = gyms.id
                     LEFT JOIN   users
-                    ON          raids.user_id = users.user_id
-		      WHERE     raids.id = {$iqq}
-                      AND       end_time>UTC_TIMESTAMP()
+		    ON          raids.user_id = users.user_id
+		     WHERE     ( raids.id = {$iqq} or gyms.gym_name like '%{$db->real_escape_string($update['inline_query']['query'])}%' )
+		      AND       end_time>UTC_TIMESTAMP()
+                    ORDER BY
+		    ( 6371000 * acos( cos( radians( " . $config->INLINESEARCH_LATITUDE . " ) ) * cos( radians( gyms.lat ) ) * cos( radians( gyms.lon ) - radians(".  $config->INLINESEARCH_LONGITUDE . ") ) + sin( radians(" . $config->INLINESEARCH_LATITUDE . ")) * sin(radians(gyms.lat)))
+		    LIMIT 8
             "
         );
 
