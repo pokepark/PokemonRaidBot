@@ -43,7 +43,7 @@ function raid_list($update)
 		     WHERE     ( raids.id = {$iqq} or gyms.gym_name like '%{$db->real_escape_string($update['inline_query']['query'])}%' )
 		      AND       end_time>UTC_TIMESTAMP()
                     ORDER BY
-		    ( 6371000 * acos( cos( radians( " . $config->INLINESEARCH_LATITUDE . " ) ) * cos( radians( gyms.lat ) ) * cos( radians( gyms.lon ) - radians(".  $config->INLINESEARCH_LONGITUDE . ") ) + sin( radians(" . $config->INLINESEARCH_LATITUDE . ")) * sin(radians(gyms.lat)))
+		    ( 6371000 * acos( cos( radians( " . $config->INLINESEARCH_LATITUDE . " ) ) * cos( radians( gyms.lat ) ) * cos( radians( gyms.lon ) - radians(".  $config->INLINESEARCH_LONGITUDE . ") ) + sin( radians(" . $config->INLINESEARCH_LATITUDE . ")) * sin(radians(gyms.lat))))
 		    LIMIT 8
             "
         );
