@@ -107,7 +107,7 @@ if ($raid_id == 0 && $gym_id != 0) {
         );
 
         // Get last insert id from db.
-        $raid_id = my_insert_id();
+        $raid_id = $dbh->lastInsertId();
 
         // Write to log.
         debug_log('ID=' . $raid_id);

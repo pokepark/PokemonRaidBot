@@ -31,7 +31,7 @@ $data = explode(',', $gym_data, 5);
 
 // Invalid data received.
 if (count($data) < 4) {
-    send_message($update['message']['chat']['id'], 'Invalid input - Paramter mismatch', []);
+    send_message($update['message']['chat']['id'], 'Invalid input - Parameter mismatch', []);
     exit;
 }
 
@@ -122,25 +122,32 @@ if ($raid_id > 0) {
         // Ex-Raid! Update only team in raids table.
         debug_log('Current pokemon is an ex-raid pokemon: ' . $poke_name);
         debug_log('Pokemon "' .$poke_name . '" will NOT be updated to "' . $boss . '"!');
-        my_query(
+        $stmt = $dbh->prepare(
             "
             UPDATE    raids
-            SET	      gym_team = '{$db->real_escape_string($team)}'
-              WHERE   id = {$raid_id}
+            SET	      gym_team = :team
+              WHERE   id = :raid_id
             "
         );
+        $stmt->bindParam(':team', $team);
+        $stmt->bindParam(':raid_id', $raid_id);
+        $stmt->execute();
     } else {
         // Update pokemon and team in raids table.
         debug_log('Current pokemon is NOT an ex-raid pokemon: ' . $poke_name);
         debug_log('Pokemon "' .$poke_name . '" will be updated to "' . $boss . '"!');
-        my_query(
+        $stmt = $dbh->prepare(
             "
             UPDATE    raids
-            SET       pokemon = '{$db->real_escape_string($boss)}',
-		      gym_team = '{$db->real_escape_string($team)}'
-              WHERE   id = {$raid_id}
+            SET       pokemon = :boss
+		      gym_team = :team
+            WHERE     id = :raid_id
             "
         );
+        $stmt->bindParam(':boss', $boss);
+        $stmt->bindParam(':team', $team);
+        $stmt->bindParam(':raid_id', $raid_id);
+        $stmt->execute();
     }
 
     // Debug log
@@ -155,21 +162,26 @@ if ($raid_id > 0) {
 }
 
 // Build the query.
-$rs = my_query(
+$stmt = $dbh->prepare(
     "
     INSERT INTO   raids
-    SET           pokemon = '{$db->real_escape_string($boss)}',
-		  user_id = {$update['message']['from']['id']},
+    SET           pokemon = :boss,
+		  user_id = :user_id,
 		  first_seen = DATE_FORMAT(UTC_TIMESTAMP(), '%Y-%m-%d %H:%i:00'),
 		  start_time = DATE_ADD(first_seen, INTERVAL {$countdown} MINUTE),
 		  end_time = DATE_ADD(start_time, INTERVAL {$endtime} MINUTE),
-		  gym_team = '{$db->real_escape_string($team)}',
-		  gym_id = '{$gym_id}'
+		  gym_team = :team,
+		  gym_id = :gym_id
     "
 );
+$stmt->bindParam(':boss', $boss);
+$stmt->bindParam(':user_id', $update['message']['from']['id']);
+$stmt->bindParam(':team', $team);
+$stmt->bindParam(':gym_id', $gym_id);
+$stmt->execute();
 
 // Get last insert id from db.
-$id = my_insert_id();
+$id = $dbh->lastInsertId();
 
 // Write to log.
 debug_log('ID=' . $id);
