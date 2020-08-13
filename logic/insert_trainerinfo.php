@@ -11,16 +11,16 @@ function insert_trainerinfo($chat_id, $message_id)
     // Build query to check if trainer info details are already in database or not
     $rs = my_query(
         "
-        SELECT    COUNT(*)
+        SELECT    COUNT(*) AS count
         FROM      trainerinfo
           WHERE   chat_id = '{$chat_id}'
          "
         );
 
-    $row = $rs->fetch_row();
+    $row = $rs->fetch();
 
     // Trainer info already in database or new
-    if (empty($row['0'])) {
+    if (empty($row['count'])) {
         // Build query for trainerinfo table to add trainer info to database
         debug_log('Adding new trainer information to database trainer info list!');
         $rs = my_query(

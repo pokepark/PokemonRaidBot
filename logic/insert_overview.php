@@ -11,16 +11,16 @@ function insert_overview($chat_id, $message_id)
     // Build query to check if overview details are already in database or not
     $rs = my_query(
         "
-        SELECT    COUNT(*)
+        SELECT    COUNT(*) AS count
         FROM      overview
           WHERE   chat_id = '{$chat_id}'
          "
         );
 
-    $row = $rs->fetch_row();
+    $row = $rs->fetch();
 
     // Overview already in database or new
-    if (empty($row['0'])) {
+    if (empty($row['count'])) {
         // Build query for overview table to add overview info to database
         debug_log('Adding new overview information to database overview list!');
         $rs = my_query(

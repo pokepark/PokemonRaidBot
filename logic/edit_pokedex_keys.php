@@ -32,14 +32,14 @@ function edit_pokedex_keys($limit, $action)
     // Number of entries
     $cnt = my_query(
         "
-        SELECT    COUNT(*)
+        SELECT    COUNT(*) AS count
         FROM      pokemon
         "
     );
 
     // Number of database entries found.
-    $sum = $cnt->fetch_row();
-    $count = $sum['0'];
+    $sum = $cnt->fetch();
+    $count = $sum['count'];
 
     // List users / moderators
     while ($mon = $rs->fetch()) {

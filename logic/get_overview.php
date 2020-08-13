@@ -127,15 +127,15 @@ function get_overview($update, $chats_active, $raids_active, $action = 'refresh'
                     // Make sure it's not already shared
                     $rs = my_query(
                         "
-                        SELECT    COUNT(*)
+                        SELECT    COUNT(*) AS count
                         FROM      overview
                         WHERE      chat_id = '{$previous}'
                         "
                     );
 
-                    $dup_row = $rs->fetch_row();
+                    $dup_row = $rs->fetch();
 
-                    if (empty($dup_row['0'])) {
+                    if (empty($dup_row['count'])) {
                         // Not shared yet - Share button
                         $keys[] = [
                             [
