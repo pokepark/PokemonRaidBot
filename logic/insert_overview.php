@@ -6,8 +6,6 @@
  */
 function insert_overview($chat_id, $message_id)
 {
-    global $db;
-
     // Build query to check if overview details are already in database or not
     $rs = my_query(
         "

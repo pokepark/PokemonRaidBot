@@ -245,4 +245,3 @@ if ($update['message']['chat']['type'] == 'private' || $update['callback_query']
 }
 
 ?>
-

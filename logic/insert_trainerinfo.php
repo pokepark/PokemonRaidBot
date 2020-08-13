@@ -6,8 +6,6 @@
  */
 function insert_trainerinfo($chat_id, $message_id)
 {
-    global $db;
-
     // Build query to check if trainer info details are already in database or not
     $rs = my_query(
         "

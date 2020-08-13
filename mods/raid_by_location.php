@@ -84,7 +84,7 @@ if($gym) {
 // Insert / update gym.
 try {
 
-    global $db;
+    global $dbh;
 
     // Build query to check if gym is already in database or not
     $rs = my_query("

@@ -13,8 +13,6 @@ function insert_cleanup($chat_id, $message_id, $raid_id)
     debug_log('Message_ID: ' . $message_id);
 
     if ((is_numeric($chat_id)) && (is_numeric($message_id)) && (is_numeric($raid_id)) && ($raid_id > 0)) {
-        global $db;
-
         // Get raid times.
         $raid = get_raid($raid_id);
 

@@ -5,8 +5,6 @@
  */
 function delete_raid($raid_id)
 {
-    global $db;
-
     // Delete telegram messages for raid.
     $rs = my_query(
         "
