@@ -92,7 +92,7 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
          * [translate.py](#translatepy)
             * [Usage](#usage)
 
-<!-- Added by: artanicus, at: Sat Aug 15 11:03:49 EEST 2020 -->
+<!-- Added by: artanicus, at: Sat Aug 15 16:07:54 EEST 2020 -->
 
 <!--te-->
 
@@ -415,8 +415,9 @@ https://web.telegram.org/#/im?p=s1122334455_11223344556677889900
 ```
 
 #### Which group type should I use? / How do I make a group a Supergroup
-- Some features will only work with Supergroups since they enable more features needed for example for automatic cleanup. If in doubt use Supergroups.
+- Some features will only work with Supergroups (and Channels) since they enable more features needed for example for automatic cleanup. If in doubt use Supergroups.
 - Every created group starts out as a normal Group but once you enable certain features it will get converted automatically to a Supergroup. For example enabling new users to see message history will convert it!
+- Once a group has been converted to a Supergroup it cannot go back to a normal Group, even if you change back the option that caused it to convert.
 - Be aware that the group ID will change completely when the group gets converted so you'll need to find it again!
 
 
@@ -691,11 +692,11 @@ Set `MAP_URL` to the URL of the PokemonBotMap to add it to each raid poll. Pokem
 
 The bot features an automatic cleanup of telegram raid poll messages as well as cleanup of the database (attendance and raids tables).
 
-To activate cleanup you need to [make sure your groups are Supergroups](#which-group-type-should-i-use--how-do-i-make-a-group-a-supergroup), enable cleanup in the config and create a cronjob to trigger the cleanup process.
+To activate cleanup you need to [make sure your groups are Supergroups or Channels](#which-group-type-should-i-use--how-do-i-make-a-group-a-supergroup), enable cleanup in the config and create a cronjob to trigger the cleanup process.
 
 1. Set the `CLEANUP` in the config to `true` and define a cleanup secret/passphrase under `CLEANUP_SECRET`.
 2. Activate the cleanup of Telegram messages and/or the database for raids by setting `CLEANUP_TELEGRAM` / `CLEANUP_DATABASE` to true.
-   - **Do note** that `CLEANUP_TELEGRAM` will not work in groups that are not Supergroups!
+   - **Do note** that `CLEANUP_TELEGRAM` will not work in groups that are not Supergroups or Channels!
 3. Specify the amount of minutes which need to pass by after raid has ended before the bot executes the cleanup.
    - Times are in minutes in `CLEANUP_TIME_TG` for telegram cleanup and `CLEANUP_TIME_DB` for database cleanup.
    - The value for the minutes of the database cleanup `CLEANUP_TIME_DB` must be greater than then one for telegram cleanup `CLEANUP_TIME_TG`. Otherwise cleanup will do nothing and exit due to misconfiguration!
