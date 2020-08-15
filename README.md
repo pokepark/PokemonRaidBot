@@ -92,7 +92,7 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
          * [translate.py](#translatepy)
             * [Usage](#usage)
 
-<!-- Added by: artanicus, at: Sat Aug 15 10:57:53 EEST 2020 -->
+<!-- Added by: artanicus, at: Sat Aug 15 11:03:49 EEST 2020 -->
 
 <!--te-->
 
@@ -694,13 +694,13 @@ The bot features an automatic cleanup of telegram raid poll messages as well as 
 To activate cleanup you need to [make sure your groups are Supergroups](#which-group-type-should-i-use--how-do-i-make-a-group-a-supergroup), enable cleanup in the config and create a cronjob to trigger the cleanup process.
 
 1. Set the `CLEANUP` in the config to `true` and define a cleanup secret/passphrase under `CLEANUP_SECRET`.
-1. Activate the cleanup of Telegram messages and/or the database for raids by setting `CLEANUP_TELEGRAM` / `CLEANUP_DATABASE` to true.
-  - **Do note** that `CLEANUP_TELEGRAM` will not work in groups that are not Supergroups!
-1. Specify the amount of minutes which need to pass by after raid has ended before the bot executes the cleanup.
-  - Times are in minutes in `CLEANUP_TIME_TG` for telegram cleanup and `CLEANUP_TIME_DB` for database cleanup.
-  - The value for the minutes of the database cleanup `CLEANUP_TIME_DB` must be greater than then one for telegram cleanup `CLEANUP_TIME_TG`. Otherwise cleanup will do nothing and exit due to misconfiguration!
-1. Finally set up a cronjob to trigger the cleanup. You can also trigger telegram / database cleanup per cronjob: For no cleanup use 0, for cleanup use 1 and to use your config file use 2 or leave "telegram" and "database" out of the request data array.
-  - See the examples below for curl based calls. Any HTTP client capable of a POST request will work.
+2. Activate the cleanup of Telegram messages and/or the database for raids by setting `CLEANUP_TELEGRAM` / `CLEANUP_DATABASE` to true.
+   - **Do note** that `CLEANUP_TELEGRAM` will not work in groups that are not Supergroups!
+3. Specify the amount of minutes which need to pass by after raid has ended before the bot executes the cleanup.
+   - Times are in minutes in `CLEANUP_TIME_TG` for telegram cleanup and `CLEANUP_TIME_DB` for database cleanup.
+   - The value for the minutes of the database cleanup `CLEANUP_TIME_DB` must be greater than then one for telegram cleanup `CLEANUP_TIME_TG`. Otherwise cleanup will do nothing and exit due to misconfiguration!
+4. Finally set up a cronjob to trigger the cleanup. You can also trigger telegram / database cleanup per cronjob: For no cleanup use 0, for cleanup use 1 and to use your config file use 2 or leave "telegram" and "database" out of the request data array.
+   - See the examples below for curl based calls. Any HTTP client capable of a POST request will work.
 
 ### Examples
 
