@@ -25,6 +25,7 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
          * [Referring to groups, channels and users](#referring-to-groups-channels-and-users)
             * [Finding public IDs](#finding-public-ids)
             * [Finding private IDs](#finding-private-ids)
+            * [Which group type should I use? / How do I make a group a Supergroup](#which-group-type-should-i-use--how-do-i-make-a-group-a-supergroup)
          * [Database connection](#database-connection)
          * [General config and log files](#general-config-and-log-files)
       * [Installing the Webhook](#installing-the-webhook)
@@ -91,7 +92,7 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
          * [translate.py](#translatepy)
             * [Usage](#usage)
 
-<!-- Added by: artanicus, at: Thu Jul 16 17:37:42 EEST 2020 -->
+<!-- Added by: artanicus, at: Sat Aug 15 10:57:53 EEST 2020 -->
 
 <!--te-->
 
@@ -337,7 +338,7 @@ While in some contexts public groups, channels and supergroups could use their p
 #### Finding public IDs
 Counterintuitively getting the ID of a public user, group, channel or supergroup is more difficult since most ways will replace the @name where a numeric ID would be visible. These methods will also work for private versions but will cause spam to the group. The easiest way is via @RawDataBot:
 
-**Group or supergroup:**
+**Group or Supergroup:**
 
 Add @RawDataBot the the group which will cause it to report data about the group. Use the id value as-is,
 it's already prepended to the right length.
@@ -413,6 +414,10 @@ https://web.telegram.org/#/im?p=s1122334455_11223344556677889900
 => use -1001122334455 (notice the extra 100 prepended to pad to 13)
 ```
 
+#### Which group type should I use? / How do I make a group a Supergroup
+- Some features will only work with Supergroups since they enable more features needed for example for automatic cleanup. If in doubt use Supergroups.
+- Every created group starts out as a normal Group but once you enable certain features it will get converted automatically to a Supergroup. For example enabling new users to see message history will convert it!
+- Be aware that the group ID will change completely when the group gets converted so you'll need to find it again!
 
 
 ### Database connection
@@ -686,39 +691,45 @@ Set `MAP_URL` to the URL of the PokemonBotMap to add it to each raid poll. Pokem
 
 The bot features an automatic cleanup of telegram raid poll messages as well as cleanup of the database (attendance and raids tables).
 
-To activate cleanup you need to change the config and create a cronjob to trigger the cleanup process as follows:
+To activate cleanup you need to [make sure your groups are Supergroups](#which-group-type-should-i-use--how-do-i-make-a-group-a-supergroup), enable cleanup in the config and create a cronjob to trigger the cleanup process.
 
-Set the `CLEANUP` in the config to `true` and define a cleanup secret/passphrase under `CLEANUP_SECRET`.
-
-Activate the cleanup of telegram messages and/or the database for raids by setting `CLEANUP_TELEGRAM` / `CLEANUP_DATABASE` to true.
-
-Specify the amount of minutes which need to pass by after raid has ended before the bot executes the cleanup. Times are in minutes in `CLEANUP_TIME_TG` for telegram cleanup and `CLEANUP_TIME_DB` for database cleanup. The value for the minutes of the database cleanup `CLEANUP_TIME_DB` must be greater than then one for telegram cleanup `CLEANUP_TIME_TG`. Otherwise cleanup will do nothing and exit due to misconfiguration!
-
-Finally set up a cronjob to trigger the cleanup. You can also trigger telegram / database cleanup per cronjob: For no cleanup use 0, for cleanup use 1 and to use your config file use 2 or leave "telegram" and "database" out of the request data array.
+1. Set the `CLEANUP` in the config to `true` and define a cleanup secret/passphrase under `CLEANUP_SECRET`.
+1. Activate the cleanup of Telegram messages and/or the database for raids by setting `CLEANUP_TELEGRAM` / `CLEANUP_DATABASE` to true.
+  - **Do note** that `CLEANUP_TELEGRAM` will not work in groups that are not Supergroups!
+1. Specify the amount of minutes which need to pass by after raid has ended before the bot executes the cleanup.
+  - Times are in minutes in `CLEANUP_TIME_TG` for telegram cleanup and `CLEANUP_TIME_DB` for database cleanup.
+  - The value for the minutes of the database cleanup `CLEANUP_TIME_DB` must be greater than then one for telegram cleanup `CLEANUP_TIME_TG`. Otherwise cleanup will do nothing and exit due to misconfiguration!
+1. Finally set up a cronjob to trigger the cleanup. You can also trigger telegram / database cleanup per cronjob: For no cleanup use 0, for cleanup use 1 and to use your config file use 2 or leave "telegram" and "database" out of the request data array.
+  - See the examples below for curl based calls. Any HTTP client capable of a POST request will work.
 
 ### Examples
 
-Make sure to replace the URL with yours.
+Make sure to replace the URL with yours!
 
-Cronjob using cleanup values from config.json for raid polls: Just the secret without telegram/database OR telegram = 2 and database = 2
+- Cronjob using cleanup values from config.json:
+```
+curl -k -d '{"cleanup":{"secret":"your-cleanup-secret/passphrase"}}' https://localhost/index.php?apikey=111111111:AABBCCDDEEFFGGHHIIJJKKLLMMNNOOPP123`
+```
 
-`curl -k -d '{"cleanup":{"secret":"your-cleanup-secret/passphrase"}}' https://localhost/index.php?apikey=111111111:AABBCCDDEEFFGGHHIIJJKKLLMMNNOOPP123`
+- Explicitly use config values:
+```
+curl -k -d '{"cleanup":{"secret":"your-cleanup-secret/passphrase","telegram":"2","database":"2"}}' https://localhost/index.php?apikey=111111111:AABBCCDDEEFFGGHHIIJJKKLLMMNNOOPP123
+```
 
-OR
+- Clean up telegram raid poll messages only: telegram = 1 and database = 0
+```
+curl -k -d '{"cleanup":{"secret":"your-cleanup-secret/passphrase","telegram":"1","database":"0"}}' https://localhost/index.php?apikey=111111111:AABBCCDDEEFFGGHHIIJJKKLLMMNNOOPP123
+```
 
-`curl -k -d '{"cleanup":{"secret":"your-cleanup-secret/passphrase","telegram":"2","database":"2"}}' https://localhost/index.php?apikey=111111111:AABBCCDDEEFFGGHHIIJJKKLLMMNNOOPP123`
+- Clean up telegram raid poll messages and database: telegram = 1 and database = 1
+```
+curl -k -d '{"cleanup":{"secret":"your-cleanup-secret/passphrase","telegram":"1","database":"1"}}' https://localhost/index.php?apikey=111111111:AABBCCDDEEFFGGHHIIJJKKLLMMNNOOPP123
+```
 
-Cronjob to clean up telegram raid poll messages only: telegram = 1 and database = 0
-
-`curl -k -d '{"cleanup":{"secret":"your-cleanup-secret/passphrase","telegram":"1","database":"0"}}' https://localhost/index.php?apikey=111111111:AABBCCDDEEFFGGHHIIJJKKLLMMNNOOPP123`
-
-Cronjob to clean up telegram raid poll messages and database: telegram = 1 and database = 1
-
-`curl -k -d '{"cleanup":{"secret":"your-cleanup-secret/passphrase","telegram":"1","database":"1"}}' https://localhost/index.php?apikey=111111111:AABBCCDDEEFFGGHHIIJJKKLLMMNNOOPP123`
-
-Cronjob to clean up database and maybe telegram raid poll messages (when specified in config): telegram = 2 and database = 1
-
-`curl -k -d '{"cleanup":{"secret":"your-cleanup-secret/passphrase","telegram":"2","database":"1"}}' https://localhost/index.php?apikey=111111111:AABBCCDDEEFFGGHHIIJJKKLLMMNNOOPP123`
+- Clean up database and maybe telegram raid poll messages (when specified in config): telegram = 2 and database = 1
+```
+curl -k -d '{"cleanup":{"secret":"your-cleanup-secret/passphrase","telegram":"2","database":"1"}}' https://localhost/index.php?apikey=111111111:AABBCCDDEEFFGGHHIIJJKKLLMMNNOOPP123
+```
 
 ## Access permissions
 
