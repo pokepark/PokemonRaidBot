@@ -202,7 +202,8 @@ if($time_now < $raid['end_time']) {
         '645-normal' => '11',
         '646-normal' => '11',
         '646-white' => '12',
-        '646-black' => '13'
+        '646-black' => '13',
+        '649-normal' => '11'
     );
 
     // Map pokemon form for filename
