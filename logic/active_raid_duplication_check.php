@@ -11,7 +11,7 @@ function active_raid_duplication_check($gym_id)
     // Build query.
     $rs = my_query(
         "
-        SELECT id, pokemon, count(gym_id) AS active_raid
+        SELECT id, pokemon, raid_level, count(gym_id) AS active_raid
         FROM   raids
         WHERE  end_time > (UTC_TIMESTAMP() - INTERVAL 10 MINUTE)
         AND    gym_id = {$gym_id}
@@ -29,7 +29,7 @@ function active_raid_duplication_check($gym_id)
             $active = $raid['active_raid'];
             if ($active > 0) {
                 // Exclude ex-raid pokemon.
-                $raid_level = get_raid_level($raid['pokemon']);
+                $raid_level = $raid['raid_level'];
                 if($raid_level == 'X') {
                     continue;
                 } else {

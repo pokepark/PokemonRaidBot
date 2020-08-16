@@ -12,22 +12,22 @@ bot_access_check($update, 'pokedex');
 // Set the id.
 $pokedex_id = $data['id'];
 
+// Split pokedex_id and form
+$dex_id_form = explode('-',$pokedex_id);
+$dex_id = $dex_id_form[0];
+$dex_form = $dex_id_form[1];
+
 // Get the action, old and new weather
 $arg = $data['arg'];
 $data = explode("-", $arg);
 $action = $data[0];
 $new_weather = $data[1];
-$old_weather = get_pokemon_weather($pokedex_id);
+$old_weather = get_pokemon_weather($dex_id, $dex_form);
 
 // Log
 debug_log('Action: ' . $action);
 debug_log('Old weather: ' . $old_weather);
 debug_log('New weather: ' . $new_weather);
-
-// Split pokedex_id and form
-$dex_id_form = explode('-',$pokedex_id);
-$dex_id = $dex_id_form[0];
-$dex_form = $dex_id_form[1];
 
 // Add weather
 if($action == 'add') {
@@ -54,7 +54,7 @@ if($action == 'add') {
 
     // Set the message.
     $msg = getTranslation('raid_boss') . ': <b>' . get_local_pokemon_name($pokedex_id) . ' (#' . $dex_id . ')</b>' . CR;
-    $msg .= getTranslation('pokedex_current_weather') . get_weather_icons($old_weather) . CR . CR;
+    $msg .= getTranslation('pokedex_current_weather') . get_weather_icons($dex_id, $dex_form) . CR . CR;
     $msg .= '<b>' . getTranslation('pokedex_new_weather') . get_weather_icons($new_weather) . '</b>';
 
 // Save weather to database
@@ -65,7 +65,7 @@ if($action == 'add') {
             UPDATE    pokemon
             SET       weather = {$new_weather}
             WHERE     pokedex_id = {$dex_id}
-            AND       pokemon_form = '{$dex_form}'
+            AND       pokemon_form_id = '{$dex_form}'
             "
         );
 
@@ -76,7 +76,7 @@ if($action == 'add') {
     $keys = [
         [
             [
-                'text'          => getTranslation('back') . ' (' . get_local_pokemon_name($pokedex_id) . ')',
+                'text'          => getTranslation('back') . ' (' . get_local_pokemon_name($dex_id, $dex_form) . ')',
                 'callback_data' => $pokedex_id . ':pokedex_edit_pokemon:0'
             ],
             [
@@ -87,11 +87,11 @@ if($action == 'add') {
     ];
 
     // Build callback message string.
-    $callback_response = getTranslation('pokemon_saved') . ' ' . get_local_pokemon_name($pokedex_id);
+    $callback_response = getTranslation('pokemon_saved') . ' ' . get_local_pokemon_name($dex_id, $dex_form);
 
     // Set the message.
     $msg = getTranslation('pokemon_saved') . CR;
-    $msg .= '<b>' . get_local_pokemon_name($pokedex_id) . ' (#' . $dex_id . ')</b>' . CR . CR;
+    $msg .= '<b>' . get_local_pokemon_name($dex_id, $dex_form) . ' (#' . $dex_id . ')</b>' . CR . CR;
     $msg .= getTranslation('pokedex_weather') . ':' . CR;
     $msg .= '<b>' . get_weather_icons($new_weather) . '</b>';
 }

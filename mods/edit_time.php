@@ -93,12 +93,17 @@ if ($raid_id == 0 && $gym_id != 0) {
         // Now.
         $now = utcnow();
 
+        $pokemon_id_form = explode("-",$pokemon_id);
+        $raid_level = get_raid_level($pokemon_id_form[0],$pokemon_id_form[1]);
+        
         // Create raid in database.
         $rs = my_query(
             "
             INSERT INTO   raids
             SET           user_id = {$update['callback_query']['from']['id']},
-			  pokemon = '{$pokemon_id}',
+			  pokemon = '{$pokemon_id_form[0]}',
+			  pokemon_form = '{$pokemon_id_form[1]}',
+			  raid_level = '{$raid_level}',
 			  first_seen = UTC_TIMESTAMP(),
 			  start_time = '{$start_date_time}',
                           end_time = DATE_ADD(start_time, INTERVAL {$duration} MINUTE),

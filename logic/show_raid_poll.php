@@ -12,11 +12,13 @@ function show_raid_poll($raid)
     $msg = array();
 
     // Get current pokemon
-    $raid_pokemon = $raid['pokemon'];
-    $raid_pokemon_id = explode('-',$raid_pokemon)[0];
+    $raid_pokemon_id = $raid['pokemon'];
+    $raid_pokemon_form = $raid['pokemon_form'];
+    $raid_pokemon_form_name = get_pokemon_form_name($raid_pokemon_id, $raid_pokemon_form);
+    $raid_pokemon = $raid_pokemon_id . "-" . $raid_pokemon_form;
 
     // Get raid level
-    $raid_level = get_raid_level($raid_pokemon);
+    $raid_level = $raid['raid_level'];
 
     // Get raid times.
     $msg = raid_poll_message($msg, get_raid_times($raid), true);
@@ -70,10 +72,10 @@ function show_raid_poll($raid)
     }
 
     // Display raid boss name.
-    $msg = raid_poll_message($msg, getPublicTranslation('raid_boss') . ': <b>' . get_local_pokemon_name($raid['pokemon'], true) . '</b>', true);
+    $msg = raid_poll_message($msg, getPublicTranslation('raid_boss') . ': <b>' . get_local_pokemon_name($raid_pokemon_id, $raid['pokemon_form'], true) . '</b>', true);
 
     // Display raid boss weather.
-    $pokemon_weather = get_pokemon_weather($raid['pokemon']);
+    $pokemon_weather = get_pokemon_weather($raid_pokemon_id, $raid_pokemon_form);
     $msg = raid_poll_message($msg, ($pokemon_weather != 0) ? (' ' . get_weather_icons($pokemon_weather)) : '', true);
     $msg = raid_poll_message($msg, CR, true);
 
@@ -110,8 +112,8 @@ function show_raid_poll($raid)
                         sum(IF(remote = '1', (remote = '1') + extra_mystic + extra_valor + extra_instinct, 0)) AS count_remote,
                         sum(IF(late = '1', (late = '1') + extra_mystic + extra_valor + extra_instinct, 0)) AS count_late,
                         sum(pokemon = '0')                   AS count_any_pokemon,
-                        sum(pokemon = '{$raid['pokemon']}')  AS count_raid_pokemon,
-                        sum(pokemon != '{$raid['pokemon']}' AND pokemon != '0')  AS count_other_pokemon,
+                        sum(pokemon = '{$raid_pokemon}')  AS count_raid_pokemon,
+                        sum(pokemon != '{$raid_pokemon}' AND pokemon != '0')  AS count_other_pokemon,
                         attend_time,
                         pokemon
         FROM            attendance
@@ -147,14 +149,14 @@ function show_raid_poll($raid)
     $hide_buttons_raid_level = explode(',', $config->RAID_POLL_HIDE_BUTTONS_RAID_LEVEL);
     $hide_buttons_pokemon = explode(',', $config->RAID_POLL_HIDE_BUTTONS_POKEMON);
     $buttons_hidden = false;
-    if(in_array($raid_level, $hide_buttons_raid_level) || in_array($raid_pokemon, $hide_buttons_pokemon) || in_array($raid_pokemon_id, $hide_buttons_pokemon)) {
+    if(in_array($raid_level, $hide_buttons_raid_level) || in_array($raid_pokemon_id, $hide_buttons_pokemon) || in_array($raid_pokemon_id.'-'.$raid_pokemon_form_name, $hide_buttons_pokemon)) {
         $buttons_hidden = true;
     }
 
     // Raid has started and has participants
     if($time_now > $raid['start_time'] && $cnt_all > 0) {
         // Display raid boss CP values.
-        $pokemon_cp = get_formatted_pokemon_cp($raid['pokemon'], true);
+        $pokemon_cp = get_formatted_pokemon_cp($raid_pokemon_id, $raid_pokemon_form, true);
         $msg = raid_poll_message($msg, (!empty($pokemon_cp)) ? ($pokemon_cp . CR) : '', true);
 
         // Add raid is done message.
@@ -205,7 +207,7 @@ function show_raid_poll($raid)
                                 sum(IF(remote = '1', (remote = '1') + extra_mystic + extra_valor + extra_instinct, 0)) AS count_remote,
                                 sum(IF(late = '1', (late = '1') + extra_mystic + extra_valor + extra_instinct, 0)) AS count_late,
                                 sum(pokemon = '0')                   AS count_any_pokemon,
-                                sum(pokemon = '{$raid['pokemon']}')  AS count_raid_pokemon,
+                                sum(pokemon = '{$raid_pokemon}')  AS count_raid_pokemon,
                                 attend_time,
                                 pokemon
                 FROM            attendance
@@ -266,6 +268,10 @@ function show_raid_poll($raid)
                 $dt_att_time = dt2time($row['attend_time']);
                 $current_pokemon = $row['pokemon'];
 
+                $poke = explode("-",$current_pokemon);
+                $current_pokemon_id = $poke[0];
+                $current_pokemon_form = $poke[1];
+                
                 // Add hint for remote attendances.
                 if($config->RAID_REMOTEPASS_USERS && $previous_att_time == 'FIRST_RUN' && $cnt_remote > 0) {
                     $remote_max_msg = str_replace('REMOTE_MAX_USERS', $config->RAID_REMOTEPASS_USERS_LIMIT, getPublicTranslation('remote_participants_max'));
@@ -323,7 +329,7 @@ function show_raid_poll($raid)
                     // Show attendances when multiple pokemon are selected, unless all attending users voted for the raid boss + any pokemon
                     if($count_all != ($count_any_pokemon + $count_raid_pokemon)) {
                         // Add pokemon name.
-                        $msg = raid_poll_message($msg, ($current_pokemon == 0) ? ('<b>' . getPublicTranslation('any_pokemon') . '</b>') : ('<b>' . get_local_pokemon_name($current_pokemon, true) . '</b>'));
+                        $msg = raid_poll_message($msg, ($current_pokemon == 0) ? ('<b>' . getPublicTranslation('any_pokemon') . '</b>') : ('<b>' . get_local_pokemon_name($current_pokemon_id,$current_pokemon_form, true) . '</b>'));
 
                         // Attendance counts by team.
                         $current_att_time_poke = $cnt_pokemon[$current_att_time . '_' . $current_pokemon];

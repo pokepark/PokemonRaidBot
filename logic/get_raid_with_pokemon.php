@@ -14,7 +14,7 @@ function get_raid_with_pokemon($raid_id)
         "
         SELECT     raids.*,
                    gyms.lat, gyms.lon, gyms.address, gyms.gym_name, gyms.ex_gym, gyms.gym_note, gyms.gym_id, gyms.img_url,
-                   pokemon.pokedex_id, pokemon.pokemon_name, pokemon.pokemon_form, pokemon.raid_level, pokemon.min_cp, pokemon.max_cp, pokemon.min_weather_cp, pokemon.max_weather_cp, pokemon.weather, pokemon.shiny,
+                   pokemon.pokedex_id, pokemon.pokemon_name, pokemon.pokemon_form_name, pokemon.raid_level, pokemon.min_cp, pokemon.max_cp, pokemon.min_weather_cp, pokemon.max_weather_cp, pokemon.weather, pokemon.shiny, pokemon.pokemon_form_id, pokemon.asset_suffix,
                    users.name,
                    TIME_FORMAT(TIMEDIFF(end_time, UTC_TIMESTAMP()) + INTERVAL 1 MINUTE, '%k:%i') AS t_left,
                    TIMESTAMPDIFF(MINUTE,raids.start_time,raids.end_time) as t_duration
@@ -22,7 +22,8 @@ function get_raid_with_pokemon($raid_id)
         LEFT JOIN  gyms
         ON         raids.gym_id = gyms.id
         LEFT JOIN  pokemon
-        ON         raids.pokemon = CONCAT(pokemon.pokedex_id, '-', pokemon.pokemon_form)
+        ON         pokemon.pokedex_id = raids.pokemon
+        AND        if(raids.pokemon_form = 0, 1, pokemon.pokemon_form_id=raids.pokemon_form)
         LEFT JOIN  users
         ON         raids.user_id = users.user_id
         WHERE      raids.id = {$raidid}

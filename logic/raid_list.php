@@ -80,7 +80,7 @@ function raid_list($update)
 	    $contents[$key]['text'] = show_raid_poll($row)['full'];
 
             // Set the title.
-            $contents[$key]['title'] = get_local_pokemon_name($row['pokemon'], true) . ' ' . getPublicTranslation('from') . ' ' . dt2time($row['start_time'])  . ' ' . getPublicTranslation('to') . ' ' . dt2time($row['end_time']);
+            $contents[$key]['title'] = get_local_pokemon_name($row['pokemon'],$row['pokemon_form'], true) . ' ' . getPublicTranslation('from') . ' ' . dt2time($row['start_time'])  . ' ' . getPublicTranslation('to') . ' ' . dt2time($row['end_time']);
 
             // Get inline keyboard.
             $contents[$key]['keyboard'] = keys_vote($row);

@@ -98,7 +98,7 @@ if($arg == 0) {
         $dex_id = explode('-',$pid)[0];
 
         // Add pokemon with id and name.
-        $poke_name = get_local_pokemon_name($pid);
+        $poke_name = get_local_pokemon_name($dex_id, explode('-',$pid)[1]);
         $msg .= $poke_name . ' (#' . $dex_id . ')' . CR;
 
         // Prepare next run.

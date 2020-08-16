@@ -22,7 +22,7 @@ $arg = $data['arg'];
 $keys = [];
 
 // Set the message.
-$msg = get_pokemon_info($poke_id_form);
+$msg = get_pokemon_info($pokedex_id, $pokemon_form);
 $msg .= '<b>' . getTranslation('pokedex_select_action') . '</b>';
 
 // Create keys array.

@@ -40,7 +40,7 @@ function group_code_keys($raid_id, $action, $arg)
             $new_code = ($poke1 == 0) ? ($i . '-0-0-add') : (($poke2 == 0) ? ($poke1 . '-' . $i . '-0-add') : (($poke3 == 0) ? ($poke1 . '-' . $poke2 . '-' . $i . '-add') : ($poke1 . '-' . $poke2 . '-' . $poke3 . '-send')));
             // Set keys.
             $keys[] = array(
-                'text'          => get_local_pokemon_name($i),
+                'text'          => get_local_pokemon_name($i, '0'),
                 'callback_data' => $raid_id . ':' . $action . ':' . $new_code
             );
         }
