@@ -36,7 +36,7 @@ function raid_edit_raidlevel_keys($gym_id, $gym_first_letter, $admin = false)
             // Get pokemon from database
             $rs_rl = my_query(
                 "
-                SELECT    pokedex_id, pokemon_form
+                SELECT    pokedex_id, pokemon_form_id
                 FROM      pokemon
                 WHERE     raid_level = '{$raid_level}'
                 "
@@ -45,8 +45,8 @@ function raid_edit_raidlevel_keys($gym_id, $gym_first_letter, $admin = false)
             // Add key for pokemon
             while ($pokemon = $rs_rl->fetch()) {
                 $keys[] = array(
-                    'text'          => get_local_pokemon_name($pokemon['pokedex_id'] . '-' . $pokemon['pokemon_form']),
-                    'callback_data' => $gym_id . ',' . $gym_first_letter . ':edit_starttime:' . $pokemon['pokedex_id'] . '-' . $pokemon['pokemon_form']
+                    'text'          => get_local_pokemon_name($pokemon['pokedex_id'], $pokemon['pokemon_form_id']),
+                    'callback_data' => $gym_id . ',' . $gym_first_letter . ':edit_starttime:' . $pokemon['pokedex_id'] . '-' . $pokemon['pokemon_form_id']
                 );
             }
         } else {

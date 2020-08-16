@@ -175,9 +175,10 @@ foreach ($update as $raid) {
         $pokemon = '999' . $level;
     }
         
-    // TODO: Translate Form
     $form = 0;
-    if ( isset($raid['message']['form']) ) {}
+    if ( isset($raid['message']['form']) ) {
+        $form = $raid['message']['form'];
+    }
     $gender = 0;
     if ( isset($raid['message']['gender']) ) {
         
@@ -190,7 +191,6 @@ foreach ($update as $raid) {
        $move_1 = $raid['message']['move_1'];
        $move_2 = $raid['message']['move_2'];   
     }
-    $pokemon = $pokemon . '-normal';
     $start_timestamp = $raid['message']['start'];
     $end_timestamp = $raid['message']['end'];
     $start = gmdate("Y-m-d H:i:s",$start_timestamp);
@@ -223,21 +223,25 @@ foreach ($update as $raid) {
                 UPDATE raids
                 SET
                     pokemon = :pokemon,
+                    pokemon_form = :pokemon_form,
                     gym_team = :gym_team,
                     move1 = :move1,
                     move2 = :move2,
-                    gender = :gender
+                    gender = :gender,
+                    raid_level = :raid_level
                 WHERE
                     id LIKE :id
             ';
             $statement = $dbh->prepare( $query );
             $statement->execute([
               'pokemon' => $pokemon,
+              'pokemon_form' => $form,
               'gym_team' => $team,
               'move1' => $move_1,
               'move2' => $move_2,
               'gender' => $gender,
-              'id' => $raid_id
+              'id' => $raid_id,
+              'raid_level' => $level
           ]);
         }
         catch (PDOException $exception) {
@@ -262,7 +266,7 @@ foreach ($update as $raid) {
             $cleanup_statement->execute(['id' => $raid_id]);
             while ($row = $cleanup_statement->fetch()) {
                 if($config->RAID_PICTURE) {
-                    $url = $config->RAID_PICTURE_URL."?pokemon=".$raid_info['pokemon']."&raid=".$raid_id;
+                    $url = $config->RAID_PICTURE_URL."?pokemon=".$raid_info['pokemon']."-".$raid_info['pokemon_form']."&raid=".$raid_id;
                     $tg_json[] = editMessageMedia($row['message_id'], $updated_msg['short'], $updated_keys, $row['chat_id'], ['disable_web_page_preview' => 'true'],true, $url);
                 }else {
                     $tg_json[] = editMessageText($row['message_id'], $updated_msg['full'], $updated_keys, $row['chat_id'], ['disable_web_page_preview' => 'true'],true);
@@ -277,12 +281,13 @@ foreach ($update as $raid) {
 
         $query = '
                 
-            INSERT INTO raids (pokemon, user_id, first_seen, start_time, end_time, gym_team, gym_id, move1, move2, gender)
-            VALUES (:pokemon, :user_id, :first_seen, :start_time, :end_time, :gym_team, :gym_id, :move1, :move2, :gender)
+            INSERT INTO raids (pokemon, pokemon_form, user_id, first_seen, start_time, end_time, gym_team, gym_id, move1, move2, gender, raid_level)
+            VALUES (:pokemon, :pokemon_form, :user_id, :first_seen, :start_time, :end_time, :gym_team, :gym_id, :move1, :move2, :gender, :raid_level)
         ';
         $statement = $dbh->prepare( $query );
         $dbh->execute([
           'pokemon' => $pokemon,
+          'pokemon_form' => $form,
           'user_id' => $config->WEBHOOK_CREATOR,
           'first_seen' => gmdate("Y-m-d H:i:s"),
           'start_time' => $start,
@@ -291,7 +296,8 @@ foreach ($update as $raid) {
           'gym_id' => $gym_internal_id,
           'move1' => $move_1,
           'move2' => $move_2,
-          'gender' => $gender
+          'gender' => $gender,
+          'raid_level' => $level
         ]);
         $raid_id = $dbh->lastInsertId();
     }
@@ -366,7 +372,7 @@ foreach ($update as $raid) {
 
     // Raid picture
     if($config->RAID_PICTURE) {
-        $picture_url = $config->RAID_PICTURE_URL . "?pokemon=" . $created_raid['pokemon'] . "&raid=". $created_raid['id'];
+        $picture_url = $config->RAID_PICTURE_URL . "?pokemon=" . $created_raid['pokemon'] . "-" . $created_raid['pokemon_form'] . "&raid=". $created_raid['id'];
         debug_log('PictureUrl: ' . $picture_url);
     }
 

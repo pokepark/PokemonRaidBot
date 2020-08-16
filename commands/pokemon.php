@@ -59,7 +59,7 @@ try {
 
         // Set text and keys.
         $text .= $row['gym_name'] . CR;
-        $text .= get_local_pokemon_name($row['pokemon']) . SP . '—' . SP . (($raid_day == $today) ? '' : ($raid_day . ', ')) . $start . SP . getTranslation('to') . SP . $end . CR . CR;
+        $text .= get_local_pokemon_name($row['pokemon'], $row['pokemon_form']) . SP . '—' . SP . (($raid_day == $today) ? '' : ($raid_day . ', ')) . $start . SP . getTranslation('to') . SP . $end . CR . CR;
         $keys[] = array(
             'text'          => $keys_text,
             'callback_data' => $row['id'] . ':raid_edit_poke:' . $row['pokemon'],

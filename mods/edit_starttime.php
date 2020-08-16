@@ -29,7 +29,8 @@ $gym_id = explode(',', $data['id'])[0];
 
 // Get level of pokemon
 $raid_level = '0';
-$raid_level = get_raid_level($pokemon_id);
+$pokemon_id_form = explode("-",$pokemon_id);
+$raid_level = get_raid_level($pokemon_id_form[0], $pokemon_id_form[1]);
 debug_log('Pokemon raid level: ' . $raid_level);
 
 // Pokemon in level X?
@@ -168,7 +169,7 @@ if (!$keys) {
     // Back key id, action and arg
     $back_id = $id;
     $back_action = 'edit_pokemon';
-    $back_arg = get_raid_level($pokemon_id);
+    $back_arg = get_raid_level($pokemon_id_form[0], $pokemon_id_form[1]);
 
     // Add navigation keys.
     $nav_keys = [];
@@ -182,7 +183,7 @@ if (!$keys) {
 
 // Build callback message string.
 if ($data['arg'] != "minutes" && $data['arg'] != "clocktime") {
-    $callback_response = getTranslation('pokemon_saved') . get_local_pokemon_name($pokemon_id);
+    $callback_response = getTranslation('pokemon_saved') . get_local_pokemon_name($pokemon_id_form[0], $pokemon_id_form[1]);
 } else {
     $callback_response = getTranslation('raid_starts_when_view_changed');
 }

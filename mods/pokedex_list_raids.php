@@ -12,7 +12,7 @@ bot_access_check($update, 'pokedex');
 // Get all pokemon with raid levels from database.
 $rs = my_query(
         "
-        SELECT    pokedex_id, pokemon_form, raid_level
+        SELECT    pokedex_id, pokemon_form_id, raid_level
         FROM      pokemon
         WHERE     raid_level != '0'
         ORDER BY  raid_level, pokedex_id, pokemon_form != 'normal', pokemon_form
@@ -22,19 +22,14 @@ $rs = my_query(
 // Init empty keys array.
 $keys = [];
 
-// Add key for each raid level
-while ($pokemon = $rs->fetch()) {
-    $levels[$pokemon['pokedex_id'].'-'.$pokemon['pokemon_form']] = $pokemon['raid_level'];
-}
-
 // Init message and previous.
 $msg = '';
 $previous = 'FIRST_RUN';
 
 // Build the message
-foreach ($levels as $id => $lv) {
+while ($pokemon = $rs->fetch_assoc()) {
     // Set current level
-    $current = $lv;
+    $current = $pokemon['raid_level'];
 
     // Add header for each raid level
     if($previous != $current || $previous == 'FIRST_RUN') {
@@ -43,19 +38,16 @@ foreach ($levels as $id => $lv) {
             $msg .= CR;
         }
         // Add header.
-        $msg .= '<b>' . getTranslation($lv . 'stars') . ':</b>' . CR ;
+        $msg .= '<b>' . getTranslation($pokemon['raid_level'] . 'stars') . ':</b>' . CR ;
     }
-    // Get just the dex id without the form.
-    $dex_id = explode('-',$id)[0];
-
     // Add pokemon with id and name.
-    $poke_name = get_local_pokemon_name($id);
-    $msg .= $poke_name . ' (#' . $dex_id . ')' . CR;
+    $poke_name = get_local_pokemon_name($pokemon['pokedex_id'], $pokemon['pokemon_form_id']);
+    $msg .= $poke_name . ' (#' . $pokemon['pokedex_id'] . ')' . CR;
 
     // Add button to edit pokemon.
     $keys[] = array(
-        'text'          => '[' . $lv . ']' . SP . $poke_name,
-        'callback_data' => $id . ':pokedex_edit_pokemon:0'
+        'text'          => '[' . $pokemon['raid_level'] . ']' . SP . $poke_name,
+        'callback_data' => $pokemon['pokedex_id'] . '-' . $pokemon['pokemon_form_id'] . ':pokedex_edit_pokemon:0'
     );
 
     // Prepare next run.

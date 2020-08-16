@@ -22,9 +22,9 @@ function edit_pokedex_keys($limit, $action)
     // Get all pokemon from database
     $rs = my_query(
         "
-        SELECT    pokedex_id, pokemon_form
+        SELECT    pokedex_id, pokemon_form_id
         FROM      pokemon
-        ORDER BY  pokedex_id, pokemon_form != 'normal', pokemon_form
+        ORDER BY  pokedex_id, pokemon_form_name != 'normal', pokemon_form_name
         LIMIT     $limit, $entries
         "
     );
@@ -43,10 +43,10 @@ function edit_pokedex_keys($limit, $action)
 
     // List users / moderators
     while ($mon = $rs->fetch()) {
-        $pokemon_name = get_local_pokemon_name($mon['pokedex_id'] . '-' . $mon['pokemon_form']);
+        $pokemon_name = get_local_pokemon_name($mon['pokedex_id'], $mon['pokemon_form_id']);
         $keys[] = array(
             'text'          => $mon['pokedex_id'] . SP . $pokemon_name,
-            'callback_data' => $mon['pokedex_id'] . '-' . $mon['pokemon_form'] . ':pokedex_edit_pokemon:0'
+            'callback_data' => $mon['pokedex_id'] . '-' . $mon['pokemon_form_id'] . ':pokedex_edit_pokemon:0'
         );
     }
 

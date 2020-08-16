@@ -168,63 +168,19 @@ $time_now = utcnow();
 
 // Raid running
 if($time_now < $raid['end_time']) {
-    // Build array to map pokedex_id-form to filenames
-    $pokeforms = array(
-        '150-armored' => '11',
-        '386-normal' => '11',
-        '386-attack' => '12',
-        '386-defense' => '13',
-        '386-speed' => '14',
-        '412-plant' => '11',
-        '412-sandy' => '12',
-        '412-trash' => '13',
-        '487-altered' => '11',
-        '487-origin' => '12',
-        '493-fighting' => '12',
-        '493-flying' => '13',
-        '493-poison' => '14',
-        '493-ground' => '15',
-        '493-rock' => '16',
-        '493-bug' => '17',
-        '493-ghost' => '18',
-        '493-steel' => '19',
-        '493-fire' => '20',
-        '493-water' => '21',
-        '493-grass' => '22',
-        '493-electric' => '23',
-        '493-psychic' => '24',
-        '493-ice' => '25',
-        '493-dragon' => '26',
-        '493-dark' => '27',
-        '493-fairy' => '28',
-        '641-normal' => '11',
-        '642-normal' => '11',
-        '645-normal' => '11',
-        '646-normal' => '11',
-        '646-white' => '12',
-        '646-black' => '13',
-        '649-normal' => '11'
-    );
-
-    // Map pokemon form for filename
-    $pokemon_form = '00';
-    if(array_key_exists($raid['pokemon'], $pokeforms)) {
-        $pokemon_form = $pokeforms[$raid['pokemon']];
-    } else {
-        if($raid['pokemon_form'] == 'alolan') {
-            $pokemon_form = '61';
-        } else if($raid['pokemon_form'] == 'galarian') {
-            $pokemon_form = '31';
-        }
+    if(strlen($raid['asset_suffix']) > 2) {
+        $icon_suffix = $raid['asset_suffix'];
+    }else {
+        $icon_suffix = $raid['pokedex_id'] . "_" . $raid['asset_suffix'];
     }
 
     // Raid Egg
     if($raid['pokedex_id'] > 9990) {
         // Getting the actual icon
-        $img_pokemon = imagecreatefrompng(IMAGES_PATH . "/raid_eggs/pokemon_icon_" . $raid['pokedex_id'] . "_" . $pokemon_form . ".png");
+        $img_pokemon = imagecreatefrompng(IMAGES_PATH . "/raid_eggs/pokemon_icon_" . $raid['pokedex_id'] . "_00.png");
 
         // Position and size of the picture
-	$dst_x = $dst_y = 150;
+        $dst_x = $dst_y = 150;
         $dst_w = $dst_h = 200;
         $src_w = $src_h = 128;
 
@@ -234,10 +190,10 @@ if($time_now < $raid['end_time']) {
         $pokemon_id = str_pad($raid['pokedex_id'], 3, '0', STR_PAD_LEFT);
 
         // Getting the actual icon
-        if($raid['shiny'] == 1) {
-                $img_pokemon = imagecreatefrompng(IMAGES_PATH . "/pokemon/pokemon_icon_" . $pokemon_id . "_" . $pokemon_form . "_shiny.png");
+        if($raid['shiny'] == 1 && !$config->RAID_PICTURE_DISABLE_SHINY) {
+            $img_pokemon = imagecreatefrompng(IMAGES_PATH . "/pokemon/pokemon_icon_" . $icon_suffix . "_shiny.png");
         } else {
-                $img_pokemon = imagecreatefrompng(IMAGES_PATH . "/pokemon/pokemon_icon_" . $pokemon_id . "_" . $pokemon_form . ".png");
+            $img_pokemon = imagecreatefrompng(IMAGES_PATH . "/pokemon/pokemon_icon_" . $icon_suffix . ".png");
         }
 
         // Position and size of the picture
@@ -426,7 +382,7 @@ for($ya=0;$ya<$num_text_lines;$ya++){
 
 
 // Pokemon raid boss
-$pokemon_name = get_local_pokemon_name($raid['pokemon'], true);
+$pokemon_name = get_local_pokemon_name($raid['pokemon'], $raid['pokemon_form'], true);
 
 // Pokemon name and form?
 $pokemon_text_lines = array($pokemon_name);

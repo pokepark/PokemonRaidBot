@@ -190,7 +190,7 @@ if($id == 0) {
             $dex_id = explode('-', $dex_id_form, 2)[0];
             $dex_form = explode('-', $dex_id_form, 2)[1];
             $pokemon_arg = $dex_id . (($dex_form != 'normal') ? ('-' . $dex_form) : '-0');
-            $local_pokemon = get_local_pokemon_name($dex_id_form);
+            $local_pokemon = get_local_pokemon_name($dex_id, $dex_form);
             debug_log('Got this pokemon dex id: ' . $dex_id);
             debug_log('Got this pokemon dex form: ' . $dex_form);
             debug_log('Got this local pokemon name and form: ' . $local_pokemon);
@@ -236,17 +236,13 @@ if($id == 0) {
                 // Save to database?
                 if(strpos($arg, 'save#') === 0) {
                     // Update raid level of pokemon
-                    // SQL Note:
-                    // pokemon_form = alola does not match as we use alolan in the database.
-                    // Therefore: OR pokemon_form LIKE alola_ where the _ means 1 additional character, so that 'alolan' matches :D
                     $rs = my_query(
                             "
                             UPDATE    pokemon
                             SET       raid_level = '{$rl}', 
                                       shiny = {$shiny}
                             WHERE     pokedex_id = {$dex_id}
-                            AND       (pokemon_form = '{$dex_form}'
-                                      OR pokemon_form LIKE '{$dex_form}_')
+                            AND       pokemon_form_name = '{$dex_form}'
                             "
                         );
                     continue;
@@ -289,7 +285,7 @@ if($id == 0) {
                         UPDATE    pokemon
                         SET       raid_level = '{$rl}'
                         WHERE     pokedex_id = {$egg_id}
-                        AND       pokemon_form = 'normal'
+                        AND       pokemon_form_name = 'normal'
                         "
                     );
             }
@@ -308,7 +304,7 @@ if($id == 0) {
         // Get all pokemon with raid levels from database.
         $rs = my_query(
             "
-            SELECT    pokedex_id, pokemon_form, raid_level
+            SELECT    pokedex_id, pokemon_form_name, raid_level
             FROM      pokemon
             WHERE     raid_level IN ({$clear})
             ORDER BY  raid_level, pokedex_id, pokemon_form != 'normal', pokemon_form
@@ -320,7 +316,7 @@ if($id == 0) {
 
         // Add key for each raid level
         while ($pokemon = $rs->fetch()) {
-            $levels[$pokemon['pokedex_id'].'-'.$pokemon['pokemon_form']] = $pokemon['raid_level'];
+            $levels[$pokemon['pokedex_id'].'-'.$pokemon['pokemon_form_name']] = $pokemon['raid_level'];
         }
 
         // Init message and previous.
@@ -345,7 +341,7 @@ if($id == 0) {
             $dex_id = explode('-',$pid)[0];
 
             // Add pokemon with id and name.
-            $poke_name = get_local_pokemon_name($pid);
+            $poke_name = get_local_pokemon_name($dex_id, explode('-',$pid)[1]);
             $msg .= $poke_name . ' (#' . $dex_id . ')' . CR;
 
             // Add button to edit pokemon.

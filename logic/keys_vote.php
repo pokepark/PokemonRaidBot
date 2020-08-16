@@ -153,19 +153,20 @@ function keys_vote($raid)
     // Raid is still running.
     } else {
         // Get current pokemon
-        $raid_pokemon = $raid['pokemon'];
-        $raid_pokemon_id = explode('-',$raid_pokemon)[0];
-
+        $raid_pokemon_id = $raid['pokemon'];
+        $raid_pokemon_form_id = $raid['pokemon_form'];
+        $raid_pokemon = $raid_pokemon_id . "-" . $raid_pokemon_form_id;
+        
         // Get raid level
         $raid_level = '0';
-        $raid_level = get_raid_level($raid_pokemon);
+        $raid_level = $raid['raid_level'];
 
         // Hide buttons for raid levels and pokemon
         $hide_buttons_raid_level = explode(',', $config->RAID_POLL_HIDE_BUTTONS_RAID_LEVEL);
         $hide_buttons_pokemon = explode(',', $config->RAID_POLL_HIDE_BUTTONS_POKEMON);
 
         // Show buttons to users?
-        if(in_array($raid_level, $hide_buttons_raid_level) || in_array($raid_pokemon, $hide_buttons_pokemon) || in_array($raid_pokemon_id, $hide_buttons_pokemon)) {
+        if(in_array($raid_level, $hide_buttons_raid_level) || in_array(($raid_pokemon_id . "-" . get_pokemon_form_name($raid_pokemon_id,$raid_pokemon_form_id)), $hide_buttons_pokemon) || in_array($raid_pokemon_id, $hide_buttons_pokemon)) {
             $keys = [];
         } else {
             // Get current time.
@@ -519,7 +520,7 @@ function keys_vote($raid)
                     // Get pokemon from database
                     $rs = my_query(
                         "
-                        SELECT    pokedex_id, pokemon_form
+                        SELECT    pokedex_id, pokemon_form_id
                         FROM      pokemon
                         WHERE     raid_level = '$raid_level'
                         "
@@ -535,8 +536,8 @@ function keys_vote($raid)
                     while ($pokemon = $rs->fetch()) {
                         if(in_array($pokemon['pokedex_id'], $eggs)) continue;
                         $buttons_pokemon[] = array(
-                            'text'          => get_local_pokemon_name($pokemon['pokedex_id'] . '-' . $pokemon['pokemon_form'], true),
-                            'callback_data' => $raid['id'] . ':vote_pokemon:' . $pokemon['pokedex_id'] . '-' . $pokemon['pokemon_form']
+                            'text'          => get_local_pokemon_name($pokemon['pokedex_id'], $pokemon['pokemon_form_id'], true),
+                            'callback_data' => $raid['id'] . ':vote_pokemon:' . $pokemon['pokedex_id'] . '-' . $pokemon['pokemon_form_id']
                         );
 
                         // Counter

@@ -108,7 +108,7 @@ if ($update['callback_query']['message']['chat']['type'] == 'private') {
     $raid_duration = $raid['t_duration'];
 
     // Get raid level.
-    $raid_level = get_raid_level($raid['pokemon']);
+    $raid_level = $raid['raid_level'];
     $const = 'SHARE_CHATS_LEVEL_' . $raid_level;
     $const_chats = $config->{$const};
 
