@@ -2,25 +2,22 @@
 /**
  * Get raid level of a pokemon.
  * @param $pokedex_id
+ * @param $pokemon_form_id
  * @return string
  */
-function get_raid_level($pokedex_id)
+function get_raid_level($pokedex_id, $pokemon_form_id)
 {
     debug_log($pokedex_id, 'Finding level for:');
-    // Split pokedex_id and form
-    $dex_id_form = explode('-',$pokedex_id);
-    $dex_id = $dex_id_form[0];
-    $dex_form = $dex_id_form[1];
 
     // Make sure $dex_id is numeric
-    if(is_numeric($dex_id)) {
+    if(is_numeric($pokedex_id)) {
         // Get raid level from database
         $rs = my_query(
                 "
                 SELECT    raid_level
                 FROM      pokemon
-                WHERE     pokedex_id = {$dex_id}
-                AND       pokemon_form = '{$dex_form}'
+                WHERE     pokedex_id = {$pokedex_id}
+                AND       pokemon_form_id = '{$pokemon_form_id}'
                 "
             );
 

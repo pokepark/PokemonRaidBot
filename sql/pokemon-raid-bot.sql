@@ -74,7 +74,8 @@ CREATE TABLE `pokemon` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `pokedex_id` int(10) unsigned NOT NULL,
   `pokemon_name` varchar(12) DEFAULT NULL,
-  `pokemon_form` varchar(12) DEFAULT 'normal',
+  `pokemon_form_name` varchar(45) DEFAULT NULL,
+  `pokemon_form_id` int(4) DEFAULT NULL,
   `raid_level` enum('0','1','2','3','4','5','X') DEFAULT '0',
   `min_cp` int(10) unsigned NOT NULL,
   `max_cp` int(10) unsigned NOT NULL,
@@ -90,7 +91,8 @@ CREATE TABLE `pokemon` (
 CREATE TABLE `raids` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) DEFAULT NULL,
-  `pokemon` varchar(20) DEFAULT NULL,
+  `pokemon` int(4) DEFAULT NULL,
+  `pokemon_form` int(4) unsigned NOT NULL DEFAULT 0,
   `first_seen` datetime DEFAULT NULL,
   `start_time` datetime DEFAULT NULL,
   `end_time` datetime DEFAULT NULL,
@@ -99,6 +101,7 @@ CREATE TABLE `raids` (
   `move1` varchar(255) DEFAULT NULL,
   `move2` varchar(255) DEFAULT NULL,
   `gender` varchar(255) DEFAULT NULL,
+  `raid_level` enum('0','1','2','3','4','5','X') DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `end_time` (`end_time`),
   KEY `user_id` (`user_id`)

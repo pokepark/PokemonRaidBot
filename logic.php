@@ -24,6 +24,7 @@ include('logic/get_gym.php');
 include('logic/get_local_pokemon_name.php');
 include('logic/get_overview.php');
 include('logic/get_pokemon_cp.php');
+include('logic/get_pokemon_form_name.php');
 include('logic/get_pokemon_id_by_name.php');
 include('logic/get_pokemon_info.php');
 include('logic/get_pokemon_weather.php');
