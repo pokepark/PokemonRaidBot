@@ -52,7 +52,7 @@
   "RAID_PICTURE_TEXT_COLOR":"255,255,255",
   "RAID_PICTURE_ICONS_WHITE": true,
   "RAID_PICTURE_FILE_FORMAT":"gif",
-  "RAID_PICTURE_DISABLE_SHINY":"false",
+  "RAID_PICTURE_SHOW_SHINY":"true",
   "RAID_DEFAULT_PICTURE":"https://example.com/raid/default_picture.jpg",
   "RAID_PICTURE_URL":"https://example.com/raid/raidpicture.php",
   "RAID_PICTURE_FONT_GYM":"NotoSans-Bold.ttf",
