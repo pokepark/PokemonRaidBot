@@ -1298,5 +1298,49 @@
 		"pokemon_move_325" : {
                 "DE": "Zielschuss",
                 "EN": "Lock-On"
+        },
+		"pokemon_move_326" : {
+                "DE": "Donnerzahn",
+                "EN": "Thunder Fang"
+        },
+		"pokemon_move_327" : {
+                "DE": "Eiszahn",
+                "EN": "Ice Fang"
+        },
+		"pokemon_move_328" : {
+                "DE": "Hornbohrer",
+                "EN": "Horn Drill"
+        },
+		"pokemon_move_329" : {
+                "DE": "Geofissur",
+                "EN": "Fissure"
+        },
+		"pokemon_move_330" : {
+                "DE": "Sanctoklinge",
+                "EN": "Sacred Sword"
+        },
+		"pokemon_move_331" : {
+                "DE": "Flying Press",
+                "EN": "Flying Press"
+        },
+		"pokemon_move_332" : {
+                "DE": "Aurasphäre",
+                "EN": "Aura Sphere"
+        },
+		"pokemon_move_333" : {
+                "DE": "Gegenstoß",
+                "EN": "Payback"
+        },
+		"pokemon_move_334" : {
+                "DE": "Felswerfer",
+                "EN": "Rock Wrecker"
+        },
+		"pokemon_move_335" : {
+                "DE": "Luftstoß",
+                "EN": "Aeroblast"
+        },
+        "pokemon_move_341" : {
+                "DE": "Fliegen",
+                "EN": "Fly"
         }
 }
