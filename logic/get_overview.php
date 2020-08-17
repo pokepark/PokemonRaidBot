@@ -248,7 +248,7 @@ function get_overview($update, $chats_active, $raids_active, $action = 'refresh'
 
         // Set variables for easier message building.
         $raid_id = $row['raid_id'];
-        $pokemon = get_local_pokemon_name($raids_active[$raid_id]['pokemon'], $raids_active[$raid_id]['pokemon_form_id'], true);
+        $pokemon = get_local_pokemon_name($raids_active[$raid_id]['pokemon'], $raids_active[$raid_id]['pokemon_form'], true);
         $gym = $raids_active[$raid_id]['gym_name'];
         $ex_gym = $raids_active[$raid_id]['ex_gym'];
         $ex_raid_gym_marker = (strtolower($config->RAID_EX_GYM_MARKER) == 'icon') ? EMOJI_STAR : '<b>' . $config->RAID_EX_GYM_MARKER . '</b>';
