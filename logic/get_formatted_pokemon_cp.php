@@ -20,7 +20,7 @@ function get_formatted_pokemon_cp($pokemon_id, $pokemon_form_id, $override_langu
                 SELECT    min_cp, max_cp, min_weather_cp, max_weather_cp
                 FROM      pokemon
                 WHERE     pokedex_id = {$pokemon_id}
-                AND       pokemon_form = '{$pokemon_form_id}'
+                AND       pokemon_form_id = '{$pokemon_form_id}'
                 "
             );
 
