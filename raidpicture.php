@@ -171,6 +171,7 @@ if($time_now < $raid['end_time']) {
     if(strlen($raid['asset_suffix']) > 2) {
         $icon_suffix = $raid['asset_suffix'];
     }else {
+        $pad_zeroes = '';
         for ($o=3-strlen($raid['pokedex_id']);$o>0;$o--) {
             $pad_zeroes .= 0;
         }
