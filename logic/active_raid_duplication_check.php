@@ -15,7 +15,7 @@ function active_raid_duplication_check($gym_id)
         FROM   raids
         WHERE  end_time > (UTC_TIMESTAMP() - INTERVAL 10 MINUTE)
         AND    gym_id = {$gym_id}
-        GROUP BY id, pokemon
+        GROUP BY id, pokemon, raid_level
         "
     );
 
