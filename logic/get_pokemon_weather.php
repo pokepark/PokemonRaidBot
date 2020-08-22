@@ -14,7 +14,7 @@ function get_pokemon_weather($pokemon_id, $pokemon_form_id)
                 SELECT    weather
                 FROM      pokemon
                 WHERE     pokedex_id = {$pokemon_id}
-                AND       pokemon_form = '{$pokemon_form_id}'
+                AND       pokemon_form_id = '{$pokemon_form_id}'
                 "
             );
 
