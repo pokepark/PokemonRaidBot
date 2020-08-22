@@ -58,9 +58,12 @@ foreach($master as $row) {
 
         // Get pokemon ID
         $pokemon_id = ltrim(str_replace("V","",$part[1]),'0');
-
+        unset($part[0]);
+        unset($part[1]);
+        unset($part[2]);
+        
         // Pokemon name 
-        $pokemon_name = $row['data']['formSettings']['pokemon'];
+        $pokemon_name = implode("_",$part);
         // Get pokemon forms
         if(!isset($row['data']['formSettings']['forms'])) {
             $form_data[] = array("form"=>$pokemon_name."_NORMAL");
@@ -72,7 +75,7 @@ foreach($master as $row) {
             if($form_name != "purified" && $form_name != "shadow") {
 
                 // Nidoran
-                $poke_name = ucfirst(strtolower(str_replace(["_FEMALE","_MALE"],["♀","♂"],$pokemon_name)));
+                $poke_name = ucfirst(strtolower(str_replace(["_FEMALE","_MALE"],["♀","♂"],$row['data']['formSettings']['pokemon'])));
                 // Ho-oh
                 $poke_name = str_replace("_","-",$poke_name);
 
