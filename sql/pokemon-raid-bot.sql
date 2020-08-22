@@ -83,6 +83,7 @@ CREATE TABLE `pokemon` (
   `max_weather_cp` int(10) unsigned NOT NULL,
   `weather` int(10) unsigned NOT NULL,
   `shiny` tinyint(1) unsigned DEFAULT '0',
+  `asset_suffix` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
