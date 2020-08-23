@@ -285,7 +285,7 @@ foreach ($update as $raid) {
             VALUES (:pokemon, :pokemon_form, :user_id, :first_seen, :start_time, :end_time, :gym_team, :gym_id, :move1, :move2, :gender, :raid_level)
         ';
         $statement = $dbh->prepare( $query );
-        $dbh->execute([
+        $statement->execute([
           'pokemon' => $pokemon,
           'pokemon_form' => $form,
           'user_id' => $config->WEBHOOK_CREATOR,
