@@ -51,7 +51,7 @@ function curl_json_response($json_response, $json)
                 // Get raid_id from address.
                 debug_log('Venue address message likely contains cleanup info!');
                 if(strpos($response['result']['venue']['address'], substr(strtoupper($config->BOT_ID), 0, 1) . '-ID = ') !== false) {
-                    $cleanup_id = substr(strrchr($response['result']['venue']['address'], substr(strtoupper($config->BOT_ID), 0, 1) . '-ID = '), 7);
+                    $cleanup_id = substr($response['result']['venue']['address'],strpos($response['result']['venue']['address'], substr(strtoupper($config->BOT_ID), 0, 1) . '-ID = ') + 7);
                 } else {
                     debug_log('BOT_ID ' . $config->BOT_ID . ' not found in venue address message!');
                 }
@@ -60,9 +60,9 @@ function curl_json_response($json_response, $json)
             } else if (!empty($response['result']['text'])) {
                 debug_log('Text message likely contains cleanup info!');
                 if(isset($response['result']['venue']['address']) && strpos($response['result']['venue']['address'], substr(strtoupper($config->BOT_ID), 0, 1) . '-ID = ') !== false) {
-                    $cleanup_id = substr(strrchr($response['result']['text'], substr(strtoupper($config->BOT_ID), 0, 1) . '-ID = '), 7);
+                    $cleanup_id = substr($response['result']['text'],strpos($response['result']['text'], substr(strtoupper($config->BOT_ID), 0, 1) . '-ID = ') + 7);
                 } else if(strpos($response['result']['text'], substr(strtoupper($config->BOT_ID), 0, 1) . '-ID = ') !== false) {
-                    $cleanup_id = substr(strrchr($response['result']['text'], substr(strtoupper($config->BOT_ID), 0, 1) . '-ID = '), 7);
+                    $cleanup_id = substr($response['result']['text'],strpos($response['result']['text'], substr(strtoupper($config->BOT_ID), 0, 1) . '-ID = ') + 7);
                 }else {
                     debug_log('BOT_ID ' . $config->BOT_ID . ' not found in text message!');
                 }
@@ -70,7 +70,7 @@ function curl_json_response($json_response, $json)
             } else if (!empty($response['result']['caption'])) {
                 debug_log('Caption in a message likely contains cleanup info!');
                 if(strpos($response['result']['caption'], substr(strtoupper($config->BOT_ID), 0, 1) . '-ID = ') !== false) {
-                    $cleanup_id = substr(strrchr($response['result']['caption'], substr(strtoupper($config->BOT_ID), 0, 1) . '-ID = '), 7);
+                    $cleanup_id = substr($response['result']['caption'],strpos($response['result']['caption'], substr(strtoupper($config->BOT_ID), 0, 1) . '-ID = ') + 7);
                 } else {
                     debug_log('BOT_ID ' . $config->BOT_ID . ' not found in caption of message!');
                 }
