@@ -112,7 +112,7 @@ if ($raid_id == 0 && $gym_id != 0) {
         );
 
         // Get last insert id from db.
-        $raid_id = my_insert_id();
+        $raid_id = $dbh->lastInsertId();
 
         // Write to log.
         debug_log('ID=' . $raid_id);
@@ -133,7 +133,7 @@ if ($raid_id == 0 && $gym_id != 0) {
             "
         );
 
-        $shared = $rs_share->fetch_assoc();
+        $shared = $rs_share->fetch();
 
         // Add keys for sharing the raid.
         if($shared['raid_count'] == 0) {

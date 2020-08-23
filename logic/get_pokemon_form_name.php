@@ -21,7 +21,7 @@ function get_pokemon_form_name($pokedex_id, $pokemon_form_id)
                 "
             );
 
-        while ($level = $rs->fetch_assoc()) {
+        while ($level = $rs->fetch()) {
             $pokemon_form_name = $level['pokemon_form_name'];
         }
         debug_log($pokemon_form_name, 'Per db, level is:');

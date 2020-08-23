@@ -25,7 +25,7 @@ function active_raid_duplication_check($gym_id)
 
     // Get row - allow normal and ex-raid at the gym.
     if($config->RAID_EXCLUDE_EXRAID_DUPLICATION) {
-        while ($raid = $rs->fetch_assoc()) {
+        while ($raid = $rs->fetch()) {
             $active = $raid['active_raid'];
             if ($active > 0) {
                 // Exclude ex-raid pokemon.
@@ -43,7 +43,7 @@ function active_raid_duplication_check($gym_id)
             }
         }
     } else {
-        $raid = $rs->fetch_assoc();
+        $raid = $rs->fetch();
         $active_counter = $raid['active_raid'];
         $active_raid_id = $raid['id'];
    }

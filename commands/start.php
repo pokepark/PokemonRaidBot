@@ -45,7 +45,7 @@ if($config->RAID_POKEMON_DURATION_EVENT != $config->RAID_POKEMON_DURATION_SHORT)
             "
         );
 
-        $info = $rs->fetch_assoc();
+        $info = $rs->fetch();
         $creation_limit = $config->RAID_EVENT_CREATION_LIMIT - 1;
 
         // Check raid count

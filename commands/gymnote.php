@@ -61,13 +61,16 @@ if(empty($id_info)) {
     } else if($gym && !empty($info)) {
         debug_log('Adding gym note for gym with ID: ' . $id);
         debug_log('Gym note: ' . $info);
-        my_query(
+        $stmt = $dbh->prepare(
             "
             UPDATE    gyms
-            SET       gym_note = '{$db->real_escape_string($info)}'
-              WHERE   id = {$id}
+            SET       gym_note = :info
+              WHERE   id = :id
             "
         );
+        $stmt->bindParam(':info', $info);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
 
         // Set message.
         $msg = get_gym_details($gym);        

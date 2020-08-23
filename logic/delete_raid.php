@@ -5,8 +5,6 @@
  */
 function delete_raid($raid_id)
 {
-    global $db;
-
     // Delete telegram messages for raid.
     $rs = my_query(
         "
@@ -21,7 +19,7 @@ function delete_raid($raid_id)
     $counter = 0;
 
     // Delete every telegram message
-    while ($row = $rs->fetch_assoc()) {
+    while ($row = $rs->fetch()) {
         // Delete telegram message.
         debug_log('Deleting telegram message ' . $row['message_id'] . ' from chat ' . $row['chat_id'] . ' for raid ' . $row['raid_id']);
         delete_message($row['chat_id'], $row['message_id']);

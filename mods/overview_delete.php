@@ -31,7 +31,7 @@ if ($chat_id == 0) {
     // Count results.
     $count = 0;
 
-    while ($rowOverviews = $request_overviews->fetch_assoc()) {
+    while ($rowOverviews = $request_overviews->fetch()) {
         // Counter++
         $count = $count + 1;
 
@@ -90,7 +90,7 @@ if ($chat_id == 0) {
         "
     );
 
-    $overview = $request_overviews->fetch_assoc();
+    $overview = $request_overviews->fetch();
 
     // Delete overview
     delete_overview($overview['chat_id'], $overview['message_id']);
