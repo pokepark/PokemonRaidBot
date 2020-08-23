@@ -11,10 +11,10 @@ function pointStringToCoordinates($pointString) {
 function isPointInsidePolygon($point, $polygon) {
 
     $point = pointStringToCoordinates($point);
-    $vertices = array(); 
+    $vertices = array();
     foreach ($polygon as $vertex) {
 
-      $vertices[] = pointStringToCoordinates($vertex); 
+      $vertices[] = pointStringToCoordinates($vertex);
     }
 
     $i = 0;
@@ -40,14 +40,14 @@ foreach ($update as $raid) {
     $exclude_raid_levels = explode(',', $config->WEBHOOK_EXCLUDE_RAID_LEVEL);
     $exclude_pokemons = explode(',', $config->WEBHOOK_EXCLUDE_POKEMON);
     if ((!empty($level) && in_array($level, $exclude_raid_levels)) || (!empty($pokemon) && in_array($pokemon, $exclude_pokemons))) {
-        
+
         continue;
     }
 
     // Create gym if not exists
     $gym_name = $raid['message']['name'];
     if ($config->WEBHOOK_EXCLUDE_UNKNOWN && $gym_name === "unknown") {
-        
+
         continue;
     }
     $gym_lat = $raid['message']['latitude'];
@@ -56,7 +56,7 @@ foreach ($update as $raid) {
     $gym_img_url = $raid['message']['url'];
     $gym_is_ex = $raid['message']['is_ex_raid_eligible'];
     $gym_internal_id = 0;
-    
+
     // Check geofence, if available and continue if not inside any fence
     if (file_exists(CONFIG_PATH . '/geoconfig.json')) {
 
@@ -64,7 +64,7 @@ foreach ($update as $raid) {
         $raw = file_get_contents(CONFIG_PATH . '/geoconfig.json');
         $geofences = json_decode($raw, true);
         foreach ($geofences as $geofence) {
-        
+
             // if current raid inside path, add chats
             $point = $gym_lat . " " . $gym_lon;
             $polygon = array();
@@ -73,13 +73,13 @@ foreach ($update as $raid) {
                 array_push($polygon, "$geopoint[0] $geopoint[1]");
             }
             if (isPointInsidePolygon($point, $polygon)) {
-                
+
                 $insideGeoFence = true;
                 break;
             }
         }
         if ($insideGeoFence === false) {
-            
+
             continue;
         }
     }
@@ -108,7 +108,7 @@ foreach ($update as $raid) {
     }
     // Update gym info in raid table.
     if ($gym_internal_id > 0) {
-        
+
         try {
 
             $query = '
@@ -142,18 +142,18 @@ foreach ($update as $raid) {
     }
     // Create gym
     else {
-        
+
         try {
 
             $query = '
-                
+
                 INSERT INTO gyms (lat, lon, gym_name, gym_id, ex_gym, img_url, show_gym)
                 VALUES (:lat, :lon, :gym_name, :gym_id, :ex_gym, :img_url, 1)
             ';
             $statement = $dbh->prepare( $query );
             $statement->execute([
-              'lat' => $gym_lat, 
-              'lon' => $gym_lon, 
+              'lat' => $gym_lat,
+              'lon' => $gym_lon,
               'gym_name' => $gym_name,
               'gym_id' => $gym_id,
               'ex_gym' => $gym_is_ex,
@@ -174,22 +174,22 @@ foreach ($update as $raid) {
     if ($pokemon == 0) {
         $pokemon = '999' . $level;
     }
-        
+
     $form = 0;
     if ( isset($raid['message']['form']) ) {
         $form = $raid['message']['form'];
     }
     $gender = 0;
     if ( isset($raid['message']['gender']) ) {
-        
+
         $gender = $raid['message']['gender'];
     }
     $move_1 = 0;
     $move_2 = 0;
     if ($pokemon < 9900) {
-     
+
        $move_1 = $raid['message']['move_1'];
-       $move_2 = $raid['message']['move_2'];   
+       $move_2 = $raid['message']['move_2'];
     }
     $start_timestamp = $raid['message']['start'];
     $end_timestamp = $raid['message']['end'];
@@ -212,11 +212,13 @@ foreach ($update as $raid) {
 
     // Insert new raid or update existing raid/ex-raid?
     $raid_id = active_raid_duplication_check($gym_internal_id);
-    
+    // Make the raid array whole
+    $raid['id'] = $raid_id;
+
     // Raid exists, do updates!
     if ( $raid_id > 0 ) {
         // Update database
-        
+
         try {
 
             $query = '
@@ -251,13 +253,19 @@ foreach ($update as $raid) {
         }
         // If update was needed, send them to TG
         if($statement->rowCount() > 0) {
-            // Get raid info for updating 
+            // Get raid info for updating
             $raid_info = get_raid($raid_id);
+
+            // Raid picture
+            if($config->RAID_PICTURE) {
+              require_once(LOGIC_PATH . '/raid_picture.php');
+              $picture_url = raid_picture_url($raid_info);
+            }
 
             $updated_msg = show_raid_poll($raid_info);
             $updated_keys = keys_vote($raid_info);
 
-            $cleanup_query = ' 
+            $cleanup_query = '
                 SELECT    *
                 FROM      cleanup
                     WHERE   raid_id = :id
@@ -266,8 +274,9 @@ foreach ($update as $raid) {
             $cleanup_statement->execute(['id' => $raid_id]);
             while ($row = $cleanup_statement->fetch()) {
                 if($config->RAID_PICTURE) {
-                    $url = $config->RAID_PICTURE_URL."?pokemon=".$raid_info['pokemon']."-".$raid_info['pokemon_form']."&raid=".$raid_id;
-                    $tg_json[] = editMessageMedia($row['message_id'], $updated_msg['short'], $updated_keys, $row['chat_id'], ['disable_web_page_preview' => 'true'],true, $url);
+                    require_once(LOGIC_PATH . '/raid_picture.php');
+                    $picture_url = raid_picture_url($raid_info);
+                    $tg_json[] = editMessageMedia($row['message_id'], $updated_msg['short'], $updated_keys, $row['chat_id'], ['disable_web_page_preview' => 'true'],true, $picture_url);
                 }else {
                     $tg_json[] = editMessageText($row['message_id'], $updated_msg['full'], $updated_keys, $row['chat_id'], ['disable_web_page_preview' => 'true'],true);
                 }
@@ -280,7 +289,7 @@ foreach ($update as $raid) {
     try {
 
         $query = '
-                
+
             INSERT INTO raids (pokemon, pokemon_form, user_id, first_seen, start_time, end_time, gym_team, gym_id, move1, move2, gender, raid_level)
             VALUES (:pokemon, :pokemon_form, :user_id, :first_seen, :start_time, :end_time, :gym_team, :gym_id, :move1, :move2, :gender, :raid_level)
         ';
@@ -307,24 +316,24 @@ foreach ($update as $raid) {
         $dbh = null;
         exit;
     }
-    
+
     if ($config->WEBHOOK_CREATE_ONLY) {
-        
+
         continue;
     }
-    
+
     // Get raid data.
     $created_raid = get_raid($raid_id);
 
     // Set text.
     $text = show_raid_poll($created_raid);
-    
+
     // Set keys.
     $keys = keys_vote($created_raid);
 
     // Get chats
     $chats = explode(',', $config->WEBHOOK_CHATS);
-    
+
     for($i = 1; $i <= 5; $i++) {
 
         $const = 'WEBHOOK_CHATS_LEVEL_' . $i;
@@ -335,14 +344,14 @@ foreach ($update as $raid) {
             $raw = file_get_contents(CONFIG_PATH . '/geoconfig.json');
             $geofences = json_decode($raw, true);
             foreach ($geofences as $geofence) {
-                
+
                 $const_geofence = 'WEBHOOK_CHATS_LEVEL_' . $i . '_' . $geofence['id'];
                 $const_geofence_chats = $config->{$const_geofence};
 
                 // Debug
                 //debug_log($const_geofence,'CONSTANT NAME:');
                 //debug_log($const_geofence_chats),'CONSTANT VALUE:');
-                
+
                 // if current raid inside path, add chats
                 $point = $created_raid['lat'] . " " . $created_raid['lon'];
                 $polygon = array();
@@ -350,7 +359,7 @@ foreach ($update as $raid) {
 
                     array_push($polygon, "$geopoint[0] $geopoint[1]");
                 }
-                
+
                 if (isPointInsidePolygon($point, $polygon)) {
 
                     if($level == $i && !empty($const_geofence_chats)) {
@@ -370,16 +379,11 @@ foreach ($update as $raid) {
         }
     }
 
-    // Raid picture
-    if($config->RAID_PICTURE) {
-        $picture_url = $config->RAID_PICTURE_URL . "?pokemon=" . $created_raid['pokemon'] . "-" . $created_raid['pokemon_form'] . "&raid=". $created_raid['id'];
-        debug_log('PictureUrl: ' . $picture_url);
-    }
 
     // Post raid polls.
     foreach ($chats as $chat) {
         debug_log('Posting poll to chat: ' . $chat);
-    
+
         // Send location.
         if ($config->RAID_LOCATION) {
 
@@ -390,7 +394,7 @@ foreach ($update as $raid) {
             debug_log('location:');
             debug_log($loc);
         }
-    
+
         // Set reply to.
         $reply_to = $chat; //$update['message']['chat']['id'];
 
@@ -398,6 +402,8 @@ foreach ($update as $raid) {
         //send_message($chat, $text, $keys, ['reply_to_message_id' => $reply_to, 'reply_markup' => ['selective' => true, 'one_time_keyboard' => true], 'disable_web_page_preview' => 'true']);
         // Send the message.
         if($config->RAID_PICTURE) {
+            require_once(LOGIC_PATH . '/raid_picture.php');
+            $picture_url = raid_picture_url($created_raid);
             $tg_json[] = send_photo($chat, $picture_url, $text['short'], $keys, ['reply_to_message_id' => $reply_to, 'reply_markup' => ['selective' => true, 'one_time_keyboard' => true], 'disable_web_page_preview' => 'true'], true);
         } else {
             $tg_json[] = send_message($chat, $text['full'], $keys, ['reply_to_message_id' => $reply_to, 'reply_markup' => ['selective' => true, 'one_time_keyboard' => true], 'disable_web_page_preview' => 'true'], true);

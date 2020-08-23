@@ -207,8 +207,8 @@ $text = show_raid_poll($raid);
 
 // Raid picture
 if($config->RAID_PICTURE) {
-    $picture_url = $config->RAID_PICTURE_URL . "?pokemon=" . $raid['pokemon'] . "&raid=". $raid['id'];
-    debug_log('PictureUrl: ' . $picture_url);
+  require_once(LOGIC_PATH . '/raid_picture.php');
+  $picture_url = raid_picture_url($raid);
 }
 
 
