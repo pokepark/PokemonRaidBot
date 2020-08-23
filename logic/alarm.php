@@ -10,18 +10,18 @@ function alarm($raid, $user, $action, $info = '')
 {
     // Name of the user, which executes a status update
     $request = my_query("SELECT * FROM users WHERE user_id = {$user}");
-    $answer_quests = $request->fetch_assoc();
+    $answer_quests = $request->fetch();
     $username = $answer_quests['name'];
 
     // Gym name and raid times
     $request = my_query("SELECT * FROM raids as r left join gyms as g on r.gym_id = g.id WHERE r.id = {$raid}");
-    $answer = $request->fetch_assoc();
+    $answer = $request->fetch();
     $gymname = $answer['gym_name'];
     $raidtimes = str_replace(CR, '', str_replace(' ', '', get_raid_times($answer, false, true)));
 
     // Get attend time.
     $r = my_query("SELECT DISTINCT attend_time FROM attendance WHERE raid_id = {$raid} and user_id = {$user}");
-    $a = $r->fetch_assoc();
+    $a = $r->fetch();
     $attendtime = $a['attend_time'];
 
     // Adding a guest

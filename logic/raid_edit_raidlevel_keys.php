@@ -24,7 +24,7 @@ function raid_edit_raidlevel_keys($gym_id, $gym_first_letter, $admin = false)
     $keys = [];
 
     // Add key for each raid level
-    while ($level = $rs->fetch_assoc()) {
+    while ($level = $rs->fetch()) {
         // Continue if user is not part of the $config->BOT_ADMINS and raid_level is X
         if($level['raid_level'] == 'X' && $admin === false) continue;
 
@@ -43,7 +43,7 @@ function raid_edit_raidlevel_keys($gym_id, $gym_first_letter, $admin = false)
             );
 
             // Add key for pokemon
-            while ($pokemon = $rs_rl->fetch_assoc()) {
+            while ($pokemon = $rs_rl->fetch()) {
                 $keys[] = array(
                     'text'          => get_local_pokemon_name($pokemon['pokedex_id'], $pokemon['pokemon_form_id']),
                     'callback_data' => $gym_id . ',' . $gym_first_letter . ':edit_starttime:' . $pokemon['pokedex_id'] . '-' . $pokemon['pokemon_form_id']

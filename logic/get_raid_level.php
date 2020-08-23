@@ -22,7 +22,7 @@ function get_raid_level($pokedex_id, $pokemon_form_id)
             );
 
         $raid_level = '0';
-        while ($level = $rs->fetch_assoc()) {
+        while ($level = $rs->fetch()) {
             $raid_level = $level['raid_level'];
         }
         debug_log($raid_level, 'Per db, level is:');

@@ -66,7 +66,7 @@ function raid_edit_gym_keys($first, $warn = true, $action = 'edit_raidlevel', $d
     // Init empty keys array.
     $keys = [];
 
-    while ($gym = $rs->fetch_assoc()) {
+    while ($gym = $rs->fetch()) {
         // Add delete argument to keys
         if ($delete == true) {
            $arg = $gym['id'] . '-delete';

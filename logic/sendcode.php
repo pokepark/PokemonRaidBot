@@ -18,7 +18,7 @@ function sendcode($text, $raid, $user, $who)
     }
 
     $request = my_query("SELECT DISTINCT user_id FROM attendance WHERE raid_id = {$raid} $sql_remote AND attend_time = (SELECT attend_time from attendance WHERE raid_id = {$raid} AND user_id = $user)");
-    while($answer = $request->fetch_assoc())
+    while($answer = $request->fetch())
     {
         // Only send message for other users!
         if($user != $answer['user_id']) {

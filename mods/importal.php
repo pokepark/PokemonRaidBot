@@ -54,10 +54,10 @@ if($config->PORTAL_IMPORT) {
           WHERE   gym_name = '{$gym_name_no_spec}'
          ");
 
-        $row = $rs->fetch_row();
+        $row = $rs->fetch();
 
         // Gym already in database or new
-        if (empty($row['0'])) {
+        if (empty($row['id'])) {
             // insert gym in table.
             debug_log('Gym not found in database gym list! Inserting gym "' . $gym_name . '" now.');
             $query = '
@@ -97,7 +97,7 @@ if($config->PORTAL_IMPORT) {
     }
 
     // Get last insert id.
-    if (empty($row['0'])) {
+    if (empty($row['id'])) {
         $gym_id = $dbh->lastInsertId();
     }
 

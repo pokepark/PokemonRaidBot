@@ -26,7 +26,7 @@ if($action == 0 || $trainer_chat == 0) {
         "
     );
 
-    while ($row = $rs->fetch_assoc()) {
+    while ($row = $rs->fetch()) {
         // Chat and message ID
         $chat_id = $row['chat_id'];
         $message_id = $row['message_id'];
@@ -132,7 +132,7 @@ if($action == 0 || $trainer_chat == 0) {
     );
 
     // Delete trainer message.
-    while ($row = $rs->fetch_assoc()) {
+    while ($row = $rs->fetch()) {
         delete_trainerinfo($row['chat_id'], $row['message_id']);
     }
 }

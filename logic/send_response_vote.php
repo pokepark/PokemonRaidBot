@@ -91,7 +91,10 @@ function send_response_vote($update, $data, $new = false, $text = true)
                 // Edit the picture - raid ended.
                 $time_now = utcnow();
                 if($time_now > $raid['end_time'] && $data['arg'] == 0) {
-                    $picture_url = $config->RAID_PICTURE_URL . "?pokemon=ended&raid=". $raid['id'];
+                    // TODO(artanicus): There's no logic for when RAID_PICTURE is not enabled, which is probably bad
+                    require_once(LOGIC_PATH . '/raid_picture.php');
+                    $raid['pokemon'] = 'ended';
+                    $picture_url = raid_picture_url($raid);
 	            $tg_json[] = editMessageMedia($update['callback_query']['message']['message_id'], $msg, $keys, $update['callback_query']['message']['chat']['id'], ['disable_web_page_preview' => 'true'], false, $picture_url);
                 }
             }

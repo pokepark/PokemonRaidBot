@@ -24,7 +24,7 @@ function get_formatted_pokemon_cp($pokemon_id, $pokemon_form_id, $override_langu
                 "
             );
 
-        while($row = $rs->fetch_assoc()) {
+        while($row = $rs->fetch()) {
             // CP
             $cp20 .= ($row['min_cp'] > 0) ? $row['min_cp'] : '';
             $cp20 .= (!empty($cp20) && $cp20 > 0) ? ('/' . $row['max_cp']) : ($row['max_cp']);

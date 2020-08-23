@@ -32,7 +32,7 @@ if($data['arg'] == "setlevel") {
         );
 
     //Get type information
-    while ($enum = $rs->fetch_assoc()) {
+    while ($enum = $rs->fetch()) {
         // Type should be something like this:                    enum('0','1','2','3','4','5','X')
         $type = $enum['Type'];
     }

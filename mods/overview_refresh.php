@@ -32,7 +32,7 @@ $raids_active = [];
 $raid_ids_active = [];
 
 // Get all active raids into array.
-while ($rowRaids = $request_active_raids->fetch_assoc()) {
+while ($rowRaids = $request_active_raids->fetch()) {
     // Use current raid_id as key for raids array
     $current_raid_id = $rowRaids['id'];
     $raids_active[$current_raid_id] = $rowRaids;
@@ -78,7 +78,7 @@ if ($count_active_raids > 0) {
         );
     }
 
-    while ($rowOverviews = $request_overviews->fetch_assoc()) {
+    while ($rowOverviews = $request_overviews->fetch()) {
         // Set chat_id.
         $chat_id = $rowOverviews['chat_id'];
 
@@ -94,7 +94,7 @@ if ($count_active_raids > 0) {
         );
 
         // Get all chats.    
-        while ($rowChats = $request_active_chats->fetch_assoc()) {
+        while ($rowChats = $request_active_chats->fetch()) {
             $chats_active[] = $rowChats;
         }
     }

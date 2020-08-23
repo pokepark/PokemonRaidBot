@@ -38,8 +38,8 @@ $tg_json = array();
 
 // Raid picture
 if($config->RAID_PICTURE) {
-    $picture_url = $config->RAID_PICTURE_URL . "?pokemon=" . $raid['pokemon'] . "-" . $raid['pokemon_form'] . "&raid=". $id;
-    debug_log('PictureUrl: ' . $picture_url);
+  require_once(LOGIC_PATH . '/raid_picture.php');
+  $picture_url = raid_picture_url($raid);
 }
 
 // Send the message.

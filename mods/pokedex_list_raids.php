@@ -27,7 +27,7 @@ $msg = '';
 $previous = 'FIRST_RUN';
 
 // Build the message
-while ($pokemon = $rs->fetch_assoc()) {
+while ($pokemon = $rs->fetch()) {
     // Set current level
     $current = $pokemon['raid_level'];
 

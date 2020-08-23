@@ -19,7 +19,7 @@ function raid_access_check($update, $data, $permission, $return_result = false)
         "
     );
 
-    $raid = $rs->fetch_assoc();
+    $raid = $rs->fetch();
 
     // Check permissions
     if ($update['callback_query']['from']['id'] != $raid['user_id']) {

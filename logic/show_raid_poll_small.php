@@ -51,7 +51,7 @@ function show_raid_poll_small($raid, $override_language = false)
         "
     );
 
-    $row = $rs->fetch_assoc();
+    $row = $rs->fetch();
 
     // Add to message.
     if ($row['count'] > 0) {

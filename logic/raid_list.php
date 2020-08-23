@@ -41,7 +41,7 @@ function raid_list($update)
             "
         );
 
-        while ($answer = $request->fetch_assoc()) {
+        while ($answer = $request->fetch()) {
             $rows[] = $answer;
         }
 
@@ -65,7 +65,7 @@ function raid_list($update)
             "
         );
 
-        while ($answer_raids = $request->fetch_assoc()) {
+        while ($answer_raids = $request->fetch()) {
             $rows[] = $answer_raids;
         }
 

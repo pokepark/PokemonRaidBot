@@ -1,5 +1,5 @@
 ARG INSTALL_CRON=1
-ARG PHP_EXTENSIONS="mysqli pdo pdo_mysql opcache gd"
+ARG PHP_EXTENSIONS="pdo pdo_mysql opcache gd"
 FROM thecodingmachine/php:7.4-v3-apache
 
 # Change back Apache user and group to www-data
