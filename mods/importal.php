@@ -49,9 +49,9 @@ if($config->PORTAL_IMPORT) {
         // Build query to check if gym is already in database or not
         // TODO: Use PDO here
         $rs = my_query("
-        SELECT    id, COUNT(*)
+        SELECT    id
         FROM      gyms
-          WHERE   gym_name = '{$gym_name_no_spec}'
+        WHERE   gym_name = '{$gym_name_no_spec}'
          ");
 
         $row = $rs->fetch_row();
