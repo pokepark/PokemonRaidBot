@@ -25,6 +25,10 @@ function get_raid($raid_id)
 
     // Get the row.
     $raid = $rs->fetch();
+    
+    // Inject raid level
+    $raid['level'] = get_raid_level($raid['pokemon'], $raid['pokemon_form']);
+
     debug_log($raid);
 
     return $raid;

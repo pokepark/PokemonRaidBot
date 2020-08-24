@@ -229,8 +229,7 @@ foreach ($update as $raid) {
                     gym_team = :gym_team,
                     move1 = :move1,
                     move2 = :move2,
-                    gender = :gender,
-                    raid_level = :raid_level
+                    gender = :gender
                 WHERE
                     id LIKE :id
             ';
@@ -242,8 +241,7 @@ foreach ($update as $raid) {
               'move1' => $move_1,
               'move2' => $move_2,
               'gender' => $gender,
-              'id' => $raid_id,
-              'raid_level' => $level
+              'id' => $raid_id
           ]);
         }
         catch (PDOException $exception) {
@@ -290,8 +288,8 @@ foreach ($update as $raid) {
 
         $query = '
 
-            INSERT INTO raids (pokemon, pokemon_form, user_id, first_seen, start_time, end_time, gym_team, gym_id, move1, move2, gender, raid_level)
-            VALUES (:pokemon, :pokemon_form, :user_id, :first_seen, :start_time, :end_time, :gym_team, :gym_id, :move1, :move2, :gender, :raid_level)
+            INSERT INTO raids (pokemon, pokemon_form, user_id, first_seen, start_time, end_time, gym_team, gym_id, move1, move2, gender)
+            VALUES (:pokemon, :pokemon_form, :user_id, :first_seen, :start_time, :end_time, :gym_team, :gym_id, :move1, :move2, :gender)
         ';
         $statement = $dbh->prepare( $query );
         $statement->execute([
@@ -305,8 +303,7 @@ foreach ($update as $raid) {
           'gym_id' => $gym_internal_id,
           'move1' => $move_1,
           'move2' => $move_2,
-          'gender' => $gender,
-          'raid_level' => $level
+          'gender' => $gender
         ]);
         $raid_id = $dbh->lastInsertId();
     }

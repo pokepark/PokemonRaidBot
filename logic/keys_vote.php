@@ -159,7 +159,7 @@ function keys_vote($raid)
         
         // Get raid level
         $raid_level = '0';
-        $raid_level = $raid['raid_level'];
+        $raid_level = get_raid_level($raid_pokemon_id, $raid_pokemon_form_id);
 
         // Hide buttons for raid levels and pokemon
         $hide_buttons_raid_level = explode(',', $config->RAID_POLL_HIDE_BUTTONS_RAID_LEVEL);

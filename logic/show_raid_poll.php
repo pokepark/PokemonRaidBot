@@ -18,7 +18,7 @@ function show_raid_poll($raid)
     $raid_pokemon = $raid_pokemon_id . "-" . $raid_pokemon_form;
 
     // Get raid level
-    $raid_level = $raid['raid_level'];
+    $raid_level = get_raid_level($raid_pokemon_id, $raid_pokemon_form);
 
     // Get raid times.
     $msg = raid_poll_message($msg, get_raid_times($raid), true);

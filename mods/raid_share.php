@@ -47,7 +47,7 @@ $raid_picture_hide_level = explode(",",$config->RAID_PICTURE_HIDE_LEVEL);
 $raid_picture_hide_pokemon = explode(",",$config->RAID_PICTURE_HIDE_POKEMON);
 
 $raid_pokemon_id = $raid['pokemon'];
-$raid_level = $raid['raid_level'];
+$raid_level = get_raid_level($raid['pokemon'], $raid['pokemon_form']);
 $raid_pokemon_form_name = get_pokemon_form_name($raid_pokemon_id,$raid['pokemon_form_id']);
 $raid_pokemon = $raid_pokemon_id . "-" . $raid_pokemon_form_name;
 

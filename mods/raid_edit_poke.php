@@ -16,8 +16,9 @@ $raid_id = $data['id'];
 $old_pokemon = $data['arg'];
 
 // Get raid level
-$raid = get_raid($raid_id);
-$raid_level = $raid['raid_level'];
+$raid_level = '0';
+$pokemon_id_form = explode("-", $old_pokemon);
+$raid_level = get_raid_level($pokemon_id_form[0], $pokemon_id_form[1]);
 debug_log('Raid level of pokemon: ' . $raid_level);
 
 // Level found

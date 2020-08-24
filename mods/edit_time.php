@@ -103,7 +103,6 @@ if ($raid_id == 0 && $gym_id != 0) {
             SET           user_id = {$update['callback_query']['from']['id']},
 			  pokemon = '{$pokemon_id_form[0]}',
 			  pokemon_form = '{$pokemon_id_form[1]}',
-			  raid_level = '{$raid_level}',
 			  first_seen = UTC_TIMESTAMP(),
 			  start_time = '{$start_date_time}',
                           end_time = DATE_ADD(start_time, INTERVAL {$duration} MINUTE),

@@ -102,7 +102,6 @@ CREATE TABLE `raids` (
   `move1` varchar(255) DEFAULT NULL,
   `move2` varchar(255) DEFAULT NULL,
   `gender` varchar(255) DEFAULT NULL,
-  `raid_level` enum('0','1','2','3','4','5','X') DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `end_time` (`end_time`),
   KEY `user_id` (`user_id`)
