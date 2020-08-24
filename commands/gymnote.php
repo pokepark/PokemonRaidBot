@@ -68,9 +68,10 @@ if(empty($id_info)) {
               WHERE   id = :id
             "
         );
-        $stmt->bindParam(':info', $info);
-        $stmt->bindParam(':id', $id);
-        $stmt->execute();
+        $stmt->execute([
+          'info' => $info,
+          'id' => $id
+        ]);
 
         // Set message.
         $msg = get_gym_details($gym);        

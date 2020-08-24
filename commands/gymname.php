@@ -67,12 +67,13 @@ if(empty($id_info)) {
             "
             UPDATE    gyms
             SET       gym_name = :info
-              WHERE   id = :id
+            WHERE     id = :id
             "
         );
-        $stmt->bindParam(':info', $info);
-        $stmt->bindParam(':id', $id);
-        $stmt->execute();
+        $stmt->execute([
+          'info' => $info,
+          'id' => $id
+        ]);
 
         // Set message.
         $gym = get_gym($id);

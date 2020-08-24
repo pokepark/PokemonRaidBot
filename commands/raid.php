@@ -73,8 +73,7 @@ try {
         LIMIT 1
     ';
     $statement = $dbh->prepare( $query );
-    $statement->bindValue(':gym_name', $gym_name, PDO::PARAM_STR);
-    $statement->execute();
+    $statement->execute(['gym_name' => $gym_name]);
     while ($row = $statement->fetch()) {
     
         $gym_id = $row['id'];
@@ -129,9 +128,10 @@ if ($raid_id > 0) {
               WHERE   id = :raid_id
             "
         );
-        $stmt->bindParam(':team', $team);
-        $stmt->bindParam(':raid_id', $raid_id);
-        $stmt->execute();
+        $stmt->execute([
+          'team' => $team,
+          'raid_id' => $raid_id
+        ]);
     } else {
         // Update pokemon and team in raids table.
         debug_log('Current pokemon is NOT an ex-raid pokemon: ' . $poke_name);
@@ -144,10 +144,11 @@ if ($raid_id > 0) {
             WHERE     id = :raid_id
             "
         );
-        $stmt->bindParam(':boss', $boss);
-        $stmt->bindParam(':team', $team);
-        $stmt->bindParam(':raid_id', $raid_id);
-        $stmt->execute();
+        $stmt->execute([
+          'boss' => $boss,
+          'team' => $team,
+          'raid_id' => $raid_id
+        ]);
     }
 
     // Debug log
@@ -174,11 +175,12 @@ $stmt = $dbh->prepare(
 		  gym_id = :gym_id
     "
 );
-$stmt->bindParam(':boss', $boss);
-$stmt->bindParam(':user_id', $update['message']['from']['id']);
-$stmt->bindParam(':team', $team);
-$stmt->bindParam(':gym_id', $gym_id);
-$stmt->execute();
+$stmt->execute([
+  'boss' => $boss,
+  'user_id' => $update['message']['from']['id'],
+  'team' => $team,
+  'gym_id' => $gym_id
+]);
 
 // Get last insert id from db.
 $id = $dbh->lastInsertId();

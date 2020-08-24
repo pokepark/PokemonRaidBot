@@ -29,11 +29,12 @@ function insert_gym($name, $lat, $lon, $address)
                           gym_name = :name,
                           address = :address
         ");
-        $stmt.bindParam(':lat', $lat);
-        $stmt.bindParam(':lon', $lon);
-        $stmt.bindParam(':name', $name);
-        $stmt.bindParam(':address', $address);
-        $stmt->execute();
+        $stmt->execute([
+          'lat' => $lat,
+          'lon' => $lon,
+          'name' => $name,
+          'address' => $address
+        ]);
     } else {
       // Update gyms table to reflect gym changes.
       // TODO(@Artanicus): using gym name as the selector is bad and doesn't allow updating gym name
@@ -46,11 +47,12 @@ function insert_gym($name, $lat, $lon, $address)
                           address = :address
                WHERE      gym_name = :name
         ");
-        $stmt.bindParam(':lat', $lat);
-        $stmt.bindParam(':lon', $lon);
-        $stmt.bindParam(':name', $name);
-        $stmt.bindParam(':address', $address);
-        $stmt->execute();
+        $stmt->execute([
+          'lat' => $lat,
+          'lon' => $lon,
+          'name' => $name,
+          'address' => $address
+        ]);
     }
 }
 

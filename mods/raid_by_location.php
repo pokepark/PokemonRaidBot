@@ -116,11 +116,12 @@ try {
     }
 
     $statement = $dbh->prepare($query);
-    $statement->bindValue(':gym_name', $gym_name, PDO::PARAM_STR);
-    $statement->bindValue(':lat', $lat, PDO::PARAM_STR);
-    $statement->bindValue(':lon', $lon, PDO::PARAM_STR);
-    $statement->bindValue(':address', $address, PDO::PARAM_STR);
-    $statement->execute();
+    $statement->execute([
+      'gym_name' => $gym_name,
+      'lat' => $lat,
+      'lon' => $lon,
+      'address' => $address
+    ]);
     // Get gym id from insert.
     if($gym_id == 0) {
         $gym_id = $dbh->lastInsertId();

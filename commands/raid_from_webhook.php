@@ -124,13 +124,14 @@ foreach ($update as $raid) {
                     gym_id LIKE :gym_id
             ';
             $statement = $dbh->prepare( $query );
-            $statement->bindValue(':lat', $gym_lat);
-            $statement->bindValue(':lon', $gym_lon);
-            $statement->bindValue(':gym_name', $gym_name);
-            $statement->bindValue(':ex_gym', $gym_is_ex);
-            $statement->bindValue(':img_url', $gym_img_url);
-            $statement->bindValue(':gym_id', $gym_id);
-            $statement->execute();
+            $statement->execute([
+              'lat' => $gym_lat, 
+              'lon' => $gym_lon, 
+              'gym_name' => $gym_name,
+              'gym_id' => $gym_id,
+              'ex_gym' => $gym_is_ex,
+              'img_url' => $gym_img_url
+            ]);
         }
         catch (PDOException $exception) {
 
