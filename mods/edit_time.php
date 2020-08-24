@@ -94,7 +94,6 @@ if ($raid_id == 0 && $gym_id != 0) {
         $now = utcnow();
 
         $pokemon_id_form = explode("-",$pokemon_id);
-        $raid_level = get_raid_level($pokemon_id_form[0],$pokemon_id_form[1]);
         
         // Create raid in database.
         $rs = my_query(
