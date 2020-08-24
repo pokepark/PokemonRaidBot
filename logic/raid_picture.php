@@ -19,7 +19,7 @@ function raid_picture_url($raid)
 
   $dedupe = strtotime($raid['end_time']); // added to the end to prevent Telegram caching raids that have a different end_time
   $picture_url = "{$config->RAID_PICTURE_URL}?pokemon={$raid['pokemon']}-{$raid['pokemon_form']}&raid={$raid['id']}&h={$dedupe}";
-  error_log('raid_picture_url: ' . $picture_url);
+  debug_log('raid_picture_url: ' . $picture_url);
   return $picture_url;
 }
 ?>
