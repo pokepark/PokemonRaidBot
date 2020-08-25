@@ -89,7 +89,7 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
          * [translate.py](#translatepy)
             * [Usage](#usage)
 
-<!-- Added by: artanicus, at: Tue Aug 25 10:05:49 EEST 2020 -->
+<!-- Added by: artanicus, at: Tue Aug 25 10:33:02 EEST 2020 -->
 
 <!--te-->
 
@@ -180,13 +180,12 @@ Import `pokemon-raid-bot.sql` as default DB structure and `raid-boss-pokedex.sql
 
 Command DB structure: `mysql -u USERNAME -p DATABASENAME < sql/pokemon-raid-bot.sql`
 
-Command raid bosses: `mysql -u USERNAME -p DATABASENAME < sql/raid-boss-pokedex.sql`
+To get raid bosses:
+```
+mysql -u USERNAME -p DATABASENAME < sql/game-master-raid-boss-pokedex.sql`
+```
 
-To get the latest raid bosses via the GOHub API, you can use getGOHubDB.php which will update the sql/gohub-raid-boss-pokedex.sql file. Import is possible too:
-
-Command gohub raid bosses: `mysql -u USERNAME -p DATABASENAME < sql/gohub-raid-boss-pokedex.sql`
-
-Important: The raid level is NOT set when importing the raid bosses from the gohub sql file! Set them via the /pokedex command, explained below in this readme.
+Important: The raid level is NOT set when importing the raid bosses from the sql file! Set them via the /pokedex command, explained below in this readme.
 
 ## Docker
 
@@ -1298,7 +1297,7 @@ The following command is used to create the game-master-raid-boss-pokedex.sql fi
 The following command is used to create the game-master-raid-boss-pokedex.sql file. Normally this file is kept up to date by developers
 but if no one has updated it yet, you can generate an updated version (and optionally also create a Pull Request.)
 ```
-php getGOHubDB.php
+php getDB.php
 ```
 
 ## Translations
