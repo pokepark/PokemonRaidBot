@@ -242,7 +242,7 @@ if($id == 0) {
                             SET       raid_level = '{$rl}', 
                                       shiny = {$shiny}
                             WHERE     pokedex_id = {$dex_id}
-                            AND       pokemon_form_name = '{$dex_form}'
+                            AND       pokemon_form_id = '{$dex_form}'
                             "
                         );
                     continue;
