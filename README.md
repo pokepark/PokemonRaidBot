@@ -84,15 +84,12 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
       * [Adding new config values](#adding-new-config-values)
       * [Git Hooks](#git-hooks)
          * [pre-commit](#pre-commit)
-      * [SQL Files](#sql-files)
-         * [pokemon-raid-bot.sql](#pokemon-raid-botsql)
-         * [raid-boss-pokedex.sql](#raid-boss-pokedexsql)
-         * [gohub-raid-boss-pokedex.sql](#gohub-raid-boss-pokedexsql)
+         * [game-master-raid-boss-pokedex.sql](#game-master-raid-boss-pokedexsql)
       * [Translations](#translations)
          * [translate.py](#translatepy)
             * [Usage](#usage)
 
-<!-- Added by: artanicus, at: Sat Aug 15 16:07:54 EEST 2020 -->
+<!-- Added by: artanicus, at: Tue Aug 25 10:05:49 EEST 2020 -->
 
 <!--te-->
 
@@ -1133,7 +1130,7 @@ The bot has a version system and checks for updates to the database automaticall
 
 The bot will send a message to the MAINTAINER_ID when an upgrade is required. In case the MAINTAINER_ID is not specified an error message is written to the error log of your webserver.
 
-Required SQL upgrades files can be found under the `sql/upgrade` folder and need to be applied manually!
+Required SQL upgrades files can be found under the `sql/upgrade` folder and are applied automatically by default.
 
 After any upgrade you need to make sure to change the bot version in your config.json as that version is used for comparison against the latest bot version in the `VERSION` file.
 
@@ -1295,21 +1292,14 @@ To give a little example the bot version `1.9.256.4` means:
 
 This way it is easy to find out when a bot version was released and how old/new a version is.
 
-## SQL Files
+The following command is used to create the game-master-raid-boss-pokedex.sql file.
 
-The following commands are used to create the raid-pokemon-bot.sql, raid-boss-pokedex.sql and gohub-raid-boss-pokedex.sql files. Make sure to change to the bot directory first and replace USERNAME and DATABASENAME before executing the commands.
-
-### pokemon-raid-bot.sql
-
-Export command: `mysqldump -u USERNAME -p --no-data --skip-add-drop-table --skip-add-drop-database --skip-comments DATABASENAME | sed 's/ AUTO_INCREMENT=[0-9]*\b/ AUTO_INCREMENT=100/' > sql/pokemon-raid-bot.sql`
-
-### raid-boss-pokedex.sql
-
-Export command: `mysqldump -u USERNAME -p --skip-extended-insert --skip-comments DATABASENAME pokemon > sql/raid-boss-pokedex.sql`
-
-### gohub-raid-boss-pokedex.sql
-
-CLI creation command: `php getGOHubDB.php`
+### game-master-raid-boss-pokedex.sql
+The following command is used to create the game-master-raid-boss-pokedex.sql file. Normally this file is kept up to date by developers
+but if no one has updated it yet, you can generate an updated version (and optionally also create a Pull Request.)
+```
+php getGOHubDB.php
+```
 
 ## Translations
 
