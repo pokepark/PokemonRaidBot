@@ -17,7 +17,7 @@ $rs = my_query(
 );
 
 // Get remote value.
-$remote = $rs->fetch_assoc();
+$remote = $rs->fetch();
 $remote_status = $remote['remote'];
 
 // Check if max remote users limit is already reached!

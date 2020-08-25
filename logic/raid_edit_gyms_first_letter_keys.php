@@ -59,7 +59,7 @@ function raid_edit_gyms_first_letter_keys($action = 'raid_by_gym', $hidden = fal
     // Init empty keys array.
     $keys = [];
 
-    while ($gym = $rs->fetch_assoc()) {
+    while ($gym = $rs->fetch()) {
 	// Add first letter to keys array
         $keys[] = array(
             'text'          => $gym['first_letter'],

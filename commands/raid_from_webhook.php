@@ -94,8 +94,7 @@ foreach ($update as $raid) {
             LIMIT 1
         ';
         $statement = $dbh->prepare( $query );
-        $statement->bindValue(':gym_id', $gym_id, PDO::PARAM_STR);
-        $statement->execute();
+        $statement->execute(['gym_id' => $gym_id]);
         while ($row = $statement->fetch()) {
 
             $gym_internal_id = $row['id'];
@@ -125,13 +124,14 @@ foreach ($update as $raid) {
                     gym_id LIKE :gym_id
             ';
             $statement = $dbh->prepare( $query );
-            $statement->bindValue(':lat', $gym_lat, PDO::PARAM_STR);
-            $statement->bindValue(':lon', $gym_lon, PDO::PARAM_STR);
-            $statement->bindValue(':gym_name', $gym_name, PDO::PARAM_STR);
-            $statement->bindValue(':ex_gym', $gym_is_ex, PDO::PARAM_INT);
-            $statement->bindValue(':img_url', $gym_img_url, PDO::PARAM_STR);
-            $statement->bindValue(':gym_id', $gym_id, PDO::PARAM_STR);
-            $statement->execute();
+            $statement->execute([
+              'lat' => $gym_lat, 
+              'lon' => $gym_lon, 
+              'gym_name' => $gym_name,
+              'gym_id' => $gym_id,
+              'ex_gym' => $gym_is_ex,
+              'img_url' => $gym_img_url
+            ]);
         }
         catch (PDOException $exception) {
 
@@ -151,13 +151,14 @@ foreach ($update as $raid) {
                 VALUES (:lat, :lon, :gym_name, :gym_id, :ex_gym, :img_url, 1)
             ';
             $statement = $dbh->prepare( $query );
-            $statement->bindValue(':lat', $gym_lat, PDO::PARAM_STR);
-            $statement->bindValue(':lon', $gym_lon, PDO::PARAM_STR);
-            $statement->bindValue(':gym_name', $gym_name, PDO::PARAM_STR);
-            $statement->bindValue(':gym_id', $gym_id, PDO::PARAM_STR);
-            $statement->bindValue(':ex_gym', $gym_is_ex, PDO::PARAM_INT);
-            $statement->bindValue(':img_url', $gym_img_url, PDO::PARAM_STR);
-            $statement->execute();
+            $statement->execute([
+              'lat' => $gym_lat, 
+              'lon' => $gym_lon, 
+              'gym_name' => $gym_name,
+              'gym_id' => $gym_id,
+              'ex_gym' => $gym_is_ex,
+              'img_url' => $gym_img_url
+          ]);
             $gym_internal_id = $dbh->lastInsertId();
         }
         catch (PDOException $exception) {
@@ -230,13 +231,14 @@ foreach ($update as $raid) {
                     id LIKE :id
             ';
             $statement = $dbh->prepare( $query );
-            $statement->bindValue(':pokemon', $pokemon, PDO::PARAM_STR);
-            $statement->bindValue(':gym_team', $team, PDO::PARAM_STR);
-            $statement->bindValue(':move1', $move_1, PDO::PARAM_STR);
-            $statement->bindValue(':move2', $move_2, PDO::PARAM_STR);
-            $statement->bindValue(':gender', $gender, PDO::PARAM_STR);
-            $statement->bindValue(':id', $raid_id, PDO::PARAM_INT);
-            $statement->execute();
+            $statement->execute([
+              'pokemon' => $pokemon,
+              'gym_team' => $team,
+              'move1' => $move_1,
+              'move2' => $move_2,
+              'gender' => $gender,
+              'id' => $raid_id
+          ]);
         }
         catch (PDOException $exception) {
             error_log($exception->getMessage());
@@ -257,8 +259,7 @@ foreach ($update as $raid) {
                     WHERE   raid_id = :id
             ';
             $cleanup_statement = $dbh->prepare( $cleanup_query );
-            $cleanup_statement->bindValue(':id', $raid_id, PDO::PARAM_STR);
-            $cleanup_statement->execute();
+            $cleanup_statement->execute(['id' => $raid_id]);
             while ($row = $cleanup_statement->fetch()) {
                 if($config->RAID_PICTURE) {
                     $url = $config->RAID_PICTURE_URL."?pokemon=".$raid_info['pokemon']."&raid=".$raid_id;
@@ -280,17 +281,18 @@ foreach ($update as $raid) {
             VALUES (:pokemon, :user_id, :first_seen, :start_time, :end_time, :gym_team, :gym_id, :move1, :move2, :gender)
         ';
         $statement = $dbh->prepare( $query );
-        $statement->bindValue(':pokemon', $pokemon, PDO::PARAM_STR);
-        $statement->bindValue(':user_id', $config->WEBHOOK_CREATOR, PDO::PARAM_STR);
-        $statement->bindValue(':first_seen', gmdate("Y-m-d H:i:s"), PDO::PARAM_STR);
-        $statement->bindValue(':start_time', $start, PDO::PARAM_STR);
-        $statement->bindValue(':end_time', $end, PDO::PARAM_STR);
-        $statement->bindValue(':gym_team', $team, PDO::PARAM_STR);
-        $statement->bindValue(':gym_id', $gym_internal_id, PDO::PARAM_INT);
-        $statement->bindValue(':move1', $move_1, PDO::PARAM_STR);
-        $statement->bindValue(':move2', $move_2, PDO::PARAM_STR);
-        $statement->bindValue(':gender', $gender, PDO::PARAM_STR);
-        $statement->execute();
+        $dbh->execute([
+          'pokemon' => $pokemon,
+          'user_id' => $config->WEBHOOK_CREATOR,
+          'first_seen' => gmdate("Y-m-d H:i:s"),
+          'start_time' => $start,
+          'end_time' => $end,
+          'gym_team' => $team,
+          'gym_id' => $gym_internal_id,
+          'move1' => $move_1,
+          'move2' => $move_2,
+          'gender' => $gender
+        ]);
         $raid_id = $dbh->lastInsertId();
     }
     catch (PDOException $exception) {

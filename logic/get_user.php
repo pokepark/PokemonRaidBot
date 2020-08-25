@@ -16,7 +16,7 @@ function get_user($user_id)
     );
 
     // Fetch the row.
-    $row = $rs->fetch_assoc();
+    $row = $rs->fetch();
 
     // Build message string.
     $msg = '';

@@ -13,8 +13,6 @@ function insert_cleanup($chat_id, $message_id, $raid_id)
     debug_log('Message_ID: ' . $message_id);
 
     if ((is_numeric($chat_id)) && (is_numeric($message_id)) && (is_numeric($raid_id)) && ($raid_id > 0)) {
-        global $db;
-
         // Get raid times.
         $raid = get_raid($raid_id);
 
@@ -34,7 +32,7 @@ function insert_cleanup($chat_id, $message_id, $raid_id)
             );
 
 	    // Chat_id and message_id equal to info from database
-	    while ($cleanup = $rs->fetch_assoc()) {
+	    while ($cleanup = $rs->fetch()) {
 		// Leave while loop if cleanup info is already in database
 		if(($cleanup['chat_id'] == $chat_id) && ($cleanup['message_id'] == $message_id)) {
             	    debug_log('Cleanup preparation info is already in database!');

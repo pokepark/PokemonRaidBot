@@ -21,7 +21,7 @@ $atts = [];
 $count = 0;
 
 // Fill array with attendances.
-while ($row = $rs->fetch_assoc()) {
+while ($row = $rs->fetch()) {
     $atts[] = $row;
     $count = $count + 1;
 }

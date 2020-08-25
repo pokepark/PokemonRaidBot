@@ -15,7 +15,7 @@ function get_gym($id)
             "
         );
 
-    $gym = $rs->fetch_assoc();
+    $gym = $rs->fetch();
 
     return $gym;
 }

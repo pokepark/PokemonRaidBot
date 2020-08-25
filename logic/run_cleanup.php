@@ -81,14 +81,14 @@ function run_cleanup ($telegram = 2, $database = 2) {
         $cleanup_jobs = [];
 
 	// Fill array with cleanup jobs.
-        while ($rowJob = $rs->fetch_assoc()) {
+        while ($rowJob = $rs->fetch()) {
             $cleanup_jobs[] = $rowJob;
         }
 
         // Cleanup telegram and database?
         if($telegram == 1 && $database == 1) {
 	    // Add database cleanup jobs to array.
-            while ($rowDBJob = $rs_db->fetch_assoc()) {
+            while ($rowDBJob = $rs_db->fetch()) {
                 $cleanup_jobs[] = $rowDBJob;
             }
         }
@@ -119,7 +119,7 @@ function run_cleanup ($telegram = 2, $database = 2) {
             );
 
             // Fetch raid data.
-            $raid = $rs->fetch_assoc();
+            $raid = $rs->fetch();
 
             // No raid found - set cleanup to 0 and continue with next raid
             if (!$raid) {
@@ -247,7 +247,7 @@ function run_cleanup ($telegram = 2, $database = 2) {
 		    );
 
 		    // Log each cleanup ID which will be deleted.
-		    while($rs_cleanups = $rs_cl->fetch_assoc()) {
+		    while($rs_cleanups = $rs_cl->fetch()) {
  			cleanup_log('Cleanup ID: ' . $rs_cleanups['id'] . ', Former Raid ID: ' . $rs_cleanups['cleaned']);
 		    }
 
