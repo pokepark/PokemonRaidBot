@@ -49,15 +49,15 @@ if($config->PORTAL_IMPORT) {
         // Build query to check if gym is already in database or not
         // TODO: Use PDO here
         $rs = my_query("
-        SELECT    id, COUNT(*)
+        SELECT    id
         FROM      gyms
-          WHERE   gym_name = '{$gym_name_no_spec}'
-         ");
+        WHERE   gym_name = '{$gym_name_no_spec}'
+        ");
 
-        $row = $rs->fetch_row();
+        $row = $rs->fetch();
 
         // Gym already in database or new
-        if (empty($row['0'])) {
+        if (empty($row['id'])) {
             // insert gym in table.
             debug_log('Gym not found in database gym list! Inserting gym "' . $gym_name . '" now.');
             $query = '
@@ -84,12 +84,13 @@ if($config->PORTAL_IMPORT) {
 
         // Insert / Update.
         $statement = $dbh->prepare($query);
-        $statement->bindValue(':gym_name', $gym_name, PDO::PARAM_STR);
-        $statement->bindValue(':lat', $lat, PDO::PARAM_STR);
-        $statement->bindValue(':lon', $lon, PDO::PARAM_STR);
-        $statement->bindValue(':address', $address, PDO::PARAM_STR);
-        $statement->bindValue(':gym_image', $gym_image, PDO::PARAM_STR);
-        $statement->execute();
+        $statement->execute([
+          'gym_name' => $gym_name,
+          'lat' => $lat,
+          'lon' => $lon,
+          'address' => $address,
+          'gym_image' => $gym_image
+        ]);
     } catch (PDOException $exception) {
         error_log($exception->getMessage());
         $dbh = null;
@@ -97,7 +98,7 @@ if($config->PORTAL_IMPORT) {
     }
 
     // Get last insert id.
-    if (empty($row['0'])) {
+    if (empty($row['id'])) {
         $gym_id = $dbh->lastInsertId();
     }
 

@@ -17,7 +17,7 @@ $rs = my_query(
 );
 
 // Get the answer.
-$answer = $rs->fetch_assoc();
+$answer = $rs->fetch();
 
 // Write to log.
 debug_log($answer);

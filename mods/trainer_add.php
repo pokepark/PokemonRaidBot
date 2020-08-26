@@ -68,7 +68,7 @@ $rs = my_query(
 );
 
 $chats_db = [];
-while ($row = $rs->fetch_assoc()) {
+while ($row = $rs->fetch()) {
     $chats_db[] = $row['chat_id'];
 }
 $log_chats_db = implode(',', $chats_db);

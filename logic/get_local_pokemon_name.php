@@ -49,7 +49,7 @@ function get_local_pokemon_name($pokemon_id_form, $override_language = false)
                 "
             );
 
-        while ($pokemon = $rs->fetch_assoc()) {
+        while ($pokemon = $rs->fetch()) {
             // Pokemon name
             $pokemon_name = $pokemon['pokemon_name'];
             // Pokemon form

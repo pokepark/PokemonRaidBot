@@ -31,7 +31,7 @@ $data = explode(',', $gym_data, 5);
 
 // Invalid data received.
 if (count($data) < 4) {
-    send_message($update['message']['chat']['id'], 'Invalid input - Paramter mismatch', []);
+    send_message($update['message']['chat']['id'], 'Invalid input - Parameter mismatch', []);
     exit;
 }
 
@@ -73,8 +73,7 @@ try {
         LIMIT 1
     ';
     $statement = $dbh->prepare( $query );
-    $statement->bindValue(':gym_name', $gym_name, PDO::PARAM_STR);
-    $statement->execute();
+    $statement->execute(['gym_name' => $gym_name]);
     while ($row = $statement->fetch()) {
     
         $gym_id = $row['id'];
@@ -111,7 +110,7 @@ if ($raid_id > 0) {
     );
 
     // Get row.
-    $row_ex_raid = $rs_ex_raid->fetch_assoc();
+    $row_ex_raid = $rs_ex_raid->fetch();
     $poke_name = $row_ex_raid['pokemon'];
     debug_log('Comparing the current pokemon to pokemons from ex-raid list now...');
     debug_log('Current Pokemon in database for this raid: ' . $poke_name);
@@ -122,25 +121,34 @@ if ($raid_id > 0) {
         // Ex-Raid! Update only team in raids table.
         debug_log('Current pokemon is an ex-raid pokemon: ' . $poke_name);
         debug_log('Pokemon "' .$poke_name . '" will NOT be updated to "' . $boss . '"!');
-        my_query(
+        $stmt = $dbh->prepare(
             "
             UPDATE    raids
-            SET	      gym_team = '{$db->real_escape_string($team)}'
-              WHERE   id = {$raid_id}
+            SET	      gym_team = :team
+              WHERE   id = :raid_id
             "
         );
+        $stmt->execute([
+          'team' => $team,
+          'raid_id' => $raid_id
+        ]);
     } else {
         // Update pokemon and team in raids table.
         debug_log('Current pokemon is NOT an ex-raid pokemon: ' . $poke_name);
         debug_log('Pokemon "' .$poke_name . '" will be updated to "' . $boss . '"!');
-        my_query(
+        $stmt = $dbh->prepare(
             "
             UPDATE    raids
-            SET       pokemon = '{$db->real_escape_string($boss)}',
-		      gym_team = '{$db->real_escape_string($team)}'
-              WHERE   id = {$raid_id}
+            SET       pokemon = :boss
+		      gym_team = :team
+            WHERE     id = :raid_id
             "
         );
+        $stmt->execute([
+          'boss' => $boss,
+          'team' => $team,
+          'raid_id' => $raid_id
+        ]);
     }
 
     // Debug log
@@ -155,21 +163,27 @@ if ($raid_id > 0) {
 }
 
 // Build the query.
-$rs = my_query(
+$stmt = $dbh->prepare(
     "
     INSERT INTO   raids
-    SET           pokemon = '{$db->real_escape_string($boss)}',
-		  user_id = {$update['message']['from']['id']},
+    SET           pokemon = :boss,
+		  user_id = :user_id,
 		  first_seen = DATE_FORMAT(UTC_TIMESTAMP(), '%Y-%m-%d %H:%i:00'),
 		  start_time = DATE_ADD(first_seen, INTERVAL {$countdown} MINUTE),
 		  end_time = DATE_ADD(start_time, INTERVAL {$endtime} MINUTE),
-		  gym_team = '{$db->real_escape_string($team)}',
-		  gym_id = '{$gym_id}'
+		  gym_team = :team,
+		  gym_id = :gym_id
     "
 );
+$stmt->execute([
+  'boss' => $boss,
+  'user_id' => $update['message']['from']['id'],
+  'team' => $team,
+  'gym_id' => $gym_id
+]);
 
 // Get last insert id from db.
-$id = my_insert_id();
+$id = $dbh->lastInsertId();
 
 // Write to log.
 debug_log('ID=' . $id);
@@ -245,4 +259,3 @@ if ($update['message']['chat']['type'] == 'private' || $update['callback_query']
 }
 
 ?>
-

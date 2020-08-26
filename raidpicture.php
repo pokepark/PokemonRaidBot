@@ -532,8 +532,5 @@ if($config->RAID_PICTURE_FILE_FORMAT == 'png') {
 imagedestroy($img_gym);
 imagedestroy($img_pokemon);
 imagedestroy($canvas);
-
-$db->close();
-$db = null;
 ?>
 

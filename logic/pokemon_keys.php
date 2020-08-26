@@ -20,7 +20,7 @@ function pokemon_keys($gym_id_plus_letter, $raid_level, $action)
         );
 
     // Add key for each raid level
-    while ($pokemon = $rs->fetch_assoc()) {
+    while ($pokemon = $rs->fetch()) {
         $keys[] = array(
             'text'          => get_local_pokemon_name($pokemon['pokedex_id'] . '-' . $pokemon['pokemon_form']),
             'callback_data' => $gym_id_plus_letter . ':' . $action . ':' . $pokemon['pokedex_id'] . '-' . $pokemon['pokemon_form']

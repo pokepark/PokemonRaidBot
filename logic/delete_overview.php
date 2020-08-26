@@ -6,8 +6,6 @@
  */
 function delete_overview($chat_id, $message_id)
 {
-    global $db;
-
     // Delete telegram message.
     debug_log('Deleting overview telegram message ' . $message_id . ' from chat ' . $chat_id);
     delete_message($chat_id, $message_id);

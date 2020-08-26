@@ -21,7 +21,7 @@ function get_active_raids()
     );
 
     // Get the raids.
-    $raids = $rs->fetch_assoc();
+    $raids = $rs->fetch();
 
     debug_log($raids);
 

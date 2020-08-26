@@ -482,7 +482,7 @@ function keys_vote($raid)
                  "
             );
 
-            $row = $rs->fetch_assoc();
+            $row = $rs->fetch();
 
             // Count participants and participants by pokemon
             $count_pp = $row['count'];
@@ -532,7 +532,7 @@ function keys_vote($raid)
                     $eggs = $GLOBALS['eggs'];
 
                     // Add key for each raid level
-                    while ($pokemon = $rs->fetch_assoc()) {
+                    while ($pokemon = $rs->fetch()) {
                         if(in_array($pokemon['pokedex_id'], $eggs)) continue;
                         $buttons_pokemon[] = array(
                             'text'          => get_local_pokemon_name($pokemon['pokedex_id'] . '-' . $pokemon['pokemon_form'], true),

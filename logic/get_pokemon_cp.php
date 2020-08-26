@@ -21,7 +21,7 @@ function get_pokemon_cp($pokemon_id_form)
             "
         );
 
-    $cp = $rs->fetch_assoc();
+    $cp = $rs->fetch();
 
     return $cp;
 }

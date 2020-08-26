@@ -30,7 +30,7 @@ function get_raid_with_pokemon($raid_id)
     );
 
     // Get the row.
-    $raid = $rs->fetch_assoc();
+    $raid = $rs->fetch();
 
     debug_log($raid);
 
