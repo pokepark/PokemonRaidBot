@@ -110,7 +110,11 @@ foreach($master as $row) {
             $max_weather_cp = $CPs[3];
 
             $weather = $weatherboost_table[$row['data']['pokemonSettings']['type']];
-            if(isset($row['data']['pokemonSettings']['type2'])) {
+            # Add type2 weather boost only if there is a second type and it's not the same weather as the first type!
+            if(
+              isset($row['data']['pokemonSettings']['type2'])
+              && $weatherboost_table[$row['data']['pokemonSettings']['type2']] != $weatherboost_table[$row['data']['pokemonSettings']['type']]
+            ) {
                 $weather .= $weatherboost_table[$row['data']['pokemonSettings']['type2']];
             }
             if(isset($pokemon_array[$pokemon_id][$form_name])) {
