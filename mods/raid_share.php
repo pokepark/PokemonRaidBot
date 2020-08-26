@@ -38,17 +38,18 @@ $tg_json = array();
 
 // Raid picture
 if($config->RAID_PICTURE) {
-    $picture_url = $config->RAID_PICTURE_URL . "?pokemon=" . $raid['pokemon'] . "&raid=". $id;
-    debug_log('PictureUrl: ' . $picture_url);
+  require_once(LOGIC_PATH . '/raid_picture.php');
+  $picture_url = raid_picture_url($raid);
 }
 
 // Send the message.
 $raid_picture_hide_level = explode(",",$config->RAID_PICTURE_HIDE_LEVEL);
 $raid_picture_hide_pokemon = explode(",",$config->RAID_PICTURE_HIDE_POKEMON);
 
-$raid_pokemon = $raid['pokemon'];
-$raid_pokemon_id = explode('-',$raid_pokemon)[0];
-$raid_level = get_raid_level($raid_pokemon);
+$raid_pokemon_id = $raid['pokemon'];
+$raid_level = get_raid_level($raid['pokemon'], $raid['pokemon_form']);
+$raid_pokemon_form_name = get_pokemon_form_name($raid_pokemon_id,$raid['pokemon_form_id']);
+$raid_pokemon = $raid_pokemon_id . "-" . $raid_pokemon_form_name;
 
 if($config->RAID_PICTURE && !in_array($raid_level, $raid_picture_hide_level) && !in_array($raid_pokemon, $raid_picture_hide_pokemon) && !in_array($raid_pokemon_id, $raid_picture_hide_pokemon)) {
     $tg_json[] = send_photo($chat, $picture_url, $text['short'], $keys, ['reply_to_message_id' => $chat, 'disable_web_page_preview' => 'true'], true);

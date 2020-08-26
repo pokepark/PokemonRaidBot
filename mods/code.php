@@ -28,7 +28,7 @@ $now = utcnow();
 $today = dt2date($now);
 $start = dt2time($raid['start_time']);
 $end = dt2time($raid['end_time']);
-$msg .= get_local_pokemon_name($raid['pokemon']) . SP . '-' . SP . (($raid_day == $today) ? '' : ($raid_day . ', ')) . $start . SP . getTranslation('to') . SP . $end . CR . CR;
+$msg .= get_local_pokemon_name($raid['pokemon'], $raid['pokemon_form']) . SP . '-' . SP . (($raid_day == $today) ? '' : ($raid_day . ', ')) . $start . SP . getTranslation('to') . SP . $end . CR . CR;
 
 // Public or private raid group?
 if($arg == 'public-unconfirmed' || $arg == 'public-send') {
@@ -81,9 +81,9 @@ if($arg == 'public-unconfirmed' || $arg == 'public-send') {
     $c3 = $data[2];
 
     // Get pokemon names.
-    $p1 = ($c1 > 0) ? get_local_pokemon_name($c1) : '';
-    $p2 = ($c2 > 0) ? get_local_pokemon_name($c2) : '';
-    $p3 = ($c3 > 0) ? get_local_pokemon_name($c3) : '';
+    $p1 = ($c1 > 0) ? get_local_pokemon_name($c1, 0) : '';
+    $p2 = ($c2 > 0) ? get_local_pokemon_name($c2, 0) : '';
+    $p3 = ($c3 > 0) ? get_local_pokemon_name($c3, 0) : '';
 
     // Action to do: Ask to send or add code?
     $action = $data[3];

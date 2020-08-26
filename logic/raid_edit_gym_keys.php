@@ -53,7 +53,8 @@ function raid_edit_gym_keys($first, $warn = true, $action = 'edit_raidlevel', $d
         LEFT JOIN raids
         ON        raids.gym_id = gyms.id
         LEFT JOIN pokemon
-        ON        raids.pokemon = CONCAT(pokemon.pokedex_id, '-', pokemon.pokemon_form)
+        ON        raids.pokemon = pokemon.pokedex_id
+        AND       raids.pokemon_form  = pokemon.pokemon_form_id
         WHERE     UPPER(LEFT(gym_name, $first_length)) = UPPER('{$first}')
         $not
         AND       gyms.show_gym = {$show_gym}

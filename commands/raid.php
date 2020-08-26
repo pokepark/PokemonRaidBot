@@ -103,7 +103,7 @@ if ($raid_id > 0) {
     // Get current pokemon from database for raid.
     $rs_ex_raid = my_query(
         "
-        SELECT    pokemon
+        SELECT    pokemon, pokemon_form
             FROM      raids
               WHERE   id = {$raid_id}
         "
@@ -111,12 +111,12 @@ if ($raid_id > 0) {
 
     // Get row.
     $row_ex_raid = $rs_ex_raid->fetch();
-    $poke_name = $row_ex_raid['pokemon'];
+    $poke_name = $row_ex_raid['pokemon'].'-'.$row_ex_raid['pokemon_form'];
     debug_log('Comparing the current pokemon to pokemons from ex-raid list now...');
     debug_log('Current Pokemon in database for this raid: ' . $poke_name);
 
     // Make sure it's not an Ex-Raid before updating the pokemon.
-    $raid_level = get_raid_level($poke_name);
+    $raid_level = get_raid_level($row_ex_raid['pokemon'], $row_ex_raid['pokemon_form']);
     if($raid_level == 'X') {
         // Ex-Raid! Update only team in raids table.
         debug_log('Current pokemon is an ex-raid pokemon: ' . $poke_name);
@@ -207,8 +207,8 @@ $text = show_raid_poll($raid);
 
 // Raid picture
 if($config->RAID_PICTURE) {
-    $picture_url = $config->RAID_PICTURE_URL . "?pokemon=" . $raid['pokemon'] . "&raid=". $raid['id'];
-    debug_log('PictureUrl: ' . $picture_url);
+  require_once(LOGIC_PATH . '/raid_picture.php');
+  $picture_url = raid_picture_url($raid);
 }
 
 

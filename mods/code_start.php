@@ -35,7 +35,7 @@ if ($end_time > $now) {
     $today = dt2date($now);
     $start = dt2time($raid['start_time']);
     $end = dt2time($raid['end_time']);
-    $text .= get_local_pokemon_name($raid['pokemon']) . SP . '-' . SP . (($raid_day == $today) ? '' : ($raid_day . ', ')) . $start . SP . getTranslation('to') . SP . $end . CR . CR;
+    $text .= get_local_pokemon_name($raid['pokemon'], $raid['pokemon_form']) . SP . '-' . SP . (($raid_day == $today) ? '' : ($raid_day . ', ')) . $start . SP . getTranslation('to') . SP . $end . CR . CR;
 
     // Add exit key.
     $keys = [

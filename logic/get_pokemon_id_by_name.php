@@ -6,6 +6,7 @@
  */
 function get_pokemon_id_by_name($pokemon_name)
 {
+    global $dbh;
     // Init id and write name to search to log.
     $pokemon_id = 0;
     $pokemon_form = 'normal';
@@ -96,16 +97,27 @@ function get_pokemon_id_by_name($pokemon_name)
                 $pokemon_form = str_replace('pokemon_form_','',$key_form);
                 debug_log('Found pokemon form by json key name: pokemon_form_' . $key_form);
                 break;
-            }
+            } 
         }
     }
-
+    // Fetch Pokemon form ID from database 
+    $stmt = $dbh->prepare("
+            SELECT  pokemon_form_id 
+            FROM    pokemon 
+            WHERE   pokedex_id = :pokedex_id
+            AND     pokemon_form_name = :form_name
+            LIMIT   1
+            ");
+    $stmt->execute(['pokedex_id' => $pokemon_id, 'form_name' => $pokemon_form]);
+    $res = $stmt->fetch();
+    $pokemon_form_id = $res['pokemon_form_id'];
+    
     // Write to log.
     debug_log($pokemon_id,'P:');
-    debug_log($pokemon_form,'P:');
+    debug_log($pokemon_form.' (ID: '.$pokemon_form_id.')','P:');
 
     // Set pokemon form.
-    $pokemon_id = $pokemon_id . '-' . $pokemon_form;
+    $pokemon_id = $pokemon_id . '-' . $pokemon_form_id;
 
     // Return pokemon_id
     return $pokemon_id;

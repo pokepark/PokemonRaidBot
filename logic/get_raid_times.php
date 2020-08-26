@@ -45,7 +45,7 @@ function get_raid_times($raid, $override_language = true, $unformatted = false)
     // Raid times.
     if($unformatted == false) {
         if($config->RAID_POLL_POKEMON_NAME_FIRST_LINE == true) {
-            $msg .= get_local_pokemon_name($raid['pokemon'], $override_language) . ':' . SP;
+            $msg .= get_local_pokemon_name($raid['pokemon'], $raid['pokemon_form'], $override_language) . ':' . SP;
         } else {
             $msg .= $getTypeTranslation('raid') . ':' . SP;
         }

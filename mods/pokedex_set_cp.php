@@ -12,6 +12,11 @@ bot_access_check($update, 'pokedex');
 // Set the id.
 $pokedex_id = $data['id'];
 
+// Split pokedex_id and form
+$dex_id_form = explode('-',$pokedex_id);
+$dex_id = $dex_id_form[0];
+$dex_form = $dex_id_form[1];
+
 // Get the type, level and cp
 $arg = $data['arg'];
 $data = explode("-", $arg);
@@ -30,7 +35,7 @@ if($cp_level == 25) {
 $action = $data[2];
 
 // Get current CP values
-$cp_old = get_pokemon_cp($pokedex_id);
+$cp_old = get_pokemon_cp($dex_id, $dex_form);
 $current_cp = $cp_old[$cp_type . $boosted];
 
 // Log
@@ -39,11 +44,6 @@ debug_log('New CP Level: ' . $cp_level);
 debug_log('New CP: ' . $cp_value);
 debug_log('Old CP: ' . $current_cp);
 debug_log('Action: ' . $action);
-
-// Split pokedex_id and form
-$dex_id_form = explode('-',$pokedex_id);
-$dex_id = $dex_id_form[0];
-$dex_form = $dex_id_form[1];
 
 // Add digits to cp
 if($action == 'add') {
@@ -69,7 +69,7 @@ if($action == 'add') {
     $callback_response = 'OK';
 
     // Set the message.
-    $msg = getTranslation('raid_boss') . ': <b>' . get_local_pokemon_name($pokedex_id) . ' (#' . $dex_id . ')</b>' . CR;
+    $msg = getTranslation('raid_boss') . ': <b>' . get_local_pokemon_name($dex_id, $dex_form) . ' (#' . $dex_id . ')</b>' . CR;
     $msg .= getTranslation('pokedex_current_cp') . ' ' . $current_cp . CR . CR;
     $msg .= '<b>' .getTranslation('pokedex_' . $cp_type . $boosted) . ': ' . $cp_value . '</b>';
 
@@ -91,7 +91,7 @@ if($action == 'add') {
             UPDATE    pokemon
             SET       $cp_column = {$cp_value}
             WHERE     pokedex_id = {$dex_id}
-            AND       pokemon_form = '{$dex_form}'
+            AND       pokemon_form_id = '{$dex_form}'
             "
         );
 
@@ -102,7 +102,7 @@ if($action == 'add') {
     $keys = [
         [
             [
-                'text'          => getTranslation('back') . ' (' . get_local_pokemon_name($pokedex_id) . ')',
+                'text'          => getTranslation('back') . ' (' . get_local_pokemon_name($dex_id, $dex_form) . ')',
                 'callback_data' => $pokedex_id . ':pokedex_edit_pokemon:0'
             ],
             [
@@ -117,7 +117,7 @@ if($action == 'add') {
 
     // Set the message.
     $msg = getTranslation('pokemon_saved') . CR;
-    $msg .= '<b>' . get_local_pokemon_name($pokedex_id) . ' (#' . $dex_id . ')</b>' . CR . CR;
+    $msg .= '<b>' . get_local_pokemon_name($dex_id, $dex_form) . ' (#' . $dex_id . ')</b>' . CR . CR;
     $msg .= getTranslation('pokedex_' . $cp_type . $boosted) . ': <b>' . $cp_value . '</b>';
 }
 

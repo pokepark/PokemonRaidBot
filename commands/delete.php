@@ -46,7 +46,7 @@ try {
         $raid_day = dt2date($row['start_time']);
         $start = dt2time($row['start_time']);
         $end = dt2time($row['end_time']);
-        $text .= get_local_pokemon_name($row['pokemon']) . SP . '—' . SP . (($raid_day == $today) ? '' : ($raid_day . ', ')) . $start . SP . getTranslation('to') . SP . $end . CR . CR;
+        $text .= get_local_pokemon_name($row['pokemon'], $row['pokemon_form']) . SP . '—' . SP . (($raid_day == $today) ? '' : ($raid_day . ', ')) . $start . SP . getTranslation('to') . SP . $end . CR . CR;
         $keys[] = array(
             'text'          => $row['gym_name'],
             'callback_data' => $row['id'] . ':raids_delete:0'

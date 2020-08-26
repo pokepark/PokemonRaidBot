@@ -75,8 +75,8 @@ if($data['arg'] == "setlevel") {
     $callback_response = getTranslation('select_raid_level');
 
     // Set the message.
-    $msg = getTranslation('raid_boss') . ': <b>' . get_local_pokemon_name($pokedex_id) . ' (#' . $dex_id . ')</b>' . CR;
-    $old_raid_level = get_raid_level($pokedex_id);
+    $msg = getTranslation('raid_boss') . ': <b>' . get_local_pokemon_name($dex_id, $dex_form) . ' (#' . $dex_id . ')</b>' . CR;
+    $old_raid_level = get_raid_level($dex_id, $dex_form);
     $msg .= getTranslation('pokedex_current_raid_level') . ' ' . getTranslation($old_raid_level . 'stars') . CR . CR;
     $msg .= '<b>' . getTranslation('pokedex_new_raid_level') . ':</b>';
 } else {
@@ -86,7 +86,7 @@ if($data['arg'] == "setlevel") {
             UPDATE    pokemon
             SET       raid_level = '{$arg}'
             WHERE     pokedex_id = {$dex_id}
-            AND       pokemon_form = '{$dex_form}'
+            AND       pokemon_form_id = '{$dex_form}'
             "
         );
 
@@ -97,7 +97,7 @@ if($data['arg'] == "setlevel") {
     $keys = [
         [
             [
-                'text'          => getTranslation('back') . ' (' . get_local_pokemon_name($pokedex_id) . ')',
+                'text'          => getTranslation('back') . ' (' . get_local_pokemon_name($dex_id, $dex_form) . ')',
                 'callback_data' => $pokedex_id . ':pokedex_edit_pokemon:0'
             ],
             [
@@ -108,11 +108,11 @@ if($data['arg'] == "setlevel") {
     ];
 
     // Build callback message string.
-    $callback_response = getTranslation('pokemon_saved') . ' ' . get_local_pokemon_name($pokedex_id);
+    $callback_response = getTranslation('pokemon_saved') . ' ' . get_local_pokemon_name($dex_id, $dex_form);
 
     // Set the message.
     $msg = getTranslation('pokemon_saved') . CR;
-    $msg .= '<b>' . get_local_pokemon_name($pokedex_id) . ' (#' . $dex_id . ')</b>' . CR . CR;
+    $msg .= '<b>' . get_local_pokemon_name($dex_id, $dex_form) . ' (#' . $dex_id . ')</b>' . CR . CR;
     $msg .= getTranslation('pokedex_new_raid_level') . ':' . CR;
     $msg .= '<b>' . getTranslation($arg . 'stars') . '</b>';
 }
