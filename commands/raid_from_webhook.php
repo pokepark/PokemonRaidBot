@@ -281,7 +281,7 @@ foreach ($update as $raid) {
             VALUES (:pokemon, :user_id, :first_seen, :start_time, :end_time, :gym_team, :gym_id, :move1, :move2, :gender)
         ';
         $statement = $dbh->prepare( $query );
-        $dbh->execute([
+        $statement->execute([
           'pokemon' => $pokemon,
           'user_id' => $config->WEBHOOK_CREATOR,
           'first_seen' => gmdate("Y-m-d H:i:s"),
