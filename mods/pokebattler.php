@@ -25,12 +25,13 @@ if($id == 0) {
     $keys = [];
 
     // Specify raid levels.
-    $levels = array('5', '4', '3', '2', '1');
+    // TODO(artanicus): create this from some other source
+    $levels = array('6', '5', '4', '3', '2', '1');
 
     // All raid level keys.
     $keys[] = array(
         'text'          => getTranslation('pokedex_all_raid_level'),
-        'callback_data' => '54321:pokebattler:ex#0,0,0'
+        'callback_data' => RAID_LEVEL_ALL . ':pokebattler:ex#0,0,0'
     );
 
     // Add key for each raid level
@@ -63,10 +64,11 @@ if($id == 0) {
     // debug_log($json,'POKEBATTLER');
 
     // All raid levels?
-    if($id == '54321') {
+   if($id == RAID_LEVEL_ALL) {
         $start = 0;
-        $end = 4;
-        $clear = "'5','4','3','2','1'";
+        // TODO(artanicus): create these two from some other source
+        $end = 5;
+        $clear = "'6','5','4','3','2','1'";
     } else {
         $start = $id - 1;
         $end = $id - 1;
@@ -251,7 +253,7 @@ if($id == 0) {
                 // Are 3 raid bosses already selected?
                 if($poke1 == '0' || $poke2 == '0' || $poke3 == '0') {
                     // Add raid level to pokemon name
-                    if($id == '54321') {
+                    if($id == RAID_LEVEL_ALL) {
                         // Add key to exclude pokemon from import.
                         $keys[] = array(
                             'text'          => '[' . ($rl) . ']' . SP . $local_pokemon,
@@ -345,7 +347,7 @@ if($id == 0) {
             $msg .= $poke_name . ' (#' . $dex_id . ')' . CR;
 
             // Add button to edit pokemon.
-            if($id == '54321') {
+            if($id == RAID_LEVEL_ALL) {
                 $keys[] = array(
                     'text'          => '[' . $lv . ']' . SP . $poke_name,
                     'callback_data' => $pid . ':pokedex_edit_pokemon:0'

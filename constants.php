@@ -2,6 +2,9 @@
 // Paths.
 define('PORTAL_IMAGES_PATH', IMAGES_PATH . '/gyms');
 
+// raid level constants
+define('RAID_LEVEL_ALL', '654321');
+
 // Icons.
 defined('TEAM_B') 		or define('TEAM_B',        iconv('UCS-4LE', 'UTF-8', pack('V', 0x1F499)));
 defined('TEAM_R') 		or define('TEAM_R',        iconv('UCS-4LE', 'UTF-8', pack('V', 0x2764)));
