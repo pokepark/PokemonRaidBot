@@ -152,7 +152,7 @@ foreach($master as $row) {
 if(!empty($pokemon_array)) {
     // Add eggs to SQL data.
     echo 'Adding raids eggs to pokemons' . PHP_EOL;
-    for($e = 1; $e <= 5; $e++) {
+    for($e = 1; $e <= 6; $e++) {
         $pokemon_id = '999'.$e;
         $form_name = 'normal';
         $pokemon_name = 'Level '. $e .' Egg';
