@@ -23,6 +23,18 @@
     "PL": "Ex-Rajd",
     "FI": "Ex-Raidi"
   },
+  "6stars": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Mega-Raid",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "TRANSLATE"
+  },
   "5stars": {
     "NL": "5 Sterren",
     "DE": "5 Sterne",
@@ -94,6 +106,18 @@
     "FR": "Désactivé",
     "PL": "Nieaktywny",
     "FI": "Pois käytöstä"
+  },
+  "egg_6": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Mega Egg",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Mega Muna"
   },
   "egg_5": {
     "NL": "Level 5 Ei",
