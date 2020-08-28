@@ -73,7 +73,7 @@ function alarm($raid, $user, $action, $info = '')
             sendalarm($msg_text, $raid, $user);
         // Any pokemon
         } else {
-            $msg_text = '<b>' . getTranslation('alert_every_poke') . SP . $poke_name . '</b>' . CR;
+            $msg_text = '<b>' . getTranslation('alert_every_poke') . '</b>' . CR;
             $msg_text .= EMOJI_HERE . SP . $gymname . SP . '(' . $raidtimes . ')' . CR;
             $msg_text .= EMOJI_SINGLE . SP . $username . CR;
             $msg_text .= EMOJI_CLOCK . SP . check_time($attendtime);
