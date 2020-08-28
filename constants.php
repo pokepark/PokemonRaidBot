@@ -57,6 +57,7 @@ $teams = array(
 
 // Raid eggs.
 $eggs = array(
+    '9996',  // Level 6 / Mega
     '9995',  // Level 5
     '9994',  // Level 4
     '9993',  // Level 3
