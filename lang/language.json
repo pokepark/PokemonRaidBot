@@ -23,6 +23,18 @@
     "PL": "Ex-Rajd",
     "FI": "Ex-Raidi"
   },
+  "6stars": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Mega-Raid",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "TRANSLATE"
+  },
   "5stars": {
     "NL": "5 Sterren",
     "DE": "5 Sterne",
