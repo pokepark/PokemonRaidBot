@@ -28,7 +28,7 @@ function pokemon_keys($gym_id_plus_letter, $raid_level, $action)
     }
 
     // Get the inline key array.
-    $keys = inline_key_array($keys, 3);
+    $keys = inline_key_array($keys, 1);
 
     return $keys;
 }
