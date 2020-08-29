@@ -5,17 +5,29 @@ $SQL_UPDATE = '';
 $SQL_eggs = '';
 $SQL_file = __DIR__ . '/sql/game-master-raid-boss-pokedex.sql';
 
-$proto_url = "https://raw.githubusercontent.com/Furtif/POGOProtos/master/src/POGOProtos/Enums/Form.proto";
+$proto_url = "https://raw.githubusercontent.com/Furtif/POGOProtos/master/src/POGOProtos/Rpc/Rpc.proto";
 $game_master_url = "https://raw.githubusercontent.com/PokeMiners/game_masters/master/latest/latest.json";
 
 //Parse the form ID's from pogoprotos
 $proto = file($proto_url);
 $count = count($proto);
 $form_ids = array();
-for($i=4;$i<$count;$i++) {
+$start=false;
+for($i=0;$i<$count;$i++) {
     $data = explode("=",str_replace(";","",$proto[$i]));
-    if(count($data) == 2) $form_ids[trim($data[0])] = trim($data[1]);
+    // Found first pokemon, start collecting data
+    if(count($data) == 2 && trim($data[0]) == "UNOWN_A") $start = true;
+
+    if($start) {
+        // End of pokemon data, no need to loop further
+        if(trim($data[0]) == "}") {
+            break;
+        }else if(count($data) == 2) {
+            $form_ids[trim($data[0])] = trim($data[1]);
+        }
+    }
 }
+unset($proto);
 
 $weatherboost_table = array(
                         "POKEMON_TYPE_BUG"      => "3",
@@ -140,7 +152,7 @@ foreach($master as $row) {
 if(!empty($pokemon_array)) {
     // Add eggs to SQL data.
     echo 'Adding raids eggs to pokemons' . PHP_EOL;
-    for($e = 1; $e <= 5; $e++) {
+    for($e = 1; $e <= 6; $e++) {
         $pokemon_id = '999'.$e;
         $form_name = 'normal';
         $pokemon_name = 'Level '. $e .' Egg';

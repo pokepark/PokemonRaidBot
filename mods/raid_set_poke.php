@@ -11,12 +11,14 @@ raid_access_check($update, $data, 'pokemon');
 
 // Set the id.
 $id = $data['id'];
+$pokemon_id_form = explode("-", $data['arg']);
 
 // Update pokemon in the raid table.
 my_query(
     "
     UPDATE    raids
-    SET       pokemon = '{$data['arg']}'
+    SET       pokemon = '{$pokemon_id_form[0]}',
+              pokemon_form = '{$pokemon_id_form[1]}'
       WHERE   id = {$id}
     "
 );
@@ -81,7 +83,7 @@ $updated_keys = keys_vote($raid);
 if($config->RAID_PICTURE) {
     require_once(LOGIC_PATH . '/raid_picture.php');
     while ($raidmsg = $rs->fetch()) {
-        $picture_url = $raid_picture_url($raid);
+        $picture_url = raid_picture_url($raid);
 	$tg_json[] = editMessageMedia($raidmsg['message_id'], $updated_msg['short'], $updated_keys, $raidmsg['chat_id'], ['disable_web_page_preview' => 'true'], false, $picture_url);
     } 
 } else {
@@ -98,7 +100,7 @@ debug_log('Alarm raid boss updated: ' . $raid['pokemon']);
 $raidtimes = str_replace(CR, '', str_replace(' ', '', get_raid_times($raid, false, true)));
 $msg_text = '<b>' . getTranslation('alert_raid_boss') . '</b>' . CR;
 $msg_text .= EMOJI_HERE . SP . $raid['gym_name'] . SP . '(' . $raidtimes . ')' . CR;
-$msg_text .= EMOJI_EGG . SP . '<b>' . get_local_pokemon_name($raid['pokemon']) . '</b>' . CR;
+$msg_text .= EMOJI_EGG . SP . '<b>' . get_local_pokemon_name($raid['pokemon'], $raid['pokemon_form']) . '</b>' . CR;
 sendalarm($msg_text, $id, $update['callback_query']['from']['id']);
 
 // Exit.

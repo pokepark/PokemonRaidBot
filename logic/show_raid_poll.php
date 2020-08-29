@@ -14,7 +14,7 @@ function show_raid_poll($raid)
     // Get current pokemon
     $raid_pokemon_id = $raid['pokemon'];
     $raid_pokemon_form = $raid['pokemon_form'];
-    $raid_pokemon_form_name = get_pokemon_form_name($raid_pokemon_id, $raid_pokemon_form);
+    ($raid_pokemon_form != 0) ? $raid_pokemon_form_name = get_pokemon_form_name($raid_pokemon_id, $raid_pokemon_form) : $raid_pokemon_form_name = '';
     $raid_pokemon = $raid_pokemon_id . "-" . $raid_pokemon_form;
 
     // Get raid level
@@ -267,10 +267,6 @@ function show_raid_poll($raid)
                 $current_att_time = $row['ts_att'];
                 $dt_att_time = dt2time($row['attend_time']);
                 $current_pokemon = $row['pokemon'];
-
-                $poke = explode("-",$current_pokemon);
-                $current_pokemon_id = $poke[0];
-                $current_pokemon_form = $poke[1];
                 
                 // Add hint for remote attendances.
                 if($config->RAID_REMOTEPASS_USERS && $previous_att_time == 'FIRST_RUN' && $cnt_remote > 0) {
@@ -329,7 +325,8 @@ function show_raid_poll($raid)
                     // Show attendances when multiple pokemon are selected, unless all attending users voted for the raid boss + any pokemon
                     if($count_all != ($count_any_pokemon + $count_raid_pokemon)) {
                         // Add pokemon name.
-                        $msg = raid_poll_message($msg, ($current_pokemon == 0) ? ('<b>' . getPublicTranslation('any_pokemon') . '</b>') : ('<b>' . get_local_pokemon_name($current_pokemon_id,$current_pokemon_form, true) . '</b>'));
+                        $pokemon_id_form = explode("-",$current_pokemon);
+                        $msg = raid_poll_message($msg, ($current_pokemon == 0) ? ('<b>' . getPublicTranslation('any_pokemon') . '</b>') : ('<b>' . get_local_pokemon_name($pokemon_id_form[0],$pokemon_id_form[1], true) . '</b>'));
 
                         // Attendance counts by team.
                         $current_att_time_poke = $cnt_pokemon[$current_att_time . '_' . $current_pokemon];

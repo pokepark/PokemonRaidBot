@@ -331,7 +331,7 @@ foreach ($update as $raid) {
     // Get chats
     $chats = explode(',', $config->WEBHOOK_CHATS);
 
-    for($i = 1; $i <= 5; $i++) {
+    for($i = 1; $i <= 6; $i++) {
 
         $const = 'WEBHOOK_CHATS_LEVEL_' . $i;
         $const_chats = $config->{$const};
