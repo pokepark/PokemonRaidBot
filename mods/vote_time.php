@@ -66,15 +66,40 @@ if($now <= $attend_time || $arg == 0) {
         // User has not voted before.
         } else {
             // Create attendance.
+            // Send Alarm.
             alarm($data['id'],$update['callback_query']['from']['id'],'new_att', $attend_time);
+            // Save attandence to DB + Set Auto-Alarm on/off according to config
             my_query(
                 "
                 INSERT INTO   attendance
                 SET           raid_id = {$data['id']},
                               user_id = {$update['callback_query']['from']['id']},
-                              attend_time = '{$attend_time}'
+                              attend_time = '{$attend_time}',
+                              alarm = $config->RAID_AUTOMATIC_ALARM
                 "
             );
+            // Get the new value
+            $rs_query = my_query(
+                "
+                SELECT    alarm
+                FROM      attendance
+                WHERE   raid_id = {$data['id']}
+                    AND   user_id = {$update['callback_query']['from']['id']}
+                "
+            );
+            $answer_rs = $rs_query->fetch();
+    
+            // Enable alerts message. -> only if alert is on
+            if($answer_rs['alarm']) {
+                // request gym name
+                $request = my_query("SELECT * FROM raids as r left join gyms as g on r.gym_id = g.id WHERE r.id = {$data['id']}");
+                $answer_request = $request->fetch();
+                $gymname = '<b>' . $answer_request['gym_name'] . '</b>';
+                $raidtimes = str_replace(CR, '', str_replace(' ', '', get_raid_times($answer_request, false, true)));
+                $msg_text = EMOJI_ALARM . SP . '<b>' . getTranslation('alert_updates_on') . '</b>' . CR;
+                $msg_text .= EMOJI_HERE . SP . $gymname . SP . '(' . $raidtimes . ')';
+                sendmessage($update['callback_query']['from']['id'], $msg_text);
+            }
         }
     } else {
         // Send max remote users reached.
