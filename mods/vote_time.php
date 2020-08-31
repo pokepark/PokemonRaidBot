@@ -4,43 +4,23 @@ debug_log('vote_time()');
 
 // For debug.
 //debug_log($update);
-debug_log($data);
-
-// Check if someone has voted for this raid before.
-$rs_count = my_query(
-    "
-    SELECT count(attend_time) AS count 
-    FROM attendance 
-      WHERE raid_id = {$data['id']}
-    "
-);
-// Get the answer.
-$answer_count = $rs_count->fetch();
-// Get number of participants, if 0 -> raid has no participant at all
-$count_att = $answer_count['count'];
-// Write to log.
-debug_log($answer_count, 'Anyone Voted: ');
+//debug_log($data);
 
 // Check if the user has voted for this raid before.
-if($count_att > 0){
-    $rs = my_query(
-        "
-        SELECT    user_id, remote, (1 + extra_valor + extra_instinct + extra_mystic) as user_count
-        FROM      attendance
-          WHERE   raid_id = {$data['id']}
-            AND   user_id = {$update['callback_query']['from']['id']}
-        "
-    );
-    
-    // Get the answer.
-    $answer = $rs->fetch();
-    
-    // Write to log.
-    debug_log($answer);
-}else{
-    $answer = FALSE;
-}
+$rs = my_query(
+    "
+    SELECT    user_id, remote, (1 + extra_valor + extra_instinct + extra_mystic) as user_count
+    FROM      attendance
+      WHERE   raid_id = {$data['id']}
+        AND   user_id = {$update['callback_query']['from']['id']}
+    "
+);
 
+// Get the answer.
+$answer = $rs->fetch();
+
+// Write to log.
+debug_log($answer);
 
 // Get the arg.
 $arg = $data['arg'];
@@ -104,35 +84,6 @@ if($now <= $attend_time || $arg == 0) {
                 // Inform User about active alert
                 sendAlertOnOffNotice($data, $update, $config->RAID_AUTOMATIC_ALARM);
             }
-        }
-        // Check if RAID has no participants AND Raid should be shared to another Channel at first participant
-        if($count_att == 0 && $config->SHARE_AFTER_ATTENDANCE){
-            // Share Raid to another Channel
-            $chat = $config->SHARE_CHATS_AFTER_ATTENDANCE;
-            // get all raid info
-            $request_gym = my_query("SELECT * FROM raids as r left join gyms as g on r.gym_id = g.id WHERE r.id = {$data['id']}");
-            $answer_gym = $request_gym->fetch();
-            // Set text.
-            $text = show_raid_poll($answer_gym);
-            // Set keys.
-            $keys = keys_vote($answer_gym);
-            // Set reply to.
-            $reply_to = $chat;
-            // Send the message.
-            if($config->RAID_PICTURE) {
-                require_once(LOGIC_PATH . '/raid_picture.php');
-                $picture_url = raid_picture_url($data);
-                $tg_json[] = send_photo($chat, $picture_url, $text['short'], $keys, ['reply_to_message_id' => $reply_to, 'reply_markup' => ['selective' => true, 'one_time_keyboard' => true], 'disable_web_page_preview' => 'true'], true);
-            } else {
-                $tg_json[] = send_message($chat, $text['full'], $keys, ['reply_to_message_id' => $reply_to, 'reply_markup' => ['selective' => true, 'one_time_keyboard' => true], 'disable_web_page_preview' => 'true'], true);
-            }
-            // Telegram multicurl request.
-            curl_json_multi_request($tg_json);
-            if ($config->RAID_PICTURE){
-                send_response_vote($update, $answer_gym,false,false); 
-             } else {
-                send_response_vote($update, $answer_gym); 
-             }
         }
     } else {
         // Send max remote users reached.
