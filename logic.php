@@ -53,6 +53,7 @@ include('logic/raid_list.php');
 include('logic/raid_poll_message.php');
 include('logic/run_cleanup.php');
 include('logic/sendalarm.php');
+include('logic/sendalarmnotice.php');
 include('logic/sendcode.php');
 include('logic/send_response_vote.php');
 include('logic/send_trainerinfo.php');
