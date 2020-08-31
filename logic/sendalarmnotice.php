@@ -34,7 +34,7 @@ function sendAlertOnOffNotice($data, $update, $alarm = null, $gymname = null, $r
             "
             SELECT    alarm
             FROM      attendance
-            WHERE     raid_id = {$$data['id']}
+            WHERE     raid_id = {$data['id']}
             AND   user_id = {$update['callback_query']['from']['id']}
             "
             );
