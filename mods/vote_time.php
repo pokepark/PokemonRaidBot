@@ -78,19 +78,9 @@ if($now <= $attend_time || $arg == 0) {
                               alarm = $config->RAID_AUTOMATIC_ALARM
                 "
             );
-            // Get the new value
-            $rs_query = my_query(
-                "
-                SELECT    alarm
-                FROM      attendance
-                WHERE   raid_id = {$data['id']}
-                    AND   user_id = {$update['callback_query']['from']['id']}
-                "
-            );
-            $answer_rs = $rs_query->fetch();
-    
+
             // Enable alerts message. -> only if alert is on
-            if($answer_rs['alarm']) {
+            if($config->RAID_AUTOMATIC_ALARM) {
                 // request gym name
                 $request = my_query("SELECT * FROM raids as r left join gyms as g on r.gym_id = g.id WHERE r.id = {$data['id']}");
                 $answer_request = $request->fetch();
