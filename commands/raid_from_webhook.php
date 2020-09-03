@@ -129,7 +129,7 @@ foreach ($update as $raid) {
               'lon' => $gym_lon, 
               'gym_name' => $gym_name,
               'gym_id' => $gym_id,
-              'ex_gym' => $gym_is_ex,
+              'ex_gym' => ($gym_is_ex ? 1 : 0),
               'img_url' => $gym_img_url
             ]);
         }
