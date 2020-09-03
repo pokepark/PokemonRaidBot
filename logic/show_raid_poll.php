@@ -238,6 +238,7 @@ function show_raid_poll($raid)
                 "
                 SELECT      attendance.*,
                             users.name,
+                            users.trainername,
                             users.level,
                             users.team,
                             DATE_FORMAT(attend_time, '%Y%m%d%H%i%s') AS ts_att
@@ -263,6 +264,8 @@ function show_raid_poll($raid)
 
             // For each attendance.
             while ($row = $rs_att->fetch()) {
+                // Check trainername
+                $row = check_trainername($row);
                 // Set current attend time and pokemon
                 $current_att_time = $row['ts_att'];
                 $dt_att_time = dt2time($row['attend_time']);
@@ -425,6 +428,7 @@ function show_raid_poll($raid)
                             attendance.extra_mystic,
                             attendance.extra_instinct,
                             users.name,
+                            users.trainername,
                             users.level,
                             users.team,
                             DATE_FORMAT(attend_time, '%Y%m%d%H%i%s') AS ts_att
@@ -449,7 +453,10 @@ function show_raid_poll($raid)
             while ($row = $rs_att->fetch()) {
                 // Attend time.
                 $dt_att_time = dt2time($row['attend_time']);
-
+                
+                // Check trainername
+                $row = check_trainername($row);
+                
                 // Add section/header for canceled
                 if($row['cancel'] == 1 && $cancel_done == 'CANCEL') {
                     $msg = raid_poll_message($msg, CR . TEAM_CANCEL . ' <b>' . getPublicTranslation('cancel') . ': </b>' . '[' . $cnt_cancel . ']' . CR);

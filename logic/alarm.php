@@ -11,6 +11,8 @@ function alarm($raid, $user, $action, $info = '')
     // Name of the user, which executes a status update
     $request = my_query("SELECT * FROM users WHERE user_id = {$user}");
     $answer_quests = $request->fetch();
+    // Get Trainername
+    $answer_quests = check_trainername($answer_quests);
     $username = $answer_quests['name'];
 
     // Gym name and raid times

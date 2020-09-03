@@ -911,6 +911,43 @@
     "PL": "TRANSLATE",
     "FI": "Chatteja ei löytynyt! Et voi jakaa viestiä tietojen näyttämiseen ja muuttamiseen!"
   },
+
+  "trainername_select": {
+    "NL": "TRANSLATE",
+    "DE": "Schreibe deinen Trainernamen",
+    "EN": "Write your trainername",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "TRANSLATE"
+  },
+  "trainername_success": {
+    "NL": "TRANSLATE",
+    "DE": "Danke. Ich nenne dich ab sofort:",
+    "EN": "Thanks. Your name is now:",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "TRANSLATE"
+  },
+  "trainername_fail": {
+    "NL": "TRANSLATE",
+    "DE": "Deine Eingabe war kein gültiger Trainername. Bitte probiere es nochmal",
+    "EN": "TRANSLATE",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "TRANSLATE"
+  },
   "name": {
     "NL": "Naam",
     "DE": "Name",

@@ -11,7 +11,7 @@ function get_raid($raid_id)
         "
         SELECT     raids.*,
                    gyms.lat, gyms.lon, gyms.address, gyms.gym_name, gyms.ex_gym, gyms.gym_note,
-                   users.name,
+                   users.name, users.trainername,
                    TIME_FORMAT(TIMEDIFF(end_time, UTC_TIMESTAMP()) + INTERVAL 1 MINUTE, '%k:%i') AS t_left,
                    TIMESTAMPDIFF(MINUTE,raids.start_time,raids.end_time) as t_duration
         FROM       raids
@@ -22,9 +22,12 @@ function get_raid($raid_id)
         WHERE      raids.id = {$raid_id}
         "
     );
-
+    
     // Get the row.
     $raid = $rs->fetch();
+
+    // Check trainername
+    $raid = check_trainername($raid);
     
     // Inject raid level
     $raid['level'] = get_raid_level($raid['pokemon'], $raid['pokemon_form']);

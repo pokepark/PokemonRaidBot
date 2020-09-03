@@ -7,6 +7,7 @@
 include('logic/active_raid_duplication_check.php');
 include('logic/alarm.php');
 include('logic/check_time.php');
+include('logic/check_trainername.php');
 include('logic/cp_keys.php');
 include('logic/curl_json_response.php');
 include('logic/delete_gym.php');

@@ -9,15 +9,16 @@ function get_user($user_id)
     // Get user details.
     $rs = my_query(
         "
-        SELECT    *
-                FROM      users
-                  WHERE   user_id = {$user_id}
+        SELECT *
+        FROM   users
+        WHERE  user_id = {$user_id}
         "
     );
 
     // Fetch the row.
     $row = $rs->fetch();
-
+    // get Username
+    $row = check_trainername($row);
     // Build message string.
     $msg = '';
 

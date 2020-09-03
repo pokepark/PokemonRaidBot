@@ -1,0 +1,1 @@
+ALTER TABLE `users` add `setname_time` DATETIME DEFAULT NULL;
