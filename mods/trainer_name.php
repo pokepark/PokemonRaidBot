@@ -26,7 +26,7 @@ if($confirm == 0) {
     my_query(
         "
         UPDATE	  users
-        SET       setname_time = DATE_ADD(NOW(), INTERVAL 1 HOUR)
+        SET       trainername_time = DATE_ADD(NOW(), INTERVAL 1 HOUR)
         WHERE     user_id = {$user_id}
         "
     );

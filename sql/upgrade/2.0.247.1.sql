@@ -1,0 +1,1 @@
+ALTER TABLE `users` add `trainername_time` DATETIME DEFAULT NULL AFTER `trainername`;
