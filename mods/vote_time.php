@@ -66,15 +66,24 @@ if($now <= $attend_time || $arg == 0) {
         // User has not voted before.
         } else {
             // Create attendance.
+            // Send Alarm.
             alarm($data['id'],$update['callback_query']['from']['id'],'new_att', $attend_time);
+            // Save attandence to DB + Set Auto-Alarm on/off according to config
             my_query(
                 "
                 INSERT INTO   attendance
                 SET           raid_id = {$data['id']},
                               user_id = {$update['callback_query']['from']['id']},
-                              attend_time = '{$attend_time}'
+                              attend_time = '{$attend_time}',
+                              alarm = $config->RAID_AUTOMATIC_ALARM
                 "
             );
+    
+            // Enable alerts message. -> only if alert is on
+            if($config->RAID_AUTOMATIC_ALARM) {
+                // Inform User about active alert
+                sendAlertOnOffNotice($data, $update, $config->RAID_AUTOMATIC_ALARM);
+            }
         }
     } else {
         // Send max remote users reached.
