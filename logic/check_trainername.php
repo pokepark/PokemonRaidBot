@@ -33,7 +33,7 @@ function check_trainername($row){
 }
 
 function check_for_empty_string($string){
-  if($string == "" || is_null($string) || empty($string){
+  if($string == "" || is_null($string) || empty($string)){
     return true;
   }
   return false;
