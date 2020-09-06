@@ -1180,7 +1180,8 @@ Updates to the config file are NOT checked automatically. Therefore always check
 | POKEBATTLER_IMPORT_DISABLE_REDUNDANT_EGGS| Boolean, when importing Pokedex from Pokebattler, disable creating an Egg raid for any level that only has one boss available. |
 | PORTAL_IMPORT| Bool, allow importing gyms via portal import Telegram bots |
 | PORTAL_PICTURE_IMPORT| Bool, download and use a local copy of gym pictures on import |
-| RAID_ANYTIME| Bool, ? |
+| RAID_ANYTIME| Bool, enable a final timeslot for attending at any given time. |
+| RAID_AUTOMATIC_ALARM | Bool, sign up every attendee to the raid alarm automatically. They will get private messages of new participants as if they had enabled it themselves on the poll. |
 | RAID_CODE_POKEMON | List of Pokemon dex IDs in use for private group codes |
 | RAID_CREATION_EX_GYM_MARKER| Highlight gyms eligible for Ex-Raids in raid polls |
 | RAID_CUSTOM_GYM_LETTERS| List of custom "letters" to include in gym selector, e.g. "St." or "The" |
@@ -1217,6 +1218,9 @@ Updates to the config file are NOT checked automatically. Therefore always check
 | RAID_POLL_HIDE_DONE_CANCELED| Bool, hide the Done and Cancel buttons from raid polls |
 | RAID_POLL_HIDE_USERS_TIME| ? |
 | RAID_POLL_UI_ORDER| Order of elements in text based raid polls. Valid elements are: `extra, teamll, time, pokemon, status` |
+| RAID_POLL_POKEMON_NAME_FIRST_LINE| Shows the Name of the Pokemon instead of `Raid:` - Good for Message Preview to see which Pokemon the Raid will be. |
+| RAID_POLL_CALCULATE_MAPS_ROUTE| TRUE: Will show the Route to the Gym while clicking onto gym-address - FALSE: Will open Google Maps and only show the gym as a point in the map. |
+| RAID_POLL_SHOW_TRAINERCODE| With /trainer everyone can set his trainercode and it will be shown on raidpolls, if the trainer chooses everytime (or renamed to invite me) and inside raidalarm messages |
 | RAID_REMOTEPASS_USERS | Bool, allow participation to raid polls with a remote pass |
 | RAID_REMOTEPASS_USERS_LIMIT | Integer, How many remote participants to allow into a single raid |
 | RAID_SLOTS| Amount of minutes between raid poll voting slots |
@@ -1230,6 +1234,7 @@ Updates to the config file are NOT checked automatically. Therefore always check
 | SHARE_CHATS_LEVEL_5| List of Telegram group IDs available for sharing raids of level 5 |
 | SHARE_CHATS_LEVEL_X| List of Telegram group IDs available for sharing Ex-Raids |
 | SHARE_CHATS| List of Telegram group IDs available for sharing any raids |
+| SHOW_GYM_NAME_IN_ADDRESS| Good for Raid-Picture - Will show the Gym Name infront of the Gym-Address. In Message-Preview you'll know which gym the raid is and you don't have to load the image to know which gym it will be.
 | TIMEZONE| Timezone definition to use as per [TZ database names](https://www.wikiwand.com/en/List_of_tz_database_time_zones#/List) |
 | TRAINER_BUTTONS_TOGGLE| Bool, ? |
 | TRAINER_CHATS| List of chats where trainer data setup messages can be shared |
