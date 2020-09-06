@@ -938,8 +938,8 @@
   },
   "trainername_fail": {
     "NL": "TRANSLATE",
-    "DE": "Deine Eingabe war kein gültiger Trainername. Bitte probiere es nochmal",
-    "EN": "TRANSLATE",
+    "DE": "Deine Eingabe war kein gültiger Trainername. Bitte probiere es nochmal und benutze nur Buchstaben und Zahlen",
+    "EN": "Please enter only alphabetic character and numbers. Try again",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
