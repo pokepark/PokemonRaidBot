@@ -69,15 +69,17 @@ if($now <= $attend_time || $arg == 0) {
             // Send Alarm.
             alarm($data['id'],$update['callback_query']['from']['id'],'new_att', $attend_time);
             // Save attandence to DB + Set Auto-Alarm on/off according to config
-            my_query(
-                "
-                INSERT INTO   attendance
-                SET           raid_id = {$data['id']},
-                              user_id = {$update['callback_query']['from']['id']},
-                              attend_time = '{$attend_time}',
-                              alarm = $config->RAID_AUTOMATIC_ALARM
-                "
-            );
+            $insert_sql="INSERT INTO attendance SET
+              raid_id = :raid_id,
+              user_id = :user_id,
+              attend_time = :attend_time,
+              alarm = :alarm";
+            $dbh->prepare($insert_sql)->execute([
+              'raid_id' => $data['id'],
+              'user_id' => $update['callback_query']['from']['id'],
+              'attend_time' => $attend_time,
+              'alarm' => ($config->RAID_AUTOMATIC_ALARM ? 1 : 0)
+            ]);
     
             // Enable alerts message. -> only if alert is on
             if($config->RAID_AUTOMATIC_ALARM) {
