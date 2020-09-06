@@ -6,7 +6,10 @@
 
 include('logic/active_raid_duplication_check.php');
 include('logic/alarm.php');
+include('logic/change_trainercode.php');
+include('logic/change_trainername.php');
 include('logic/check_time.php');
+include('logic/check_trainername.php');
 include('logic/cp_keys.php');
 include('logic/curl_json_response.php');
 include('logic/delete_gym.php');
@@ -15,6 +18,7 @@ include('logic/delete_raid.php');
 include('logic/delete_trainerinfo.php');
 include('logic/disable_raid_level.php');
 include('logic/edit_pokedex_keys.php');
+include('logic/evaluate_priv_message.php');
 include('logic/get_active_raids.php');
 include('logic/get_chat_title.php');
 include('logic/get_formatted_pokemon_cp.php');
