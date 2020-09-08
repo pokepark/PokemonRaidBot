@@ -8,7 +8,6 @@ define('RAID_LEVEL_ALL', '654321');
 // Value used for denoting anytime attendance
 define('ANYTIME', '1970-01-01 00:00:00');
 define('ANYTIME_TS', preg_replace("/[^0-9]/", "", ANYTIME));
-#error_log('c: ' . ANYTIME_TS);
 
 // Icons.
 defined('TEAM_B') 		or define('TEAM_B',        iconv('UCS-4LE', 'UTF-8', pack('V', 0x1F499)));
