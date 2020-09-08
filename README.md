@@ -89,7 +89,7 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
          * [translate.py](#translatepy)
             * [Usage](#usage)
 
-<!-- Added by: artanicus, at: Tue Aug 25 10:33:02 EEST 2020 -->
+<!-- Added by: artanicus, at: Sun Sep  6 15:46:50 EEST 2020 -->
 
 <!--te-->
 
