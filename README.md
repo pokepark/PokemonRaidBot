@@ -89,7 +89,7 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
          * [translate.py](#translatepy)
             * [Usage](#usage)
 
-<!-- Added by: artanicus, at: Tue Aug 25 10:33:02 EEST 2020 -->
+<!-- Added by: artanicus, at: Sun Sep  6 15:46:50 EEST 2020 -->
 
 <!--te-->
 
@@ -1180,7 +1180,8 @@ Updates to the config file are NOT checked automatically. Therefore always check
 | POKEBATTLER_IMPORT_DISABLE_REDUNDANT_EGGS| Boolean, when importing Pokedex from Pokebattler, disable creating an Egg raid for any level that only has one boss available. |
 | PORTAL_IMPORT| Bool, allow importing gyms via portal import Telegram bots |
 | PORTAL_PICTURE_IMPORT| Bool, download and use a local copy of gym pictures on import |
-| RAID_ANYTIME| Bool, ? |
+| RAID_ANYTIME| Bool, enable a final timeslot for attending at any given time. |
+| RAID_AUTOMATIC_ALARM | Bool, sign up every attendee to the raid alarm automatically. They will get private messages of new participants as if they had enabled it themselves on the poll. |
 | RAID_CODE_POKEMON | List of Pokemon dex IDs in use for private group codes |
 | RAID_CREATION_EX_GYM_MARKER| Highlight gyms eligible for Ex-Raids in raid polls |
 | RAID_CUSTOM_GYM_LETTERS| List of custom "letters" to include in gym selector, e.g. "St." or "The" |
