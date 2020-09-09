@@ -8,12 +8,12 @@
 function send_response_vote($update, $data, $new = false, $text = true)
 {
     global $config;
+    // get all channel, where the raid polls where shared
+    $chats_to_update = get_all_active_raid_channels($update, $data);
     // Initial text status
     $initial_text = $text;
-
     // Get the raid data by id.
     $raid = get_raid($data['id']);
-
     // Message - make sure to not exceed Telegrams 1024 characters limit for caption
     $msg = show_raid_poll($raid);
     $full_msg = $msg['full'];
@@ -69,21 +69,37 @@ function send_response_vote($update, $data, $new = false, $text = true)
 	if($text) {
             // Make sure to only send if picture with caption and not text message
             if($initial_text == false && !(isset($update['callback_query']['message']['text']))) {
-                // Delete raid picture and caption.
-                delete_message($update['callback_query']['message']['chat']['id'], $update['callback_query']['message']['message_id']);
+                foreach($chats_to_update as $chats){
+                    foreach($chats as $chat => $message){
+                        // Delete raid picture and caption.
+                        delete_message($chat, $message);
 
-                // Resend raid poll as text message.
-                $tg_json[] = send_message($update['callback_query']['message']['chat']['id'], $full_msg . "\n", $keys, ['disable_web_page_preview' => 'true'], true);
+                        // Resend raid poll as text message.
+                        $tg_json[] = send_message($chat, $full_msg . "\n", $keys, ['disable_web_page_preview' => 'true'], true);
+                    }
+                }
             } else {
                 // Edit the message.
-                $tg_json[] = edit_message($update, $full_msg, $keys, ['disable_web_page_preview' => 'true'], true);
+                foreach($chats_to_update as $chats){
+                    foreach($chats as $chat => $message){
+                        $update['callback_query']['message']['message_id'] = $message;
+                        $update['callback_query']['message']['chat']['id'] = $chat;
+                        $tg_json[] = edit_message($update, $full_msg, $keys, ['disable_web_page_preview' => 'true'], true);
+                    }
+                }
             }
         } else {
             // Make sure it's a picture with caption.
             if(isset($update['callback_query']['message']['text'])) {
                 // Do not switch back to picture with caption. Only allow switch from picture with caption to text message.
                 // Edit the message.
-                $tg_json[] = edit_message($update, $full_msg, $keys, ['disable_web_page_preview' => 'true'], true);
+                foreach($chats_to_update as $chats){
+                    foreach($chats as $chat => $message){
+                        $update['callback_query']['message']['message_id'] = $message;
+                        $update['callback_query']['message']['chat']['id'] = $chat;
+                        $tg_json[] = edit_message($update, $full_msg, $keys, ['disable_web_page_preview' => 'true'], true);
+                    }
+                }
             } else {
                 // Edit the caption.
                 $tg_json[] = edit_caption($update, $msg, $keys, ['disable_web_page_preview' => 'true'], true);
@@ -95,7 +111,11 @@ function send_response_vote($update, $data, $new = false, $text = true)
                     require_once(LOGIC_PATH . '/raid_picture.php');
                     $raid['pokemon'] = 'ended';
                     $picture_url = raid_picture_url($raid);
-	            $tg_json[] = editMessageMedia($update['callback_query']['message']['message_id'], $msg, $keys, $update['callback_query']['message']['chat']['id'], ['disable_web_page_preview' => 'true'], false, $picture_url);
+                    foreach($chats_to_update as $chats){
+                        foreach($chats as $chat => $message){
+                            $tg_json[] = editMessageMedia($message, $msg, $keys, $chat, ['disable_web_page_preview' => 'true'], false, $picture_url);
+                        }
+                    }
                 }
             }
 	}
@@ -106,6 +126,39 @@ function send_response_vote($update, $data, $new = false, $text = true)
 
     // Exit.
     exit();
+}
+
+/**
+ * Delivers all Raid channel got to be updated
+ * @param $update
+ * @param $data
+ * @return array $channel_id
+ */
+
+function get_all_active_raid_channels($update,$data){
+    global $config;
+    $channel_id = [[
+        $update['callback_query']['message']['chat']['id'] => $update['callback_query']['message']['message_id'],
+    ]];
+    $rs_chann = my_query(
+        "
+        SELECT *
+        FROM cleanup
+          WHERE raid_id = {$data['id']}
+          AND cleaned = 0
+        ");
+    // IF Chat was shared only to target channel -> no extra update
+    if ($rs_chann->rowCount() > 1) {
+        // share to multiple chats
+        $anwer = $rs_chann->fetchAll();
+        foreach($anwer as $channel){
+            array_push($channel_id,[$channel['chat_id'] => $channel['message_id']]);
+        }
+        return $channel_id;
+    }else{
+        // Only one Chat to update
+        return $channel_id;
+    }
 }
 
 ?>
