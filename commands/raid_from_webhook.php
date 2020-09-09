@@ -30,9 +30,6 @@ function isPointInsidePolygon($point, $polygon) {
     return $c;
 }
 
-// Query to get normal form id from pokemon table
-$normal_form_query = "IF((SELECT count(*) FROM pokemon WHERE pokedex_id = :pokemon) = 1, (SELECT pokemon_form_id FROM pokemon WHERE pokedex_id = :pokemon AND pokemon_form_name='normal' LIMIT 1), :pokemon_form)";
-
 // Telegram JSON array.
 $tg_json = array();
 
@@ -179,8 +176,31 @@ foreach ($update as $raid) {
     }
 
     $form = 0;
-    if ( isset($raid['message']['form']) ) {
+    if ( isset($raid['message']['form']) && $raid['message']['form'] != "0") {
+        // Use the form provided in webhook if it's valid
         $form = $raid['message']['form'];
+    }elseif($pokemon != 0) {
+        // Else look up the normal form's id from pokemon table unless it's an egg
+        try {
+            $query = "
+                SELECT pokemon_form_id FROM pokemon
+                WHERE
+                    pokedex_id = :pokemon AND
+                    pokemon_form_name = 'normal'
+                LIMIT 1
+            ";
+            $statement = $dbh->prepare( $query );
+            $statement->execute([
+              'pokemon' => $pokemon
+          ]);
+        }
+        catch (PDOException $exception) {
+            error_log($exception->getMessage());
+            $dbh = null;
+            exit;
+        }
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+        $form = $result['pokemon_form_id'];
     }
     $gender = 0;
     if ( isset($raid['message']['gender']) ) {
@@ -215,16 +235,7 @@ foreach ($update as $raid) {
 
     // Insert new raid or update existing raid/ex-raid?
     $raid_id = active_raid_duplication_check($gym_internal_id);
-    // Make the raid array whole
-    $raid['id'] = $raid_id;
     
-    // If webhook isn't providing a form id, use the normal_form_query to get a valid form id from pokemon table
-    if($form == 0 && $pokemon<9990) {
-        $query_form = $normal_form_query;
-    }else {
-        $query_form = ":pokemon_form";
-    }
-
     // Raid exists, do updates!
     if ( $raid_id > 0 ) {
         // Update database
@@ -234,7 +245,7 @@ foreach ($update as $raid) {
                 UPDATE raids
                 SET
                     pokemon = :pokemon,
-                    pokemon_form = '.$query_form.',
+                    pokemon_form = :pokemon_form,
                     gym_team = :gym_team,
                     move1 = :move1,
                     move2 = :move2,
@@ -297,7 +308,7 @@ foreach ($update as $raid) {
         $query = '
 
             INSERT INTO raids (pokemon, pokemon_form, user_id, first_seen, start_time, end_time, gym_team, gym_id, move1, move2, gender)
-            VALUES (:pokemon, '.$query_form.', :user_id, :first_seen, :start_time, :end_time, :gym_team, :gym_id, :move1, :move2, :gender)
+            VALUES (:pokemon, :pokemon_form, :user_id, :first_seen, :start_time, :end_time, :gym_team, :gym_id, :move1, :move2, :gender)
         ';
         $statement = $dbh->prepare( $query );
         $statement->execute([
