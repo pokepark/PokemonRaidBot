@@ -1,0 +1,1 @@
+ALTER TABLE `raids` MODIFY `pokemon_form` INT(4) NOT NULL DEFAULT 0;
