@@ -9,8 +9,8 @@ debug_log('vote_time()');
 // Check if someone has voted for this raid before.
 $rs_count = my_query(
     "
-    SELECT count(attend_time) AS count 
-    FROM attendance 
+    SELECT count(attend_time) AS count
+    FROM attendance
       WHERE raid_id = {$data['id']}
     ");
 // Get the answer.
@@ -25,7 +25,7 @@ if($count_att == 0 && $config->SHARE_AFTER_ATTENDANCE && !empty($config->SHARE_C
     $rs_chann = my_query(
         "
         SELECT *
-        FROM cleanup 
+        FROM cleanup
           WHERE raid_id = {$data['id']}
           AND chat_id = {$config->SHARE_CHATS_AFTER_ATTENDANCE}
           AND cleaned = 0
@@ -115,7 +115,7 @@ if($now <= $attend_time || $arg == 0) {
               'attend_time' => $attend_time,
               'alarm' => ($config->RAID_AUTOMATIC_ALARM ? 1 : 0)
             ]);
-    
+
             // Enable alerts message. -> only if alert is on
             if($config->RAID_AUTOMATIC_ALARM) {
                 // Inform User about active alert
@@ -130,7 +130,7 @@ if($now <= $attend_time || $arg == 0) {
             // get all raid info - very detailed, because gyms->gym_id (ingress portal id) is different to raids->gym_id (the real one)
             $request_gym = my_query(
                 "
-                SELECT 
+                SELECT
                     r.id AS id,
                     r.user_id AS user_id,
                     r.pokemon AS pokemon,
@@ -151,9 +151,9 @@ if($now <= $attend_time || $arg == 0) {
                     g.show_gym AS show_gym,
                     g.gym_note AS gym_note,
                     g.gym_id AS gym_id2,
-                    g.img_url AS img_url           
-                FROM raids as r 
-                left join gyms as g on r.gym_id = g.id 
+                    g.img_url AS img_url
+                FROM raids as r
+                left join gyms as g on r.gym_id = g.id
                 WHERE r.id = {$data['id']}
                 "
             );
@@ -174,12 +174,6 @@ if($now <= $attend_time || $arg == 0) {
             }
             // Telegram multicurl request.
             curl_json_multi_request($tg_json);
-            // Update new entry
-            /*if ($config->RAID_PICTURE){
-                send_response_vote($update, $answer_gym,false,false); 
-             } else {
-                send_response_vote($update, $answer_gym); 
-             }*/
         }
     } else {
         // Send max remote users reached.
