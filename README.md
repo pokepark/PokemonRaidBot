@@ -44,6 +44,7 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
             * [Sharing split to channels by level](#sharing-split-to-channels-by-level)
             * [Raids from Webhook](#raids-from-webhook)
             * [Filter Raids from Webhook / geoconfig.json](#filter-raids-from-webhook--geoconfigjson)
+            * [Extended Raid Sharing](#entended-raid-sharing)
       * [Trainer settings](#trainer-settings)
       * [Raid overview](#raid-overview)
       * [Raid Map](#raid-map)
@@ -649,6 +650,11 @@ If you have multiple Chats for different Areas you can setup them in
 Go to http://geo.jasparke.net/ and create an Area (Geofence), where your gyms are.
 When you are finished, click on 'exp' and save the coordinates to your geoconfig.json. And for the ID 0 you use "WEBHOOK_CHATS_LEVEL_5_0", for ID 1 "WEBHOOK_CHATS_LEVEL_5_1" and so on.
 The raids will only be posted into the defined chats.
+
+#### Extended Raid-Sharing
+
+If you are using multiple Channel, you can setup one Channel as Main-Channel "SHARE_CHATS_AFTER_ATTENDANCE":"-100444555666" and on votes in different Channel, the Raid will be shared to your Main-Channel. Activate this function with "SHARE_AFTER_ATTENDANCE":true
+This is important for Raids from Webhooks. All Raids were posted to one Channel, which can be muted to the users. But if someone votes for a raid, this raid will be posted to a unmuted channel, where all others get a notification.
 
 ## Trainer settings
 
