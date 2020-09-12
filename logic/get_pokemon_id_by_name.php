@@ -7,9 +7,6 @@
 function get_pokemon_id_by_name($pokemon_name)
 {
     global $dbh;
-    // Init id and write name to search to log.
-    $pokemon_id = 0;
-    $pokemon_form = 'normal';
     debug_log($pokemon_name,'P:');
 
     // Explode pokemon name in case we have a form too.
@@ -33,6 +30,10 @@ function get_pokemon_id_by_name($pokemon_name)
         debug_log($poke_name,'P NAME:');
         debug_log($poke_form,'P FORM:');
     }
+    
+    // Init id and write name to search to log.
+    $pokemon_id = 0;
+    $pokemon_form = $poke_form;
 
     // Set language
     $language = USERLANGUAGE;

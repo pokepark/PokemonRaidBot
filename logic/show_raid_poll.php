@@ -325,7 +325,7 @@ function show_raid_poll($raid)
                     // Show attendances when multiple pokemon are selected, unless all attending users voted for the raid boss + any pokemon
                     if($count_all != ($count_any_pokemon + $count_raid_pokemon)) {
                         // Add pokemon name.
-                        $pokemon_id_form = explode("-",$current_pokemon);
+                        $pokemon_id_form = explode("-",$current_pokemon,2);
                         $msg = raid_poll_message($msg, ($current_pokemon == 0) ? ('<b>' . getPublicTranslation('any_pokemon') . '</b>') : ('<b>' . get_local_pokemon_name($pokemon_id_form[0],$pokemon_id_form[1], true) . '</b>'));
 
                         // Attendance counts by team.
