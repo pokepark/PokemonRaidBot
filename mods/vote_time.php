@@ -127,37 +127,8 @@ if($now <= $attend_time || $arg == 0) {
         if($count_att == 0 && $config->SHARE_AFTER_ATTENDANCE && !empty($config->SHARE_CHATS_AFTER_ATTENDANCE) && $perform_share){
             // Share Raid to another Channel
             $chat = $config->SHARE_CHATS_AFTER_ATTENDANCE;
-            // get all raid info - very detailed, because gyms->gym_id (ingress portal id) is different to raids->gym_id (the real one)
-            $request_gym = my_query(
-                "
-                SELECT
-                    r.id AS id,
-                    r.user_id AS user_id,
-                    r.pokemon AS pokemon,
-                    r.pokemon_form AS pokemon_form,
-                    r.first_seen AS first_seen,
-                    r.start_time AS start_time,
-                    r.end_time AS end_time,
-                    r.gym_team AS gym_team,
-                    r.gym_id AS gym_id,
-                    r.move1 AS move1,
-                    r.move2 AS move2,
-                    r.gender AS gender,
-                    g.lon AS lon,
-                    g.lat AS lat,
-                    g.address AS address,
-                    g.gym_name AS gym_name,
-                    g.ex_gym AS ex_gym,
-                    g.show_gym AS show_gym,
-                    g.gym_note AS gym_note,
-                    g.gym_id AS gym_id2,
-                    g.img_url AS img_url
-                FROM raids as r
-                left join gyms as g on r.gym_id = g.id
-                WHERE r.id = {$data['id']}
-                "
-            );
-            $answer_gym = $request_gym->fetch();
+            // Request Raid and Gym - Infos
+            $answer_gym = get_gym_raid($data['id']);
             // Set text.
             $text = show_raid_poll($answer_gym);
             // Set keys.
@@ -194,3 +165,44 @@ if($now <= $attend_time || $arg == 0) {
     }
 
 exit();
+
+/**
+ *  get all raid info - very detailed,
+ *  because gyms->gym_id (ingress portal id) is different to
+ *  raids->gym_id (the real one)
+ * @param $raid_id
+ * @return array
+ */
+function get_gym_raid($raid_id){
+  $request_gym = my_query(
+      "
+      SELECT
+          r.id AS id,
+          r.user_id AS user_id,
+          r.pokemon AS pokemon,
+          r.pokemon_form AS pokemon_form,
+          r.first_seen AS first_seen,
+          r.start_time AS start_time,
+          r.end_time AS end_time,
+          r.gym_team AS gym_team,
+          r.gym_id AS gym_id,
+          r.move1 AS move1,
+          r.move2 AS move2,
+          r.gender AS gender,
+          g.lon AS lon,
+          g.lat AS lat,
+          g.address AS address,
+          g.gym_name AS gym_name,
+          g.ex_gym AS ex_gym,
+          g.show_gym AS show_gym,
+          g.gym_note AS gym_note,
+          g.gym_id AS gym_id2,
+          g.img_url AS img_url
+      FROM raids as r
+      left join gyms as g on r.gym_id = g.id
+      WHERE r.id = {$raid_id}
+      "
+  );
+  $answer_gym = $request_gym->fetch();
+  return $answer_gym;
+}
