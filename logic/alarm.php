@@ -64,7 +64,7 @@ function alarm($raid, $user, $action, $info = '')
 
         // Only a specific pokemon
         if($info != '0') {
-            $pokemon = explode("-",$info);
+            $pokemon = explode("-",$info,2);
             $poke_name = get_local_pokemon_name($pokemon[0],$pokemon[1]);
             $msg_text = '<b>' . getTranslation('alert_individual_poke') . SP . $poke_name . '</b>' . CR;
             $msg_text .= EMOJI_HERE . SP . $gymname . SP . '(' . $raidtimes . ')' . CR;
@@ -83,7 +83,7 @@ function alarm($raid, $user, $action, $info = '')
     // Cancel pokemon
     } else if($action == "pok_cancel_individual") {
         debug_log('Alarm Pokemon: ' . $info);
-        $pokemon = explode("-",$info);
+        $pokemon = explode("-",$info,2);
         $poke_name = get_local_pokemon_name($pokemon[0],$pokemon[1]);
         $msg_text = '<b>' . getTranslation('alert_cancel_individual_poke') . SP . $poke_name . '</b>' . CR;
         $msg_text .= EMOJI_HERE . SP . $gymname . SP . '(' . $raidtimes . ')' . CR;

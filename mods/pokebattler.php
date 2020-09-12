@@ -67,7 +67,7 @@ if($id == 0) {
    if($id == RAID_LEVEL_ALL) {
         $start = 0;
         // TODO(artanicus): create these two from some other source
-        $end = 5;
+        $end = 6;
         $clear = "'6','5','4','3','2','1'";
     } else {
         $start = $id - 1;
@@ -110,6 +110,7 @@ if($id == 0) {
     $raidlevels = array();
     for($i = $start; $i <= $end; $i++) {
         $rl = $i + 1;
+        if($rl == 6) $rl = 'MEGA';
         $raidlevels[] = 'RAID_LEVEL_' . $rl;
     }
     debug_log($raidlevels);
@@ -127,6 +128,7 @@ if($id == 0) {
         }
         // Raid level and message.
         $rl = str_replace('RAID_LEVEL_','', $tier['tier']);
+        if($rl == "MEGA") $raid_level_id = 6; else $raid_level_id = $rl;
         $msg .= '<b>' . getTranslation('pokedex_raid_level') . SP . $rl . ':</b>' . CR;
 
         // Count raid bosses and add raid egg later if 2 or more bosses.
@@ -168,6 +170,15 @@ if($id == 0) {
                 // Get pokemon name and form.
                 $name = explode("_", $pokemon, 2)[0] . '♀';
                 $form = 'normal';
+            
+            // Mega pokemon ?
+            }else if(substr_compare($raid['pokemon'], '_MEGA', -strlen('_MEGA')) === 0 or substr_compare($raid['pokemon'], '_MEGA_X', -strlen('_MEGA_X')) === 0 or substr_compare($raid['pokemon'], '_MEGA_Y', -strlen('_MEGA_Y')) === 0) {
+                debug_log('Mega Pokemon received: ' . $raid['pokemon']);
+
+                // Get pokemon name and form.
+                $name_form = explode("_", $raid['pokemon'], 2);
+                $name = $name_form[0];
+                $form = $name_form[1];
 
             // Normal pokemon without form or gender.
             } else {
@@ -176,7 +187,7 @@ if($id == 0) {
                     $pokemon = str_replace('_', '-', $raid['pokemon']);
                 } else {
                     $pokemon = $raid['pokemon'];
-	        }
+                }
                 // Name and form.
                 $name = $pokemon;
                 $form = 'normal';
@@ -241,7 +252,7 @@ if($id == 0) {
                     $rs = my_query(
                             "
                             UPDATE    pokemon
-                            SET       raid_level = '{$rl}', 
+                            SET       raid_level = '{$raid_level_id}', 
                                       shiny = {$shiny}
                             WHERE     pokedex_id = {$dex_id}
                             AND       pokemon_form_id = '{$dex_form}'
@@ -276,8 +287,8 @@ if($id == 0) {
             debug_log('Not creating egg for level ' . $rl . ' since there are not 2 or more bosses.');
         } else {
             // Add pokemon to message.
-            $msg .= getTranslation('egg_' . $rl) . SP . '(#999' . $rl . ')' . CR;
-            $egg_id = '999'  . $rl;
+            $msg .= getTranslation('egg_' . $raid_level_id) . SP . '(#999' . $raid_level_id . ')' . CR;
+            $egg_id = '999'  . $raid_level_id;
             debug_log('Adding raid level egg with id: ' . $egg_id);
 
             // Save raid egg.
@@ -285,7 +296,7 @@ if($id == 0) {
                 $re = my_query(
                         "
                         UPDATE    pokemon
-                        SET       raid_level = '{$rl}'
+                        SET       raid_level = '{$raid_level_id}'
                         WHERE     pokedex_id = {$egg_id}
                         AND       pokemon_form_name = 'normal'
                         "
@@ -340,10 +351,12 @@ if($id == 0) {
                 $msg .= '<b>' . getTranslation($lv . 'stars') . ':</b>' . CR ;
             }
             // Get just the dex id without the form.
-            $dex_id = explode('-',$pid)[0];
+            $pokemon_id_form = explode('-',$pid,2);
+            $dex_id = $pokemon_id_form[0];
+            $pokemon_form_id = $pokemon_id_form[1];
 
             // Add pokemon with id and name.
-            $poke_name = get_local_pokemon_name($dex_id, explode('-',$pid)[1]);
+            $poke_name = get_local_pokemon_name($dex_id, $pokemon_form_id);
             $msg .= $poke_name . ' (#' . $dex_id . ')' . CR;
 
             // Add button to edit pokemon.

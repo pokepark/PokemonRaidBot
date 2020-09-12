@@ -29,6 +29,12 @@ for($i=0;$i<$count;$i++) {
 }
 unset($proto);
 
+// Set ID's for mega evolutions
+// Using negative to prevent mixup with actual form ID's
+// Collected from pogoprotos (hoping they won't change, so hard coding them here)
+$mega_ids = array("MEGA"=>-1,"MEGA_X"=>-2,"MEGA_Y"=>-3);
+
+
 $weatherboost_table = array(
                         "POKEMON_TYPE_BUG"      => "3",
                         "POKEMON_TYPE_DARK"     => "8",
@@ -104,11 +110,40 @@ foreach($master as $row) {
                                                           ];
             }
         }
+    }else if($part[0] == "TEMPORARY" && $part[1] == "EVOLUTION") {
+        // Found Mega pokemon data
+        // Get pokemon ID
+        $pokemon_id = ltrim(str_replace("V","",$part[2]),'0');
+        unset($part[0]);
+        unset($part[1]);
+        unset($part[2]);
+        unset($part[3]);
+        
+        // Pokemon name 
+        $pokemon_name = implode("_",$part);
+        $form_data = $row['data']['temporaryEvolutionSettings']['obTemporaryEvolutions'];
+        foreach($form_data as $form) {
+            // Nidoran
+            $poke_name = ucfirst(strtolower(str_replace(["_FEMALE","_MALE"],["♀","♂"],$pokemon_name)));
+            // Ho-oh
+            $poke_name = str_replace("_","-",$poke_name);
+
+            $form_name = str_replace("TEMP_EVOLUTION_","",$form['obTemporaryEvolution']);
+            $form_asset_suffix = $form['assetBundleValue'];
+            $poke_shiny = 0;
+            $form_id = $mega_ids[$form_name];
+            
+            $pokemon_array[$pokemon_id][$form_name] = [ "pokemon_name"=>$poke_name,
+                                                        "pokemon_form_name"=>$form_name,
+                                                        "pokemon_form_id"=>$form_id,
+                                                        "asset_suffix"=>$form_asset_suffix,
+                                                        "shiny"=>$poke_shiny
+                                                      ];
+        }
     }else if ($part[1] == "POKEMON" && $part[0][0] == "V") {
         // Found Pokemon data
         $pokemon_id = (int)str_replace("V","",$part[0]);
         $form_name = str_replace($row['data']['pokemonSettings']['pokemonId']."_","",substr($row['data']['templateId'],14));
-
         if($form_name != "PURIFIED" && $form_name != "SHADOW" && $form_name != "NORMAL") {
             if($form_name == $row['data']['pokemonSettings']['pokemonId']) {
                 $form_name = "normal";
@@ -145,7 +180,18 @@ foreach($master as $row) {
                     $pokemon_array[$pokemon_id][$form]["weather"] = $weather;
                 }
             }
+            if(isset($row['data']['pokemonSettings']['obTemporaryEvolutions'])) {
+                foreach($row['data']['pokemonSettings']['obTemporaryEvolutions'] as $temp_evolution) {
+                    $form_name = str_replace("TEMP_EVOLUTION_","",$temp_evolution['obTemporaryEvolution']);
+                    $pokemon_array[$pokemon_id][$form_name]["min_cp"] = $min_cp;
+                    $pokemon_array[$pokemon_id][$form_name]["max_cp"] = $max_cp;
+                    $pokemon_array[$pokemon_id][$form_name]["min_weather_cp"] = $min_weather_cp;
+                    $pokemon_array[$pokemon_id][$form_name]["max_weather_cp"] = $max_weather_cp;
+                    $pokemon_array[$pokemon_id][$form_name]["weather"] = $weather;
+                }
+            }
         }
+
    }
 }
 // Save data to file.

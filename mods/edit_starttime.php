@@ -29,7 +29,7 @@ $gym_id = explode(',', $data['id'])[0];
 
 // Get level of pokemon
 $raid_level = '0';
-$pokemon_id_form = explode("-",$pokemon_id);
+$pokemon_id_form = explode("-",$pokemon_id,2);
 $raid_level = get_raid_level($pokemon_id_form[0], $pokemon_id_form[1]);
 debug_log('Pokemon raid level: ' . $raid_level);
 

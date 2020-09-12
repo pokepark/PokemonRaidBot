@@ -93,7 +93,7 @@ if ($raid_id == 0 && $gym_id != 0) {
         // Now.
         $now = utcnow();
 
-        $pokemon_id_form = explode("-",$pokemon_id);
+        $pokemon_id_form = explode("-",$pokemon_id,2);
         
         // Create raid in database.
         $rs = my_query(

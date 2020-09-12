@@ -13,7 +13,7 @@ bot_access_check($update, 'pokedex');
 $pokedex_id = $data['id'];
 
 // Split pokedex_id and form
-$dex_id_form = explode('-',$pokedex_id);
+$dex_id_form = explode('-',$pokedex_id,2);
 $dex_id = $dex_id_form[0];
 $dex_form = $dex_id_form[1];
 

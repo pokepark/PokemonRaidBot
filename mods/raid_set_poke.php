@@ -11,7 +11,7 @@ raid_access_check($update, $data, 'pokemon');
 
 // Set the id.
 $id = $data['id'];
-$pokemon_id_form = explode("-", $data['arg']);
+$pokemon_id_form = explode("-", $data['arg'], 2);
 
 // Update pokemon in the raid table.
 my_query(

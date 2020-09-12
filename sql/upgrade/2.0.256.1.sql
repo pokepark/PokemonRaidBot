@@ -1,0 +1,6 @@
+ALTER TABLE `raids` MODIFY `pokemon_form` INT(4) NOT NULL DEFAULT 0;
+INSERT INTO pokemon (pokedex_id, pokemon_name, pokemon_form_name, pokemon_form_id, asset_suffix, min_cp, max_cp, min_weather_cp, max_weather_cp, weather, shiny) VALUES ('3','Venusaur','mega','-1','51','1480','1554','1851','1943','125','0');
+INSERT INTO pokemon (pokedex_id, pokemon_name, pokemon_form_name, pokemon_form_id, asset_suffix, min_cp, max_cp, min_weather_cp, max_weather_cp, weather, shiny) VALUES ('6','Charizard','mega_x','-2','51','1574','1651','1968','2064','126','0');
+INSERT INTO pokemon (pokedex_id, pokemon_name, pokemon_form_name, pokemon_form_id, asset_suffix, min_cp, max_cp, min_weather_cp, max_weather_cp, weather, shiny) VALUES ('6','Charizard','mega_y','-3','52','1574','1651','1968','2064','126','0');
+INSERT INTO pokemon (pokedex_id, pokemon_name, pokemon_form_name, pokemon_form_id, asset_suffix, min_cp, max_cp, min_weather_cp, max_weather_cp, weather, shiny) VALUES ('9','Blastoise','mega','-1','51','1338','1409','1673','1761','3','0');
+INSERT INTO pokemon (pokedex_id, pokemon_name, pokemon_form_name, pokemon_form_id, asset_suffix, min_cp, max_cp, min_weather_cp, max_weather_cp, weather, shiny) VALUES ('15','Beedrill','mega','-1','51','994','1054','1242','1318','35','0');
