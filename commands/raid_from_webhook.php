@@ -421,14 +421,12 @@ foreach ($update as $raid) {
         $reply_to = $chat; //$update['message']['chat']['id'];
 
         // Send the message.
-        //send_message($chat, $text, $keys, ['reply_to_message_id' => $reply_to, 'reply_markup' => ['selective' => true, 'one_time_keyboard' => true], 'disable_web_page_preview' => 'true']);
-        // Send the message.
         if($config->RAID_PICTURE) {
             require_once(LOGIC_PATH . '/raid_picture.php');
             $picture_url = raid_picture_url($created_raid);
             $tg_json[] = send_photo($chat, $picture_url, $text['short'], $keys, ['reply_to_message_id' => $reply_to, 'reply_markup' => ['selective' => true, 'one_time_keyboard' => true], 'disable_web_page_preview' => 'true'], true);
         } else {
-            $tg_json[] = send_message($chat, $text['full'], $keys, ['reply_to_message_id' => $reply_to, 'reply_markup' => ['selective' => true, 'one_time_keyboard' => true], 'disable_web_page_preview' => 'true'], true);
+            $tg_json[] = send_message($chat, $text['full'], ['inline_keyboard' => $keys, 'selective' => true, 'one_time_keyboard' => true], ['disable_web_page_preview' => 'true'], true);
         }
     }
 }

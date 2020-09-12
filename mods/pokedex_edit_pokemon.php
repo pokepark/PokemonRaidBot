@@ -39,7 +39,7 @@ $keys = [
 $eggs = $GLOBALS['eggs'];
 if(!in_array($pokedex_id, $eggs)) {
     $keys_cp_weather = [
-        [  
+        [
             [
                 'text'          => getTranslation('pokedex_min_cp'),
                 'callback_data' => $poke_id_form . ':pokedex_set_cp:min-20-add-0'
@@ -89,7 +89,7 @@ $keys[] = [
 // Send message.
 if($arg == 'id-or-name') {
     // Send message.
-    send_message($update['message']['chat']['id'], $msg, $keys, ['reply_markup' => ['selective' => true, 'one_time_keyboard' => true]]);
+    send_message($update['message']['chat']['id'], $msg, ['inline_keyboard' => $keys, 'selective' => true, 'one_time_keyboard' => true]);
 
 // Edit message.
 } else {

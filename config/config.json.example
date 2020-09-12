@@ -1,5 +1,5 @@
 {
-  "VERSION":"2.0.256.8",
+  "VERSION":"2.0.256.6",
   "DB_HOST":"localhost",
   "DB_NAME":"your_database_name",
   "DB_USER":"your_database_user",

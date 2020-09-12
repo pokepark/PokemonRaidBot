@@ -77,7 +77,7 @@ if(empty($id_info)) {
 
         // Set message.
         $gym = get_gym($id);
-        $msg = get_gym_details($gym);        
+        $msg = get_gym_details($gym);
         $msg .= CR . '<b>' . getTranslation('gym_name_updated') . '</b>';
     } else if($gym && empty($info)) {
         debug_log('Missing gym name!');
@@ -93,6 +93,6 @@ if(empty($id_info)) {
 }
 
 // Send message.
-send_message($update['message']['chat']['id'], $msg, $keys, ['reply_markup' => ['selective' => true, 'one_time_keyboard' => true], 'disable_web_page_preview' => 'true']);
+send_message($update['message']['chat']['id'], $msg, ['inline_keyboard' => $keys, 'selective' => true, 'one_time_keyboard' => true], ['disable_web_page_preview' => 'true']);
 
 ?>

@@ -158,7 +158,7 @@ function get_overview($update, $chats_active, $raids_active, $action = 'refresh'
                     }
 
                     // Send the message, but disable the web preview!
-                    $tg_json[] = send_message($update['callback_query']['message']['chat']['id'], $msg, $keys, ['disable_web_page_preview' => 'true'], true);
+                    $tg_json[] = send_message($update['callback_query']['message']['chat']['id'], $msg, ['inline_keyboard' => $keys], ['disable_web_page_preview' => 'true'], true);
 
                     // Set the callback message and keys
                     $callback_keys = [];
@@ -184,7 +184,7 @@ function get_overview($update, $chats_active, $raids_active, $action = 'refresh'
                     $tg_json[] = edit_message($update, $msg_callback, $keys, ['disable_web_page_preview' => 'true'], true);
 
                     // Send the message, but disable the web preview!
-                    $tg_json[] = send_message($chat_id, $msg, $keys, ['disable_web_page_preview' => 'true'], true);
+                    $tg_json[] = send_message($chat_id, $msg, ['inline_keyboard' => $keys], ['disable_web_page_preview' => 'true'], true);
                 }
 
                 // Telegram multicurl request.

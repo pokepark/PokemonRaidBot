@@ -138,6 +138,6 @@ if($config->PORTAL_IMPORT) {
 }
 
 // Send the message.
-send_message($update['message']['chat']['id'], $msg, $keys, ['disable_web_page_preview' => 'true']);
+send_message($update['message']['chat']['id'], $msg, ['inline_keyboard' => $keys], ['disable_web_page_preview' => 'true']);
 
 ?>

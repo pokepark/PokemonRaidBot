@@ -62,7 +62,7 @@ if ($chat_id == 0) {
         ];
 
         // Send the message, but disable the web preview!
-        $tg_json[] = send_message($update['callback_query']['message']['chat']['id'], $msg, $keys, true);
+        $tg_json[] = send_message($update['callback_query']['message']['chat']['id'], $msg, ['inline_keyboard' => $keys], true);
     }
 
     // Set message.

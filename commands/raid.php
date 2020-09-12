@@ -63,7 +63,6 @@ if (!empty($data[4])) {
 
 $gym_id = 0;
 try {
-     
     // Update gym name in raid table.
     $query = '
         SELECT id
@@ -75,7 +74,6 @@ try {
     $statement = $dbh->prepare( $query );
     $statement->execute(['gym_name' => $gym_name]);
     while ($row = $statement->fetch()) {
-    
         $gym_id = $row['id'];
     }
 }
@@ -225,14 +223,13 @@ if ($update['message']['chat']['type'] == 'private' || $update['callback_query']
     ];
 
     // Send the message.
-    //send_message($update['message']['chat']['id'], $text, $keys, ['disable_web_page_preview' => 'true']);
     $chat = $update['message']['chat']['id'];
 
     // Send the message.
     if($config->RAID_PICTURE) {
         send_photo($chat, $picture_url, $text['short'], $keys, ['disable_web_page_preview' => 'true']);
     } else {
-        send_message($chat, $text['full'], $keys, ['disable_web_page_preview' => 'true']);
+        send_message($chat, $text['full'], ['inline_keyboard' => $keys], ['disable_web_page_preview' => 'true']);
     }
 
 
@@ -248,13 +245,11 @@ if ($update['message']['chat']['type'] == 'private' || $update['callback_query']
     }
 
     // Send the message.
-    // send_message($update['message']['chat']['id'], $text, $keys, ['reply_to_message_id' => $reply_to, 'reply_markup' => ['selective' => true, 'one_time_keyboard' => true], 'disable_web_page_preview' => 'true']);
     $chat = $update['message']['chat']['id'];
-    // Send the message.
     if($config->RAID_PICTURE) {
         send_photo($chat, $picture_url, $text['short'], $keys, ['reply_to_message_id' => $reply_to, 'reply_markup' => ['selective' => true, 'one_time_keyboard' => true], 'disable_web_page_preview' => 'true']);
     } else {
-        send_message($chat, $text['full'], $keys, ['reply_to_message_id' => $reply_to, 'reply_markup' => ['selective' => true, 'one_time_keyboard' => true], 'disable_web_page_preview' => 'true']);
+        send_message($chat, $text['full'], ['inline_keyboard' => $keys, 'selective' => true, 'one_time_keyboard' => true], ['disable_web_page_preview' => 'true']);
     }
 }
 

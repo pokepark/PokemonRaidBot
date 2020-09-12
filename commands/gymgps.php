@@ -80,7 +80,7 @@ if(empty($id_info)) {
         );
 
         // Set message.
-        $msg = get_gym_details($gym);        
+        $msg = get_gym_details($gym);
         $msg .= EMOJI_NEW . SP . $info;
         $msg .= CR . CR . '<b>' . getTranslation('gym_gps_added') . '</b>';
     } else if($gym && empty($info)) {
@@ -96,6 +96,6 @@ if(empty($id_info)) {
 }
 
 // Send message.
-send_message($update['message']['chat']['id'], $msg, $keys, ['reply_markup' => ['selective' => true, 'one_time_keyboard' => true], 'disable_web_page_preview' => 'true']);
+send_message($update['message']['chat']['id'], $msg, ['inline_keyboard' => $keys, 'selective' => true, 'one_time_keyboard' => true], ['disable_web_page_preview' => 'true']);
 
 ?>

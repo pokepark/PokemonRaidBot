@@ -54,7 +54,7 @@ $raid_pokemon = $raid_pokemon_id . "-" . $raid_pokemon_form_name;
 if($config->RAID_PICTURE && !in_array($raid_level, $raid_picture_hide_level) && !in_array($raid_pokemon, $raid_picture_hide_pokemon) && !in_array($raid_pokemon_id, $raid_picture_hide_pokemon)) {
     $tg_json[] = send_photo($chat, $picture_url, $text['short'], $keys, ['reply_to_message_id' => $chat, 'disable_web_page_preview' => 'true'], true);
 } else {
-    $tg_json[] = send_message($chat, $text['full'], $keys, ['reply_to_message_id' => $chat, 'disable_web_page_preview' => 'true'], true);
+    $tg_json[] = send_message($chat, $text['full'], ['inline_keyboard' => $keys], ['reply_to_message_id' => $chat, 'disable_web_page_preview' => 'true'], true);
 }
 
 // Set callback keys and message

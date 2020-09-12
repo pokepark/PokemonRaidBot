@@ -69,7 +69,7 @@ if($gym) {
         $keys = [];
 
         // Send message.
-        send_message($update['message']['chat']['id'], $msg, $keys, ['reply_markup' => ['selective' => true, 'one_time_keyboard' => true]]);
+        send_message($update['message']['chat']['id'], $msg, ['inline_keyboard' => $keys, 'selective' => true, 'one_time_keyboard' => true]);
 
         exit();
     } else {
@@ -159,7 +159,7 @@ if(isset($update['message']['location'])) {
     $msg = getTranslation('create_raid') . ': <i>' . $address . '</i>';
 
     // Send message.
-    send_message($update['message']['chat']['id'], $msg, $keys, ['reply_markup' => ['selective' => true, 'one_time_keyboard' => true]]);
+    send_message($update['message']['chat']['id'], $msg, ['inline_keyboard' => $keys, 'selective' => true, 'one_time_keyboard' => true]);
 
 // Answer forwarded location message from geo_create.
 } else if(isset($update['callback_query'])) {

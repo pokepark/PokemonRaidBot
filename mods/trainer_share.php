@@ -20,7 +20,7 @@ $keys = keys_trainerinfo();
 $tg_json = array();
 
 // Send the message.
-$tg_json[] = send_message($chat, $text, $keys, ['reply_to_message_id' => $chat, 'disable_web_page_preview' => 'true'], true);
+$tg_json[] = send_message($chat, $text, ['inline_keyboard' => $keys], ['reply_to_message_id' => $chat, 'disable_web_page_preview' => 'true'], true);
 
 // Set callback keys and message
 $callback_msg = getTranslation('successfully_shared');
