@@ -199,7 +199,7 @@ foreach ($update as $raid) {
             $dbh = null;
             exit;
         }
-        $result = $statement->fetch(PDO::FETCH_ASSOC);
+        $result = $statement->fetch();
         $form = $result['pokemon_form_id'];
     }
     $gender = 0;
