@@ -64,5 +64,5 @@ include('logic/show_raid_poll.php');
 include('logic/show_raid_poll_small.php');
 include('logic/show_trainerinfo.php');
 include('logic/weather_keys.php');
-include('logic/file_get_contents.php');
+include('logic/curl_get_contents.php');
 ?>
