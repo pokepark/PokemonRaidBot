@@ -9,6 +9,21 @@ debug_log('pokebattler()');
 // Check access.
 bot_access_check($update, 'pokedex');
 
+function curl_get_contents($url)
+{
+    $ch = curl_init();
+
+    curl_setopt($ch, CURLOPT_HEADER, 0);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_URL, $url);
+
+    $data = curl_exec($ch);
+    curl_close($ch);
+
+    return $data;
+}
+
+
 // Get raid levels
 $id = $data['id'];
 
@@ -58,7 +73,7 @@ if($id == 0) {
     // Get pokebattler data.
     debug_log('Getting raid bosses from pokebattler.com now...');
     $link = 'https://fight.pokebattler.com/raids';
-    $data = file_get_contents($link);
+    $data = curl_get_contents($link);
     $json = json_decode($data,true);
 
     // debug_log($json,'POKEBATTLER');
