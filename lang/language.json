@@ -2830,5 +2830,41 @@
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
     "FI": "Ei ylimääräisiä kouluttajia!"
+  },
+  "alert_want_invite": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Wishes to be invited.",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Toivoo tulevansa kutsutuksi."
+  },
+  "alert_no_want_invite": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "No longer wishes to be invited.",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Ei enää toivo kutsua."
+  },
+  "user_wishes_to_be_invited": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Wishes to be invited:",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Toivovat tulevansa kutsutuksi:"
   }
 }

@@ -57,6 +57,20 @@ function keys_vote($raid)
         $buttons_extra[0] = array_merge($buttons_extra[0], $button_remote[0]);
     }
 
+    // Want invite key
+    $button_want_invite = [
+        [
+            [
+                'text'          => EMOJI_WANT_INVITE,
+                'callback_data' => $raid['id'] . ':vote_want_invite:0'
+            ]
+        ]
+    ];
+
+    if($config->RAID_WANT_INVITE) {
+        $buttons_extra[0] = array_merge($buttons_extra[0], $button_want_invite[0]);
+    }
+
     // Team and level keys.
     if($config->RAID_POLL_HIDE_BUTTONS_TEAM_LVL) {
         $buttons_teamlvl = [];

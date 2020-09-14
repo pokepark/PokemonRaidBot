@@ -250,6 +250,7 @@ function show_raid_poll($raid)
                     AND     cancel != 1
                   ORDER BY  attend_time,
                             pokemon,
+                            want_invite,
                             users.team,
                             arrived,
                             users.level desc,
@@ -260,6 +261,7 @@ function show_raid_poll($raid)
             // Init previous attend time and pokemon
             $previous_att_time = 'FIRST_RUN';
             $previous_pokemon = 'FIRST_RUN';
+            $want_inv = false;
 
             // For each attendance.
             while ($row = $rs_att->fetch()) {
@@ -313,6 +315,9 @@ function show_raid_poll($raid)
                         $msg = raid_poll_message($msg, (($count_late > 0) ? EMOJI_LATE . $count_late . '  ' : ''));
                     }
                     $msg = raid_poll_message($msg, CR);
+
+                    // New title, reset want inv
+                    $want_inv = false;
                 }
 
                 // Add section/header for pokemon
@@ -346,7 +351,16 @@ function show_raid_poll($raid)
                         $msg = raid_poll_message($msg, (($poke_count_remote > 0) ? EMOJI_REMOTE . $poke_count_remote . '  ' : ''));
                         $msg = raid_poll_message($msg, (($poke_count_late > 0) ? EMOJI_LATE . $poke_count_late . '  ' : ''));
                         $msg = raid_poll_message($msg, CR);
-                    }
+                        
+                        // New title, reset want inv
+                        $want_inv = false;
+                   }
+                }
+                // Add section/header for want_inv
+                if(!$want_inv && $row['want_invite'] == 1) {
+                    $msg = raid_poll_message($msg, '<i>' . getPublicTranslation('user_wishes_to_be_invited') . '</i> ' . EMOJI_WANT_INVITE);
+                    $msg = raid_poll_message($msg, CR);
+                    $want_inv = true;
                 }
 
                 // Add users: ARRIVED --- TEAM -- LEVEL -- NAME -- INVITE -- EXTRAPEOPLE
