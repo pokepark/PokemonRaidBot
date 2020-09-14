@@ -93,7 +93,7 @@ CREATE TABLE `raids` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) DEFAULT NULL,
   `pokemon` int(4) DEFAULT NULL,
-  `pokemon_form` int(4) unsigned NOT NULL DEFAULT 0,
+  `pokemon_form` int(4) NOT NULL DEFAULT 0,
   `first_seen` datetime DEFAULT NULL,
   `start_time` datetime DEFAULT NULL,
   `end_time` datetime DEFAULT NULL,
