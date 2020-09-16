@@ -9,19 +9,9 @@ $repo_name = 'PogoAssets';
 $repo_dir = 'pokemon_icons';
 $repo_branch = 'master';
 
-// Get JSON
-function getRepoContent($URL) {
-    // Get data.
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $URL);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    //curl_setopt($ch, CURLOPT_USERAGENT, "https://developer.github.com/v3/#user-agent-required" );
-    curl_setopt($ch, CURLOPT_USERAGENT, "Googlebot/2.1 (+http://www.google.com/bot.html)" );
-    $data = curl_exec($ch);
-    curl_close($ch);
 
-    return $data;
-}
+// Get JSON
+include('logic/curl_get_contents.php');
 
 // Download file
 function downloadFile($URL, $destination, $filename) {
@@ -90,7 +80,7 @@ $repo_html = 'https://github.com/' . $repo_owner . '/' . $repo_name . '/' . $rep
 $repo_raw = 'https://raw.githubusercontent.com/' . $repo_owner . '/' . $repo_name . '/' . $repo_branch . '/' . $repo_dir . '/';
 
 // Git tree lookup
-$tree = getRepoContent($repo_content);
+$tree = curl_get_contents($repo_content);
 $leaf = json_decode($tree, true);
 
 // Git tree lookup for repo dir
@@ -99,7 +89,7 @@ $foldername = basename($repo_html);
 echo 'Downloading each file from ' . $repo_html . PHP_EOL;
 foreach ($leaf as $l) {
     if($l['name'] == $foldername && $l['type'] == 'dir') {
-        $json = getRepoContent($l['git_url']);
+        $json = curl_get_contents($l['git_url']);
         $content = json_decode($json, true);
         break;
     }
