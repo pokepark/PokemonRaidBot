@@ -129,6 +129,10 @@ if($id == 0) {
 
         // Get raid bosses for each raid level.
         foreach($pb_data['tiers'][$index]['raids'] as $raid) {
+            if ($raid['id'] == 0) {
+                debug_log("Skipping raid boss {$raid['pokemon']} since it has no id, it's likely in the future!");
+                continue;
+            }
             // Pokemon name ending with "_FORM" ?
             if(substr_compare($raid['pokemon'], '_FORM', -strlen('_FORM')) === 0) {
                 debug_log('Pokemon with a special form received: ' . $raid['pokemon']);
@@ -163,7 +167,7 @@ if($id == 0) {
                 // Get pokemon name and form.
                 $name = explode("_", $pokemon, 2)[0] . '♀';
                 $form = 'normal';
-            
+
             // Mega pokemon ?
             }else if(substr_compare($raid['pokemon'], '_MEGA', -strlen('_MEGA')) === 0 or substr_compare($raid['pokemon'], '_MEGA_X', -strlen('_MEGA_X')) === 0 or substr_compare($raid['pokemon'], '_MEGA_Y', -strlen('_MEGA_Y')) === 0) {
                 debug_log('Mega Pokemon received: ' . $raid['pokemon']);
@@ -184,7 +188,7 @@ if($id == 0) {
                 // Name and form.
                 $name = $pokemon;
                 $form = 'normal';
-		
+
 		// Fix for GIRATINA as the actual GIRATINA_ALTERED_FORM is just GIRATINA
                 if($name == 'GIRATINA' && $form == 'normal') {
                     $form = 'ALTERED';
@@ -245,7 +249,7 @@ if($id == 0) {
                     $rs = my_query(
                             "
                             UPDATE    pokemon
-                            SET       raid_level = '{$raid_level_id}', 
+                            SET       raid_level = '{$raid_level_id}',
                                       shiny = {$shiny}
                             WHERE     pokedex_id = {$dex_id}
                             AND       pokemon_form_id = '{$dex_form}'
@@ -277,12 +281,13 @@ if($id == 0) {
 
         // Add raid egg?
         if($config->POKEBATTLER_IMPORT_DISABLE_REDUNDANT_EGGS && $bosscount <= 1) {
-            debug_log('Not creating egg for level ' . $rl . ' since there are not 2 or more bosses.');
+            debug_log('Not creating egg for level ' . $raid_level_id . ' since there are not 2 or more bosses.');
         } else {
             // Add pokemon to message.
-            $msg .= getTranslation('egg_' . $raid_level_id) . SP . '(#999' . $raid_level_id . ')' . CR;
+            $translated_egg = getTranslation('egg_' . $raid_level_id);
+            $msg .= $translated_egg. SP . '(#999' . $raid_level_id . ')' . CR;
             $egg_id = '999'  . $raid_level_id;
-            debug_log('Adding raid level egg with id: ' . $egg_id);
+            debug_log("Adding raid level {$raid_level_id} egg '{$translated_egg}' with id: . {$egg_id}");
 
             // Save raid egg.
             if(strpos($arg, 'save#') === 0) {
@@ -394,7 +399,7 @@ if($id == 0) {
         $msg .= '<b>' . getTranslation('excluded_raid_bosses') . '</b>' . CR;
         $msg .= (empty($ex_msg) ? (getTranslation('none') . CR) : $ex_msg) . CR;
 
-        // Import or select more pokemon to exclude? 
+        // Import or select more pokemon to exclude?
         if($poke1 == '0' || $poke2 == '0' || $poke3 == '0') {
             $msg .= '<b>' . getTranslation('exclude_raid_boss_or_import') . ':</b>';
         } else {
