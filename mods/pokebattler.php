@@ -58,7 +58,7 @@ if($id == 0) {
     // Get pokebattler data.
     debug_log('Getting raid bosses from pokebattler.com now...');
     $link = 'https://fight.pokebattler.com/raids';
-    $data = file_get_contents($link);
+    $data = curl_get_contents($link);
     $json = json_decode($data,true);
 
     // debug_log($json,'POKEBATTLER');
