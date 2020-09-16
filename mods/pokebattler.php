@@ -9,6 +9,9 @@ debug_log('pokebattler()');
 // Check access.
 bot_access_check($update, 'pokedex');
 
+// Levels available for import at PokeBattler
+$levels = array('6', '5', '3', '1');
+
 // Get raid levels
 $id = $data['id'];
 
@@ -23,10 +26,6 @@ if($id == 0) {
 
     // Init empty keys array.
     $keys = [];
-
-    // Specify raid levels.
-    // TODO(artanicus): create this from some other source
-    $levels = array('6', '5', '4', '3', '2', '1');
 
     // All raid level keys.
     $keys[] = array(
@@ -58,20 +57,15 @@ if($id == 0) {
     // Get pokebattler data.
     debug_log('Getting raid bosses from pokebattler.com now...');
     $link = 'https://fight.pokebattler.com/raids';
-    $data = curl_get_contents($link);
-    $json = json_decode($data,true);
-
-    // debug_log($json,'POKEBATTLER');
+    $pb_data = curl_get_contents($link);
+    $pb_data = json_decode($pb_data,true);
 
     // All raid levels?
-   if($id == RAID_LEVEL_ALL) {
-        $start = 0;
-        // TODO(artanicus): create these two from some other source
-        $end = 6;
-        $clear = "'6','5','4','3','2','1'";
+    if($id == RAID_LEVEL_ALL) {
+      $get_levels = $levels;
+        $clear = "'6','5','3','1'";
     } else {
-        $start = $id - 1;
-        $end = $id - 1;
+        $get_levels = Array($id);
         $clear = "'" . $id . "'";
     }
 
@@ -108,10 +102,9 @@ if($id == 0) {
     // Raid tier array
     debug_log('Processing the following raid levels:');
     $raidlevels = array();
-    for($i = $start; $i <= $end; $i++) {
-        $rl = $i + 1;
-        if($rl == 6) $rl = 'MEGA';
-        $raidlevels[] = 'RAID_LEVEL_' . $rl;
+    foreach($get_levels as $level) {
+        if($level == 6) $level = 'MEGA';
+        $raidlevels[] = 'RAID_LEVEL_' . $level;
     }
     debug_log($raidlevels);
 
@@ -119,7 +112,7 @@ if($id == 0) {
     debug_log('Processing received pokebattler raid bosses for each raid level');
     // Init index to process the json
     $index = 0;
-    foreach($json['tiers'] as $tier) {
+    foreach($pb_data['tiers'] as $tier) {
         // Process raid level?
         if(!in_array($tier['tier'],$raidlevels)) {
             // Index + 1
@@ -135,7 +128,7 @@ if($id == 0) {
         $bosscount = 0;
 
         // Get raid bosses for each raid level.
-        foreach($json['tiers'][$index]['raids'] as $raid) {
+        foreach($pb_data['tiers'][$index]['raids'] as $raid) {
             // Pokemon name ending with "_FORM" ?
             if(substr_compare($raid['pokemon'], '_FORM', -strlen('_FORM')) === 0) {
                 debug_log('Pokemon with a special form received: ' . $raid['pokemon']);
@@ -328,8 +321,9 @@ if($id == 0) {
         $keys = [];
 
         // Add key for each raid level
+        $level_keys = $levels;
         while ($pokemon = $rs->fetch()) {
-            $levels[$pokemon['pokedex_id'].'-'.$pokemon['pokemon_form_id']] = $pokemon['raid_level'];
+            $level_keys[$pokemon['pokedex_id'].'-'.$pokemon['pokemon_form_id']] = $pokemon['raid_level'];
         }
 
         // Init message and previous.
@@ -337,7 +331,7 @@ if($id == 0) {
         $previous = 'FIRST_RUN';
 
         // Build the message
-        foreach ($levels as $pid => $lv) {
+        foreach ($level_keys as $pid => $lv) {
             // Set current level
             $current = $lv;
 
