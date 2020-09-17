@@ -63,10 +63,10 @@ if($arg == 0) {
     // Get all pokemon with raid levels from database.
     $rs = my_query(
         "
-        SELECT    pokedex_id, pokemon_form, raid_level
+        SELECT    pokedex_id, pokemon_form_name, raid_level
         FROM      pokemon
         WHERE     raid_level IN ({$clear})
-        ORDER BY  raid_level, pokedex_id, pokemon_form != 'normal', pokemon_form
+        ORDER BY  raid_level, pokedex_id, pokemon_form_name != 'normal', pokemon_form_name
         "
     );
 
@@ -75,7 +75,7 @@ if($arg == 0) {
 
     // Add key for each raid level
     while ($pokemon = $rs->fetch()) {
-        $plevels[$pokemon['pokedex_id'].'-'.$pokemon['pokemon_form']] = $pokemon['raid_level'];
+        $plevels[$pokemon['pokedex_id'].'-'.$pokemon['pokemon_form_name']] = $pokemon['raid_level'];
     }
 
     // Init message and previous.
