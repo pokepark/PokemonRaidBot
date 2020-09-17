@@ -21,6 +21,7 @@ function get_pokemon_id_by_name($pokemon_name)
 
     // Explode if delimiter was found.
     $poke_name = $pokemon_name;
+    $poke_form = "";
     if($delimiter != '') {
         $pokemon_name_form = explode($delimiter,$pokemon_name,2);
         $poke_name = trim($pokemon_name_form[0]);
@@ -33,7 +34,7 @@ function get_pokemon_id_by_name($pokemon_name)
     
     // Init id and write name to search to log.
     $pokemon_id = 0;
-    $pokemon_form = $poke_form;
+    $pokemon_form = ($poke_form!="")?$poke_form:"normal";
 
     // Set language
     $language = USERLANGUAGE;
