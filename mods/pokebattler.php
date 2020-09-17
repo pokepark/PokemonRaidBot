@@ -103,7 +103,9 @@ if($id == 0) {
     debug_log('Processing the following raid levels:');
     $raidlevels = array();
     foreach($get_levels as $level) {
-        if($level == 6) $level = 'MEGA';
+        if($level == 6) {
+          $level = 'MEGA'; // PB uses RAID_LEVEL_MEGA instead of RAID_LEVEL_6
+        }
         $raidlevels[] = 'RAID_LEVEL_' . $level;
     }
     debug_log($raidlevels);
