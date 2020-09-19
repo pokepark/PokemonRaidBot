@@ -445,25 +445,33 @@ for($pa=0;$pa<$num_pokemon_lines;$pa++){
 }
 
 // Pokemon CP
-if($raid['pokedex_id'] < 9990) {
+if($raid['pokedex_id'] < 9990 && intval($raid['min_cp']) > 0 && intval($raid['max_cp']) > 0) {
     $cp_text_top = $poke_text_top+$text_size+$spacing;
     $cp_text = $raid['min_cp']." - ".$raid['max_cp'];
-    $cp_text2 =  "(".$raid['min_weather_cp']."-".$raid['max_weather_cp'].")";
-
     imagettftext($canvas,$text_size,$angle,$left_after_poke,$cp_text_top,$font_color,$font_text,$cp_text);
-    $cp_weather_text_box = imagettfbbox($text_size_cp_weather,$angle,$font_text,$cp_text2);
-    imagettftext($canvas,$text_size_cp_weather,$angle,($canvas_width-$cp_weather_text_box[2]-$spacing_right),$cp_text_top,$font_color,$font_text,$cp_text2);
+    
+    // Pokemon Weather CP's set?
+    if(intval($raid['min_weather_cp']) > 0 && intval($raid['max_weather_cp']) > 0) {
+        $cp_text2 =  "(".$raid['min_weather_cp']."-".$raid['max_weather_cp'].")";
+        $cp_weather_text_box = imagettfbbox($text_size_cp_weather,$angle,$font_text,$cp_text2);
+        imagettftext($canvas,$text_size_cp_weather,$angle,($canvas_width-$cp_weather_text_box[2]-$spacing_right),$cp_text_top,$font_color,$font_text,$cp_text2);
+    }
 
-    $count_weather = strlen($raid['weather']);
-    for($i=0;$i<$count_weather;$i++) {
-        $we = substr($raid['weather'],$i,1);
-        $weather_icon_path = IMAGES_PATH . "/weather/";
-        // Use white icons?
-        if($config->RAID_PICTURE_ICONS_WHITE) {
-            $weather_icon_path = IMAGES_PATH . "/weather_white/";
+    // Pokemon Weather type set?
+    if(intval($raid['weather']) > 0) {
+        $count_weather = strlen($raid['weather']);
+        for($i=0;$i<$count_weather;$i++) {
+            $we = substr($raid['weather'],$i,1);
+            $weather_icon_path = IMAGES_PATH . "/weather/";
+            // Use white icons?
+            if($config->RAID_PICTURE_ICONS_WHITE) {
+                $weather_icon_path = IMAGES_PATH . "/weather_white/";
+            }
+            $weather_icon = imagecreatefrompng($weather_icon_path . $we . ".png"); // 64x64
+            if($weather_icon !== false) {
+                imagecopyresampled($canvas,$weather_icon,$canvas_width-$spacing_right-($count_weather-$i)*40,$poke_text_top-30,0,0,38,38,64,64);
+            }
         }
-        $weather_icon = imagecreatefrompng($weather_icon_path . $we . ".png"); // 64x64
-        imagecopyresampled($canvas,$weather_icon,$canvas_width-$spacing_right-($count_weather-$i)*40,$poke_text_top-30,0,0,38,38,64,64);
     }
 }
 
