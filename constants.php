@@ -2,6 +2,13 @@
 // Paths.
 define('PORTAL_IMAGES_PATH', IMAGES_PATH . '/gyms');
 
+// raid level constants
+define('RAID_LEVEL_ALL', '654321');
+
+// Value used for denoting anytime attendance
+define('ANYTIME', '1970-01-01 00:00:00');
+define('ANYTIME_TS', preg_replace("/[^0-9]/", "", ANYTIME));
+
 // Icons.
 defined('TEAM_B') 		or define('TEAM_B',        iconv('UCS-4LE', 'UTF-8', pack('V', 0x1F499)));
 defined('TEAM_R') 		or define('TEAM_R',        iconv('UCS-4LE', 'UTF-8', pack('V', 0x2764)));
@@ -57,6 +64,7 @@ $teams = array(
 
 // Raid eggs.
 $eggs = array(
+    '9996',  // Level 6 / Mega
     '9995',  // Level 5
     '9994',  // Level 4
     '9993',  // Level 3

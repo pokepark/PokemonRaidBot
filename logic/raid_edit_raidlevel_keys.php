@@ -16,7 +16,7 @@ function raid_edit_raidlevel_keys($gym_id, $gym_first_letter, $admin = false)
             FROM      pokemon
             WHERE     raid_level != '0'
             GROUP BY  raid_level
-            ORDER BY  FIELD(raid_level, '5', '4', '3', '2', '1', 'X')
+            ORDER BY  FIELD(raid_level, '6', '5', '4', '3', '2', '1', 'X')
             "
         );
 

@@ -37,37 +37,14 @@ if (!empty($answer)) {
                WHEN alarm = '0' THEN '1'
                ELSE '0'
                END
-	WHERE  raid_id = {$data['id']}
-	AND    user_id = {$update['callback_query']['from']['id']}
+        WHERE  raid_id = {$data['id']}
+        AND    user_id = {$update['callback_query']['from']['id']}
         "
         );
 
-        // request gym name
-        $request = my_query("SELECT * FROM raids as r left join gyms as g on r.gym_id = g.id WHERE r.id = {$data['id']}");
-        $answer = $request->fetch();
-        $gymname = '<b>' . $answer['gym_name'] . '</b>';
-                $raidtimes = str_replace(CR, '', str_replace(' ', '', get_raid_times($answer, false, true)));
-
-        // Get the new value
-        $rs = my_query(
-        "
-        SELECT    alarm
-        FROM      attendance
-		  WHERE   raid_id = {$data['id']}
-	        AND   user_id = {$update['callback_query']['from']['id']}
-        "
-        );
-        $answer = $rs->fetch();
-
-        // Enable alerts message.
-        if($answer['alarm']) {
-            $msg_text = EMOJI_ALARM . SP . '<b>' . getTranslation('alert_updates_on') . '</b>' . CR;
-        // Disable alerts message.
-        } else {
-            $msg_text = EMOJI_NO_ALARM . SP . '<b>' . getTranslation('alert_no_updates') . '</b>' . CR;
-	}
-        $msg_text .= EMOJI_HERE . SP . $gymname . SP . '(' . $raidtimes . ')';
-        sendmessage($update['callback_query']['from']['id'], $msg_text);
+    // Inform User about change
+    sendAlertOnOffNotice($data, $update);
+    
     } else {
         // All other status-updates are using the short query
         my_query(

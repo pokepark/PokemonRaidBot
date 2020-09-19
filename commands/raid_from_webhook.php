@@ -54,7 +54,7 @@ foreach ($update as $raid) {
     $gym_lon = $raid['message']['longitude'];
     $gym_id = $raid['message']['gym_id'];
     $gym_img_url = $raid['message']['url'];
-    $gym_is_ex = $raid['message']['is_ex_raid_eligible'];
+    $gym_is_ex = ( $raid['message']['is_ex_raid_eligible'] ? 1 : 0 );
     $gym_internal_id = 0;
 
     // Check geofence, if available and continue if not inside any fence
@@ -176,9 +176,38 @@ foreach ($update as $raid) {
     }
 
     $form = 0;
-    if ( isset($raid['message']['form']) ) {
-        $form = $raid['message']['form'];
+    // Use negated evolution id instead of form id if present
+    if(isset($raid['message']['evolution']) && $raid['message']['evolution'] > 0) {
+        $form = 0 - $raid['message']['evolution'];
+    }else {
+        if ( isset($raid['message']['form']) && $raid['message']['form'] != "0") {
+            // Use the form provided in webhook if it's valid
+            $form = $raid['message']['form'];
+        }elseif($pokemon != 0) {
+            // Else look up the normal form's id from pokemon table unless it's an egg
+            try {
+                $query = "
+                    SELECT pokemon_form_id FROM pokemon
+                    WHERE
+                        pokedex_id = :pokemon AND
+                        pokemon_form_name = 'normal'
+                    LIMIT 1
+                ";
+                $statement = $dbh->prepare( $query );
+                $statement->execute([
+                  'pokemon' => $pokemon
+              ]);
+            }
+            catch (PDOException $exception) {
+                error_log($exception->getMessage());
+                $dbh = null;
+                exit;
+            }
+            $result = $statement->fetch();
+            $form = $result['pokemon_form_id'];
+        }
     }
+    
     $gender = 0;
     if ( isset($raid['message']['gender']) ) {
 
@@ -212,15 +241,12 @@ foreach ($update as $raid) {
 
     // Insert new raid or update existing raid/ex-raid?
     $raid_id = active_raid_duplication_check($gym_internal_id);
-    // Make the raid array whole
-    $raid['id'] = $raid_id;
-
+    
     // Raid exists, do updates!
     if ( $raid_id > 0 ) {
         // Update database
 
         try {
-
             $query = '
                 UPDATE raids
                 SET
@@ -285,7 +311,6 @@ foreach ($update as $raid) {
 
     // Create Raid and send messages
     try {
-
         $query = '
 
             INSERT INTO raids (pokemon, pokemon_form, user_id, first_seen, start_time, end_time, gym_team, gym_id, move1, move2, gender)
@@ -331,7 +356,7 @@ foreach ($update as $raid) {
     // Get chats
     $chats = explode(',', $config->WEBHOOK_CHATS);
 
-    for($i = 1; $i <= 5; $i++) {
+    for($i = 1; $i <= 6; $i++) {
 
         $const = 'WEBHOOK_CHATS_LEVEL_' . $i;
         $const_chats = $config->{$const};

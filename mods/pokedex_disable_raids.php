@@ -16,14 +16,16 @@ $id = $data['id'];
 $arg = $data['arg'];
 
 // All raid levels?
-if($id == 'X54321') {
-    $clear = "'X','5','4','3','2','1'";
+if($id == 'X' . RAID_LEVEL_ALL) {
+    // TODO(artanicus): get this from somewhere instead of hardcoded
+    $clear = "'X','6','5','4','3','2','1'";
 } else {
     $clear = "'" . $id . "'";
 }
 
 // Specify raid levels.
-$levels = array('X', '5', '4', '3', '2', '1');
+// TODO(artanicus): get this from somewhere instead of hardcoded
+$levels = array('X', '6', '5', '4', '3', '2', '1');
 
 // Raid level selection
 if($arg == 0) {
@@ -36,7 +38,7 @@ if($arg == 0) {
     // All raid level keys.
     $keys[] = array(
         'text'          => getTranslation('pokedex_all_raid_level'),
-        'callback_data' => 'X54321:pokedex_disable_raids:1'
+        'callback_data' => 'X' . RAID_LEVEL_ALL . ':pokedex_disable_raids:1'
     );
 
     // Add key for each raid level
@@ -61,10 +63,10 @@ if($arg == 0) {
     // Get all pokemon with raid levels from database.
     $rs = my_query(
         "
-        SELECT    pokedex_id, pokemon_form, raid_level
+        SELECT    pokedex_id, pokemon_form_name, raid_level
         FROM      pokemon
         WHERE     raid_level IN ({$clear})
-        ORDER BY  raid_level, pokedex_id, pokemon_form != 'normal', pokemon_form
+        ORDER BY  raid_level, pokedex_id, pokemon_form_name != 'normal', pokemon_form_name
         "
     );
 
@@ -73,7 +75,7 @@ if($arg == 0) {
 
     // Add key for each raid level
     while ($pokemon = $rs->fetch()) {
-        $plevels[$pokemon['pokedex_id'].'-'.$pokemon['pokemon_form']] = $pokemon['raid_level'];
+        $plevels[$pokemon['pokedex_id'].'-'.$pokemon['pokemon_form_name']] = $pokemon['raid_level'];
     }
 
     // Init message and previous.
@@ -129,7 +131,7 @@ if($arg == 0) {
     $msg = '<b>' . getTranslation('disabled_raid_level') . ':</b>' . CR;
 
     // All levels
-    if($id == 'X54321') {
+    if($id == 'X' . RAID_LEVEL_ALL) {
         foreach($levels as $l) {
             $msg .= getTranslation($lv . 'stars');
         }
