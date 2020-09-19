@@ -16,6 +16,7 @@ function pokemon_keys($gym_id_plus_letter, $raid_level, $action)
             SELECT    pokedex_id, pokemon_form_id
             FROM      pokemon
             WHERE     raid_level = '$raid_level'
+            ORDER BY pokedex_id
             "
         );
 
