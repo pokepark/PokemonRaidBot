@@ -9,10 +9,13 @@ debug_log('vote_want_invite()');
 try {
     $query = "
             UPDATE    attendance
-            SET    want_invite = CASE
-                     WHEN want_invite = '0' THEN '1'
-                     ELSE '0'
-                   END
+            SET     want_invite = CASE
+                      WHEN want_invite = '0' THEN '1'
+                      ELSE '0'
+                    END,
+                    late = 0,
+                    arrived = 0,
+                    remote = 0
             WHERE   raid_id = :raid_id
             AND   user_id = :user_id
             ";

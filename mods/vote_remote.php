@@ -32,7 +32,8 @@ if ($remote_users + $remote['user_count'] <= $config->RAID_REMOTEPASS_USERS_LIMI
         SET    remote = CASE
                 WHEN remote = '0' THEN '1'
                 ELSE '0'
-            END
+            END,
+                want_invite = 0
         WHERE   raid_id = {$data['id']}
         AND   user_id = {$update['callback_query']['from']['id']}
         "

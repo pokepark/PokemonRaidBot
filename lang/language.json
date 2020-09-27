@@ -299,6 +299,18 @@
     "PL": "TRANSLATE",
     "FI": "Osallistuminen etänä ei ole enää mahdollista!"
   },
+  "vote_status_not_allowed": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "You can't make this selection.",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Et voi tehdä tätä valintaa."
+  },
   "raid_info_no_voting": {
     "NL": "Dit is alleen raid info.",
     "DE": "Dies ist eine Raid-Info. Keine Raid-Abstimmung möglich!",
