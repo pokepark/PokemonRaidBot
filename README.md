@@ -1226,6 +1226,7 @@ Updates to the config file are NOT checked automatically. Therefore always check
 | RAID_POLL_UI_ORDER| Order of elements in text based raid polls. Valid elements are: `extra, teamll, time, pokemon, status` |
 | RAID_REMOTEPASS_USERS | Bool, allow participation to raid polls with a remote pass |
 | RAID_REMOTEPASS_USERS_LIMIT | Integer, How many remote participants to allow into a single raid |
+| RAID_WANT_INVITE | Bool, allow participants to indicate that they wish to be invited to the raid |
 | RAID_SLOTS| Amount of minutes between raid poll voting slots |
 | RAID_VIA_LOCATION| Bool, enable creating raids by sharing a location with the bot |
 | RAID_VOTE_ICONS| Bool, use icons on raid poll buttons |
