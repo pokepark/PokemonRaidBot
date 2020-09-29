@@ -1261,7 +1261,8 @@ Updates to the config file are NOT checked automatically. Therefore always check
 | WEBHOOK_CREATOR| Telegram ID of the bot or user to credit as having created webhook raids |
 | WEBHOOK_EXCLUDE_POKEMON| List of Pokemon dex IDs to exclude from webhook raid creation |
 | WEBHOOK_EXCLUDE_RAID_LEVEL| List of raid levels to exclude from webhook raid creation |
-| WEBHOOK_EXCLUDE_UNKOWN| Bool, create raids for Pokemon not currently enabled in the pokedex |
+| WEBHOOK_EXCLUDE_UNKOWN| Bool, disable raid creation for gyms with "unknown" gym name. |
+| WEBHOOK_EXCLUDE_AUTOSHARE_DURATION| Time in seconds, skip autosharing of raids to chats if raid duration is greater than set value. Raids are still saved to the bot even if they aren't shared. (Default 2700 (45 min))|
 
 
 # Development
