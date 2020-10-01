@@ -340,7 +340,7 @@ foreach ($update as $raid) {
     }
 
     // Skip posting if create only -mode is set or raid time is greater than value set in config
-    if ($config->WEBHOOK_CREATE_ONLY or ($end_timestamp-$start_timestamp) > $config->WEBHOOK_EXCLUDE_AUTOSHARE_DURATION) {
+    if ($config->WEBHOOK_CREATE_ONLY or ($end_timestamp-$start_timestamp) > ($config->WEBHOOK_EXCLUDE_AUTOSHARE_DURATION * 60) ) {
 
         continue;
     }
