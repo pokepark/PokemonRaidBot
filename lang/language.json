@@ -2866,17 +2866,5 @@
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
     "FI": "Ei enää toivo kutsua."
-  },
-  "user_wishes_to_be_invited": {
-    "NL": "TRANSLATE",
-    "DE": "TRANSLATE",
-    "EN": "Wishes to be invited:",
-    "IT": "TRANSLATE",
-    "PT-BR": "TRANSLATE",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "TRANSLATE",
-    "FI": "Toivovat tulevansa kutsutuksi:"
   }
 }
