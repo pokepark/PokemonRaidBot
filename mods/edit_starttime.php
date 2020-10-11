@@ -29,7 +29,8 @@ $gym_id = explode(',', $data['id'])[0];
 
 // Get level of pokemon
 $raid_level = '0';
-$raid_level = get_raid_level($pokemon_id);
+$pokemon_id_form = explode("-",$pokemon_id,2);
+$raid_level = get_raid_level($pokemon_id_form[0], $pokemon_id_form[1]);
 debug_log('Pokemon raid level: ' . $raid_level);
 
 // Pokemon in level X?
@@ -39,7 +40,7 @@ if($raid_level == 'X') {
 
     // Current time from the user
     // We let the user pick the raid date and time and convert to UTC afterwards in edit_date.php
-    $tz = TIMEZONE;
+    $tz = $config->TIMEZONE;
     $today = new DateTimeImmutable('now', new DateTimeZone($tz));
 
     // Next 14 days.
@@ -69,7 +70,7 @@ if($raid_level == 'X') {
 } else if (true || $arg == "minutes" || $arg == "clocktime") {
     if ($arg != "minutes" && $arg != "clocktime") {
 	// Get default raid duration style from config
-	if (RAID_DURATION_CLOCK_STYLE == true) {
+	if ($config->RAID_DURATION_CLOCK_STYLE) {
 	    $arg = "clocktime";
 	} else {
 	    $arg = "minutes";
@@ -88,7 +89,7 @@ if($raid_level == 'X') {
 	$switch_view = "clocktime";
 	$key_count = 5;
 
-        for ($i = 1; $i <= RAID_EGG_DURATION; $i = $i + 1) {
+        for ($i = 1; $i <= $config->RAID_EGG_DURATION; $i = $i + 1) {
             // Create new DateTime object, add minutes and convert back to string.
             $now_plus_i = new DateTime($now, new DateTimeZone('UTC'));
             $now_plus_i->add(new DateInterval('PT'.$i.'M'));
@@ -107,7 +108,7 @@ if($raid_level == 'X') {
 	// Small screen fix
 	$key_count = 4;
 
-        for ($i = 1; $i <= RAID_EGG_DURATION; $i = $i + 1) {
+        for ($i = 1; $i <= $config->RAID_EGG_DURATION; $i = $i + 1) {
             // Create new DateTime object, add minutes and convert back to string.
             $now_plus_i = new DateTime($now, new DateTimeZone('UTC'));
             $now_plus_i->add(new DateInterval('PT'.$i.'M'));
@@ -168,7 +169,7 @@ if (!$keys) {
     // Back key id, action and arg
     $back_id = $id;
     $back_action = 'edit_pokemon';
-    $back_arg = get_raid_level($pokemon_id);
+    $back_arg = get_raid_level($pokemon_id_form[0], $pokemon_id_form[1]);
 
     // Add navigation keys.
     $nav_keys = [];
@@ -182,7 +183,7 @@ if (!$keys) {
 
 // Build callback message string.
 if ($data['arg'] != "minutes" && $data['arg'] != "clocktime") {
-    $callback_response = getTranslation('pokemon_saved') . get_local_pokemon_name($pokemon_id);
+    $callback_response = getTranslation('pokemon_saved') . get_local_pokemon_name($pokemon_id_form[0], $pokemon_id_form[1]);
 } else {
     $callback_response = getTranslation('raid_starts_when_view_changed');
 }

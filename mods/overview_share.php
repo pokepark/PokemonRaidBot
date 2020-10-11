@@ -35,7 +35,7 @@ $raids_active = [];
 $raid_ids_active = [];
 
 // Get all active raids into array.
-while ($rowRaids = $request_active_raids->fetch_assoc()) {
+while ($rowRaids = $request_active_raids->fetch()) {
     // Use current raid_id as key for raids array
     $current_raid_id = $rowRaids['id'];
     $raids_active[$current_raid_id] = $rowRaids;
@@ -48,8 +48,7 @@ while ($rowRaids = $request_active_raids->fetch_assoc()) {
 }
 
 // Write to log.
-debug_log('Active raids:');
-debug_log($raids_active);
+debug_log($raids_active, 'Active raids for overview:');
 
 // Init empty active chats array.
 $chats_active = [];
@@ -60,8 +59,7 @@ if ($count_active_raids > 0) {
     $raid_ids_active = implode(',',$raid_ids_active);
 
     // Write to log.
-    debug_log('IDs of active raids:');
-    debug_log($raid_ids_active);
+    debug_log($raid_ids_active, 'IDs of active raids for overview:');
 
     // Get chat for active raids.
     if ($chat_id == 0) {
@@ -86,14 +84,13 @@ if ($count_active_raids > 0) {
     }
 
     // Get all chats.    
-    while ($rowChats = $request_active_chats->fetch_assoc()) {
+    while ($rowChats = $request_active_chats->fetch()) {
         $chats_active[] = $rowChats;
     }
 }
 
 // Write to log.
-debug_log('Active chats:');
-debug_log($chats_active);
+debug_log($chats_active, 'Active chats for overview:');
 
 // Get raid overviews
 if ($chat_id == 0) {

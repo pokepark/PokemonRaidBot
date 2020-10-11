@@ -21,7 +21,7 @@ $atts = [];
 $count = 0;
 
 // Fill array with attendances.
-while ($row = $rs->fetch_assoc()) {
+while ($row = $rs->fetch()) {
     $atts[] = $row;
     $count = $count + 1;
 }
@@ -33,8 +33,10 @@ debug_log($atts);
 if(!empty($atts)) {
     // Any pokemon?
     if($data['arg'] == 0) {
-        // Update attendance.
+        // Send alarm
         alarm($data['id'],$update['callback_query']['from']['id'],'pok_individual',$data['arg']);
+
+        // Update attendance.
         my_query(
         "
         UPDATE    attendance
@@ -73,7 +75,7 @@ if(!empty($atts)) {
                     my_query(
                     "
                     UPDATE    attendance
-                    SET       pokemon = 0
+                    SET       pokemon = '0'
                     WHERE     raid_id = {$data['id']}
                     AND       user_id = {$update['callback_query']['from']['id']}
                     "
@@ -89,6 +91,9 @@ if(!empty($atts)) {
                     "
                     );
                 }
+                // Send alarm
+                alarm($data['id'],$update['callback_query']['from']['id'],'pok_cancel_individual',$data['arg']);
+
                 // Update count.
                 $count = $count - 1;
 
@@ -100,13 +105,30 @@ if(!empty($atts)) {
 
         // Not found? Insert!
         if(!$found) {
-            // Insert vote.
+            // Send alarm
             alarm($data['id'],$update['callback_query']['from']['id'],'pok_individual',$data['arg']);
+
+            // Insert vote.
             my_query(
             "
             INSERT INTO attendance
+            (
+              user_id,
+              raid_id,
+              attend_time,
+              extra_mystic,
+              extra_valor,
+              extra_instinct,
+              arrived,
+              raid_done,
+              cancel,
+              late,
+              remote,
+              invite,
+              pokemon,
+              alarm
+            )
             VALUES(
-            NULL,
             '{$atts[0]['user_id']}',
             '{$atts[0]['raid_id']}',
             '{$atts[0]['attend_time']}',
@@ -117,6 +139,7 @@ if(!empty($atts)) {
             '{$atts[0]['raid_done']}',
             '{$atts[0]['cancel']}',
             '{$atts[0]['late']}',
+            '{$atts[0]['remote']}',
             '{$atts[0]['invite']}',
             '{$data['arg']}',
             '{$atts[0]['alarm']}'
@@ -135,14 +158,14 @@ if(!empty($atts)) {
             DELETE FROM attendance
             WHERE  raid_id = {$data['id']}
             AND   user_id = {$update['callback_query']['from']['id']}
-            AND   pokemon = 0
+            AND   pokemon = '0'
             "
             );
         }
     }
 
-    // Send vote response.
-   if(RAID_PICTURE == true) {
+   // Send vote response.
+   if($config->RAID_PICTURE) {
 	    send_response_vote($update, $data,false,false);
     } else {
 	    send_response_vote($update, $data);

@@ -18,7 +18,7 @@ if(!empty($pokemon)) {
     // Pokedex_id received?
     if(is_numeric($pokemon)) {
         // Always normal form
-        $pokemon = $pokemon . '-normal';
+        $pokemon = $pokemon . '-0';
         // Set forward to true
         $forward = true;
 

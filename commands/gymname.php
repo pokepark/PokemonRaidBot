@@ -63,13 +63,17 @@ if(empty($id_info)) {
     if($gym && !empty($info) && $id > 0) {
         debug_log('Changing name for gym with ID: ' . $id);
         debug_log('Gym name: ' . $info);
-        my_query(
+        $stmt = $dbh->prepare(
             "
             UPDATE    gyms
-            SET       gym_name = '{$db->real_escape_string($info)}'
-              WHERE   id = {$id}
+            SET       gym_name = :info
+            WHERE     id = :id
             "
         );
+        $stmt->execute([
+          'info' => $info,
+          'id' => $id
+        ]);
 
         // Set message.
         $gym = get_gym($id);

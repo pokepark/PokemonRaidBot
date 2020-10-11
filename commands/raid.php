@@ -31,7 +31,7 @@ $data = explode(',', $gym_data, 5);
 
 // Invalid data received.
 if (count($data) < 4) {
-    send_message($update['message']['chat']['id'], 'Invalid input - Paramter mismatch', []);
+    send_message($update['message']['chat']['id'], 'Invalid input - Parameter mismatch', []);
     exit;
 }
 
@@ -73,8 +73,7 @@ try {
         LIMIT 1
     ';
     $statement = $dbh->prepare( $query );
-    $statement->bindValue(':gym_name', $gym_name, PDO::PARAM_STR);
-    $statement->execute();
+    $statement->execute(['gym_name' => $gym_name]);
     while ($row = $statement->fetch()) {
     
         $gym_id = $row['id'];
@@ -104,43 +103,52 @@ if ($raid_id > 0) {
     // Get current pokemon from database for raid.
     $rs_ex_raid = my_query(
         "
-        SELECT    pokemon
+        SELECT    pokemon, pokemon_form
             FROM      raids
               WHERE   id = {$raid_id}
         "
     );
 
     // Get row.
-    $row_ex_raid = $rs_ex_raid->fetch_assoc();
-    $poke_name = $row_ex_raid['pokemon'];
+    $row_ex_raid = $rs_ex_raid->fetch();
+    $poke_name = $row_ex_raid['pokemon'].'-'.$row_ex_raid['pokemon_form'];
     debug_log('Comparing the current pokemon to pokemons from ex-raid list now...');
     debug_log('Current Pokemon in database for this raid: ' . $poke_name);
 
     // Make sure it's not an Ex-Raid before updating the pokemon.
-    $raid_level = get_raid_level($poke_name);
+    $raid_level = get_raid_level($row_ex_raid['pokemon'], $row_ex_raid['pokemon_form']);
     if($raid_level == 'X') {
         // Ex-Raid! Update only team in raids table.
         debug_log('Current pokemon is an ex-raid pokemon: ' . $poke_name);
         debug_log('Pokemon "' .$poke_name . '" will NOT be updated to "' . $boss . '"!');
-        my_query(
+        $stmt = $dbh->prepare(
             "
             UPDATE    raids
-            SET	      gym_team = '{$db->real_escape_string($team)}'
-              WHERE   id = {$raid_id}
+            SET	      gym_team = :team
+              WHERE   id = :raid_id
             "
         );
+        $stmt->execute([
+          'team' => $team,
+          'raid_id' => $raid_id
+        ]);
     } else {
         // Update pokemon and team in raids table.
         debug_log('Current pokemon is NOT an ex-raid pokemon: ' . $poke_name);
         debug_log('Pokemon "' .$poke_name . '" will be updated to "' . $boss . '"!');
-        my_query(
+        $stmt = $dbh->prepare(
             "
             UPDATE    raids
-            SET       pokemon = '{$db->real_escape_string($boss)}',
-		      gym_team = '{$db->real_escape_string($team)}'
-              WHERE   id = {$raid_id}
+            SET       pokemon = :boss
+		      gym_team = :team
+            WHERE     id = :raid_id
             "
         );
+        $stmt->execute([
+          'boss' => $boss,
+          'team' => $team,
+          'raid_id' => $raid_id
+        ]);
     }
 
     // Debug log
@@ -155,21 +163,27 @@ if ($raid_id > 0) {
 }
 
 // Build the query.
-$rs = my_query(
+$stmt = $dbh->prepare(
     "
     INSERT INTO   raids
-    SET           pokemon = '{$db->real_escape_string($boss)}',
-		  user_id = {$update['message']['from']['id']},
+    SET           pokemon = :boss,
+		  user_id = :user_id,
 		  first_seen = DATE_FORMAT(UTC_TIMESTAMP(), '%Y-%m-%d %H:%i:00'),
 		  start_time = DATE_ADD(first_seen, INTERVAL {$countdown} MINUTE),
 		  end_time = DATE_ADD(start_time, INTERVAL {$endtime} MINUTE),
-		  gym_team = '{$db->real_escape_string($team)}',
-		  gym_id = '{$gym_id}'
+		  gym_team = :team,
+		  gym_id = :gym_id
     "
 );
+$stmt->execute([
+  'boss' => $boss,
+  'user_id' => $update['message']['from']['id'],
+  'team' => $team,
+  'gym_id' => $gym_id
+]);
 
 // Get last insert id from db.
-$id = my_insert_id();
+$id = $dbh->lastInsertId();
 
 // Write to log.
 debug_log('ID=' . $id);
@@ -178,9 +192,9 @@ debug_log('ID=' . $id);
 $raid = get_raid($id);
 
 // Send location.
-if (RAID_LOCATION == true) {
+if ($config->RAID_LOCATION) {
     //$loc = send_location($update['message']['chat']['id'], $raid['lat'], $raid['lon']);
-    $msg_text = !empty($raid['address']) ? $raid['address'] . ', ' . substr(strtoupper(BOT_ID), 0, 1) . '-ID = ' . $raid['id'] : $raid['pokemon'] . ', ' . $raid['id']; // DO NOT REMOVE " ID = " --> NEEDED FOR CLEANUP PREPARATION!
+    $msg_text = !empty($raid['address']) ? $raid['address'] . ', ' . substr(strtoupper($config->BOT_ID), 0, 1) . '-ID = ' . $raid['id'] : $raid['pokemon'] . ', ' . $raid['id']; // DO NOT REMOVE " ID = " --> NEEDED FOR $config->CLEANUP PREPARATION!
     $loc = send_venue($update['message']['chat']['id'], $raid['lat'], $raid['lon'], "", $msg_text);
 
     // Write to log.
@@ -192,9 +206,9 @@ if (RAID_LOCATION == true) {
 $text = show_raid_poll($raid);
 
 // Raid picture
-if(RAID_PICTURE == true) {
-    $picture_url = RAID_PICTURE_URL . "?pokemon=" . $raid['pokemon'] . "&raid=". $raid['id'];
-    debug_log('PictureUrl: ' . $picture_url);
+if($config->RAID_PICTURE) {
+  require_once(LOGIC_PATH . '/raid_picture.php');
+  $picture_url = raid_picture_url($raid);
 }
 
 
@@ -212,10 +226,10 @@ if ($update['message']['chat']['type'] == 'private' || $update['callback_query']
 
     // Send the message.
     //send_message($update['message']['chat']['id'], $text, $keys, ['disable_web_page_preview' => 'true']);
-    $chat = $update['message']['chat']['id']);
+    $chat = $update['message']['chat']['id'];
 
     // Send the message.
-    if(RAID_PICTURE == true) {
+    if($config->RAID_PICTURE) {
         send_photo($chat, $picture_url, $text['short'], $keys, ['disable_web_page_preview' => 'true']);
     } else {
         send_message($chat, $text['full'], $keys, ['disable_web_page_preview' => 'true']);
@@ -237,7 +251,7 @@ if ($update['message']['chat']['type'] == 'private' || $update['callback_query']
     // send_message($update['message']['chat']['id'], $text, $keys, ['reply_to_message_id' => $reply_to, 'reply_markup' => ['selective' => true, 'one_time_keyboard' => true], 'disable_web_page_preview' => 'true']);
     $chat = $update['message']['chat']['id'];
     // Send the message.
-    if(RAID_PICTURE == true) {
+    if($config->RAID_PICTURE) {
         send_photo($chat, $picture_url, $text['short'], $keys, ['reply_to_message_id' => $reply_to, 'reply_markup' => ['selective' => true, 'one_time_keyboard' => true], 'disable_web_page_preview' => 'true']);
     } else {
         send_message($chat, $text['full'], $keys, ['reply_to_message_id' => $reply_to, 'reply_markup' => ['selective' => true, 'one_time_keyboard' => true], 'disable_web_page_preview' => 'true']);
@@ -245,4 +259,3 @@ if ($update['message']['chat']['type'] == 'private' || $update['callback_query']
 }
 
 ?>
-

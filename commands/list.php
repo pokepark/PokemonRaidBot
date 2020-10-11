@@ -33,7 +33,7 @@ $text = '';
 $keys = [];
 
 // Get raids.
-while ($raid = $rs->fetch_assoc()) {
+while ($raid = $rs->fetch()) {
     // Set text and keys.
     $gym_name = $raid['gym_name'];
     if(empty($gym_name)) {
@@ -46,7 +46,7 @@ while ($raid = $rs->fetch_assoc()) {
     $today = dt2date($now);
     $start = dt2time($raid['start_time']);
     $end = dt2time($raid['end_time']);
-    $text .= get_local_pokemon_name($raid['pokemon']) . SP . '—' . SP . (($raid_day == $today) ? '' : ($raid_day . ', ')) . $start . SP . getTranslation('to') . SP . $end . CR . CR;
+    $text .= get_local_pokemon_name($raid['pokemon'], $raid['pokemon_form']) . SP . '-' . SP . (($raid_day == $today) ? '' : ($raid_day . ', ')) . $start . SP . getTranslation('to') . SP . $end . CR . CR;
 
     // Split pokemon and form to get the pokedex id.
     $pokedex_id = explode('-', $raid['pokemon'])[0];

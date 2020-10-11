@@ -23,6 +23,7 @@ CREATE TABLE `attendance` (
   `raid_done` tinyint(1) unsigned DEFAULT '0',
   `cancel` tinyint(1) unsigned DEFAULT '0',
   `late` tinyint(1) unsigned DEFAULT '0',
+  `remote` tinyint(1) unsigned DEFAULT '0',
   `invite` tinyint(1) unsigned DEFAULT '0',
   `pokemon` varchar(20) DEFAULT '0',
   `alarm` tinyint(1) unsigned DEFAULT '0',
@@ -54,7 +55,8 @@ CREATE TABLE `gyms` (
   `gym_note` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL,
   `gym_id` varchar(40) DEFAULT NULL,
   `img_url` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `gym_lat_lon` (`lat`, `lon`)
 ) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -72,14 +74,16 @@ CREATE TABLE `pokemon` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `pokedex_id` int(10) unsigned NOT NULL,
   `pokemon_name` varchar(12) DEFAULT NULL,
-  `pokemon_form` varchar(12) DEFAULT 'normal',
-  `raid_level` enum('0','1','2','3','4','5','X') DEFAULT '0',
+  `pokemon_form_name` varchar(45) DEFAULT NULL,
+  `pokemon_form_id` int(4) DEFAULT NULL,
+  `raid_level` enum('0','1','2','3','4','5', '6','X') DEFAULT '0',
   `min_cp` int(10) unsigned NOT NULL,
   `max_cp` int(10) unsigned NOT NULL,
   `min_weather_cp` int(10) unsigned NOT NULL,
   `max_weather_cp` int(10) unsigned NOT NULL,
   `weather` int(10) unsigned NOT NULL,
   `shiny` tinyint(1) unsigned DEFAULT '0',
+  `asset_suffix` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -88,7 +92,8 @@ CREATE TABLE `pokemon` (
 CREATE TABLE `raids` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) DEFAULT NULL,
-  `pokemon` varchar(20) DEFAULT NULL,
+  `pokemon` int(4) DEFAULT NULL,
+  `pokemon_form` int(4) NOT NULL DEFAULT 0,
   `first_seen` datetime DEFAULT NULL,
   `start_time` datetime DEFAULT NULL,
   `end_time` datetime DEFAULT NULL,

@@ -252,28 +252,28 @@
     "FI": "/pokedex - Hallinnoi raidibosseja"
   },
   "help_config-get": {
-    "NL": "/getconfig - Laat de bot configuratie zien",
-    "DE": "/getconfig - Bot-Konfiguration anzeigen",
-    "EN": "/getconfig - Show bot configuration",
+    "NL": "/get - Laat de bot configuratie zien",
+    "DE": "/get - Bot-Konfiguration anzeigen",
+    "EN": "/get - Show bot configuration",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "/getconfig - Näytä botin asetukset"
+    "FI": "/get - Näytä botin asetukset"
   },
   "help_config-set": {
-    "NL": "/setconfig - Verander de bot configuratie",
-    "DE": "/setconfig - Bot-Konfiguration bearbeiten",
-    "EN": "/setconfig - Edit bot configuration",
+    "NL": "/set - Verander de bot configuratie",
+    "DE": "/set - Bot-Konfiguration bearbeiten",
+    "EN": "/set - Edit bot configuration",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "/setconfig - Muuta botin asetuksia"
+    "FI": "/set - Muuta botin asetuksia"
   },
   "help_help": {
     "NL": "/help - laat help zien",

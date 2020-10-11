@@ -79,7 +79,7 @@ if ($raid_id == 0 && $gym_id != 0) {
     }
 
     // Duration and end time.
-    $duration = RAID_POKEMON_DURATION_SHORT;
+    $duration = $config->RAID_POKEMON_DURATION_SHORT;
     $end = date('Y-m-d H:i:s', strtotime('+' . $duration . ' minutes', strtotime($start_date_time)));
 
     // Check for duplicate raid
@@ -93,12 +93,15 @@ if ($raid_id == 0 && $gym_id != 0) {
         // Now.
         $now = utcnow();
 
+        $pokemon_id_form = explode("-",$pokemon_id,2);
+        
         // Create raid in database.
         $rs = my_query(
             "
             INSERT INTO   raids
             SET           user_id = {$update['callback_query']['from']['id']},
-			  pokemon = '{$pokemon_id}',
+			  pokemon = '{$pokemon_id_form[0]}',
+			  pokemon_form = '{$pokemon_id_form[1]}',
 			  first_seen = UTC_TIMESTAMP(),
 			  start_time = '{$start_date_time}',
                           end_time = DATE_ADD(start_time, INTERVAL {$duration} MINUTE),
@@ -107,7 +110,7 @@ if ($raid_id == 0 && $gym_id != 0) {
         );
 
         // Get last insert id from db.
-        $raid_id = my_insert_id();
+        $raid_id = $dbh->lastInsertId();
 
         // Write to log.
         debug_log('ID=' . $raid_id);
@@ -128,7 +131,7 @@ if ($raid_id == 0 && $gym_id != 0) {
             "
         );
 
-        $shared = $rs_share->fetch_assoc();
+        $shared = $rs_share->fetch();
 
         // Add keys for sharing the raid.
         if($shared['raid_count'] == 0) {
@@ -161,14 +164,14 @@ $keys = [];
 if($opt_arg == 'more') {
     if ($slot_switch == 0) {
         // Event running?
-        if(RAID_POKEMON_DURATION_EVENT != RAID_POKEMON_DURATION_SHORT) {
-	    $slotmax = RAID_POKEMON_DURATION_EVENT;
+        if($config->RAID_POKEMON_DURATION_EVENT != $config->RAID_POKEMON_DURATION_SHORT) {
+	    $slotmax = $config->RAID_POKEMON_DURATION_EVENT;
         } else {
-	    $slotmax = RAID_POKEMON_DURATION_SHORT;
+	    $slotmax = $config->RAID_POKEMON_DURATION_SHORT;
         }
 	$slotsize = 1;
     } else {
-	$slotmax = RAID_POKEMON_DURATION_LONG;
+	$slotmax = $config->RAID_POKEMON_DURATION_LONG;
 	$slotsize = 5;
     }
 
@@ -192,7 +195,7 @@ if($opt_arg == 'more') {
         $data = [];
         $data['id'] = $raid_id;
         $data['action'] = 'edit_save';
-        $data['arg'] = RAID_POKEMON_DURATION_SHORT;
+        $data['arg'] = $config->RAID_POKEMON_DURATION_SHORT;
 
         // Write to log.
         debug_log($data, '* NEW DATA= ');
@@ -213,8 +216,8 @@ if($opt_arg == 'more') {
 
         // Use raid pokemon duration short.
         $keys[] = array(
-            'text'          => '0:' . RAID_POKEMON_DURATION_SHORT,
-            'callback_data' => $raid_id . ':edit_save:' . RAID_POKEMON_DURATION_SHORT
+            'text'          => '0:' . $config->RAID_POKEMON_DURATION_SHORT,
+            'callback_data' => $raid_id . ':edit_save:' . $config->RAID_POKEMON_DURATION_SHORT
         );
 
         // Button for more options.

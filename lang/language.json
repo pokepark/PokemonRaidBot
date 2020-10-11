@@ -23,6 +23,18 @@
     "PL": "Ex-Rajd",
     "FI": "Ex-Raidi"
   },
+  "6stars": {
+    "NL": "Mega-Raid",
+    "DE": "Mega-Raid",
+    "EN": "Mega-Raid",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Mega-Raidi"
+  },
   "5stars": {
     "NL": "5 Sterren",
     "DE": "5 Sterne",
@@ -95,6 +107,18 @@
     "PL": "Nieaktywny",
     "FI": "Pois käytöstä"
   },
+  "egg_6": {
+    "NL": "Mega-Raid Ei",
+    "DE": "Mega-Raid Ei",
+    "EN": "Mega-Raid Egg",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Mega-Raid Muna"
+  },
   "egg_5": {
     "NL": "Level 5 Ei",
     "DE": "Level 5 Ei",
@@ -105,7 +129,7 @@
     "NO": "Level 5 Egg",
     "FR": "Oeuf 5",
     "PL": "Jajko 5 poziom",
-    "FI": "Tason 5 Muna"
+    "FI": "Tason 5 muna"
   },
   "egg_4": {
     "NL": "Level 4 Ei",
@@ -117,7 +141,7 @@
     "NO": "Level 4 Egg",
     "FR": "Oeuf 4",
     "PL": "Jajko 4 poziom",
-    "FI": "Tason 4 Muna"
+    "FI": "Tason 4 muna"
   },
   "egg_3": {
     "NL": "Level 3 Ei",
@@ -129,7 +153,7 @@
     "NO": "Level 3 Egg",
     "FR": "Oeuf 3",
     "PL": "Jajko 3 poziom",
-    "FI": "Tason 3 Muna"
+    "FI": "Tason 3 muna"
   },
   "egg_2": {
     "NL": "Level 2 Ei",
@@ -141,7 +165,7 @@
     "NO": "Level 2 Egg",
     "FR": "Oeuf 2",
     "PL": "Jajko 2 poziom",
-    "FI": "Tason 2 Muna"
+    "FI": "Tason 2 muna"
   },
   "egg_1": {
     "NL": "Level 1 Ei",
@@ -153,7 +177,7 @@
     "NO": "Level 1 Egg",
     "FR": "Oeuf 1",
     "PL": "Jajko 1 poziom",
-    "FI": "Tason 1 Muna"
+    "FI": "Tason 1 muna"
   },
   "egg_0": {
     "NL": "Raid Ei",
@@ -165,7 +189,7 @@
     "NO": "Level 0 Egg",
     "FR": "Oeuf 0",
     "PL": "Jajo",
-    "FI": "Raidi Muna"
+    "FI": "Raid-muna"
   },
   "alone": {
     "NL": "Alleen",
@@ -213,7 +237,7 @@
     "NO": "Avlysning",
     "FR": "Finalement je ne viens pas",
     "PL": "Nie mogę przyjsć",
-    "FI": "Peruutus"
+    "FI": "Peru"
   },
   "raid_done": {
     "NL": "Raid beëindigd",
@@ -225,7 +249,7 @@
     "NO": "Raidet er ferdig",
     "FR": "Raid terminé",
     "PL": "Rajd skończony",
-    "FI": "Raidi tehty"
+    "FI": "Raidi ohi"
   },
   "vote_updated": {
     "NL": "Stem geüpdatet",
@@ -263,6 +287,18 @@
     "PL": "TRANSLATE",
     "FI": "Äänestä tulevaa aikaa!"
   },
+  "vote_remote_users_limit_reached": {
+    "NL": "Op afstand meedoen is niet meer mogelijk!",
+    "DE": "Keine Fern-Teilnahme mehr möglich!",
+    "EN": "Attending remote is no longer possible!",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Osallistuminen etänä ei ole enää mahdollista!"
+  },
   "raid_info_no_voting": {
     "NL": "Dit is alleen raid info.",
     "DE": "Dies ist eine Raid-Info. Keine Raid-Abstimmung möglich!",
@@ -273,7 +309,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "Tämä on raidi info. Äänestys ei ole mahdollista!"
+    "FI": "Tämä on raid-tiedote, ei äänestystä."
   },
   "raid_event_creation_limit_one": {
     "NL": "Gedurende raid hour kan je maar 1 raid aanmaken!",
@@ -429,7 +465,7 @@
     "NO": "fra",
     "FR": "de",
     "PL": "od",
-    "FI": "TRANSLATE"
+    "FI": ""
   },
   "to": {
     "NL": "tot",
@@ -441,7 +477,7 @@
     "NO": "til",
     "FR": "DEPOP",
     "PL": "do",
-    "FI": "TRANSLATE"
+    "FI": "-"
   },
   "no_participants": {
     "NL": "Geen deelnemers",
@@ -465,7 +501,7 @@
     "NO": "Noen deltakere er forsinket",
     "FR": "Certains participants sont en retard",
     "PL": "Ktoś się spóźni",
-    "FI": "Osa osallistujista ovat myöhässä."
+    "FI": "Osa osallistujista on myöhässä."
   },
   "late_participants_wait": {
     "NL": "A.u.b RAID_LATE_TIME wachten!",
@@ -478,6 +514,162 @@
     "FR": "Attendez s'il vous plaît RAID_LATE_TIME minutes !",
     "PL": "Poczekaj RAID_LATE_TIME minut!",
     "FI": "Odottakaa RAID_LATE_TIME minuuttia!"
+  },
+  "start_raid": {
+    "NL": "START_CODE raid",
+    "DE": "Raid START_CODE",
+    "EN": "START_CODE raid",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "TRANSLATE"
+  },
+  "start_raid_now": {
+    "NL": "Stuur een bericht naar alle deelnemers over de start van de raid",
+    "DE": "Alle Teilnehmer über den Raid-Start informieren",
+    "EN": "Notify all participants about the raid start",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Ilmoita kaikille osallistujille raidin alkamisesta"
+  },
+  "start_raid_info": {
+    "NL": "(Stuur iedereen een bericht)",
+    "DE": "(Nachricht an alle)",
+    "EN": "(message everyone)",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "(viesti kaikille)"
+  },
+  "start_raid_private": {
+    "NL": "Prive Groep",
+    "DE": "Private Gruppe",
+    "EN": "Private group",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Privaattiryhmä"
+  },
+  "start_raid_public": {
+    "NL": "Publiek",
+    "DE": "Öffentlich",
+    "EN": "Public",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Julkinen"
+  },
+  "remote_participants": {
+    "NL": "Deelnemers op afstand!",
+    "DE": "Fern-Teilnahmen!",
+    "EN": "Remote participations!",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Etäosallistujia!"
+  },
+  "remote_participants_max": {
+    "NL": "(max. REMOTE_MAX_USERS per tijd)",
+    "DE": "(max. REMOTE_MAX_USERS pro Uhrzeit)",
+    "EN": "(max. REMOTE_MAX_USERS per time)",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "(max. REMOTE_MAX_USERS kerrallaan)"
+  },
+  "group_code": {
+    "NL": "Groep code",
+    "DE": "Gruppencode",
+    "EN": "Group code",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Ryhmäkoodi"
+  },
+  "no_group_code": {
+    "NL": "(geen groep code nodig)",
+    "DE": "(kein Gruppencode notwendig)",
+    "EN": "(no group code necessary)",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "(ei ryhmäkoodia)"
+  },
+  "group_code_only_for_remote_raiders": {
+    "NL": "Je bent geregisteerd als raider op afstand! Vraag om de groep code!",
+    "DE": "Du bist NICHT als Fern-Teilnehmer angemeldet! Frage nach dem Gruppencode vor Ort!",
+    "EN": "You are NOT registered as a remote participant! Ask for the group code on site!",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Et ole rekisteröity etäosallistujaksi, pyydä koodi paikanpäällä!"
+  },
+  "group_code_share": {
+    "NL": "Deel de groep code",
+    "DE": "Gruppencode teilen",
+    "EN": "Share group code",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Jaa ryhmäkoodi"
+  },
+  "code_send": {
+    "NL": "Groep code verzonden!",
+    "DE": "Gruppencode verschickt!",
+    "EN": "Group code send!",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Lähetä ryhmäkoodi!"
+  },
+  "telegram_bot_start": {
+    "NL": "START",
+    "DE": "STARTEN",
+    "EN": "START",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "ALOITA"
   },
   "select_gym_first_letter": {
     "NL": "Selecteer alstublieft de eerste letter van de gym:",
@@ -1713,7 +1905,7 @@
     "NO": "Det er ingen aktive raid akkurat nå!",
     "FR": "Aucun raid en cours",
     "PL": "Brak aktywnych Rajdów w tej chwili!",
-    "FI": "Ai aktiivisia raideja tällähetkellä!"
+    "FI": "Ei aktiivisia raideja tällähetkellä!"
   },
   "pokemon_saved": {
     "NL": "Pokemon opgeslagen: ",
@@ -2424,123 +2616,219 @@
     "FI": "Mikä tahansa raidibossi"
   },
   "alert_no_updates": {
-    "NL": "Ik stuur verder geen informatie over de raid bij deze gym.",
-    "DE": "Ich werde dir <b>keine weiteren Infos</b> zum Raid an folgender Arena senden",
-    "EN": "I will not send further Information regarding raids at this gym",
+    "NL": "Raid alarm uit!",
+    "DE": "Raid-Benachrichtigungen deaktiviert!",
+    "EN": "Raid alerts disabled!",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
-    "NO": "I will not send further Information regarding raids at this gym",
+    "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "I will not send further Information regarding raids at this gym"
+    "FI": "Raidihäly pois käytöstä!"
   },
   "alert_updates_on": {
-    "NL": "Ik zal vanaf nu informatie over de raid bij deze gym sturen",
-    "DE": "Ich werde dich jetzt über <b>alle Änderungen</b> zum Raid an folgender Arena senden",
-    "EN": "I will send from now Information regarding raids at this gym",
+    "NL": "Raid alarm Aan!",
+    "DE": "Raid-Benachrichtigungen aktiviert!",
+    "EN": "Raid alerts enabled!",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
-    "NO": "I will send from now Information regarding raids at this gym",
+    "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "I will send from now Information regarding raids at this gym"
+    "FI": "Raidihäly käytössä!"
   },
   "alert_add_trainer": {
-    "NL": "zal bij de raid aanwezig zijn met extra spelers.",
-    "DE": "bringt zum Raid noch einen weiteren Trainer mit",
-    "EN": "will attend to the raid with an additional Trainer",
+    "NL": "Extra spelers!",
+    "DE": "Zusätzlicher Trainer!",
+    "EN": "Additional trainer!",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
-    "NO": "will attend to the raid with an additional Trainer",
+    "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "will attend to the raid with an additional Trainer"
+    "FI": "Uusi osallistuja!"
   },
   "alert_later": {
-    "NL": "zal te laat zijn voor de Raid bij de gym",
-    "DE": "verspätet sich zum Raid an der Arena",
-    "EN": "will be late to the Raid at the gym",
+    "NL": "Late Speler!",
+    "DE": "Verspäteter Trainer!",
+    "EN": "Late Trainer!",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
-    "NO": "will be late to the Raid at the gym",
+    "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "will be late to the Raid at the gym"
+    "FI": "Myöhästyvä osallistuja!"
   },
-  "alert_canceled": {
-    "NL": "heeft de raid bij de gym geannuleerd",
-    "DE": "hat seine Teilnahme am Raid abgesagt. Arena",
-    "EN": "has canceled the attendance at gym",
+  "alert_cancel": {
+    "NL": "Gecancelled!",
+    "DE": "Absage!",
+    "EN": "Cancellation!",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
-    "NO": "has canceled the attendance at gym",
+    "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "has canceled the attendance at gym"
+    "FI": "Peruutus!"
   },
-  "alert_indiviual_poke": {
-    "NL": "is alleen aanwezig als de het de volgende Raid baas",
-    "DE": "nimmt am Raid nur beim folgendem Raidboss teil",
-    "EN": "will attend only with the following Raid-Boss",
+  "alert_individual_poke": {
+    "NL": "Komt voor",
+    "DE": "Kommt für",
+    "EN": "Coming for",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
-    "NO": "will attend only with the following Raid-Boss",
+    "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "will attend only with the following Raid-Boss"
+    "FI": "Ilmoittautuneet,"
   },
-  "alert_new_att": {
-    "NL": "zal de Raid bijwonen om",
-    "DE": "nimmt zu folgender Uhrzeit am Raid teil",
-    "EN": "will attend to the Raid at",
+  "alert_cancel_individual_poke": {
+    "NL": "Komt niet voor",
+    "DE": "Kommt NICHT für",
+    "EN": "NOT coming for",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
-    "NO": "will attend to the Raid at",
+    "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "will attend to the Raid at"
-  },
-  "alert_change_time": {
-    "NL": "heeft zijn/haar raid tijd gewijzigd in",
-    "DE": "hat die Uhrzeit für die Raid-Teilnahme geändert",
-    "EN": "has changed his/her raidtime to",
-    "IT": "TRANSLATE",
-    "PT-BR": "TRANSLATE",
-    "RU": "TRANSLATE",
-    "NO": "has changed his/her raidtime to",
-    "FR": "TRANSLATE",
-    "PL": "TRANSLATE",
-    "FI": "has changed his/her raidtime to"
-  },
-  "alert_extra_alone": {
-    "NL": "zal alleen de Raid bijwonen",
-    "DE": "kommt doch lieber allein zum Raid",
-    "EN": "will attend alone at the Raid",
-    "IT": "TRANSLATE",
-    "PT-BR": "TRANSLATE",
-    "RU": "TRANSLATE",
-    "NO": "will attend alone at the Raid",
-    "FR": "TRANSLATE",
-    "PL": "TRANSLATE",
-    "FI": "will attend alone at the Raid"
+    "FI": "Peruuttaneet,"
   },
   "alert_every_poke": {
-    "NL": "zal bij elke pokemon Raid aanwezig zijn",
-    "DE": "nimmt am Raid mit jedem Pokemon teil",
-    "EN": "will attend at the Raid with every Pokemon",
+    "NL": "Komt voor",
+    "DE": "Kommt für jeden Raid-Boss",
+    "EN": "Coming for",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
-    "NO": "will attend at the Raid with every Pokemon",
+    "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "will attend at the Raid with every Pokemon"
+    "FI": "Ilmoittautuneet,"
+  },
+  "alert_new_att": {
+    "NL": "Nieuwe deelnemer!",
+    "DE": "Neue Teilnahme!",
+    "EN": "New participation!",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Uusi osallistuja!"
+  },
+  "alert_remote": {
+    "NL": "Deelnemer vanaf afstand!",
+    "DE": "Fern-Teilnahme!",
+    "EN": "Remote participation!",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Etäosallistuminen!"
+  },
+  "alert_no_remote": {
+    "NL": "Geen deelnemers meer vanaf afstand!",
+    "DE": "Keine Fern-Teilnahme mehr!",
+    "EN": "No more remote participation!",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Ei enää etäosallistujia!"
+  },
+  "alert_raid_starts_now": {
+    "NL": "De raid start NU!",
+    "DE": "Der Raid beginnt jetzt!",
+    "EN": "The raid starts now!",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Raidi alkaa nyt!"
+  },
+  "alert_raid_get_in": {
+    "NL": "Zo kom je in de raid battle:",
+    "DE": "So geht's in den Kampf:",
+    "EN": "Here's how to get into the battle:",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Näin pääset taisteluun:"
+  },
+  "alert_private_group": {
+    "NL": "Prive raid groep!",
+    "DE": "Private Raidgruppe!",
+    "EN": "Private raid group!",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Yksityinen raidiryhmä!"
+  },
+  "alert_public_group": {
+    "NL": "Publieke raid groep!",
+    "DE": "Öffentliche Raidgruppe!",
+    "EN": "Public raid group!",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Julkinen raidiryhmä!"
+  },
+  "alert_change_time": {
+    "NL": "Deelnemer heeft de tijd aangepast!",
+    "DE": "Neue Teilnahme-Uhrzeit!",
+    "EN": "New participation time!",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Uusi aika!"
+  },
+  "alert_raid_boss": {
+    "NL": "Raid baas ge-update!",
+    "DE": "Raid-Boss aktualisiert!",
+    "EN": "Raid boss updated!",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Raidibossi päivitetty!"
+  },
+  "alert_extra_alone": {
+    "NL": "Geen extra spelers!",
+    "DE": "Keine zusätzlichen Trainer!",
+    "EN": "No additional trainers!",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Ei ylimääräisiä kouluttajia!"
   }
 }

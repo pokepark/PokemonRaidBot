@@ -16,10 +16,16 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
       * [Bot token](#bot-token)
       * [Database](#database)
       * [Docker](#docker)
+         * [Installation of Docker:](#installation-of-docker)
+         * [Raidbot installation:](#raidbot-installation)
+         * [SSL with Docker](#ssl-with-docker)
+         * [Useful Docker commands](#useful-docker-commands)
+         * [Using getZeCharles.php with Docker](#using-getzecharlesphp-with-docker)
       * [Config](#config)
          * [Referring to groups, channels and users](#referring-to-groups-channels-and-users)
             * [Finding public IDs](#finding-public-ids)
             * [Finding private IDs](#finding-private-ids)
+            * [Which group type should I use? / How do I make a group a Supergroup](#which-group-type-should-i-use--how-do-i-make-a-group-a-supergroup)
          * [Database connection](#database-connection)
          * [General config and log files](#general-config-and-log-files)
       * [Installing the Webhook](#installing-the-webhook)
@@ -30,11 +36,15 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
          * [Raid creation options](#raid-creation-options)
          * [Raid time customization](#raid-time-customization)
          * [Raid poll design and layout](#raid-poll-design-and-layout)
-         * [Raid Picture](#raid-picture)
+         * [Raid Picture mode](#raid-picture-mode)
+            * [Font support](#font-support)
          * [Portal Import](#portal-import)
          * [Raid sharing](#raid-sharing)
             * [Sharing all raids to two chats](#sharing-all-raids-to-two-chats)
             * [Sharing split to channels by level](#sharing-split-to-channels-by-level)
+            * [Raids from Webhook](#raids-from-webhook)
+            * [Filter Raids from Webhook / geoconfig.json](#filter-raids-from-webhook--geoconfigjson)
+            * [Extended Raid Sharing](#entended-raid-sharing)
       * [Trainer settings](#trainer-settings)
       * [Raid overview](#raid-overview)
       * [Raid Map](#raid-map)
@@ -70,18 +80,17 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
       * [Command: /deletegym](#command-deletegym)
    * [Debugging](#debugging)
    * [Updates](#updates)
+   * [Config reference](#config-reference)
    * [Development](#development)
+      * [Adding new config values](#adding-new-config-values)
       * [Git Hooks](#git-hooks)
          * [pre-commit](#pre-commit)
-      * [SQL Files](#sql-files)
-         * [pokemon-raid-bot.sql](#pokemon-raid-botsql)
-         * [raid-boss-pokedex.sql](#raid-boss-pokedexsql)
-         * [gohub-raid-boss-pokedex.sql](#gohub-raid-boss-pokedexsql)
+         * [game-master-raid-boss-pokedex.sql](#game-master-raid-boss-pokedexsql)
       * [Translations](#translations)
          * [translate.py](#translatepy)
             * [Usage](#usage)
 
-<!-- Added by: artanicus, at: Sat Nov 30 19:11:58 EET 2019 -->
+<!-- Added by: artanicus, at: Sun Sep  6 15:46:50 EEST 2020 -->
 
 <!--te-->
 
@@ -172,158 +181,139 @@ Import `pokemon-raid-bot.sql` as default DB structure and `raid-boss-pokedex.sql
 
 Command DB structure: `mysql -u USERNAME -p DATABASENAME < sql/pokemon-raid-bot.sql`
 
-Command raid bosses: `mysql -u USERNAME -p DATABASENAME < sql/raid-boss-pokedex.sql`
+To get raid bosses:
+```
+mysql -u USERNAME -p DATABASENAME < sql/game-master-raid-boss-pokedex.sql`
+```
 
-To get the latest raid bosses via the GOHub API, you can use getGOHubDB.php which will update the sql/gohub-raid-boss-pokedex.sql file. Import is possible too:
-
-Command gohub raid bosses: `mysql -u USERNAME -p DATABASENAME < sql/gohub-raid-boss-pokedex.sql`
-
-Important: The raid level is NOT set when importing the raid bosses from the gohub sql file! Set them via the /pokedex command, explained below in this readme.
+Important: The raid level is NOT set when importing the raid bosses from the sql file! Set them via the /pokedex command, explained below in this readme.
 
 ## Docker
 
-Installation of Docker:
+### Installation of Docker:
 ```
 curl -L https://github.com/docker/compose/releases/download/1.25.1-rc1/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-compose
 service docker start
 ```
 
+### Raidbot installation:
+
+Go to the directory where you want to install the raidbot. **Make sure to not expose this directory to the internet as it contains sensitive informations!**
+
 You can just copy & paste this to the shell to prepare your docker-deployment:
 ```
-cd /var/ && \
-mkdir docker && \
-mkdir docker/wwwdir && \
-mkdir docker/wwwdir/raidbot && \
-cd docker/wwwdir/raidbot && \
-mkdir access && \
-mkdir config && \
-mkdir custom && \
-mkdir docker && \
+mkdir raidbot-docker && \
+cd raidbot-docker && \
 mkdir sql && \
-mkdir log && \
-mkdir log/tg-bots && \
-mkdir log/apache2 && \
-touch log/tg-bots/dev-raid-bot-cleanup.log && \
-touch log/tg-bots/dev-raid-bot.log && \
-wget -O sql/1pokemon-raid-bot.sql https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/sql/pokemon-raid-bot.sql && \
-wget -O sql/2raid-boss-pokedex.sql https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/sql/raid-boss-pokedex.sql && \
-wget -O sql/3gohub-raid-boss-pokedex.sql https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/sql/gohub-raid-boss-pokedex.sql && \
-wget -O config/.gitignore https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/config/.gitignore && \
-wget -O config/config.json https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/config/config.json.example && \
-wget -O config/telegram.json https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/config/telegram.json.example && \
-wget -O custom/.gitignore https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/custom/.gitignore  && \
-wget -O access/.gitignore https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/access/.gitignore  && \
-wget -O docker-compose.yml https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/docker-compose.yml && \
-wget -O docker/cronjob https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/docker-custom/cronjob  && \
-wget -O docker/Dockerfile https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/docker-custom/Dockerfile  && \
-wget -O docker/apache2.conf https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/docker-custom/apache2.conf  && \
-wget -O docker/app.conf https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/docker-custom/app.conf  && \
-wget -O docker/entrypoint.sh https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/docker-custom/entrypoint.sh  && \
-wget -O docker/php.ini https://raw.githubusercontent.com/florianbecker/PokemonRaidBot/master/docker-custom/php.ini  && \
-chown -R www-data:www-data config/ && \
-chown -R www-data:www-data access/ && \
-chown -R www-data:www-data custom/ && \
-find config/ -type d -exec chmod 755 {} \; && \
-find config/ -type f -exec chmod 644 {} \; && \
-find access/ -type f -exec chmod 644 {} \; && \
-find access/ -type d -exec chmod 755 {} \; && \
-find custom/ -type f -exec chmod 644 {} \; && \
-find custom/ -type d -exec chmod 755 {} \; && \
-chown -R www-data:www-data log/tg-bots/ && \
-cd config/ && \
-chmod 0600 config.json  && \
-chmod 0600 telegram.json && \
-mkdir -p /etc/ssl/localcerts && \
-openssl req -newkey rsa:2048 -sha256 -nodes -keyout /etc/ssl/localcerts/apache.key -x509 -days 365 -out /etc/ssl/localcerts/apache.pem -subj "/C=US/ST=New York/L=Brooklyn/O=Example Brooklyn Company/CN=domain/ServerIP" && \
-chmod 600 /etc/ssl/localcerts/apache*
+mkdir tg-logs && \
+touch tg-logs/dev-raid-bot-cleanup.log && \
+touch tg-logs/dev-raid-bot.log && \
+git clone --recurse-submodules https://github.com/florianbecker/PokemonRaidBot.git && \
+cp PokemonRaidBot/sql/pokemon-raid-bot.sql sql/01_pokemon-raid-bot.sql && \
+cp PokemonRaidBot/sql/raid-boss-pokedex.sql sql/02_raid-boss-pokedex.sql && \
+cp PokemonRaidBot/sql/gohub-raid-boss-pokedex.sql sql/03_gohub-raid-boss-pokedex.sql && \
+cp PokemonRaidBot/docker-compose.yml .
 ```
 
 This will:
-1. Create a directory `raidbot`.
-2. Create a file `docker-compose.yml`.
-3. Create a directory `access`. (here we store Access Permissions https://github.com/florianbecker/PokemonRaidBot#access-permissions)
-4. Create a directory `config`. (here we store config files for the raidbot).
-Here you store your `config.json` and `telegram.json`.
-Examples for these files can be found @github https://github.com/florianbecker/PokemonRaidBot/tree/master/config
-5. Create a directory `custom` for your custom translations etc.
-6. Download the Raidbot Database Schema: https://github.com/florianbecker/PokemonRaidBot/tree/master/sql and store it
-in the directory `sql`.
-7. Download Docker-configs and example Config-Files for the Raidbot
-8. Create a self-singed Certificate for Telegram - Change your CN= to your Server IP or your Domain.com - It is recommended to use yourdomain.com with a letsencrypt certifcate (for free)
-
+1. Create a directory `raidbot-docker`.
+2. Create a directory `sql`.
+3. Create a directory `tg-logs` and create the two logfiles in it.
+4. Clone the Raidbot Repository including the telegram-core.
+5. Copy and rename the required SQL files.
+6. Copy the docker-compose file.
 
 Your directory should now look like this:
- ```
- --raidbot/
-  |-- docker-compose.yml
-  |-- access
-    |-- .gitignore
-  |-- config
-    |-- .gitignore
-    |-- config.json
-    |-- telegram.json
-  |-- custom
-    |-- .gitignore
-  |-- docker/
-    |-- apache2.conf
-    |-- app.conf
-    |-- cronjob
-    |-- Dockerfile
-    |-- entrypoint.sh
-    |-- php.ini
-  |-- log/
-    |-- apache2
-    |-- tg-bots/
-      |-- dev-raid-bot-cleanup.log
-      |-- dev-raid-bot.log
-  |-- sql/
-    |-- 1pokemon-raid-bot.sql
-    |-- 2raid-boss-pokedex.sql
-    |-- 3gohub-raid-boss-pokedex.sql
- ```
 
-- Check the `docker-compose.yml` for your customization. Change the `MYSQL_ROOT_PASSWORD`.
-- The `cronjob` should be changed according the cleanup https://github.com/florianbecker/PokemonRaidBot#cleanup and Raid-Overview https://github.com/florianbecker/PokemonRaidBot#raid-overview.
-- Comment the Line 29 in `Dockerfile`, if you don't want to download the images, it takes a bit longer on build.
-- Change the config.json to your needs.
-- Add some user-rights to the `access-Folder` https://github.com/florianbecker/PokemonRaidBot#access-permissions.
+```
+├── PokemonRaidBot
+│   └── The normal RaidBot Repository
+├── raidbot-db
+├── sql
+│   ├── 01_pokemon-raid-bot.sql
+│   ├── 02_raid-boss-pokedex.sql
+│   └── 03_gohub-raid-boss-pokedex.sql
+├── tg-logs
+│   ├── dev-raid-bot-cleanup.log
+│   └── dev-raid-bot.log
+└── docker-compose.yml
+```
 
-Now you are ready to start the Docker.
+- Check the `docker-compose.yml` for adjusting it to your needs. Change the two `CRON_COMMAND` variables and replace `changeme` with either your API key or your cleanup secret. Make sure to also edit the DB credentials at the bottom of the file. Basically, replace every `changeme`.
+- Now setup the Raidbot as usual. Change the `config.json` to your needs (remeber to use `raidbot-db` in the `DB_HOST` value field). Maybe modify stuff in `config/telegram.json`, `custom/` or `access/`, etc.
 
-To deploy the Raidbot and Database you just execute in the folder `/var/docker/wwwdir/raidbot/`
+Change the file permissions:
+
+```
+find . -type d -exec chmod 755 {} \; && \
+find . -type f -exec chmod 644 {} \; && \
+chown -R 33:33 tg-logs/ && \
+chmod 0600 PokemonRaidBot/config/config.json
+```
+
+To deploy the Raidbot and Database containers, you just need to build the Raidbot container and start them by running:
+
 ```
 docker-compose up --build -d
 ```
+
 Look at the logs with:
+
 ```
 docker-compose logs -f raidbot
 
 docker-compose logs -f raidbot-db
 ```
 
-List all running Dockers:
+Make sure that everything is running correctly by inspecting the logs.
+
+### SSL with Docker
+
+The next step is to add some sort of SSL layer on top. There are dozens of ways to do that, but the recommended ways are ether a classic reverse proxy on the normal Hostsytem or adding a reverse proxy container (like the [companion container](https://github.com/JrCs/docker-letsencrypt-nginx-proxy-companion) or using [traefik](https://docs.traefik.io/)) to the docker-stack.yml. The Raidbot container is exposed at port `8088` by default.
+
+### Useful Docker commands
+
+List all running Docker containers:
 ```
 docker ps -a
 ```
 
-Restart all Docker-Container:
+Accessing the Database (remember to change `changeme`):
+
+```
+docker exec -it raidbot-docker_raidbot-db_1 mysql -uchangeme -pchangeme raidbot
+```
+
+Restart all Docker containers:
+
 ```
 docker container restart $(docker container ls -aq)
 ```
 
-Stop and Delete one Docker-Container:
+Stop and Delete one Docker container:
+
 ```
 docker rm -f raidbot
+```
 
-or more
+Or the database container as well:
 
+```
 docker rm -f raidbot raidbot_db
+```
+
+### Using getZeCharles.php with Docker
+
+Connect to the running Raidbot container and run the php command:
+
+```
+docker exec -it raidbot-docker_raidbot_1 php getZeCharles.php
 ```
 
 ## Config
 
-Inside the config folder, copy the example config.json.example to your own config.json and edit the values (explained further).
+Inside the config folder, copy the example config.json.example to your own config.json and edit the values (explained further). The example only contains the most common values people want to change, refer to defaults-config.json for all available values. Any value set in config.json will override the default from defaults-config.json.
 
 Don't forget to change the file permissions of your config file to 0600 (e.g. `chmod 0600 config.json`) afterwards. You need to change the ownerchip of all files to the webserver user - otherwise the config is not readable. Normally this: `chown www-data:www-data -R *`
 
@@ -345,7 +335,7 @@ While in some contexts public groups, channels and supergroups could use their p
 #### Finding public IDs
 Counterintuitively getting the ID of a public user, group, channel or supergroup is more difficult since most ways will replace the @name where a numeric ID would be visible. These methods will also work for private versions but will cause spam to the group. The easiest way is via @RawDataBot:
 
-**Group or supergroup:**
+**Group or Supergroup:**
 
 Add @RawDataBot the the group which will cause it to report data about the group. Use the id value as-is,
 it's already prepended to the right length.
@@ -421,6 +411,11 @@ https://web.telegram.org/#/im?p=s1122334455_11223344556677889900
 => use -1001122334455 (notice the extra 100 prepended to pad to 13)
 ```
 
+#### Which group type should I use? / How do I make a group a Supergroup
+- Some features will only work with Supergroups (and Channels) since they enable more features needed for example for automatic cleanup. If in doubt use Supergroups.
+- Every created group starts out as a normal Group but once you enable certain features it will get converted automatically to a Supergroup. For example enabling new users to see message history will convert it!
+- Once a group has been converted to a Supergroup it cannot go back to a normal Group, even if you change back the option that caused it to convert.
+- Be aware that the group ID will change completely when the group gets converted so you'll need to find it again!
 
 
 ### Database connection
@@ -574,14 +569,23 @@ Set `RAID_EX_GYM_MARKER` to set the marker for ex-raid gyms. You can use a prede
 
 Set `RAID_CREATION_EX_GYM_MARKER` to true to show the marker for ex-raid gyms during raid creation.
 
-### Raid Picture
+### Raid Picture mode
 
-Set `RAID_PICTURE` to true and set the url in `RAID_PICTURE_URL` to the location of raidpicture.php.
+To enable raid announcements as images set `RAID_PICTURE` to true and set the url in `RAID_PICTURE_URL` to the location of raidpicture.php.
 
 You also need to get the Pokemon sprites from ZeChrales and put them in the images/pokemon folder.
 Link: https://github.com/ZeChrales/PogoAssets/tree/master/pokemon_icons
 
 To easily download you can use a special download script on the CLI: `php getZeCharles.php`
+
+#### Font support
+
+If we included support for every unicode glyph under the sun the fonts alone would be over 1GB, thus we only ship the base Noto Sans fonts. If you need support for example for CJK glyphs, download a better suited font from [google.com/get/noto](https://www.google.com/get/noto/), place the `Regular` & `Bold` font files in `fonts/` and override them in `config/config.json`, for example:
+```
+  "RAID_PICTURE_FONT_GYM": "NotoSansCJKjp-Bold.otf",
+  "RAID_PICTURE_FONT_EX_GYM": "NotoSansCJKjp-Regular.otf",
+  "RAID_PICTURE_FONT_TEXT": "NotoSansCJKjp-Regular.otf"
+```
 
 Set `RAID_PICTURE_HIDE_LEVEL` to the raid levels (1-5 and X) for which the raid message is shared without the picture even if `RAID_PICTURE` is set to true.
 
@@ -631,6 +635,27 @@ Predefine sharing all raids to the chats -100111222333 and -100444555666, except
 `"SHARE_CHATS":"-100111222333,-100444555666"`
 `"SHARE_CHATS_LEVEL_5":"-100444555666"`
 
+#### Raids from Webhook
+
+You can receive Raids from a mapping system such as MAD via Webhook.
+For that you need to setup
+`"WEBHOOK_CHATS":"-100444555666"`
+or by Raidlevel `"WEBHOOK_CHATS_LEVEL_5":"-100444555666"`
+All raids will be published in these chats.
+
+#### Filter Raids from Webhook / geoconfig.json
+
+If you have multiple Chats for different Areas you can setup them in
+`"WEBHOOK_CHATS_LEVEL_5_0":"-100444555666"` matching with your configuration in the geoconfig.json.
+Go to http://geo.jasparke.net/ and create an Area (Geofence), where your gyms are.
+When you are finished, click on 'exp' and save the coordinates to your geoconfig.json. And for the ID 0 you use "WEBHOOK_CHATS_LEVEL_5_0", for ID 1 "WEBHOOK_CHATS_LEVEL_5_1" and so on.
+The raids will only be posted into the defined chats.
+
+#### Extended Raid-Sharing
+
+If you are using multiple Channel, you can setup one Channel as Main-Channel "SHARE_CHATS_AFTER_ATTENDANCE":"-100444555666" and on votes in different Channel, the Raid will be shared to your Main-Channel. Activate this function with "SHARE_AFTER_ATTENDANCE":true
+This is important for Raids from Webhooks. All Raids were posted to one Channel, which can be muted to the users. But if someone votes for a raid, this raid will be posted to a unmuted channel, where all others get a notification.
+
 ## Trainer settings
 
 The command '/trainer' allows users of the bot to change their trainer data like team and level. It is also used to share a message that allows trainers to modify their trainer data like team and level to another chat. To share this message, every chat specified in the raid sharing list like SHARE_CHATS are used.
@@ -669,39 +694,45 @@ Set `MAP_URL` to the URL of the PokemonBotMap to add it to each raid poll. Pokem
 
 The bot features an automatic cleanup of telegram raid poll messages as well as cleanup of the database (attendance and raids tables).
 
-To activate cleanup you need to change the config and create a cronjob to trigger the cleanup process as follows:
+To activate cleanup you need to [make sure your groups are Supergroups or Channels](#which-group-type-should-i-use--how-do-i-make-a-group-a-supergroup), enable cleanup in the config and create a cronjob to trigger the cleanup process.
 
-Set the `CLEANUP` in the config to `true` and define a cleanup secret/passphrase under `CLEANUP_SECRET`.
-
-Activate the cleanup of telegram messages and/or the database for raids by setting `CLEANUP_TELEGRAM` / `CLEANUP_DATABASE` to true.
-
-Specify the amount of minutes which need to pass by after raid has ended before the bot executes the cleanup. Times are in minutes in `CLEANUP_TIME_TG` for telegram cleanup and `CLEANUP_TIME_DB` for database cleanup. The value for the minutes of the database cleanup `CLEANUP_TIME_DB` must be greater than then one for telegram cleanup `CLEANUP_TIME_TG`. Otherwise cleanup will do nothing and exit due to misconfiguration!
-
-Finally set up a cronjob to trigger the cleanup. You can also trigger telegram / database cleanup per cronjob: For no cleanup use 0, for cleanup use 1 and to use your config file use 2 or leave "telegram" and "database" out of the request data array.
+1. Set the `CLEANUP` in the config to `true` and define a cleanup secret/passphrase under `CLEANUP_SECRET`.
+2. Activate the cleanup of Telegram messages and/or the database for raids by setting `CLEANUP_TELEGRAM` / `CLEANUP_DATABASE` to true.
+   - **Do note** that `CLEANUP_TELEGRAM` will not work in groups that are not Supergroups or Channels!
+3. Specify the amount of minutes which need to pass by after raid has ended before the bot executes the cleanup.
+   - Times are in minutes in `CLEANUP_TIME_TG` for telegram cleanup and `CLEANUP_TIME_DB` for database cleanup.
+   - The value for the minutes of the database cleanup `CLEANUP_TIME_DB` must be greater than then one for telegram cleanup `CLEANUP_TIME_TG`. Otherwise cleanup will do nothing and exit due to misconfiguration!
+4. Finally set up a cronjob to trigger the cleanup. You can also trigger telegram / database cleanup per cronjob: For no cleanup use 0, for cleanup use 1 and to use your config file use 2 or leave "telegram" and "database" out of the request data array.
+   - See the examples below for curl based calls. Any HTTP client capable of a POST request will work.
 
 ### Examples
 
-Make sure to replace the URL with yours.
+Make sure to replace the URL with yours!
 
-Cronjob using cleanup values from config.json for raid polls: Just the secret without telegram/database OR telegram = 2 and database = 2
+- Cronjob using cleanup values from config.json:
+```
+curl -k -d '{"cleanup":{"secret":"your-cleanup-secret/passphrase"}}' https://localhost/index.php?apikey=111111111:AABBCCDDEEFFGGHHIIJJKKLLMMNNOOPP123`
+```
 
-`curl -k -d '{"cleanup":{"secret":"your-cleanup-secret/passphrase"}}' https://localhost/index.php?apikey=111111111:AABBCCDDEEFFGGHHIIJJKKLLMMNNOOPP123`
+- Explicitly use config values:
+```
+curl -k -d '{"cleanup":{"secret":"your-cleanup-secret/passphrase","telegram":"2","database":"2"}}' https://localhost/index.php?apikey=111111111:AABBCCDDEEFFGGHHIIJJKKLLMMNNOOPP123
+```
 
-OR
+- Clean up telegram raid poll messages only: telegram = 1 and database = 0
+```
+curl -k -d '{"cleanup":{"secret":"your-cleanup-secret/passphrase","telegram":"1","database":"0"}}' https://localhost/index.php?apikey=111111111:AABBCCDDEEFFGGHHIIJJKKLLMMNNOOPP123
+```
 
-`curl -k -d '{"cleanup":{"secret":"your-cleanup-secret/passphrase","telegram":"2","database":"2"}}' https://localhost/index.php?apikey=111111111:AABBCCDDEEFFGGHHIIJJKKLLMMNNOOPP123`
+- Clean up telegram raid poll messages and database: telegram = 1 and database = 1
+```
+curl -k -d '{"cleanup":{"secret":"your-cleanup-secret/passphrase","telegram":"1","database":"1"}}' https://localhost/index.php?apikey=111111111:AABBCCDDEEFFGGHHIIJJKKLLMMNNOOPP123
+```
 
-Cronjob to clean up telegram raid poll messages only: telegram = 1 and database = 0
-
-`curl -k -d '{"cleanup":{"secret":"your-cleanup-secret/passphrase","telegram":"1","database":"0"}}' https://localhost/index.php?apikey=111111111:AABBCCDDEEFFGGHHIIJJKKLLMMNNOOPP123`
-
-Cronjob to clean up telegram raid poll messages and database: telegram = 1 and database = 1
-
-`curl -k -d '{"cleanup":{"secret":"your-cleanup-secret/passphrase","telegram":"1","database":"1"}}' https://localhost/index.php?apikey=111111111:AABBCCDDEEFFGGHHIIJJKKLLMMNNOOPP123`
-
-Cronjob to clean up database and maybe telegram raid poll messages (when specified in config): telegram = 2 and database = 1
-
-`curl -k -d '{"cleanup":{"secret":"your-cleanup-secret/passphrase","telegram":"2","database":"1"}}' https://localhost/index.php?apikey=111111111:AABBCCDDEEFFGGHHIIJJKKLLMMNNOOPP123`
+- Clean up database and maybe telegram raid poll messages (when specified in config): telegram = 2 and database = 1
+```
+curl -k -d '{"cleanup":{"secret":"your-cleanup-secret/passphrase","telegram":"2","database":"1"}}' https://localhost/index.php?apikey=111111111:AABBCCDDEEFFGGHHIIJJKKLLMMNNOOPP123
+```
 
 ## Access permissions
 
@@ -955,7 +986,7 @@ Based on your access to the bot, you may can only change the pokemon raid boss o
 
 Show and update any pokemon raid boss. You can change the raid level (select raid level 0 to disable a raid boss), pokemon CP values and weather information of any pokemon raid boss.
 
-There is also a possibility to import the raids bosses from Pokebattler and disable all raid bosses for all or just a specific raid level which makes raid boss management pretty easy.
+There is also a possibility to import the raids bosses from Pokebattler and disable all raid bosses for all or just a specific raid level which makes raid boss management pretty easy. By default the import will disable eggs for levels that only contain 1 raid boss. To disable this set `POKEBATTLER_IMPORT_DISABLE_REDUNDANT_EGGS` to `false`.
 
 To quickly get to a specific pokemon raid boss, you can use the /pokedex command with the local name of the pokemon. A few examples:
 
@@ -1104,13 +1135,143 @@ The bot has a version system and checks for updates to the database automaticall
 
 The bot will send a message to the MAINTAINER_ID when an upgrade is required. In case the MAINTAINER_ID is not specified an error message is written to the error log of your webserver.
 
-Required SQL upgrades files can be found under the `sql/upgrade` folder and need to be applied manually!
+Required SQL upgrades files can be found under the `sql/upgrade` folder and are applied automatically by default.
 
 After any upgrade you need to make sure to change the bot version in your config.json as that version is used for comparison against the latest bot version in the `VERSION` file.
 
-Updates to the config file are NOT checked automatically. Therefore always check for changes to the config.json.example and add new config variables to your own config.json then too!
+Updates to the config file are NOT checked automatically. Therefore always check for changes to the config.json.example and add any new config variables you want to override to your own config.json. Most new variables should get added to defaults-config.json so you'll get the new default automatically on update.
+
+
+# Config reference
+
+* For default values, see `config/defaults-config.json`.
+* Most values are strings.
+* Boolean values should use `true` & `false`, not strings.
+* Any lists are given as a comma separated string.
+* For raid levels, valid values are 1,2,3,4,5,X where X stands for Ex-Raid.
+* If your config is not valid json, the bot will not work. Use a jslinter if in doubt.
+
+| Option | Description |
+|--------|------------ |
+| APIKEY_HASH | Telegram API key hashed in sha256 |
+| BOT_ADMINS| List of admin identifiers |
+| BOT_ID| One letter ID for the bot used in debug logging. Mostly useful if you run multiple. |
+| BOT_NAME| Name of the bot. |
+| BRIDGE_MODE| Bool, whether to enable bridge mode. |
+| CLEANUP_DATABASE| Bool, whether to clean up finished raids from DB if cleanup is enabled. |
+| CLEANUP_LOGFILE| Full path to Log file where cleanup operations are logged. |
+| CLEANUP_SECRET| Plain text passphrase to protect cleanup calls. |
+| CLEANUP_TELEGRAM| Bool, whether to clean up raid polls posted by the bot if cleanup is enabled. |
+| CLEANUP_TIME_DB| In minutes how old DB entries (past raid end-time) need to be to be eligible for cleanup |
+| CLEANUP_TIME_TG| In minutes how old TG posts (past raid end-time) need to be to be eligible for cleanup |
+| CLEANUP| Bool, whether to accept cleanup calls |
+| CURL_PROXYSERVER| Address of curl proxy |
+| CURL_USEPROXY| Bool, enable curl via proxy |
+| DB_HOST | Host or ip address of MySQL server |
+| DB_NAME | Name of DB |
+| DB_PASSWORD | Password of dedicated RaidBot DB user|
+| DB_USER | Username of dedicated RaidBot DB user|
+| DDOS_MAXIMUM | ? |
+| DEBUG | Output helpful debugging messages to `DEBUG_LOGFILE`|
+| DEBUG_LOGFILE | Full path to debug logfile|
+| DEBUG_SQL | Also output details on DB queries, quite verbose! |
+| DEFAULTS_WARNING | json files don't support comments, this is just a comment warning you not to edit defaults. |
+| LANGUAGE_PRIVATE| Language to use in private messages. Leave empty to infer language from users Telegram language |
+| LANGUAGE_PUBLIC| Language to use in groups |
+| MAINTAINER_ID| Telegram ID of main maintainer |
+| MAINTAINER| Name of main maintainer |
+| MAPS_API_KEY| Google Maps API key for `MAPS_LOOKUP` |
+| MAPS_LOOKUP| Boolean, resolve missing gym addresses via Google Maps |
+| MAP_URL| ? |
+| POKEBATTLER_IMPORT_DISABLE_REDUNDANT_EGGS| Boolean, when importing Pokedex from Pokebattler, disable creating an Egg raid for any level that only has one boss available. |
+| PORTAL_IMPORT| Bool, allow importing gyms via portal import Telegram bots |
+| PORTAL_PICTURE_IMPORT| Bool, download and use a local copy of gym pictures on import |
+| RAID_ANYTIME| Bool, enable a final timeslot for attending at any given time. |
+| RAID_AUTOMATIC_ALARM | Bool, sign up every attendee to the raid alarm automatically. They will get private messages of new participants as if they had enabled it themselves on the poll. |
+| RAID_CODE_POKEMON | List of Pokemon dex IDs in use for private group codes |
+| RAID_CREATION_EX_GYM_MARKER| Highlight gyms eligible for Ex-Raids in raid polls |
+| RAID_CUSTOM_GYM_LETTERS| List of custom "letters" to include in gym selector, e.g. "St." or "The" |
+| RAID_DEFAULT_PICTURE| URL of image to use for raids if the portal photo is unknown. Only relevant for `RAID_PICTURE` |
+| RAID_DIRECT_START| Bool, Allow voting for starting raids as soon as it opens |
+| RAID_DURATION_CLOCK_STYLE| Bool, enable showing the time a raid starts vs. duration until start |
+| RAID_EGG_DURATION| In minutes the maximum length of the egg phase a user is allowed to give. |
+| RAID_EVENT_CREATION_LIMIT| ? |
+| RAID_EXCLUDE_EXRAID_DUPLICATION| ? |
+| RAID_EX_GYM_MARKER| Enum, "icon" or ? |
+| RAID_FIRST_START| In minutes what the earliest timeslot is after egg has opened |
+| RAID_LAST_START| In minutes what the last timeslot is before the raid ends |
+| RAID_LATE_MSG| Bool, add a message to the raidpoll if anyone has signaled they are late. |
+| RAID_LATE_TIME| How many minutes to advise waiting in `RAID_LATE_MSG` |
+| RAID_LOCATION| Bool, Send a separate attached location message in addition to a raid poll |
+| RAID_PICTURE | Bool, enable picture based raid polls instead of default text mode |
+| RAID_PICTURE_BG_COLOR| List of RGB values for `RAID_PICTURE` poll background color, e.g. "0,0,0" for black |
+| RAID_PICTURE_FILE_FORMAT| Format for raid pictures for `RAID_PICTURE`, valid values are gif, jpg, jpeg, png |
+| RAID_PICTURE_FONT_GYM | Font used for gym names for regular raids. must match a ttf or otf file under `fonts/`. Probably should be of weight Bold. |
+| RAID_PICTURE_FONT_EX_GYM | Font used for gym names for ex-raids. must match a ttf or otf file under `fonts/`. Probably should be of weight Regular. |
+| RAID_PICTURE_FONT_TEXT | Font used for most text in raid pictures. must match a ttf or otf file under `fonts/`. Probably should be of weight Regular. |
+| RAID_PICTURE_HIDE_LEVEL| List of levels to exclude from `RAID_PICTURE` (will fall back to text mode)|
+| RAID_PICTURE_HIDE_POKEMON| List of Pokemon dex IDs to exclude from `RAID_PICTURE` (will fall back to text mode) |
+| RAID_PICTURE_ICONS_WHITE| Bool, use white icons in `RAID_PICTURE` instead of black |
+| RAID_PICTURE_TEXT_COLOR| List of RGB values for `RAID_PICTURE` poll text color, e.g "255,255,255" for white |
+| RAID_PICTURE_URL| Fully qualified HTTPS URL to `raidpicture.php`, for example `https://example.com/raidbot/raidpicture.php` |
+| RAID_PIN_MESSAGE| ? |
+| RAID_POKEMON_DURATION_EVENT| ? |
+| RAID_POKEMON_DURATION_LONG| ? |
+| RAID_POKEMON_DURATION_SHORT| ? |
+| RAID_POLL_HIDE_BUTTONS_POKEMON| List of Pokemon dex IDs for which voting buttons are disabled |
+| RAID_POLL_HIDE_BUTTONS_RAID_LEVEL| List of raid levels for which voting buttons are disabled |
+| RAID_POLL_HIDE_BUTTONS_TEAM_LVL| Bool, ? |
+| RAID_POLL_HIDE_DONE_CANCELED| Bool, hide the Done and Cancel buttons from raid polls |
+| RAID_POLL_HIDE_USERS_TIME| ? |
+| RAID_POLL_UI_ORDER| Order of elements in text based raid polls. Valid elements are: `extra, teamll, time, pokemon, status` |
+| RAID_REMOTEPASS_USERS | Bool, allow participation to raid polls with a remote pass |
+| RAID_REMOTEPASS_USERS_LIMIT | Integer, How many remote participants to allow into a single raid |
+| RAID_SLOTS| Amount of minutes between raid poll voting slots |
+| RAID_VIA_LOCATION| Bool, enable creating raids by sharing a location with the bot |
+| RAID_VOTE_ICONS| Bool, use icons on raid poll buttons |
+| RAID_VOTE_TEXT| Bool, use text on raid poll buttons |
+| SHARE_CHATS_LEVEL_1| List of Telegram group IDs available for sharing raids of level 1 |
+| SHARE_CHATS_LEVEL_2| List of Telegram group IDs available for sharing raids of level 2 |
+| SHARE_CHATS_LEVEL_3| List of Telegram group IDs available for sharing raids of level 3 |
+| SHARE_CHATS_LEVEL_4| List of Telegram group IDs available for sharing raids of level 4 |
+| SHARE_CHATS_LEVEL_5| List of Telegram group IDs available for sharing raids of level 5 |
+| SHARE_CHATS_LEVEL_X| List of Telegram group IDs available for sharing Ex-Raids |
+| SHARE_CHATS| List of Telegram group IDs available for sharing any raids |
+| TIMEZONE| Timezone definition to use as per [TZ database names](https://www.wikiwand.com/en/List_of_tz_database_time_zones#/List) |
+| TRAINER_BUTTONS_TOGGLE| Bool, ? |
+| TRAINER_CHATS| List of chats where trainer data setup messages can be shared |
+| UPGRADE_SQL_AUTO | When a DB schema upgrade is detected, run it automatically and bump config version to match. |
+| WEBHOOK_CHATS_LEVEL_1_0| ? |
+| WEBHOOK_CHATS_LEVEL_1_1| ? |
+| WEBHOOK_CHATS_LEVEL_1| List of Telegram group IDs to autoshare raids of level 1 |
+| WEBHOOK_CHATS_LEVEL_2_0| ? |
+| WEBHOOK_CHATS_LEVEL_2_1| ? |
+| WEBHOOK_CHATS_LEVEL_2| List of Telegram group IDs to autoshare raids of level 2 |
+| WEBHOOK_CHATS_LEVEL_3_0| ? |
+| WEBHOOK_CHATS_LEVEL_3_1| ? |
+| WEBHOOK_CHATS_LEVEL_3| List of Telegram group IDs to autoshare raids of level 3 |
+| WEBHOOK_CHATS_LEVEL_4_0| ? |
+| WEBHOOK_CHATS_LEVEL_4_1| ? |
+| WEBHOOK_CHATS_LEVEL_4| List of Telegram group IDs to autoshare raids of level 4 |
+| WEBHOOK_CHATS_LEVEL_5_0| ? |
+| WEBHOOK_CHATS_LEVEL_5_1| ? |
+| WEBHOOK_CHATS_LEVEL_5| List of Telegram group IDs to autoshare raids of level 5 |
+| WEBHOOK_CHATS| List of Telegram group IDs to autoshare raids of any level  |
+| WEBHOOK_CREATE_ONLY| Bool, only create raids, don't autoshare them to any group |
+| WEBHOOK_CREATOR| Telegram ID of the bot or user to credit as having created webhook raids |
+| WEBHOOK_EXCLUDE_POKEMON| List of Pokemon dex IDs to exclude from webhook raid creation |
+| WEBHOOK_EXCLUDE_RAID_LEVEL| List of raid levels to exclude from webhook raid creation |
+| WEBHOOK_EXCLUDE_UNKOWN| Bool, create raids for Pokemon not currently enabled in the pokedex |
+
 
 # Development
+
+## Adding new config values
+
+ - Any previously undefined config value needs a sane default value in `config/defaults-config.json`. Anyone updating will get that default!
+ - If the new config item is something people will likely want to override, add it to `config/config.json.example`.
+ - You can access the new config item in code with `$config->CONFIG_ITEM_NAME` but if inside a function, remember to specify `global $config;`
+ - Don't break backwards compatibility if you can.
 
 ## Git Hooks
 
@@ -1137,21 +1298,14 @@ To give a little example the bot version `1.9.256.4` means:
 
 This way it is easy to find out when a bot version was released and how old/new a version is.
 
-## SQL Files
+The following command is used to create the game-master-raid-boss-pokedex.sql file.
 
-The following commands are used to create the raid-pokemon-bot.sql, raid-boss-pokedex.sql and gohub-raid-boss-pokedex.sql files. Make sure to change to the bot directory first and replace USERNAME and DATABASENAME before executing the commands.
-
-### pokemon-raid-bot.sql
-
-Export command: `mysqldump -u USERNAME -p --no-data --skip-add-drop-table --skip-add-drop-database --skip-comments DATABASENAME | sed 's/ AUTO_INCREMENT=[0-9]*\b/ AUTO_INCREMENT=100/' > sql/pokemon-raid-bot.sql`
-
-### raid-boss-pokedex.sql
-
-Export command: `mysqldump -u USERNAME -p --skip-extended-insert --skip-comments DATABASENAME pokemon > sql/raid-boss-pokedex.sql`
-
-### gohub-raid-boss-pokedex.sql
-
-CLI creation command: `php getGOHubDB.php`
+### game-master-raid-boss-pokedex.sql
+The following command is used to create the game-master-raid-boss-pokedex.sql file. Normally this file is kept up to date by developers
+but if no one has updated it yet, you can generate an updated version (and optionally also create a Pull Request.)
+```
+php getDB.php
+```
 
 ## Translations
 

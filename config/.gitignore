@@ -4,3 +4,4 @@
 !.gitignore
 !config.json.example
 !telegram.json.example
+!defaults-*.json
