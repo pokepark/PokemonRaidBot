@@ -9,6 +9,9 @@ define('RAID_LEVEL_ALL', '654321');
 define('ANYTIME', '1970-01-01 00:00:00');
 define('ANYTIME_TS', preg_replace("/[^0-9]/", "", ANYTIME));
 
+// Ex-raid event ID
+defined('EVENT_ID_EX') 		or define('EVENT_ID_EX', '999');
+
 // Icons.
 defined('TEAM_B') 		        or define('TEAM_B',             iconv('UCS-4LE', 'UTF-8', pack('V', 0x1F499)));
 defined('TEAM_R') 		        or define('TEAM_R',             iconv('UCS-4LE', 'UTF-8', pack('V',  0x2764)));

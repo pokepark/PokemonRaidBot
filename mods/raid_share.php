@@ -47,11 +47,11 @@ $raid_picture_hide_level = explode(",",$config->RAID_PICTURE_HIDE_LEVEL);
 $raid_picture_hide_pokemon = explode(",",$config->RAID_PICTURE_HIDE_POKEMON);
 
 $raid_pokemon_id = $raid['pokemon'];
-$raid_level = get_raid_level($raid['pokemon'], $raid['pokemon_form']);
+$raid_level = $raid['level'];
 $raid_pokemon_form_name = get_pokemon_form_name($raid_pokemon_id,$raid['pokemon_form']);
 $raid_pokemon = $raid_pokemon_id . "-" . $raid_pokemon_form_name;
 
-if($config->RAID_PICTURE && !in_array($raid_level, $raid_picture_hide_level) && !in_array($raid_pokemon, $raid_picture_hide_pokemon) && !in_array($raid_pokemon_id, $raid_picture_hide_pokemon)) {
+if($config->RAID_PICTURE && $raid['event_hide_raid_picture'] == 0 && !in_array($raid_level, $raid_picture_hide_level) && !in_array($raid_pokemon, $raid_picture_hide_pokemon) && !in_array($raid_pokemon_id, $raid_picture_hide_pokemon)) {
     $tg_json[] = send_photo($chat, $picture_url, $text['short'], $keys, ['reply_to_message_id' => $chat, 'disable_web_page_preview' => 'true'], true);
 } else {
     $tg_json[] = send_message($chat, $text['full'], $keys, ['reply_to_message_id' => $chat, 'disable_web_page_preview' => 'true'], true);

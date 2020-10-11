@@ -11,7 +11,6 @@ bot_access_check($update, 'create');
 
 // Get count of ID and argument.
 $count_id = substr_count($data['id'], ',');
-$count_arg = substr_count($data['arg'], ',');
 
 // Set the id.
 // Count 0 means we just received the raid_id
@@ -27,25 +26,24 @@ if($count_id == 0) {
     $gym_letter = $gym_id_letter[1];
 }
 
-// Set the arg.
-// Count 1 means we received pokemon_id and starttime 
-// Count 2 means we received pokemon_id, starttime and an optional argument
-// Count 3 means we received pokemon_id, starttime, optional argument and slot switch
-$pokemon_time = explode(',', $data['arg']);
+// Count 3 means we received pokemon_table_id and starttime 
+// Count 4 means we received pokemon_table_id, starttime and an optional argument
+// Count 5 means we received pokemon_table_id, starttime, optional argument and slot switch
+$arg_data = explode(',', $data['arg']);
+$count_arg = count($arg_data);
+$event_id = $arg_data[0];
+$raid_level = $arg_data[1];
 $opt_arg = 'new-raid';
 $slot_switch = 0;
-if($count_arg == 1) {
-    $pokemon_id = $pokemon_time[0];
-    $starttime = $pokemon_time[1];
-} else if($count_arg == 2) {
-    $pokemon_id = $pokemon_time[0]; 
-    $starttime = $pokemon_time[1];
-    $opt_arg = $pokemon_time[2];
-} else if($count_arg == 3) {
-    $pokemon_id = $pokemon_time[0];
-    $starttime = $pokemon_time[1];
-    $opt_arg = $pokemon_time[2];
-    $slot_switch = $pokemon_time[3];
+if($count_arg >= 4) {
+    $pokemon_table_id = $arg_data[2];
+    $starttime = $arg_data[3];
+} 
+if($count_arg >= 5) {
+    $opt_arg = $arg_data[4];
+}
+if($count_arg >= 6) {
+    $slot_switch = $arg_data[5];
 }
 
 // Write to log.
@@ -65,10 +63,17 @@ if ($raid_id == 0 && $gym_id != 0) {
     debug_log('Formatting the raid time properly now.');
     $arg_time = str_replace('-', ':', $starttime);
 
-    // Ex-Raid or normal raid?
-    if($opt_arg == 'X') {
+    // Event Raid or normal/EX raid?
+    if($event_id == 'X') {
         debug_log('Ex-Raid time :D ... Setting raid date to ' . $arg_time);
         $start_date_time = $arg_time;
+        $duration = $config->RAID_POKEMON_DURATION_SHORT;
+    }elseif($event_id != 'N') {
+        debug_log('Event time :D ... Setting raid date to ' . $arg_time);
+        $start_date_time = $arg_time;
+        $query = my_query("SELECT raid_duration FROM events WHERE id = '{$event_id}' LIMIT 1");
+        $result = $query->fetch();
+        $duration = $result['raid_duration'];
     } else {
         // Current date
         $current_date = date('Y-m-d', strtotime('now'));
@@ -76,11 +81,8 @@ if ($raid_id == 0 && $gym_id != 0) {
         // Raid time
         $start_date_time = $current_date . ' ' . $arg_time . ':00';
         debug_log('Received the following time for the raid: ' . $start_date_time);
+        $duration = $config->RAID_POKEMON_DURATION_SHORT;
     }
-
-    // Duration and end time.
-    $duration = $config->RAID_POKEMON_DURATION_SHORT;
-    $end = date('Y-m-d H:i:s', strtotime('+' . $duration . ' minutes', strtotime($start_date_time)));
 
     // Check for duplicate raid
     $duplicate_id = 0;
@@ -93,19 +95,27 @@ if ($raid_id == 0 && $gym_id != 0) {
         // Now.
         $now = utcnow();
 
-        $pokemon_id_form = explode("-",$pokemon_id,2);
+        $pokemon_id_formid = get_pokemon_by_table_id($pokemon_table_id);
+
+        // Saving event info to db. N = null
+        $event = (($event_id == "N") ? "NULL" : (($event_id=="X") ? EVENT_ID_EX : $event_id ));
+        debug_log("Event: ".$event);
+        debug_log("Event-id: ".$event_id);
+        debug_log("Raid level: ".$raid_level);
+        debug_log("Pokemon: ".($pokemon_id_formid));
         
         // Create raid in database.
         $rs = my_query(
             "
             INSERT INTO   raids
             SET           user_id = {$update['callback_query']['from']['id']},
-			  pokemon = '{$pokemon_id_form[0]}',
-			  pokemon_form = '{$pokemon_id_form[1]}',
-			  first_seen = UTC_TIMESTAMP(),
-			  start_time = '{$start_date_time}',
+                          pokemon = '{$pokemon_id_formid['pokedex_id']}',
+                          pokemon_form = '{$pokemon_id_formid['pokemon_form_id']}',
+                          first_seen = UTC_TIMESTAMP(),
+                          start_time = '{$start_date_time}',
                           end_time = DATE_ADD(start_time, INTERVAL {$duration} MINUTE),
-			  gym_id = '{$gym_id}'
+                          gym_id = '{$gym_id}',
+                          event = {$event}
             "
         );
 
@@ -195,7 +205,7 @@ if($opt_arg == 'more') {
         $data = [];
         $data['id'] = $raid_id;
         $data['action'] = 'edit_save';
-        $data['arg'] = $config->RAID_POKEMON_DURATION_SHORT;
+        $data['arg'] = $duration;
 
         // Write to log.
         debug_log($data, '* NEW DATA= ');
@@ -237,7 +247,7 @@ $keys = inline_key_array($keys, 5);
 debug_log($keys);
 
 // Build callback message string.
-if ($opt_arg != 'more' && $opt_arg !='X') {
+if ($opt_arg != 'more' && $event_id == 'N') {
     $callback_response = getTranslation('start_date_time') . ' ' . $arg_time;
 } else {
     $callback_response = getTranslation('raid_starts_when_view_changed');

@@ -57,7 +57,7 @@ function show_raid_poll($raid)
 	            "
 	            UPDATE    gyms
 	            SET     address = '{$address}'
-	            WHERE   id = {$raid['gym_id']}
+	            WHERE   id = '{$raid['gym_id']}'
 	            "
             );
             //Use new address

@@ -811,6 +811,7 @@ A few examples for access files can be found below the permission overview table
 | Raid poll  | Vote on shared raid poll                                         | Not required!                            |
 |            | Create raids `/start`, `/raid`                                   | `create`                                 |
 |            | Create ex-raids `/start`                                         | `ex-raids`                               |
+|            | Create event raids `/start`                                      | `event-raids`                            |
 |            | Change raid duration `/start`                                    | `raid-duration`                          |
 |            | List all raids `/list`                                           | `list`                                   |
 |            | Manage overview `/overview`                                      | `overview`                               |

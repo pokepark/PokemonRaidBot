@@ -62,18 +62,20 @@ $font_color = imagecolorallocate($canvas,$font_rgb[0],$font_rgb[1],$font_rgb[2])
 $transparent_rgb = [0,255,0];
 
 // Gym image
-if(exif_imagetype($raid['img_url']) != IMAGETYPE_JPEG){
-  //no jpg
-  $img_gym = imagecreatefrompng($raid['img_url']);
-}else{
-  $img_gym = imagecreatefromjpeg($raid['img_url']);
-}
+if (!empty($raid['img_url'])) {
+    if(exif_imagetype($raid['img_url']) != IMAGETYPE_JPEG){
+        //no jpg
+        $img_gym = imagecreatefrompng($raid['img_url']);
+    }else{
+        $img_gym = imagecreatefromjpeg($raid['img_url']);
+    }
 } else if(is_file($config->RAID_DEFAULT_PICTURE)) {
-if(exif_imagetype($config->RAID_DEFAULT_PICTURE) != IMAGETYPE_JPEG){
-  //no jpg
-  $img_gym = imagecreatefrompng($config->RAID_DEFAULT_PICTURE);
-}else{
-  $img_gym = imagecreatefromjpeg($config->RAID_DEFAULT_PICTURE);
+    if(exif_imagetype($config->RAID_DEFAULT_PICTURE) != IMAGETYPE_JPEG){
+        //no jpg
+        $img_gym = imagecreatefrompng($config->RAID_DEFAULT_PICTURE);
+    }else{
+        $img_gym = imagecreatefromjpeg($config->RAID_DEFAULT_PICTURE);
+    }
 }
 
 // Get the width and height of the gym picture

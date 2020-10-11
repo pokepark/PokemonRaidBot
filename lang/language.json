@@ -2962,5 +2962,77 @@
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
     "FI": "Ei ylimääräisiä kouluttajia!"
+  },
+  "event": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Event",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Tapahtuman"
+  },
+  "event_note": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Event note",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Tapahtuman lisätiedot"
+  },
+  "event_note_add": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Add event note",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Lisää raiditapahtumaan lisätietoja"
+  },
+  "event_note_edit": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Edit event note",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Muokkaa raiditapahtuman lisätietoja"
+  },
+  "event_add_note_description": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Add more info for this specific poll regarding the event. (e.g. route)",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Lisää ilmoituskohtaisia lisätietoja tapahtumaan liittyen. (esim. reitti)"
+  },
+  "Participate": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Participate",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Osallistu"
   }
 }

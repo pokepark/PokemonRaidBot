@@ -3,9 +3,10 @@
  * Pokemon keys.
  * @param $gym_id_plus_letter
  * @param $raid_level
+ * @param $event_id
  * @return array
  */
-function pokemon_keys($gym_id_plus_letter, $raid_level, $action)
+function pokemon_keys($gym_id_plus_letter, $raid_level, $action, $event_id = false)
 {
     // Init empty keys array.
     $keys = [];
@@ -13,9 +14,9 @@ function pokemon_keys($gym_id_plus_letter, $raid_level, $action)
     // Get pokemon from database
     $rs = my_query(
             "
-            SELECT    pokedex_id, pokemon_form_id
+            SELECT    id, pokedex_id, pokemon_form_id
             FROM      pokemon
-            WHERE     raid_level = '$raid_level'
+            WHERE     raid_level = '{$raid_level}'
             ORDER BY pokedex_id
             "
         );
@@ -24,7 +25,7 @@ function pokemon_keys($gym_id_plus_letter, $raid_level, $action)
     while ($pokemon = $rs->fetch()) {
         $keys[] = array(
             'text'          => get_local_pokemon_name($pokemon['pokedex_id'], $pokemon['pokemon_form_id']),
-            'callback_data' => $gym_id_plus_letter . ':' . $action . ':' . $pokemon['pokedex_id'] . '-' . $pokemon['pokemon_form_id']
+            'callback_data' => $gym_id_plus_letter . ':' . $action . ':' . (($event_id!==false) ? $event_id . ',' . $raid_level . ',' : '') . $pokemon['id']
         );
     }
 
