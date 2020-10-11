@@ -181,6 +181,25 @@ function alarm($raid, $user, $action, $info = '')
         $msg_text_local = $msg_text;
         $msg_text_local .= EMOJI_REMOTE . SP . '<b>' . getTranslation('group_code_only_for_remote_raiders') . '</b>';
         sendcode($msg_text_local, $raid, $user, 'local');
+        // Attendance from remote
+    } else if($action == "want_invite") {
+        debug_log('Alarm invite begging changed: ' . $info);
+        $msg_text = '<b>' . getTranslation('alert_want_invite') . '</b>' . CR;
+        $msg_text .= EMOJI_WANT_INVITE . SP . $gymname . SP . '(' . $raidtimes . ')' . CR;
+        $msg_text .= EMOJI_SINGLE . SP . $username . CR;
+        $msg_text .= EMOJI_CLOCK . SP . '<b>' . check_time($attendtime) . '</b>';
+        $msg_text .= create_traincode_msg($attendtime,$trainercode);
+        sendalarm($msg_text, $raid, $user);
+
+    // Attendance no longer from remote
+    } else if($action == "no_want_invite") {
+        debug_log('Alarm invite begging changed: ' . $info);
+        $msg_text = '<b>' . getTranslation('alert_no_want_invite') . '</b>' . CR;
+        $msg_text .= EMOJI_WANT_INVITE . SP . $gymname . SP . '(' . $raidtimes . ')' . CR;
+        $msg_text .= EMOJI_SINGLE . SP . $username . CR;
+        $msg_text .= EMOJI_CLOCK . SP . '<b>' . check_time($attendtime) . '</b>';
+        $msg_text .= create_traincode_msg($attendtime,$trainercode);
+        sendalarm($msg_text, $raid, $user);
     }
 }
 

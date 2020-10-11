@@ -283,41 +283,43 @@ function get_overview($update, $chats_active, $raids_active, $action = 'refresh'
 
         if ( $raid_id ) {
 
-        // Count attendances
-        $rs_att = my_query(
-            "
-            SELECT          count(attend_time)          AS count,
-                            sum(team = 'mystic')        AS count_mystic,
-                            sum(team = 'valor')         AS count_valor,
-                            sum(team = 'instinct')      AS count_instinct,
-                            sum(team IS NULL)           AS count_no_team,
-                            sum(extra_mystic)           AS extra_mystic,
-                            sum(extra_valor)            AS extra_valor,
-                            sum(extra_instinct)         AS extra_instinct
-            FROM            attendance
-            LEFT JOIN       users
-              ON            attendance.user_id = users.user_id
-              WHERE         raid_id = {$raid_id}
-                AND         attend_time IS NOT NULL
-                AND         raid_done != 1
-                AND         cancel != 1
-            "
-        );
+            // Count attendances
+            $rs_att = my_query(
+                "
+                SELECT          count(attend_time)          AS count,
+                                sum(team = 'mystic' && want_invite = 0)        AS count_mystic,
+                                sum(team = 'valor' && want_invite = 0)         AS count_valor,
+                                sum(team = 'instinct' && want_invite = 0)      AS count_instinct,
+                                sum(team IS NULL && want_invite = 0)           AS count_no_team,
+                                sum(extra_mystic && want_invite = 0)           AS extra_mystic,
+                                sum(extra_valor && want_invite = 0)            AS extra_valor,
+                                sum(extra_instinct && want_invite = 0)         AS extra_instinct,
+                                sum(want_invite = 1)                           AS count_want_invite
+                FROM            attendance
+                LEFT JOIN       users
+                  ON            attendance.user_id = users.user_id
+                  WHERE         raid_id = {$raid_id}
+                    AND         attend_time IS NOT NULL
+                    AND         raid_done != 1
+                    AND         cancel != 1
+                "
+            );
 
-        $att = $rs_att->fetch();
+            $att = $rs_att->fetch();
 
-        // Add to message.
-        if ($att['count'] > 0) {
-            $msg .= EMOJI_GROUP . '<b> ' . ($att['count'] + $att['extra_mystic'] + $att['extra_valor'] + $att['extra_instinct']) . '</b> — ';
-            $msg .= ((($att['count_mystic'] + $att['extra_mystic']) > 0) ? TEAM_B . ($att['count_mystic'] + $att['extra_mystic']) . '  ' : '');
-            $msg .= ((($att['count_valor'] + $att['extra_valor']) > 0) ? TEAM_R . ($att['count_valor'] + $att['extra_valor']) . '  ' : '');
-            $msg .= ((($att['count_instinct'] + $att['extra_instinct']) > 0) ? TEAM_Y . ($att['count_instinct'] + $att['extra_instinct']) . '  ' : '');
-            $msg .= (($att['count_no_team'] > 0) ? TEAM_UNKNOWN . $att['count_no_team'] : '');
+            // Add to message.
+            if ($att['count'] > 0) {
+                $msg .= EMOJI_GROUP . '<b> ' . ($att['count'] + $att['extra_mystic'] + $att['extra_valor'] + $att['extra_instinct']) . '</b> — ';
+                $msg .= ((($att['count_mystic'] + $att['extra_mystic']) > 0) ? TEAM_B . ($att['count_mystic'] + $att['extra_mystic']) . '  ' : '');
+                $msg .= ((($att['count_valor'] + $att['extra_valor']) > 0) ? TEAM_R . ($att['count_valor'] + $att['extra_valor']) . '  ' : '');
+                $msg .= ((($att['count_instinct'] + $att['extra_instinct']) > 0) ? TEAM_Y . ($att['count_instinct'] + $att['extra_instinct']) . '  ' : '');
+                $msg .= (($att['count_no_team'] > 0) ? TEAM_UNKNOWN . $att['count_no_team'] . ' ' : ' ');
+                $msg .= (($att['count_want_invite'] > 0) ? EMOJI_WANT_INVITE . $att['count_want_invite'] : '');
+                $msg .= CR;
+            }
+
+            // Add CR to message now since we don't know if attendances got added or not
             $msg .= CR;
-        }
-
-        // Add CR to message now since we don't know if attendances got added or not
-        $msg .= CR;
         }
 
         // Prepare next iteration
