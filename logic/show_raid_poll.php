@@ -239,6 +239,7 @@ function show_raid_poll($raid)
                 SELECT      attendance.*,
                             users.name,
                             users.trainername,
+                            users.nick,
                             users.trainercode,
                             users.level,
                             users.team,
@@ -431,6 +432,7 @@ function show_raid_poll($raid)
                             attendance.extra_instinct,
                             users.name,
                             users.trainername,
+                            users.nick,
                             users.level,
                             users.team,
                             DATE_FORMAT(attend_time, '%Y%m%d%H%i%s') AS ts_att
