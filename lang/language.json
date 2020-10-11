@@ -323,6 +323,30 @@
     "PL": "TRANSLATE",
     "FI": "Tämä on raid-tiedote, ei äänestystä."
   },
+  "alert_want_invite": {
+    "NL": "Wenst uitgenodigd te worden.",
+    "DE": "Möchte eingeladen werden.",
+    "EN": "Wishes to be invited.",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Toivoo tulevansa kutsutuksi."
+  },
+  "alert_no_want_invite": {
+    "NL": "Wil niet langer worden uitgenodigd.",
+    "DE": "Möchte nicht mehr eingeladen werden.",
+    "EN": "No longer wishes to be invited.",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Ei enää toivo kutsua."
+  },
   "raid_event_creation_limit_one": {
     "NL": "Gedurende raid hour kan je maar 1 raid aanmaken!",
     "DE": "Während der Raidstunde kannst du nur 1 Raid anlegen!",

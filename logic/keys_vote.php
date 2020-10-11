@@ -170,7 +170,7 @@ function keys_vote($raid)
         $raid_pokemon_id = $raid['pokemon'];
         $raid_pokemon_form_id = $raid['pokemon_form'];
         $raid_pokemon = $raid_pokemon_id . "-" . $raid_pokemon_form_id;
-        
+
         // Get raid level
         $raid_level = '0';
         $raid_level = get_raid_level($raid_pokemon_id, $raid_pokemon_form_id);
