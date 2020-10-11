@@ -124,6 +124,9 @@ CREATE TABLE `users` (
   `nick` varchar(100) CHARACTER SET utf8mb4 DEFAULT NULL,
   `name` varchar(200) CHARACTER SET utf8mb4 DEFAULT NULL,
   `trainername` varchar(200) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `trainername_time` DATETIME DEFAULT NULL,
+  `trainercode` varchar(12) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `trainercode_time` DATETIME DEFAULT NULL,
   `team` enum('mystic','valor','instinct') DEFAULT NULL,
   `level` int(10) unsigned DEFAULT '0',
   PRIMARY KEY (`id`),
@@ -139,4 +142,3 @@ CREATE TABLE `users` (
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
