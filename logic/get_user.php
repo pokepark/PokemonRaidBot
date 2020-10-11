@@ -59,7 +59,7 @@ function get_user($user_id)
  */
 function check_trainername($row){
     global $config;
-    if($config->CUSTOM_TRAINERNAME){ // if Custom Trainername is enabled by config
+    if($config->CUSTOM_TRAINERNAME==true){ // if Custom Trainername is enabled by config
         if(check_for_empty_string($row['trainername'])){ // trainername not set by user
             // check if Telegram-@Nick is set
               if(check_for_empty_string($row['nick'])){
@@ -85,6 +85,11 @@ function check_trainername($row){
     return $row;
 }
 
+/**
+ * Checks if String is empty
+ * @param String $string
+ * @return boolean | true = empty | false = not empty
+ */
 function check_for_empty_string($string){
   if($string == "" || is_null($string) || empty($string)){
     return true;
