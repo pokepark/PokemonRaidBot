@@ -105,7 +105,12 @@ function show_raid_poll($raid)
     $rs_attendance = my_query(
         "
         SELECT          attendance.*,
-                        users.*
+                        users.name,
+                        users.nick,
+                        users.trainername,
+                        users.trainercode,
+                        users.level,
+                        users.team
         FROM            attendance
         LEFT JOIN       users
           ON            attendance.user_id = users.user_id
@@ -198,7 +203,12 @@ function show_raid_poll($raid)
     $rs_attendance_want_inv = my_query(
         "
         SELECT          attendance.*,
-                        users.*
+                        users.name,
+                        users.nick,
+                        users.trainername,
+                        users.trainercode,
+                        users.level,
+                        users.team
         FROM            attendance
         LEFT JOIN       users
           ON            attendance.user_id = users.user_id
