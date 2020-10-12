@@ -105,12 +105,7 @@ function show_raid_poll($raid)
     $rs_attendance = my_query(
         "
         SELECT          attendance.*,
-                        users.name,
-                        users.trainername,
-                        users.nick,
-                        users.trainercode,
-                        users.level,
-                        users.team,
+                        users.*
         FROM            attendance
         LEFT JOIN       users
           ON            attendance.user_id = users.user_id
@@ -203,12 +198,7 @@ function show_raid_poll($raid)
     $rs_attendance_want_inv = my_query(
         "
         SELECT          attendance.*,
-                        users.name,
-                        users.trainername,
-                        users.nick,
-                        users.trainercode,
-                        users.level,
-                        users.team,
+                        users.*
         FROM            attendance
         LEFT JOIN       users
           ON            attendance.user_id = users.user_id
@@ -339,7 +329,7 @@ function show_raid_poll($raid)
                         $msg = raid_poll_message($msg, ($att_row['extra_valor']) ? ('+' . $att_row['extra_valor'] . TEAM_R . ' ') : '');
                         $msg = raid_poll_message($msg, ($att_row['extra_instinct']) ? ('+' . $att_row['extra_instinct'] . TEAM_Y . ' ') : '');
                         $msg = raid_poll_message($msg, ($att_row['want_invite']) ? (EMOJI_WANT_INVITE) : '');
-                        $msg = raid_poll_message($msg, ($config->RAID_POLL_SHOW_TRAINERCODE && $att_row['want_invite'] && !is_null($row['trainercode'])) ? $row['trainercode'] : '');
+                        $msg = raid_poll_message($msg, ($config->RAID_POLL_SHOW_TRAINERCODE && $att_row['want_invite'] && !is_null($att_row['trainercode'])) ? $att_row['trainercode'] : '');
 
                         $msg = raid_poll_message($msg, CR);
 
