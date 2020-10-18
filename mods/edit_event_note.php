@@ -27,7 +27,12 @@ $msg .= show_raid_poll_small($raid, false) . CR2;
 
 if($mode == "edit") {
 	$msg.= getTranslation("event_note_edit") . ": ";
-	my_query("UPDATE raids SET event_note='{$userid}' WHERE id='{$raid_id}'");
+    
+    // Create an entry to user_input table
+    $modifiers = json_encode(array("id"=>$raid_id)); // Save the raid id
+    $handler = "save_event_note";  // call for mods/save_event_note.php after user posts the answer
+    
+	my_query("INSERT INTO user_input SET user_id='{$userid}', modifiers='{$modifiers}', handler='{$handler}'");
 }elseif($mode == "cancel") {
     $note = "";
     if($raid['event_note'] != "") {
@@ -42,7 +47,12 @@ if($mode == "edit") {
 
 	$msg.= getTranslation("event") . ": <b>".$res['name']."</b>".CR;
 	$msg.= getTranslation("event_add_note_description");
-	my_query("UPDATE raids SET event_note='{$userid}' WHERE id='{$raid_id}'");
+    
+    // Create an entry to user_input table
+    $modifiers = json_encode(array("id"=>$raid_id)); // Save the raid id
+    $handler = "save_event_note";  // call for mods/save_event_note.php after user posts the answer
+    
+	my_query("INSERT INTO user_input SET user_id='{$userid}', modifiers='{$modifiers}', handler='{$handler}'");
 }
 $keys[] = [
             [
