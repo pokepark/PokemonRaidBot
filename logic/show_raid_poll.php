@@ -20,6 +20,10 @@ function show_raid_poll($raid)
     // Get raid level
     $raid_level = $raid['level'];
 
+    if($raid['event_name'] != NULL && $raid['event_name'] != "") {
+        $msg = raid_poll_message($msg, "<b>".$raid['event_name']."</b>".CR, true);
+    }
+
     // Get raid times.
     $msg = raid_poll_message($msg, get_raid_times($raid), true);
 
@@ -266,7 +270,17 @@ function show_raid_poll($raid)
         if($raid_level == 'X') {
             $msg = raid_poll_message($msg, CR . EMOJI_WARN . ' <b>' . getPublicTranslation('exraid_pass') . '</b> ' . EMOJI_WARN . CR);
         }
-
+        
+        // Add event description
+        if($raid['event_description'] != NULL && $raid['event_description'] != "") {
+            $msg = raid_poll_message($msg, CR . "<b>".$raid['event_name']."</b>" . CR);
+            $msg = raid_poll_message($msg, $raid['event_description'] . CR);
+        }
+        
+        // Add event note
+        if($raid['event_note'] != NULL && $raid['event_note'] != "") {
+            $msg = raid_poll_message($msg, CR . $raid['event_note'] . CR);
+        }
         // Add attendances message.
         if ($cnt_all > 0) {
             // Init previous attend time and pokemon
