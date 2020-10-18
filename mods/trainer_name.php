@@ -30,7 +30,11 @@ if($confirm == 0) {
         WHERE     user_id = {$user_id}
         "
     );
-
+    
+    // Data for handling response from the user
+    $handler = "change_trainername";
+    my_query("INSERT INTO user_input SET user_id='{$user_id}', handler='{$handler}'");
+    
     // Build callback message string.
     $callback_response = 'OK';
 

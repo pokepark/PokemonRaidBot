@@ -16,7 +16,7 @@ $msg = '<b>' . getTranslation('trainerinfo_set_yours') . '</b>';
 $keys = [];
 
 // Create keys array.
-if($config->CUSTOM_TRAINERNAME && $config->RAID_POLL_SHOW_TRAINCODE){
+if($config->CUSTOM_TRAINERNAME && $config->RAID_POLL_SHOW_TRAINERCODE){
     $keys = [
         [
             [
@@ -58,7 +58,7 @@ if($config->CUSTOM_TRAINERNAME && $config->RAID_POLL_SHOW_TRAINCODE){
             ]
         ]
     ];
-}elseif($config->RAID_POLL_SHOW_TRAINCODE){
+}elseif($config->RAID_POLL_SHOW_TRAINERCODE){
     $keys = [
         [
             [
