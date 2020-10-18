@@ -72,13 +72,16 @@ if (isset($update['callback_query'])) {
         if($update['message']['chat']['type'] == 'private') {
             $q = my_query("SELECT id, handler, modifiers FROM user_input WHERE user_id='{$update['message']['from']['id']}' LIMIT 1");
             if( $q->rowCount() > 0 ) {
-                debug_log("Found user from raids table: " . $update['message']['from']['id']);
+                debug_log("Expecting a response message from user: " . $update['message']['from']['id']);
                 $res = $q->fetch();
                 // Modifiers to pass to handler
                 $modifiers = json_decode($res['modifiers'], true);
                 
-                include_once(ROOT_PATH . '/mods/' . $res['handler'] .'.php');
+                debug_log("Calling: " . $res['handler'] . '.php');
+                debug_log("With modifiers: " . $modifiers);
+                include_once(ROOT_PATH . '/mods/' . $res['handler'] . '.php');
                 
+                debug_log("Response handeled successfully!");
                 // Delete the entry if the call was handled without errors
                 my_query("DELETE FROM user_input WHERE id='{$res['id']}'");
                 
