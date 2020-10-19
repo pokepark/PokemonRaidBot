@@ -271,7 +271,9 @@ function get_overview($update, $chats_active, $raids_active, $action = 'refresh'
         $msg .= $ex_gym ? $ex_raid_gym_marker . SP : '';
         $msg .= !empty($chat_username) ? '<a href="https://t.me/' . $chat_username . '/' . $row['message_id'] . '">' . htmlspecialchars($gym) . '</a>' : $gym;
         $msg .= CR;
-
+        if($raids_active[$raid_id]['event_name'] != "") {
+            $msg .= "<b>" . $raids_active[$raid_id]['event_name'] . "</b>" . CR;
+        }
         // Raid has not started yet - adjust time left message
         if ($now < $start_time) {
             $msg .= get_raid_times($raids_active[$raid_id], true);
