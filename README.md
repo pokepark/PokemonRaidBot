@@ -1196,7 +1196,6 @@ Updates to the config file are NOT checked automatically. Therefore always check
 | RAID_DIRECT_START| Bool, Allow voting for starting raids as soon as it opens |
 | RAID_DURATION_CLOCK_STYLE| Bool, enable showing the time a raid starts vs. duration until start |
 | RAID_EGG_DURATION| In minutes the maximum length of the egg phase a user is allowed to give. |
-| RAID_EVENT_CREATION_LIMIT| ? |
 | RAID_EXCLUDE_EXRAID_DUPLICATION| ? |
 | RAID_EX_GYM_MARKER| Enum, "icon" or ? |
 | RAID_FIRST_START| In minutes what the earliest timeslot is after egg has opened |
@@ -1216,7 +1215,6 @@ Updates to the config file are NOT checked automatically. Therefore always check
 | RAID_PICTURE_TEXT_COLOR| List of RGB values for `RAID_PICTURE` poll text color, e.g "255,255,255" for white |
 | RAID_PICTURE_URL| Fully qualified HTTPS URL to `raidpicture.php`, for example `https://example.com/raidbot/raidpicture.php` |
 | RAID_PIN_MESSAGE| ? |
-| RAID_POKEMON_DURATION_EVENT| ? |
 | RAID_POKEMON_DURATION_LONG| ? |
 | RAID_POKEMON_DURATION_SHORT| ? |
 | RAID_POLL_HIDE_BUTTONS_POKEMON| List of Pokemon dex IDs for which voting buttons are disabled |

@@ -173,22 +173,17 @@ $keys = [];
 // Raid pokemon duration short or 1 Minute / 5 minute time slots
 if($opt_arg == 'more') {
     if ($slot_switch == 0) {
-        // Event running?
-        if($config->RAID_POKEMON_DURATION_EVENT != $config->RAID_POKEMON_DURATION_SHORT) {
-	    $slotmax = $config->RAID_POKEMON_DURATION_EVENT;
-        } else {
-	    $slotmax = $config->RAID_POKEMON_DURATION_SHORT;
-        }
-	$slotsize = 1;
+        $slotmax = $config->RAID_POKEMON_DURATION_SHORT;
+        $slotsize = 1;
     } else {
-	$slotmax = $config->RAID_POKEMON_DURATION_LONG;
-	$slotsize = 5;
+        $slotmax = $config->RAID_POKEMON_DURATION_LONG;
+        $slotsize = 5;
     }
 
     for ($i = $slotmax; $i >= 15; $i = $i - $slotsize) {
         // Create the keys.
         $keys[] = array(
-	    // Just show the time, no text - not everyone has a phone or tablet with a large screen...
+        // Just show the time, no text - not everyone has a phone or tablet with a large screen...
             'text'          => floor($i / 60) . ':' . str_pad($i % 60, 2, '0', STR_PAD_LEFT),
             'callback_data' => $raid_id . ':edit_save:' . $i
         );
