@@ -17,8 +17,23 @@ if(strlen($trainercode)==12){
         WHERE user_id =     {$target_user_id}
         "
     );
+
+    // Create the keys.
+    $keys = [
+        [
+            [
+                'text'          => getTranslation('back'),
+                'callback_data' => '0:trainer:0'
+            ],
+            [
+                'text'          => getTranslation('done'),
+                'callback_data' => '0:exit:1'
+            ]
+        ]
+    ];
+
     // confirm Trainercode-Change
-    sendMessage($target_user_id, getTranslation('trainercode_success').' <b>'.$trainercode.'</b>');
+    send_message($target_user_id, getTranslation('trainercode_success').' <b>'.$trainercode.'</b>', $keys);
 }else{
     // Trainer Code got unallowed Chars -> Error-Message
     sendMessage($target_user_id, getTranslation('trainercode_fail'));

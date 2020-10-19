@@ -16,8 +16,23 @@ if($returnValue){
         WHERE user_id =     {$userid}
         "
     );
+
+    // Create the keys.
+    $keys = [
+        [
+            [
+                'text'          => getTranslation('back'),
+                'callback_data' => '0:trainer:0'
+            ],
+            [
+                'text'          => getTranslation('done'),
+                'callback_data' => '0:exit:1'
+            ]
+        ]
+    ];
+
     // confirm Name-Change
-    sendMessage($userid, getTranslation('trainername_success').' <b>'.$trainername.'</b>');
+    send_message($userid, getTranslation('trainername_success').' <b>'.$trainername.'</b>', $keys);
 }else{
     // Trainer Name got unallowed Chars -> Error-Message
     sendMessage($userid, getTranslation('trainername_fail'));

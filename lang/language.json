@@ -3010,5 +3010,17 @@
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
     "FI": "Osallistu"
+  },
+  "tutorial_no_user_info_set": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "You have not yet saved your trainer info. Would you like to do it now?",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Et ole vielä tallentanut tietoja pelihahmostasi. Haluaisitko tehdä sen nyt?"
   }
 }

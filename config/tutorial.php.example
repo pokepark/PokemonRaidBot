@@ -1,0 +1,16 @@
+<?php
+//Tutorial messages
+$tutorial[0]['msg'] = '1st tutorial message';
+$tutorial[0]['msg_new'] = '1st tutorial message for new users';
+$tutorial[0]['photo'] = '';// A photo url must be set!
+
+$tutorial[1]['msg'] = '2nd tutorial message';
+$tutorial[1]['msg_new'] = '2nd tutorial message for new users';
+$tutorial[1]['photo'] = '';// A photo url must be set!
+
+$tutorial[2]['msg'] = '3rd tutorial message';
+// A separate message for new users isn't required
+$tutorial[2]['photo'] = '';// A photo url must be set!
+
+
+?> 

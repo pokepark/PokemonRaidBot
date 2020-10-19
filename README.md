@@ -844,6 +844,8 @@ A few examples for access files can be found below the permission overview table
 | Pokedex    | Manage raid pokemon `/pokedex`                                   | `pokedex`                                |
 |            |                                                                  |                                          |
 | Help       | Show help `/help`                                                | `help`                                   |
+|            |                                                                  |                                          |
+| Tutorial   | Force user to complete tutorial before allowing the use of any other command | `force-tutorial`             |
 
 
 #### Examples
@@ -875,6 +877,15 @@ share-all
 share-own
 share-any-chat
 ```
+
+## Tutorial mode
+
+To help with teaching users how to use the bot you can force them to go through a tutorial (that you must create) before they are able to use any of the bot's commands. 
+
+To enable this feature:
+- Create `tutorial.php` in config folder. Use `tutorial.php.example` as reference
+- Set `TUTORIAL_MODE` = `true` in `config.json`
+- `force-tutorial` in access config file(s).
 
 # Customization
 

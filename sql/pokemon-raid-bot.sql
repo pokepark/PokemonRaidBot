@@ -155,7 +155,8 @@ CREATE TABLE `users` (
   `trainercode_time` DATETIME DEFAULT NULL,
   `team` enum('mystic','valor','instinct') DEFAULT NULL,
   `level` int(10) unsigned DEFAULT '0',
-  PRIMARY KEY (`id`),
+  `tutorial` TINYINT(1) NOT NULL DEFAULT 0,
+   PRIMARY KEY (`id`),
   UNIQUE KEY `i_userid` (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
