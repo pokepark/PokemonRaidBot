@@ -120,5 +120,6 @@
   "CLEANUP_TIME_TG":"10",
   "CLEANUP_DATABASE": true,
   "CLEANUP_TIME_DB":"10080",
-  "TUTORIAL_MODE": false
+  "TUTORIAL_MODE": false,
+  "TUTORIAL_COMPLETED_CURL_ADDRESS": "http://localhost/banhammer/index.php?apikey=1255262853:AAF-d4q-Gn0kDsKATjIr0Ch79Z79qIoeAfo"
 }

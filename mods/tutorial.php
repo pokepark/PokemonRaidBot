@@ -24,7 +24,37 @@ if($action == "end") {
     if($new_user) {
         my_query("UPDATE users SET tutorial = '1' WHERE user_id = '{$user_id}'");
 
-        send_message($user_id, $tutorial_done, $keys);
+        send_message($user_id, $tutorial_done, []);
+        
+        // Post the user id to external address if specified 
+        if(isset($config->TUTORIAL_COMPLETED_CURL_ADDRESS) && $config->TUTORIAL_COMPLETED_CURL_ADDRESS != "") {
+            $post_array = [
+                            "tutorial"=> "OK",
+                            "user_id" => $user_id
+                          ];
+            $json = json_encode($post_array);
+            $URL = $config->TUTORIAL_COMPLETED_CURL_ADDRESS;
+            $curl = curl_init($URL);
+
+            curl_setopt($curl, CURLOPT_HEADER, false);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-type: application/json"));
+            curl_setopt($curl, CURLOPT_POST, true);
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $json);
+            curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 5);
+            curl_setopt($curl, CURLOPT_TIMEOUT, 10);
+
+            // Use Proxyserver for curl if configured
+            if ($config->CURL_USEPROXY && !empty($config->CURL_PROXYSERVER)) {
+                curl_setopt($curl, CURLOPT_PROXY, $config->CURL_PROXYSERVER);
+            }
+
+            // Execute curl request.
+            $json_response = curl_exec($curl);
+
+            // Close connection.
+            curl_close($curl);
+        }
     }
     
     
@@ -47,7 +77,8 @@ if($action == "end") {
         ];
         send_message($user_id,$msg,$keys);
     }
-
+    $dbh = null;
+    exit();
 
 }else {
 
