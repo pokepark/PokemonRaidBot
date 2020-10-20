@@ -18,6 +18,10 @@ if(isset($_GET['debug']) && $_GET['debug'] == 1) {
     $debug = true;
 }
 
+// Are we creating a thumbnail?
+if( $_GET['thumbnail'] == 1 ) $thumbnail = true;
+else $thumbnail = false;
+
 // Raid info
 $raid_id = preg_replace("/\D/","",$_GET['raid']);
 if($_GET['raid']!="") {
@@ -29,11 +33,14 @@ $font_gym = FONTS_PATH . '/' . $config->RAID_PICTURE_FONT_GYM;
 $font_text = FONTS_PATH . '/' . $config->RAID_PICTURE_FONT_TEXT;
 $font_ex_gym = FONTS_PATH . '/' . $config->RAID_PICTURE_FONT_EX_GYM;
 
-
 // Canvas size
-$canvas_width = 700;
-$canvas_height = 356;
-
+if( $thumbnail ) {
+    $canvas_width = 356;
+    $canvas_height = 356;
+}else {
+    $canvas_width = 700;
+    $canvas_height = 356;
+}
 // Creating an empty canvas
 $canvas = imagecreatetruecolor($canvas_width,$canvas_height);
 imagesavealpha($canvas,true);
@@ -247,223 +254,224 @@ if($raid['raid_level'] == 'X') {
     imagecopyresampled($canvas,$img_expass,0,225,0,0,100,100,256,256);
 }
 
+// Add texts if picture is not a thumbnail
+if( !$thumbnail ) {
+    // Adding the gym name to the image
+    $text_size = 23;									// Font size of additional text
+    $text_size_cp_weather = 20;									// Font size of weather cp text
+    $left_after_poke = 356; // First left position behind the pokemon icon.
+    $angle = 0;											// Angle of the text
+    $spacing = 10;										// Spacing between lines
+    $spacing_right = 10;								// Empty space on the right for weather icons and CP text
 
 
-// Adding the gym name to the image
-$text_size = 23;									// Font size of additional text
-$text_size_cp_weather = 20;									// Font size of weather cp text
-$left_after_poke = 356; // First left position behind the pokemon icon.
-$angle = 0;											// Angle of the text
-$spacing = 10;										// Spacing between lines
-$spacing_right = 10;								// Empty space on the right for weather icons and CP text
 
+    // Gym name
+    // Largest gym name we found so far for testing:
+    //$gym_name = 'Zentrum für Junge Erwachsene der Kirche Jesu Christi der Heiligen der Letzten Tage Pfahl Düsseldorf';
+    $gym_name = $raid['gym_name'];
 
+    // Get length, the shortest and largest word of the gym name
+    $gym_name_words = explode(SP, $gym_name);
+    $gym_name_word_lengths = array_map('strlen', array_map('utf8_decode', $gym_name_words));
+    $gym_name_word_largest = max($gym_name_word_lengths);
+    $gym_name_word_shortest = min($gym_name_word_lengths);
+    $gym_name_total_chars = strlen(utf8_decode($gym_name));
 
-// Gym name
-// Largest gym name we found so far for testing:
-//$gym_name = 'Zentrum für Junge Erwachsene der Kirche Jesu Christi der Heiligen der Letzten Tage Pfahl Düsseldorf';
-$gym_name = $raid['gym_name'];
+    // Number of rows based on number of words or total chars
+    $gym_name_rows = 1;
+    if(count($gym_name_words) > 1 && $gym_name_total_chars >= 18 && $gym_name_total_chars <= 50)  {
+        $gym_name_rows = 2;
+    } else if($gym_name_total_chars > 50)  {
+        $gym_name_rows = 3;
+    }
 
-// Get length, the shortest and largest word of the gym name
-$gym_name_words = explode(SP, $gym_name);
-$gym_name_word_lengths = array_map('strlen', array_map('utf8_decode', $gym_name_words));
-$gym_name_word_largest = max($gym_name_word_lengths);
-$gym_name_word_shortest = min($gym_name_word_lengths);
-$gym_name_total_chars = strlen(utf8_decode($gym_name));
+    // Wrap gym name to multiple lines if too long
+    $gym_name_lines = explode(PHP_EOL,wordwrap(trim($gym_name),($gym_name_total_chars+$gym_name_word_largest)/$gym_name_rows,PHP_EOL));
 
-// Number of rows based on number of words or total chars
-$gym_name_rows = 1;
-if(count($gym_name_words) > 1 && $gym_name_total_chars >= 18 && $gym_name_total_chars <= 50)  {
-    $gym_name_rows = 2;
-} else if($gym_name_total_chars > 50)  {
-    $gym_name_rows = 3;
-}
+    // Write to log.
+    debug_log($gym_name_total_chars, 'Gym name length:');
+    debug_log($gym_name_lines, 'Gym name lines:');
 
-// Wrap gym name to multiple lines if too long
-$gym_name_lines = explode(PHP_EOL,wordwrap(trim($gym_name),($gym_name_total_chars+$gym_name_word_largest)/$gym_name_rows,PHP_EOL));
+    // Target width and height
+    $targetWidth = imagesx($canvas) - imagesx($mask) - $spacing_right;
+    $targetHeight = 95;
+    $targetHeight = $targetHeight/$gym_name_rows;
 
-// Write to log.
-debug_log($gym_name_total_chars, 'Gym name length:');
-debug_log($gym_name_lines, 'Gym name lines:');
+    // Get largest possible fontsize for each gym name line
+    for($l=0; $l<count($gym_name_lines); $l++) {
+        for($s=1; $s<70/count($gym_name_lines); $s=$s+0.5){
+            $box = imagettfbbox($s, 0, $font_gym, $gym_name_lines[$l]);
+            $min_x = min(array($box[0], $box[2], $box[4], $box[6]));
+            $max_x = max(array($box[0], $box[2], $box[4], $box[6]));
+            $min_y = min(array($box[1], $box[3], $box[5], $box[7]));
+            $max_y = max(array($box[1], $box[3], $box[5], $box[7]));
+            $width = ($max_x - $min_x);
+            $height = ($max_y - $min_y);
+            $targetsize = $s;
+            // Exit once we exceed width or height
+            if($width >= $targetWidth || $height >= $targetHeight){
+                break;
+            }
+        }
 
-// Target width and height
-$targetWidth = imagesx($canvas) - imagesx($mask) - $spacing_right;
-$targetHeight = 95;
-$targetHeight = $targetHeight/$gym_name_rows;
+        // Gym name font size and spacing
+        if($l == 0 || $targetsize < $fontsize_gym) {
+            $fontsize_gym = $targetsize;
+            $spacing_gym = $height * 0.30;
+        }
+    }
 
-// Get largest possible fontsize for each gym name line
-for($l=0; $l<count($gym_name_lines); $l++) {
-    for($s=1; $s<70/count($gym_name_lines); $s=$s+0.5){
-        $box = imagettfbbox($s, 0, $font_gym, $gym_name_lines[$l]);
+    // Add gym name to image
+    for($y=0;$y<count($gym_name_lines);$y++){
+        // Get box around text
+        $box = imagettfbbox($fontsize_gym,$angle,$font_gym,$gym_name_lines[$y]);
+        // Get min and max positions for x and y
         $min_x = min(array($box[0], $box[2], $box[4], $box[6]));
         $max_x = max(array($box[0], $box[2], $box[4], $box[6]));
         $min_y = min(array($box[1], $box[3], $box[5], $box[7]));
         $max_y = max(array($box[1], $box[3], $box[5], $box[7]));
-        $width = ($max_x - $min_x);
-        $height = ($max_y - $min_y);
-        $targetsize = $s;
-        // Exit once we exceed width or height
-        if($width >= $targetWidth || $height >= $targetHeight){
-            break;
-        }
+        // Get text width and height
+        $textwidth = ($max_x - $min_x);
+        $textheight = ($max_y - $min_y);
+        // Calculate distance from left and top for positioning the gym name text.
+        $gym_name_top = (($y+1)*($textheight))+($y*$spacing_gym);
+        $gym_name_left = imagesx($mask) + (((imagesx($canvas) - imagesx($mask) - $spacing_right) - $textwidth)/2);
+        imagettftext($canvas, $fontsize_gym, $angle, $gym_name_left, $gym_name_top, $font_color, $font_gym, $gym_name_lines[$y]);
     }
 
-    // Gym name font size and spacing
-    if($l == 0 || $targetsize < $fontsize_gym) {
-        $fontsize_gym = $targetsize;
-        $spacing_gym = $height * 0.30;
-    }
-}
-
-// Add gym name to image
-for($y=0;$y<count($gym_name_lines);$y++){
-    // Get box around text
-    $box = imagettfbbox($fontsize_gym,$angle,$font_gym,$gym_name_lines[$y]);
-    // Get min and max positions for x and y
-    $min_x = min(array($box[0], $box[2], $box[4], $box[6]));
-    $max_x = max(array($box[0], $box[2], $box[4], $box[6]));
-    $min_y = min(array($box[1], $box[3], $box[5], $box[7]));
-    $max_y = max(array($box[1], $box[3], $box[5], $box[7]));
-    // Get text width and height
-    $textwidth = ($max_x - $min_x);
-    $textheight = ($max_y - $min_y);
-    // Calculate distance from left and top for positioning the gym name text.
-    $gym_name_top = (($y+1)*($textheight))+($y*$spacing_gym);
-    $gym_name_left = imagesx($mask) + (((imagesx($canvas) - imagesx($mask) - $spacing_right) - $textwidth)/2);
-    imagettftext($canvas, $fontsize_gym, $angle, $gym_name_left, $gym_name_top, $font_color, $font_gym, $gym_name_lines[$y]);
-}
 
 
-
-// Raid times
-if($time_now < $raid['end_time']) {
-    $time_text = get_raid_times($raid, true, true);
-} else {
-    $time_text = getPublicTranslation('raid_done');
-}
-
-// Adjust margins, font size and raid time text itself
-$time_text_lines = array();
-if(strpos($time_text, ',') !== false) {
-    $time_text_lines[] .= explode(',', $time_text)[0] . ',';
-    // Thursday, 18:00 - 18:45
-    if(count(explode(SP, explode(',', $time_text, 2)[1])) == 4) {
-        $time_top = 150;
-        $time_text_size = 35;
-        $tmp_time_text_line = explode(SP, explode(',', $time_text)[1]);
-        $time_text_lines[] .= $tmp_time_text_line[0] . SP . $tmp_time_text_line[1] . SP . $tmp_time_text_line[2] . SP . $tmp_time_text_line[3];
-
-    // Thursday, 12. December 18:00 - 18:45
+    // Raid times
+    if($time_now < $raid['end_time']) {
+        $time_text = get_raid_times($raid, true, true);
     } else {
-        $time_top = 140;
-        $time_text_size = 30;
-        $tmp_time_text_line = explode(SP, explode(',', $time_text)[1]);
-        $time_text_lines[] .= $tmp_time_text_line[0] . SP . $tmp_time_text_line[1] . SP . $tmp_time_text_line[2];
-        $time_text_lines[] .= $tmp_time_text_line[3] . SP . $tmp_time_text_line[4] . SP . $tmp_time_text_line[5];
+        $time_text = getPublicTranslation('raid_done');
     }
-} else {
-    // 18:00 - 18:45 or raid ended text.
-    $time_text_size = 40;
-    $time_top = 175;
-    $time_text_lines[] .= $time_text;
-}
-$num_text_lines = count($time_text_lines);
 
-// Go through every line...
-for($ya=0;$ya<$num_text_lines;$ya++){
-    // ...and draw them to image
-    $time_text_top = ($time_top+($ya*($time_text_size+$spacing)));
+    // Adjust margins, font size and raid time text itself
+    $time_text_lines = array();
+    if(strpos($time_text, ',') !== false) {
+        $time_text_lines[] .= explode(',', $time_text)[0] . ',';
+        // Thursday, 18:00 - 18:45
+        if(count(explode(SP, explode(',', $time_text, 2)[1])) == 4) {
+            $time_top = 150;
+            $time_text_size = 35;
+            $tmp_time_text_line = explode(SP, explode(',', $time_text)[1]);
+            $time_text_lines[] .= $tmp_time_text_line[0] . SP . $tmp_time_text_line[1] . SP . $tmp_time_text_line[2] . SP . $tmp_time_text_line[3];
 
-    // Align text to center between pokemon icon and right edge
-    $box = imagettfbbox($time_text_size, $angle, $font_text, $time_text_lines[$ya]);
-    $min_x = min(array($box[0], $box[2], $box[4], $box[6]));
-    $max_x = max(array($box[0], $box[2], $box[4], $box[6]));
-    $textwidth = ($max_x - $min_x);
-    $time_left = $left_after_poke + (((imagesx($canvas) - $left_after_poke - $spacing_right) - $textwidth)/2);
-    imagettftext($canvas,$time_text_size,$angle,$time_left,$time_text_top,$font_color,$font_text,$time_text_lines[$ya]);
-}
-
-
-
-// Pokemon raid boss
-$pokemon_name = get_local_pokemon_name($raid['pokemon'], $raid['pokemon_form'], true);
-
-// Pokemon name and form?
-$pokemon_text_lines = array($pokemon_name);
-if(strlen($pokemon_name) > 20) {
-    $pokemon_text_lines = explode(SP,$pokemon_name);
-    if(count($pokemon_text_lines) == 1) {
-        // Wrapping the time text if too long (to 20 letters)
-        $pokemon_text_lines = explode(PHP_EOL,wordwrap(trim($pokemon_name),20,PHP_EOL));
+        // Thursday, 12. December 18:00 - 18:45
+        } else {
+            $time_top = 140;
+            $time_text_size = 30;
+            $tmp_time_text_line = explode(SP, explode(',', $time_text)[1]);
+            $time_text_lines[] .= $tmp_time_text_line[0] . SP . $tmp_time_text_line[1] . SP . $tmp_time_text_line[2];
+            $time_text_lines[] .= $tmp_time_text_line[3] . SP . $tmp_time_text_line[4] . SP . $tmp_time_text_line[5];
+        }
+    } else {
+        // 18:00 - 18:45 or raid ended text.
+        $time_text_size = 40;
+        $time_top = 175;
+        $time_text_lines[] .= $time_text;
     }
-}
-$num_pokemon_lines = count($pokemon_text_lines);
+    $num_text_lines = count($time_text_lines);
 
-// Target width and height
-$targetWidth = imagesx($canvas) - $left_after_poke - (strlen($raid['weather']) * 42) - $spacing_right;
-$targetHeight = 80;
+    // Go through every line...
+    for($ya=0;$ya<$num_text_lines;$ya++){
+        // ...and draw them to image
+        $time_text_top = ($time_top+($ya*($time_text_size+$spacing)));
 
-// Get largest possible fontsize for each pokemon name and form line
-for($p=0; $p<($num_pokemon_lines); $p++) {
-    for($s=1; $s<40; $s=$s+0.5){
-        $box = imagettfbbox($s, 0, $font_text, $pokemon_text_lines[$p]);
+        // Align text to center between pokemon icon and right edge
+        $box = imagettfbbox($time_text_size, $angle, $font_text, $time_text_lines[$ya]);
         $min_x = min(array($box[0], $box[2], $box[4], $box[6]));
         $max_x = max(array($box[0], $box[2], $box[4], $box[6]));
-        $min_y = min(array($box[1], $box[3], $box[5], $box[7]));
-        $max_y = max(array($box[1], $box[3], $box[5], $box[7]));
-        $width = ($max_x - $min_x);
-        $height = ($max_y - $min_y);
-        $targetsize = $s;
-        // Exit once we exceed width or height
-        if($width >= $targetWidth || $height >= $targetHeight){
-            break;
+        $textwidth = ($max_x - $min_x);
+        $time_left = $left_after_poke + (((imagesx($canvas) - $left_after_poke - $spacing_right) - $textwidth)/2);
+        imagettftext($canvas,$time_text_size,$angle,$time_left,$time_text_top,$font_color,$font_text,$time_text_lines[$ya]);
+    }
+
+
+
+    // Pokemon raid boss
+    $pokemon_name = get_local_pokemon_name($raid['pokemon'], $raid['pokemon_form'], true);
+
+    // Pokemon name and form?
+    $pokemon_text_lines = array($pokemon_name);
+    if(strlen($pokemon_name) > 20) {
+        $pokemon_text_lines = explode(SP,$pokemon_name);
+        if(count($pokemon_text_lines) == 1) {
+            // Wrapping the time text if too long (to 20 letters)
+            $pokemon_text_lines = explode(PHP_EOL,wordwrap(trim($pokemon_name),20,PHP_EOL));
+        }
+    }
+    $num_pokemon_lines = count($pokemon_text_lines);
+
+    // Target width and height
+    $targetWidth = imagesx($canvas) - $left_after_poke - (strlen($raid['weather']) * 42) - $spacing_right;
+    $targetHeight = 80;
+
+    // Get largest possible fontsize for each pokemon name and form line
+    for($p=0; $p<($num_pokemon_lines); $p++) {
+        for($s=1; $s<40; $s=$s+0.5){
+            $box = imagettfbbox($s, 0, $font_text, $pokemon_text_lines[$p]);
+            $min_x = min(array($box[0], $box[2], $box[4], $box[6]));
+            $max_x = max(array($box[0], $box[2], $box[4], $box[6]));
+            $min_y = min(array($box[1], $box[3], $box[5], $box[7]));
+            $max_y = max(array($box[1], $box[3], $box[5], $box[7]));
+            $width = ($max_x - $min_x);
+            $height = ($max_y - $min_y);
+            $targetsize = $s;
+            // Exit once we exceed width or height
+            if($width >= $targetWidth || $height >= $targetHeight){
+                break;
+            }
+        }
+
+        // Gym name font size and spacing
+        if($p == 0 || $targetsize < $fontsize_poke) {
+            $fontsize_poke = $targetsize;
         }
     }
 
-    // Gym name font size and spacing
-    if($p == 0 || $targetsize < $fontsize_poke) {
-        $fontsize_poke = $targetsize;
+    // Pokemon name (and form) in 1 row
+    $poke_text_top = 310;
+
+    // Pokemon name and form in one or two lines?
+    if($num_pokemon_lines > 1) {
+        $poke_text_top = 272;
     }
-}
 
-// Pokemon name (and form) in 1 row
-$poke_text_top = 310;
+    // Add pokemon name to image
+    for($pa=0;$pa<$num_pokemon_lines;$pa++){
+        // Get text width and height
+        $textwidth = ($max_x - $min_x);
+        $textheight = ($max_y - $min_y);
+        // Position from top
+        $poke_text_top = ($poke_text_top+($pa*($fontsize_poke+$spacing)));
+        imagettftext($canvas,$fontsize_poke,$angle,$left_after_poke,$poke_text_top,$font_color,$font_text,$pokemon_text_lines[$pa]);
+    }
 
-// Pokemon name and form in one or two lines?
-if($num_pokemon_lines > 1) {
-    $poke_text_top = 272;
-}
+    // Pokemon CP
+    if($raid['pokedex_id'] < 9990) {
+        $cp_text_top = $poke_text_top+$text_size+$spacing;
+        $cp_text = $raid['min_cp']." - ".$raid['max_cp'];
+        $cp_text2 =  "(".$raid['min_weather_cp']."-".$raid['max_weather_cp'].")";
 
-// Add pokemon name to image
-for($pa=0;$pa<$num_pokemon_lines;$pa++){
-    // Get text width and height
-    $textwidth = ($max_x - $min_x);
-    $textheight = ($max_y - $min_y);
-    // Position from top
-    $poke_text_top = ($poke_text_top+($pa*($fontsize_poke+$spacing)));
-    imagettftext($canvas,$fontsize_poke,$angle,$left_after_poke,$poke_text_top,$font_color,$font_text,$pokemon_text_lines[$pa]);
-}
+        imagettftext($canvas,$text_size,$angle,$left_after_poke,$cp_text_top,$font_color,$font_text,$cp_text);
+        $cp_weather_text_box = imagettfbbox($text_size_cp_weather,$angle,$font_text,$cp_text2);
+        imagettftext($canvas,$text_size_cp_weather,$angle,($canvas_width-$cp_weather_text_box[2]-$spacing_right),$cp_text_top,$font_color,$font_text,$cp_text2);
 
-// Pokemon CP
-if($raid['pokedex_id'] < 9990) {
-    $cp_text_top = $poke_text_top+$text_size+$spacing;
-    $cp_text = $raid['min_cp']." - ".$raid['max_cp'];
-    $cp_text2 =  "(".$raid['min_weather_cp']."-".$raid['max_weather_cp'].")";
-
-    imagettftext($canvas,$text_size,$angle,$left_after_poke,$cp_text_top,$font_color,$font_text,$cp_text);
-    $cp_weather_text_box = imagettfbbox($text_size_cp_weather,$angle,$font_text,$cp_text2);
-    imagettftext($canvas,$text_size_cp_weather,$angle,($canvas_width-$cp_weather_text_box[2]-$spacing_right),$cp_text_top,$font_color,$font_text,$cp_text2);
-
-    $count_weather = strlen($raid['weather']);
-    for($i=0;$i<$count_weather;$i++) {
-        $we = substr($raid['weather'],$i,1);
-        $weather_icon_path = IMAGES_PATH . "/weather/";
-        // Use white icons?
-        if($config->RAID_PICTURE_ICONS_WHITE) {
-            $weather_icon_path = IMAGES_PATH . "/weather_white/";
+        $count_weather = strlen($raid['weather']);
+        for($i=0;$i<$count_weather;$i++) {
+            $we = substr($raid['weather'],$i,1);
+            $weather_icon_path = IMAGES_PATH . "/weather/";
+            // Use white icons?
+            if($config->RAID_PICTURE_ICONS_WHITE) {
+                $weather_icon_path = IMAGES_PATH . "/weather_white/";
+            }
+            $weather_icon = imagecreatefrompng($weather_icon_path . $we . ".png"); // 64x64
+            imagecopyresampled($canvas,$weather_icon,$canvas_width-$spacing_right-($count_weather-$i)*40,$poke_text_top-30,0,0,38,38,64,64);
         }
-        $weather_icon = imagecreatefrompng($weather_icon_path . $we . ".png"); // 64x64
-        imagecopyresampled($canvas,$weather_icon,$canvas_width-$spacing_right-($count_weather-$i)*40,$poke_text_top-30,0,0,38,38,64,64);
     }
 }
 
@@ -471,12 +479,12 @@ if($raid['pokedex_id'] < 9990) {
 
 // Define and print picture
 // PNG
-if($config->RAID_PICTURE_FILE_FORMAT == 'png') {
+if($config->RAID_PICTURE_FILE_FORMAT == 'png' && $_GET['jpg']!="true") {
    header("Content-type: image/png");
    imagepng($canvas);
 
 // JPEG
-} else if($config->RAID_PICTURE_FILE_FORMAT == 'jpeg' || $config->RAID_PICTURE_FILE_FORMAT == 'jpg') {
+} else if($config->RAID_PICTURE_FILE_FORMAT == 'jpeg' || $config->RAID_PICTURE_FILE_FORMAT == 'jpg' || $_GET['jpg'] == "true") {
     header("Content-type: image/jpeg");
     imagejpeg($canvas, NULL, 90);
 
