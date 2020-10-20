@@ -845,7 +845,8 @@ A few examples for access files can be found below the permission overview table
 |            |                                                                  |                                          |
 | Help       | Show help `/help`                                                | `help`                                   |
 |            |                                                                  |                                          |
-| Tutorial   | Force user to complete tutorial before allowing the use of any other command | `force-tutorial`             |
+| Tutorial   | Allow users to access tutorial                                   | `tutorial`             |
+|            | Force user to complete tutorial before allowing the use of any other command | `force-tutorial`             |
 
 
 #### Examples
@@ -885,7 +886,8 @@ To help with teaching users how to use the bot you can force them to go through 
 To enable this feature:
 - Create `tutorial.php` in config folder. Use `tutorial.php.example` as reference
 - Set `TUTORIAL_MODE` = `true` in `config.json`
-- `force-tutorial` in access config file(s).
+- `tutorial` in access config file(s)
+- `force-tutorial` in access config file(s) to force users to go through the tutorial before they're able to use the bot.
 
 # Customization
 
