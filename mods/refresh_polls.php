@@ -8,7 +8,7 @@ if($config->AUTO_REFRESH_POLLS) {
                     LEFT JOIN   raids
                     ON          cleanup.raid_id = raids.id
                     WHERE   chat_id != 0
-                    AND     raids.start_time >= NOW()
+                    AND     raids.start_time <= NOW()
                     AND     message_id != 0
                     ");
     debug_log("REFRESH POLLS:");
@@ -34,10 +34,13 @@ if($config->AUTO_REFRESH_POLLS) {
             edit_message($data_poll, $msg['full'], $keys, ['disable_web_page_preview' => 'true']);
         }else {
             // If raid is over, update photo
-            if($raid['ts_end'] < $raid['ts_now'] ){
+            $time_now = utcnow();
+            if($time_now > $raid['end_time']) {
                 // Edit the photo
-                $url = PICTURE_URL . "?gym=".$raid['gym_id']."&pokemon=ended";
-                editMessageMedia($res_messages['message_id'], $msg['short'], $keys, $res_messages['chat_id'],['disable_web_page_preview' => 'true'], false, $url);
+                require_once(LOGIC_PATH . '/raid_picture.php');
+                $raid['pokemon'] = 'ended';
+                $picture_url = raid_picture_url($raid);
+                editMessageMedia($res_messages['message_id'], $msg['short'], $keys, $res_messages['chat_id'],['disable_web_page_preview' => 'true'], false, $picture_url);
             }else {
                 edit_caption($data_poll, $msg['short'], $keys, ['disable_web_page_preview' => 'true']);
             }

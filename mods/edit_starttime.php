@@ -14,7 +14,7 @@ $arg_data = explode(",", $data['arg']);
 $event_id = $arg_data[0];
 $raid_level = $arg_data[1];
 $pokemon_id = $arg_data[2];
-
+$arg = "";
 // Check for options.
 if (isset($arg_data[3]))
 { 

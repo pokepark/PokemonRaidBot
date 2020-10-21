@@ -102,7 +102,7 @@ if ($raid_id == 0 && $gym_id != 0) {
         debug_log("Event: ".$event);
         debug_log("Event-id: ".$event_id);
         debug_log("Raid level: ".$raid_level);
-        debug_log("Pokemon: ".($pokemon_id_formid));
+        debug_log("Pokemon: ".$pokemon_id_formid['pokedex_id']."-".$pokemon_id_formid['pokemon_form_id']);
         
         // Create raid in database.
         $rs = my_query(
