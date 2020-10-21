@@ -2,7 +2,15 @@
 
 // Refresh polls also
 if($config->AUTO_REFRESH_POLLS) {
-    $query_messages = my_query("SELECT * FROM cleanup WHERE chat_id != 0 AND message_id != 0");
+    $query_messages = my_query("
+                    SELECT *
+                    FROM cleanup
+                    LEFT JOIN   raids
+                    ON          cleanup.raid_id = raids.id
+                    WHERE   chat_id != 0
+                    AND     raids.start_time >= NOW()
+                    AND     message_id != 0
+                    ");
     debug_log("REFRESH POLLS:");
     debug_log("Num rows: ".$query_messages->rowCount());
     while($res_messages = $query_messages->fetch()) {
@@ -22,14 +30,14 @@ if($config->AUTO_REFRESH_POLLS) {
         $msg = show_raid_poll($raid);
         $keys = keys_vote($raid);
 
-        if($raid['event_hide_raid_picture'] == 1 or strlen(utf8_decode($msg['short'])) > 1024) {
-            edit_message($data_poll, $msg[], $keys, ['disable_web_page_preview' => 'true']);
+        if(!$config->RAID_PICTURE or $raid['event_hide_raid_picture'] == 1 or strlen(utf8_decode($msg['short'])) > 1024) {
+            edit_message($data_poll, $msg['full'], $keys, ['disable_web_page_preview' => 'true']);
         }else {
             // If raid is over, update photo
             if($raid['ts_end'] < $raid['ts_now'] ){
                 // Edit the photo
                 $url = PICTURE_URL . "?gym=".$raid['gym_id']."&pokemon=ended";
-                editMessageMedia($res_messages['message_id'], $msg['short'], $keys, $res_messages['chat_id'],['disable_web_page_preview' => 'true'], false, $url);	
+                editMessageMedia($res_messages['message_id'], $msg['short'], $keys, $res_messages['chat_id'],['disable_web_page_preview' => 'true'], false, $url);
             }else {
                 edit_caption($data_poll, $msg['short'], $keys, ['disable_web_page_preview' => 'true']);
             }
