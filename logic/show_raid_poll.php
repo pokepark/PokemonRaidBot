@@ -186,8 +186,13 @@ function show_raid_poll($raid)
                 }
             }else if($attendance['want_invite'] == 1) {
                 // Create array key for attend time and pokemon to maintain correct sorting order
-                if(!array_key_exists($attendance['attend_time'], $att_array)) $att_array[$attendance['attend_time']] = null;
-                if(!array_key_exists($attendance['pokemon'], $att_array[$attendance['attend_time']])) $att_array[$attendance['attend_time']][$attendance['pokemon']] = null;
+                if(!array_key_exists($attendance['attend_time'], $att_array)) {
+                    $att_array[$attendance['attend_time']] = null;
+                    $att_array[$attendance['attend_time']][$attendance['pokemon']] = null;
+                }
+                if(!array_key_exists($attendance['pokemon'], $att_array[$attendance['attend_time']])) {
+                    $att_array[$attendance['attend_time']][$attendance['pokemon']] = null;
+                }
 
                 $cnt_array[$attendance['attend_time']][$attendance['pokemon']]['want_invite'] += 1 + $attendance['extra_valor'] + $attendance['extra_mystic'] + $attendance['extra_instinct'];
             }

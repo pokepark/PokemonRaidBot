@@ -22,6 +22,7 @@
   "TIMEZONE":"UTC",
   "MAPS_LOOKUP": false,
   "MAPS_API_KEY":"",
+  "AUTO_REFRESH_POLLS":false,
   "CUSTOM_TRAINERNAME": true,
   "RAID_VIA_LOCATION": true,
   "RAID_EGG_DURATION":"60",

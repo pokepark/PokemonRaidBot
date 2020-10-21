@@ -128,10 +128,6 @@ function keys_vote($raid)
     $buttons_status = [
         [
             [
-                'text'          => EMOJI_REFRESH,
-                'callback_data' => $raid['id'] . ':vote_refresh:0'
-            ],
-            [
               'text'          => EMOJI_ALARM,
               'callback_data' => $raid['id'] . ':vote_status:alarm'
             ],
@@ -153,7 +149,14 @@ function keys_vote($raid)
             ],
         ],
     ];
-
+    if(!$config->AUTO_REFRESH_POLLS) {
+        $buttons_refresh = 
+            [
+                'text'          => EMOJI_REFRESH,
+                'callback_data' => $raid['id'] . ':vote_refresh:0'
+            ];
+        $buttons_status = array_merge($buttons_refresh, $buttons_status);
+    }
     // Raid ended already.
     if ($end_time < $now) {
         $keys = [
