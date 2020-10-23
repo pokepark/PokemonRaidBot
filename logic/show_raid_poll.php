@@ -242,24 +242,17 @@ function show_raid_poll($raid)
         $att_array[$attendance['attend_time']][$attendance['pokemon']][] = $attendance;
     }
     // Raid has started and has participants
-    if($time_now > $raid['start_time'] && $cnt_all > 0) {
+    if(($time_now > $raid['start_time'] && $cnt_all > 0) || $buttons_hidden) {
         // Display raid boss CP values.
         $pokemon_cp = get_formatted_pokemon_cp($raid_pokemon_id, $raid_pokemon_form_id, true);
         $msg = raid_poll_message($msg, (!empty($pokemon_cp)) ? ($pokemon_cp . CR) : '', true);
-
-        // Add raid is done message.
-        if($time_now > $raid['end_time']) {
-            $msg = raid_poll_message($msg, '<b>' . getPublicTranslation('raid_done') . '</b>' . CR);
-
-        // Add time left message.
-        } else {
-            $msg = raid_poll_message($msg, getPublicTranslation('raid') . ' — <b>' . getPublicTranslation('still') . ' ' . $time_left . 'h</b>' . CR);
-        }
-    // Buttons are hidden?
-    } else if($buttons_hidden) {
-        // Display raid boss CP values.
-        $pokemon_cp = get_formatted_pokemon_cp($raid['pokemon'], true);
-        $msg = raid_poll_message($msg, (!empty($pokemon_cp)) ? ($pokemon_cp . CR) : '', true);
+    }
+    // Add raid is done message.
+    if($time_now > $raid['end_time']) {
+        $msg = raid_poll_message($msg, '<b>' . getPublicTranslation('raid_done') . '</b>' . CR);
+    // Add time left message.
+    } else {
+        $msg = raid_poll_message($msg, getPublicTranslation('raid') . ' — <b>' . getPublicTranslation('still') . ' ' . $time_left . 'h</b>' . CR);
     }
 
     // Hide info if buttons are hidden
