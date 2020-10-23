@@ -25,9 +25,6 @@ if ($chat_id == 0) {
         "
     );
 
-    // Init keys.
-    $keys = [];
-
     // Count results.
     $count = 0;
 
@@ -50,14 +47,16 @@ if ($chat_id == 0) {
         $msg = '<b>' . getTranslation('delete_raid_overview_for_chat') . ' ' . $chat_title . '?</b>';
 
         // Set keys - Delete button.
-        $keys[] = [         
-            [                   
-                'text'          => getTranslation('yes'),
-                'callback_data' => '0:overview_delete:' . $rowOverviews['chat_id']
-            ],
+        $keys = [
             [
-                'text'          => getTranslation('no'),
-                'callback_data' => '0:overview_delete:1'
+                [
+                    'text'          => getTranslation('yes'),
+                    'callback_data' => '0:overview_delete:' . $rowOverviews['chat_id']
+                ],
+                [
+                    'text'          => getTranslation('no'),
+                    'callback_data' => '0:overview_delete:1'
+                ]
             ]
         ];
 
@@ -93,7 +92,21 @@ if ($chat_id == 0) {
     $overview = $request_overviews->fetch();
 
     // Delete overview
-    delete_overview($overview['chat_id'], $overview['message_id']);
+    $chat_id = $overview['chat_id'];
+    $message_id = $overview['message_id'];
+
+    // Delete telegram message.
+    debug_log('Deleting overview telegram message ' . $message_id . ' from chat ' . $chat_id);
+    delete_message($chat_id, $message_id);
+
+    // Delete overview from database.
+    debug_log('Deleting overview information from database for Chat_ID: ' . $chat_id);
+    $rs = my_query(
+        "
+        DELETE FROM   overview
+        WHERE   chat_id = '{$chat_id}'
+        "
+    );
 
     // Set message.
     $callback_msg = '<b>' . getTranslation('overview_successfully_deleted') . '</b>';
@@ -115,4 +128,5 @@ $tg_json[] = edit_message($update, $callback_msg, $callback_keys, false, true);
 curl_json_multi_request($tg_json);
 
 // Exit.
+$dbh = null;
 exit();
