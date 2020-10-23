@@ -12,5 +12,7 @@ $tutorial[2]['msg'] = '3rd tutorial message';
 // A separate message for new users isn't required
 $tutorial[2]['photo'] = '';// A photo url must be set!
 
+$tutorial_done = 'Message that is left to user after completing the tutorial.';
+$tutorial_grant_level = 1; // The tutorial value set to user in db (int)0-9
 
 ?> 

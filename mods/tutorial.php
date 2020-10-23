@@ -22,7 +22,7 @@ if($action == "end") {
     answerCallbackQuery($update['callback_query']['id'], "OK!");
     delete_message($update['callback_query']['message']['chat']['id'],$update['callback_query']['message']['message_id']);
     if($new_user) {
-        my_query("UPDATE users SET tutorial = '1' WHERE user_id = '{$user_id}'");
+        my_query("UPDATE users SET tutorial = '{$data['id']}' WHERE user_id = '{$user_id}'");
 
         send_message($user_id, $tutorial_done, []);
         
@@ -107,7 +107,7 @@ if($action == "end") {
     }else {
         $keys[0][] = [
                 'text'          => getTranslation("done"),
-                'callback_data' => "0:tutorial:end"
+                'callback_data' => $tutorial_grant_level . ":tutorial:end"
         ];
     }
 }

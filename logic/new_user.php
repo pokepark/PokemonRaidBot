@@ -5,7 +5,8 @@
  * @return bool
  */
 function new_user($user_id) {
-    if(user_tutorial($user_id) == 0 ) return true;
+    global $config;
+    if(user_tutorial($user_id) < $config->TUTORIAL_LEVEL_REQUIREMENT) return true;
     else return false;
 }
 ?>
