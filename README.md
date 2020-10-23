@@ -1238,6 +1238,7 @@ Updates to the config file are NOT checked automatically. Therefore always check
 | RAID_POLL_UI_ORDER| Order of elements in text based raid polls. Valid elements are: `extra, teamll, time, pokemon, status` |
 | RAID_POLL_POKEMON_NAME_FIRST_LINE| Shows the Name of the Pokemon instead of `Raid:` - Good for Message Preview to see which Pokemon the Raid will be. |
 | RAID_POLL_CALCULATE_MAPS_ROUTE| TRUE: Will show the Route to the Gym while clicking onto gym-address - FALSE: Will open Google Maps and only show the gym as a point in the map. |
+| RAID_POLL_SHOW_NICK_OVER_NAME | Show users Telegram @username instead of name |
 | RAID_WANT_INVITE | Bool, allow participants to indicate that they wish to be invited to the raid |
 | RAID_POLL_SHOW_TRAINERCODE| With /trainer everyone can set his trainercode and it will be shown on raidpolls, if the trainer chooses everytime (or renamed to invite me) and inside raidalarm messages |
 | RAID_POLL_SHOW_START_LINK| Display the `START`-link in raid poll that allows users to send lobby code to other participants. |

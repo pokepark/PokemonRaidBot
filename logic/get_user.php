@@ -59,27 +59,18 @@ function get_user($user_id)
  */
 function check_trainername($row){
     global $config;
-    if($config->CUSTOM_TRAINERNAME==true){ // if Custom Trainername is enabled by config
-        if(check_for_empty_string($row['trainername'])){ // trainername not set by user
-            // check if Telegram-@Nick is set
-              if(check_for_empty_string($row['nick'])){
-                // leave Telegram-name as it is (Trainername and Telegram-@Nick were not configured by user)
-              }else{
-                // set Telegram-@Nick as Name inside the bot
-                $row['name'] = $row['nick'];
-              }
+    // if Custom Trainername is enabled by config
+    if($config->CUSTOM_TRAINERNAME == false || check_for_empty_string($row['trainername'])){ // trainername not set by user
+        // check if Telegram-@Nick is set
+        if(!check_for_empty_string($row['nick']) && $config->RAID_POLL_SHOW_NICK_OVER_NAME){
+            // set Telegram-@Nick as Name inside the bot
+            $row['name'] = $row['nick'];
         }else{
-            // Trainername is configured by User
-            $row['name'] = $row['trainername'];
+            // leave Telegram-name as it is (Trainername and Telegram-@Nick were not configured by user)
         }
-    }else{ // Custom Trainername is disabled by config
-      // check if Telegram-@Nick is set
-      if(check_for_empty_string($row['nick'])){
-        // do nothing -> leave Telegram-name
-      }else{
-        // set Telegram-@Nick as Name inside the bot
-        $row['name'] = $row['nick'];
-      }
+    }else{
+        // Trainername is configured by User
+        $row['name'] = $row['trainername'];
     }
 
     return $row;
