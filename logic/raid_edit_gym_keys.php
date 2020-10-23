@@ -37,7 +37,10 @@ function raid_edit_gym_keys($first, $warn = true, $action = 'edit_raidlevel', $d
     } else {
         $show_gym = 1;
     }
-
+    $query_collate = "";
+    if($config->MYSQL_SORT_COLLATE != "") {
+        $query_collate = "COLLATE " . $config->MYSQL_SORT_COLLATE;
+    }
     // Get gyms from database
     $rs = my_query(
         "
@@ -49,7 +52,7 @@ function raid_edit_gym_keys($first, $warn = true, $action = 'edit_raidlevel', $d
         $not
         AND       gyms.show_gym = {$show_gym}
         GROUP BY  gym_name, raids.gym_id, gyms.id, gyms.ex_gym
-        ORDER BY  gym_name
+        ORDER BY  gym_name " . $query_collate . "
         "
     );
 

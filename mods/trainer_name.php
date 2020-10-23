@@ -42,7 +42,7 @@ if($confirm == 0) {
     answerCallbackQuery($update['callback_query']['id'], $callback_response);
 
     // Edit message.
-    edit_message($update, $msg, $keys, false);
+    edit_message($update, $msg, [], false);
 
 }
 
