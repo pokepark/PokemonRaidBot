@@ -168,43 +168,60 @@ foreach ($update as $raid) {
             exit;
         }
     }
+    $form = 0;
 
     // Create raid if not exists otherwise update if changes are detected
     // Just an egg
     if ($pokemon == 0) {
-        $pokemon = '999' . $level;
-    }
-
-    $form = 0;
-    // Use negated evolution id instead of form id if present
-    if(isset($raid['message']['evolution']) && $raid['message']['evolution'] > 0) {
-        $form = 0 - $raid['message']['evolution'];
-    }else {
-        if ( isset($raid['message']['form']) && $raid['message']['form'] != "0") {
-            // Use the form provided in webhook if it's valid
-            $form = $raid['message']['form'];
-        }elseif($pokemon != 0) {
-            // Else look up the normal form's id from pokemon table unless it's an egg
-            try {
-                $query = "
-                    SELECT pokemon_form_id FROM pokemon
-                    WHERE
-                        pokedex_id = :pokemon AND
-                        pokemon_form_name = 'normal'
-                    LIMIT 1
+        $query = "
+                    SELECT  pokemon_form_id, 
+                            pokedex_id 
+                    FROM    pokemon 
+                    WHERE   raid_level = :raid_level
                 ";
-                $statement = $dbh->prepare( $query );
-                $statement->execute([
-                  'pokemon' => $pokemon
-              ]);
-            }
-            catch (PDOException $exception) {
-                error_log($exception->getMessage());
-                $dbh = null;
-                exit;
-            }
+        $statement = $dbh->prepare( $query );
+        $statement->execute([
+          ':raid_level' => $level
+        ]);
+        if($statement->rowCount() == 1) {
             $result = $statement->fetch();
+            $pokemon = $result['pokedex_id'];
             $form = $result['pokemon_form_id'];
+        }else {
+            $pokemon = '999' . $level;
+        }
+    }
+    if($form == 0) {
+        // Use negated evolution id instead of form id if present
+        if(isset($raid['message']['evolution']) && $raid['message']['evolution'] > 0) {
+            $form = 0 - $raid['message']['evolution'];
+        }else {
+            if ( isset($raid['message']['form']) && $raid['message']['form'] != "0") {
+                // Use the form provided in webhook if it's valid
+                $form = $raid['message']['form'];
+            }elseif($pokemon != 0) {
+                // Else look up the normal form's id from pokemon table unless it's an egg
+                try {
+                    $query = "
+                        SELECT pokemon_form_id FROM pokemon
+                        WHERE
+                            pokedex_id = :pokemon AND
+                            pokemon_form_name = 'normal'
+                        LIMIT 1
+                    ";
+                    $statement = $dbh->prepare( $query );
+                    $statement->execute([
+                      'pokemon' => $pokemon
+                  ]);
+                }
+                catch (PDOException $exception) {
+                    error_log($exception->getMessage());
+                    $dbh = null;
+                    exit;
+                }
+                $result = $statement->fetch();
+                $form = $result['pokemon_form_id'];
+            }
         }
     }
     
