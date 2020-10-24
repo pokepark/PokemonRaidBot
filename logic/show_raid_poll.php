@@ -242,17 +242,19 @@ function show_raid_poll($raid)
         $att_array[$attendance['attend_time']][$attendance['pokemon']][] = $attendance;
     }
     // Raid has started and has participants
-    if(($time_now > $raid['start_time'] && $cnt_all > 0) || $buttons_hidden) {
-        // Display raid boss CP values.
-        $pokemon_cp = get_formatted_pokemon_cp($raid_pokemon_id, $raid_pokemon_form_id, true);
-        $msg = raid_poll_message($msg, (!empty($pokemon_cp)) ? ($pokemon_cp . CR) : '', true);
-    }
-    // Add raid is done message.
-    if($time_now > $raid['end_time']) {
-        $msg = raid_poll_message($msg, '<b>' . getPublicTranslation('raid_done') . '</b>' . CR);
-    // Add time left message.
-    } else {
-        $msg = raid_poll_message($msg, getPublicTranslation('raid') . ' — <b>' . getPublicTranslation('still') . ' ' . $time_left . 'h</b>' . CR);
+    if($time_now > $raid['start_time']) {
+        // Add raid is done message.
+        if($time_now > $raid['end_time']) {
+            $msg = raid_poll_message($msg, '<b>' . getPublicTranslation('raid_done') . '</b>' . CR);
+        // Add time left message.
+        } else {
+            $msg = raid_poll_message($msg, getPublicTranslation('raid') . ' — <b>' . getPublicTranslation('still') . ' ' . $time_left . 'h</b>' . CR);
+        }
+        if($cnt_all > 0 || $buttons_hidden) {
+            // Display raid boss CP values.
+            $pokemon_cp = get_formatted_pokemon_cp($raid_pokemon_id, $raid_pokemon_form_id, true);
+            $msg = raid_poll_message($msg, (!empty($pokemon_cp)) ? ($pokemon_cp . CR) : '', true);
+        }
     }
 
     // Hide info if buttons are hidden
@@ -390,7 +392,7 @@ function show_raid_poll($raid)
 
                 // Add section/header for canceled
                 if($row['cancel'] == 1 && $cancel_done == 'CANCEL') {
-                    $msg = raid_poll_message($msg, CR . TEAM_CANCEL . ' <b>' . getPublicTranslation('cancel') . ': </b>' . '[' . $cnt_cancel . ']' . CR);
+                    $msg = raid_poll_message($msg, CR . TEAM_CANCEL . ' <b>' . getPublicTranslation('cancelled') . ': </b>' . '[' . $cnt_cancel . ']' . CR);
                     $cancel_done = 'DONE';
                 }
 

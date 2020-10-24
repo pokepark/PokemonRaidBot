@@ -238,6 +238,18 @@
     "FR": "Finalement je ne viens pas",
     "PL": "Nie mogę przyjsć",
     "FI": "Peru"
+  },  
+  "cancelled": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Cancelled",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Perunut"
   },
   "raid_done": {
     "NL": "Raid beëindigd",
