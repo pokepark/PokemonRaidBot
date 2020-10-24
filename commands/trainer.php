@@ -21,11 +21,11 @@ if($config->CUSTOM_TRAINERNAME && $config->RAID_POLL_SHOW_TRAINERCODE){
         [
             [
                 'text'          => getTranslation('name'),
-                'callback_data' => '0:trainer_name:0'
+                'callback_data' => '1:trainer_name_code:0'
             ],
             [
                 'text'          => getTranslation('trainercode'),
-                'callback_data' => '0:trainer_code:0'
+                'callback_data' => '2:trainer_name_code:0'
             ]
         ],
         [
@@ -44,7 +44,7 @@ if($config->CUSTOM_TRAINERNAME && $config->RAID_POLL_SHOW_TRAINERCODE){
         [
             [
                 'text'          => getTranslation('name'),
-                'callback_data' => '0:trainer_name:0'
+                'callback_data' => '1:trainer_name_code:0'
             ]
         ],
         [

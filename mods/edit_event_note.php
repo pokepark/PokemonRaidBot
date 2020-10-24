@@ -34,11 +34,7 @@ if($mode == "edit") {
     
     my_query("INSERT INTO user_input SET user_id='{$userid}', modifiers='{$modifiers}', handler='{$handler}'");
 }elseif($mode == "cancel") {
-    $note = "";
-    if($raid['event_note'] != "") {
-        $note = $raid['event_note'];
-    }
-    my_query("UPDATE raids SET event_note='{$note}' WHERE id='{$raid_id}'");
+    my_query("DELETE FROM user_input WHERE user_id='{$userid}'");
     $data['arg'] = $arg[0];
     require_once("edit_save.php");
 }else {

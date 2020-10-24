@@ -12,12 +12,14 @@ if(strlen($trainercode)==12){
     my_query(
         "
         UPDATE users
-        SET trainercode_time =  NULL,
-            trainercode =   '{$trainercode}'
+        SET trainercode =   '{$trainercode}'
         WHERE user_id =     {$target_user_id}
         "
     );
-
+    
+    // Remove back button from previous message to avoid confusion
+    edit_message_keyboard($modifiers['old_message_id'], [], $target_user_id);
+    
     // Create the keys.
     $keys = [
         [
@@ -37,13 +39,5 @@ if(strlen($trainercode)==12){
 }else{
     // Trainer Code got unallowed Chars -> Error-Message
     sendMessage($target_user_id, getTranslation('trainercode_fail'));
-    // Set trainercode_time to 'still waiting for Code-Change'
-    my_query(
-        "
-        UPDATE users
-        SET trainercode_time =  DATE_ADD(NOW(), INTERVAL 1 HOUR)
-        WHERE user_id =     {$target_user_id}
-        "
-    );
     exit();
 }

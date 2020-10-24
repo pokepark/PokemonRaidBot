@@ -11,11 +11,13 @@ if($returnValue){
     my_query(
         "
         UPDATE users
-        SET trainername_time =  NULL,
-            trainername =   '{$trainername}'
+        SET trainername =   '{$trainername}'
         WHERE user_id =     {$userid}
         "
     );
+
+    // Remove back button from previous message to avoid confusion
+    edit_message_keyboard($modifiers['old_message_id'], [], $userid);
 
     // Create the keys.
     $keys = [
@@ -36,14 +38,6 @@ if($returnValue){
 }else{
     // Trainer Name got unallowed Chars -> Error-Message
     sendMessage($userid, getTranslation('trainername_fail'));
-    // Set trainername_time to 'still waiting for Name-Change'
-    my_query(
-        "
-        UPDATE users
-        SET trainername_time =  DATE_ADD(NOW(), INTERVAL 1 HOUR)
-        WHERE user_id =     {$userid}
-        "
-    );
     exit();
 }
 
