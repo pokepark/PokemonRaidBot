@@ -81,6 +81,7 @@ function get_overview( $active_raids, $chat_id )
                           FROM attendance
                           WHERE raid_id = {$raid_id}
                           AND attend_time IS NOT NULL
+                          AND ( attend_time > UTC_TIMESTAMP() or attend_time = '" . ANYTIME . "' )
                           AND raid_done != 1
                           AND cancel != 1
                         ) as attendance
