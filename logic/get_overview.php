@@ -71,11 +71,11 @@ function get_overview( $active_raids, $chat_id )
             $rs_att = my_query(
             "
             SELECT      count(attend_time)                                                                                  AS count,
-                        sum(team = 'mystic' && want_invite = 0)   + sum(attendance.extra_mystic && want_invite = 0)         AS count_mystic,
-                        sum(team = 'valor' && want_invite = 0)    + sum(attendance.extra_valor && want_invite = 0)          AS count_valor,
-                        sum(team = 'instinct' && want_invite = 0) + sum(attendance.extra_instinct && want_invite = 0)       AS count_instinct,
-                        sum(team IS NULL && want_invite = 0)                                                                AS count_no_team,
-                        sum(want_invite = 1)                                                                                AS count_want_invite
+                        sum(team = 'mystic'     && want_invite = 0) + sum(case when want_invite = 0 then attendance.extra_mystic else 0 end)         AS count_mystic,
+                        sum(team = 'valor'      && want_invite = 0) + sum(case when want_invite = 0 then attendance.extra_valor else 0 end)          AS count_valor,
+                        sum(team = 'instinct'   && want_invite = 0) + sum(case when want_invite = 0 then attendance.extra_instinct else 0 end)       AS count_instinct,
+                        sum(team IS NULL        && want_invite = 0)                                                         AS count_no_team,
+                        sum(case when want_invite = 1 then 1+attendance.extra_mystic+extra_instinct+extra_valor else 0 end) AS count_want_invite
             FROM        ( 
                           SELECT DISTINCT attend_time, user_id, extra_mystic, extra_valor, extra_instinct, want_invite
                           FROM attendance
@@ -94,7 +94,7 @@ function get_overview( $active_raids, $chat_id )
 
             // Add to message.
             if ($att['count'] > 0) {
-                $msg .= EMOJI_GROUP . '<b> ' . ($att['count_mystic'] + $att['count_valor'] + $att['count_instinct'] + $att['count_no_team']) . '</b> — ';
+                $msg .= EMOJI_GROUP . '<b> ' . ($att['count_mystic'] + $att['count_valor'] + $att['count_instinct'] + $att['count_no_team'] + $att['count_want_invite']) . '</b> — ';
                 $msg .= ((($att['count_mystic']) > 0) ? TEAM_B . ($att['count_mystic']) . '  ' : '');
                 $msg .= ((($att['count_valor']) > 0) ? TEAM_R . ($att['count_valor']) . '  ' : '');
                 $msg .= ((($att['count_instinct']) > 0) ? TEAM_Y . ($att['count_instinct']) . '  ' : '');
