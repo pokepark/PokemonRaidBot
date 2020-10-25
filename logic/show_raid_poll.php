@@ -138,7 +138,6 @@ function show_raid_poll($raid)
     $cancel_array = [];
     $cnt_all = 0;
     $cnt_remote = 0;
-    $cnt_other_pokemon = 0;
     $cnt_want_invite = 0;
     $cnt_latewait = 0;
     $cnt_cancel = 0;
@@ -146,6 +145,7 @@ function show_raid_poll($raid)
     while ($attendance = $rs_attendance->fetch()) {
         // Attendance found
         $cnt_all = 1;
+
         // Check trainername
         $attendance = check_trainername($attendance);
 
@@ -153,19 +153,19 @@ function show_raid_poll($raid)
         if(!isset($cnt_array[$attendance['attend_time']][$attendance['pokemon']]))$cnt_array[$attendance['attend_time']][$attendance['pokemon']]['mystic']=$cnt_array[$attendance['attend_time']][$attendance['pokemon']]['valor']=$cnt_array[$attendance['attend_time']][$attendance['pokemon']]['instinct']=$cnt_array[$attendance['attend_time']][$attendance['pokemon']]['noteam']=$cnt_array[$attendance['attend_time']][$attendance['pokemon']]['late']=$cnt_array[$attendance['attend_time']][$attendance['pokemon']]['remote']=$cnt_array[$attendance['attend_time']][$attendance['pokemon']]['want_invite']=$cnt_array[$attendance['attend_time']][$attendance['pokemon']]['total']=0;
         if(!isset($cnt_array[$attendance['attend_time']]['other_pokemon'])) $cnt_array[$attendance['attend_time']]['other_pokemon'] = $cnt_array[$attendance['attend_time']]['raid_pokemon'] = $cnt_array[$attendance['attend_time']]['any_pokemon'] = 0;
 
-        // These counts are used to control printing of pokemon/time headers, so just number of entries is enough
-        if($attendance['pokemon'] != 0 && $raid_pokemon != $attendance['pokemon']){
-            $cnt_array[$attendance['attend_time']]['other_pokemon']+=1;
-        }elseif($attendance['pokemon'] != 0 && $raid_pokemon == $attendance['pokemon']) {
-            $cnt_array[$attendance['attend_time']]['raid_pokemon']+= 1;
-        }else {
-            $cnt_array[$attendance['attend_time']]['any_pokemon']+= 1;
-        }
-
-        // Adding to total count of specific pokemon at specific time
-        $cnt_array[$attendance['attend_time']][$attendance['pokemon']]['total']+=1 + $attendance['extra_valor'] + $attendance['extra_instinct'] + $attendance['extra_mystic'];
-
         if($attendance['cancel'] == 0 && $attendance['raid_done'] == 0) {
+            // These counts are used to control printing of pokemon/time headers, so just number of entries is enough
+            if($attendance['pokemon'] != 0 && $raid_pokemon != $attendance['pokemon']){
+                $cnt_array[$attendance['attend_time']]['other_pokemon']+=1;
+            }elseif($attendance['pokemon'] != 0 && $raid_pokemon == $attendance['pokemon']) {
+                $cnt_array[$attendance['attend_time']]['raid_pokemon']+= 1;
+            }else {
+                $cnt_array[$attendance['attend_time']]['any_pokemon']+= 1;
+            }
+
+            // Adding to total count of specific pokemon at specific time
+            $cnt_array[$attendance['attend_time']][$attendance['pokemon']]['total'] += 1 + $attendance['extra_valor'] + $attendance['extra_instinct'] + $attendance['extra_mystic'];
+
             if($attendance['want_invite'] == 0) {
                 // Fill attendance array with results
                 $att_array[$attendance['attend_time']][$attendance['pokemon']][] = $attendance;
@@ -200,14 +200,15 @@ function show_raid_poll($raid)
         }else {
             if($attendance['raid_done']==1) {
                 $cnt_done += 1 + $attendance['extra_valor'] + $attendance['extra_instinct'] + $attendance['extra_mystic'];
-                $done_array[] = $attendance;
+                $done_array[$attendance['user_id']] = $attendance; // Adding user_id as key to overwrite duplicate entries and thus only display user once even if they made multiple pokemon selections
             }
             if($attendance['cancel']==1) {
                 $cnt_cancel += 1 + $attendance['extra_valor'] + $attendance['extra_instinct'] + $attendance['extra_mystic'];
-                $cancel_array[] = $attendance;
+                $cancel_array[$attendance['user_id']] = $attendance;
             }
         }
     }
+
     // Get attendances with invite beggars
     // Using a separate query so they can be displayed in the order they're in the db (who voted first)
     $rs_attendance_want_inv = my_query(
@@ -297,6 +298,14 @@ function show_raid_poll($raid)
             if($cnt_all > 0 && $config->RAID_POLL_SHOW_START_LINK) {
                 $msg = raid_poll_message($msg, CR . '<b>' . str_replace('START_CODE', '<a href="https://t.me/' . str_replace('@', '', $config->BOT_NAME) . '?start=c0de-' . $raid['id'] . '">' . getTranslation('telegram_bot_start') . '</a>', getPublicTranslation('start_raid')) . '</b>' . SP . '<i>' . getPublicTranslation('start_raid_info') . '</i>' . CR);
             }
+            // Add hint for late attendances.
+            if($config->RAID_LATE_MSG && $cnt_latewait > 0) {
+                $late_wait_msg = "";
+                if($config->RAID_LATE_TIME > 0) {
+                    $late_wait_msg = str_replace('RAID_LATE_TIME', $config->RAID_LATE_TIME, getPublicTranslation('late_participants_wait'));
+                }
+                $msg = raid_poll_message($msg, CR . EMOJI_LATE . '<i>' . getPublicTranslation('late_participants') . ' ' . $late_wait_msg . '</i>' . CR);
+            }
             // For each attendance.
             foreach($att_array as $att_time => $att_time_row) {
                 // Set current attend time and pokemon
@@ -305,16 +314,6 @@ function show_raid_poll($raid)
                 foreach($att_time_row as $att_pokemon => $att_pokemon_row) {
                     $current_pokemon = $att_pokemon;
                     foreach($att_pokemon_row as $att_row) {
-
-                        // Add hint for late attendances.
-                        if($config->RAID_LATE_MSG && $previous_att_time == 'FIRST_RUN' && $cnt_latewait > 0) {
-                            $late_wait_msg = "";
-                            if($config->RAID_LATE_TIME > 0) {
-                                $late_wait_msg = str_replace('RAID_LATE_TIME', $config->RAID_LATE_TIME, getPublicTranslation('late_participants_wait'));
-                            }
-                            $msg = raid_poll_message($msg, CR . EMOJI_LATE . '<i>' . getPublicTranslation('late_participants') . ' ' . $late_wait_msg . '</i>' . CR);
-                        }
-
                         // Add section/header for time
                         if($previous_att_time != $current_att_time) {
                             // Add to message.
@@ -326,7 +325,7 @@ function show_raid_poll($raid)
                             }
 
                             // Hide counts if other pokemon got selected. Show them in pokemon headers instead of attend time header
-                            if (($cnt_array[$current_att_time][$current_pokemon]['total'] > 0) && $cnt_array[$current_att_time]['other_pokemon'] == 0) {
+                            if ($cnt_array[$current_att_time][$current_pokemon]['total'] > 0 && $cnt_array[$current_att_time]['other_pokemon'] == 0) {
                                 $msg = raid_poll_print_counts($msg, $cnt_array[$current_att_time][$current_pokemon]);
                             }else {
                                 $msg = raid_poll_message($msg, CR );
@@ -335,21 +334,15 @@ function show_raid_poll($raid)
 
                         // Add section/header for pokemon
                         if($previous_pokemon != $current_pokemon || $previous_att_time != $current_att_time) {
-
-                            // Get counts for pokemons
-                            $count_any_pokemon = $cnt_array[$current_att_time]['any_pokemon'];
-                            $count_raid_pokemon = $cnt_array[$current_att_time]['raid_pokemon'];
-                            $count_all = $count_any_pokemon + $count_raid_pokemon + $cnt_array[$current_att_time]['other_pokemon'];
-
-                            // Show attendances when multiple pokemon are selected, unless all attending users voted for the raid boss + any pokemon
-                            if($count_all != ($count_any_pokemon + $count_raid_pokemon)) {
+                            // Only display the pokemon titles if other pokemon than raid pokemon and any pokemon was selected
+                            if($cnt_array[$current_att_time]['other_pokemon'] > 0 ) {
                                 // Add pokemon name.
                                 $pokemon_id_form = explode("-",$current_pokemon,2);
                                 $msg = raid_poll_message($msg, ($current_pokemon == 0) ? ('<b>' . getPublicTranslation('any_pokemon') . '</b>') : ('<b>' . get_local_pokemon_name($pokemon_id_form[0],$pokemon_id_form[1], true) . '</b>'));
 
                                 // Add counts to message.
                                 $msg = raid_poll_print_counts($msg, $cnt_array[$current_att_time][$current_pokemon]);
-                           }
+                            }
                         }
 
                         if($config->RAID_POLL_ENABLE_HYPERLINKS_IN_NAMES) {
