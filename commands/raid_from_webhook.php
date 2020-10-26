@@ -90,7 +90,7 @@ foreach ($update as $raid) {
             SELECT id
             FROM gyms
             WHERE
-                gym_id LIKE :gym_id
+                gym_id = :gym_id
             LIMIT 1
         ';
         $statement = $dbh->prepare( $query );
@@ -121,7 +121,7 @@ foreach ($update as $raid) {
                     img_url = :img_url,
                     show_gym = 1
                 WHERE
-                    gym_id LIKE :gym_id
+                    gym_id = :gym_id
             ';
             $statement = $dbh->prepare( $query );
             $statement->execute([
@@ -274,7 +274,7 @@ foreach ($update as $raid) {
                     move2 = :move2,
                     gender = :gender
                 WHERE
-                    id LIKE :id
+                    id = :id
             ';
             $statement = $dbh->prepare( $query );
             $statement->execute([
