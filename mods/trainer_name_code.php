@@ -22,13 +22,28 @@ $user_id = $update['callback_query']['from']['id'];
 if($mode == 1) {
     $handler = "change_trainername";
     $translation = "trainername_select";
+    $sql_col = "trainername";
 }else if($mode == 2) {
     $handler = "change_trainercode";
     $translation = "trainercode_select";
+    $sql_col = "trainercode";
 }
 
 if($action == "cancel") {
     my_query("DELETE FROM user_input WHERE user_id='{$user_id}' AND handler='{$handler}'");
+
+    // Build callback message string.
+    $callback_response = 'OK';
+    
+    $data['arg'] = $data['id'] = 0;
+    require_once(ROOT_PATH . '/mods/trainer.php');
+}elseif($action == "delete") {
+    my_query("DELETE FROM user_input WHERE user_id='{$user_id}' AND handler='{$handler}'");
+    my_query("        
+        UPDATE users
+        SET {$sql_col} =  NULL
+        WHERE user_id = {$user_id}
+    ");
 
     // Build callback message string.
     $callback_response = 'OK';
@@ -54,6 +69,9 @@ if($action == "cancel") {
             [
                 'text'          => getTranslation('back'),
                 'callback_data' => $mode.':trainer_name_code:cancel'
+            ],[
+                'text'          => getTranslation('delete'),
+                'callback_data' => $mode.':trainer_name_code:delete'
             ]
         ];
     // Answer callback.
