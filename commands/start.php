@@ -8,7 +8,12 @@ debug_log('START()');
 
 $new_user = new_user($update['message']['from']['id']);
 $access = bot_access_check($update, 'create', true, false, $new_user);
-if($config->TUTORIAL_MODE && !$access) {
+if(!$access && bot_access_check($update, 'list', true) && !$new_user){
+    debug_log('No access to create, will do a list instead');
+    require('list.php');
+    exit;
+} 
+if($config->TUTORIAL_MODE && $new_user && !$access) {
     // Tutorial
     if(is_file(ROOT_PATH . '/config/tutorial.php')) {
         require_once(ROOT_PATH . '/config/tutorial.php');
@@ -36,14 +41,6 @@ if($config->TUTORIAL_MODE && !$access) {
         require_once(ROOT_PATH . '/mods/code_start.php');
         exit();
     } 
-
-    if(!$access && bot_access_check($update, 'list', true)){
-        debug_log('No access to create, will do a list instead');
-        require('list.php');
-        exit;
-    } else {
-        $access = bot_access_check($update, 'create', false, true);
-    }
 
     // Get the keys by gym name search.
     $keys = '';
