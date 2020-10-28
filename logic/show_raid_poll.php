@@ -377,7 +377,7 @@ function show_raid_poll($raid)
         if(!$config->RAID_POLL_HIDE_DONE_CANCELED && ($cnt_cancel > 0 || $cnt_done > 0)) {
             // Init cancel_done value.
             $cancel_done = 'CANCEL';
-            $array_cancel_done = array_merge($done_array,$cancel_array);
+            $array_cancel_done = array_merge($cancel_array,$done_array);
             // For each canceled / done.
             foreach ($array_cancel_done as $row) {
                 // Attend time.
