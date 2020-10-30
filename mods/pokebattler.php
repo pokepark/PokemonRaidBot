@@ -327,49 +327,36 @@ if($id == 0) {
         // Init empty keys array.
         $keys = [];
 
-        // Add key for each raid level
-        $level_keys = $levels;
-        while ($pokemon = $rs->fetch()) {
-            $level_keys[$pokemon['pokedex_id'].'-'.$pokemon['pokemon_form_id']] = $pokemon['raid_level'];
-        }
-
         // Init message and previous.
-        $msg = '<b>Pokebattler' . SP . '—' . SP . getTranslation('import_done') . '</b>' . CR . CR;
-        $previous = 'FIRST_RUN';
+        $msg = '<b>Pokebattler' . SP . '—' . SP . getTranslation('import_done') . '</b>' . CR;
+        $previous = '';
 
         // Build the message
-        foreach ($level_keys as $pid => $lv) {
+        while ($pokemon = $rs->fetch()) {
             // Set current level
-            $current = $lv;
+            $current = $pokemon['raid_level'];
 
             // Add header for each raid level
-            if($previous != $current || $previous == 'FIRST_RUN') {
-                // Formatting.
-                if($previous != 'FIRST_RUN') {
-                    $msg .= CR;
-                }
-                // Add header.
-                $msg .= '<b>' . getTranslation($lv . 'stars') . ':</b>' . CR ;
+            if($previous != $current) {
+                $msg .= CR . '<b>' . getTranslation($pokemon['raid_level'] . 'stars') . ':</b>' . CR ;
             }
-            // Get just the dex id without the form.
-            $pokemon_id_form = explode('-',$pid,2);
-            $dex_id = $pokemon_id_form[0];
-            $pokemon_form_id = $pokemon_id_form[1];
 
             // Add pokemon with id and name.
+            $dex_id = $pokemon['pokedex_id'];
+            $pokemon_form_id = $pokemon['pokemon_form_id'];
             $poke_name = get_local_pokemon_name($dex_id, $pokemon_form_id);
             $msg .= $poke_name . ' (#' . $dex_id . ')' . CR;
 
             // Add button to edit pokemon.
             if($id == RAID_LEVEL_ALL) {
                 $keys[] = array(
-                    'text'          => '[' . $lv . ']' . SP . $poke_name,
-                    'callback_data' => $pid . ':pokedex_edit_pokemon:0'
+                    'text'          => '[' . $pokemon['raid_level'] . ']' . SP . $poke_name,
+                    'callback_data' => $dex_id . "-" . $pokemon_form_id . ':pokedex_edit_pokemon:0'
                 );
             } else {
                 $keys[] = array(
                     'text'          => $poke_name,
-                    'callback_data' => $pid . ':pokedex_edit_pokemon:0'
+                    'callback_data' => $dex_id . "-" . $pokemon_form_id . ':pokedex_edit_pokemon:0'
                 );
             }
 

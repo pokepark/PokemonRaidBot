@@ -53,9 +53,9 @@ if($action == 'add') {
     ];
 
     // Set the message.
-    $msg = getTranslation('raid_boss') . ': <b>' . get_local_pokemon_name($pokedex_id) . ' (#' . $dex_id . ')</b>' . CR;
-    $msg .= getTranslation('pokedex_current_weather') . get_weather_icons($dex_id, $dex_form) . CR . CR;
-    $msg .= '<b>' . getTranslation('pokedex_new_weather') . get_weather_icons($new_weather) . '</b>';
+    $msg = getTranslation('raid_boss') . ': <b>' . get_local_pokemon_name($dex_id, $dex_form) . ' (#' . $dex_id . ')</b>' . CR;
+    $msg .= getTranslation('pokedex_current_weather') . ' ' . get_weather_icons($old_weather) . CR . CR;
+    $msg .= '<b>' . getTranslation('pokedex_new_weather') . '</b> ' . get_weather_icons($new_weather);
 
 // Save weather to database
 } else if($action == 'save') {
