@@ -26,11 +26,8 @@ my_query(
 // Get eggs.
 $eggs = $GLOBALS['eggs'];
 
-// Get pokedex_id.
-$pokedex_id = explode('-', $data['arg'])[0];
-
 // Do not update if pokedex_id is an egg.
-if(!in_array($pokedex_id, $eggs)) {
+if(!in_array($pokemon_id_form[0], $eggs)) {
     // Update users in attendance table.
     // Helps to proper sort users as they are ordered by pokemon.
     my_query(
@@ -84,7 +81,7 @@ if($config->RAID_PICTURE) {
     require_once(LOGIC_PATH . '/raid_picture.php');
     while ($raidmsg = $rs->fetch()) {
         $picture_url = raid_picture_url($raid);
-	$tg_json[] = editMessageMedia($raidmsg['message_id'], $updated_msg['short'], $updated_keys, $raidmsg['chat_id'], ['disable_web_page_preview' => 'true'], false, $picture_url);
+        $tg_json[] = editMessageMedia($raidmsg['message_id'], $updated_msg['short'], $updated_keys, $raidmsg['chat_id'], ['disable_web_page_preview' => 'true'], false, $picture_url);
     } 
 } else {
     while ($raidmsg = $rs->fetch()) {
