@@ -67,7 +67,7 @@ $nav_keys[] = universal_inner_key($keys, '0', 'exit', '0', getTranslation('abort
 
 // Get the inline key array.
 $keys[] = $nav_keys;
-error_log(print_r($keys,true));
+
 // Send message.
 send_message($update['message']['chat']['id'], $msg, $keys, ['reply_markup' => ['selective' => true, 'one_time_keyboard' => true]]);
 
