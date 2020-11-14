@@ -140,7 +140,7 @@ foreach($master as $row) {
                                                         "shiny"=>$poke_shiny
                                                       ];
         }
-    }else if ($part[1] == "POKEMON" && $part[0][0] == "V") {
+    }else if ($part[1] == "POKEMON" && $part[0][0] == "V" && isset($row['data']['pokemonSettings'])) {
         // Found Pokemon data
         $pokemon_id = (int)str_replace("V","",$part[0]);
         $form_name = str_replace($row['data']['pokemonSettings']['pokemonId']."_","",substr($row['data']['templateId'],14));
@@ -180,14 +180,16 @@ foreach($master as $row) {
                     $pokemon_array[$pokemon_id][$form]["weather"] = $weather;
                 }
             }
-            foreach($row['data']['pokemonSettings']['evolutionBranch'] as $temp_evolution) {
-                if(isset($temp_evolution['temporaryEvolution'])) {
-                    $form_name = str_replace("TEMP_EVOLUTION_","",$temp_evolution['temporaryEvolution']);
-                    $pokemon_array[$pokemon_id][$form_name]["min_cp"] = $min_cp;
-                    $pokemon_array[$pokemon_id][$form_name]["max_cp"] = $max_cp;
-                    $pokemon_array[$pokemon_id][$form_name]["min_weather_cp"] = $min_weather_cp;
-                    $pokemon_array[$pokemon_id][$form_name]["max_weather_cp"] = $max_weather_cp;
-                    $pokemon_array[$pokemon_id][$form_name]["weather"] = $weather;
+            if(isset($row['data']['pokemonSettings']['evolutionBranch'])) {
+                foreach($row['data']['pokemonSettings']['evolutionBranch'] as $temp_evolution) {
+                    if(isset($temp_evolution['temporaryEvolution'])) {
+                        $form_name = str_replace("TEMP_EVOLUTION_","",$temp_evolution['temporaryEvolution']);
+                        $pokemon_array[$pokemon_id][$form_name]["min_cp"] = $min_cp;
+                        $pokemon_array[$pokemon_id][$form_name]["max_cp"] = $max_cp;
+                        $pokemon_array[$pokemon_id][$form_name]["min_weather_cp"] = $min_weather_cp;
+                        $pokemon_array[$pokemon_id][$form_name]["max_weather_cp"] = $max_weather_cp;
+                        $pokemon_array[$pokemon_id][$form_name]["weather"] = $weather;
+                    }
                 }
             }
         }
