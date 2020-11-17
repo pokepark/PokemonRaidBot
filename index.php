@@ -51,8 +51,12 @@ if (isset($update['callback_query'])) {
 
 // Location received.
 } else if (isset($update['message']['location']) && $update['message']['chat']['type'] == 'private') {
-    // Create raid and exit.
-    include_once(ROOT_PATH . '/mods/raid_by_location.php');
+    if($config->LIST_BY_LOCATION) {
+        include_once(ROOT_PATH . '/mods/share_raid_by_location.php');
+    }else {
+        // Create raid and exit.
+        include_once(ROOT_PATH . '/mods/raid_by_location.php');
+    }
     $dbh = null;
     exit();
 
