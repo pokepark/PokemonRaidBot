@@ -405,8 +405,9 @@ function show_raid_poll($raid)
                 $msg = raid_poll_message($msg, ($row['level'] == 0) ? ('<b>00</b> ') : (($row['level'] < 10) ? ('<b>0' . $row['level'] . '</b> ') : ('<b>' . $row['level'] . '</b> ')));
                 $msg = raid_poll_message($msg, $trainername);
                 $msg = raid_poll_message($msg, ($raid_level == 'X' && $row['invite']) ? (EMOJI_INVITE . ' ') : '');
-                $msg = raid_poll_message($msg, ($row['cancel'] == 1) ? ('[' . (($row['attend_time'] == ANYTIME) ? (getPublicTranslation('anytime')) : ($dt_att_time)) . '] ') : '');
-                $msg = raid_poll_message($msg, ($row['raid_done'] == 1) ? ('[' . (($row['attend_time'] == ANYTIME) ? (getPublicTranslation('anytime')) : ($dt_att_time)) . '] ') : '');
+                if($raid['event_vote_key_mode'] != 1) {
+                    $msg = raid_poll_message($msg, ($row['cancel'] == 1 || $row['raid_done'] == 1) ? ('[' . (($row['attend_time'] == ANYTIME) ? (getPublicTranslation('anytime')) : ($dt_att_time)) . '] ') : '');
+                }
                 $msg = raid_poll_message($msg, ($row['extra_mystic']) ? ('+' . $row['extra_mystic'] . TEAM_B . ' ') : '');
                 $msg = raid_poll_message($msg, ($row['extra_valor']) ? ('+' . $row['extra_valor'] . TEAM_R . ' ') : '');
                 $msg = raid_poll_message($msg, ($row['extra_instinct']) ? ('+' . $row['extra_instinct'] . TEAM_Y . ' ') : '');
