@@ -1,0 +1,2 @@
+INSERT INTO events (name, description, vote_key_mode, time_slots, raid_duration, hide_raid_picture) VALUES ('Raid day', 'Every free gym is hosting a raid for 6 hours.', 0, 60, 180, 1);
+INSERT INTO events (name, description, vote_key_mode, time_slots, raid_duration, hide_raid_picture) VALUES ('Raid hour', 'Every free gym is hosting a raid for an hour.', 1, NULL, 60, 1);
