@@ -11,13 +11,13 @@ raid_access_check($update, $data, 'pokemon');
 
 // Set the id.
 $id = $data['id'];
-$pokemon_id_formid = get_pokemon_by_table_id($data['arg']);
+$pokemon_id_form = get_pokemon_by_table_id($data['arg']);
 
 // Update pokemon in the raid table.
 my_query(
     "
     UPDATE    raids
-    SET       pokemon = '{$pokemon_id_form[['pokedex_id']}',
+    SET       pokemon = '{$pokemon_id_form['pokedex_id']}',
               pokemon_form = '{$pokemon_id_form['pokemon_form_id']}'
       WHERE   id = {$id}
     "
