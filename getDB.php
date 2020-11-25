@@ -4,9 +4,13 @@ $SQL = '';
 $SQL_UPDATE = '';
 $SQL_eggs = '';
 $SQL_file = __DIR__ . '/sql/game-master-raid-boss-pokedex.sql';
+$SQL_file_update = __DIR__ . '/sql/update-pokemon-table.sql';
 
 $proto_url = "https://raw.githubusercontent.com/Furtif/POGOProtos/master/src/POGOProtos/Rpc/Rpc.proto";
 $game_master_url = "https://raw.githubusercontent.com/PokeMiners/game_masters/master/latest/latest.json";
+
+$update = false;
+if($argv[1] == "update") $update = true;
 
 //Parse the form ID's from pogoprotos
 $proto = file($proto_url);
@@ -98,16 +102,17 @@ foreach($master as $row) {
                 $poke_name = str_replace("_","-",$poke_name);
 
                 $poke_shiny = 0;
+                if(isset($form_ids[$form['form']])) {
+                    $form_id = $form_ids[$form['form']];
+                    $form_asset_suffix = (isset($form['assetBundleValue']) ? $form['assetBundleValue'] : (isset($form['assetBundleSuffix'])?$form['assetBundleSuffix']:"00"));
 
-                $form_id = $form_ids[$form['form']];
-                $form_asset_suffix = (isset($form['assetBundleValue']) ? $form['assetBundleValue'] : (isset($form['assetBundleSuffix'])?$form['assetBundleSuffix']:"00"));
-
-                $pokemon_array[$pokemon_id][$form_name] = [ "pokemon_name"=>$poke_name,
-                                                            "pokemon_form_name"=>$form_name,
-                                                            "pokemon_form_id"=>$form_id,
-                                                            "asset_suffix"=>$form_asset_suffix,
-                                                            "shiny"=>$poke_shiny
-                                                          ];
+                    $pokemon_array[$pokemon_id][$form_name] = [ "pokemon_name"=>$poke_name,
+                                                                "pokemon_form_name"=>$form_name,
+                                                                "pokemon_form_id"=>$form_id,
+                                                                "asset_suffix"=>$form_asset_suffix,
+                                                                "shiny"=>$poke_shiny
+                                                              ];
+                }
             }
         }
     }else if($part[0] == "TEMPORARY" && $part[1] == "EVOLUTION") {
@@ -144,7 +149,7 @@ foreach($master as $row) {
         // Found Pokemon data
         $pokemon_id = (int)str_replace("V","",$part[0]);
         $form_name = str_replace($row['data']['pokemonSettings']['pokemonId']."_","",substr($row['data']['templateId'],14));
-        if($form_name != "PURIFIED" && $form_name != "SHADOW" && $form_name != "NORMAL") {
+        if($form_name != "PURIFIED" && $form_name != "SHADOW" && $form_name != "NORMAL" && isset($pokemon_array[$pokemon_id]) && isset($row['data']['pokemonSettings']['stats']['baseAttack']) && isset($row['data']['pokemonSettings']['stats']['baseDefense']) && isset($row['data']['pokemonSettings']['stats']['baseStamina'])) {
             if($form_name == $row['data']['pokemonSettings']['pokemonId']) {
                 $form_name = "normal";
             }else {
@@ -198,29 +203,33 @@ foreach($master as $row) {
 }
 // Save data to file.
 if(!empty($pokemon_array)) {
-    // Add eggs to SQL data.
-    echo 'Adding raids eggs to pokemons' . PHP_EOL;
-    for($e = 1; $e <= 6; $e++) {
-        $pokemon_id = '999'.$e;
-        $form_name = 'normal';
-        $pokemon_name = 'Level '. $e .' Egg';
-        $pokemon_array[$pokemon_id][$form_name] = [ "pokemon_name"=>$pokemon_name,
-                                                    "pokemon_form_name"=>$form_name,
-                                                    "pokemon_form_id"=>0,
-                                                    "asset_suffix"=>0,
-                                                    "shiny"=>0,
-                                                    "min_cp"=>0,
-                                                    "max_cp"=>0,
-                                                    "min_weather_cp"=>0,
-                                                    "max_weather_cp"=>0,
-                                                    "weather"=>0
-                                                  ];
-    }
+    $DEL = "";
+    if(!$update) {
+        // Add eggs to SQL data.
+        echo 'Adding raids eggs to pokemons' . PHP_EOL;
+        for($e = 1; $e <= 6; $e++) {
+            $pokemon_id = '999'.$e;
+            $form_name = 'normal';
+            $pokemon_name = 'Level '. $e .' Egg';
+            $pokemon_array[$pokemon_id][$form_name] = [ "pokemon_name"=>$pokemon_name,
+                                                        "pokemon_form_name"=>$form_name,
+                                                        "pokemon_form_id"=>0,
+                                                        "asset_suffix"=>0,
+                                                        "shiny"=>0,
+                                                        "min_cp"=>0,
+                                                        "max_cp"=>0,
+                                                        "min_weather_cp"=>0,
+                                                        "max_weather_cp"=>0,
+                                                        "weather"=>0
+                                                      ];
+        }
 
-    // Add delete command to SQL data.
-    echo 'Adding delete sql command to the beginning' . PHP_EOL;
-    $DEL = 'DELETE FROM `pokemon`;' . PHP_EOL;
-    $DEL .= 'TRUNCATE `pokemon`;' . PHP_EOL;
+        // Add delete command to SQL data.
+        echo 'Adding delete sql command to the beginning' . PHP_EOL;
+        $DEL = 'DELETE FROM `pokemon`;' . PHP_EOL;
+        $DEL .= 'TRUNCATE `pokemon`;' . PHP_EOL;
+    }
+    $i=1;
     foreach($pokemon_array as $id => $forms) {
         $pokemon_id = $id;
         foreach($forms as $form=>$data) {
@@ -246,25 +255,31 @@ if(!empty($pokemon_array)) {
             }
             $QM = "'";
             $SEP = ",";
-            echo $poke_name." ".$poke_form.PHP_EOL;
-            $SQL .= "INSERT INTO pokemon (pokedex_id, pokemon_name, pokemon_form_name, pokemon_form_id, asset_suffix, min_cp, max_cp, min_weather_cp, max_weather_cp, weather, shiny) ";
-            $SQL.= "VALUES (". $QM . $pokemon_id . $QM . $SEP . $QM . $poke_name . $QM . $SEP . $QM . $poke_form . $QM . $SEP . $QM . $form_id . $QM . $SEP . $QM . $form_asset_suffix . $QM . $SEP . $QM . $poke_min_cp . $QM . $SEP . $QM . $poke_max_cp . $QM . $SEP . $QM . $poke_min_weather_cp . $QM . $SEP . $QM . $poke_max_weather_cp . $QM . $SEP . $QM . $poke_weather . $QM . $SEP . $QM . $poke_shiny . $QM .");".PHP_EOL;
+
+            $SQL .= "INSERT INTO pokemon (id, pokedex_id, pokemon_name, pokemon_form_name, pokemon_form_id, asset_suffix, min_cp, max_cp, min_weather_cp, max_weather_cp, weather, shiny) ";
+            $SQL.= "VALUES (". $QM . $i . $QM . $SEP . $QM . $pokemon_id . $QM . $SEP . $QM . $poke_name . $QM . $SEP . $QM . $poke_form . $QM . $SEP . $QM . $form_id . $QM . $SEP . $QM . $form_asset_suffix . $QM . $SEP . $QM . $poke_min_cp . $QM . $SEP . $QM . $poke_max_cp . $QM . $SEP . $QM . $poke_min_weather_cp . $QM . $SEP . $QM . $poke_max_weather_cp . $QM . $SEP . $QM . $poke_weather . $QM . $SEP . $QM . $poke_shiny . $QM .")";
+            if($update) {
+                $SQL.= ' ON DUPLICATE KEY UPDATE pokedex_id = '.$QM.$pokemon_id.$QM.$SEP.' pokemon_name = '.$QM.$poke_name.$QM.$SEP.' pokemon_form_name = '.$QM.$poke_form.$QM.$SEP.' pokemon_form_id = '.$QM.$form_id.$QM.$SEP.' asset_suffix = '.$QM.$form_asset_suffix.$QM.$SEP.' min_cp = '.$QM.$poke_min_cp.$QM.$SEP.' max_cp = '.$QM.$poke_max_cp.$QM.$SEP.' min_weather_cp = '.$QM.$poke_min_weather_cp.$QM.$SEP.' max_weather_cp = '.$QM.$poke_max_weather_cp.$QM;
+            }
+            $SQL .= ";".PHP_EOL;
+            $i++;
         }
     }
     $SQL = $DEL . $SQL . $SQL_UPDATE;
     // Save data.
-    //echo $SQL . PHP_EOL;
-    echo 'Saving data to ' . $SQL_file . PHP_EOL;
-    file_put_contents($SQL_file, $SQL);
+    if($update) $save_file = $SQL_file_update;
+    else $save_file = $SQL_file;
+    echo 'Saving '.$i.' lines of data to ' . $save_file . PHP_EOL;
+    file_put_contents($save_file, $SQL);
 } else {
     echo 'Failed to get pokemon data!' . PHP_EOL;
 }
 
 // File successfully created?
-if(is_file($SQL_file)) {
+if(is_file($save_file)) {
     echo 'Finished!' . PHP_EOL;
 } else {
-    echo 'Failed to save file: ' . $SQL_file . PHP_EOL;
+    echo 'Failed to save file: ' . $save_file . PHP_EOL;
 }
 
 ?> 
