@@ -175,7 +175,7 @@ if (!$keys) {
 
 // Build callback message string.
 if ($arg != "min" && $arg != "clock") {
-    $callback_response = getTranslation('pokemon_saved') . get_local_pokemon_name($pokemon_id_form[0], $pokemon_id_form[1]);
+    $callback_response = getTranslation('pokemon_saved');
 } else {
     $callback_response = getTranslation('raid_starts_when_view_changed');
 }

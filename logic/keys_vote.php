@@ -150,12 +150,15 @@ function keys_vote($raid)
         ],
     ];
     if(!$config->AUTO_REFRESH_POLLS) {
-        $buttons_refresh = 
+        $buttons_refresh = [
             [
-                'text'          => EMOJI_REFRESH,
-                'callback_data' => $raid['id'] . ':vote_refresh:0'
-            ];
-        $buttons_status = array_merge($buttons_refresh, $buttons_status);
+                [
+                    'text'          => EMOJI_REFRESH,
+                    'callback_data' => $raid['id'] . ':vote_refresh:0'
+                ]
+            ]
+        ];
+        $buttons_status[0] = array_merge($buttons_refresh[0], $buttons_status[0]);
     }
     // Raid ended already.
     if ($end_time < $now) {
