@@ -242,6 +242,18 @@ function show_raid_poll($raid)
         // Fill attendance array with results
         $att_array[$attendance['attend_time']][$attendance['pokemon']][] = $attendance;
     }
+    foreach($cnt_array as $time => $att_time_row) {
+        if($att_time_row['other_pokemon'] == 0) {
+            foreach($cnt_array[$time][$raid_pokemon] as $title=>$value) {
+                $cnt_array[$time][0][$title]+=$value;
+                unset($cnt_array[$time][$raid_pokemon][$title]);
+            }
+            foreach($att_array[$time][$raid_pokemon] as $a_row) {
+                $att_array[$time][0][] = $a_row;
+            }
+            unset($att_array[$time][$raid_pokemon]);
+        }
+    }
     // Raid has started and has participants
     if($time_now > $raid['start_time']) {
         // Add raid is done message.
