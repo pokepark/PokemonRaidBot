@@ -80,11 +80,11 @@ if (isset($update['callback_query'])) {
                 $res = $q->fetch();
                 // Modifiers to pass to handler
                 $modifiers = json_decode($res['modifiers'], true);
-                
+
                 debug_log("Calling: " . $res['handler'] . '.php');
-                debug_log("With modifiers: " . $modifiers);
+                debug_log("With modifiers: " . $res['modifiers']);
                 include_once(ROOT_PATH . '/mods/' . $res['handler'] . '.php');
-                
+
                 debug_log("Response handeled successfully!");
                 // Delete the entry if the call was handled without errors
                 my_query("DELETE FROM user_input WHERE id='{$res['id']}'");
@@ -93,7 +93,7 @@ if (isset($update['callback_query'])) {
                 exit();
             }
         }
-        
+
         // Logic to get the command
         include_once(CORE_BOT_PATH . '/commands.php');
     }
