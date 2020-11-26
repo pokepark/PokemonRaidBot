@@ -204,26 +204,25 @@ foreach($master as $row) {
 // Save data to file.
 if(!empty($pokemon_array)) {
     $DEL = "";
+    // Add eggs to SQL data.
+    echo 'Adding raids eggs to pokemons' . PHP_EOL;
+    for($e = 1; $e <= 6; $e++) {
+        $pokemon_id = '999'.$e;
+        $form_name = 'normal';
+        $pokemon_name = 'Level '. $e .' Egg';
+        $pokemon_array[$pokemon_id][$form_name] = [ "pokemon_name"=>$pokemon_name,
+                                                    "pokemon_form_name"=>$form_name,
+                                                    "pokemon_form_id"=>0,
+                                                    "asset_suffix"=>0,
+                                                    "shiny"=>0,
+                                                    "min_cp"=>0,
+                                                    "max_cp"=>0,
+                                                    "min_weather_cp"=>0,
+                                                    "max_weather_cp"=>0,
+                                                    "weather"=>0
+                                                  ];
+    }
     if(!$update) {
-        // Add eggs to SQL data.
-        echo 'Adding raids eggs to pokemons' . PHP_EOL;
-        for($e = 1; $e <= 6; $e++) {
-            $pokemon_id = '999'.$e;
-            $form_name = 'normal';
-            $pokemon_name = 'Level '. $e .' Egg';
-            $pokemon_array[$pokemon_id][$form_name] = [ "pokemon_name"=>$pokemon_name,
-                                                        "pokemon_form_name"=>$form_name,
-                                                        "pokemon_form_id"=>0,
-                                                        "asset_suffix"=>0,
-                                                        "shiny"=>0,
-                                                        "min_cp"=>0,
-                                                        "max_cp"=>0,
-                                                        "min_weather_cp"=>0,
-                                                        "max_weather_cp"=>0,
-                                                        "weather"=>0
-                                                      ];
-        }
-
         // Add delete command to SQL data.
         echo 'Adding delete sql command to the beginning' . PHP_EOL;
         $DEL = 'DELETE FROM `pokemon`;' . PHP_EOL;
