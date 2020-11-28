@@ -242,20 +242,20 @@ function show_raid_poll($raid)
         // Fill attendance array with results
         $att_array[$attendance['attend_time']][$attendance['pokemon']][] = $attendance;
     }
+    // Combine and sort array data if only both raid pokemon and any pokemon were selected per timeslot
     foreach($cnt_array as $time => $att_time_row) {
-        if($att_time_row['other_pokemon'] == 0) {
-            if(isset($cnt_array[$time][$raid_pokemon])) {
-                foreach($cnt_array[$time][$raid_pokemon] as $title=>$value) {
-                    $cnt_array[$time][0][$title]+=$value;
-                    unset($cnt_array[$time][$raid_pokemon][$title]);
-                }
+        if($att_time_row['other_pokemon'] == 0 && $att_time_row['raid_pokemon'] != 0) {
+            // Combine count data
+            foreach($cnt_array[$time][$raid_pokemon] as $title=>$value) {
+                $cnt_array[$time][0][$title]+=$value;
+                unset($cnt_array[$time][$raid_pokemon][$title]);
             }
-            if(isset($att_array[$time][$raid_pokemon])) {
-                foreach($att_array[$time][$raid_pokemon] as $a_row) {
-                    $att_array[$time][0][] = $a_row;
-                }
-                unset($att_array[$time][$raid_pokemon]);
+            // Combine user list from raid pokemon to any pokemon...
+            foreach($att_array[$time][$raid_pokemon] as $a_row) {
+                $att_array[$time][0][] = $a_row;
             }
+            unset($att_array[$time][$raid_pokemon]);
+            // ...and sort the new list
             array_multisort(array_column($att_array[$time][0], 'team'),SORT_ASC,array_column($att_array[$time][0], 'arrived'),SORT_ASC,array_column($att_array[$time][0], 'level'),SORT_DESC,array_column($att_array[$time][0], 'name'),SORT_ASC,$att_array[$time][0]);
         }
     }
