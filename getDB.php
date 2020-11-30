@@ -102,17 +102,20 @@ foreach($master as $row) {
                 $poke_name = str_replace("_","-",$poke_name);
 
                 $poke_shiny = 0;
-                if(isset($form_ids[$form['form']])) {
+                if(!isset($form_ids[$form['form']])) {
+                    $form_id = 0;
+                }else {
                     $form_id = $form_ids[$form['form']];
-                    $form_asset_suffix = (isset($form['assetBundleValue']) ? $form['assetBundleValue'] : (isset($form['assetBundleSuffix'])?$form['assetBundleSuffix']:"00"));
-
-                    $pokemon_array[$pokemon_id][$form_name] = [ "pokemon_name"=>$poke_name,
-                                                                "pokemon_form_name"=>$form_name,
-                                                                "pokemon_form_id"=>$form_id,
-                                                                "asset_suffix"=>$form_asset_suffix,
-                                                                "shiny"=>$poke_shiny
-                                                              ];
                 }
+                $form_asset_suffix = (isset($form['assetBundleValue']) ? $form['assetBundleValue'] : (isset($form['assetBundleSuffix'])?$form['assetBundleSuffix']:"00"));
+
+                $pokemon_array[$pokemon_id][$form_name] = [ "pokemon_name"=>$poke_name,
+                                                            "pokemon_form_name"=>$form_name,
+                                                            "pokemon_form_id"=>$form_id,
+                                                            "asset_suffix"=>$form_asset_suffix,
+                                                            "shiny"=>$poke_shiny
+                                                          ];
+                
             }
         }
     }else if($part[0] == "TEMPORARY" && $part[1] == "EVOLUTION") {
@@ -233,35 +236,36 @@ if(!empty($pokemon_array)) {
         $pokemon_id = $id;
         foreach($forms as $form=>$data) {
             $poke_form = $form;
+            if(isset($data['weather']) && isset($data['min_cp']) && isset($data['max_cp']) && isset($data['min_weather_cp']) && isset($data['max_weather_cp'])) {
+                $poke_name = $data['pokemon_name'];
+                $form_id = $data['pokemon_form_id'];
+                $form_asset_suffix = $data['asset_suffix'];
+                $poke_min_cp = $data['min_cp'];
+                $poke_max_cp = $data['max_cp'];
+                $poke_min_weather_cp = $data['min_weather_cp'];
+                $poke_max_weather_cp = $data['max_weather_cp'];
 
-            $poke_name = $data['pokemon_name'];
-            $form_id = $data['pokemon_form_id'];
-            $form_asset_suffix = $data['asset_suffix'];
-            $poke_min_cp = $data['min_cp'];
-            $poke_max_cp = $data['max_cp'];
-            $poke_min_weather_cp = $data['min_weather_cp'];
-            $poke_max_weather_cp = $data['max_weather_cp'];
+                $poke_weather  = $data['weather'];
 
-            $poke_weather  = $data['weather'];
+                $poke_shiny = $data['shiny'];
 
-            $poke_shiny = $data['shiny'];
+                if($pokemon_id == 150 && $data['pokemon_form_name']=="a") {
+                    // Because logic and consistency
+                    $poke_form = "armored";
+                }else {
+                    $poke_form = strtolower($data['pokemon_form_name']);
+                }
+                $QM = "'";
+                $SEP = ",";
 
-            if($pokemon_id == 150 && $data['pokemon_form_name']=="a") {
-                // Because logic and consistency
-                $poke_form = "armored";
-            }else {
-                $poke_form = strtolower($data['pokemon_form_name']);
+                $SQL .= "INSERT INTO pokemon (id, pokedex_id, pokemon_name, pokemon_form_name, pokemon_form_id, asset_suffix, min_cp, max_cp, min_weather_cp, max_weather_cp, weather, shiny) ";
+                $SQL.= "VALUES (". $QM . $i . $QM . $SEP . $QM . $pokemon_id . $QM . $SEP . $QM . $poke_name . $QM . $SEP . $QM . $poke_form . $QM . $SEP . $QM . $form_id . $QM . $SEP . $QM . $form_asset_suffix . $QM . $SEP . $QM . $poke_min_cp . $QM . $SEP . $QM . $poke_max_cp . $QM . $SEP . $QM . $poke_min_weather_cp . $QM . $SEP . $QM . $poke_max_weather_cp . $QM . $SEP . $QM . $poke_weather . $QM . $SEP . $QM . $poke_shiny . $QM .")";
+                if($update) {
+                    $SQL.= ' ON DUPLICATE KEY UPDATE pokedex_id = '.$QM.$pokemon_id.$QM.$SEP.' pokemon_name = '.$QM.$poke_name.$QM.$SEP.' pokemon_form_name = '.$QM.$poke_form.$QM.$SEP.' pokemon_form_id = '.$QM.$form_id.$QM.$SEP.' asset_suffix = '.$QM.$form_asset_suffix.$QM.$SEP.' min_cp = '.$QM.$poke_min_cp.$QM.$SEP.' max_cp = '.$QM.$poke_max_cp.$QM.$SEP.' min_weather_cp = '.$QM.$poke_min_weather_cp.$QM.$SEP.' max_weather_cp = '.$QM.$poke_max_weather_cp.$QM;
+                }
+                $SQL .= ";".PHP_EOL;
+                $i++;
             }
-            $QM = "'";
-            $SEP = ",";
-
-            $SQL .= "INSERT INTO pokemon (id, pokedex_id, pokemon_name, pokemon_form_name, pokemon_form_id, asset_suffix, min_cp, max_cp, min_weather_cp, max_weather_cp, weather, shiny) ";
-            $SQL.= "VALUES (". $QM . $i . $QM . $SEP . $QM . $pokemon_id . $QM . $SEP . $QM . $poke_name . $QM . $SEP . $QM . $poke_form . $QM . $SEP . $QM . $form_id . $QM . $SEP . $QM . $form_asset_suffix . $QM . $SEP . $QM . $poke_min_cp . $QM . $SEP . $QM . $poke_max_cp . $QM . $SEP . $QM . $poke_min_weather_cp . $QM . $SEP . $QM . $poke_max_weather_cp . $QM . $SEP . $QM . $poke_weather . $QM . $SEP . $QM . $poke_shiny . $QM .")";
-            if($update) {
-                $SQL.= ' ON DUPLICATE KEY UPDATE pokedex_id = '.$QM.$pokemon_id.$QM.$SEP.' pokemon_name = '.$QM.$poke_name.$QM.$SEP.' pokemon_form_name = '.$QM.$poke_form.$QM.$SEP.' pokemon_form_id = '.$QM.$form_id.$QM.$SEP.' asset_suffix = '.$QM.$form_asset_suffix.$QM.$SEP.' min_cp = '.$QM.$poke_min_cp.$QM.$SEP.' max_cp = '.$QM.$poke_max_cp.$QM.$SEP.' min_weather_cp = '.$QM.$poke_min_weather_cp.$QM.$SEP.' max_weather_cp = '.$QM.$poke_max_weather_cp.$QM;
-            }
-            $SQL .= ";".PHP_EOL;
-            $i++;
         }
     }
     $SQL = $DEL . $SQL . $SQL_UPDATE;
