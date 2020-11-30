@@ -241,7 +241,7 @@
   },  
   "cancelled": {
     "NL": "TRANSLATE",
-    "DE": "TRANSLATE",
+    "DE": "Abgesagt",
     "EN": "Cancelled",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -2953,7 +2953,7 @@
   },
   "event": {
     "NL": "TRANSLATE",
-    "DE": "TRANSLATE",
+    "DE": "Event",
     "EN": "Event",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -2965,7 +2965,7 @@
   },
   "event_note": {
     "NL": "TRANSLATE",
-    "DE": "TRANSLATE",
+    "DE": "Event Notiz",
     "EN": "Event note",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -2977,7 +2977,7 @@
   },
   "event_note_add": {
     "NL": "TRANSLATE",
-    "DE": "TRANSLATE",
+    "DE": "Event Notiz hinzufügen",
     "EN": "Add event note",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -2989,7 +2989,7 @@
   },
   "event_note_edit": {
     "NL": "TRANSLATE",
-    "DE": "TRANSLATE",
+    "DE": "Event Notiz ändern",
     "EN": "Edit event note",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -3001,7 +3001,7 @@
   },
   "event_add_note_description": {
     "NL": "TRANSLATE",
-    "DE": "TRANSLATE",
+    "DE": "Füge genauere Informationen zu dieser Abstimmung hinzu. (z.B. Route)",
     "EN": "Add more info for this specific poll regarding the event. (e.g. route)",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -3013,7 +3013,7 @@
   },
   "Participate": {
     "NL": "TRANSLATE",
-    "DE": "TRANSLATE",
+    "DE": "Teilnehmen",
     "EN": "Participate",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -3025,7 +3025,7 @@
   },
   "participating": {
     "NL": "TRANSLATE",
-    "DE": "TRANSLATE",
+    "DE": "Teilnehmer",
     "EN": "Participating",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -3037,7 +3037,7 @@
   },
   "tutorial_no_user_info_set": {
     "NL": "TRANSLATE",
-    "DE": "TRANSLATE",
+    "DE": "Du hast deine Trainerinfo noch nicht gespeichert. Möchstest du sie jetzt hinzufügen?",
     "EN": "You have not yet saved your trainer info. Would you like to do it now?",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
