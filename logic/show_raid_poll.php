@@ -92,6 +92,9 @@ function show_raid_poll($raid)
     } else {
         $hide_users_sql = "";
     }
+    if($raid['pokemon'] < '9990') {
+        $hide_users_sql.= 'AND (pokemon = \''.$raid['pokemon'].'-'.$raid['pokemon_form'].'\' OR pokemon = \'0\')';
+    }
 
     // Buttons for raid levels and pokemon hidden?
     $hide_buttons_raid_level = explode(',', $config->RAID_POLL_HIDE_BUTTONS_RAID_LEVEL);
