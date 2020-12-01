@@ -123,7 +123,7 @@ function show_raid_poll($raid)
         LEFT JOIN       users
           ON            attendance.user_id = users.user_id
           WHERE         raid_id = {$raid['id']}
-                        $hide_users_sql
+                        {$hide_users_sql}
             AND         attend_time IS NOT NULL
           ORDER BY      attend_time,
                         pokemon,
@@ -249,8 +249,9 @@ function show_raid_poll($raid)
     foreach($cnt_array as $time => $att_time_row) {
         if($att_time_row['other_pokemon'] == 0 && $att_time_row['raid_pokemon'] != 0) {
             // Combine count data
+            if(!isset($cnt_array[$time][0])) $cnt_array[$time][0] = [];
             foreach($cnt_array[$time][$raid_pokemon] as $title=>$value) {
-                $cnt_array[$time][0][$title]+=$value;
+                $cnt_array[$time][0][$title] = (isset($cnt_array[$time][0][$title]) ? $cnt_array[$time][0][$title] + $value : $value);
                 unset($cnt_array[$time][$raid_pokemon][$title]);
             }
             // Combine user list from raid pokemon to any pokemon...
