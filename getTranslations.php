@@ -69,7 +69,7 @@ foreach($translations_available as $language) {
     }
 }
 // Build the path to move translation file
-$moves_translation_file = $core_lang_dir . 'moves.json';
+$moves_translation_file = $core_lang_dir . 'pokemon_moves.json';
 
 // Save translations to the file
 file_put_contents($moves_translation_file, json_encode($move_array,JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT), LOCK_EX);
