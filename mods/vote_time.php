@@ -94,6 +94,7 @@ if($now <= $attend_time || $vote_time == 0) {
                     INNER JOIN attendance a2
                     WHERE   a1.id < a2.id
                        AND  a1.user_id = a2.user_id
+                       AND  a2.raid_id = {$raid['id']}
                        AND  a1.raid_id = {$raid['id']}
                     ");
                 $update_pokemon_sql = 'pokemon = \'0\',';
