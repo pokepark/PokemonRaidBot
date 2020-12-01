@@ -23,6 +23,7 @@ $move_translations_to_fetch = [
 
 // Initialize array
 $move_array = [];
+$pokemon_array = [];
 
 // Loop through all available translations
 foreach($translations_available as $language) {
@@ -31,9 +32,6 @@ foreach($translations_available as $language) {
 
     // Only read the file if a translation is wanted
     if( $write_pokemon_translation || $write_move_translation ) {
-        // Initialize array
-        $pokemon_array = [];
-
         // Open the file and write it into an array
         $file = curl_open_file($lang_directory_url . $language . '.txt');
         $data = explode("\n", $file);
@@ -50,15 +48,17 @@ foreach($translations_available as $language) {
                 $text = substr(trim($row), 6);
 
                 // Filter out mega translations
-                if(count($resource_part) == 3) {
+                if(count($resource_part) == 3 && $resource_part[1] == 'name') {
+                    $id = intval($resource_part[2]); // remove leading zeroes
                     // Save pokemon names into an array if pokemon id is larger than 0
-                    if($write_pokemon_translation && $resource_part[0] == 'pokemon' && $resource_part[1] == 'name' && intval($resource_part[2]) > 0) {
-                        $pokemon_array[] = $text;
+                    if($write_pokemon_translation && $resource_part[0] == 'pokemon' && $id > 0) {
+                        foreach($pokemon_translations_to_fetch[$language] as $lan) {
+                            $pokemon_array['pokemon_id_'.$id][$lan] = $text;
+                        }
                     // Save pokemon moves into an array
-                    }elseif($write_move_translation && $resource_part[0] == 'move' && $resource_part[1] == 'name') {
-                        $move_id = intval($resource_part[2]); // remove leading zeroes
+                    }elseif($write_move_translation && $resource_part[0] == 'move') {
                         foreach($move_translations_to_fetch[$language] as $lan) {
-                            $move_array['pokemon_move_'.$move_id][$lan] = $text;
+                            $move_array['pokemon_move_'.$id][$lan] = $text;
                         }
                     }
                 }
@@ -66,23 +66,19 @@ foreach($translations_available as $language) {
         }
         unset($file);
         unset($data);
-        if($write_pokemon_translation) {
-            foreach($pokemon_translations_to_fetch[$language] as $lan) {
-                // Build the path to translation file
-                $pokemon_translation_file = $core_lang_dir . 'pokemon_' . strtolower($lan) . '.json';
-
-                // Save translations to file
-                file_put_contents($pokemon_translation_file, json_encode($pokemon_array,JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT), LOCK_EX);
-            }
-        }
-        unset($pokemon_array);
     }
 }
 // Build the path to move translation file
-$moves_translation_file = $lang_dir . 'moves.json';
+$moves_translation_file = $core_lang_dir . 'moves.json';
 
 // Save translations to the file
 file_put_contents($moves_translation_file, json_encode($move_array,JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT), LOCK_EX);
+
+// Build the path to translation file
+$pokemon_translation_file = $core_lang_dir . 'pokemon.json';
+
+// Save translations to file
+file_put_contents($pokemon_translation_file, json_encode($pokemon_array,JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT), LOCK_EX);
 
 function curl_open_file($input) {
     $ch = curl_init();
