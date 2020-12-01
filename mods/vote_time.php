@@ -86,13 +86,15 @@ if($now <= $attend_time || $vote_time == 0) {
         if (!empty($answer)) {
             // Update attendance.
             alarm($data['id'],$update['callback_query']['from']['id'],'change_time', $attend_time);
+            $update_pokemon_sql = "";
             if($raid['pokemon'] < '9990') {
                 my_query("
                     DELETE  a1
-                    FROM    attendance a1,
-                            attendance a2
+                    FROM    attendance a1
+                    INNER JOIN attendance a2
                     WHERE   a1.id < a2.id
                        AND  a1.user_id = a2.user_id
+                       AND  a1.raid_id = {$raid['id']}
                     ");
                 $update_pokemon_sql = 'pokemon = \'0\',';
             }
