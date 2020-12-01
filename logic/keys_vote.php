@@ -517,20 +517,14 @@ function keys_vote($raid)
                 $buttons_pokemon = [];
 
                 // Hide keys for specific cases
-                $show_keys = true;
+                $show_pokemon_keys = true;
                 // Make sure raid boss is not an egg
                 if(!in_array($raid_pokemon_id, $GLOBALS['eggs'])) {
-                    // Make sure we either have no participants
-                    // OR all participants voted for "any" raid boss
-                    // OR all participants voted for the hatched raid boss
-                    // OR all participants voted for "any" or the hatched raid boss
-                    if($count_pp == 0 || $count_pp == $count_any_pokemon || $count_pp == $count_raid_pokemon || $count_pp == ($count_any_pokemon + $count_raid_pokemon)) {
-                        $show_keys = false;
-                    }
+                    $show_pokemon_keys = false;
                 }
 
                 // Add pokemon keys if we found the raid boss
-                if ($raid_level != '0' && $show_keys) {
+                if ($raid_level != '0' && $show_pokemon_keys) {
                     // Get pokemon from database
                     $rs = my_query(
                         "

@@ -36,6 +36,8 @@ if($count_att == 0 && $config->SHARE_AFTER_ATTENDANCE && !empty($config->SHARE_C
     }
 }
 
+// Request Raid and Gym - Infos
+$raid = get_raid($data['id']);
 
 // Check if the user has voted for this raid before.
 if($count_att > 0){
@@ -45,6 +47,7 @@ if($count_att > 0){
         FROM      attendance
           WHERE   raid_id = {$data['id']}
             AND   user_id = {$update['callback_query']['from']['id']}
+            LIMIT 1
         "
     );
 
@@ -83,6 +86,16 @@ if($now <= $attend_time || $vote_time == 0) {
         if (!empty($answer)) {
             // Update attendance.
             alarm($data['id'],$update['callback_query']['from']['id'],'change_time', $attend_time);
+            if($raid['pokemon'] < '9990') {
+                my_query("
+                    DELETE  a1
+                    FROM    attendance a1,
+                            attendance a2
+                    WHERE   a1.id < a2.id
+                       AND  a1.user_id = a2.user_id
+                    ");
+                $update_pokemon_sql = 'pokemon = \'0\',';
+            }
             my_query(
                 "
                 UPDATE    attendance
@@ -90,6 +103,7 @@ if($now <= $attend_time || $vote_time == 0) {
                           cancel = 0,
                           arrived = 0,
                           raid_done = 0,
+                          {$update_pokemon_sql}
                           late = 0
                   WHERE   raid_id = {$data['id']}
                     AND   user_id = {$update['callback_query']['from']['id']}
@@ -126,12 +140,10 @@ if($now <= $attend_time || $vote_time == 0) {
           // TODO(artanicus): This code is very WET, I'm sure we have functions somewhere to send a raid share -_-
             // Share Raid to another Channel
             $chat = $config->SHARE_CHATS_AFTER_ATTENDANCE;
-            // Request Raid and Gym - Infos
-            $answer_gym = get_gym_raid($data['id']);
             // Set text.
-            $text = show_raid_poll($answer_gym);
+            $text = show_raid_poll($raid);
             // Set keys.
-            $keys = keys_vote($answer_gym);
+            $keys = keys_vote($raid);
             // Set reply to.
             $reply_to = $chat;
             // Send the message.
@@ -164,44 +176,3 @@ if($now <= $attend_time || $vote_time == 0) {
     }
 
 exit();
-
-/**
- *  get all raid info - very detailed,
- *  because gyms->gym_id (ingress portal id) is different to
- *  raids->gym_id (the real one)
- * @param $raid_id
- * @return array
- */
-function get_gym_raid($raid_id){
-  $request_gym = my_query(
-      "
-      SELECT
-          r.id AS id,
-          r.user_id AS user_id,
-          r.pokemon AS pokemon,
-          r.pokemon_form AS pokemon_form,
-          r.first_seen AS first_seen,
-          r.start_time AS start_time,
-          r.end_time AS end_time,
-          r.gym_team AS gym_team,
-          r.gym_id AS gym_id,
-          r.move1 AS move1,
-          r.move2 AS move2,
-          r.gender AS gender,
-          g.lon AS lon,
-          g.lat AS lat,
-          g.address AS address,
-          g.gym_name AS gym_name,
-          g.ex_gym AS ex_gym,
-          g.show_gym AS show_gym,
-          g.gym_note AS gym_note,
-          g.gym_id AS gym_id2,
-          g.img_url AS img_url
-      FROM raids as r
-      left join gyms as g on r.gym_id = g.id
-      WHERE r.id = {$raid_id}
-      "
-  );
-  $answer_gym = $request_gym->fetch();
-  return $answer_gym;
-}
