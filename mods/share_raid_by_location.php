@@ -9,9 +9,7 @@ debug_log('SHARE_RAID_BY_LOCATION()');
 // Check access.
 bot_access_check($update, 'share-all');
 
-$action = $data['arg'];
-
-if($action == 1) {
+if(isset($data['arg']) && $data['arg'] == 1) {
     $raid_id = $data['id'];
 
     // Get raid details.
@@ -101,7 +99,7 @@ if($action == 1) {
         $start = dt2time($raid['start_time']);
         $end = dt2time($raid['end_time']);
         $time_left = $raid['t_left'];
-        if ($now < $start_time) {
+        if ($now < $start) {
             $text .= get_raid_times($raid, true);
         // Raid has started already
         } else {
