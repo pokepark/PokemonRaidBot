@@ -7,7 +7,7 @@
  */
 function get_overview( $active_raids, $chat_id )
 {
-    global $config;
+    global $config, $eggs;
 
     // Get info about chat for username.
     debug_log('Getting chat object for chat_id: ' . $chat_id);
@@ -62,7 +62,10 @@ function get_overview( $active_raids, $chat_id )
                 // Add time left message.
                 $msg .= $pokemon . ' — <b>' . getPublicTranslation('still') . SP . $time_left . 'h</b>' . CR;
             }
-
+            $exclude_pokemon_sql = "";
+            if(!in_array($row['pokemon'], $eggs)) {
+                $exclude_pokemon_sql = 'AND (pokemon = \''.$row['pokemon'].'-'.$row['pokemon_form'].'\' or pokemon = \'0\')';
+            }
             // Count attendances
             $rs_att = my_query(
             "
@@ -80,6 +83,7 @@ function get_overview( $active_raids, $chat_id )
                           AND ( attend_time > UTC_TIMESTAMP() or attend_time = '" . ANYTIME . "' )
                           AND raid_done != 1
                           AND cancel != 1
+                          {$exclude_pokemon_sql}
                         ) as attendance
             LEFT JOIN   users
             ON          attendance.user_id = users.user_id

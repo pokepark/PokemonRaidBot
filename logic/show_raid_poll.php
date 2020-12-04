@@ -6,7 +6,7 @@
  */
 function show_raid_poll($raid)
 {
-    global $config;
+    global $config, $eggs;
     // Init empty message array.
     //$msg = '';
     $msg = array();
@@ -92,7 +92,7 @@ function show_raid_poll($raid)
     } else {
         $hide_users_sql = "";
     }
-    if($raid['pokemon'] < '9990') {
+    if(!in_array($raid['pokemon'], $eggs)) {
         $hide_users_sql.= 'AND (pokemon = \''.$raid['pokemon'].'-'.$raid['pokemon_form'].'\' OR pokemon = \'0\')';
     }
 
