@@ -474,7 +474,7 @@ function keys_vote($raid)
             // Hidden participants?
             if($config->RAID_POLL_HIDE_USERS_TIME > 0) {
                 if($config->RAID_ANYTIME) {
-                    $hide_users_sql = "AND (attend_time > (UTC_TIMESTAMP() - INTERVAL " . $config->RAID_POLL_HIDE_USERS_TIME . " MINUTE) OR attend_time = 0)";
+                    $hide_users_sql = "AND (attend_time > (UTC_TIMESTAMP() - INTERVAL " . $config->RAID_POLL_HIDE_USERS_TIME . " MINUTE) OR attend_time = '".ANYTIME."')";
                 } else {
                     $hide_users_sql = "AND attend_time > (UTC_TIMESTAMP() - INTERVAL " . $config->RAID_POLL_HIDE_USERS_TIME . " MINUTE)";
                 }

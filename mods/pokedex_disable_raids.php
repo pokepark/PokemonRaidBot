@@ -63,44 +63,33 @@ if($arg == 0) {
     // Get all pokemon with raid levels from database.
     $rs = my_query(
         "
-        SELECT    pokedex_id, pokemon_form, raid_level
+        SELECT    pokedex_id, pokemon_form_name, pokemon_form_id, raid_level
         FROM      pokemon
         WHERE     raid_level IN ({$clear})
-        ORDER BY  raid_level, pokedex_id, pokemon_form != 'normal', pokemon_form
+        ORDER BY  raid_level, pokedex_id, pokemon_form_name != 'normal', pokemon_form_name
         "
     );
 
     // Init empty keys array.
     $keys = [];
 
-    // Add key for each raid level
-    while ($pokemon = $rs->fetch()) {
-        $plevels[$pokemon['pokedex_id'].'-'.$pokemon['pokemon_form']] = $pokemon['raid_level'];
-    }
-
     // Init message and previous.
-    $msg = '<b>' . getTranslation('disable_raid_level') . '?</b>' . CR . CR;
-    $previous = 'FIRST_RUN';
+    $msg = '<b>' . getTranslation('disable_raid_level') . '?</b>' . CR;
+    $previous = '';
 
     // Build the message
-    foreach ($plevels as $pid => $lv) {
+    while ($pokemon = $rs->fetch()) {
         // Set current level
-        $current = $lv;
+        $current = $pokemon['raid_level'];
 
         // Add header for each raid level
-        if($previous != $current || $previous == 'FIRST_RUN') {
-            // Formatting.
-            if($previous != 'FIRST_RUN') {
-                $msg .= CR;
-            }
-            // Add header.
-            $msg .= '<b>' . getTranslation($lv . 'stars') . ':</b>' . CR ;
+        if($previous != $current) {
+            $msg .=  CR . '<b>' . getTranslation($pokemon['raid_level'] . 'stars') . ':</b>' . CR ;
         }
-        // Get just the dex id without the form.
-        $dex_id = explode('-',$pid)[0];
 
         // Add pokemon with id and name.
-        $poke_name = get_local_pokemon_name($dex_id, explode('-',$pid)[1]);
+        $dex_id = $pokemon['pokedex_id'];
+        $poke_name = get_local_pokemon_name($dex_id, $pokemon['pokemon_form_id']);
         $msg .= $poke_name . ' (#' . $dex_id . ')' . CR;
 
         // Prepare next run.

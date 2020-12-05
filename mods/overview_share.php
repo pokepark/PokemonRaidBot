@@ -13,89 +13,104 @@ bot_access_check($update, 'overview');
 $chat_id = 0;
 $chat_id = $data['arg'];
 
+// Get all or specific overview
+$query_chat = "";
+if ($chat_id != 0) {
+    $query_chat = "AND chat_id = '{$chat_id}'";
+} 
 // Get active raids.
 $request_active_raids = my_query(
     "
-    SELECT    raids.*,
-              gyms.lat, gyms.lon, gyms.address, gyms.gym_name, gyms.ex_gym,
-              TIME_FORMAT(TIMEDIFF(end_time, UTC_TIMESTAMP()) + INTERVAL 1 MINUTE, '%k:%i') AS t_left
-    FROM      raids
-    LEFT JOIN gyms
-    ON        raids.gym_id = gyms.id
-      WHERE   raids.end_time>UTC_TIMESTAMP()
-    ORDER BY  raids.end_time ASC
+        SELECT
+          cleanup.chat_id, cleanup.message_id,
+          raids.*,
+          gyms.lat, gyms.lon, gyms.address, gyms.gym_name, gyms.ex_gym,
+          TIME_FORMAT(TIMEDIFF(end_time, UTC_TIMESTAMP()) + INTERVAL 1 MINUTE, '%k:%i') AS t_left
+        FROM      cleanup
+        LEFT JOIN raids
+        ON        raids.id = cleanup.raid_id
+        LEFT JOIN gyms
+        ON        raids.gym_id = gyms.id
+        WHERE     raids.end_time>UTC_TIMESTAMP()
+        {$query_chat}
+        ORDER BY  cleanup.chat_id, raids.end_time ASC, gyms.gym_name
     "
 );
+// Collect results in an array
+$active_raids = $request_active_raids->fetchAll(PDO::FETCH_GROUP);
 
-// Count active raids.
-$count_active_raids = 0;
+$tg_json = [];
 
-// Init empty active raids and raid_ids array.
-$raids_active = [];
-$raid_ids_active = [];
+// Share an overview
+if($chat_id != 0) {
+    $overview_message = get_overview($active_raids[$chat_id], $chat_id);
+    // Shared overview
+    $keys = [];
 
-// Get all active raids into array.
-while ($rowRaids = $request_active_raids->fetch()) {
-    // Use current raid_id as key for raids array
-    $current_raid_id = $rowRaids['id'];
-    $raids_active[$current_raid_id] = $rowRaids;
+    // Set callback message string.
+    $msg_callback = getTranslation('successfully_shared');
 
-    // Build array with raid_ids to query cleanup table later
-    $raid_ids_active[] = $rowRaids['id'];
+    // Answer the callback.
+    $tg_json[] = answerCallbackQuery($update['callback_query']['id'], $msg_callback, true);
 
-    // Counter for active raids
-    $count_active_raids = $count_active_raids + 1;
-}
+    // Edit the message, but disable the web preview!
+    $tg_json[] = edit_message($update, $msg_callback, $keys, ['disable_web_page_preview' => 'true'], true);
 
-// Write to log.
-debug_log($raids_active, 'Active raids for overview:');
-
-// Init empty active chats array.
-$chats_active = [];
-
-// Make sure we have active raids.
-if ($count_active_raids > 0) {
-    // Implode raid_id's of all active raids.
-    $raid_ids_active = implode(',',$raid_ids_active);
-
-    // Write to log.
-    debug_log($raid_ids_active, 'IDs of active raids for overview:');
-
-    // Get chat for active raids.
-    if ($chat_id == 0) {
-        $request_active_chats = my_query(
+    // Send the message, but disable the web preview!
+    $tg_json[] = send_message($chat_id, $overview_message, $keys, ['disable_web_page_preview' => 'true'], true);
+}else {
+    // List all overviews to user
+    foreach( array_keys($active_raids) as $chat_id ) {
+        // Make sure it's not already shared
+        $rs = my_query(
             "
-            SELECT    *
-            FROM      cleanup
-              WHERE   raid_id IN ({$raid_ids_active})
-              ORDER BY chat_id, FIELD(raid_id, {$raid_ids_active})
+            SELECT    chat_id, message_id
+            FROM      overview
+            WHERE      chat_id = '{$chat_id}'
             "
         );
-    } else {
-        $request_active_chats = my_query(
-            "
-            SELECT    *
-            FROM      cleanup
-              WHERE   raid_id IN ({$raid_ids_active})
-	      AND     chat_id = '{$chat_id}'
-              ORDER BY chat_id, FIELD(raid_id, {$raid_ids_active})
-            "
-        );
+        $overview_message = get_overview($active_raids[$chat_id], $chat_id);
+        // Already shared
+        if($rs->rowCount() > 0 ) {
+            $keys = [
+                [
+                    [
+                        'text'          => EMOJI_REFRESH,
+                        'callback_data' => '0:overview_refresh:' . $chat_id
+                    ],
+                    [
+                        'text'          => getTranslation('done'),
+                        'callback_data' => '0:exit:1'
+                    ]
+                ]
+            ];
+        }else {
+            $chat_title = get_chat_title($chat_id);
+            $keys = [
+                [
+                    [
+                        'text'          => getTranslation('share_with') . ' ' . $chat_title,
+                        'callback_data' => '0:overview_share:' . $chat_id
+                    ]
+                ]
+            ];
+        }
+        // Send the message, but disable the web preview!
+        $tg_json[] = send_message($update['callback_query']['message']['chat']['id'], $overview_message, $keys, ['disable_web_page_preview' => 'true'], true);
     }
+    // Set the callback message and keys
+    $callback_keys = [];
+    $callback_msg = '<b>' . getTranslation('list_all_overviews') . ':</b>';
 
-    // Get all chats.    
-    while ($rowChats = $request_active_chats->fetch()) {
-        $chats_active[] = $rowChats;
-    }
+    // Answer the callback.
+    $tg_json[] = answerCallbackQuery($update['callback_query']['id'], 'OK', true);
+
+    // Edit the message.
+    $tg_json[] = edit_message($update, $callback_msg, $callback_keys, false, true);
 }
 
-// Write to log.
-debug_log($chats_active, 'Active chats for overview:');
+// Telegram multicurl request.
+curl_json_multi_request($tg_json);
 
-// Get raid overviews
-if ($chat_id == 0) {
-    get_overview($update, $chats_active, $raids_active, $action = 'share');
-} else {
-    get_overview($update, $chats_active, $raids_active, $action = 'share', $chat_id);
-}
+$dbh = null;
 exit;

@@ -19,7 +19,7 @@ $answer_count = $rs_count->fetch();
 $count_att = $answer_count['count'];
 // Write to log.
 debug_log($answer_count, 'Anyone Voted: ');
-$perform_share = true;
+$perform_share = false; // no sharing by default
 // Check if Raid has been posted to target channel
 if($count_att == 0 && $config->SHARE_AFTER_ATTENDANCE && !empty($config->SHARE_CHATS_AFTER_ATTENDANCE)){
     $rs_chann = my_query(
@@ -30,9 +30,9 @@ if($count_att == 0 && $config->SHARE_AFTER_ATTENDANCE && !empty($config->SHARE_C
           AND chat_id = {$config->SHARE_CHATS_AFTER_ATTENDANCE}
           AND cleaned = 0
         ");
-    // IF Chat was shared to target channel -> no new share
-    if ($rs_chann->rowCount() > 0) {
-        $perform_share = false;
+    // IF Chat was not shared to target channel we want to share it
+    if ($rs_chann->rowCount() == 0) {
+        $perform_share = true;
     }
 }
 
@@ -54,20 +54,18 @@ if($count_att > 0){
     // Write to log.
     debug_log($answer);
 }else{
-    $answer = NULL;
+    $answer = null;
 }
 
-// Get the arg.
-$arg = $data['arg'];
-
+$vote_time = $data['arg'];
 // Raid anytime?
-if($arg == 0) {
+if($vote_time == 0) {
     // Raid anytime.
     $attend_time = ANYTIME;
 } else {
     // Normal raid time - convert data arg to UTC time.
     $dt = new DateTime();
-    $dt_attend = $dt->createFromFormat('YmdHis', $arg, new DateTimeZone('UTC'));
+    $dt_attend = $dt->createFromFormat('YmdHis', $vote_time, new DateTimeZone('UTC'));
     $attend_time = $dt_attend->format('Y-m-d H:i:s');
 }
 
@@ -76,11 +74,11 @@ $now = new DateTime('now', new DateTimeZone('UTC'));
 $now = $now->format('Y-m-d H:i') . ':00';
 
 // Vote time in the future or Raid anytime?
-if($now <= $attend_time || $arg == 0) {
+if($now <= $attend_time || $vote_time == 0) {
     // If user is attending remotely, get the number of remote users already attending
     $remote_users = (($answer['remote']==0) ? 0 : get_remote_users_count($data['id'], $update['callback_query']['from']['id'], $attend_time));
     // Check if max remote users limit is already reached, unless voting for 'Anytime'
-    if ($answer['remote'] == 0 || $remote_users + $answer['user_count'] <= $config->RAID_REMOTEPASS_USERS_LIMIT || $arg == 0) {
+    if ($answer['remote'] == 0 || $remote_users + $answer['user_count'] <= $config->RAID_REMOTEPASS_USERS_LIMIT || $vote_time == 0) {
         // User has voted before.
         if (!empty($answer)) {
             // Update attendance.
@@ -125,6 +123,7 @@ if($now <= $attend_time || $arg == 0) {
         // Check if RAID has no participants AND Raid should be shared to another Channel at first participant
         // AND target channel was set in config AND Raid was not shared to target channel before
         if($count_att == 0 && $config->SHARE_AFTER_ATTENDANCE && !empty($config->SHARE_CHATS_AFTER_ATTENDANCE) && $perform_share){
+          // TODO(artanicus): This code is very WET, I'm sure we have functions somewhere to send a raid share -_-
             // Share Raid to another Channel
             $chat = $config->SHARE_CHATS_AFTER_ATTENDANCE;
             // Request Raid and Gym - Infos

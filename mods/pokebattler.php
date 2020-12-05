@@ -9,6 +9,9 @@ debug_log('pokebattler()');
 // Check access.
 bot_access_check($update, 'pokedex');
 
+// Levels available for import at PokeBattler
+$levels = array('6', '5', '3', '1');
+
 // Get raid levels
 $id = $data['id'];
 
@@ -23,10 +26,6 @@ if($id == 0) {
 
     // Init empty keys array.
     $keys = [];
-
-    // Specify raid levels.
-    // TODO(artanicus): create this from some other source
-    $levels = array('6', '5', '4', '3', '2', '1');
 
     // All raid level keys.
     $keys[] = array(
@@ -58,20 +57,15 @@ if($id == 0) {
     // Get pokebattler data.
     debug_log('Getting raid bosses from pokebattler.com now...');
     $link = 'https://fight.pokebattler.com/raids';
-    $data = file_get_contents($link);
-    $json = json_decode($data,true);
-
-    // debug_log($json,'POKEBATTLER');
+    $pb_data = curl_get_contents($link);
+    $pb_data = json_decode($pb_data,true);
 
     // All raid levels?
-   if($id == RAID_LEVEL_ALL) {
-        $start = 0;
-        // TODO(artanicus): create these two from some other source
-        $end = 6;
-        $clear = "'6','5','4','3','2','1'";
+    if($id == RAID_LEVEL_ALL) {
+      $get_levels = $levels;
+        $clear = "'6','5','3','1'";
     } else {
-        $start = $id - 1;
-        $end = $id - 1;
+        $get_levels = Array($id);
         $clear = "'" . $id . "'";
     }
 
@@ -108,10 +102,11 @@ if($id == 0) {
     // Raid tier array
     debug_log('Processing the following raid levels:');
     $raidlevels = array();
-    for($i = $start; $i <= $end; $i++) {
-        $rl = $i + 1;
-        if($rl == 6) $rl = 'MEGA';
-        $raidlevels[] = 'RAID_LEVEL_' . $rl;
+    foreach($get_levels as $level) {
+        if($level == 6) {
+          $level = 'MEGA'; // PB uses RAID_LEVEL_MEGA instead of RAID_LEVEL_6
+        }
+        $raidlevels[] = 'RAID_LEVEL_' . $level;
     }
     debug_log($raidlevels);
 
@@ -119,7 +114,7 @@ if($id == 0) {
     debug_log('Processing received pokebattler raid bosses for each raid level');
     // Init index to process the json
     $index = 0;
-    foreach($json['tiers'] as $tier) {
+    foreach($pb_data['tiers'] as $tier) {
         // Process raid level?
         if(!in_array($tier['tier'],$raidlevels)) {
             // Index + 1
@@ -135,7 +130,11 @@ if($id == 0) {
         $bosscount = 0;
 
         // Get raid bosses for each raid level.
-        foreach($json['tiers'][$index]['raids'] as $raid) {
+        foreach($pb_data['tiers'][$index]['raids'] as $raid) {
+            if ($raid['id'] == 0) {
+                debug_log("Skipping raid boss {$raid['pokemon']} since it has no id, it's likely in the future!");
+                continue;
+            }
             // Pokemon name ending with "_FORM" ?
             if(substr_compare($raid['pokemon'], '_FORM', -strlen('_FORM')) === 0) {
                 debug_log('Pokemon with a special form received: ' . $raid['pokemon']);
@@ -170,7 +169,7 @@ if($id == 0) {
                 // Get pokemon name and form.
                 $name = explode("_", $pokemon, 2)[0] . '♀';
                 $form = 'normal';
-            
+
             // Mega pokemon ?
             }else if(substr_compare($raid['pokemon'], '_MEGA', -strlen('_MEGA')) === 0 or substr_compare($raid['pokemon'], '_MEGA_X', -strlen('_MEGA_X')) === 0 or substr_compare($raid['pokemon'], '_MEGA_Y', -strlen('_MEGA_Y')) === 0) {
                 debug_log('Mega Pokemon received: ' . $raid['pokemon']);
@@ -191,7 +190,7 @@ if($id == 0) {
                 // Name and form.
                 $name = $pokemon;
                 $form = 'normal';
-		
+
 		// Fix for GIRATINA as the actual GIRATINA_ALTERED_FORM is just GIRATINA
                 if($name == 'GIRATINA' && $form == 'normal') {
                     $form = 'ALTERED';
@@ -199,7 +198,7 @@ if($id == 0) {
             }
             // Get ID and form name used internally.
             debug_log('Getting dex id and form for pokemon ' . $name . ' with form ' . $form);
-            $dex_id_form = get_pokemon_id_by_name($name . '-' . $form);
+            $dex_id_form = get_pokemon_id_by_name($name . '-' . $form, true);
             $dex_id = explode('-', $dex_id_form, 2)[0];
             $dex_form = explode('-', $dex_id_form, 2)[1];
             $pokemon_arg = $dex_id . (($dex_form != 'normal') ? ('-' . $dex_form) : '-0');
@@ -252,7 +251,7 @@ if($id == 0) {
                     $rs = my_query(
                             "
                             UPDATE    pokemon
-                            SET       raid_level = '{$raid_level_id}', 
+                            SET       raid_level = '{$raid_level_id}',
                                       shiny = {$shiny}
                             WHERE     pokedex_id = {$dex_id}
                             AND       pokemon_form_id = '{$dex_form}'
@@ -284,12 +283,13 @@ if($id == 0) {
 
         // Add raid egg?
         if($config->POKEBATTLER_IMPORT_DISABLE_REDUNDANT_EGGS && $bosscount <= 1) {
-            debug_log('Not creating egg for level ' . $rl . ' since there are not 2 or more bosses.');
+            debug_log('Not creating egg for level ' . $raid_level_id . ' since there are not 2 or more bosses.');
         } else {
             // Add pokemon to message.
-            $msg .= getTranslation('egg_' . $raid_level_id) . SP . '(#999' . $raid_level_id . ')' . CR;
+            $translated_egg = getTranslation('egg_' . $raid_level_id);
+            $msg .= $translated_egg. SP . '(#999' . $raid_level_id . ')' . CR;
             $egg_id = '999'  . $raid_level_id;
-            debug_log('Adding raid level egg with id: ' . $egg_id);
+            debug_log("Adding raid level {$raid_level_id} egg '{$translated_egg}' with id: . {$egg_id}");
 
             // Save raid egg.
             if(strpos($arg, 'save#') === 0) {
@@ -327,48 +327,36 @@ if($id == 0) {
         // Init empty keys array.
         $keys = [];
 
-        // Add key for each raid level
-        while ($pokemon = $rs->fetch()) {
-            $levels[$pokemon['pokedex_id'].'-'.$pokemon['pokemon_form_id']] = $pokemon['raid_level'];
-        }
-
         // Init message and previous.
-        $msg = '<b>Pokebattler' . SP . '—' . SP . getTranslation('import_done') . '</b>' . CR . CR;
-        $previous = 'FIRST_RUN';
+        $msg = '<b>Pokebattler' . SP . '—' . SP . getTranslation('import_done') . '</b>' . CR;
+        $previous = '';
 
         // Build the message
-        foreach ($levels as $pid => $lv) {
+        while ($pokemon = $rs->fetch()) {
             // Set current level
-            $current = $lv;
+            $current = $pokemon['raid_level'];
 
             // Add header for each raid level
-            if($previous != $current || $previous == 'FIRST_RUN') {
-                // Formatting.
-                if($previous != 'FIRST_RUN') {
-                    $msg .= CR;
-                }
-                // Add header.
-                $msg .= '<b>' . getTranslation($lv . 'stars') . ':</b>' . CR ;
+            if($previous != $current) {
+                $msg .= CR . '<b>' . getTranslation($pokemon['raid_level'] . 'stars') . ':</b>' . CR ;
             }
-            // Get just the dex id without the form.
-            $pokemon_id_form = explode('-',$pid,2);
-            $dex_id = $pokemon_id_form[0];
-            $pokemon_form_id = $pokemon_id_form[1];
 
             // Add pokemon with id and name.
+            $dex_id = $pokemon['pokedex_id'];
+            $pokemon_form_id = $pokemon['pokemon_form_id'];
             $poke_name = get_local_pokemon_name($dex_id, $pokemon_form_id);
             $msg .= $poke_name . ' (#' . $dex_id . ')' . CR;
 
             // Add button to edit pokemon.
             if($id == RAID_LEVEL_ALL) {
                 $keys[] = array(
-                    'text'          => '[' . $lv . ']' . SP . $poke_name,
-                    'callback_data' => $pid . ':pokedex_edit_pokemon:0'
+                    'text'          => '[' . $pokemon['raid_level'] . ']' . SP . $poke_name,
+                    'callback_data' => $dex_id . "-" . $pokemon_form_id . ':pokedex_edit_pokemon:0'
                 );
             } else {
                 $keys[] = array(
                     'text'          => $poke_name,
-                    'callback_data' => $pid . ':pokedex_edit_pokemon:0'
+                    'callback_data' => $dex_id . "-" . $pokemon_form_id . ':pokedex_edit_pokemon:0'
                 );
             }
 
@@ -400,7 +388,7 @@ if($id == 0) {
         $msg .= '<b>' . getTranslation('excluded_raid_bosses') . '</b>' . CR;
         $msg .= (empty($ex_msg) ? (getTranslation('none') . CR) : $ex_msg) . CR;
 
-        // Import or select more pokemon to exclude? 
+        // Import or select more pokemon to exclude?
         if($poke1 == '0' || $poke2 == '0' || $poke3 == '0') {
             $msg .= '<b>' . getTranslation('exclude_raid_boss_or_import') . ':</b>';
         } else {

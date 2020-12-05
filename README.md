@@ -988,11 +988,15 @@ Show and update any pokemon raid boss. You can change the raid level (select rai
 
 There is also a possibility to import the raids bosses from Pokebattler and disable all raid bosses for all or just a specific raid level which makes raid boss management pretty easy. By default the import will disable eggs for levels that only contain 1 raid boss. To disable this set `POKEBATTLER_IMPORT_DISABLE_REDUNDANT_EGGS` to `false`.
 
-To quickly get to a specific pokemon raid boss, you can use the /pokedex command with the local name of the pokemon. A few examples:
+To quickly get to a specific pokemon raid boss, you can use the /pokedex command with the local name of the pokemon to get a list of it's all formes. A few examples:
 
-Your telegram is set to English and you like to change Deoxys in his Attack form: `/pokedex Deoxys Attack`
+| Search term  			| Response                                												       |
+|-----------------------|----------------------------------------------------------------------------------------------|
+| `/pokedex Deoxys`     | `Deoxys`<br/>`Deoxys Attack`<br/>`Deoxys Defense`<br/>`Deoxys Speed`                         |
+| `/pokedex Charizard`  | `Charizard`<br/>`Charizard Copy 2019` (clone)<br/>`Charizard Mega X`<br/>`Charizard Mega Y`  |
+| `/pokedex Knogga`     | `Knogga`<br/>`Knogga Alola`	     														   |
 
-Your telegram is set to German and you like to change Marowak (German: Knogga) in his Alolan (German: Alola) form: `/pokedex Knogga Alola`
+User's local language is fetched from their Telegram settings.
 
 Beside your local language the bot always is looking at the English language as a fallback.
 
@@ -1262,7 +1266,8 @@ Updates to the config file are NOT checked automatically. Therefore always check
 | WEBHOOK_CREATOR| Telegram ID of the bot or user to credit as having created webhook raids |
 | WEBHOOK_EXCLUDE_POKEMON| List of Pokemon dex IDs to exclude from webhook raid creation |
 | WEBHOOK_EXCLUDE_RAID_LEVEL| List of raid levels to exclude from webhook raid creation |
-| WEBHOOK_EXCLUDE_UNKOWN| Bool, create raids for Pokemon not currently enabled in the pokedex |
+| WEBHOOK_EXCLUDE_UNKOWN| Bool, disable raid creation for gyms with "unknown" gym name. |
+| WEBHOOK_EXCLUDE_AUTOSHARE_DURATION| Time in minutes, skip autosharing of raids to chats if raid duration is greater than set value. Raids are still saved to the bot even if they aren't shared. (Default 45)|
 
 
 # Development

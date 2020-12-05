@@ -75,7 +75,7 @@ if(!empty($atts)) {
                     my_query(
                     "
                     UPDATE    attendance
-                    SET       pokemon = 0
+                    SET       pokemon = '0'
                     WHERE     raid_id = {$data['id']}
                     AND       user_id = {$update['callback_query']['from']['id']}
                     "
@@ -160,7 +160,7 @@ if(!empty($atts)) {
             DELETE FROM attendance
             WHERE  raid_id = {$data['id']}
             AND   user_id = {$update['callback_query']['from']['id']}
-            AND   pokemon = 0
+            AND   pokemon = '0'
             "
             );
         }

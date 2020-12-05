@@ -10,7 +10,6 @@ include('logic/check_time.php');
 include('logic/cp_keys.php');
 include('logic/curl_json_response.php');
 include('logic/delete_gym.php');
-include('logic/delete_overview.php');
 include('logic/delete_raid.php');
 include('logic/delete_trainerinfo.php');
 include('logic/disable_raid_level.php');
@@ -64,4 +63,5 @@ include('logic/show_raid_poll.php');
 include('logic/show_raid_poll_small.php');
 include('logic/show_trainerinfo.php');
 include('logic/weather_keys.php');
+include('logic/curl_get_contents.php');
 ?>
