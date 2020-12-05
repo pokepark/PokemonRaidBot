@@ -198,7 +198,7 @@ if($id == 0) {
             }
             // Get ID and form name used internally.
             debug_log('Getting dex id and form for pokemon ' . $name . ' with form ' . $form);
-            $dex_id_form = get_pokemon_id_by_name($name . '-' . $form);
+            $dex_id_form = get_pokemon_id_by_name($name . '-' . $form, true);
             $dex_id = explode('-', $dex_id_form, 2)[0];
             $dex_form = explode('-', $dex_id_form, 2)[1];
             $pokemon_arg = $dex_id . (($dex_form != 'normal') ? ('-' . $dex_form) : '-0');
