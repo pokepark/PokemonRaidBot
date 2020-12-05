@@ -11,7 +11,7 @@ bot_access_check($update, 'pokedex');
 
 // Set the id.
 $poke_id_form = $data['id'];
-$dex_id_form = explode('-',$data['id']);
+$dex_id_form = explode('-',$data['id'],2);
 $pokedex_id = $dex_id_form[0];
 $pokemon_form = $dex_id_form[1];
 
