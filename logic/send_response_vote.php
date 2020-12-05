@@ -66,7 +66,7 @@ function send_response_vote($update, $data, $new = false, $text = true)
         // Answer the callback.
         $tg_json[] = answerCallbackQuery($update['callback_query']['id'], $callback_msg, true, true);
 
-	if($text) {
+        if($text) {
             // Make sure to only send if picture with caption and not text message
             if($initial_text == false && !(isset($update['callback_query']['message']['text']))) {
                 foreach($chats_to_update as $chats){
@@ -102,7 +102,13 @@ function send_response_vote($update, $data, $new = false, $text = true)
                 }
             } else {
                 // Edit the caption.
-                $tg_json[] = edit_caption($update, $msg, $keys, ['disable_web_page_preview' => 'true'], true);
+                foreach($chats_to_update as $chats){
+                    foreach($chats as $chat => $message){
+                        $update['callback_query']['message']['message_id'] = $message;
+                        $update['callback_query']['message']['chat']['id'] = $chat;
+                        $tg_json[] = edit_caption($update, $msg, $keys, ['disable_web_page_preview' => 'true'], true);
+                    }
+                }
 
                 // Edit the picture - raid ended.
                 $time_now = utcnow();
@@ -118,13 +124,14 @@ function send_response_vote($update, $data, $new = false, $text = true)
                     }
                 }
             }
-	}
+        }
     }
 
     // Telegram multicurl request.
     curl_json_multi_request($tg_json);
 
     // Exit.
+    $dbh = null;
     exit();
 }
 
