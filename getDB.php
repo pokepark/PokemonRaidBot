@@ -80,7 +80,7 @@ foreach($master as $row) {
         unset($part[1]);
         unset($part[2]);
 
-        // Pokemon name 
+        // Pokemon name
         $pokemon_name = implode("_",$part);
         // Get pokemon forms
         if(!isset($row['data']['formSettings']['forms'])) {
@@ -122,7 +122,7 @@ foreach($master as $row) {
         unset($part[2]);
         unset($part[3]);
 
-        // Pokemon name 
+        // Pokemon name
         $pokemon_name = implode("_",$part);
         $form_data = $row['data']['temporaryEvolutionSettings']['temporaryEvolutions'];
         foreach($form_data as $form) {
@@ -135,7 +135,7 @@ foreach($master as $row) {
             $form_asset_suffix = $form['assetBundleValue'];
             $poke_shiny = 0;
             $form_id = $mega_ids[$form_name];
-            
+
             $pokemon_array[$pokemon_id][$form_name] = [ "pokemon_name"=>$poke_name,
                                                         "pokemon_form_name"=>$form_name,
                                                         "pokemon_form_id"=>$form_id,
@@ -227,6 +227,8 @@ if(!empty($pokemon_array)) {
     foreach($pokemon_array as $id => $forms) {
         $pokemon_id = $id;
         foreach($forms as $form=>$data) {
+            // Check that data is set, if not the mon is probably not in the game yet and there's no point in having them in a broken state
+            if(isset($data['weather']) && isset($data['min_cp']) && isset($data['max_cp']) && isset($data['min_weather_cp']) && isset($data['max_weather_cp'])) {
             $poke_form = $form;
 
             $poke_name = $data['pokemon_name'];
@@ -252,6 +254,7 @@ if(!empty($pokemon_array)) {
             echo $poke_name." ".$poke_form.PHP_EOL;
             $SQL .= "REPLACE INTO pokemon SET pokedex_id=\"${pokemon_id}\", pokemon_name=\"${poke_name}\", pokemon_form_name=\"${poke_form}\", pokemon_form_id=\"${form_id}\", asset_suffix=\"${form_asset_suffix}\", min_cp=\"${poke_min_cp}\", max_cp=\"${poke_max_cp}\", min_weather_cp=\"${poke_min_weather_cp}\", max_weather_cp=\"${poke_max_weather_cp}\", weather=\"${poke_weather}\", shiny=\"${poke_shiny}\";" . PHP_EOL;
         }
+      }
     }
     $SQL = $DEL . $SQL . $SQL_UPDATE;
     // Save data.
@@ -269,4 +272,4 @@ if(is_file($SQL_file)) {
     echo 'Failed to save file: ' . $SQL_file . PHP_EOL;
 }
 
-?> 
+?>
