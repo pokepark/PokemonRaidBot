@@ -98,8 +98,11 @@ foreach($master as $row) {
                 $poke_name = str_replace("_","-",$poke_name);
 
                 $poke_shiny = 0;
-
-                $form_id = $form_ids[$form['form']];
+                if(!isset($form_ids[$form['form']])) {
+                                    $form_id = 0;
+                }else {
+                    $form_id = $form_ids[$form['form']];
+                }
                 $form_asset_suffix = (isset($form['assetBundleValue']) ? $form['assetBundleValue'] : (isset($form['assetBundleSuffix'])?$form['assetBundleSuffix']:"00"));
 
                 $pokemon_array[$pokemon_id][$form_name] = [ "pokemon_name"=>$poke_name,
