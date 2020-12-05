@@ -1,7 +1,5 @@
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `events` (
+ALTER TABLE `attendance` ADD COLUMN IF NOT EXISTS `want_invite` tinyint(1) unsigned DEFAULT 0 AFTER `alarm`;
+CREATE TABLE IF NOT EXISTS `events` (
   `id` int(3) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(45) CHARACTER SET latin1 NOT NULL,
   `description` varchar(200) CHARACTER SET latin1 NOT NULL,
@@ -12,5 +10,5 @@ CREATE TABLE `events` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
-ALTER TABLE `raids` ADD `event` int(3) DEFAULT NULL;
-ALTER TABLE `raids` ADD `event_note` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL;
+ALTER TABLE `raids` ADD COLUMN IF NOT EXISTS `event` int(3) DEFAULT NULL;
+ALTER TABLE `raids` ADD COLUMN IF NOT EXISTS `event_note` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL;
