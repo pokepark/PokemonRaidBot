@@ -147,7 +147,11 @@ foreach($master as $row) {
         // Found Pokemon data
         $pokemon_id = (int)str_replace("V","",$part[0]);
         $form_name = str_replace($row['data']['pokemonSettings']['pokemonId']."_","",substr($row['data']['templateId'],14));
-        if($form_name != "PURIFIED" && $form_name != "SHADOW" && $form_name != "NORMAL") {
+        if($form_name != 'PURIFIED' && $form_name != 'SHADOW' && $form_name != 'NORMAL'
+          && isset($pokemon_array[$pokemon_id])
+          && isset($row['data']['pokemonSettings']['stats']['baseAttack'])
+          && isset($row['data']['pokemonSettings']['stats']['baseDefense'])
+          && isset($row['data']['pokemonSettings']['stats']['baseStamina'])) {
             if($form_name == $row['data']['pokemonSettings']['pokemonId']) {
                 $form_name = "normal";
             }else {
