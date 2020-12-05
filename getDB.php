@@ -247,8 +247,7 @@ if(!empty($pokemon_array)) {
             $QM = "'";
             $SEP = ",";
             echo $poke_name." ".$poke_form.PHP_EOL;
-            $SQL .= "INSERT INTO pokemon (pokedex_id, pokemon_name, pokemon_form_name, pokemon_form_id, asset_suffix, min_cp, max_cp, min_weather_cp, max_weather_cp, weather, shiny) ";
-            $SQL.= "VALUES (". $QM . $pokemon_id . $QM . $SEP . $QM . $poke_name . $QM . $SEP . $QM . $poke_form . $QM . $SEP . $QM . $form_id . $QM . $SEP . $QM . $form_asset_suffix . $QM . $SEP . $QM . $poke_min_cp . $QM . $SEP . $QM . $poke_max_cp . $QM . $SEP . $QM . $poke_min_weather_cp . $QM . $SEP . $QM . $poke_max_weather_cp . $QM . $SEP . $QM . $poke_weather . $QM . $SEP . $QM . $poke_shiny . $QM .");".PHP_EOL;
+            $SQL .= "REPLACE INTO pokemon SET pokedex_id=\"${pokemon_id}\", pokemon_name=\"${poke_name}\", pokemon_form_name=\"${poke_form}\", pokemon_form_id=\"${form_id}\", asset_suffix=\"${form_asset_suffix}\", min_cp=\"${poke_min_cp}\", max_cp=\"${poke_max_cp}\", min_weather_cp=\"${poke_min_weather_cp}\", max_weather_cp=\"${poke_max_weather_cp}\", weather=\"${poke_weather}\", shiny=\"${poke_shiny}\";" . PHP_EOL;
         }
     }
     $SQL = $DEL . $SQL . $SQL_UPDATE;

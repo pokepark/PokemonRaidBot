@@ -1,5 +1,3 @@
-DELETE FROM `pokemon`;
-TRUNCATE `pokemon`;
 REPLACE INTO pokemon SET pokedex_id="1", pokemon_name="Bulbasaur", pokemon_form_name="normal", pokemon_form_id="163", asset_suffix="00", min_cp="590", max_cp="637", min_weather_cp="737", max_weather_cp="796", weather="125", shiny="0";
 REPLACE INTO pokemon SET pokedex_id="1", pokemon_name="Bulbasaur", pokemon_form_name="fall_2019", pokemon_form_id="897", asset_suffix="pm0001_00_pgo_fall2019", min_cp="590", max_cp="637", min_weather_cp="737", max_weather_cp="796", weather="125", shiny="0";
 REPLACE INTO pokemon SET pokedex_id="2", pokemon_name="Ivysaur", pokemon_form_name="normal", pokemon_form_id="166", asset_suffix="00", min_cp="912", max_cp="970", min_weather_cp="1141", max_weather_cp="1213", weather="125", shiny="0";
