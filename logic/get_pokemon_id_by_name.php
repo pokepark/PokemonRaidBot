@@ -40,7 +40,7 @@ function get_pokemon_id_by_name($pokemon_name, $get_from_db = false)
     // Set language
     $language = USERLANGUAGE;
     if($get_from_db) {
-        // Fetch Pokemon form ID from database 
+        // Fetch Pokemon form ID from database
         $stmt = $dbh->prepare("
                 SELECT  pokedex_id, pokemon_form_id 
                 FROM    pokemon 
@@ -56,26 +56,24 @@ function get_pokemon_id_by_name($pokemon_name, $get_from_db = false)
         // Get translation file
         $str = file_get_contents(CORE_LANG_PATH . '/pokemon.json');
         $json = json_decode($str, true);
-
-        // Search pokemon name in json
-        $key = array_search(ucfirst($poke_name), $json);
-        if($key !== FALSE) {
-            // Index starts at 0, so key + 1 for the correct id!
-            $pokemon_id = $key + 1;
-        } else {
-            // Try English language as fallback to get the pokemon id.
-            $str = file_get_contents(CORE_LANG_PATH . '/pokemon_' . strtolower(DEFAULT_LANGUAGE) . '.json');
-            $json = json_decode($str, true);
-
-            // Search pokemon name in json
-            $key = array_search(ucfirst($poke_name), $json);
-            if($key !== FALSE) {
-                // Index starts at 0, so key + 1 for the correct id!
-                $pokemon_id = $key + 1;
-            } else {
-                // Debug log.
-                debug_log('Error! Pokedex ID could not be found for pokemon with name: ' . $poke_name);
+        $search_result = "";
+        foreach($json as $title => $translations) {
+            // Try to find translation for userlanguage
+            if(ucfirst($poke_name) == $translations[$language]) {
+                $search_result = $title;
+                debug_log('Translation found for lang: '.$language, 'P:');
+                debug_log('Translation result: '.$title, 'P:');
+                break;
+            // Also look for fallback in default language
+            }elseif(ucfirst($poke_name) == $translations[DEFAULT_LANGUAGE]) {
+                $search_result = $title;
             }
+        }
+        if($search_result != "") {
+            $pokemon_id = str_replace('pokemon_id_','', $search_result);
+        }else {
+            // Debug log.
+            debug_log('Error! Pokedex ID could not be found for pokemon with name: ' . $poke_name);
         }
 
         // Get form.
@@ -108,13 +106,13 @@ function get_pokemon_id_by_name($pokemon_name, $get_from_db = false)
                     $pokemon_form = str_replace('pokemon_form_','',$key_form);
                     debug_log('Found pokemon form by json key name: pokemon_form_' . $key_form);
                     break;
-                } 
+                }
             }
         }
-        // Fetch Pokemon form ID from database 
+        // Fetch Pokemon form ID from database
         $stmt = $dbh->prepare("
-                SELECT  pokemon_form_id 
-                FROM    pokemon 
+                SELECT  pokemon_form_id
+                FROM    pokemon
                 WHERE   pokedex_id = :pokedex_id
                 AND     pokemon_form_name = :form_name
                 LIMIT   1

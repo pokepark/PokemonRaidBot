@@ -7,7 +7,11 @@
  */
 function get_overview( $active_raids, $chat_id )
 {
+<<<<<<< HEAD
     global $config, $eggs;
+=======
+    global $config;
+>>>>>>> master
 
     // Get info about chat for username.
     debug_log('Getting chat object for chat_id: ' . $chat_id);
@@ -54,10 +58,13 @@ function get_overview( $active_raids, $chat_id )
             $msg .= !empty($chat_username) ? '<a href="https://t.me/' . $chat_username . '/' . $row['message_id'] . '">' . htmlspecialchars($gym) . '</a>' : $gym;
             $msg .= CR;
 
+<<<<<<< HEAD
             if(isset($row['event_name']) && $row['event_name'] != "") {
                 $msg .= "<b>" . $row['event_name'] . "</b>" . CR;
             }
 
+=======
+>>>>>>> master
             // Raid has not started yet - adjust time left message
             if ($now < $start_time) {
                 $msg .= get_raid_times($row, true);
@@ -65,6 +72,7 @@ function get_overview( $active_raids, $chat_id )
             } else {
                 // Add time left message.
                 $msg .= $pokemon . ' — <b>' . getPublicTranslation('still') . SP . $time_left . 'h</b>' . CR;
+<<<<<<< HEAD
             }
             $exclude_pokemon_sql = "";
             if(!in_array($row['pokemon'], $eggs)) {
@@ -88,6 +96,26 @@ function get_overview( $active_raids, $chat_id )
                           AND raid_done != 1
                           AND cancel != 1
                           {$exclude_pokemon_sql}
+=======
+            }
+
+            // Count attendances
+            $rs_att = my_query(
+            "
+            SELECT      count(attend_time)                                           AS count,
+                        sum(team = 'mystic')   + sum(attendance.extra_mystic)        AS count_mystic,
+                        sum(team = 'valor')    + sum(attendance.extra_valor)         AS count_valor,
+                        sum(team = 'instinct') + sum(attendance.extra_instinct)      AS count_instinct,
+                        sum(team IS NULL)                                            AS count_no_team
+            FROM        ( 
+                          SELECT DISTINCT attend_time, user_id, extra_mystic, extra_valor, extra_instinct 
+                          FROM attendance 
+                          WHERE raid_id = {$raid_id} 
+                          AND attend_time IS NOT NULL 
+                          AND ( attend_time > UTC_TIMESTAMP() or attend_time = '" . ANYTIME . "' )
+                          AND raid_done != 1 
+                          AND cancel != 1  
+>>>>>>> master
                         ) as attendance
             LEFT JOIN   users
             ON          attendance.user_id = users.user_id
@@ -98,12 +126,19 @@ function get_overview( $active_raids, $chat_id )
 
             // Add to message.
             if ($att['count'] > 0) {
+<<<<<<< HEAD
                 $msg .= EMOJI_GROUP . '<b> ' . ($att['count_mystic'] + $att['count_valor'] + $att['count_instinct'] + $att['count_no_team'] + $att['count_want_invite']) . '</b> — ';
+=======
+                $msg .= EMOJI_GROUP . '<b> ' . ($att['count_mystic'] + $att['count_valor'] + $att['count_instinct'] + $att['count_no_team']) . '</b> — ';
+>>>>>>> master
                 $msg .= ((($att['count_mystic']) > 0) ? TEAM_B . ($att['count_mystic']) . '  ' : '');
                 $msg .= ((($att['count_valor']) > 0) ? TEAM_R . ($att['count_valor']) . '  ' : '');
                 $msg .= ((($att['count_instinct']) > 0) ? TEAM_Y . ($att['count_instinct']) . '  ' : '');
                 $msg .= (($att['count_no_team'] > 0) ? TEAM_UNKNOWN . $att['count_no_team'] : '');
+<<<<<<< HEAD
                 $msg .= (($att['count_want_invite'] > 0) ? EMOJI_WANT_INVITE . $att['count_want_invite'] : '');
+=======
+>>>>>>> master
                 $msg .= CR;
             }
             $msg .= CR;
