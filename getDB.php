@@ -232,30 +232,34 @@ foreach($master as $row) {
 }
 // Save data to file.
 if(!empty($pokemon_array)) {
-    // Add eggs to SQL data.
-    echo 'Adding raids eggs to pokemons' . PHP_EOL;
-    for($e = 1; $e <= 6; $e++) {
-        $pokemon_id = '999'.$e;
-        $form_name = 'normal';
-        $pokemon_name = 'Level '. $e .' Egg';
-        $raid_level = check_raid_level($pokemon_id,$form_name);
-        $pokemon_array[$pokemon_id][$form_name] = [ 'pokemon_name'=>$pokemon_name,
-                                                    'pokemon_form_name'=>$form_name,
-                                                    'pokemon_form_id'=>0,
-                                                    'asset_suffix'=>0,
-                                                    'shiny'=>0,
-                                                    'min_cp'=>0,
-                                                    'max_cp'=>0,
-                                                    'min_weather_cp'=>0,
-                                                    'max_weather_cp'=>0,
-                                                    'weather'=>0,
-                                                    'raid_level'=>$raid_level
-                                                  ];
+    if($update) {
+        $DEL = '';
+    }else {
+        // Add eggs to SQL data.
+        echo 'Adding raids eggs to pokemons' . PHP_EOL;
+        for($e = 1; $e <= 6; $e++) {
+            $pokemon_id = '999'.$e;
+            $form_name = 'normal';
+            $pokemon_name = 'Level '. $e .' Egg';
+            $raid_level = check_raid_level($pokemon_id,$form_name);
+            $pokemon_array[$pokemon_id][$form_name] = [ 'pokemon_name'=>$pokemon_name,
+                                                        'pokemon_form_name'=>$form_name,
+                                                        'pokemon_form_id'=>0,
+                                                        'asset_suffix'=>0,
+                                                        'shiny'=>0,
+                                                        'min_cp'=>0,
+                                                        'max_cp'=>0,
+                                                        'min_weather_cp'=>0,
+                                                        'max_weather_cp'=>0,
+                                                        'weather'=>0,
+                                                        'raid_level'=>$raid_level
+                                                      ];
+        }
+        // Add delete command to SQL data.
+        echo 'Adding delete sql command to the beginning' . PHP_EOL;
+        $DEL = 'DELETE FROM `pokemon`;' . PHP_EOL;
+        $DEL .= 'TRUNCATE `pokemon`;' . PHP_EOL;
     }
-    // Add delete command to SQL data.
-    echo 'Adding delete sql command to the beginning' . PHP_EOL;
-    $DEL = 'DELETE FROM `pokemon`;' . PHP_EOL;
-    $DEL .= 'TRUNCATE `pokemon`;' . PHP_EOL;
     foreach($pokemon_array as $id => $forms) {
         $pokemon_id = $id;
         foreach($forms as $form=>$data) {
@@ -282,7 +286,7 @@ if(!empty($pokemon_array)) {
                 }else {
                     $poke_form = strtolower($data['pokemon_form_name']);
                 }
-                $SQL .= "REPLACE INTO pokemon SET pokedex_id=\"${pokemon_id}\", pokemon_name=\"${poke_name}\", pokemon_form_name=\"${poke_form}\", pokemon_form_id=\"${form_id}\", asset_suffix=\"${form_asset_suffix}\", min_cp=\"${poke_min_cp}\", max_cp=\"${poke_max_cp}\", min_weather_cp=\"${poke_min_weather_cp}\", max_weather_cp=\"${poke_max_weather_cp}\", weather=\"${poke_weather}\", shiny=\"${poke_shiny}\" ".( ($update) ? ", raid_level=\"${raid_level}\"" : "" ).";" . PHP_EOL;
+                $SQL .= "REPLACE INTO pokemon SET pokedex_id=\"${pokemon_id}\", pokemon_name=\"${poke_name}\", pokemon_form_name=\"${poke_form}\", pokemon_form_id=\"${form_id}\", asset_suffix=\"${form_asset_suffix}\", min_cp=\"${poke_min_cp}\", max_cp=\"${poke_max_cp}\", min_weather_cp=\"${poke_min_weather_cp}\", max_weather_cp=\"${poke_max_weather_cp}\", weather=\"${poke_weather}\", shiny=\"${poke_shiny}\"".( ($update) ? ", raid_level=\"${raid_level}\"" : "" ).";" . PHP_EOL;
             }
         }
     }
