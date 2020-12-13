@@ -26,7 +26,7 @@ try {
                     ]);
     $query_select = "
             SELECT  want_invite
-            FROM    attendance
+            FROM    attendance 
             WHERE   raid_id = :raid_id
             AND   user_id = :user_id
             LIMIT 1
@@ -56,6 +56,6 @@ if($config->RAID_PICTURE) {
     send_response_vote($update, $data,false,false);
 } else {
     send_response_vote($update, $data);
-}
+} 
 
 exit();

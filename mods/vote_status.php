@@ -32,7 +32,7 @@ if (!empty($answer)) {
         alarm($data['id'],$update['callback_query']['from']['id'],'status',$status);
         // Update attendance.
         if($status == 'alarm') {
-            // Enable / Disable alarm
+            // Enable / Disable alarm 
             my_query(
             "
             UPDATE attendance
@@ -47,7 +47,7 @@ if (!empty($answer)) {
 
             // Inform User about change
             sendAlertOnOffNotice($data, $update);
-
+        
         } else {
             // All other status-updates are using the short query
             my_query(

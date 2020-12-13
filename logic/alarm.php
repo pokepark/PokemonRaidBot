@@ -181,7 +181,8 @@ function alarm($raid, $user, $action, $info = '')
         $msg_text_local = $msg_text;
         $msg_text_local .= EMOJI_REMOTE . SP . '<b>' . getTranslation('group_code_only_for_remote_raiders') . '</b>';
         sendcode($msg_text_local, $raid, $user, 'local');
-        // Attendance from remote
+    
+    // Attendance from remote
     } else if($action == "want_invite") {
         debug_log('Alarm invite begging changed: ' . $info);
         $msg_text = '<b>' . getTranslation('alert_want_invite') . '</b>' . CR;

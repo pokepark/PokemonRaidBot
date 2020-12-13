@@ -1250,6 +1250,7 @@ Updates to the config file are NOT checked automatically. Therefore always check
 | RAID_POLL_ENABLE_HYPERLINKS_IN_NAMES | Enable hyperlinks to user profiles in participant names in raid polls. It's recommended to disable this if you're running the bot in a supergroup and with `RAID_PICTURE` mode on. |
 | RAID_REMOTEPASS_USERS | Bool, allow participation to raid polls with a remote pass |
 | RAID_REMOTEPASS_USERS_LIMIT | Integer, How many remote participants to allow into a single raid |
+| RAID_WANT_INVITE | Bool, allow participants to indicate that they wish to be invited to the raid |
 | RAID_SLOTS| Amount of minutes between raid poll voting slots |
 | RAID_VIA_LOCATION| Bool, enable creating raids by sharing a location with the bot |
 | RAID_VOTE_ICONS| Bool, use icons on raid poll buttons |
