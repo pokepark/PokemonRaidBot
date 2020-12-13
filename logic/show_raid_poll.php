@@ -118,7 +118,13 @@ function show_raid_poll($raid)
                         users.trainername,
                         users.trainercode,
                         users.level,
-                        users.team
+                        users.team,
+                        CASE
+                            WHEN users.team = 'mystic'  THEN 1
+                            WHEN users.team = 'valor'   THEN 2
+                            WHEN users.team = 'instinct'THEN 3
+                            ELSE 0
+                        END as sort_team
         FROM            attendance
         LEFT JOIN       users
           ON            attendance.user_id = users.user_id
@@ -222,7 +228,13 @@ function show_raid_poll($raid)
                         users.trainername,
                         users.trainercode,
                         users.level,
-                        users.team
+                        users.team,
+                        CASE
+                            WHEN users.team = 'mystic'  THEN 1
+                            WHEN users.team = 'valor'   THEN 2
+                            WHEN users.team = 'instinct'THEN 3
+                            ELSE 0
+                        END as sort_team
         FROM            attendance
         LEFT JOIN       users
           ON            attendance.user_id = users.user_id
@@ -237,14 +249,6 @@ function show_raid_poll($raid)
                         attendance.id
         "
     );
-    while ($attendance = $rs_attendance_want_inv->fetch()) {
-        // Attendance found
-        $cnt_want_invite = 1;
-        $attendance = check_trainername($attendance);
-
-        // Fill attendance array with results
-        $att_array[$attendance['attend_time']][$attendance['pokemon']][] = $attendance;
-    }
     // Combine and sort array data if only both raid pokemon and any pokemon were selected per timeslot
     foreach($cnt_array as $time => $att_time_row) {
         if($att_time_row['other_pokemon'] == 0 && $att_time_row['raid_pokemon'] != 0) {
@@ -260,7 +264,19 @@ function show_raid_poll($raid)
             }
             unset($att_array[$time][$raid_pokemon]);
             // ...and sort the new list
-            array_multisort(array_column($att_array[$time][0], 'team'),SORT_ASC,array_column($att_array[$time][0], 'arrived'),SORT_ASC,array_column($att_array[$time][0], 'level'),SORT_DESC,array_column($att_array[$time][0], 'name'),SORT_ASC,$att_array[$time][0]);
+            array_multisort(array_column($att_array[$time][0], 'sort_team'),SORT_ASC,array_column($att_array[$time][0], 'arrived'),SORT_ASC,array_column($att_array[$time][0], 'level'),SORT_DESC,array_column($att_array[$time][0], 'name'),SORT_ASC,$att_array[$time][0]);
+        }
+    }
+    while ($attendance = $rs_attendance_want_inv->fetch()) {
+        // Attendance found
+        $cnt_want_invite = 1;
+        $attendance = check_trainername($attendance);
+
+        // Fill attendance array with results
+        if($cnt_array[$attendance['attend_time']]['other_pokemon'] == 0 && $cnt_array[$attendance['attend_time']]['raid_pokemon'] != 0) {
+            $att_array[$attendance['attend_time']][0][] = $attendance;
+        }else {
+            $att_array[$attendance['attend_time']][$attendance['pokemon']][] = $attendance;
         }
     }
     // Raid has started and has participants
