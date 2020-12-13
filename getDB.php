@@ -291,12 +291,10 @@ if(!empty($pokemon_array)) {
         }
     }
     $SQL = $DEL . $SQL . $SQL_UPDATE;
-    // Save data.
-    //echo $SQL . PHP_EOL;
     if($update) $save_file = $SQL_file_update;
     else $save_file = $SQL_file;
-    echo 'Saving data to ' . $SQL_file . PHP_EOL;
-    file_put_contents($SQL_file, $SQL);
+    echo 'Saving data to ' . $save_file . PHP_EOL;
+    file_put_contents($save_file, $SQL);
 } else {
     echo 'Failed to get pokemon data!' . PHP_EOL;
 }
