@@ -92,8 +92,10 @@ function show_raid_poll($raid)
     } else {
         $hide_users_sql = "";
     }
+    $order_by_sql = 'pokemon,'; // For invite beggars
     if(!in_array($raid['pokemon'], $eggs)) {
         $hide_users_sql.= 'AND (pokemon = \''.$raid['pokemon'].'-'.$raid['pokemon_form'].'\' OR pokemon = \'0\')';
+        $order_by_sql = ''; // Remove sorting by pokemon for invite beggars, since all attendances are combined
     }
 
     // Buttons for raid levels and pokemon hidden?
@@ -226,10 +228,10 @@ function show_raid_poll($raid)
           AND           want_invite = 1
           AND           cancel = 0
           AND           raid_done = 0
-                        $hide_users_sql
+                        {$hide_users_sql}
             AND         attend_time IS NOT NULL
           ORDER BY      attend_time,
-                        pokemon,
+                        {$order_by_sql}
                         attendance.id
         "
     );
