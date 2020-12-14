@@ -7,7 +7,7 @@
  */
 function get_overview( $active_raids, $chat_id )
 {
-    global $config, $eggs;
+    global $config;
 
     // Get info about chat for username.
     debug_log('Getting chat object for chat_id: ' . $chat_id);
@@ -63,7 +63,7 @@ function get_overview( $active_raids, $chat_id )
                 $msg .= $pokemon . ' — <b>' . getPublicTranslation('still') . SP . $time_left . 'h</b>' . CR;
             }
             $exclude_pokemon_sql = "";
-            if(!in_array($row['pokemon'], $eggs)) {
+            if(!in_array($row['pokemon'], $GLOBALS['eggs'])) {
                 $exclude_pokemon_sql = 'AND (pokemon = \''.$row['pokemon'].'-'.$row['pokemon_form'].'\' or pokemon = \'0\')';
             }
             // Count attendances
