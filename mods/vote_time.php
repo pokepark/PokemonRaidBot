@@ -86,8 +86,11 @@ if($now <= $attend_time || $vote_time == 0) {
         if (!empty($answer)) {
             // Update attendance.
             alarm($data['id'],$update['callback_query']['from']['id'],'change_time', $attend_time);
-            $update_pokemon_sql = "";
-            if($raid['pokemon'] < '9990') {
+            $update_pokemon_sql = '';
+            if(!in_array($raid['pokemon'], $eggs)) {
+                // If raid egg has hatched
+                // -> clean up attendance table from votes for other pokemon
+                // -> leave one entry remaining and set the pokemon to 0 there
                 my_query("
                     DELETE  a1
                     FROM    attendance a1
