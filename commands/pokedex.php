@@ -65,6 +65,12 @@ if(count($keys) == 0 ) {
                 'text'          => getTranslation('import') . SP . '(Pokebattler)',
                 'callback_data' => '0:pokebattler:0'
             ]
+        ],
+        [
+            [
+                'text'          => getTranslation('import') . SP . '(pogoinfo)',
+                'callback_data' => '0:pogoinfo:0'
+            ]
         ]
     ];
     // Set message.
