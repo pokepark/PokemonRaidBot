@@ -113,6 +113,9 @@ if($id == 0) {
         // Raid level and message.
         $msg .= '<b>' . getTranslation('pokedex_raid_level') . SP . $tier . ':</b>' . CR;
 
+        // Count raid bosses and add raid egg later if 2 or more bosses.
+        $bosscount = 0;
+
         // Get raid bosses for each raid level.
         foreach($tier_pokemon as $raid_id_form) {
             $split_mon_id = explode('_', $raid_id_form);
@@ -173,6 +176,9 @@ if($id == 0) {
                 // Add pokemon to message.
                 $msg .= $local_pokemon . SP . '(#' . $dex_id . ')' . CR;
 
+                // Counter.
+                $bosscount = $bosscount + 1;
+
                 // Save to database?
                 if(strpos($arg, 'save#') === 0) {
                     // Update raid level of pokemon
@@ -209,7 +215,7 @@ if($id == 0) {
         }
 
         // Add raid egg?
-        if($config->POKEBATTLER_IMPORT_DISABLE_REDUNDANT_EGGS && count($tier_pokemon) <= 1) {
+        if($config->POKEBATTLER_IMPORT_DISABLE_REDUNDANT_EGGS && $bosscount <= 1) {
             debug_log('Not creating egg for level ' . $tier . ' since there are not 2 or more bosses.');
         } else {
             // Add pokemon to message.
