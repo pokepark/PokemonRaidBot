@@ -23,23 +23,6 @@ my_query(
     "
 );
 
-// Get eggs.
-$eggs = $GLOBALS['eggs'];
-
-// Do not update if pokedex_id is an egg.
-if(!in_array($pokemon_id_form[0], $eggs)) {
-    // Update users in attendance table.
-    // Helps to proper sort users as they are ordered by pokemon.
-    my_query(
-        "
-        UPDATE    attendance
-        SET       pokemon = '{$data['arg']}'
-          WHERE   raid_id = {$id}
-          AND     pokemon = '0'
-        "
-    );
-}
-
 // Get raid times.
 $raid = get_raid($data['id']);
 
