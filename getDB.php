@@ -33,7 +33,7 @@ function check_raid_level($pokemon_id,$pokemon_form){
 }
 
 //Parse the form ID's from pogoprotos
-$proto = file($proto_url);
+$proto = file($proto_url) or exit("Failed to open proto file." . PHP_EOL);
 $count = count($proto);
 $form_ids = array();
 $start=false;
