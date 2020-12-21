@@ -1243,6 +1243,7 @@ Updates to the config file are NOT checked automatically. Therefore always check
 | SHARE_CHATS_LEVEL_X| List of Telegram group IDs available for sharing Ex-Raids |
 | SHARE_CHATS| List of Telegram group IDs available for sharing any raids |
 | TIMEZONE| Timezone definition to use as per [TZ database names](https://www.wikiwand.com/en/List_of_tz_database_time_zones#/List) |
+| TRAINER_MAX_LEVEL| Int, Maximum level a trainer can be (currently 50) |
 | TRAINER_BUTTONS_TOGGLE| Bool, ? |
 | TRAINER_CHATS| List of chats where trainer data setup messages can be shared |
 | UPGRADE_SQL_AUTO | When a DB schema upgrade is detected, run it automatically and bump config version to match. |
