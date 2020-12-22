@@ -25,8 +25,8 @@ if(substr_count($data['id'], ',') == 1) {
 // Set the user id.
 $userid = $update['callback_query']['from']['id'];
 
-// Update only if time is not equal to RAID_POKEMON_DURATION_SHORT
-if($arg != $config->RAID_POKEMON_DURATION_SHORT) {
+// Update only if time is not equal to RAID_DURATION
+if($arg != $config->RAID_DURATION) {
 
     // Build query.
     my_query(
@@ -90,7 +90,7 @@ if ($update['callback_query']['message']['chat']['type'] == 'private') {
 
     // Check access level prior allowing to change raid time
     $admin_access = bot_access_check($update, 'raid-duration', true);
-    if($admin_access && $arg == $config->RAID_POKEMON_DURATION_SHORT) {
+    if($admin_access) {
         // Add time change to keys.
         $keys_time = [
             [
@@ -124,17 +124,11 @@ if ($update['callback_query']['message']['chat']['type'] == 'private') {
         $chats = '';
     }
 
-    // Add keys to share.
+    // Share keys
     $pre_text = EMOJI_CLOCK . SP . $raid_duration . getTranslation('minutes_short') . SP . '+' . SP;
     $keys_share = share_keys($id, 'raid_share', $update, $chats, $pre_text);
     $keys = array_merge($keys, $keys_share);
 
-    // Add event keys.
-    if($config->RAID_POKEMON_DURATION_EVENT != $config->RAID_POKEMON_DURATION_SHORT) {
-        $prefix_text = EMOJI_CLOCK . SP . $config->RAID_POKEMON_DURATION_EVENT . getTranslation('minutes_short') . SP . '+' . SP;
-        $keys_event = share_keys($id . ',' . $config->RAID_POKEMON_DURATION_EVENT, 'edit_save', $update, $chats, $prefix_text, true);
-        $keys = array_merge($keys, $keys_event);
-    }
     // Build message string.
     $msg = '';
     $msg .= getTranslation('raid_saved') . CR;
@@ -174,18 +168,6 @@ if ($update['callback_query']['message']['chat']['type'] == 'private') {
 
     // Answer callback.
     $tg_json[] = answerCallbackQuery($update['callback_query']['id'], $callback_response, true);
-
-    // Old Edit message.
-    /*
-    if($config->RAID_PICTURE) {
-        $tg_json[] = edit_caption($update, $text['short'], $keys, false, true);
-    } else {
-        $tg_json[] = edit_message($update, $text['full'], $keys, false, true);
-    }
-    */
-
-    // Older Edit message.
-    //$tg_json[] = edit_message($update, $text, $keys, false, true);
 
     // Edit message.
     if($config->RAID_PICTURE) {

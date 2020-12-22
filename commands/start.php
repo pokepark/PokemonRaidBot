@@ -30,7 +30,7 @@ if(!$access && bot_access_check($update, 'list', true)){
   $access = bot_access_check($update, 'create', false, true);
 }
 // Raid event?
-if($config->RAID_POKEMON_DURATION_EVENT != $config->RAID_POKEMON_DURATION_SHORT) {
+if($config->RAID_HOUR || $config->RAID_DAY) {
     // Always allow for Admins.
     if($access && $access == 'BOT_ADMINS') {
         debug_log('Bot Admin detected. Allowing further raid creation during the raid hour');
@@ -46,24 +46,37 @@ if($config->RAID_POKEMON_DURATION_EVENT != $config->RAID_POKEMON_DURATION_SHORT)
         );
 
         $info = $rs->fetch();
-        $creation_limit = $config->RAID_EVENT_CREATION_LIMIT - 1;
 
-        // Check raid count
-        if($info['created_raids_count'] > $creation_limit) {
-            // Set message and keys.
-            if($config->RAID_EVENT_CREATION_LIMIT == 1) {
-                $msg = '<b>' . getTranslation('raid_event_creation_limit_one') . '</b>';
-            } else {
-                $msg = '<b>' . str_replace('RAID_EVENT_CREATION_LIMIT', $config->RAID_EVENT_CREATION_LIMIT, getPublicTranslation('raid_event_creation_limit')) . '</b>';
+        // Set message and keys.
+        if($config->RAID_HOUR) {
+            // Check raid count
+            $creation_limit = $config->RAID_HOUR_CREATION_LIMIT - 1;
+            if($info['created_raids_count'] > $creation_limit) {
+                if($config->RAID_HOUR_CREATION_LIMIT == 1) {
+                    $msg = '<b>' . getTranslation('raid_hour_creation_limit_one') . '</b>';
+                } else {
+                    $msg = '<b>' . str_replace('RAID_HOUR_CREATION_LIMIT', $config->RAID_HOUR_CREATION_LIMIT, getPublicTranslation('raid_hour_creation_limit')) . '</b>';
+                }
             }
-            $keys = [];
-
-            // Send message.
-            send_message($update['message']['chat']['id'], $msg, $keys, ['reply_markup' => ['selective' => true, 'one_time_keyboard' => true]]);
-
-            // Exit.
-            exit();
+        } elseif($config->RAID_DAY) {
+            // Check raid count
+            $creation_limit = $config->RAID_DAY_CREATION_LIMIT - 1;
+            if($info['created_raids_count'] > $creation_limit) {
+                if($config->RAID_DAY_CREATION_LIMIT == 1) {
+                    $msg = '<b>' . getTranslation('raid_day_creation_limit_one') . '</b>';
+                } else {
+                    $msg = '<b>' . str_replace('RAID_DAY_CREATION_LIMIT', $config->RAID_DAY_CREATION_LIMIT, getPublicTranslation('raid_day_creation_limit')) . '</b>';
+                }
+            }
         }
+
+        $keys = [];
+
+        // Send message.
+        send_message($update['message']['chat']['id'], $msg, $keys, ['reply_markup' => ['selective' => true, 'one_time_keyboard' => true]]);
+
+        // Exit.
+        exit();
     }
 }
 

@@ -44,7 +44,7 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
             * [Sharing split to channels by level](#sharing-split-to-channels-by-level)
             * [Raids from Webhook](#raids-from-webhook)
             * [Filter Raids from Webhook / geoconfig.json](#filter-raids-from-webhook--geoconfigjson)
-            * [Extended Raid Sharing](#entended-raid-sharing)
+            * [Extended Raid-Sharing](#extended-raid-sharing)
       * [Trainer settings](#trainer-settings)
       * [Raid overview](#raid-overview)
       * [Raid Map](#raid-map)
@@ -90,7 +90,7 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
          * [translate.py](#translatepy)
             * [Usage](#usage)
 
-<!-- Added by: artanicus, at: Sun Sep  6 15:46:50 EEST 2020 -->
+<!-- Added by: tux, at: Tue 22 Dec 2020 06:46:55 PM CET -->
 
 <!--te-->
 
@@ -515,9 +515,19 @@ Set `RAID_VIA_LOCATION` to true to allow raid creation from a location shared wi
 
 Set `RAID_EGG_DURATION` to the maximum amount of minutes a user can select for the egg hatching phase.
 
-Set `RAID_POKEMON_DURATION_SHORT` to the maximum amount of minutes a user can select as raid duration for already running/active raids.
+Set `RAID_DURATION` to the maximum amount of minutes a user can select as raid duration for already running/active raids.
 
-Set `RAID_POKEMON_DURATION_LONG` to the maximum amount of minutes a user can select as raid duration for not yet hatched raid eggs.
+Set `RAID_HOUR` to true to enable the raid hour. Enabling the raid hour superseds the normal raid duration. Note that the raid hour takes precedence over the raid day. Make sure to disable the raid hour to get the raid day.
+
+Set `RAID_HOUR_DURATION` to the maximum amount of minutes a user can select as raid duration if the `RAID_HOUR` is enabled. Per default max. 60 minutes.
+
+Set `RAID_HOUR_CREATION_LIMIT` to the maximum amount of raids a user can create if the `RAID_HOUR` is enabled. Per default 1 raid.
+
+Set `RAID_DAY` to true to enable the raid day. Enabling the raid day superseds the normal raid duration. Note that the raid hour takes precedence over the raid day. Make sure to disable the raid hour to get the raid day.
+
+Set `RAID_DAY_DURATION` to the maximum amount of minutes a user can select as raid duration if the `RAID_DAY` is enabled. Per default max. 180 minutes.
+
+Set `RAID_DAY_CREATION_LIMIT` to the maximum amount of raids a user can create if the `RAID_DAY` is enabled. Per default 1 raid.
 
 Set `RAID_DURATION_CLOCK_STYLE` to customize the default style for the raid start time selection. Set to true, the bot will show the time in clocktime style, e.g. "18:34" as selection when the raid will start. Set to false the bot will show the time until the raid starts in minutes, e.g. "0:16" (similar to the countdown in the gyms). Users can switch between both style in the raid creation process.
 
@@ -1158,7 +1168,7 @@ Updates to the config file are NOT checked automatically. Therefore always check
 | Option | Description |
 |--------|------------ |
 | APIKEY_HASH | Telegram API key hashed in sha256 |
-| BOT_ADMINS| List of admin identifiers |
+| BOT_ADMINS| List of admin identifiers (comma separated telegram ids) |
 | BOT_ID| One letter ID for the bot used in debug logging. Mostly useful if you run multiple. |
 | BOT_NAME| Name of the bot. |
 | BRIDGE_MODE| Bool, whether to enable bridge mode. |
@@ -1195,14 +1205,20 @@ Updates to the config file are NOT checked automatically. Therefore always check
 | RAID_CODE_POKEMON | List of Pokemon dex IDs in use for private group codes |
 | RAID_CREATION_EX_GYM_MARKER| Highlight gyms eligible for Ex-Raids in raid polls |
 | RAID_CUSTOM_GYM_LETTERS| List of custom "letters" to include in gym selector, e.g. "St." or "The" |
+| RAID_DAY| Bool, enable the raid day. Raid duration will change to RAID_DAY_DURATION |
+| RAID_DAY_DURATION| In minutes, default duration of raids during raid day, currently 180min |
+| RAID_DAY_CREATION_LIMIT| In raids, max. raids a user can create if RAID_HOUR is enabled. BOT_ADMINS are not affected |
 | RAID_DEFAULT_PICTURE| URL of image to use for raids if the portal photo is unknown. Only relevant for `RAID_PICTURE` |
 | RAID_DIRECT_START| Bool, Allow voting for starting raids as soon as it opens |
+| RAID_DURATION| In minutes, default duration of raids, currently 45min |
 | RAID_DURATION_CLOCK_STYLE| Bool, enable showing the time a raid starts vs. duration until start |
 | RAID_EGG_DURATION| In minutes the maximum length of the egg phase a user is allowed to give. |
-| RAID_EVENT_CREATION_LIMIT| ? |
-| RAID_EXCLUDE_EXRAID_DUPLICATION| ? |
-| RAID_EX_GYM_MARKER| Enum, "icon" or ? |
+| RAID_EXCLUDE_EXRAID_DUPLICATION| Bool, true to exclude ex-raids from the duplication check which allows to create an ex-raid and a normal raid at the same gym |
+| RAID_EX_GYM_MARKER| Enum, "icon" (default value, a star icon) or a custom text/icon to indicate an ex-raid gym in the raid polls |
 | RAID_FIRST_START| In minutes what the earliest timeslot is after egg has opened |
+| RAID_HOUR| Bool, enable the raid hour. Raid duration will change to RAID_HOUR_DURATION |
+| RAID_HOUR_DURATION| In minutes, default duration of raids during raid hour, currently 60min |
+| RAID_HOUR_CREATION_LIMIT| In raids, max. raids a user can create if RAID_HOUR is enabled. BOT_ADMINS are not affected |
 | RAID_LAST_START| In minutes what the last timeslot is before the raid ends |
 | RAID_LATE_MSG| Bool, add a message to the raidpoll if anyone has signaled they are late. |
 | RAID_LATE_TIME| How many minutes to advise waiting in `RAID_LATE_MSG` |
@@ -1218,15 +1234,12 @@ Updates to the config file are NOT checked automatically. Therefore always check
 | RAID_PICTURE_ICONS_WHITE| Bool, use white icons in `RAID_PICTURE` instead of black |
 | RAID_PICTURE_TEXT_COLOR| List of RGB values for `RAID_PICTURE` poll text color, e.g "255,255,255" for white |
 | RAID_PICTURE_URL| Fully qualified HTTPS URL to `raidpicture.php`, for example `https://example.com/raidbot/raidpicture.php` |
-| RAID_PIN_MESSAGE| ? |
-| RAID_POKEMON_DURATION_EVENT| ? |
-| RAID_POKEMON_DURATION_LONG| ? |
-| RAID_POKEMON_DURATION_SHORT| ? |
+| RAID_PIN_MESSAGE| Custom message added to the bottom of the raid overview messages |
 | RAID_POLL_HIDE_BUTTONS_POKEMON| List of Pokemon dex IDs for which voting buttons are disabled |
 | RAID_POLL_HIDE_BUTTONS_RAID_LEVEL| List of raid levels for which voting buttons are disabled |
-| RAID_POLL_HIDE_BUTTONS_TEAM_LVL| Bool, ? |
+| RAID_POLL_HIDE_BUTTONS_TEAM_LVL| Bool, true to hide the team and level+/- buttons below each raid poll |
 | RAID_POLL_HIDE_DONE_CANCELED| Bool, hide the Done and Cancel buttons from raid polls |
-| RAID_POLL_HIDE_USERS_TIME| ? |
+| RAID_POLL_HIDE_USERS_TIME| In minutes, after what time the previous raid slots are hidden from a raid poll |
 | RAID_POLL_UI_ORDER| Order of elements in text based raid polls. Valid elements are: `extra, teamll, time, pokemon, status` |
 | RAID_REMOTEPASS_USERS | Bool, allow participation to raid polls with a remote pass |
 | RAID_REMOTEPASS_USERS_LIMIT | Integer, How many remote participants to allow into a single raid |
@@ -1244,7 +1257,7 @@ Updates to the config file are NOT checked automatically. Therefore always check
 | SHARE_CHATS| List of Telegram group IDs available for sharing any raids |
 | TIMEZONE| Timezone definition to use as per [TZ database names](https://www.wikiwand.com/en/List_of_tz_database_time_zones#/List) |
 | TRAINER_MAX_LEVEL| Int, Maximum level a trainer can be (currently 50) |
-| TRAINER_BUTTONS_TOGGLE| Bool, ? |
+| TRAINER_BUTTONS_TOGGLE| Bool, true to show/hide the team and level+/- buttons below the trainer data setup messages once a users hits the "trainer info" button. False to always show the team and level+/- buttons. |
 | TRAINER_CHATS| List of chats where trainer data setup messages can be shared |
 | UPGRADE_SQL_AUTO | When a DB schema upgrade is detected, run it automatically and bump config version to match. |
 | WEBHOOK_CHATS_LEVEL_1_0| ? |

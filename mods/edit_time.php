@@ -79,7 +79,7 @@ if ($raid_id == 0 && $gym_id != 0) {
     }
 
     // Duration and end time.
-    $duration = $config->RAID_POKEMON_DURATION_SHORT;
+    $duration = $config->RAID_DURATION;
     $end = date('Y-m-d H:i:s', strtotime('+' . $duration . ' minutes', strtotime($start_date_time)));
 
     // Check for duplicate raid
@@ -162,17 +162,20 @@ $keys = [];
 
 // Raid pokemon duration short or 1 Minute / 5 minute time slots
 if($opt_arg == 'more') {
-    if ($slot_switch == 0) {
-        // Event running?
-        if($config->RAID_POKEMON_DURATION_EVENT != $config->RAID_POKEMON_DURATION_SHORT) {
-	    $slotmax = $config->RAID_POKEMON_DURATION_EVENT;
-        } else {
-	    $slotmax = $config->RAID_POKEMON_DURATION_SHORT;
-        }
-	$slotsize = 1;
+
+    // 1-minute selection
+    $slotsize = 1;
+
+    // Raid hour?
+    if ($config->RAID_HOUR) {
+        $slotmax = $config->RAID_HOUR_DURATION;
+    // Raid day?
+    } elseif ($config->RAID_DAY) {
+        $slotsize = 5;
+        $slotmax = $config->RAID_DAY_DURATION;
+    // No event
     } else {
-	$slotmax = $config->RAID_POKEMON_DURATION_LONG;
-	$slotsize = 5;
+        $slotmax = $config->RAID_DURATION;
     }
 
     for ($i = $slotmax; $i >= 15; $i = $i - $slotsize) {
@@ -185,8 +188,19 @@ if($opt_arg == 'more') {
     }
 
 } else {
-    debug_log('Comparing slot switch and argument for fast forward using RAID_POKEMON_DURATION_SHORT');
+    debug_log('Comparing slot switch and argument for fast forward');
     if ($slot_switch == 0) {
+        // Raid hour?
+        if ($config->RAID_HOUR) {
+            $raidduration = $config->RAID_HOUR_DURATION;
+        // Raid day?
+        } elseif ($config->RAID_DAY) {
+            $raidduration = $config->RAID_DAY_DURATION;
+        // No event
+        } else {
+            $raidduration = $config->RAID_DURATION;
+        }
+
         // Write to log.
         debug_log('Doing a fast forward now!');
         debug_log('Changing data array first...');
@@ -195,7 +209,7 @@ if($opt_arg == 'more') {
         $data = [];
         $data['id'] = $raid_id;
         $data['action'] = 'edit_save';
-        $data['arg'] = $config->RAID_POKEMON_DURATION_SHORT;
+        $data['arg'] = $raidduration;
 
         // Write to log.
         debug_log($data, '* NEW DATA= ');
@@ -215,9 +229,10 @@ if($opt_arg == 'more') {
     } else {
 
         // Use raid pokemon duration short.
+        // Use normal raid duration.
         $keys[] = array(
-            'text'          => '0:' . $config->RAID_POKEMON_DURATION_SHORT,
-            'callback_data' => $raid_id . ':edit_save:' . $config->RAID_POKEMON_DURATION_SHORT
+            'text'          => '0:' . $config->RAID_DURATION,
+            'callback_data' => $raid_id . ':edit_save:' . $config->RAID_DURATION
         );
 
         // Button for more options.
