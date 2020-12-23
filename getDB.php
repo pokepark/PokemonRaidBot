@@ -5,7 +5,7 @@ $SQL_UPDATE = '';
 $SQL_eggs = '';
 $SQL_file = __DIR__ . '/sql/game-master-raid-boss-pokedex.sql';
 
-$proto_url = "https://raw.githubusercontent.com/Furtif/POGOProtos/master/src/POGOProtos/Rpc/Rpc.proto";
+$proto_url = "https://raw.githubusercontent.com/Furtif/POGOProtos/master/base/base.proto";
 $game_master_url = "https://raw.githubusercontent.com/PokeMiners/game_masters/master/latest/latest.json";
 
 //Parse the form ID's from pogoprotos
