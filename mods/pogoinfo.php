@@ -21,7 +21,7 @@ $arg = $data['arg'];
 // Raid level selection
 if($id == 0) {
     // Set message.
-    $msg = '<b>' . getTranslation('import') . SP . '(pogoinfo)' . '</b>' . CR . CR;
+    $msg = '<b>' . getTranslation('import') . SP . '(ccev pogoinfo)' . '</b>' . CR . CR;
     $msg .= '<b>' . getTranslation('select_raid_level') . ':</b>';
 
     // Init empty keys array.
@@ -51,7 +51,7 @@ if($id == 0) {
     $keys = inline_key_array($keys, 1);
 } else if($id > 0) {
     // Set message and init message to exclude raid bosses.
-    $msg = '<b>' . getTranslation('import') . SP . '(pogoinfo)' . '</b>' . CR . CR;
+    $msg = '<b>' . getTranslation('import') . SP . '(ccev pogoinfo)' . '</b>' . CR . CR;
     $ex_msg = '';
 
     // Get pogoinfo data.
@@ -104,7 +104,7 @@ if($id == 0) {
     debug_log($get_levels);
 
     // Process raid tier(s)
-    debug_log('Processing received pogoinfo raid bosses for each raid level');
+    debug_log('Processing received ccev pogoinfo raid bosses for each raid level');
     foreach($data as $tier => $tier_pokemon) {
         // Process raid level?
         if(!in_array($tier,$get_levels)) {

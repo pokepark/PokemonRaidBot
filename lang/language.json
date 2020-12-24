@@ -191,6 +191,30 @@
     "PL": "Jajo",
     "FI": "Raid-muna"
   },
+  "shiny": {
+    "NL": "Shiny",
+    "DE": "Schillernd",
+    "EN": "Shiny",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "TRANSLATE"
+  },
+  "not_shiny": {
+    "NL": "TRANSLATE",
+    "DE": "Nicht schillernd",
+    "EN": "Not shiny",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "TRANSLATE"
+  },
   "alone": {
     "NL": "Alleen",
     "DE": "Alleine",
@@ -2074,6 +2098,30 @@
     "FR": "Niveau actuel du raid",
     "PL": "Aktualny poziom Rajdu:",
     "FI": "Nykyinen raiditaso:"
+  },
+  "pokedex_new_status": {
+    "NL": "TRANSLATE",
+    "DE": "Neuer Status",
+    "EN": "New status",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "TRANSLATE"
+  },
+  "pokedex_current_status": {
+    "NL": "TRANSLATE:",
+    "DE": "Aktueller Status:",
+    "EN": "Current status:",
+    "IT": "TRANSLATE:",
+    "PT-BR": "TRANSLATE:",
+    "RU": "TRANSLATE:",
+    "NO": "TRANSLATE:",
+    "FR": "TRANSLATE:",
+    "PL": "TRANSLATE:",
+    "FI": "TRANSLATE:"
   },
   "pokedex_select_action": {
     "NL": "Selecteer een eigenschap om deze aan te passen:",
