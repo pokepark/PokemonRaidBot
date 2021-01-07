@@ -66,61 +66,42 @@ function send_response_vote($update, $data, $new = false, $text = true)
         // Answer the callback.
         $tg_json[] = answerCallbackQuery($update['callback_query']['id'], $callback_msg, true, true);
 
-        if($text) {
-            // Make sure to only send if picture with caption and not text message
-            if($initial_text == false && !(isset($update['callback_query']['message']['text']))) {
-                foreach($chats_to_update as $chats){
-                    foreach($chats as $chat => $message){
-                        // Delete raid picture and caption.
-                        delete_message($chat, $message);
+        foreach($chats_to_update as $chat_id_msg_id) {
+            $chat = $chat_id_msg_id['chat_id'];
+            $message = $chat_id_msg_id['message_id'];
+            // Modify the $update to also handle messages in other chats than the one where the vote came from
+            $update['callback_query']['message']['message_id'] = $message;
+            $update['callback_query']['message']['chat']['id'] = $chat;
+            if($text) {
+                // Make sure to only send if picture with caption and not text message
+                if($initial_text == false && !(isset($update['callback_query']['message']['text']))) {
+                    // Delete raid picture and caption.
+                    delete_message($chat, $message);
 
-                        // Resend raid poll as text message.
-                        $tg_json[] = send_message($chat, $full_msg . "\n", $keys, ['disable_web_page_preview' => 'true'], true);
-                    }
+                    // Resend raid poll as text message.
+                    $tg_json[] = send_message($chat, $full_msg . "\n", $keys, ['disable_web_page_preview' => 'true'], true);
+                } else {
+                    // Edit the message.
+                    $tg_json[] = edit_message($update, $full_msg, $keys, ['disable_web_page_preview' => 'true'], true);
                 }
             } else {
-                // Edit the message.
-                foreach($chats_to_update as $chats){
-                    foreach($chats as $chat => $message){
-                        $update['callback_query']['message']['message_id'] = $message;
-                        $update['callback_query']['message']['chat']['id'] = $chat;
-                        $tg_json[] = edit_message($update, $full_msg, $keys, ['disable_web_page_preview' => 'true'], true);
-                    }
-                }
-            }
-        } else {
-            // Make sure it's a picture with caption.
-            if(isset($update['callback_query']['message']['text'])) {
-                // Do not switch back to picture with caption. Only allow switch from picture with caption to text message.
-                // Edit the message.
-                foreach($chats_to_update as $chats){
-                    foreach($chats as $chat => $message){
-                        $update['callback_query']['message']['message_id'] = $message;
-                        $update['callback_query']['message']['chat']['id'] = $chat;
-                        $tg_json[] = edit_message($update, $full_msg, $keys, ['disable_web_page_preview' => 'true'], true);
-                    }
-                }
-            } else {
-                // Edit the caption.
-                foreach($chats_to_update as $chats){
-                    foreach($chats as $chat => $message){
-                        $update['callback_query']['message']['message_id'] = $message;
-                        $update['callback_query']['message']['chat']['id'] = $chat;
-                        $tg_json[] = edit_caption($update, $msg, $keys, ['disable_web_page_preview' => 'true'], true);
-                    }
-                }
+                // Make sure it's a picture with caption.
+                if(isset($update['callback_query']['message']['text'])) {
+                    // Do not switch back to picture with caption. Only allow switch from picture with caption to text message.
+                    // Edit the message.
+                    $tg_json[] = edit_message($update, $full_msg, $keys, ['disable_web_page_preview' => 'true'], true);
+                } else {
+                    // Edit the caption.
+                    $tg_json[] = edit_caption($update, $msg, $keys, ['disable_web_page_preview' => 'true'], true);
 
-                // Edit the picture - raid ended.
-                $time_now = utcnow();
-                if($time_now > $raid['end_time'] && $data['arg'] == 0) {
-                    // TODO(artanicus): There's no logic for when RAID_PICTURE is not enabled, which is probably bad
-                    require_once(LOGIC_PATH . '/raid_picture.php');
-                    $raid['pokemon'] = 'ended';
-                    $picture_url = raid_picture_url($raid);
-                    foreach($chats_to_update as $chats){
-                        foreach($chats as $chat => $message){
-                            $tg_json[] = editMessageMedia($message, $msg, $keys, $chat, ['disable_web_page_preview' => 'true'], false, $picture_url);
-                        }
+                    // Edit the picture - raid ended.
+                    $time_now = utcnow();
+                    if($time_now > $raid['end_time'] && $data['arg'] == 0) {
+                        // TODO(artanicus): There's no logic for when RAID_PICTURE is not enabled, which is probably bad
+                        require_once(LOGIC_PATH . '/raid_picture.php');
+                        $raid['pokemon'] = 'ended';
+                        $picture_url = raid_picture_url($raid);
+                        $tg_json[] = editMessageMedia($message, $msg, $keys, $chat, ['disable_web_page_preview' => 'true'], false, $picture_url);
                     }
                 }
             }
@@ -145,7 +126,8 @@ function send_response_vote($update, $data, $new = false, $text = true)
 function get_all_active_raid_channels($update,$data){
     global $config;
     $channel_id = [[
-        $update['callback_query']['message']['chat']['id'] => $update['callback_query']['message']['message_id'],
+        'chat_id' => $update['callback_query']['message']['chat']['id'],
+        'message_id' => $update['callback_query']['message']['message_id'],
     ]];
     $rs_chann = my_query(
         "
@@ -157,9 +139,9 @@ function get_all_active_raid_channels($update,$data){
     // IF Chat was shared only to target channel -> no extra update
     if ($rs_chann->rowCount() > 1) {
         // share to multiple chats
-        $anwer = $rs_chann->fetchAll();
-        foreach($anwer as $channel){
-            array_push($channel_id,[$channel['chat_id'] => $channel['message_id']]);
+        $answer = $rs_chann->fetchAll();
+        foreach($answer as $channel){
+            array_push($channel_id,['chat_id' => $channel['chat_id'],'message_id' => $channel['message_id']]);
         }
         return $channel_id;
     }else{
