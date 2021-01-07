@@ -29,12 +29,16 @@ if(!$access && bot_access_check($update, 'list', true)){
 } else {
   $access = bot_access_check($update, 'create', false, true);
 }
+        
+
 // Raid event?
 if($config->RAID_HOUR || $config->RAID_DAY) {
     // Always allow for Admins.
     if($access && $access == 'BOT_ADMINS') {
-        debug_log('Bot Admin detected. Allowing further raid creation during the raid hour');
+        debug_log('Bot Admin detected. Allowing further raid creation during the raid event');
     } else {
+        debug_log('Checking further raid creation during the raid event');
+
         // Get number of raids for the current user.
         $rs = my_query(
             "
@@ -47,36 +51,53 @@ if($config->RAID_HOUR || $config->RAID_DAY) {
 
         $info = $rs->fetch();
 
-        // Set message and keys.
+        // Init message and keys.
+        $msg = getTranslation('not_supported');
+        $keys = [];
+
         if($config->RAID_HOUR) {
+            // Limits
+            $creation_limit = $config->RAID_HOUR_CREATION_LIMIT;
+            debug_log('Event: Raid hour');
+            debug_log($info['created_raids_count'],'Raids created from user:');
+            debug_log($creation_limit,'Max raids user can create during event:');
+
             // Check raid count
-            $creation_limit = $config->RAID_HOUR_CREATION_LIMIT - 1;
-            if($info['created_raids_count'] > $creation_limit) {
+            if($info['created_raids_count'] == $creation_limit) {
                 if($config->RAID_HOUR_CREATION_LIMIT == 1) {
                     $msg = '<b>' . getTranslation('raid_hour_creation_limit_one') . '</b>';
                 } else {
-                    $msg = '<b>' . str_replace('RAID_HOUR_CREATION_LIMIT', $config->RAID_HOUR_CREATION_LIMIT, getPublicTranslation('raid_hour_creation_limit')) . '</b>';
+                    $msg = '<b>' . str_replace('RAID_HOUR_CREATION_LIMIT', $config->RAID_HOUR_CREATION_LIMIT, getTranslation('raid_hour_creation_limit')) . '</b>';
                 }
+
+                // Send message.
+                send_message($update['message']['chat']['id'], $msg, $keys, ['reply_markup' => ['selective' => true, 'one_time_keyboard' => true]]);
+
+                // Exit.
+                exit();
             }
         } elseif($config->RAID_DAY) {
+            // Limits
+            $creation_limit = $config->RAID_DAY_CREATION_LIMIT;
+            debug_log('Event: Raid day');
+            debug_log($info['created_raids_count'],'Raids created from user:');
+            debug_log($creation_limit,'Max raids user can create during event:');
+
             // Check raid count
-            $creation_limit = $config->RAID_DAY_CREATION_LIMIT - 1;
-            if($info['created_raids_count'] > $creation_limit) {
+            if($info['created_raids_count'] == $creation_limit) {
                 if($config->RAID_DAY_CREATION_LIMIT == 1) {
                     $msg = '<b>' . getTranslation('raid_day_creation_limit_one') . '</b>';
                 } else {
-                    $msg = '<b>' . str_replace('RAID_DAY_CREATION_LIMIT', $config->RAID_DAY_CREATION_LIMIT, getPublicTranslation('raid_day_creation_limit')) . '</b>';
+                    $msg = '<b>' . str_replace('RAID_DAY_CREATION_LIMIT', $config->RAID_DAY_CREATION_LIMIT, getTranslation('raid_day_creation_limit')) . '</b>';
                 }
+
+                // Send message.
+                send_message($update['message']['chat']['id'], $msg, $keys, ['reply_markup' => ['selective' => true, 'one_time_keyboard' => true]]);
+
+                // Exit.
+                exit();
             }
         }
-
-        $keys = [];
-
-        // Send message.
-        send_message($update['message']['chat']['id'], $msg, $keys, ['reply_markup' => ['selective' => true, 'one_time_keyboard' => true]]);
-
-        // Exit.
-        exit();
     }
 }
 
