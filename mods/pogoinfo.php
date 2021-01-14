@@ -185,8 +185,7 @@ if($id == 0) {
                     $rs = my_query(
                             "
                             UPDATE    pokemon
-                            SET       raid_level = '{$tier}',
-                                      shiny = 0
+                            SET       raid_level = '{$tier}'
                             WHERE     pokedex_id = {$dex_id}
                             AND       pokemon_form_id = '{$dex_form}'
                             "
