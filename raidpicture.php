@@ -193,12 +193,28 @@ if($time_now < $raid['end_time']) {
         // Formatting the id from 1 digit to 3 digit (1 -> 001)
         $pokemon_id = str_pad($raid['pokedex_id'], 3, '0', STR_PAD_LEFT);
 
-        // Getting the actual icon
+        // Getting the actual icon filename
+        $p_icon = "pokemon_icon_" . $icon_suffix;
         if($raid['shiny'] == 1 && $config->RAID_PICTURE_SHOW_SHINY) {
-            $img_pokemon = imagecreatefrompng(IMAGES_PATH . "/pokemon/pokemon_icon_" . $icon_suffix . "_shiny.png");
-        } else {
-            $img_pokemon = imagecreatefrompng(IMAGES_PATH . "/pokemon/pokemon_icon_" . $icon_suffix . ".png");
+            $p_icon = $p_icon . "_shiny";
         }
+        $p_icon = $p_icon . ".png";
+
+        // Initialize pokemon image with egg image (+ used as fallback if no pokemon image was found)
+        $img_file = IMAGES_PATH . "/raid_eggs/pokemon_icon_999" . $raid['raid_level'] . "_00.png";
+
+        // Check pokemon icon source and create image
+        $p_sources = explode(',', $config->RAID_PICTURE_POKEMON_ICONS);
+        foreach($p_sources as $p_dir) {
+            $p_img = IMAGES_PATH . "/pokemon_" . $p_dir . "/" . $p_icon;
+            if (file_exists($p_img) && filesize($p_img) > 0) {
+                $img_file = IMAGES_PATH . "/pokemon_" . $p_dir . "/" . $p_icon;
+                break;
+            }
+        }
+
+        // Create image
+        $img_pokemon = imagecreatefrompng($img_file);
 
         // Position and size of the picture
         $dst_x = $dst_y = 100;

@@ -20,7 +20,7 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
          * [Raidbot installation:](#raidbot-installation)
          * [SSL with Docker](#ssl-with-docker)
          * [Useful Docker commands](#useful-docker-commands)
-         * [Using getZeCharles.php with Docker](#using-getzecharlesphp-with-docker)
+         * [Using getPokemonIcons.php with Docker](#using-getpokemoniconsphp-with-docker)
       * [Config](#config)
          * [Referring to groups, channels and users](#referring-to-groups-channels-and-users)
             * [Finding public IDs](#finding-public-ids)
@@ -90,7 +90,7 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
          * [translate.py](#translatepy)
             * [Usage](#usage)
 
-<!-- Added by: tux, at: Tue 22 Dec 2020 06:46:55 PM CET -->
+<!-- Added by: tux, at: Sat 23 Jan 2021 08:24:13 PM CET -->
 
 <!--te-->
 
@@ -303,12 +303,12 @@ Or the database container as well:
 docker rm -f raidbot raidbot_db
 ```
 
-### Using getZeCharles.php with Docker
+### Using getPokemonIcons.php with Docker
 
 Connect to the running Raidbot container and run the php command:
 
 ```
-docker exec -it raidbot-docker_raidbot_1 php getZeCharles.php
+docker exec -it raidbot-docker_raidbot_1 php getPokemonIcons.php
 ```
 
 ## Config
@@ -583,10 +583,11 @@ Set `RAID_CREATION_EX_GYM_MARKER` to true to show the marker for ex-raid gyms du
 
 To enable raid announcements as images set `RAID_PICTURE` to true and set the url in `RAID_PICTURE_URL` to the location of raidpicture.php.
 
-You also need to get the Pokemon sprites from ZeChrales and put them in the images/pokemon folder.
+You also need to get the Pokemon sprites from known sources and put them in the images/pokemon_REPO-OWNER folder.
+Link: https://github.com/PokeMiners/pogo_assets/tree/master/Images/Pokemon%20-%20256x256
 Link: https://github.com/ZeChrales/PogoAssets/tree/master/pokemon_icons
 
-To easily download you can use a special download script on the CLI: `php getZeCharles.php`
+To easily download you can use a special download script on the CLI: `php getPokemonIcons.php`
 
 #### Font support
 
@@ -1232,6 +1233,7 @@ Updates to the config file are NOT checked automatically. Therefore always check
 | RAID_PICTURE_HIDE_LEVEL| List of levels to exclude from `RAID_PICTURE` (will fall back to text mode)|
 | RAID_PICTURE_HIDE_POKEMON| List of Pokemon dex IDs to exclude from `RAID_PICTURE` (will fall back to text mode) |
 | RAID_PICTURE_ICONS_WHITE| Bool, use white icons in `RAID_PICTURE` instead of black |
+| RAID_PICTURE_POKEMON_ICONS| Comma separated list of pokemon icon sources (currently PokeMiners and ZeChrales) |
 | RAID_PICTURE_TEXT_COLOR| List of RGB values for `RAID_PICTURE` poll text color, e.g "255,255,255" for white |
 | RAID_PICTURE_URL| Fully qualified HTTPS URL to `raidpicture.php`, for example `https://example.com/raidbot/raidpicture.php` |
 | RAID_PIN_MESSAGE| Custom message added to the bottom of the raid overview messages |

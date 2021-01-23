@@ -64,6 +64,7 @@
   "RAID_PICTURE_FONT_GYM":"NotoSans-Bold.ttf",
   "RAID_PICTURE_FONT_EX_GYM":"NotoSans-Regular.ttf",
   "RAID_PICTURE_FONT_TEXT":"NotoSans-Regular.ttf",
+  "RAID_PICTURE_POKEMON_ICONS":"PokeMiners,ZeChrales",
   "RAID_POLL_UI_ORDER":"extra,teamlvl,time,pokemon,status",
   "RAID_POLL_HIDE_USERS_TIME":"10",
   "RAID_POLL_HIDE_BUTTONS_RAID_LEVEL":"1,2,3",
