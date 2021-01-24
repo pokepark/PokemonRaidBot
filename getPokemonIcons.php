@@ -27,13 +27,7 @@ if(empty($argv[2]) || (!empty($argv[2]) && strtolower($argv[2]) == "pokeminers")
                       'dir'    => "Images/Pokemon - 256x256");
 }
 
-$repo_owner = 'ZeChrales';
-$repo_name = 'PogoAssets';
-$repo_dir = 'pokemon_icons';
-$repo_branch = 'master';
-
-
-// Get JSON
+// Get download function curl_get_contents
 include('logic/curl_get_contents.php');
 
 // Download file
@@ -43,12 +37,7 @@ function downloadFile($URL, $destination, $filename) {
     $output = $destination . $filename;
 
     // Get file.
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $input);
-    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    $data = curl_exec($ch);
-    curl_close ($ch);
+    $data = curl_get_contents($input);
 
     // Write to file.
     if(empty($data)) {
@@ -118,7 +107,7 @@ foreach ($repos as $key => $r)
     }
 
     // Raw download dir
-    $raw_dir = '';
+    $raw_dir = $repo_dir;
     if (strpos($repo_dir, ' ') !== false) {
         $raw_dir = str_replace(' ', '%20', $repo_dir);
     }
