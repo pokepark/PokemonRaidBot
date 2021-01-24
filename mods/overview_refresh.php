@@ -43,6 +43,7 @@ foreach($overviews as $overview_row) {
             ON        raids.gym_id = gyms.id
 	        WHERE     cleanup.chat_id = '{$overview_row['chat_id']}'
             AND       raids.end_time>UTC_TIMESTAMP()
+            GROUP BY  cleanup.raid_id
             ORDER BY  raids.end_time ASC, gyms.gym_name
     ");
     // Write active raids to array
