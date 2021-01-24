@@ -206,7 +206,15 @@ if($time_now < $raid['end_time']) {
         // Check pokemon icon source and create image
         $p_sources = explode(',', $config->RAID_PICTURE_POKEMON_ICONS);
         foreach($p_sources as $p_dir) {
+            // Set pokemon icon dir
             $p_img = IMAGES_PATH . "/pokemon_" . $p_dir . "/" . $p_icon;
+            
+            // Icon dir named 'pokemon'? Then change path to not add '_repo-owner' to icon folder name
+            if($p_dir == 'pokemon') {
+                $p_img = IMAGES_PATH . "/pokemon/" . $p_icon;
+            }
+
+            // Make sure file exists
             if (file_exists($p_img) && filesize($p_img) > 0) {
                 $img_file = IMAGES_PATH . "/pokemon_" . $p_dir . "/" . $p_icon;
                 break;

@@ -1,22 +1,31 @@
 <?php
 // File settings.
-$destination = __DIR__ . '/images/pokemon';
+$destination = __DIR__ . '/images/';
 $filter = ".png";
+
+// Set different destination via argument
+if(!empty($argv[1])) {
+    $destination = $argv[1];
+}
 
 // Git Repo array.
 $repos = [];
 
 // ZeChrales
-$repos[] = array('owner'  => "ZeChrales", 
-                 'name'   => "PogoAssets", 
-                 'branch' => "master", 
-                 'dir'    => "pokemon_icons");
+if(empty($argv[2]) || (!empty($argv[2]) && strtolower($argv[2]) == "zechrales")) {
+    $repos[] = array('owner'  => "ZeChrales", 
+                     'name'   => "PogoAssets", 
+                     'branch' => "master", 
+                     'dir'    => "pokemon_icons");
+}
 
 // PokeMiners
-$repos[] = array('owner'   => "PokeMiners", 
-                  'name'   => "pogo_assets", 
-                  'branch' => "master", 
-                  'dir'    => "Images/Pokemon - 256x256");
+if(empty($argv[2]) || (!empty($argv[2]) && strtolower($argv[2]) == "pokeminers")) {
+    $repos[] = array('owner'   => "PokeMiners", 
+                      'name'   => "pogo_assets", 
+                      'branch' => "master", 
+                      'dir'    => "Images/Pokemon - 256x256");
+}
 
 $repo_owner = 'ZeChrales';
 $repo_name = 'PogoAssets';
@@ -95,7 +104,12 @@ foreach ($repos as $key => $r)
     $repo_name = $r['name'];
     $repo_branch = $r['branch'];
     $repo_dir = $r['dir'];
-    $dest = $destination . '_' . $repo_owner .'/';
+    $dest = $destination . 'pokemon_' . $repo_owner .'/';
+
+    // Set destination to different path
+    if(!empty($argv[1]) && !empty($argv[2])) {
+        $dest = rtrim($destination,"/") . '/';
+    }
 
     // Content dir
     $content_dir = '';
@@ -119,8 +133,9 @@ foreach ($repos as $key => $r)
     $tree = curl_get_contents($repo_content);
     $leaf = json_decode($tree, true);
 
-    echo 'LEAF:' . PHP_EOL;
-    print_r($leaf) . PHP_EOL;
+    // Debug
+    //echo 'LEAF:' . PHP_EOL;
+    //print_r($leaf) . PHP_EOL;
 
     // Git tree lookup for repo dir
     $content = '';
