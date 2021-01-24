@@ -17,7 +17,7 @@ if ($action == 'up') {
         UPDATE    users
         SET       level = IF(level = 0, 30, level+1)
           WHERE   user_id = {$update['callback_query']['from']['id']}
-            AND   level < 50
+            AND   level < {$config->TRAINER_MAX_LEVEL}
         "
     );
 }

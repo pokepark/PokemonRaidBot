@@ -68,7 +68,7 @@ if(count($keys) == 0 ) {
         ],
         [
             [
-                'text'          => getTranslation('import') . SP . '(pogoinfo)',
+                'text'          => getTranslation('import') . SP . '(ccev pogoinfo)',
                 'callback_data' => '0:pogoinfo:0'
             ]
         ]

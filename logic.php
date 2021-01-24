@@ -28,6 +28,7 @@ include('logic/get_pokemon_form_name.php');
 include('logic/get_pokemon_id_by_name.php');
 include('logic/get_pokemon_info.php');
 include('logic/get_pokemon_weather.php');
+include('logic/get_pokemon_shiny_status.php');
 include('logic/get_raid_level.php');
 include('logic/get_raid.php');
 include('logic/get_raid_times.php');

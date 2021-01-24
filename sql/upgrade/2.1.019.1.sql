@@ -1,0 +1,1 @@
+REPLACE INTO pokemon SET pokedex_id="181", pokemon_name="Ampharos", pokemon_form_name="mega", pokemon_form_id="-1", asset_suffix="51", min_cp="1554", max_cp="1630", min_weather_cp="1943", max_weather_cp="2037", weather="3", shiny="0";

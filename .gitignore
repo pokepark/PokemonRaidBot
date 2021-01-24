@@ -1,3 +1,8 @@
+# Ignore .idea and temporary README.md files
 /.idea
 README.md.*
-.DS_Store
+
+# Ignore /images/pokemon and the .gitignore in it
+# Allows to replace /images/pokemon with a symlink
+/images/pokemon
+/images/pokemon/*

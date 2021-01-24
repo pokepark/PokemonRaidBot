@@ -68,6 +68,12 @@ if(!in_array($pokedex_id, $eggs)) {
                 'text'          => getTranslation('pokedex_weather'),
                 'callback_data' => $poke_id_form . ':pokedex_set_weather:add-0'
             ]
+        ],
+        [
+            [
+                'text'          => getTranslation('shiny'),
+                'callback_data' => $poke_id_form . ':pokedex_set_shiny:setshiny'
+            ]
         ]
     ];
 

@@ -25,7 +25,7 @@ if($confirm == 0) {
 
     // Set keys.
     $keys = [];
-    for($i = 5; $i <= 50; $i++) {
+    for($i = 5; $i <= $config->TRAINER_MAX_LEVEL; $i++) {
         $keys[] = array(
             'text'          => $i,
             'callback_data' => '1:trainer_level:' . $i

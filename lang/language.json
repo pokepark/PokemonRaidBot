@@ -191,6 +191,30 @@
     "PL": "Jajo",
     "FI": "Raid-muna"
   },
+  "shiny": {
+    "NL": "Shiny",
+    "DE": "Schillernd",
+    "EN": "Shiny",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "TRANSLATE"
+  },
+  "not_shiny": {
+    "NL": "Niet Shiny",
+    "DE": "Nicht schillernd",
+    "EN": "Not shiny",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "TRANSLATE"
+  },
   "alone": {
     "NL": "Alleen",
     "DE": "Alleine",
@@ -335,29 +359,53 @@
     "PL": "TRANSLATE",
     "FI": "Tämä on raid-tiedote, ei äänestystä."
   },
-  "alert_want_invite": {
-    "NL": "Wenst uitgenodigd te worden.",
-    "DE": "Möchte eingeladen werden.",
-    "EN": "Wishes to be invited.",
+  "raid_hour_creation_limit_one": {
+    "NL": "Gedurende raid hour kan je maar 1 raid aanmaken!",
+    "DE": "Während der Raidstunde kannst du nur 1 Raid anlegen!",
+    "EN": "During the raid hour you can only create 1 raid!",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "Toivoo tulevansa kutsutuksi."
+    "FI": "Raiditunnin aikana voit luoda vain yhden raidin!"
   },
-  "alert_no_want_invite": {
-    "NL": "Wil niet langer worden uitgenodigd.",
-    "DE": "Möchte nicht mehr eingeladen werden.",
-    "EN": "No longer wishes to be invited.",
+  "raid_hour_creation_limit": {
+    "NL": "Gedurende raid hour kan je maar RAID_EVENT_CREATION_LIMIT raids aanmaken!",
+    "DE": "Während der Raidstunde kannst du nur RAID_EVENT_CREATION_LIMIT Raids anlegen!",
+    "EN": "During the raid hour you can only create RAID_EVENT_CREATION_LIMIT raids!",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "Ei enää toivo kutsua."
+    "FI": "Raiditunnin aikana voit luoda vain RAID_EVENT_CREATION_LIMIT raidia!"
+  },
+  "raid_day_creation_limit_one": {
+    "NL": "Tijdens Raid day kan je maar 1 raid aanmaken!",
+    "DE": "Während des Raidtages kannst du nur 1 Raid anlegen!",
+    "EN": "During the raid day you can only create 1 raid!",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "TRANSLATE"
+  },
+  "raid_day_creation_limit": {
+    "NL": "Tijdens Raid day mag je maar RAID_EVENT_CREATION_LIMIT Raids aanmaken!",
+    "DE": "Während des Raidtages kannst du nur RAID_EVENT_CREATION_LIMIT Raids anlegen!",
+    "EN": "During the raid day you can only create RAID_EVENT_CREATION_LIMIT raids!",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "TRANSLATE"
   },
   "still": {
     "NL": "nog",
@@ -2159,6 +2207,30 @@
     "PL": "Aktualny poziom Rajdu:",
     "FI": "Nykyinen raiditaso:"
   },
+  "pokedex_new_status": {
+    "NL": "Nieuwe status",
+    "DE": "Neuer Status",
+    "EN": "New status",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "TRANSLATE"
+  },
+  "pokedex_current_status": {
+    "NL": "Actuele status:",
+    "DE": "Aktueller Status:",
+    "EN": "Current status:",
+    "IT": "TRANSLATE:",
+    "PT-BR": "TRANSLATE:",
+    "RU": "TRANSLATE:",
+    "NO": "TRANSLATE:",
+    "FR": "TRANSLATE:",
+    "PL": "TRANSLATE:",
+    "FI": "TRANSLATE:"
+  },
   "pokedex_select_action": {
     "NL": "Selecteer een eigenschap om deze aan te passen:",
     "DE": "Eigenschaft zum Ändern auswählen:",
@@ -2950,6 +3022,30 @@
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
     "FI": "Ei ylimääräisiä kouluttajia!"
+  },
+  "alert_want_invite": {
+    "NL": "Wenst uitgenodigd te worden.",
+    "DE": "TRANSLATE",
+    "EN": "Wishes to be invited.",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Toivoo tulevansa kutsutuksi."
+  },
+  "alert_no_want_invite": {
+    "NL": "Wil niet langer worden uitgenodigd.",
+    "DE": "TRANSLATE",
+    "EN": "No longer wishes to be invited.",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Ei enää toivo kutsua."
   },
   "event": {
     "NL": "TRANSLATE",

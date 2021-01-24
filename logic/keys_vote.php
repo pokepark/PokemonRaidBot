@@ -579,7 +579,7 @@ function keys_vote($raid)
                         );
 
                         // Finally add pokemon to keys
-                        $buttons_pokemon = inline_key_array($buttons_pokemon, 3);
+                        $buttons_pokemon = inline_key_array($buttons_pokemon, 2);
                     } else {
                         // Reset pokemon buttons.
                         $buttons_pokemon = [];
