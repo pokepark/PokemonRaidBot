@@ -59,7 +59,7 @@ function get_pokemon_id_by_name($pokemon_name, $get_from_db = false)
         $search_result = "";
         foreach($json as $title => $translations) {
             // Try to find translation for userlanguage
-            if(ucfirst($poke_name) == $translations[$language]) {
+            if(isset($translations[$language]) && ucfirst($poke_name) == $translations[$language]) {
                 $search_result = $title;
                 debug_log('Translation found for lang: '.$language, 'P:');
                 debug_log('Translation result: '.$title, 'P:');
