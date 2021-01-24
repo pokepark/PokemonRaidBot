@@ -216,7 +216,7 @@ if($time_now < $raid['end_time']) {
 
             // Make sure file exists
             if (file_exists($p_img) && filesize($p_img) > 0) {
-                $img_file = IMAGES_PATH . "/pokemon_" . $p_dir . "/" . $p_icon;
+                $img_file = $p_img;
                 break;
             }
         }
