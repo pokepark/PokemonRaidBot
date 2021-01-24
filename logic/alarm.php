@@ -215,7 +215,7 @@ function create_traincode_msg($attendtime,$trainercode){
   global $config;
   $message = '';
   if($config->RAID_POLL_SHOW_TRAINERCODE == true && !is_null($trainercode)) {
-      $message = CR . EMOJI_FRIEND . SP . $trainercode;
+      $message = CR . EMOJI_FRIEND . SP . '<code>' . $trainercode . '</code>';
   }
   return $message;
 }
