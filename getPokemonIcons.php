@@ -100,6 +100,11 @@ foreach ($repos as $key => $r)
         $dest = rtrim($destination,"/") . '/';
     }
 
+    // Make sure destination exists otherwise create it
+    if (!file_exists($dest)) {
+        mkdir($dest);
+    }
+
     // Content dir
     $content_dir = '';
     if (strpos($repo_dir, '/') !== false) {
