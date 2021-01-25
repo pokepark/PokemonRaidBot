@@ -4,15 +4,15 @@ $destination = __DIR__ . '/images/';
 $filter = ".png";
 
 // Set different destination via argument
-if(!empty($argv[1])) {
-    $destination = $argv[1];
+if(!empty($argv[2])) {
+    $destination = $argv[2];
 }
 
 // Git Repo array.
 $repos = [];
 
 // ZeChrales
-if(empty($argv[2]) || (!empty($argv[2]) && strtolower($argv[2]) == "zechrales")) {
+if(empty($argv[1]) || (!empty($argv[1]) && strtolower($argv[1]) == "zechrales")) {
     $repos[] = array('owner'  => "ZeChrales", 
                      'name'   => "PogoAssets", 
                      'branch' => "master", 
@@ -20,7 +20,7 @@ if(empty($argv[2]) || (!empty($argv[2]) && strtolower($argv[2]) == "zechrales"))
 }
 
 // PokeMiners
-if(empty($argv[2]) || (!empty($argv[2]) && strtolower($argv[2]) == "pokeminers")) {
+if(empty($argv[1]) || (!empty($argv[1]) && strtolower($argv[1]) == "pokeminers")) {
     $repos[] = array('owner'   => "PokeMiners", 
                       'name'   => "pogo_assets", 
                       'branch' => "master", 
@@ -115,7 +115,6 @@ foreach ($repos as $key => $r)
     // Git urls
     $repo_content = 'https://api.github.com/repos/' . $repo_owner . '/' . $repo_name . '/contents/' . $content_dir;
     $repo_html = 'https://github.com/' . $repo_owner . '/' . $repo_name . '/' . $repo_dir . '/';
-    //$repo_raw = 'https://raw.githubusercontent.com/' . $repo_owner . '/' . $repo_name . '/' . $repo_branch . '/' . $repo_dir . '/';
     $repo_raw = 'https://raw.githubusercontent.com/' . $repo_owner . '/' . $repo_name . '/' . $repo_branch . '/' . $raw_dir . '/';
 
     // Git tree lookup

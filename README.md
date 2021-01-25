@@ -90,7 +90,7 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
          * [translate.py](#translatepy)
             * [Usage](#usage)
 
-<!-- Added by: tux, at: Sat 23 Jan 2021 08:24:13 PM CET -->
+<!-- Added by: tux, at: Mon 25 Jan 2021 09:52:44 AM CET -->
 
 <!--te-->
 
@@ -583,11 +583,24 @@ Set `RAID_CREATION_EX_GYM_MARKER` to true to show the marker for ex-raid gyms du
 
 To enable raid announcements as images set `RAID_PICTURE` to true and set the url in `RAID_PICTURE_URL` to the location of raidpicture.php.
 
-You also need to get the Pokemon sprites from known sources and put them in the images/pokemon_REPO-OWNER folder.
+You also need to get the Pokemon sprites from known sources and put them in either the images/pokemon/ or the images/pokemon_REPO-OWNER/ folder.
 Link: https://github.com/PokeMiners/pogo_assets/tree/master/Images/Pokemon%20-%20256x256
 Link: https://github.com/ZeChrales/PogoAssets/tree/master/pokemon_icons
 
 To easily download you can use a special download script on the CLI: `php getPokemonIcons.php`
+
+The script can also be triggered via command line arguments, eg. as cron job.
+Argument 1 is the source (either `ZeChrales` or `PokeMiners`), so eg. `php getPokemonIcons.php PokeMiners`
+Argument 2 is the destination folder where the images shall be saved. To save the sprites to a different location outside the actual PokemonRaidBot directory, just add that second argument, eg. `php getPokemonIcons.php PokeMiners /var/www/html/pokemon_sprites/`
+
+If you're sharing the pokemon icons with other bots or applications and therefore placed them outside the PokemonRaidBot directory, you can easily replace the images/pokemon with a softlink to that directory. It won't interfere with git status as we adjusted the .gitignore accordingly.
+
+Example to replace the with a symbolic link:
+```
+cd /var/www/html/PokemonRaidBot/images/
+rm -rf pokemon/
+ln -sf /var/www/html/pokemon_sprites pokemon
+``` 
 
 #### Font support
 
