@@ -90,7 +90,7 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
          * [translate.py](#translatepy)
             * [Usage](#usage)
 
-<!-- Added by: tux, at: Mon 25 Jan 2021 09:52:44 AM CET -->
+<!-- Added by: tux, at: Mon 25 Jan 2021 08:40:15 PM CET -->
 
 <!--te-->
 
@@ -583,7 +583,9 @@ Set `RAID_CREATION_EX_GYM_MARKER` to true to show the marker for ex-raid gyms du
 
 To enable raid announcements as images set `RAID_PICTURE` to true and set the url in `RAID_PICTURE_URL` to the location of raidpicture.php.
 
-You also need to get the Pokemon sprites from known sources and put them in either the images/pokemon/ or the images/pokemon_REPO-OWNER/ folder.
+You also need to get the Pokemon sprites from known sources and put them in either images/pokemon/ or the images/pokemon_REPO-OWNER/ folder. The images/pokemon/ directory needs to be created manually, the images/pokemon_REPO-OWNER/ folders will be created automatically when by running the special download script mentioned below.
+
+Pokemon Icons / Sprites:
 Link: https://github.com/PokeMiners/pogo_assets/tree/master/Images/Pokemon%20-%20256x256
 Link: https://github.com/ZeChrales/PogoAssets/tree/master/pokemon_icons
 
