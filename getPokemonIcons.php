@@ -134,7 +134,6 @@ foreach ($repos as $key => $r)
     $content = '';
     $foldername = basename($repo_html);
     echo 'Downloading each file from ' . $repo_html . PHP_EOL;
-    echo "Repo raw: " . $repo_raw . PHP_EOL;
     foreach ($leaf as $l) {
         if($l['name'] == $foldername && $l['type'] == 'dir') {
             $json = curl_get_contents($l['git_url']);
@@ -145,8 +144,6 @@ foreach ($repos as $key => $r)
 
     // Download each file.
     if(is_array($content)) {
-        echo "Downloading repo content." . PHP_EOL;
-        echo "Repo content: " . $repo_content . PHP_EOL;
         foreach($content['tree'] as $c) {
             // Filter by file extension
             $ext = '.' . pathinfo($c['path'], PATHINFO_EXTENSION);
