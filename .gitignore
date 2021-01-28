@@ -2,7 +2,27 @@
 /.idea
 README.md.*
 
-# Ignore /images/pokemon and the .gitignore in it
-# Allows to replace /images/pokemon with a symlink
+# Ignore content of directories with user specific data, keep directories itself
+/access/**
+/custom/**
+/ddos/**
+!/access/.gitkeep
+!/custom/.gitkeep
+!/ddos/.gitkeep
+
+# Ignore config directory except for specific files
+/config/**
+!/config/*.json.example
+!/config/defaults-*.json
+!/config/*.php.example
+
+# Ignore several icon directories + their content
+# Ignoring directories itself allows to replace them with symlinks
+/images/gyms/**
 /images/pokemon
-/images/pokemon/*
+/images/pokemon/**
+/images/pokemon_PokeMiners
+/images/pokemon_PokeMiners/**
+/images/pokemon_ZeChrales
+/images/pokemon_ZeChrales/**
+!/images/gyms/.gitkeep

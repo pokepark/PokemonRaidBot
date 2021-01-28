@@ -32,9 +32,9 @@ $tg_json = [];
 foreach($overviews as $overview_row) {
     $request_raids = my_query("
             SELECT
-              raids.*,
-              cleanup.message_id,
-              events.name as event_name, events.description as event_description, events.vote_key_mode as event_vote_key_mode, events.time_slots as event_time_slots, events.raid_duration as event_raid_duration, events.hide_raid_picture as event_hide_raid_picture,
+              raids.id, raids.pokemon, raids.pokemon_form, raids.start_time, raids.end_time, raids.gym_id,
+              MAX(cleanup.message_id) as message_id,
+              events.name as event_name,
               gyms.lat, gyms.lon, gyms.address, gyms.gym_name, gyms.ex_gym,
               TIME_FORMAT(TIMEDIFF(end_time, UTC_TIMESTAMP()) + INTERVAL 1 MINUTE, '%k:%i') AS t_left
             FROM      cleanup
@@ -46,6 +46,7 @@ foreach($overviews as $overview_row) {
             ON         events.id = raids.event 
 	        WHERE     cleanup.chat_id = '{$overview_row['chat_id']}'
             AND       raids.end_time>UTC_TIMESTAMP()
+            GROUP BY  raids.id, raids.pokemon, raids.pokemon_form, raids.start_time, raids.end_time, raids.gym_id, gyms.lat, gyms.lon, gyms.address, gyms.gym_name, gyms.ex_gym, events.name
             ORDER BY  raids.end_time ASC, gyms.gym_name
     ");
     // Write active raids to array

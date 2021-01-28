@@ -4,15 +4,15 @@ $destination = __DIR__ . '/images/';
 $filter = ".png";
 
 // Set different destination via argument
-if(!empty($argv[1])) {
-    $destination = $argv[1];
+if(!empty($argv[2])) {
+    $destination = $argv[2];
 }
 
 // Git Repo array.
 $repos = [];
 
 // ZeChrales
-if(empty($argv[2]) || (!empty($argv[2]) && strtolower($argv[2]) == "zechrales")) {
+if(empty($argv[1]) || (!empty($argv[1]) && strtolower($argv[1]) == "zechrales")) {
     $repos[] = array('owner'  => "ZeChrales", 
                      'name'   => "PogoAssets", 
                      'branch' => "master", 
@@ -20,20 +20,14 @@ if(empty($argv[2]) || (!empty($argv[2]) && strtolower($argv[2]) == "zechrales"))
 }
 
 // PokeMiners
-if(empty($argv[2]) || (!empty($argv[2]) && strtolower($argv[2]) == "pokeminers")) {
+if(empty($argv[1]) || (!empty($argv[1]) && strtolower($argv[1]) == "pokeminers")) {
     $repos[] = array('owner'   => "PokeMiners", 
                       'name'   => "pogo_assets", 
                       'branch' => "master", 
                       'dir'    => "Images/Pokemon - 256x256");
 }
 
-$repo_owner = 'ZeChrales';
-$repo_name = 'PogoAssets';
-$repo_dir = 'pokemon_icons';
-$repo_branch = 'master';
-
-
-// Get JSON
+// Get download function curl_get_contents
 include('logic/curl_get_contents.php');
 
 // Download file
@@ -43,12 +37,7 @@ function downloadFile($URL, $destination, $filename) {
     $output = $destination . $filename;
 
     // Get file.
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $input);
-    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    $data = curl_exec($ch);
-    curl_close ($ch);
+    $data = curl_get_contents($input);
 
     // Write to file.
     if(empty($data)) {
@@ -111,6 +100,11 @@ foreach ($repos as $key => $r)
         $dest = rtrim($destination,"/") . '/';
     }
 
+    // Make sure destination exists otherwise create it
+    if (!file_exists($dest)) {
+        mkdir($dest);
+    }
+
     // Content dir
     $content_dir = '';
     if (strpos($repo_dir, '/') !== false) {
@@ -118,7 +112,7 @@ foreach ($repos as $key => $r)
     }
 
     // Raw download dir
-    $raw_dir = '';
+    $raw_dir = $repo_dir;
     if (strpos($repo_dir, ' ') !== false) {
         $raw_dir = str_replace(' ', '%20', $repo_dir);
     }
@@ -126,7 +120,6 @@ foreach ($repos as $key => $r)
     // Git urls
     $repo_content = 'https://api.github.com/repos/' . $repo_owner . '/' . $repo_name . '/contents/' . $content_dir;
     $repo_html = 'https://github.com/' . $repo_owner . '/' . $repo_name . '/' . $repo_dir . '/';
-    //$repo_raw = 'https://raw.githubusercontent.com/' . $repo_owner . '/' . $repo_name . '/' . $repo_branch . '/' . $repo_dir . '/';
     $repo_raw = 'https://raw.githubusercontent.com/' . $repo_owner . '/' . $repo_name . '/' . $repo_branch . '/' . $raw_dir . '/';
 
     // Git tree lookup
@@ -141,7 +134,6 @@ foreach ($repos as $key => $r)
     $content = '';
     $foldername = basename($repo_html);
     echo 'Downloading each file from ' . $repo_html . PHP_EOL;
-    echo "Repo raw: " . $repo_raw . PHP_EOL;
     foreach ($leaf as $l) {
         if($l['name'] == $foldername && $l['type'] == 'dir') {
             $json = curl_get_contents($l['git_url']);
@@ -152,8 +144,6 @@ foreach ($repos as $key => $r)
 
     // Download each file.
     if(is_array($content)) {
-        echo "Downloading repo content." . PHP_EOL;
-        echo "Repo content: " . $repo_content . PHP_EOL;
         foreach($content['tree'] as $c) {
             // Filter by file extension
             $ext = '.' . pathinfo($c['path'], PATHINFO_EXTENSION);
