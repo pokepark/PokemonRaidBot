@@ -144,6 +144,8 @@ foreach ($repos as $key => $r)
 
     // Download each file.
     if(is_array($content)) {
+        $count_unchanged = 0;
+        $count_extension = 0;
         foreach($content['tree'] as $c) {
             // Filter by file extension
             $ext = '.' . pathinfo($c['path'], PATHINFO_EXTENSION);
@@ -155,11 +157,23 @@ foreach ($repos as $key => $r)
                 echo filesize($download_path) . '/' . $c['size'] . ' bytes' . PHP_EOL;
                 verifyDownload($download_path, $c['size']);
               } else {
-                  echo 'Skipping file: ' . $c['path'] . " (File hasn't changed.)" . PHP_EOL;
+                  $count_unchanged = $count_unchanged + 1;
+                  // Debug
+                  // echo 'Skipping file: ' . $c['path'] . " (File hasn't changed.)" . PHP_EOL;
               }
             } else {
-                echo 'Skipping file: ' . $c['path'] . ' (File extension filtering)' . PHP_EOL;
+                $count_extension = $count_extension + 1;
+                // Debug
+                // echo 'Skipping file: ' . $c['path'] . ' (File extension filtering)' . PHP_EOL;
             }
+        }
+        // Unchanged files
+        if($count_unchanged > 0) {
+            echo 'Skipped ' . $count_unchanged . ' unchanged files' . PHP_EOL;
+        }
+        // Filtered files
+        if($count_extension > 0) {
+            echo 'Skipped ' . $count_extension . ' files due to wrong file extension'. PHP_EOL;
         }
     } else {
         echo "Failed to download repo content!" . PHP_EOL;
