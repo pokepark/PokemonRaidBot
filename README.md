@@ -67,6 +67,7 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
       * [Command: /pokemon](#command-pokemon)
       * [Command: /pokedex](#command-pokedex)
       * [Command: /list](#command-list)
+      * [Command: /listall](#command-listall)
       * [Command: /overview](#command-overview)
       * [Command: /delete](#command-delete)
       * [Command: /team](#command-team)
@@ -90,7 +91,7 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
          * [translate.py](#translatepy)
             * [Usage](#usage)
 
-<!-- Added by: tux, at: Mon 25 Jan 2021 08:40:15 PM CET -->
+<!-- Added by: tux, at: Thu 04 Feb 2021 07:38:38 PM CET -->
 
 <!--te-->
 
@@ -838,7 +839,7 @@ A few examples for access files can be found below the permission overview table
 |            | Create raids `/start`, `/raid`                                   | `create`                                 |
 |            | Create ex-raids `/start`                                         | `ex-raids`                               |
 |            | Change raid duration `/start`                                    | `raid-duration`                          |
-|            | List all raids `/list`                                           | `list`                                   |
+|            | List all raids `/list` and `/listall`                            | `list`                                   |
 |            | Manage overview `/overview`                                      | `overview`                               |
 |            | Delete OWN raid polls `/delete`                                  | `delete-own`                             |
 |            | Delete ALL raid polls `/delete`                                  | `delete-all`                             |
@@ -1057,8 +1058,9 @@ Edit the weather:
 
 ## Command: /list
 
-The bot will allow you to get a list of the last 20 active raids and re-share or delete them.
+The bot will allow you to get a list of the last 12 active raids and re-share or delete them.
 
+In case more than 12 active raids are happening, the bot will automatically call the /listall command
 
 List existing raid polls with the `/list` command:
 
@@ -1066,6 +1068,10 @@ List existing raid polls with the `/list` command:
 
 ![Command: /list](/screens/commands-list-active-raids.png?raw=true "Command: /list")
 
+
+## Command: /listall
+
+The bot will allow you to get all active raids and re-share or delete them. The raids are grouped by gyms and their first letter or custom letters.
 
 ## Command: /overview
 
