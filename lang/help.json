@@ -48,16 +48,28 @@
     "FI": "/start - Vaihda raidin kestoa"
   },
   "help_list": {
-    "NL": "/list - alle actieve Raids",
-    "DE": "/list - Alle aktiven Raids",
-    "EN": "/list - All active raids",
+    "NL": "TRANSLATE",
+    "DE": "/list - Letzten 12 aktiven Raids",
+    "EN": "/list - Last 12 active raids",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "/list - Kaikki aktiiviset raidit"
+    "FI": "TRANSLATE"
+  },
+  "help_listall": {
+    "NL": "/listall - alle actieve Raids",
+    "DE": "/listall - Alle aktiven Raids",
+    "EN": "/listall - All active raids",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "/listall - Kaikki aktiiviset raidit"
   },
   "help_overview": {
     "NL": "/overview - Beheer raid overzicht",

@@ -67,6 +67,18 @@ function raid_edit_gym_keys($first, $warn = true, $action = 'edit_raidlevel', $d
            $arg = $gym['id'];
         }
 
+        // List action to list only gyms with active raids, so always continue at the end
+        if ($action == 'list_raid') {
+            if ($gym['active_raid'] == 1) {
+                $keys[] = array(
+                    'text'          => $gym['gym_name'],
+                    'callback_data' => $first . ':' . $action . ':' . $arg
+                );
+            }
+            // Continue always in case of list action
+            continue;
+        }
+
         // Write to log.
         // debug_log($gym);
         

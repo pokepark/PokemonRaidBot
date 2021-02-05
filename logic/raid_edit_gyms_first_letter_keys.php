@@ -32,28 +32,64 @@ function raid_edit_gyms_first_letter_keys($action = 'raid_by_gym', $hidden = fal
 
     // Case or not?
     if(!empty($case)) {
-        // Get gyms from database
-        $rs = my_query(
-                "
-                SELECT CASE $case
-                ELSE UPPER(LEFT(gym_name, 1))
-                END       AS first_letter
-                FROM      gyms
-                WHERE     show_gym = {$show_gym}
-                GROUP BY  1
-                ORDER BY  gym_name
-                "
-            );
+        // List or other action?
+        if($action == 'list_by_gym') {
+            // Get gyms with active raids only from database
+            $rs = my_query(
+                    "
+                    SELECT CASE $case
+                    ELSE UPPER(LEFT(gym_name, 1))
+                    END       AS first_letter
+                    FROM      raids
+                    LEFT JOIN gyms 
+                    ON        raids.gym_id = gyms.id 
+                    WHERE     end_time>UTC_TIMESTAMP() 
+                    AND       show_gym = {$show_gym}
+                    GROUP BY  1
+                    ORDER BY  gym_name
+                    "
+                );
+        } else {
+            // Get gyms from database
+            $rs = my_query(
+                    "
+                    SELECT CASE $case
+                    ELSE UPPER(LEFT(gym_name, 1))
+                    END       AS first_letter
+                    FROM      gyms
+                    WHERE     show_gym = {$show_gym}
+                    GROUP BY  1
+                    ORDER BY  gym_name
+                    "
+                );
+        }
     } else {
-        // Get gyms from database
-        $rs = my_query(
-                "
-                SELECT DISTINCT UPPER(SUBSTR(gym_name, 1, 1)) AS first_letter
-                FROM      gyms
-                WHERE     show_gym = {$show_gym}
-                ORDER BY 1
-                "
-            );
+        // List or other action?
+        if($action == 'list_by_gym') {
+            // Get gyms with active raids only from database
+            // Get gyms from database
+            $rs = my_query(
+                    "
+                    SELECT DISTINCT UPPER(SUBSTR(gym_name, 1, 1)) AS first_letter
+                    FROM      raids
+                    LEFT JOIN gyms 
+                    ON        raids.gym_id = gyms.id 
+                    WHERE     end_time>UTC_TIMESTAMP() 
+                    AND       show_gym = {$show_gym}
+                    ORDER BY 1
+                    "
+                );
+        } else {
+            // Get gyms from database
+            $rs = my_query(
+                    "
+                    SELECT DISTINCT UPPER(SUBSTR(gym_name, 1, 1)) AS first_letter
+                    FROM      gyms
+                    WHERE     show_gym = {$show_gym}
+                    ORDER BY 1
+                    "
+                );
+        }
     }
 
     // Init empty keys array.

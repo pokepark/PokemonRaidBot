@@ -13,6 +13,7 @@ if($access && (is_file(ROOT_PATH . '/access/' . $access) || $access == 'BOT_ADMI
         $permissions[] = 'ex-raids';
         $permissions[] = 'raid-duration';
         $permissions[] = 'list';
+        $permissions[] = 'listall';
         $permissions[] = 'overview';
         $permissions[] = 'delete-all';
         $permissions[] = 'pokemon-all';
