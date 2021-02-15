@@ -23,14 +23,14 @@ if($config->CUSTOM_TRAINERNAME){
     $keys[0][] =
             [
                 'text'          => getTranslation('name'),
-                'callback_data' => '1:trainer_name_code:0'
+                'callback_data' => '0:trainer_name:0'
             ];
 }
 if($config->RAID_POLL_SHOW_TRAINERCODE){
     $keys[0][] =
             [
                 'text'          => getTranslation('trainercode'),
-                'callback_data' => '2:trainer_name_code:0'
+                'callback_data' => '0:trainer_code:0'
             ];
 }
 $keys[] = [

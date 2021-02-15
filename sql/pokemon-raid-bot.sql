@@ -151,6 +151,7 @@ CREATE TABLE `users` (
   `nick` varchar(100) CHARACTER SET utf8mb4 DEFAULT NULL,
   `name` varchar(200) CHARACTER SET utf8mb4 DEFAULT NULL,
   `trainername` varchar(200) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `display_name` int(1) NOT NULL DEFAULT 0,
   `trainercode` varchar(12) CHARACTER SET utf8mb4 DEFAULT NULL,
   `team` enum('mystic','valor','instinct') DEFAULT NULL,
   `level` int(10) unsigned DEFAULT '0',

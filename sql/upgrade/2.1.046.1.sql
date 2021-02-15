@@ -1,0 +1,1 @@
+ALTER TABLE `users` ADD COLUMN IF NOT EXISTS `display_name` INT(1) NOT NULL DEFAULT 0 AFTER `trainername`;

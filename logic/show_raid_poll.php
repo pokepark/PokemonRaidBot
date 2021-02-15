@@ -123,6 +123,7 @@ function show_raid_poll($raid)
                         users.name,
                         users.nick,
                         users.trainername,
+                        users.display_name,
                         users.trainercode,
                         users.level,
                         users.team
@@ -227,6 +228,7 @@ function show_raid_poll($raid)
                         users.name,
                         users.nick,
                         users.trainername,
+                        users.display_name,
                         users.trainercode,
                         users.level,
                         users.team
@@ -327,6 +329,7 @@ function show_raid_poll($raid)
                 $dt_att_time = dt2time($current_att_time);
                 foreach($att_time_row as $att_pokemon => $att_pokemon_row) {
                     $current_pokemon = $att_pokemon;
+                    $string_trainernames = '';
                     foreach($att_pokemon_row as $att_row) {
                         // Add section/header for time
                         if($previous_att_time != $current_att_time) {
@@ -364,6 +367,10 @@ function show_raid_poll($raid)
                         }else {
                             $trainername = htmlspecialchars($att_row['name']) . ' ';
                         }
+                        if(isset($att_row['trainername']) && $config->RAID_POLL_SHOW_TRAINERNAME_STRING && $att_row['want_invite']) {
+                            if(!empty($string_trainernames)) $string_trainernames .= ',';
+                            $string_trainernames .= $att_row['trainername'];
+                        }
                         // Add users: ARRIVED --- TEAM -- LEVEL -- NAME -- INVITE -- EXTRAPEOPLE
                         $msg = raid_poll_message($msg, ($att_row['arrived']) ? (EMOJI_HERE . ' ') : (($att_row['late']) ? (EMOJI_LATE . ' ') : '└ '));
                         $msg = raid_poll_message($msg, ($att_row['team'] === NULL) ? ($GLOBALS['teams']['unknown'] . ' ') : ($GLOBALS['teams'][$att_row['team']] . ' '));
@@ -382,6 +389,9 @@ function show_raid_poll($raid)
                         // Prepare next result
                         $previous_att_time = $current_att_time;
                         $previous_pokemon = $current_pokemon;
+                    }
+                    if(!empty($string_trainernames)) {
+                        $msg = raid_poll_message($msg, '<code>' . $string_trainernames . '</code>' . CR);
                     }
                 }
             }

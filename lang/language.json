@@ -983,6 +983,42 @@
     "PL": "TRANSLATE",
     "FI": "Chatteja ei löytynyt! Et voi jakaa viestiä tietojen näyttämiseen ja muuttamiseen!"
   },
+  "trainername": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Trainername",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Pelinimi"
+  },
+  "trainername_add": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Add trainername",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Lisää pelinimi"
+  },
+  "trainername_edit": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Edit trainername",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Muokkaa pelinimeä"
+  },
   "trainername_select": {
     "NL": "TRANSLATE",
     "DE": "Schreibe deinen Trainernamen",
@@ -1019,6 +1055,18 @@
     "PL": "TRANSLATE",
     "FI": "Pelinimessä voi olla pelkästään numeroita ja kirjaimia. Yritä uudelleen."
   },
+  "switch_display_name": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Switch display name",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Vaihda näyttönimeä"
+  },
   "trainercode": {
     "NL": "TRANSLATE",
     "DE": "Trainercode",
@@ -1031,7 +1079,7 @@
     "PL": "TRANSLATE",
     "FI": "Kaverikoodi"
   },
-  "code_missing": {
+  "not_set": {
     "NL": "TRANSLATE",
     "DE": "nicht festgelegt",
     "EN": "not set",
@@ -1078,6 +1126,18 @@
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
     "FI": "Annetussa kaverikoodissa ei ole 12 numeroa. Yritä uudelleen."
+  },
+  "display_name_explanation": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "The arrow (->) marks the name displayed in raid polls. You can change your displayname from name settings.",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Nuoli (->) osoittaa raidi-ilmoituksissa käytettävää nimeä. Voit vaihtaa näyttönimeä nimiasetuksista."
   },
   "name": {
     "NL": "Naam",
