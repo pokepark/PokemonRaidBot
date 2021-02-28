@@ -91,7 +91,7 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
          * [translate.py](#translatepy)
             * [Usage](#usage)
 
-<!-- Added by: tux, at: Thu 04 Feb 2021 07:38:38 PM CET -->
+<!-- Added by: artanicus, at: Sun Feb 28 12:48:08 EET 2021 -->
 
 <!--te-->
 
@@ -1195,6 +1195,7 @@ Updates to the config file are NOT checked automatically. Therefore always check
 | BOT_NAME| Name of the bot. |
 | BRIDGE_MODE| Bool, whether to enable bridge mode. |
 | CLEANUP_DATABASE| Bool, whether to clean up finished raids from DB if cleanup is enabled. |
+| CLEANP_LOG | Log cleanup operations in a separate file, quite verbose! |
 | CLEANUP_LOGFILE| Full path to Log file where cleanup operations are logged. |
 | CLEANUP_SECRET| Plain text passphrase to protect cleanup calls. |
 | CLEANUP_TELEGRAM| Bool, whether to clean up raid polls posted by the bot if cleanup is enabled. |
@@ -1210,7 +1211,10 @@ Updates to the config file are NOT checked automatically. Therefore always check
 | DDOS_MAXIMUM | ? |
 | DEBUG | Output helpful debugging messages to `DEBUG_LOGFILE`|
 | DEBUG_LOGFILE | Full path to debug logfile|
-| DEBUG_SQL | Also output details on DB queries, quite verbose! |
+| DEBUG_INCOMING | Also log details on incoming webhook data to separate file, quite verbose! |
+| DEBUG_INCOMING_LOGFILE | Full path to incoming data debug logfile|
+| DEBUG_SQL | Also log details on DB queries to separate file, quite verbose! |
+| DEBUG_SQL_LOGFILE | Full path to SQL debug logfile|
 | DEFAULTS_WARNING | json files don't support comments, this is just a comment warning you not to edit defaults. |
 | LANGUAGE_PRIVATE| Language to use in private messages. Leave empty to infer language from users Telegram language |
 | LANGUAGE_PUBLIC| Language to use in groups |
