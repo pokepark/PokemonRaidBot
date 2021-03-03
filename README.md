@@ -91,7 +91,7 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
          * [translate.py](#translatepy)
             * [Usage](#usage)
 
-<!-- Added by: artanicus, at: Sun Feb 28 12:48:08 EET 2021 -->
+<!-- Added by: artanicus, at: Wed Mar  3 19:34:56 EET 2021 -->
 
 <!--te-->
 
@@ -1195,7 +1195,7 @@ Updates to the config file are NOT checked automatically. Therefore always check
 | BOT_NAME| Name of the bot. |
 | BRIDGE_MODE| Bool, whether to enable bridge mode. |
 | CLEANUP_DATABASE| Bool, whether to clean up finished raids from DB if cleanup is enabled. |
-| CLEANP_LOG | Log cleanup operations in a separate file, quite verbose! |
+| CLEANUP_LOG | Log cleanup operations in a separate file, quite verbose! |
 | CLEANUP_LOGFILE| Full path to Log file where cleanup operations are logged. |
 | CLEANUP_SECRET| Plain text passphrase to protect cleanup calls. |
 | CLEANUP_TELEGRAM| Bool, whether to clean up raid polls posted by the bot if cleanup is enabled. |
