@@ -201,7 +201,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Shiny"
   },
   "not_shiny": {
     "NL": "Niet Shiny",
@@ -213,7 +213,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Ei shiny"
   },
   "alone": {
     "NL": "Alleen",
@@ -381,7 +381,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Raidipäivän aikana voit luoda vain yhden raidin!"
   },
   "raid_day_creation_limit": {
     "NL": "Tijdens Raid day mag je maar RAID_EVENT_CREATION_LIMIT Raids aanmaken!",
@@ -393,7 +393,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Raidipäivän aikana voit luoda vain RAID_EVENT_CREATION_LIMIT raidia!"
   },
   "still": {
     "NL": "nog",
@@ -585,7 +585,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "START_CODE raidi"
   },
   "start_raid_now": {
     "NL": "Stuur een bericht naar alle deelnemers over de start van de raid",
@@ -2109,7 +2109,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Uusi status"
   },
   "pokedex_current_status": {
     "NL": "Actuele status:",
