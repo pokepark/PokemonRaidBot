@@ -1,16 +1,21 @@
 <?php
 
-// Parent dir.
 $parent = __DIR__;
 
 // Include requirements and perfom initial steps
 include_once(__DIR__ . '/core/bot/requirements.php');
-
-// Database connection
 include_once(CORE_BOT_PATH . '/db.php');
-
-// Get language
 include_once(CORE_BOT_PATH . '/userlanguage.php');
+
+// Create GD image object from given URI regardless of file type
+function grab_img($uri){
+  $img = imagecreatefromstring(file_get_contents($uri));
+  if ($img === false) {
+    info_log($uri, 'Failed to get image:');
+    return false;
+  }
+  return $img;
+}
 
 // Debug switch
 $debug = false;
@@ -19,9 +24,12 @@ if(isset($_GET['debug']) && $_GET['debug'] == 1) {
 }
 
 // Raid info
-$raid_id = preg_replace("/\D/","",$_GET['raid']);
-if($_GET['raid']!="") {
+if(array_key_exists('raid', $_GET) && $_GET['raid']!="") {
+    $raid_id = preg_replace("/\D/","",$_GET['raid']);
     $raid = get_raid_with_pokemon($raid_id);
+} else {
+  info_log('Called without a raid id, things will fail');
+  $raid = null;
 }
 
 // Fonts
@@ -44,6 +52,8 @@ $bg_rgb = [255,255,255];
 $config_bg_color = explode(',',$config->RAID_PICTURE_BG_COLOR);
 if(count($config_bg_color) == 3) {
     $bg_rgb = $config_bg_color;
+} else {
+  info_log($config->RAID_PICTURE_BG_COLOR, 'Invalid value RAID_PICTURE_BG_COLOR:');
 }
 $bg_color = imagecolorallocate($canvas,$bg_rgb[0],$bg_rgb[1], $bg_rgb[2]);
 imagefill($canvas, 0, 0, $bg_color);
@@ -54,6 +64,8 @@ $font_rgb = [0,0,0];
 $config_font_color = explode(',',$config->RAID_PICTURE_TEXT_COLOR);
 if(count($config_font_color) == 3) {
     $font_rgb = $config_font_color;
+} else {
+  info_log($config->RAID_PICTURE_TEXT_COLOR, 'Invalid value RAID_PICTURE_TEXT_COLOR:');
 }
 $font_color = imagecolorallocate($canvas,$font_rgb[0],$font_rgb[1],$font_rgb[2]);
 
@@ -62,12 +74,17 @@ $font_color = imagecolorallocate($canvas,$font_rgb[0],$font_rgb[1],$font_rgb[2])
 $transparent_rgb = [0,255,0];
 
 // Gym image
-if (!empty($raid['img_url'])) {
-    $img_gym = imagecreatefromjpeg($raid['img_url']);
-} else if(is_file($config->RAID_DEFAULT_PICTURE)) {
-    $img_gym = imagecreatefromjpeg($config->RAID_DEFAULT_PICTURE);
+$gym_url = $raid['img_url'];
+if (!empty($gym_url)) {
+  $img_gym = grab_img($gym_url);
 } else {
-    $img_gym = imagecreatefrompng(IMAGES_PATH . "/gym_default.png");
+    info_log('No gym img_url given, using default gym image');
+    if(is_file($config->RAID_DEFAULT_PICTURE)) {
+      $img_gym = grab_img($config->RAID_DEFAULT_PICTURE);
+    } else {
+        info_log($config->RAID_DEFAULT_PICTURE, 'Cannot read default gym image:');
+        $img_gym = grab_img(IMAGES_PATH . "/gym_default.png");
+    }
 }
 
 // Get the width and height of the gym picture
@@ -118,8 +135,8 @@ imagecopymerge($canvas, $mask, 0, 0, 0, 0, $new_w, $new_h, 100);
 if($raid['ex_gym'] == 1) {
     $ex_text_size = 20;
     $ex_text_angle = 0;
-    $corner = 16;										// Roundness of the corners
-    $extra = $ex_text_size/5+1;							// Some extra height
+    $corner = 16; // Roundness of the corners
+    $extra = $ex_text_size/5+1; // Some extra height
 
     $ex_mark_bg_color = [94,169,190];
     $ex_mark_text_color = [255,255,255];
@@ -181,7 +198,7 @@ if($time_now < $raid['end_time']) {
     // Raid Egg
     if($raid['pokedex_id'] > 9990) {
         // Getting the actual icon
-        $img_pokemon = imagecreatefrompng(IMAGES_PATH . "/raid_eggs/pokemon_icon_" . $raid['pokedex_id'] . "_00.png");
+        $img_pokemon = grab_img(IMAGES_PATH . "/raid_eggs/pokemon_icon_" . $raid['pokedex_id'] . "_00.png");
 
         // Position and size of the picture
         $dst_x = $dst_y = 150;
@@ -200,10 +217,8 @@ if($time_now < $raid['end_time']) {
         }
         $p_icon = $p_icon . ".png";
 
-        // Initialize pokemon image with egg image (+ used as fallback if no pokemon image was found)
-        $img_file = IMAGES_PATH . "/raid_eggs/pokemon_icon_999" . $raid['raid_level'] . "_00.png";
-
         // Check pokemon icon source and create image
+        $img_file = null;
         $p_sources = explode(',', $config->RAID_PICTURE_POKEMON_ICONS);
         foreach($p_sources as $p_dir) {
             // Set pokemon icon dir
@@ -213,16 +228,28 @@ if($time_now < $raid['end_time']) {
             if($p_dir == 'pokemon') {
                 $p_img = IMAGES_PATH . "/pokemon/" . $p_icon;
             }
-
-            // Make sure file exists
-            if (file_exists($p_img) && filesize($p_img) > 0) {
+            // Check if file exists in this collection
+            if(file_exists($p_img) && filesize($p_img) > 0) {
                 $img_file = $p_img;
                 break;
             }
         }
 
-        // Create image
-        $img_pokemon = imagecreatefrompng($img_file);
+        // If no image was found, substitute with a fallback
+        if($img_file === null) {
+          info_log($p_icon, 'Failed to find an image in any pokemon image collection for:');
+          $img_fallback_file = null;
+          // If we know the raid level, fallback to egg image
+          if(array_key_exists('raid_level', $raid) && $raid['raid_level'] !== null && $raid['raid_level'] != 0) {
+            $img_fallback_file = IMAGES_PATH . "/raid_eggs/pokemon_icon_999" . $raid['raid_level'] . "_00.png";
+          } else {
+            info_log('Unknown raid level, using fallback icon.');
+            $img_fallback_file = $config->RAID_PICTURE_POKEMON_FALLBACK;
+          }
+          $img_file = $img_fallback_file;
+        }
+
+        $img_pokemon = grab_img($img_file);
 
         // Position and size of the picture
         $dst_x = $dst_y = 100;
@@ -232,7 +259,7 @@ if($time_now < $raid['end_time']) {
 // Raid ended
 } else {
     // Raid won image
-    $img_pokemon = imagecreatefrompng(IMAGES_PATH . "/raidwon.png");
+    $img_pokemon = grab_img(IMAGES_PATH . "/raidwon.png");
 
     // Position and size of the picture
     $dst_x = $dst_y = 172;
@@ -259,7 +286,7 @@ imagecopyresampled($canvas,$img_pokemon,$dst_x,$dst_y,0,0,$dst_w,$dst_h,$src_w,$
 
 // Ex-Raid?
 if($raid['raid_level'] == 'X') {
-    $img_expass = imagecreatefrompng(IMAGES_PATH . "/expass.png");
+    $img_expass = grab_img(IMAGES_PATH . "/expass.png");
     imagesavealpha($img_expass,true);
 
     // Debug - Add border around expass image
@@ -274,12 +301,12 @@ if($raid['raid_level'] == 'X') {
 
 
 // Adding the gym name to the image
-$text_size = 23;									// Font size of additional text
-$text_size_cp_weather = 20;									// Font size of weather cp text
+$text_size = 23; // Font size of additional text
+$text_size_cp_weather = 20;// Font size of weather cp text
 $left_after_poke = 356; // First left position behind the pokemon icon.
-$angle = 0;											// Angle of the text
-$spacing = 10;										// Spacing between lines
-$spacing_right = 10;								// Empty space on the right for weather icons and CP text
+$angle = 0; // Angle of the text
+$spacing = 10; // Spacing between lines
+$spacing_right = 10; // Empty space on the right for weather icons and CP text
 
 
 
@@ -306,7 +333,6 @@ if(count($gym_name_words) > 1 && $gym_name_total_chars >= 18 && $gym_name_total_
 // Wrap gym name to multiple lines if too long
 $gym_name_lines = explode(PHP_EOL,wordwrap(trim($gym_name),($gym_name_total_chars+$gym_name_word_largest)/$gym_name_rows,PHP_EOL));
 
-// Write to log.
 debug_log($gym_name_total_chars, 'Gym name length:');
 debug_log($gym_name_lines, 'Gym name lines:');
 
@@ -486,7 +512,7 @@ if($raid['pokedex_id'] < 9990) {
         if($config->RAID_PICTURE_ICONS_WHITE) {
             $weather_icon_path = IMAGES_PATH . "/weather_white/";
         }
-        $weather_icon = imagecreatefrompng($weather_icon_path . $we . ".png"); // 64x64
+        $weather_icon = grab_img($weather_icon_path . $we . ".png"); // 64x64
         imagecopyresampled($canvas,$weather_icon,$canvas_width-$spacing_right-($count_weather-$i)*40,$poke_text_top-30,0,0,38,38,64,64);
     }
 }
