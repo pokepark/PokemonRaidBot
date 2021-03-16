@@ -25,7 +25,7 @@ function get_raid_level($pokedex_id, $pokemon_form_id)
         }
         debug_log("Resolved level of {$pokedex_id}({$pokemon_form_id}) to {$raid_level}");
     } else {
-        debug_log("Could not resolve level of {$pokedex_id}({$pokemon_form_id}), defaulting to 0!");
+        info_log("Could not resolve level of {$pokedex_id}({$pokemon_form_id}), defaulting to 0!");
         $raid_level = '0';
     }
 
