@@ -65,7 +65,7 @@ if(substr_count($data['id'], ',') == 1) {
         include_once($module);
         exit();
     } else {
-        debug_log('Error! Fast forward failed as file does not exist!');
+        info_log($module, 'Error! Fast forward failed as file does not exist:');
         exit();
     }
 }
