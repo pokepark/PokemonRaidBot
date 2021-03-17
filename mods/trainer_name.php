@@ -73,23 +73,23 @@ if($no_include) {
             $keys[] = [
                     [
                         'text'          => getTranslation('switch_display_name'),
-                        'callback_data' => $mode.':trainer_name:switch'
+                        'callback_data' => '0:trainer_name:switch'
                     ]
                 ];
             $keys[] = [
                     [
                         'text'          => getTranslation('trainername_edit'),
-                        'callback_data' => $mode.':trainer_name:add'
+                        'callback_data' => '0:trainer_name:add'
                     ],[
                         'text'          => getTranslation('delete'),
-                        'callback_data' => $mode.':trainer_name:delete'
+                        'callback_data' => '0:trainer_name:delete'
                     ]
                 ];
         }else {
             $keys[] = [
                     [
                         'text'          => getTranslation('trainername_add'),
-                        'callback_data' => $mode.':trainer_name:add'
+                        'callback_data' => '0:trainer_name:add'
                     ]
                 ];
         }

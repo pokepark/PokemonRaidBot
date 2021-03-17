@@ -56,10 +56,10 @@ if($action == "cancel") {
     $keys[] = [
             [
                 'text'          => getTranslation('back'),
-                'callback_data' => $mode.':trainer_code:cancel'
+                'callback_data' => '0:trainer_code:cancel'
             ],[
                 'text'          => getTranslation('delete'),
-                'callback_data' => $mode.':trainer_code:delete'
+                'callback_data' => '0:trainer_code:delete'
             ]
         ];
     // Answer callback.

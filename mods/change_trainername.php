@@ -11,7 +11,8 @@ if($returnValue){
     my_query(
         "
         UPDATE users
-        SET trainername =   '{$trainername}'
+        SET trainername =   '{$trainername}',
+            display_name = IF(trainername is null, 0, 1)
         WHERE user_id =     {$userid}
         "
     );
