@@ -9,15 +9,14 @@ function curl_json_response($json_response, $json)
 {
     global $config;
     // Write to log.
-    debug_log($json_response, '<-');
+    debug_log_incoming($json_response, '<-');
 
     // Decode json response.
     $response = json_decode($json_response, true);
 
     // Validate response.
     if ($response['ok'] != true || isset($response['update_id'])) {
-        // Write error to log.
-        debug_log('ERROR: ' . $json . "\n\n" . $json_response . "\n\n");
+        info_log("{$json} -> {$json_response}", 'ERROR:');
     } else {
 	// Result seems ok, get message_id and chat_id if supergroup or channel message
 	if (isset($response['result']['chat']['type']) && ($response['result']['chat']['type'] == "channel" || $response['result']['chat']['type'] == "supergroup")) {
@@ -88,7 +87,7 @@ function curl_json_response($json_response, $json)
 		    debug_log('Calling cleanup preparation now!');
 		    insert_cleanup($chat_id, $message_id, $cleanup_id);
 	        } else {
-		    debug_log('Missing input! Cannot call cleanup preparation!');
+		    info_log($cleanup_id, 'Missing input! Cannot call cleanup preparation for raid:');
 		}
             } else if($cleanup_id != '0' && $cleanup_id == 'trainer') {
                 debug_log('Detected trainer info message from callback_data!');
@@ -100,7 +99,7 @@ function curl_json_response($json_response, $json)
                     debug_log('Adding trainer info to database now!');
                     insert_trainerinfo($chat_id, $message_id);
                 } else {
-                    debug_log('Missing input! Cannot add trainer info!');
+                    info_log("Missing input! Cannot add trainer info. chat: '{$chat_id}', message: '{$message_id}'");
                 }
             } else {
                 debug_log('No cleanup info found! Skipping cleanup preparation!');

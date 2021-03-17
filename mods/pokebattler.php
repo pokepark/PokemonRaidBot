@@ -209,7 +209,7 @@ if($id == 0) {
 
             // Make sure we received a valid dex id.
             if(!is_numeric($dex_id) || $dex_id == 0) {
-                debug_log('Failed to get a valid pokemon dex id! Continuing with next raid boss...');
+                info_log('Failed to get a valid pokemon dex id: '. $dex_id .' Continuing with next raid boss...');
                 continue;
             }
 
