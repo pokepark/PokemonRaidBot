@@ -40,14 +40,14 @@ foreach ($update as $raid) {
     $exclude_raid_levels = explode(',', $config->WEBHOOK_EXCLUDE_RAID_LEVEL);
     $exclude_pokemons = explode(',', $config->WEBHOOK_EXCLUDE_POKEMON);
     if ((!empty($level) && in_array($level, $exclude_raid_levels)) || (!empty($pokemon) && in_array($pokemon, $exclude_pokemons))) {
-
+        debug_log($pokemon,'Ignoring raid, the pokemon is excluded:');
         continue;
     }
 
     // Create gym if not exists
     $gym_name = $raid['message']['name'];
     if ($config->WEBHOOK_EXCLUDE_UNKNOWN && $gym_name === "unknown") {
-
+        debug_log($raid['message']['gym_id'],'Ignoring raid, the gym name is unknown and WEBHOOK_EXCLUDE_UNKNOWN says to ignore. id:');
         continue;
     }
     $gym_lat = $raid['message']['latitude'];
@@ -79,7 +79,7 @@ foreach ($update as $raid) {
             }
         }
         if ($insideGeoFence === false) {
-
+            debug_log($gym_name,'Ignoring raid, not inside geofence:');
             continue;
         }
     }
@@ -125,8 +125,8 @@ foreach ($update as $raid) {
             ';
             $statement = $dbh->prepare( $query );
             $statement->execute([
-              'lat' => $gym_lat, 
-              'lon' => $gym_lon, 
+              'lat' => $gym_lat,
+              'lon' => $gym_lon,
               'gym_name' => $gym_name,
               'gym_id' => $gym_id,
               'ex_gym' => $gym_is_ex,
@@ -224,7 +224,7 @@ foreach ($update as $raid) {
             }
         }
     }
-    
+
     $gender = 0;
     if ( isset($raid['message']['gender']) ) {
 
@@ -258,7 +258,7 @@ foreach ($update as $raid) {
 
     // Insert new raid or update existing raid/ex-raid?
     $raid_id = active_raid_duplication_check($gym_internal_id);
-    
+
     // Raid exists, do updates!
     if ( $raid_id > 0 ) {
         // Update database
@@ -323,6 +323,7 @@ foreach ($update as $raid) {
                 }
             }
         }
+        debug_log($gym_name,'Ignoring raid, already present in DB:');
         continue;
     }
 
@@ -358,7 +359,7 @@ foreach ($update as $raid) {
 
     // Skip posting if create only -mode is set or raid time is greater than value set in config
     if ($config->WEBHOOK_CREATE_ONLY or ($end_timestamp-$start_timestamp) > ($config->WEBHOOK_EXCLUDE_AUTOSHARE_DURATION * 60) ) {
-
+        debug_log($gym_name,'Not autoposting raid, its duration is over the WEBHOOK_EXCLUDE_AUTOSHARE_DURATION threshold:');
         continue;
     }
 
@@ -388,10 +389,6 @@ foreach ($update as $raid) {
                 $const_geofence = 'WEBHOOK_CHATS_LEVEL_' . $i . '_' . $geofence['id'];
                 $const_geofence_chats = $config->{$const_geofence};
 
-                // Debug
-                //debug_log($const_geofence,'CONSTANT NAME:');
-                //debug_log($const_geofence_chats),'CONSTANT VALUE:');
-
                 // if current raid inside path, add chats
                 $point = $created_raid['lat'] . " " . $created_raid['lon'];
                 $polygon = array();
@@ -409,9 +406,6 @@ foreach ($update as $raid) {
                 }
             }
         }
-        // Debug.
-        //debug_log($const,'CONSTANT NAME:');
-        //debug_log($const_chats),'CONSTANT VALUE:');
 
         if($level == $i && !empty($const_chats)) {
 
@@ -430,9 +424,7 @@ foreach ($update as $raid) {
             $msg_text = !empty($created_raid['address']) ? $created_raid['address'] . ', ' . substr(strtoupper($config->BOT_ID), 0, 1) . '-ID = ' . $created_raid['id'] : $created_raid['pokemon'] . ', ' . substr(strtoupper($config->BOT_ID), 0, 1) . '-ID = ' . $created_raid['id']; // DO NOT REMOVE " ID = " --> NEEDED FOR $config->CLEANUP PREPARATION!
             $loc = send_venue($chat, $created_raid['lat'], $created_raid['lon'], "", $msg_text, true);
             $tg_json[] = $loc;
-            // Write to log.
-            debug_log('location:');
-            debug_log($loc);
+            debug_log($loc, 'Location:');
         }
 
         // Set reply to.
