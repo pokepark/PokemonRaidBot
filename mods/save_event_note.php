@@ -4,10 +4,15 @@ debug_log("Saving event note:");
 
 // Get wanted info from modifiers in db
 $raid_id = $modifiers['id'];
+// Set the user_id
+$user_id = $update['message']['from']['id'];
 
 // Update the event note to raid table
 $query = $dbh->prepare("UPDATE raids SET event_note=:text WHERE id = :id");
 $query->execute([':text' => $update['message']['text'], ':id' => $raid_id]);
+
+// Remove back button from previous message to avoid confusion
+edit_message_keyboard($modifiers['old_message_id'], [], $user_id);
 
 // Return message to user
 $msg = '';
@@ -35,4 +40,4 @@ $keys = array_merge($keys, $keys_share);
 debug_log($keys);
 
 // Send response message to user
-send_message($update['message']['from']['id'],$msg,$keys,[]);
+send_message($user_id, $msg, $keys, []);

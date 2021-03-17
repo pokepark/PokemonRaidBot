@@ -29,7 +29,7 @@ if($mode == "edit") {
     $msg.= getTranslation("event_note_edit") . ": ";
     
     // Create an entry to user_input table
-    $modifiers = json_encode(array("id"=>$raid_id)); // Save the raid id
+    $modifiers = json_encode(array("id"=>$raid_id,"old_message_id"=>$update['callback_query']['message']['message_id'])); // Save the raid id and the message id to db so we can delete it later
     $handler = "save_event_note";  // call for mods/save_event_note.php after user posts the answer
     
     my_query("INSERT INTO user_input SET user_id='{$userid}', modifiers='{$modifiers}', handler='{$handler}'");
@@ -45,7 +45,7 @@ if($mode == "edit") {
     $msg.= getTranslation("event_add_note_description");
     
     // Create an entry to user_input table
-    $modifiers = json_encode(array("id"=>$raid_id)); // Save the raid id
+    $modifiers = json_encode(array("id"=>$raid_id,"old_message_id"=>$update['callback_query']['message']['message_id'])); // Save the raid id and the message id to db so we can delete it later
     $handler = "save_event_note";  // call for mods/save_event_note.php after user posts the answer
     
     my_query("INSERT INTO user_input SET user_id='{$userid}', modifiers='{$modifiers}', handler='{$handler}'");
