@@ -8,8 +8,8 @@ if($config->AUTO_REFRESH_POLLS) {
                     LEFT JOIN   raids
                     ON          cleanup.raid_id = raids.id
                     WHERE   chat_id != 0
-                    AND     raids.start_time <= NOW()
-                    AND     raids.end_time > NOW()
+                    AND     raids.start_time <= UTC_TIMESTAMP()
+                    AND     raids.end_time > DATE_SUB(UTC_TIMESTAMP(), INTERVAL 1 MINUTE)
                     AND     message_id != 0
                     ");
     debug_log("REFRESH POLLS:");
