@@ -92,7 +92,8 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
          * [translate.py](#translatepy)
             * [Usage](#usage)
 
-<!-- Added by: BotAdmin, at: Wed Mar 17 20:47:26 EET 2021 -->
+
+<!-- Added by: artanicus, at: Tue Mar 16 21:46:59 EET 2021 -->
 
 <!--te-->
 
@@ -1221,11 +1222,11 @@ Updates to the config file are NOT checked automatically. Therefore always check
 | CURL_USEPROXY| Bool, enable curl via proxy |
 | DB_HOST | Host or ip address of MySQL server |
 | DB_NAME | Name of DB |
-| DB_PASSWORD | Password of dedicated RaidBot DB user|
-| DB_USER | Username of dedicated RaidBot DB user|
+| DB_PASSWORD | Password of dedicated RaidBot DB user |
+| DB_USER | Username of dedicated RaidBot DB user |
 | DDOS_MAXIMUM | ? |
-| DEBUG | Output helpful debugging messages to `DEBUG_LOGFILE`|
-| DEBUG_LOGFILE | Full path to debug logfile|
+| DEBUG | Output helpful debugging messages to `DEBUG_LOGFILE` |
+| DEBUG_LOGFILE | Full path to debug logfile |
 | DEBUG_INCOMING | Also log details on incoming webhook data to separate file, quite verbose! |
 | DEBUG_INCOMING_LOGFILE | Full path to incoming data debug logfile|
 | DEBUG_SQL | Also log details on DB queries to separate file, quite verbose! |
@@ -1233,6 +1234,8 @@ Updates to the config file are NOT checked automatically. Therefore always check
 | DEFAULTS_WARNING | json files don't support comments, this is just a comment warning you not to edit defaults. |
 | LANGUAGE_PRIVATE| Language to use in private messages. Leave empty to infer language from users Telegram language |
 | LANGUAGE_PUBLIC| Language to use in groups |
+| LOGGING_INFO | Log INFO level messages to the file defined by LOGGING_INFO_LOGFILE. Useful for identifying potential issues. |
+| LOGGING_INFO_LOGFILE | Path to logfile. |
 | MAINTAINER_ID| Telegram ID of main maintainer |
 | MAINTAINER| Name of main maintainer |
 | MAPS_API_KEY| Google Maps API key for `MAPS_LOOKUP` |

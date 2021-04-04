@@ -73,7 +73,7 @@ function get_pokemon_id_by_name($pokemon_name, $get_from_db = false)
             $pokemon_id = str_replace('pokemon_id_','', $search_result);
         }else {
             // Debug log.
-            debug_log('Error! Pokedex ID could not be found for pokemon with name: ' . $poke_name);
+            info_log('Error! Pokedex ID could not be found for pokemon with name: ' . $poke_name);
         }
 
         // Get form.

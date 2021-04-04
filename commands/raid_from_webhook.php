@@ -40,14 +40,14 @@ foreach ($update as $raid) {
     $exclude_raid_levels = explode(',', $config->WEBHOOK_EXCLUDE_RAID_LEVEL);
     $exclude_pokemons = explode(',', $config->WEBHOOK_EXCLUDE_POKEMON);
     if ((!empty($level) && in_array($level, $exclude_raid_levels)) || (!empty($pokemon) && in_array($pokemon, $exclude_pokemons))) {
-        debug_log($pokemon,'Ignoring raid, the pokemon is excluded:');
+        info_log($pokemon,'Ignoring raid, the pokemon is excluded:');
         continue;
     }
 
     // Create gym if not exists
     $gym_name = $raid['message']['name'];
     if ($config->WEBHOOK_EXCLUDE_UNKNOWN && $gym_name === "unknown") {
-        debug_log($raid['message']['gym_id'],'Ignoring raid, the gym name is unknown and WEBHOOK_EXCLUDE_UNKNOWN says to ignore. id:');
+        info_log($raid['message']['gym_id'],'Ignoring raid, the gym name is unknown and WEBHOOK_EXCLUDE_UNKNOWN says to ignore. id:');
         continue;
     }
     $gym_lat = $raid['message']['latitude'];
@@ -79,7 +79,7 @@ foreach ($update as $raid) {
             }
         }
         if ($insideGeoFence === false) {
-            debug_log($gym_name,'Ignoring raid, not inside geofence:');
+            info_log($gym_name,'Ignoring raid, not inside geofence:');
             continue;
         }
     }
@@ -359,7 +359,7 @@ foreach ($update as $raid) {
 
     // Skip posting if create only -mode is set or raid time is greater than value set in config
     if ($config->WEBHOOK_CREATE_ONLY or ($end_timestamp-$start_timestamp) > ($config->WEBHOOK_EXCLUDE_AUTOSHARE_DURATION * 60) ) {
-        debug_log($gym_name,'Not autoposting raid, its duration is over the WEBHOOK_EXCLUDE_AUTOSHARE_DURATION threshold:');
+        info_log($gym_name,'Not autoposting raid, its duration is over the WEBHOOK_EXCLUDE_AUTOSHARE_DURATION threshold:');
         continue;
     }
 
