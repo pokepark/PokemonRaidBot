@@ -9,6 +9,7 @@ if($config->AUTO_REFRESH_POLLS) {
                     ON          cleanup.raid_id = raids.id
                     WHERE   chat_id != 0
                     AND     raids.start_time <= NOW()
+                    AND     raids.end_time > NOW()
                     AND     message_id != 0
                     ");
     debug_log("REFRESH POLLS:");
