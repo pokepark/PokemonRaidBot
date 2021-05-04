@@ -1,4 +1,4 @@
-DELETE FROM pokemon WHERE pokedex_id="676" AND pokemon_form_name="normal"
+DELETE FROM pokemon WHERE pokedex_id="676" AND pokemon_form_name="normal";
 REPLACE INTO pokemon SET pokedex_id="676", pokemon_name="Furfrou", pokemon_form_name="natural", pokemon_form_id="2629", asset_suffix="11", min_cp="1141", max_cp="1206", min_weather_cp="1427", max_weather_cp="1508", weather="4", shiny="0";
 REPLACE INTO pokemon SET pokedex_id="676", pokemon_name="Furfrou", pokemon_form_name="heart", pokemon_form_id="2630", asset_suffix="12", min_cp="1141", max_cp="1206", min_weather_cp="1427", max_weather_cp="1508", weather="4", shiny="0";
 REPLACE INTO pokemon SET pokedex_id="676", pokemon_name="Furfrou", pokemon_form_name="star", pokemon_form_id="2631", asset_suffix="13", min_cp="1141", max_cp="1206", min_weather_cp="1427", max_weather_cp="1508", weather="4", shiny="0";
