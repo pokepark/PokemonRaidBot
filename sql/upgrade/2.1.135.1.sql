@@ -1,0 +1,3 @@
+REPLACE INTO pokemon SET pokedex_id="334", pokemon_name="Altaria", pokemon_form_name="mega", pokemon_form_id="-1", asset_suffix="51", min_cp="1081", max_cp="1145", min_weather_cp="1352", max_weather_cp="1432", weather="6", shiny="0";
+REPLACE INTO pokemon SET pokedex_id="710", pokemon_name="Pumpkaboo", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="649", max_cp="698", min_weather_cp="811", max_weather_cp="872", weather="812", shiny="0";
+REPLACE INTO pokemon SET pokedex_id="711", pokemon_name="Gourgeist", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="1296", max_cp="1366", min_weather_cp="1621", max_weather_cp="1707", weather="812", shiny="0";
