@@ -65,6 +65,7 @@
   "RAID_PICTURE_FILE_FORMAT":"gif",
   "RAID_PICTURE_SHOW_SHINY": true,
   "RAID_DEFAULT_PICTURE":"images/gym_default.png",
+  "RAID_PICTURE_STORE_GYM_IMAGES_LOCALLY":false,
   "RAID_PICTURE_URL":"https://example.com/raid/raidpicture.php",
   "RAID_PICTURE_FONT_GYM":"NotoSans-Bold.ttf",
   "RAID_PICTURE_FONT_EX_GYM":"NotoSans-Regular.ttf",
