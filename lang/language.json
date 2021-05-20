@@ -1127,6 +1127,18 @@
     "PL": "TRANSLATE",
     "FI": "Annetussa kaverikoodissa ei ole 12 numeroa. Yritä uudelleen."
   },
+  "trainer_not_found": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Trainer not found!",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Kouluttajaa ei löytynyt!"
+  },
   "display_name_explanation": {
     "NL": "TRANSLATE",
     "DE": "TRANSLATE",
