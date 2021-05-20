@@ -624,6 +624,8 @@ Set `RAID_PICTURE_BG_COLOR` to an RGB value to specify the background color of t
 
 Set `RAID_PICTURE_TEXT_COLOR` to an RGB value to specify the text color of the raid picture.
 
+Set `RAID_PICTURE_STORE_GYM_IMAGES_LOCALLY` to `true` if you want to download and store gym images locally instead of fetching them from the url every time an image is created.
+
 Set `RAID_PICTURE_ICONS_WHITE` to true to use white weather icons for the raid picture. Especially useful when you defined a dark background color.
 
 Set `RAID_PICTURE_FILE_FORMAT` to either `gif`, `jpeg`, `jpg` or `png` to specify the output format of the raid picture.

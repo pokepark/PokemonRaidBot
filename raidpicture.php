@@ -74,13 +74,37 @@ $font_color = imagecolorallocate($canvas,$font_rgb[0],$font_rgb[1],$font_rgb[2])
 $transparent_rgb = [0,255,0];
 
 // Gym image
-$gym_url = $raid['img_url'];
-if (!empty($gym_url)) {
-  $img_gym = grab_img($gym_url);
-} else {
-    info_log('No gym img_url given, using default gym image');
+
+if($config->RAID_PICTURE_STORE_GYM_IMAGES_LOCALLY) {
+    $gym_image_path = PORTAL_IMAGES_PATH .'/'. $raid['gym_id_internal'].'.png';
+    info_log($gym_image_path, 'Attempting to use locally stored gym image');
+    if(!file_exists($gym_image_path)) {
+        info_log($raid['img_url'], 'Gym image not found, attempting to downloading it from: ');
+        // Get file.
+        $data = curl_get_contents($raid['img_url']);
+
+        // Write to file.
+        if(empty($data)) {
+            info_log($raid['img_url'], 'Error downloading file, no data received!');
+        } else {
+            $file = fopen($gym_image_path, "w+");
+            fwrite($file, $data);
+            fflush($file);
+            fclose($file);
+        }
+    }
+    $img_gym = grab_img($gym_image_path);
+}else {
+    $gym_url = $raid['img_url'];
+    $img_gym = false;
+    if (!empty($gym_url)) {
+        $img_gym = grab_img($gym_url);
+    }
+}
+if($img_gym == false) {
+    info_log($img_gym, 'Loading the gym image failed, using default gym image');
     if(is_file($config->RAID_DEFAULT_PICTURE)) {
-      $img_gym = grab_img($config->RAID_DEFAULT_PICTURE);
+        $img_gym = grab_img($config->RAID_DEFAULT_PICTURE);
     } else {
         info_log($config->RAID_DEFAULT_PICTURE, 'Cannot read default gym image:');
         $img_gym = grab_img(IMAGES_PATH . "/gym_default.png");
