@@ -40,11 +40,6 @@ function raid_list($update)
                       AND       end_time>UTC_TIMESTAMP()
             "
         );
-
-        while ($answer = $request->fetch()) {
-            $rows[] = $answer;
-        }
-
     } else {
         // Get raid data by user.
         $request = my_query(
@@ -64,11 +59,11 @@ function raid_list($update)
 		      ORDER BY  iqq_raid_id DESC LIMIT 2
             "
         );
+    }
 
-        while ($answer_raids = $request->fetch()) {
-            $rows[] = $answer_raids;
-        }
-
+    while ($answer_raids = $request->fetch()) {
+        $answer_raids['level'] = get_raid_level($answer_raids['pokemon'], $answer_raids['pokemon_form']);
+        $rows[] = $answer_raids;
     }
 
     // Init array.
@@ -77,7 +72,7 @@ function raid_list($update)
     // For each rows.
     foreach ($rows as $key => $row) {
             // Get raid poll.
-	    $contents[$key]['text'] = show_raid_poll($row)['full'];
+            $contents[$key]['text'] = show_raid_poll($row)['full'];
 
             // Set the title.
             $contents[$key]['title'] = get_local_pokemon_name($row['pokemon'],$row['pokemon_form'], true) . ' ' . getPublicTranslation('from') . ' ' . dt2time($row['start_time'])  . ' ' . getPublicTranslation('to') . ' ' . dt2time($row['end_time']);
