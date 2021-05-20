@@ -622,7 +622,7 @@ Set `RAID_PICTURE_BG_COLOR` to an RGB value to specify the background color of t
 
 Set `RAID_PICTURE_TEXT_COLOR` to an RGB value to specify the text color of the raid picture.
 
-Set `RAID_PICTURE_STORE_GYM_IMAGES_LOCALLY` to `true` if you want to download and store gym images locally instead of fetching them from the url every time an image is created.
+Set `RAID_PICTURE_STORE_GYM_IMAGES_LOCALLY` to `true` if you want to download and store gym photos in `images/gyms/` instead of fetching them from the cloud every time an image is created.
 
 Set `RAID_PICTURE_ICONS_WHITE` to true to use white weather icons for the raid picture. Especially useful when you defined a dark background color.
 
@@ -1254,6 +1254,7 @@ Updates to the config file are NOT checked automatically. Therefore always check
 | RAID_LATE_TIME| How many minutes to advise waiting in `RAID_LATE_MSG` |
 | RAID_LOCATION| Bool, Send a separate attached location message in addition to a raid poll |
 | RAID_PICTURE | Bool, enable picture based raid polls instead of default text mode |
+| RAID_PICTURE_STORE_GYM_IMAGES_LOCALLY | Bool, option to store gym photos in `images/gyms` instead of fetching them from cloud every time |
 | RAID_PICTURE_BG_COLOR| List of RGB values for `RAID_PICTURE` poll background color, e.g. "0,0,0" for black |
 | RAID_PICTURE_FILE_FORMAT| Format for raid pictures for `RAID_PICTURE`, valid values are gif, jpg, jpeg, png |
 | RAID_PICTURE_FONT_GYM | Font used for gym names for regular raids. must match a ttf or otf file under `fonts/`. Probably should be of weight Bold. |
