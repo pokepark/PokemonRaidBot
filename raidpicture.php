@@ -76,7 +76,8 @@ $transparent_rgb = [0,255,0];
 // Gym image
 
 if($config->RAID_PICTURE_STORE_GYM_IMAGES_LOCALLY) {
-    $gym_image_path = PORTAL_IMAGES_PATH .'/'. $raid['gym_id_internal'].'.png';
+    $file_name = explode('/', $raid['img_url'])[3];
+    $gym_image_path = PORTAL_IMAGES_PATH .'/'. $file_name.'.png';
     info_log($gym_image_path, 'Attempting to use locally stored gym image');
     if(!file_exists($gym_image_path)) {
         info_log($raid['img_url'], 'Gym image not found, attempting to downloading it from: ');
