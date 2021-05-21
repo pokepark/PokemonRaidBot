@@ -35,7 +35,7 @@ if($config->PORTAL_IMPORT) {
         }
 
         // Gym image.
-        if($config->PORTAL_PICTURE_IMPORT) {
+        if($config->RAID_PICTURE_STORE_GYM_IMAGES_LOCALLY) {
 			$no_spaces_gym_name = str_replace(array(' ', '\''), array('_', ''), $gym_name) . '.png';
             $gym_image = download_Portal_Image($portal_image, PORTAL_IMAGES_PATH, $no_spaces_gym_name);
             if($gym_image) {
