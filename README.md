@@ -635,7 +635,7 @@ Set `RAID_DEFAULT_PICTURE` to the url of a default gym picture in case no gym im
 
 Set `PORTAL_IMPORT` to `true` to enable the possibility to import portals from Telegram Ingress Bots.
 
-Set `PORTAL_PICTURE_IMPORT` to `true` to download the portal image from Telegram Ingress Bots. When set to `false` the URL of the portal image is stored in the database.
+Set `RAID_PICTURE_STORE_GYM_IMAGES_LOCALLY` to `true` to download the portal image from Telegram Ingress Bots. When set to `false` the URL of the portal image is stored in the database.
 
 
 ### Raid sharing
@@ -1244,7 +1244,6 @@ Updates to the config file are NOT checked automatically. Therefore always check
 | MAP_URL| ? |
 | POKEBATTLER_IMPORT_DISABLE_REDUNDANT_EGGS| Boolean, when importing Pokedex from Pokebattler, disable creating an Egg raid for any level that only has one boss available. |
 | PORTAL_IMPORT| Bool, allow importing gyms via portal import Telegram bots |
-| PORTAL_PICTURE_IMPORT| Bool, download and use a local copy of gym pictures on import |
 | RAID_ANYTIME| Bool, enable a final timeslot for attending at any given time. |
 | RAID_AUTOMATIC_ALARM | Bool, sign up every attendee to the raid alarm automatically. They will get private messages of new participants as if they had enabled it themselves on the poll. |
 | RAID_CODE_POKEMON | List of Pokemon dex IDs in use for private group codes |
