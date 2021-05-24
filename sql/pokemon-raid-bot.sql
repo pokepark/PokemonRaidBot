@@ -57,6 +57,7 @@ CREATE TABLE `gyms` (
   `gym_id` varchar(40) DEFAULT NULL,
   `img_url` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `index_gym_id` (`gym_id`),
   KEY `gym_lat_lon` (`lat`, `lon`)
 ) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
