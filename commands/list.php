@@ -17,7 +17,7 @@ $text = '';
 $keys = [];
 
 // Get raids.
-$raids = get_active_raids();
+$raids = get_active_raids(bot_access_check($update, 'event',true));
 
 // Did we get any raids?
 if(isset($raids[0]['r_active'])) {
