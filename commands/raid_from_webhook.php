@@ -110,9 +110,24 @@ foreach ($update as $raid) {
     // Create raid if not exists otherwise update if changes are detected
     // Just an egg
     if ($pokemon == 0) {
-        $pokemon = '999' . $level;
+        $query = '
+                    SELECT  pokemon_form_id, 
+                            pokedex_id 
+                    FROM    pokemon 
+                    WHERE   raid_level = :raid_level
+                ';
+        $statement = $dbh->prepare( $query );
+        $statement->execute([
+          ':raid_level' => $level
+        ]);
+        if($statement->rowCount() == 1) {
+            $result = $statement->fetch();
+            $pokemon = $result['pokedex_id'];
+            $form = $result['pokemon_form_id'];
+        }else {
+            $pokemon = '999' . $level;
+        }
     }
-
     $form = 0;
     $form_lookup = false;
     $form_query = ':pokemon_form';
