@@ -108,8 +108,11 @@ foreach ($update as $raid) {
     }
 
     // Create raid if not exists otherwise update if changes are detected
-    // Just an egg
+    $form = 0;
+    $form_lookup = false;
+    $form_query = ':pokemon_form';
     if ($pokemon == 0) {
+        // Just an egg
         $query = '
                     SELECT  pokemon_form_id, 
                             pokedex_id 
@@ -127,25 +130,23 @@ foreach ($update as $raid) {
         }else {
             $pokemon = '999' . $level;
         }
-    }
-    $form = 0;
-    $form_lookup = false;
-    $form_query = ':pokemon_form';
-    // Use negated evolution id instead of form id if present
-    if(isset($raid['message']['evolution']) && $raid['message']['evolution'] > 0) {
-        $form = 0 - $raid['message']['evolution'];
     }else {
-        if ( isset($raid['message']['form']) && $raid['message']['form'] != '0') {
-            // Use the form provided in webhook if it's valid
-            $form = $raid['message']['form'];
-        }elseif($pokemon != 0) {
-            // Else look up the normal form's id from pokemon table unless it's an egg
-            $form_query = '(SELECT pokemon_form_id FROM pokemon
-            WHERE
-                pokedex_id = :pokemon AND
-                pokemon_form_name = \'normal\'
-            LIMIT 1)';
-            $form_lookup = true;
+        // Use negated evolution id instead of form id if present
+        if(isset($raid['message']['evolution']) && $raid['message']['evolution'] > 0) {
+            $form = 0 - $raid['message']['evolution'];
+        }else {
+            if ( isset($raid['message']['form']) && $raid['message']['form'] != '0') {
+                // Use the form provided in webhook if it's valid
+                $form = $raid['message']['form'];
+            }elseif($pokemon != 0) {
+                // Else look up the normal form's id from pokemon table unless it's an egg
+                $form_query = '(SELECT pokemon_form_id FROM pokemon
+                WHERE
+                    pokedex_id = :pokemon AND
+                    pokemon_form_name = \'normal\'
+                LIMIT 1)';
+                $form_lookup = true;
+            }
         }
     }
 
