@@ -1,0 +1,1 @@
+REPLACE INTO pokemon SET pokedex_id="80", pokemon_name="Slowbro", pokemon_form_name="mega", pokemon_form_id="-1", asset_suffix="51", min_cp="1382", max_cp="1454", min_weather_cp="1728", max_weather_cp="1817", weather="36", shiny="0";
