@@ -31,7 +31,7 @@ $rs = my_query(
     ON         raids.user_id = users.user_id
     LEFT JOIN  events
     ON         events.id = raids.event
-    WHERE      end_time>UTC_TIMESTAMP()
+    WHERE      end_time > UTC_TIMESTAMP() - INTERVAL 10 MINUTE
     {$sql_condition}
     "
 );
@@ -65,7 +65,7 @@ if($rs->rowcount() == 1) {
 
     // Add keys to share.
     debug_log($raid, 'raw raid data for share: ');
-    $keys_share = share_keys($raid['id'], 'raid_share', $update, '', '', false, $raid['level']);
+    $keys_share = share_keys($raid['id'], 'raid_share', $update, '', '', false, get_raid_level($raid['pokemon'],$raid['pokemon_form']));
     if(is_array($keys_share)) {
         $keys = array_merge($keys, $keys_share);
     } else {
