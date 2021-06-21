@@ -39,10 +39,10 @@ function get_remote_users_count($raid_id, $user_id, $attend_time = false)
     $answer = $rs->fetch();
 
     // Write to log.
-    debug_log($answer['remote_users'], 'Remote participants so far:');
+    debug_log(intval($answer['remote_users']), 'Remote participants so far:');
     debug_log($config->RAID_REMOTEPASS_USERS_LIMIT, 'Maximum remote participants:');
 
-    return $answer['remote_users'];
+    return intval($answer['remote_users']);
 }
 
 ?>
