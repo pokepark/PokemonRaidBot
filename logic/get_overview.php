@@ -19,7 +19,7 @@ function get_overview( $active_raids, $chat_id )
         $chat_username = $chat_obj['result']['username'];
         debug_log('Username of the chat: ' . $chat_obj['result']['username']);
     }
-    $chat_title = get_chat_title($chat_id);
+    $chat_title = get_chat_title(false, $chat_obj);
     $msg = '<b>' . getPublicTranslation('raid_overview_for_chat') . ' ' . $chat_title . ' ' . getPublicTranslation('from') . ' '. dt2time('now') . '</b>' .  CR . CR;
 
     $now = utcnow();
