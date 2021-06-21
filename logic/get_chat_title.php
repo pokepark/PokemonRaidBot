@@ -4,10 +4,12 @@
  * @param $chat_id
  * @return string
  */
-function get_chat_title($chat_id){
+function get_chat_title($chat_id, $chat_obj = false){
     // Get info about chat for title.
     debug_log('Getting chat object for chat_id: ' . $chat_id);
-    $chat_obj = get_chat($chat_id);
+    if($chat_obj == false) {
+        $chat_obj = get_chat($chat_id);
+    }
     $chat_title = '<unknown chat>';
 
     // Set title.
