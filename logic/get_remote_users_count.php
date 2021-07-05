@@ -28,7 +28,7 @@ function get_remote_users_count($raid_id, $user_id, $attend_time = false)
     // Ignore max limit if attend time is 'Anytime'
     $rs = my_query(
         "
-        SELECT    IF(attend_time = '" . ANYTIME . "',0,sum(1 + extra_mystic + extra_valor + extra_instinct)) AS remote_users
+        SELECT    IF(attend_time = '" . ANYTIME . "', 0, sum(1 + extra_mystic + extra_valor + extra_instinct)) AS remote_users
         FROM      (SELECT DISTINCT user_id, extra_mystic, extra_valor, extra_instinct, remote, attend_time FROM attendance WHERE remote = 1 AND cancel = 0 AND raid_done = 0) as T
         WHERE     attend_time = {$att_sql}
         GROUP BY  attend_time
@@ -37,12 +37,13 @@ function get_remote_users_count($raid_id, $user_id, $attend_time = false)
 
     // Get the answer.
     $answer = $rs->fetch();
+    $remote_users = empty($answer) ? 0 : $answer['remote_users'];
 
     // Write to log.
-    debug_log(intval($answer['remote_users']), 'Remote participants so far:');
+    debug_log($remote_users, 'Remote participants so far:');
     debug_log($config->RAID_REMOTEPASS_USERS_LIMIT, 'Maximum remote participants:');
 
-    return intval($answer['remote_users']);
+    return $remote_users;
 }
 
 ?>

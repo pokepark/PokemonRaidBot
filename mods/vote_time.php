@@ -79,9 +79,9 @@ $now = $now->format('Y-m-d H:i') . ':00';
 // Vote time in the future or Raid anytime?
 if($now <= $attend_time || $vote_time == 0) {
     // If user is attending remotely, get the number of remote users already attending
-    $remote_users = (($answer['remote']==0) ? 0 : get_remote_users_count($data['id'], $update['callback_query']['from']['id'], $attend_time));
+    $remote_users = (!empty($answer) && $answer['remote'] == 0) ? 0 : get_remote_users_count($data['id'], $update['callback_query']['from']['id'], $attend_time);
     // Check if max remote users limit is already reached, unless voting for 'Anytime'
-    if ($answer['remote'] == 0 || $remote_users + $answer['user_count'] <= $config->RAID_REMOTEPASS_USERS_LIMIT || $vote_time == 0) {
+    if ((!empty($answer) && ($answer['remote'] == 0 || $remote_users + $answer['user_count'])) <= $config->RAID_REMOTEPASS_USERS_LIMIT || $vote_time == 0) {
         // User has voted before.
         if (!empty($answer)) {
             // Update attendance.
@@ -119,8 +119,6 @@ if($now <= $attend_time || $vote_time == 0) {
         // User has not voted before.
         } else {
             // Create attendance.
-            // Send Alarm.
-            alarm($data['id'],$update['callback_query']['from']['id'],'new_att', $attend_time);
             // Save attandence to DB + Set Auto-Alarm on/off according to config
             $insert_sql="INSERT INTO attendance SET
               raid_id = :raid_id,
@@ -133,6 +131,8 @@ if($now <= $attend_time || $vote_time == 0) {
               'attend_time' => $attend_time,
               'alarm' => ($config->RAID_AUTOMATIC_ALARM ? 1 : 0)
             ]);
+            // Send Alarm.
+            alarm($data['id'],$update['callback_query']['from']['id'],'new_att', $attend_time);
 
             // Enable alerts message. -> only if alert is on
             if($config->RAID_AUTOMATIC_ALARM) {
