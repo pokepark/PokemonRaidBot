@@ -14,4 +14,4 @@ COPY docker/entrypoint.sh /root/entrypoint.sh
 RUN mkdir /var/log/tg-bots/ && \
     chown -R www-data:www-data /var/www/html/ /var/log/tg-bots
 ENTRYPOINT [ "/root/entrypoint.sh" ]
-CMD "apache2-foreground"
+CMD apache2-foreground
