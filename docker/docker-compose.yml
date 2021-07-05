@@ -1,3 +1,9 @@
+## NOTICE: This compose file and it's documentation in the README.md are community supplied & maintained and may not always be up to date.
+# Current known issues are:
+# - Old images/pokemon/ handling, paths are now dynamic per selected image providers
+# - Imported SQL files may not match the current recommendations
+# - A new database will be initialized every time, resulting in loss of bot state
+
 version: "3.4"
 
 services:
