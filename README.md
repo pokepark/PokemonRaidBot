@@ -92,7 +92,7 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
          * [translate.py](#translatepy)
             * [Usage](#usage)
 
-<!-- Added by: BotAdmin, at: Thu May 20 17:54:08 EEST 2021 -->
+<!-- Added by: artanicus, at: Sun Jun 13 14:48:18 EEST 2021 -->
 
 <!--te-->
 
@@ -1380,6 +1380,11 @@ The following command is used to create the game-master-raid-boss-pokedex.sql fi
 but if no one has updated it yet, you can generate an updated version (and optionally also create a Pull Request.)
 ```
 php getDB.php
+```
+
+To create the sql upgrade file, the following one-liner usually works:
+```
+git diff sql/ | egrep '^\+REPLACE' | tr -d + > sql/upgrade/$(cat VERSION).sql
 ```
 
 ## Translations

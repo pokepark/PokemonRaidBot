@@ -10,14 +10,11 @@
 function raid_edit_raidlevel_keys($gym_id, $gym_first_letter, $admin_access = [false,false], $event = false)
 {
     global $config;
-    // Set event ID to null if no event was selected
-    if($event === false) {
-        $event_id = "N";
-    }else {
-        $event_id = $event;
-    }
+
     $query = "";
-    if($event_id == "N") {
+    if($event === false) {
+        // Set event ID to null if no event was selected
+        $event_id = "N";
         $query = "
             SELECT    raid_level, COUNT(*) AS raid_level_count
             FROM      pokemon
@@ -27,6 +24,7 @@ function raid_edit_raidlevel_keys($gym_id, $gym_first_letter, $admin_access = [f
             ORDER BY  FIELD(raid_level, '6', '5', '4', '3', '2', '1')
             ";
     }else {
+        $event_id = $event;
         $query = "
             SELECT    raid_level, COUNT(*) AS raid_level_count
             FROM      pokemon
