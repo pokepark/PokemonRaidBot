@@ -56,7 +56,7 @@ if($id == 0) {
 
     // Get pogoinfo data.
     debug_log('Getting raid bosses from pogoinfo repository now...');
-    $link = 'https://raw.githubusercontent.com/ccev/pogoinfo/info/raid-bosses.json';
+    $link = 'https://raw.githubusercontent.com/ccev/pogoinfo/v2/active/raids.json';
     $data = curl_get_contents($link);
     $data = json_decode($data,true);
 
@@ -118,27 +118,14 @@ if($id == 0) {
 
         // Get raid bosses for each raid level.
         foreach($tier_pokemon as $raid_id_form) {
-            $split_mon_id = explode('_', $raid_id_form);
-            if(!is_numeric($split_mon_id[0])) {
-                $query = my_query("SELECT pokedex_id, pokemon_form_id FROM pokemon WHERE asset_suffix='{$raid_id_form}' LIMIT 1");
-                $res = $query->fetch();
-                $dex_id = $res['pokedex_id'];
-                $dex_form = $res['pokemon_form_id'];
-            }else {
-                if(count($split_mon_id) == 3) {
-                    // Mega received
-                    $dex_id = intval($split_mon_id[0]);
-                    $dex_form = '-'.$split_mon_id[2];
-                }else {
-                    $dex_id = intval($split_mon_id[0]);
-                    $dex_form = intval($split_mon_id[1]);
-                    if($dex_form == 0) {
-                        $form_id_query = my_query("SELECT pokemon_form_id FROM pokemon WHERE pokedex_id='{$dex_id}' AND pokemon_form_name='normal' LIMIT 1");
-                        $form_res = $form_id_query->fetch();
-                        $dex_form = $form_res['pokemon_form_id'];
-                    }
-                }
+            $dex_id = $raid_id_form['id'];
+            $dex_form = 0;
+            if(isset($raid_id_form['temp_evolution_id'])) {
+                $dex_form = '-'.$raid_id_form['temp_evolution_id'];
+            }elseif(isset($raid_id_form['form'])) {
+                $dex_form = $raid_id_form['form'];
             }
+
             $pokemon_arg = $dex_id . $dex_form;
 
             // Get ID and form name used internally.
