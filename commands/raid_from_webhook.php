@@ -337,9 +337,6 @@ foreach ($update as $raid) {
                 info_log($loc, 'Location:');
             }
 
-            // Set reply to.
-            $reply_to = $chat;
-
             // Send the message.
             if($config->RAID_PICTURE) {
                 require_once(LOGIC_PATH . '/raid_picture.php');

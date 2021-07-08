@@ -150,15 +150,13 @@ if($now <= $attend_time || $vote_time == 0) {
             $text = show_raid_poll($raid);
             // Set keys.
             $keys = keys_vote($raid);
-            // Set reply to.
-            $reply_to = $chat;
             // Send the message.
             if($config->RAID_PICTURE) {
                 require_once(LOGIC_PATH . '/raid_picture.php');
                 $picture_url = raid_picture_url($data);
-                $tg_json[] = send_photo($chat, $picture_url, $text['short'], $keys, ['reply_to_message_id' => $reply_to, 'reply_markup' => ['selective' => true, 'one_time_keyboard' => true], 'disable_web_page_preview' => 'true'], true);
+                $tg_json[] = send_photo($chat, $picture_url, $text['short'], $keys, ['disable_web_page_preview' => 'true'], true);
             } else {
-                $tg_json[] = send_message($chat, $text['full'], $keys, ['reply_to_message_id' => $reply_to, 'reply_markup' => ['selective' => true, 'one_time_keyboard' => true], 'disable_web_page_preview' => 'true'], true);
+                $tg_json[] = send_message($chat, $text['full'], $keys, ['disable_web_page_preview' => 'true'], true);
             }
             // Telegram multicurl request.
             curl_json_multi_request($tg_json);
