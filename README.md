@@ -90,7 +90,7 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
          * [translate.py](#translatepy)
             * [Usage](#usage)
 
-<!-- Added by: artanicus, at: Sat 10 Jul 2021 12:41:21 EEST -->
+<!-- Added by: artanicus, at: Sat 10 Jul 2021 14:43:42 EEST -->
 
 <!--te-->
 
@@ -203,7 +203,7 @@ Important: The raid level is NOT set when importing the raid bosses from the sql
 - Don't override default log paths in your config.json, it will break the stderr forwarding.
 - IF YOU DO NOT PERSIST THE POKEMON IMAGE FOLDERS GITHUB MAY BAN YOU (temporarily, and only if you restart the container too often).
 - Pokemon images are downloaded / refreshed in the background on container start which will take a long time the first time around! But if you persisted the directories then the next refresh will only take seconds.
-- Apache is started on port 80, so forward that whereever you need to.
+- Apache is started on port 80, so forward that whereever you need to. Do note that the final output towards Telegram needs to be either from port 443 or 8443 and SSL encrypted.
 - To refresh pokemon images, just restart the container!
 
 ```
