@@ -1,0 +1,92 @@
+{
+        "pokemon_type_1" : {
+                "DE": "Normal",
+                "EN": "Normal",
+                "FR": "Normal"
+        },
+	"pokemon_type_2" : {
+                "DE": "Käfer",
+                "EN": "Bug",
+        	"FR": "Insecte"
+        },
+        "pokemon_type_3" : {
+                "DE": "Unlicht",
+                "EN": "Dark",
+                "FR": "Ténèbre"
+        },
+        "pokemon_type_4" : {
+                "DE": "Drache",
+                "EN": "Dragon",
+                "FR": "Dragon"
+        },
+        "pokemon_type_5" : {
+                "DE": "Elektro",
+                "EN": "Electric",
+                "FR": "Electrique"
+        },
+        "pokemon_type_6" : {
+                "DE": "Pflanze",
+                "EN": "Grass",
+                "FR": "Plante"
+        },
+        "pokemon_type_7" : {
+                "DE": "Fee",
+                "EN": "Fairy",
+                "FR": "Fée"
+        },
+        "pokemon_type_8" : {
+                "DE": "Kampf",
+                "EN": "fighting",
+                "FR": "combat"
+        },
+        "pokemon_type_9" : {
+                "DE": "Feuer",
+                "EN": "Fire",
+                "FR": "Feu"
+        },
+        "pokemon_type_10" : {
+                "DE": "Flug",
+                "EN": "Flying",
+                "FR": "Vol"
+        },
+        "pokemon_type_11" : {
+                "DE": "Geist",
+                "EN": "Ghost",
+                "FR": "Spectre"
+        },
+        "pokemon_type_12" : {
+                "DE": "Boden",
+                "EN": "Ground",
+                "FR": "Sol"
+        },
+        "pokemon_type_13" : {
+                "DE": "Eis",
+                "EN": "Ice",
+                "FR": "Glace"
+        },
+        "pokemon_type_14" : {
+                "DE": "Gift",
+                "EN": "Poison",
+                "FR": "Poison"
+        },
+        "pokemon_type_15" : {
+                "DE": "Psycho",
+                "EN": "Psychic",
+                "FR": "Psy"
+        },
+        "pokemon_type_16" : {
+                "DE": "Gestein",
+                "EN": "Rock",
+                "FR": "Roche"
+        },
+        "pokemon_type_17" : {
+                "DE": "Stahl",
+                "EN": "Steel",
+                "FR": "Acier"
+        },
+        "pokemon_type_18" : {
+                "DE": "Wasser",
+                "EN": "Water",
+                "FR": "Eau"
+        }
+}
