@@ -1,0 +1,63 @@
+#!/bin/bash
+
+# Debug
+# set -x
+
+regen_toc(){
+  # Tell the user we run a pre-commit hook
+  echo 'Running pre-commit hook for README.md ToC'
+
+  regen_tool=tools/github-markdown-toc/gh-md-toc
+  if [ ! -x "$regen_tool" ]; then
+    regen_tool=core/tools/github-markdown-toc/gh-md-toc
+  fi
+  if [ ! -x "$regen_tool" ]; then
+    >&2 echo "Can't find gh-md-toc, can't update README.md table of contents automatically!"
+  else
+    "$regen_tool" --insert README.md
+    git add README.md
+  fi
+}
+
+
+
+regen_version(){
+  # Old version
+  OLD_VERSION=$(cat VERSION)
+  echo 'Current version:' $OLD_VERSION
+
+  # Build new version string
+  MAJOR=$(date +%y | cut -c1)
+  MINOR=$(date +%y | cut -c2)
+  DAY=$(date +%j)
+  COMMIT=$((`git rev-list --count --since=midnight HEAD` + 1))
+  VERSION=$MAJOR.$MINOR.$DAY.$COMMIT
+
+  # Update version file
+  echo 'Updating project version to:' $VERSION
+  echo $VERSION > VERSION
+  # Update sample config VERSION
+  sed -E -i "s/(\"VERSION\":\")[0-9\.]+/\1$VERSION/" config/config.json.example
+
+  # Add version file to commit
+  echo 'Adding new version to commit'
+  echo
+  git add VERSION config/config.json.example
+
+  # Interrupt, so user can see output before commit
+  read -p "Press any key to continue..." </dev/tty
+  echo
+}
+
+# Tell the user we're running pre-commit hooks
+echo 'Running pre-commit hooks'
+
+# Only run the ToC regen hook if README.md has been staged
+git diff --cached --name-only --diff-filter=ACM | grep README.md && regen_toc
+
+# Run version regen on every commit if VERSION file present
+# TODO(artanicus): Is this truly the intention, to run at every commit? And should the update also go to the sample config?
+[ -f VERSION ] && regen_version
+
+# exit cleanly to let commit continue
+exit 0

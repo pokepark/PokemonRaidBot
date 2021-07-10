@@ -1,0 +1,106 @@
+<html>
+
+<head>
+    <title>Set Telegram Webhooks</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css" />
+    <!-- <script src="https://unpkg.com/vue/dist/vue.js"></script> -->
+    <script src="https://vuejs.org/js/vue.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div id="app" class="section">
+            <form @submit="checkUpload" :action="set_webhook" method="post" enctype="multipart/form-data">
+                <label class="label">Bot API Token:</label>
+                <p class="control">
+                    <input class="input" type="text" v-model="token" />
+                </p>
+                <br/>
+                <label class="label">Host URL:</label>
+                <p class="control">
+                    <input class="input" type="text" v-model="host" />
+                </p>
+                <br/>
+                <label class="label">Port:</label>
+                <p class="control">
+                    <input class="input" type="text" v-model="port" />
+                </p>
+                <br/>
+                <label class="label">Maximum Connections:</label>
+				<p class="content is-small">(max: 100)</p>
+                <p class="control">
+                    <input class="input" type="text" v-model="maxconnection" name="max_connections" />
+                </p>
+                <br/>
+                <label class="label">Webhook URL Preview:</label>
+                <p style="color:blue">{{ bot_url }}</p>
+                    <input type="hidden" v-model="bot_url" name="url" />
+                <br/>
+                <label class="label">Certificate (only if self-signed)</label>
+                <p class="control">
+                    <input type="file" name="certificate" id="fileToUpload" />
+                </p>
+                <br/>
+                <br/>
+                <label class="label">Set Webhook</label>
+                <div class="control is-grouped">
+                    <p class="control">
+                        <button class="button is-primary" name="submit">Submit Webhook</button>
+                        <br/>
+                        <br/>
+                        <a :href="set_webhook_url" target="_blank" class="button is-primary">Set Webhook via URL *</a>
+                        <br/>
+                        <p class="content is-small">* works only if NOT using a self-signed certificate</p>
+                    </p>
+                    <br/>
+                    <label class="label">Webhook Info</label>
+                    <p class="control">
+                        <a :href="get_webhook_info" target="_blank" class="button is-info">Get Webhook Info</a>
+                    </p>
+                </div>
+        </div>
+    </div>
+    <script>
+    new Vue({
+     el: '#app',
+     data: {
+         token: '123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11',
+         maxconnection: '80',
+         port: '',
+         host: 'https://' + window.location.hostname + location.pathname.replace(/[^/]*$/, '')
+     },
+     methods: {
+         checkUpload: function(e) {
+             var fileUpload = document.getElementById('fileToUpload');
+             if (fileUpload.files.length == 0) {
+                 fileUpload.disabled = true;
+             }
+         }
+     },
+     computed: {
+         get_webhook_info: function() {
+             return 'https://api.telegram.org/bot' + this.token + '/getwebhookinfo'
+         },
+         set_webhook: function() {
+             return 'https://api.telegram.org/bot' + this.token + '/setwebhook'
+         },
+         set_webhook_url: function() {
+             return 'https://api.telegram.org/bot' + this.token + '/setwebhook?url=' + this.bot_url  + '&max_connections=' + this.maxconnection
+         },
+         bot_url: function() {
+             port_string = '';
+             if (this.port) {
+                 port_string = ':' + this.port;
+             }
+             var bot = document.createElement('a');
+             bot.href = this.host;
+             bot_string = bot.origin + port_string + bot.pathname.replace(/\/?$/, '/') + 'index.php?apikey=' + this.token;
+
+             return bot_string
+         }
+     }
+ })
+</script>
+</body>
+
+</html>
