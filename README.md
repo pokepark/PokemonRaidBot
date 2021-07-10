@@ -82,6 +82,7 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
    * [Updates](#updates)
    * [Config reference](#config-reference)
    * [Development](#development)
+      * [Releasing a new version](#releasing-a-new-version)
       * [Adding new config values](#adding-new-config-values)
       * [Git Hooks](#git-hooks)
          * [pre-commit](#pre-commit)
@@ -90,7 +91,7 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
          * [translate.py](#translatepy)
             * [Usage](#usage)
 
-<!-- Added by: artanicus, at: Sat 10 Jul 2021 14:43:42 EEST -->
+<!-- Added by: artanicus, at: Sat 10 Jul 2021 18:37:32 EEST -->
 
 <!--te-->
 
@@ -208,7 +209,8 @@ Important: The raid level is NOT set when importing the raid bosses from the sql
 
 ```
 mkdir /path/to/persistent/images/pokemon_PokeMiners # set your own path where you want these stored
-mkdir path/to/persistent/images/pokemon_ZeChrales # same here, and use these paths in the command below
+mkdir /path/to/persistent/images/pokemon_ZeChrales # same here, and use these paths in the command below
+mkdir /path/to/persistent/access # same here, build your access files under here
 docker run \
   -e TAIL_LOGS         = "info" \
   -e TZ                = "Europe/Helsinki" \
@@ -216,6 +218,7 @@ docker run \
   -e TEMPLATE_PHP_INI  = "production" \
   -e PHP_INI_EXTENSION = "gd" \
   -v /path/to/persistent/config.json:/var/www/html/config/config.json \
+  -v /path/to/persistent/access:/var/www/html/access \
   -v /path/to/persistent/images/pokemon_PokeMiners:/var/www/html/images/pokemon_PokeMiners \
   -v /path/to/persistent/images/pokemon_ZeChrales:/var/www/html/images/pokemon_ZeChrales \
   -p 8088:80
@@ -1243,6 +1246,23 @@ Updates to the config file are NOT checked automatically. Therefore always check
 
 
 # Development
+
+## Releasing a new version
+
+Whenever significant enough changes are made that they should be minted into a new Docker image you'll need to tag the version to trigger an image build.
+1. In GitHub after merging a PR, head to the [Releases](https://github.com/pokepark/PokemonRaidBot/releases) page.
+2. Create a new release giving it the contents of the VERSION file prepended with a `v`. i.e. at time of writing, the latest release tag is `v2.1.191.10`. The `v` is mandatory!
+3. Add the same tag as the release name, describe what's new. As soon as you submit you can find the image release running in the `Actions` tab.
+
+Alternatively from the CLI:
+```
+git tag -f v$(cat VERSION)
+git push pokepark v$(cat VERSION)
+```
+- The release name becomes the same as the tag name.
+- The release description comes from the description of the revision you tagged.
+
+
 
 ## Adding new config values
 

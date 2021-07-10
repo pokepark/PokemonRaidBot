@@ -36,10 +36,10 @@ job "pokemonraidbot" {
       }
       tags = [
         "traefik.enable=true",
-        "traefik.http.routers.raidbot.rule=Host(`${NOMAD_META_HOST}`)",
+        "traefik.http.routers.raidbot.rule=Host(`raidbot.example.com`)", # needs to be customized!
         "traefik.http.routers.raidbot.tls=true",
-        "traefik.http.routers.raidbot.tls.certResolver=${NOMAD_META_CERTRESOLVER}",
-        "traefik.http.routers.raidbot.entrypoints=websecure",
+        "traefik.http.routers.raidbot.tls.certResolver=myresolver", # needs to be customized!
+        "traefik.http.routers.raidbot.entrypoints=websecure", # needs to be customized!
       ]
     }
     task "raidbot" {
@@ -47,7 +47,6 @@ job "pokemonraidbot" {
         HOST            = "raidbot.example.com"
         APIKEY          = "123456789:AABBCCDDEEFFGGHHIIJJKKLLMMNN"
         CLEANUP_SECRET  = "super-strong-cleanup-password"
-        CERTRESOLVER    = "myresolver"
       }
       driver = "docker"
       resources {
