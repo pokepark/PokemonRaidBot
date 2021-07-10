@@ -47,6 +47,7 @@ job "pokemonraidbot" {
         HOST            = "raidbot.example.com"
         APIKEY          = "123456789:AABBCCDDEEFFGGHHIIJJKKLLMMNN"
         CLEANUP_SECRET  = "super-strong-cleanup-password"
+        CERTRESOLVER    = "myresolver"
       }
       driver = "docker"
       resources {
@@ -60,7 +61,7 @@ job "pokemonraidbot" {
         PHP_INI_EXTENSION = "gd"
       }
       config {
-        image = "ghcr.io/pokepark/PokemonRaidBot:latest"
+        image = "ghcr.io/pokepark/pokemonraidbot:latest"
         ports = [ "http" ]
         labels = {
           "com.centurylinklabs.watchtower.enable": "true",
