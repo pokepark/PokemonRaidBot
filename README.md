@@ -16,11 +16,10 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
       * [Bot token](#bot-token)
       * [Database](#database)
       * [Docker](#docker)
-         * [Installation of Docker:](#installation-of-docker)
-         * [Raidbot installation:](#raidbot-installation)
+         * [Basic operation with the Docker image](#basic-operation-with-the-docker-image)
          * [SSL with Docker](#ssl-with-docker)
-         * [Useful Docker commands](#useful-docker-commands)
-         * [Using getPokemonIcons.php with Docker](#using-getpokemoniconsphp-with-docker)
+         * [Task scheduling](#task-scheduling)
+         * [Orchestration](#orchestration)
       * [Config](#config)
          * [Referring to groups, channels and users](#referring-to-groups-channels-and-users)
             * [Finding public IDs](#finding-public-ids)
@@ -91,7 +90,7 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
          * [translate.py](#translatepy)
             * [Usage](#usage)
 
-<!-- Added by: artanicus, at: Sun Jun 13 14:48:18 EEST 2021 -->
+<!-- Added by: artanicus, at: Sat 10 Jul 2021 12:41:21 EEST -->
 
 <!--te-->
 
@@ -191,126 +190,56 @@ Important: The raid level is NOT set when importing the raid bosses from the sql
 
 ## Docker
 
-### Installation of Docker:
-```
-curl -L https://github.com/docker/compose/releases/download/1.25.1-rc1/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
-chmod +x /usr/local/bin/docker-compose
-service docker start
-```
+- Official images are provided as GitHub Packages: https://github.com/orgs/pokepark/packages
+- The official image contains only an apache2 hosting the php, it's up to you to also provide:
+  - a MariaDB server (any image will work fine)
+  - an SSL encryption reverse proxy (For example Traefik with Lets Encrypt or a traditional reverse proxy)
+  - Task scheduler (such as Ofelia or plain old cron) for overview updates & cleanup.
 
-### Raidbot installation:
+### Basic operation with the Docker image
 
-Go to the directory where you want to install the raidbot. **Make sure to not expose this directory to the internet as it contains sensitive informations!**
-
-You can just copy & paste this to the shell to prepare your docker-deployment:
-```
-mkdir raidbot-docker && \
-cd raidbot-docker && \
-mkdir sql && \
-mkdir tg-logs && \
-touch tg-logs/dev-raid-bot-cleanup.log && \
-touch tg-logs/dev-raid-bot.log && \
-git clone --recurse-submodules https://github.com/florianbecker/PokemonRaidBot.git && \
-cp PokemonRaidBot/sql/pokemon-raid-bot.sql sql/01_pokemon-raid-bot.sql && \
-cp PokemonRaidBot/sql/raid-boss-pokedex.sql sql/02_raid-boss-pokedex.sql && \
-cp PokemonRaidBot/sql/gohub-raid-boss-pokedex.sql sql/03_gohub-raid-boss-pokedex.sql && \
-cp PokemonRaidBot/docker-compose.yml .
-```
-
-This will:
-1. Create a directory `raidbot-docker`.
-2. Create a directory `sql`.
-3. Create a directory `tg-logs` and create the two logfiles in it.
-4. Clone the Raidbot Repository including the telegram-core.
-5. Copy and rename the required SQL files.
-6. Copy the docker-compose file.
-
-Your directory should now look like this:
+- You can use the optional env variable `TAIL_LOGS` to set which logs will be directed to stderr of the container main process. By default only PHP errors are so adding in `info` is recommended for any troubleshooting. This only controls what logs are forwarded, your `config.json` still needs to actually enable the logging!
+- Volume mount in your config AND the pokemon image folders!
+- Don't override default log paths in your config.json, it will break the stderr forwarding.
+- IF YOU DO NOT PERSIST THE POKEMON IMAGE FOLDERS GITHUB MAY BAN YOU (temporarily, and only if you restart the container too often).
+- Pokemon images are downloaded / refreshed in the background on container start which will take a long time the first time around! But if you persisted the directories then the next refresh will only take seconds.
+- Apache is started on port 80, so forward that whereever you need to.
+- To refresh pokemon images, just restart the container!
 
 ```
-├── PokemonRaidBot
-│   └── The normal RaidBot Repository
-├── raidbot-db
-├── sql
-│   ├── 01_pokemon-raid-bot.sql
-│   ├── 02_raid-boss-pokedex.sql
-│   └── 03_gohub-raid-boss-pokedex.sql
-├── tg-logs
-│   ├── dev-raid-bot-cleanup.log
-│   └── dev-raid-bot.log
-└── docker-compose.yml
+mkdir /path/to/persistent/images/pokemon_PokeMiners # set your own path where you want these stored
+mkdir path/to/persistent/images/pokemon_ZeChrales # same here, and use these paths in the command below
+docker run \
+  -e TAIL_LOGS         = "info" \
+  -e TZ                = "Europe/Helsinki" \
+  -e TAIL_LOGS         = "info" \                 
+  -e TEMPLATE_PHP_INI  = "production" \
+  -e PHP_INI_EXTENSION = "gd" \
+  -v /path/to/persistent/config.json:/var/www/html/config/config.json \
+  -v /path/to/persistent/images/pokemon_PokeMiners:/var/www/html/images/pokemon_PokeMiners \
+  -v /path/to/persistent/images/pokemon_ZeChrales:/var/www/html/images/pokemon_ZeChrales \
+  -p 8088:80
+  -it ghcr.io/pokepark/PokemonRaidBot:latest
 ```
-
-- Check the `docker-compose.yml` for adjusting it to your needs. Change the two `CRON_COMMAND` variables and replace `changeme` with either your API key or your cleanup secret. Make sure to also edit the DB credentials at the bottom of the file. Basically, replace every `changeme`.
-- Now setup the Raidbot as usual. Change the `config.json` to your needs (remeber to use `raidbot-db` in the `DB_HOST` value field). Maybe modify stuff in `config/telegram.json`, `custom/` or `access/`, etc.
-
-Change the file permissions:
-
-```
-find . -type d -exec chmod 755 {} \; && \
-find . -type f -exec chmod 644 {} \; && \
-chown -R 33:33 tg-logs/ && \
-chmod 0600 PokemonRaidBot/config/config.json
-```
-
-To deploy the Raidbot and Database containers, you just need to build the Raidbot container and start them by running:
-
-```
-docker-compose up --build -d
-```
-
-Look at the logs with:
-
-```
-docker-compose logs -f raidbot
-
-docker-compose logs -f raidbot-db
-```
-
-Make sure that everything is running correctly by inspecting the logs.
 
 ### SSL with Docker
 
-The next step is to add some sort of SSL layer on top. There are dozens of ways to do that, but the recommended ways are ether a classic reverse proxy on the normal Hostsytem or adding a reverse proxy container (like the [companion container](https://github.com/JrCs/docker-letsencrypt-nginx-proxy-companion) or using [traefik](https://docs.traefik.io/)) to the docker-stack.yml. The Raidbot container is exposed at port `8088` by default.
+- The next step is to add some sort of SSL layer on top, this is mandatory due to the requirements of the Telegram API.
+- There are dozens of ways to do that, but the recommended ways are either a classic reverse proxy on the normal Hostsytem or adding a reverse proxy container (like the [companion container](https://github.com/JrCs/docker-letsencrypt-nginx-proxy-companion) or using [traefik](https://docs.traefik.io/)).
+- The Raidbot container listens on port 80 and with the above example is exposed at port `8088` on the host.
 
-### Useful Docker commands
+### Task scheduling
 
-List all running Docker containers:
-```
-docker ps -a
-```
+- Overview refreshes & cleanup are not yet baked into the base Docker image. This is a goal eventually though.
+- The image does have a cron daemon available but since the calls have raw json in them, quoting can be tricky to get right.
+- The easiest way will be to follow the normal guidance for setting up the crons since they can be run from anywhere, not just within the container.
+- A sample Ofelia setup can be seen in the Nomad orchestration example discussed below.
 
-Accessing the Database (remember to change `changeme`):
+### Orchestration
 
-```
-docker exec -it raidbot-docker_raidbot-db_1 mysql -uchangeme -pchangeme raidbot
-```
-
-Restart all Docker containers:
-
-```
-docker container restart $(docker container ls -aq)
-```
-
-Stop and Delete one Docker container:
-
-```
-docker rm -f raidbot
-```
-
-Or the database container as well:
-
-```
-docker rm -f raidbot raidbot_db
-```
-
-### Using getPokemonIcons.php with Docker
-
-Connect to the running Raidbot container and run the php command:
-
-```
-docker exec -it raidbot-docker_raidbot_1 php getPokemonIcons.php
-```
+- The raw docker run example above is only provided as an example and using some orchestration system is highly recommended in the long run.
+- An old sample `docker-compose.yml` can be found in the `docker/` directory but be warned, it makes assumptions that are no longer true. PRs from Compose experts are welcome!
+- A sample Nomad job can be found at `docker/pokemonraidbot.hcl`, it also includes labels for Traefik & Ofelia integration but does not include the jobs for them.
 
 ## Config
 

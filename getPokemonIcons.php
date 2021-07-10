@@ -84,7 +84,7 @@ function is_updated($path, $file_object) {
 }
 
 // Start
-echo 'Starting!' . PHP_EOL;
+echo 'Starting fetch of missing pokemon images' . PHP_EOL;
 
 // Process each repo
 foreach ($repos as $key => $r)
@@ -125,6 +125,10 @@ foreach ($repos as $key => $r)
     // Git tree lookup
     $tree = curl_get_contents($repo_content);
     $leaf = json_decode($tree, true);
+    // Detect rate-limiting and die gracefully
+    if(is_array($leaf) && in_array('message', $leaf)) {
+      die('Failed to download repo index: ' . $leaf['message']);
+    }
 
     // Debug
     //echo 'LEAF:' . PHP_EOL;
@@ -181,5 +185,5 @@ foreach ($repos as $key => $r)
     }
 }
 
-echo "Finished!" . PHP_EOL;
+echo "Finished pokemon image refresh." . PHP_EOL;
 ?>
