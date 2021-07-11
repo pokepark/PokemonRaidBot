@@ -91,7 +91,6 @@ CREATE TABLE `pokemon` (
   `pokemon_name` varchar(12) DEFAULT NULL,
   `pokemon_form_name` varchar(45) DEFAULT NULL,
   `pokemon_form_id` int(4) DEFAULT NULL,
-  `raid_level` enum('0','1','2','3','4','5', '6','X') DEFAULT '0',
   `min_cp` int(10) unsigned NOT NULL,
   `max_cp` int(10) unsigned NOT NULL,
   `min_weather_cp` int(10) unsigned NOT NULL,
