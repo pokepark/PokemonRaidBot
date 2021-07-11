@@ -11,7 +11,7 @@ debug_log('code_start');
 //bot_access_check($update, 'list');
 
 // Get raid
-$raid = get_raid_with_pokemon($code_raid_id);
+$raid = get_raid($code_raid_id);
 
 // Init text and keys.
 $text = '';

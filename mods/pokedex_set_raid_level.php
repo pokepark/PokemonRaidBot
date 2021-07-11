@@ -81,14 +81,24 @@ if($data['arg'] == "setlevel") {
     $msg .= '<b>' . getTranslation('pokedex_new_raid_level') . ':</b>';
 } else {
     // Update raid level of pokemon.
-    $rs = my_query(
-            "
-            UPDATE    pokemon
-            SET       raid_level = '{$arg}'
-            WHERE     pokedex_id = {$dex_id}
-            AND       pokemon_form_id = '{$dex_form}'
-            "
-        );
+    if($arg == 0 && get_raid_level($dex_id, $dex_form) != 0) {
+        $rs = my_query(
+                "
+                DELETE FROM raid_bosses
+                WHERE     pokedex_id = '{$dex_id}'
+                AND       pokemon_form_id = '{$dex_form}'
+                AND       date_start = '1970-01-01 00:00:01'
+                AND       date_end = '2038-01-19 03:14:07'
+                "
+            );
+    }else {
+        $rs = my_query(
+                "
+                INSERT INTO raid_bosses (pokedex_id, pokemon_form_id, raid_level)
+                VALUES ('{$dex_id}', '{$dex_form}', '{$arg}')
+                "
+            );
+    }
 
     // Init empty keys array.
     $keys = [];

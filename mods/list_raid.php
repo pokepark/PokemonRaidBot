@@ -22,8 +22,7 @@ $rs = my_query(
                gyms.lat, gyms.lon, gyms.address, gyms.gym_name, gyms.ex_gym, gyms.gym_note,
                users.name,
                events.name as event_name, events.description as event_description, events.vote_key_mode as event_vote_key_mode, events.time_slots as event_time_slots, events.raid_duration as event_raid_duration, events.hide_raid_picture as event_hide_raid_picture,
-               TIME_FORMAT(TIMEDIFF(end_time, UTC_TIMESTAMP()) + INTERVAL 1 MINUTE, '%k:%i') AS t_left,
-               TIMESTAMPDIFF(MINUTE,raids.start_time,raids.end_time) as t_duration
+               TIME_FORMAT(TIMEDIFF(end_time, UTC_TIMESTAMP()) + INTERVAL 1 MINUTE, '%k:%i') AS t_left
     FROM       raids
     LEFT JOIN  gyms
     ON         raids.gym_id = gyms.id
@@ -52,7 +51,7 @@ if($rs->rowcount() == 1) {
         [
             [
                 'text'          => getTranslation('update_pokemon'),
-                'callback_data' => $raid['id'] . ':raid_edit_poke:' . $raid['pokemon'] . '-' . $raid['pokemon_form'],
+                'callback_data' => $raid['id'] . ':raid_edit_poke:' . $raid['level'],
             ]
         ],
         [
@@ -65,7 +64,7 @@ if($rs->rowcount() == 1) {
 
     // Add keys to share.
     debug_log($raid, 'raw raid data for share: ');
-    $keys_share = share_keys($raid['id'], 'raid_share', $update, '', '', false, get_raid_level($raid['pokemon'],$raid['pokemon_form']));
+    $keys_share = share_keys($raid['id'], 'raid_share', $update, '', '', false, $raid['level']));
     if(is_array($keys_share)) {
         $keys = array_merge($keys, $keys_share);
     } else {

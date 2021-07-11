@@ -544,34 +544,22 @@ function keys_vote($raid)
                 // Add pokemon keys if we found the raid boss
                 if ($raid_level != '0' && $show_pokemon_keys) {
                     // Get pokemon from database
-                    $rs = my_query(
-                        "
-                        SELECT    pokedex_id, pokemon_form_id
-                        FROM      pokemon
-                        WHERE     raid_level = '$raid_level'
-                        "
-                    );
-
-                    // Init counter.
-                    $count = 0;
+                    $raid_spawn = dt2time($raid['spawn'], 'Y-m-d H:i'); // Convert utc spawntime to local time
+                    $raid_bosses = get_raid_bosses($raid_spawn, $raid_level);
 
                     // Get eggs.
                     $eggs = $GLOBALS['eggs'];
 
-                    // Add key for each raid level
-                    while ($pokemon = $rs->fetch()) {
-                        if(in_array($pokemon['pokedex_id'], $eggs)) continue;
-                        $buttons_pokemon[] = array(
-                            'text'          => get_local_pokemon_name($pokemon['pokedex_id'], $pokemon['pokemon_form_id'], true),
-                            'callback_data' => $raid['id'] . ':vote_pokemon:' . $pokemon['pokedex_id'] . '-' . $pokemon['pokemon_form_id']
-                        );
+                    if(count($raid_bosses) > 2) {
+                        // Add key for each raid level
+                        foreach($raid_bosses as $pokemon) {
+                            if(in_array($pokemon['pokedex_id'], $eggs)) continue;
+                            $buttons_pokemon[] = array(
+                                'text'          => get_local_pokemon_name($pokemon['pokedex_id'], $pokemon['pokemon_form_id'], true),
+                                'callback_data' => $raid['id'] . ':vote_pokemon:' . $pokemon['pokedex_id'] . '-' . $pokemon['pokemon_form_id']
+                            );
+                        }
 
-                        // Counter
-                        $count = $count + 1;
-                    }
-
-                    // Add pokemon keys if we have two or more pokemon
-                    if($count >= 2) {
                         // Add button if raid boss does not matter
                         $buttons_pokemon[] = array(
                             'text'          => getPublicTranslation('any_pokemon'),
@@ -580,9 +568,6 @@ function keys_vote($raid)
 
                         // Finally add pokemon to keys
                         $buttons_pokemon = inline_key_array($buttons_pokemon, 2);
-                    } else {
-                        // Reset pokemon buttons.
-                        $buttons_pokemon = [];
                     }
                 }
 

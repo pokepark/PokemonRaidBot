@@ -12,10 +12,14 @@ bot_access_check($update, 'pokedex');
 // Get all pokemon with raid levels from database.
 $rs = my_query(
         "
-        SELECT    pokedex_id, pokemon_form_id, raid_level
-        FROM      pokemon
-        WHERE     raid_level != '0'
-        ORDER BY  raid_level, pokedex_id, pokemon_form_name != 'normal', pokemon_form_name
+            SELECT    raid_bosses.pokedex_id, raid_bosses.pokemon_form_id, raid_bosses.raid_level
+            FROM      raid_bosses
+            LEFT JOIN pokemon
+            ON        raid_bosses.pokedex_id = pokemon.pokedex_id
+            AND       raid_bosses.pokemon_form_id = pokemon.pokemon_form_id
+            WHERE     date_start = '1970-01-01 00:00:01'
+            AND       date_end = '2038-01-19 03:14:07'
+            ORDER BY  raid_bosses.raid_level, raid_bosses.pokedex_id, pokemon.pokemon_form_name != 'normal', pokemon.pokemon_form_name, raid_bosses.pokemon_form_id
         "
     );
 

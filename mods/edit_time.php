@@ -103,7 +103,7 @@ if ($raid_id == 0 && $gym_id != 0) {
         debug_log("Event-id: ".$event_id);
         debug_log("Raid level: ".$raid_level);
         debug_log("Pokemon: ".$pokemon_id_formid['pokedex_id']."-".$pokemon_id_formid['pokemon_form_id']);
-        
+
         // Create raid in database.
         $rs = my_query(
             "
@@ -111,10 +111,11 @@ if ($raid_id == 0 && $gym_id != 0) {
             SET           user_id = {$update['callback_query']['from']['id']},
                           pokemon = '{$pokemon_id_formid['pokedex_id']}',
                           pokemon_form = '{$pokemon_id_formid['pokemon_form_id']}',
-                          first_seen = UTC_TIMESTAMP(),
                           start_time = '{$start_date_time}',
+                          spawn = DATE_SUB(start_time, INTERVAL ".$config->RAID_EGG_DURATION." MINUTE),
                           end_time = DATE_ADD(start_time, INTERVAL {$duration} MINUTE),
                           gym_id = '{$gym_id}',
+                          level = {$raid_level},
                           event = {$event}
             "
         );

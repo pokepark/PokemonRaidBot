@@ -1030,7 +1030,7 @@ Based on your access to the bot, you may can only change the pokemon raid boss o
 
 Show and update any pokemon raid boss. You can change the raid level (select raid level 0 to disable a raid boss), pokemon CP values and weather information of any pokemon raid boss.
 
-There is also a possibility to import the raids bosses from Pokebattler and disable all raid bosses for all or just a specific raid level which makes raid boss management pretty easy. By default the import will disable eggs for levels that only contain 1 raid boss. To disable this set `POKEBATTLER_IMPORT_DISABLE_REDUNDANT_EGGS` to `false`.
+There is also a possibility to import the raids bosses from Pokebattler and disable all raid bosses for all or just a specific raid level which makes raid boss management pretty easy.
 
 To quickly get to a specific pokemon raid boss, you can use the /pokedex command with the local name of the pokemon to get a list of it's all formes. A few examples:
 
@@ -1242,7 +1242,6 @@ Updates to the config file are NOT checked automatically. Therefore always check
 | MAPS_API_KEY| Google Maps API key for `MAPS_LOOKUP` |
 | MAPS_LOOKUP| Boolean, resolve missing gym addresses via Google Maps |
 | MAP_URL| ? |
-| POKEBATTLER_IMPORT_DISABLE_REDUNDANT_EGGS| Boolean, when importing Pokedex from Pokebattler, disable creating an Egg raid for any level that only has one boss available. |
 | PORTAL_IMPORT| Bool, allow importing gyms via portal import Telegram bots |
 | RAID_ANYTIME| Bool, enable a final timeslot for attending at any given time. |
 | RAID_AUTOMATIC_ALARM | Bool, sign up every attendee to the raid alarm automatically. They will get private messages of new participants as if they had enabled it themselves on the poll. |

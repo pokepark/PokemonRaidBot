@@ -105,16 +105,29 @@ CREATE TABLE `pokemon` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `raid_bosses` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `pokedex_id` int(10) DEFAULT NULL,
+  `pokemon_form_id` int(4) DEFAULT NULL,
+  `date_start` datetime NOT NULL DEFAULT '1970-01-01 00:00:01',
+  `date_end` datetime NOT NULL DEFAULT '2038-01-19 03:14:07',
+  `raid_level` enum('1','2','3','4','5','6','X') DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=utf8mb4
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `raids` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) DEFAULT NULL,
   `pokemon` int(4) DEFAULT NULL,
   `pokemon_form` int(4) NOT NULL DEFAULT 0,
-  `first_seen` datetime DEFAULT NULL,
+  `spawn` datetime DEFAULT NULL,
   `start_time` datetime DEFAULT NULL,
   `end_time` datetime DEFAULT NULL,
   `gym_team` enum('mystic','valor','instinct') DEFAULT NULL,
   `gym_id` int(10) unsigned NOT NULL,
+  `level` enum('1','2','3','4','5','6','X') DEFAULT NULL,
   `move1` varchar(255) DEFAULT NULL,
   `move2` varchar(255) DEFAULT NULL,
   `gender` varchar(255) DEFAULT NULL,

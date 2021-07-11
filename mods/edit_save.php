@@ -105,7 +105,6 @@ if ($update['callback_query']['message']['chat']['type'] == 'private') {
 
     // Get raid times.
     $raid = get_raid($data['id']);
-    $raid_duration = $raid['t_duration'];
 
     // Get raid level.
     $raid_level = $raid['level'];
@@ -134,7 +133,7 @@ if ($update['callback_query']['message']['chat']['type'] == 'private') {
             [
                 [
                     'text'          => $event_button_text,
-                    'callback_data' => $id . ':edit_event_note:' . $raid_duration
+                    'callback_data' => $id . ':edit_event_note:0'
                 ]
             ]
         ];

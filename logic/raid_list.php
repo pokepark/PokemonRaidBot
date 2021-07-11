@@ -62,7 +62,6 @@ function raid_list($update)
     }
 
     while ($answer_raids = $request->fetch()) {
-        $answer_raids['level'] = get_raid_level($answer_raids['pokemon'], $answer_raids['pokemon_form']);
         $rows[] = $answer_raids;
     }
 

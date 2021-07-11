@@ -108,46 +108,13 @@ foreach ($update as $raid) {
     }
 
     // Create raid if not exists otherwise update if changes are detected
-    $form = 0;
-    $form_lookup = false;
-    $form_query = ':pokemon_form';
-    if ($pokemon == 0) {
-        // Just an egg
-        $query = '
-                    SELECT  pokemon_form_id, 
-                            pokedex_id 
-                    FROM    pokemon 
-                    WHERE   raid_level = :raid_level
-                ';
-        $statement = $dbh->prepare( $query );
-        $statement->execute([
-          ':raid_level' => $level
-        ]);
-        if($statement->rowCount() == 1) {
-            $result = $statement->fetch();
-            $pokemon = $result['pokedex_id'];
-            $form = $result['pokemon_form_id'];
-        }else {
-            $pokemon = '999' . $level;
-        }
+
+    // Raid pokemon form
+    // Use negated evolution id instead of form id if present
+    if(isset($raid['message']['evolution']) && $raid['message']['evolution'] > 0) {
+        $form = 0 - $raid['message']['evolution'];
     }else {
-        // Use negated evolution id instead of form id if present
-        if(isset($raid['message']['evolution']) && $raid['message']['evolution'] > 0) {
-            $form = 0 - $raid['message']['evolution'];
-        }else {
-            if ( isset($raid['message']['form']) && $raid['message']['form'] != '0') {
-                // Use the form provided in webhook if it's valid
-                $form = $raid['message']['form'];
-            }elseif($pokemon != 0) {
-                // Else look up the normal form's id from pokemon table unless it's an egg
-                $form_query = '(SELECT pokemon_form_id FROM pokemon
-                WHERE
-                    pokedex_id = :pokemon AND
-                    pokemon_form_name = \'normal\'
-                LIMIT 1)';
-                $form_lookup = true;
-            }
-        }
+        $form = $raid['message']['form'] ?? 0;
     }
 
     // Raid pokemon gender
@@ -165,6 +132,7 @@ foreach ($update as $raid) {
     }
 
     // Raid start and endtimes
+    $spawn = gmdate('Y-m-d H:i:s',$raid['message']['spawn']);
     $start = gmdate('Y-m-d H:i:s',$raid['message']['start']);
     $end = gmdate('Y-m-d H:i:s',$raid['message']['end']);
 
@@ -197,7 +165,7 @@ foreach ($update as $raid) {
                 UPDATE raids
                 SET
                     pokemon = :pokemon,
-                    pokemon_form = '.$form_query.',
+                    pokemon_form = :form,
                     gym_team = :gym_team,
                     move1 = :move1,
                     move2 = :move2,
@@ -207,13 +175,13 @@ foreach ($update as $raid) {
             ';
             $execute_array = [
                 'pokemon' => $pokemon,
+                'pokemon_form' => $form,
                 'gym_team' => $team,
                 'move1' => $move_1,
                 'move2' => $move_2,
                 'gender' => $gender,
                 'id' => $raid_id
             ];
-            if(!$form_lookup) $execute_array['pokemon_form'] =  $form;
             $statement = $dbh->prepare( $query );
             $statement->execute($execute_array);
         }
@@ -234,22 +202,23 @@ foreach ($update as $raid) {
         // Create Raid and send messages
         try {
             $query = '
-                INSERT INTO raids (pokemon, pokemon_form, user_id, first_seen, start_time, end_time, gym_team, gym_id, move1, move2, gender)
-                VALUES (:pokemon, '.$form_query.', :user_id, :first_seen, :start_time, :end_time, :gym_team, :gym_id, :move1, :move2, :gender)
+                INSERT INTO raids (pokemon, pokemon_form, user_id, spawn, start_time, end_time, gym_team, gym_id, level, move1, move2, gender)
+                VALUES (:pokemon, :pokemon_form, :user_id, :spawn, :start_time, :end_time, :gym_team, :gym_id, :level, :move1, :move2, :gender)
             ';
             $execute_array = [
                 'pokemon' => $pokemon,
+                'pokemon_form' => $form,
                 'user_id' => $config->WEBHOOK_CREATOR,
-                'first_seen' => gmdate('Y-m-d H:i:s'),
+                'spawn' => $spawn,
                 'start_time' => $start,
                 'end_time' => $end,
                 'gym_team' => $team,
                 'gym_id' => $gym_internal_id,
+                'level' => $level,
                 'move1' => $move_1,
                 'move2' => $move_2,
                 'gender' => $gender
             ];
-            if(!$form_lookup) $execute_array['pokemon_form'] = $form;
             $statement = $dbh->prepare( $query );
             $statement->execute($execute_array);
             $raid_id = $dbh->lastInsertId();

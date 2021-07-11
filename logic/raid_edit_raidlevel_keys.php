@@ -11,28 +11,30 @@ function raid_edit_raidlevel_keys($gym_id, $gym_first_letter, $admin_access = [f
 {
     global $config;
 
-    $query = "";
+    $time_now = dt2time(utcnow(), 'Y-m-d H:i');
+
     if($event === false) {
         // Set event ID to null if no event was selected
-        $event_id = "N";
-        $query = "
-            SELECT    raid_level, COUNT(*) AS raid_level_count
-            FROM      pokemon
-            WHERE     raid_level != '0'
-                AND   raid_level != 'X'
-            GROUP BY  raid_level
-            ORDER BY  FIELD(raid_level, '6', '5', '4', '3', '2', '1')
-            ";
+        $event_id = 'N';
+        $query_event = 'AND raid_bosses.raid_level != \'X\'';
     }else {
         $event_id = $event;
-        $query = "
-            SELECT    raid_level, COUNT(*) AS raid_level_count
-            FROM      pokemon
-            WHERE     raid_level != '0'
-            GROUP BY  raid_level
-            ORDER BY  FIELD(raid_level, '6', '5', '4', '3', '2', '1', 'X')
-            ";
+        $query_event = '';
     }
+    $query = '
+        SELECT    pokemon.id, pokemon.pokedex_id, pokemon.pokemon_form_id, raid_bosses.raid_level, COUNT(*) AS raid_level_count
+        FROM      raid_bosses
+        LEFT JOIN pokemon
+        ON        pokemon.pokedex_id = raid_bosses.pokedex_id
+        AND       pokemon.pokemon_form_id = raid_bosses.pokemon_form_id
+        WHERE     (
+                  DATE_SUB(\'' . $time_now . '\', INTERVAL '.$config->RAID_EGG_DURATION.' MINUTE) > date_start 
+            OR    DATE_ADD(\'' . $time_now . '\', INTERVAL '.$config->RAID_DURATION.' MINUTE) < date_end
+            )
+            '.$query_event.'
+        GROUP BY  raid_bosses.raid_level
+        ORDER BY  FIELD(raid_bosses.raid_level, \'6\', \'5\', \'4\', \'3\', \'2\', \'1\', \'X\')
+        ';
     // Get all raid levels from database
     $rs = my_query($query);
 
@@ -49,26 +51,15 @@ function raid_edit_raidlevel_keys($gym_id, $gym_first_letter, $admin_access = [f
 
         // Add key for pokemon if we have just 1 pokemon for a level
         if($level['raid_level_count'] == 1) {
-            // Get pokemon from database
-            $rs_rl = my_query(
-                "
-                SELECT    id, pokedex_id, pokemon_form_id
-                FROM      pokemon
-                WHERE     raid_level = '{$raid_level}'
-                "
-            );
-
             // Add key for pokemon
-            while ($pokemon = $rs_rl->fetch()) {
-                $keys[] = array(
-                    'text'          => get_local_pokemon_name($pokemon['pokedex_id'], $pokemon['pokemon_form_id']),
-                    'callback_data' => $gym_id . ',' . $gym_first_letter . ':edit_starttime:' . $event_id . ',' . $raid_level . ',' . $pokemon['id']
-                );
-            }
+            $keys[] = array(
+                'text'          => get_local_pokemon_name($level['pokedex_id'], $level['pokemon_form_id']),
+                'callback_data' => $gym_id . ',' . $gym_first_letter . ':edit_starttime:' . $event_id . ',' . $raid_level . ',' . $level['id']
+            );
         } else {
             // Add key for raid level
             $keys[] = array(
-                'text'          => getTranslation($level['raid_level'] . 'stars'),
+                'text'          => getTranslation($raid_level . 'stars'),
                 'callback_data' => $gym_id . ',' . $gym_first_letter . ':edit_pokemon:' . $event_id . ',' . $raid_level
             );
         }

@@ -16,8 +16,7 @@ function get_raid_with_pokemon($raid_id)
                    gyms.lat, gyms.lon, gyms.address, gyms.gym_name, gyms.ex_gym, gyms.gym_note, gyms.gym_id, gyms.img_url,
                    pokemon.pokedex_id, pokemon.pokemon_name, pokemon.pokemon_form_name, pokemon.raid_level, pokemon.min_cp, pokemon.max_cp, pokemon.min_weather_cp, pokemon.max_weather_cp, pokemon.weather, pokemon.shiny, pokemon.pokemon_form_id, pokemon.asset_suffix,
                    users.name,
-                   TIME_FORMAT(TIMEDIFF(end_time, UTC_TIMESTAMP()) + INTERVAL 1 MINUTE, '%k:%i') AS t_left,
-                   TIMESTAMPDIFF(MINUTE,raids.start_time,raids.end_time) as t_duration
+                   TIME_FORMAT(TIMEDIFF(end_time, UTC_TIMESTAMP()) + INTERVAL 1 MINUTE, '%k:%i') AS t_left
         FROM       raids
         LEFT JOIN  gyms
         ON         raids.gym_id = gyms.id
