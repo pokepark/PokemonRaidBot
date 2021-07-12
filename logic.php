@@ -30,7 +30,6 @@ include('logic/get_pokemon_weather.php');
 include('logic/get_pokemon_shiny_status.php');
 include('logic/get_raid.php');
 include('logic/get_raid_times.php');
-include('logic/get_raid_with_pokemon.php');
 include('logic/get_remote_users_count.php');
 include('logic/get_user.php');
 include('logic/get_weather_icons.php');
