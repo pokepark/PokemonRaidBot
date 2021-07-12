@@ -6,6 +6,7 @@
  */
 function get_raid($raid_id)
 {
+    global $dbh;
     // Remove all non-numeric characters
     $raidid = preg_replace( '/[^0-9]/', '', $raid_id );
 

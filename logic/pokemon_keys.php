@@ -23,7 +23,7 @@ function pokemon_keys($gym_id_plus_letter, $raid_level, $action, $event_id = fal
             AND       pokemon.pokemon_form_id = raid_bosses.pokemon_form_id
             WHERE     raid_bosses.raid_level = \'' . $raid_level . '\'
             AND       (DATE_SUB(\'' . $spawntime . '\', INTERVAL '.$config->RAID_EGG_DURATION.' MINUTE) > raid_bosses.date_start 
-            OR        DATE_ADD(\'' . $spawntime . '\', INTERVAL '.$config->RAID_DURATION.' MINUTE) < raid_bosses.date_end)
+            AND       DATE_ADD(\'' . $spawntime . '\', INTERVAL '.$config->RAID_DURATION.' MINUTE) < raid_bosses.date_end)
             ORDER BY  pokemon.pokedex_id
             '
         );

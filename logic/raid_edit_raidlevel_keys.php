@@ -29,7 +29,7 @@ function raid_edit_raidlevel_keys($gym_id, $gym_first_letter, $admin_access = [f
         AND       pokemon.pokemon_form_id = raid_bosses.pokemon_form_id
         WHERE     (
                   DATE_SUB(\'' . $time_now . '\', INTERVAL '.$config->RAID_EGG_DURATION.' MINUTE) > date_start 
-            OR    DATE_ADD(\'' . $time_now . '\', INTERVAL '.$config->RAID_DURATION.' MINUTE) < date_end
+            AND   DATE_ADD(\'' . $time_now . '\', INTERVAL '.$config->RAID_DURATION.' MINUTE) < date_end
             )
             '.$query_event.'
         GROUP BY  raid_bosses.raid_level

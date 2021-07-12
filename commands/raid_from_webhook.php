@@ -114,7 +114,7 @@ foreach ($update as $raid) {
     if(isset($raid['message']['evolution']) && $raid['message']['evolution'] > 0) {
         $form = 0 - $raid['message']['evolution'];
     }else {
-        $form = $raid['message']['form'] ?? 0;
+        $form = isset($raid['message']['form']) ? $raid['message']['form'] : 0;
     }
 
     // Raid pokemon gender
@@ -132,7 +132,7 @@ foreach ($update as $raid) {
     }
 
     // Raid start and endtimes
-    $spawn = gmdate('Y-m-d H:i:s',$raid['message']['spawn']);
+    $spawn = (isset($raid['message']['spawn'])) ? gmdate('Y-m-d H:i:s',$raid['message']['spawn']) : gmdate('Y-m-d H:i:s', ($raid['message']['start'] - $config->RAID_EGG_DURATION*60));
     $start = gmdate('Y-m-d H:i:s',$raid['message']['start']);
     $end = gmdate('Y-m-d H:i:s',$raid['message']['end']);
 
@@ -165,7 +165,7 @@ foreach ($update as $raid) {
                 UPDATE raids
                 SET
                     pokemon = :pokemon,
-                    pokemon_form = :form,
+                    pokemon_form = :pokemon_form,
                     gym_team = :gym_team,
                     move1 = :move1,
                     move2 = :move2,

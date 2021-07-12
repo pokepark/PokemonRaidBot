@@ -26,7 +26,13 @@ if(isset($_GET['debug']) && $_GET['debug'] == 1) {
 // Raid info
 if(array_key_exists('raid', $_GET) && $_GET['raid']!="") {
     $raid_id = preg_replace("/\D/","",$_GET['raid']);
-    $raid = get_raid_with_pokemon($raid_id);
+    $raid = get_raid($raid_id);
+    $q_img_url = my_query("SELECT img_url FROM gyms WHERE id='".$raid['gym_id']."' LIMIT 1")->fetch();
+    $q_pokemon_info = my_query(" SELECT pokemon.min_cp, pokemon.max_cp, pokemon.min_weather_cp, pokemon.max_weather_cp, pokemon.weather, pokemon.shiny, pokemon.asset_suffix 
+                    FROM pokemon
+                    WHERE pokedex_id = '".$raid['pokemon']."'
+                    AND pokemon_form_id = '".$raid['pokemon_form']."' LIMIT 1")->fetch();
+    $raid = array_merge($raid, $q_img_url, $q_pokemon_info);
 } else {
   info_log('Called without a raid id, things will fail');
   $raid = null;
@@ -218,16 +224,16 @@ if($time_now < $raid['end_time']) {
         $icon_suffix = $raid['asset_suffix'];
     }else {
         $pad_zeroes = '';
-        for ($o=3-strlen($raid['pokedex_id']);$o>0;$o--) {
+        for ($o=3-strlen($raid['pokemon']);$o>0;$o--) {
             $pad_zeroes .= 0;
         }
-        $icon_suffix = $pad_zeroes.$raid['pokedex_id'] . "_" . $raid['asset_suffix'];
+        $icon_suffix = $pad_zeroes.$raid['pokemon'] . "_" . $raid['asset_suffix'];
     }
 
     // Raid Egg
-    if($raid['pokedex_id'] > 9990) {
+    if($raid['pokemon'] > 9990) {
         // Getting the actual icon
-        $img_pokemon = grab_img(IMAGES_PATH . "/raid_eggs/pokemon_icon_" . $raid['pokedex_id'] . "_00.png");
+        $img_pokemon = grab_img(IMAGES_PATH . "/raid_eggs/pokemon_icon_" . $raid['pokemon'] . "_00.png");
 
         // Position and size of the picture
         $dst_x = $dst_y = 150;
@@ -237,7 +243,7 @@ if($time_now < $raid['end_time']) {
     //Pokemon
     } else {
         // Formatting the id from 1 digit to 3 digit (1 -> 001)
-        $pokemon_id = str_pad($raid['pokedex_id'], 3, '0', STR_PAD_LEFT);
+        $pokemon_id = str_pad($raid['pokemon'], 3, '0', STR_PAD_LEFT);
 
         // Getting the actual icon filename
         $p_icon = "pokemon_icon_" . $icon_suffix;
@@ -269,8 +275,8 @@ if($time_now < $raid['end_time']) {
           info_log($p_icon, 'Failed to find an image in any pokemon image collection for:');
           $img_fallback_file = null;
           // If we know the raid level, fallback to egg image
-          if(array_key_exists('raid_level', $raid) && $raid['raid_level'] !== null && $raid['raid_level'] != 0) {
-            $img_fallback_file = IMAGES_PATH . "/raid_eggs/pokemon_icon_999" . $raid['raid_level'] . "_00.png";
+          if(array_key_exists('level', $raid) && $raid['level'] !== null && $raid['level'] != 0) {
+            $img_fallback_file = IMAGES_PATH . "/raid_eggs/pokemon_icon_999" . $raid['level'] . "_00.png";
           } else {
             info_log('Unknown raid level, using fallback icon.');
             $img_fallback_file = $config->RAID_PICTURE_POKEMON_FALLBACK;
@@ -314,7 +320,7 @@ imagecopyresampled($canvas,$img_pokemon,$dst_x,$dst_y,0,0,$dst_w,$dst_h,$src_w,$
 
 
 // Ex-Raid?
-if($raid['raid_level'] == 'X') {
+if($raid['level'] == 'X') {
     $img_expass = grab_img(IMAGES_PATH . "/expass.png");
     imagesavealpha($img_expass,true);
 
@@ -524,7 +530,7 @@ for($pa=0;$pa<$num_pokemon_lines;$pa++){
 }
 
 // Pokemon CP
-if($raid['pokedex_id'] < 9990) {
+if($raid['pokemon'] < 9990) {
     $cp_text_top = $poke_text_top+$text_size+$spacing;
     $cp_text = $raid['min_cp']." - ".$raid['max_cp'];
     $cp_text2 =  "(".$raid['min_weather_cp']."-".$raid['max_weather_cp'].")";
