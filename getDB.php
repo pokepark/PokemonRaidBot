@@ -16,20 +16,6 @@ $game_master_url = "https://raw.githubusercontent.com/PokeMiners/game_masters/ma
 $update = false;
 if(isset($argv[1]) && $argv[1] == 'update') {
     $update = true;
-    $sql = 'SELECT pokedex_id,pokemon_form_name,raid_level FROM pokemon WHERE raid_level != \'0\'';
-    $q = $dbh->query($sql);
-    $pokemon_raid_level = [];
-    while($res = $q->fetch()) {
-        $pokemon_raid_level[$res['pokedex_id']][$res['pokemon_form_name']] = $res['raid_level'];
-    }
-}
-function check_raid_level($pokemon_id,$pokemon_form){
-    global $update, $pokemon_raid_level;
-    $raid_level = 0;
-    if($update && isset($pokemon_raid_level[$pokemon_id][$pokemon_form])) {
-        $raid_level = $pokemon_raid_level[$pokemon_id][$pokemon_form];
-    }
-    return $raid_level;
 }
 
 //Parse the form ID's from pogoprotos
@@ -202,7 +188,6 @@ foreach($master as $row) {
                 $pokemon_array[$pokemon_id][$form_name]['min_weather_cp'] = $min_weather_cp;
                 $pokemon_array[$pokemon_id][$form_name]['max_weather_cp'] = $max_weather_cp;
                 $pokemon_array[$pokemon_id][$form_name]['weather'] = $weather;
-                $pokemon_array[$pokemon_id][$form_name]['raid_level'] = check_raid_level($pokemon_id,$form_name);
             }else {
                 // Fill data for Pokemon that have form data but no stats for forms specifically
                 foreach($pokemon_array[$pokemon_id] as $form=>$data) {
@@ -211,7 +196,6 @@ foreach($master as $row) {
                     $pokemon_array[$pokemon_id][$form]['min_weather_cp'] = $min_weather_cp;
                     $pokemon_array[$pokemon_id][$form]['max_weather_cp'] = $max_weather_cp;
                     $pokemon_array[$pokemon_id][$form]['weather'] = $weather;
-                    $pokemon_array[$pokemon_id][$form]['raid_level'] = check_raid_level($pokemon_id,$form);
                 }
             }
             if(isset($row['data']['pokemonSettings']['evolutionBranch'])) {
@@ -223,7 +207,6 @@ foreach($master as $row) {
                         $pokemon_array[$pokemon_id][$form_name]['min_weather_cp'] = $min_weather_cp;
                         $pokemon_array[$pokemon_id][$form_name]['max_weather_cp'] = $max_weather_cp;
                         $pokemon_array[$pokemon_id][$form_name]['weather'] = $weather;
-                        $pokemon_array[$pokemon_id][$form_name]['raid_level'] = check_raid_level($pokemon_id,strtolower($form_name));
                     }
                 }
             }
@@ -241,7 +224,6 @@ if(!empty($pokemon_array)) {
             $pokemon_id = '999'.$e;
             $form_name = 'normal';
             $pokemon_name = 'Level '. $e .' Egg';
-            $raid_level = check_raid_level($pokemon_id,$form_name);
             $pokemon_array[$pokemon_id][$form_name] = [ 'pokemon_name'=>$pokemon_name,
                                                         'pokemon_form_name'=>$form_name,
                                                         'pokemon_form_id'=>0,
@@ -251,8 +233,7 @@ if(!empty($pokemon_array)) {
                                                         'max_cp'=>0,
                                                         'min_weather_cp'=>0,
                                                         'max_weather_cp'=>0,
-                                                        'weather'=>0,
-                                                        'raid_level'=>$raid_level
+                                                        'weather'=>0
                                                       ];
         }
         // Add delete command to SQL data.
@@ -274,7 +255,6 @@ if(!empty($pokemon_array)) {
                 $poke_max_cp = $data['max_cp'];
                 $poke_min_weather_cp = $data['min_weather_cp'];
                 $poke_max_weather_cp = $data['max_weather_cp'];
-                $raid_level = $data['raid_level'];
 
                 $poke_weather  = $data['weather'];
 
@@ -286,7 +266,7 @@ if(!empty($pokemon_array)) {
                 }else {
                     $poke_form = strtolower($data['pokemon_form_name']);
                 }
-                $SQL .= "REPLACE INTO pokemon SET pokedex_id=\"${pokemon_id}\", pokemon_name=\"${poke_name}\", pokemon_form_name=\"${poke_form}\", pokemon_form_id=\"${form_id}\", asset_suffix=\"${form_asset_suffix}\", min_cp=\"${poke_min_cp}\", max_cp=\"${poke_max_cp}\", min_weather_cp=\"${poke_min_weather_cp}\", max_weather_cp=\"${poke_max_weather_cp}\", weather=\"${poke_weather}\", shiny=\"${poke_shiny}\"".( ($update) ? ", raid_level=\"${raid_level}\"" : "" ).";" . PHP_EOL;
+                $SQL .= "REPLACE INTO pokemon SET pokedex_id=\"${pokemon_id}\", pokemon_name=\"${poke_name}\", pokemon_form_name=\"${poke_form}\", pokemon_form_id=\"${form_id}\", asset_suffix=\"${form_asset_suffix}\", min_cp=\"${poke_min_cp}\", max_cp=\"${poke_max_cp}\", min_weather_cp=\"${poke_min_weather_cp}\", max_weather_cp=\"${poke_max_weather_cp}\", weather=\"${poke_weather}\", shiny=\"${poke_shiny}\";" . PHP_EOL;
             }
         }
     }
