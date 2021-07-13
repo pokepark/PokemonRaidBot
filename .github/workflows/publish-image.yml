@@ -34,8 +34,9 @@ jobs:
         run: |
           if [[ "$GITHUB_REF" == 'refs/heads/main' ]]; then
             echo ::set-output name=channel::"latest"
+            echo ::set-output name=version::main_$(cat VERSION)
           elif [[ "$GITHUB_REF" == "refs/heads/"* ]]; then
-            echo ::set-output name=channel::${GITHUB_REF/refs\/heads\//}
+            echo ::set-output name=channel::${GITHUB_REF/refs\/heads\//}_$(cat VERSION)
           elif [[ "$GITHUB_REF" == "refs/tags/"* ]]; then
             echo ::set-output name=channel::${GITHUB_REF/refs\/tags\//}
           fi
@@ -47,7 +48,7 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
             type=raw,value=${{ steps.get_channel.outputs.channel }}
-            type=raw,value=${{ steps.get_channel.outputs.channel }}_${{ steps.get_version.outputs.version }}
+            type=raw,value=${{ steps.get_channel.outputs.version }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
