@@ -1,11 +1,6 @@
 name: Docker image
 
-on:
-  push:
-    branches:
-      - main
-    tags:
-      - 'v*'
+on: push
 
 env:
   REGISTRY: ghcr.io
@@ -31,7 +26,19 @@ jobs:
 
       - name: Get the version
         id: get_version
-        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+        run: echo ::set-output name=version::$(cat VERSION)
+
+      - name: Get the release channel
+        id: get_channel
+        shell: bash
+        run: |
+          if [[ "$GITHUB_REF" == 'refs/heads/main' ]]; then
+            echo ::set-output name=channel::"latest"
+          elif [[ "$GITHUB_REF" == "refs/heads/"* ]]; then
+            echo ::set-output name=channel::${GITHUB_REF/refs\/heads\//}
+          elif [[ "$GITHUB_REF" == "refs/tags/"* ]]; then
+            echo ::set-output name=channel::${GITHUB_REF/refs\/tags\//}
+          fi
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
@@ -39,8 +46,8 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-            type=raw,value=${{ steps.get_version.outputs.VERSION }}
-            type=raw,value=latest
+            type=raw,value=${{ steps.get_channel.outputs.channel }}
+            type=raw,value=${{ steps.get_channel.outputs.channel }}_${{ steps.get_version.outputs.version }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
