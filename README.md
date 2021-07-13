@@ -44,6 +44,7 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
             * [Raids from Webhook](#raids-from-webhook)
             * [Filter Raids from Webhook / geoconfig.json](#filter-raids-from-webhook--geoconfigjson)
             * [Extended Raid-Sharing](#extended-raid-sharing)
+         * [Event raids](#event-raids)
       * [Trainer settings](#trainer-settings)
       * [Raid overview](#raid-overview)
       * [Raid Map](#raid-map)
@@ -90,7 +91,7 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
          * [translate.py](#translatepy)
             * [Usage](#usage)
 
-<!-- Added by: BotAdmin, at: Tue Jul 13 20:17:15 EEST 2021 -->
+<!-- Added by: BotAdmin, at: Tue Jul 13 20:43:07 EEST 2021 -->
 
 <!--te-->
 
@@ -653,6 +654,18 @@ The raids will only be posted into the defined chats.
 
 If you are using multiple Channel, you can setup one Channel as Main-Channel "SHARE_CHATS_AFTER_ATTENDANCE":"-100444555666" and on votes in different Channel, the Raid will be shared to your Main-Channel. Activate this function with "SHARE_AFTER_ATTENDANCE":true
 This is important for Raids from Webhooks. All Raids were posted to one Channel, which can be muted to the users. But if someone votes for a raid, this raid will be posted to a unmuted channel, where all others get a notification.
+
+### Event raids
+
+Users with the proper access rights can choose to create event raids. These can be handy for example on raid hours and raid days. These special raid polls have event specific name, description and poll settings that need to be set in database. Example of a few settings is in `sql/event-table-example.sql`.
+
+`vote_key_mode` currently supports 2 modes, 0 and 1. 0 is the standard mode where users vote for a time when they are attending. 1 is a mode with no timeslots, just a button for 'attending'.
+
+With `time_slots` you can set event secific time slots for vote keys when `vote_key_mode` 0 is selected.
+
+`raid_duration` is the duration of the raids of that event type.
+
+`hide_raid_picture` hides the raid picture from these event polls even if `RAID_PICTURE` is set to `true`.
 
 ## Trainer settings
 
