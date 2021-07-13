@@ -14,5 +14,6 @@
   "LANGUAGE_PRIVATE":"",
   "LANGUAGE_PUBLIC":"EN",
   "TIMEZONE":"Europe/Berlin",
+  "CUSTOM_TRAINERNAME": true,
   "SHARE_CHATS":""
 }
