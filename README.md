@@ -24,7 +24,6 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
       * [Config](#config)
          * [Referring to groups, channels and users](#referring-to-groups-channels-and-users)
             * [Finding public IDs](#finding-public-ids)
-            * [Finding private IDs](#finding-private-ids)
             * [Which group type should I use? / How do I make a group a Supergroup](#which-group-type-should-i-use--how-do-i-make-a-group-a-supergroup)
          * [Database connection](#database-connection)
          * [General config and log files](#general-config-and-log-files)
@@ -64,7 +63,6 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
       * [Using inline search of @PortalMapBot or @Ingressportalbot](#using-inline-search-of-portalmapbot-or-ingressportalbot)
       * [Command: /start](#command-start)
       * [Command: /help](#command-help)
-      * [Command: /raid](#command-raid)
       * [Command: /pokemon](#command-pokemon)
       * [Command: /pokedex](#command-pokedex)
       * [Command: /list](#command-list)
@@ -92,7 +90,7 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
          * [translate.py](#translatepy)
             * [Usage](#usage)
 
-<!-- Added by: artanicus, at: Sun Jun 13 14:48:18 EEST 2021 -->
+<!-- Added by: BotAdmin, at: Tue Jul 13 20:17:15 EEST 2021 -->
 
 <!--te-->
 
@@ -382,36 +380,6 @@ Forward a message to @RawDataBot which will get you a data package:
 *snip*
 ```
 
-#### Finding private IDs
-The above method works fine for private groups as well but if you don't want to spam the group there are less intrusive ways.
-One of the least intrusive ways is to use https://web.telegram.org to log in and select the entity in question in your chat list.
-The URL displayed in your browser can be converted into a usable ID.
-
-**Examples:**
-
-*Private user:*
-```
-https://web.telegram.org/#/im?p=u12345678_1122334455667788990011
-=> use 12345678
-```
-
-*Private group:*
-```
-https://web.telegram.org/#/im?p=g998877665
-=> use -998877665
-```
-
-*Private channel:*
-```
-https://web.telegram.org/#/im?p=c112233445566_1122334455667788990
-=> use -1112233445566 (notice the extra 1 prepended to pad to 13)
-```
-
-*Private supergroup:*
-```
-https://web.telegram.org/#/im?p=s1122334455_11223344556677889900
-=> use -1001122334455 (notice the extra 100 prepended to pad to 13)
-```
 
 #### Which group type should I use? / How do I make a group a Supergroup
 - Some features will only work with Supergroups (and Channels) since they enable more features needed for example for automatic cleanup. If in doubt use Supergroups.
