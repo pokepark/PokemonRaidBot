@@ -96,7 +96,7 @@ if ($update['callback_query']['message']['chat']['type'] == 'private') {
             [
                 [
                     'text'          => getTranslation('change_raid_duration'),
-                    'callback_data' => $id . ':edit_time:0,0,more,1'
+                    'callback_data' => $id . ':edit_time:0,0,0,0,more,1'
                 ]
             ]
         ];
