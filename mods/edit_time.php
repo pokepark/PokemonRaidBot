@@ -176,17 +176,7 @@ if($opt_arg == 'more') {
     // 1-minute selection
     $slotsize = 1;
 
-    // Raid hour?
-    if ($config->RAID_HOUR) {
-        $slotmax = $config->RAID_HOUR_DURATION;
-    // Raid day?
-    } elseif ($config->RAID_DAY) {
-        $slotsize = 5;
-        $slotmax = $config->RAID_DAY_DURATION;
-    // No event
-    } else {
-        $slotmax = $config->RAID_DURATION;
-    }
+    $slotmax = $config->RAID_DURATION;
 
     for ($i = $slotmax; $i >= 15; $i = $i - $slotsize) {
         // Create the keys.
@@ -200,16 +190,7 @@ if($opt_arg == 'more') {
 } else {
     debug_log('Comparing slot switch and argument for fast forward');
     if ($slot_switch == 0) {
-        // Raid hour?
-        if ($config->RAID_HOUR) {
-            $raidduration = $config->RAID_HOUR_DURATION;
-        // Raid day?
-        } elseif ($config->RAID_DAY) {
-            $raidduration = $config->RAID_DAY_DURATION;
-        // No event
-        } else {
-            $raidduration = $config->RAID_DURATION;
-        }
+        $raidduration = $config->RAID_DURATION;
 
         // Write to log.
         debug_log('Doing a fast forward now!');
