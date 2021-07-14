@@ -34,19 +34,6 @@ jobs:
         run: |
           if [[ "$GITHUB_REF" == 'refs/heads/main' ]]; then
             echo ::set-output name=channel::"latest"
-          elif [[ "$GITHUB_REF" == "refs/heads/"* ]]; then
-            echo ::set-output name=channel::${GITHUB_REF/refs\/heads\//}
-          elif [[ "$GITHUB_REF" == "refs/tags/"* ]]; then
-            echo ::set-output name=channel::${GITHUB_REF/refs\/tags\//}
-          fi
-        run: echo ::set-output name=version::$(cat VERSION)
-
-      - name: Get the release channel
-        id: get_channel
-        shell: bash
-        run: |
-          if [[ "$GITHUB_REF" == 'refs/heads/main' ]]; then
-            echo ::set-output name=channel::"latest"
             echo ::set-output name=version::main_$(cat VERSION)
           elif [[ "$GITHUB_REF" == "refs/heads/"* ]]; then
             echo ::set-output name=channel::${GITHUB_REF/refs\/heads\//}_$(cat VERSION)
