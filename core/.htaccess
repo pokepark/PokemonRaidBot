@@ -1,0 +1,11 @@
+# Block access to all dot files
+RedirectMatch 404 /\..*$
+
+# Block access to .git files and folders
+RedirectMatch 404 /\.git
+
+# Block access to .json and .sql files
+RedirectMatch 404 /*\.(json|sql)$
+
+# Block access to specific folders
+RedirectMatch 404 /lang/
