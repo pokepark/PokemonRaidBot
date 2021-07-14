@@ -37,29 +37,23 @@ function raid_edit_gym_keys($first, $warn = true, $action = 'edit_raidlevel', $d
     } else {
         $show_gym = 1;
     }
-
-    // Exclude ex-raids?
-    $exraid_exclude = '';
-    if($config->RAID_EXCLUDE_EXRAID_DUPLICATION) {
-        $exraid_exclude = "pokemon.raid_level <> 'X' AND ";
+    $query_collate = "";
+    if($config->MYSQL_SORT_COLLATE != "") {
+        $query_collate = "COLLATE " . $config->MYSQL_SORT_COLLATE;
     }
-
     // Get gyms from database
     $rs = my_query(
         "
         SELECT    gyms.id, gyms.gym_name, gyms.ex_gym,
-                  CASE WHEN SUM($exraid_exclude raids.end_time > UTC_TIMESTAMP() - INTERVAL 10 MINUTE) THEN 1 ELSE 0 END AS active_raid
+                  CASE WHEN SUM(raids.end_time > UTC_TIMESTAMP() - INTERVAL 10 MINUTE) THEN 1 ELSE 0 END AS active_raid
         FROM      gyms
         LEFT JOIN raids
         ON        raids.gym_id = gyms.id
-        LEFT JOIN pokemon
-        ON        raids.pokemon = pokemon.pokedex_id
-        AND       raids.pokemon_form  = pokemon.pokemon_form_id
         WHERE     UPPER(LEFT(gym_name, $first_length)) = UPPER('{$first}')
         $not
         AND       gyms.show_gym = {$show_gym}
         GROUP BY  gym_name, raids.gym_id, gyms.id, gyms.ex_gym
-        ORDER BY  gym_name
+        ORDER BY  gym_name " . $query_collate . "
         "
     );
 
@@ -88,43 +82,24 @@ function raid_edit_gym_keys($first, $warn = true, $action = 'edit_raidlevel', $d
 
         // Write to log.
         // debug_log($gym);
-
-        // No active raid OR only active ex-raid
-        if($gym['active_raid'] == 0 || $warn = false) {
-            // Show Ex-Gym-Marker?
-            if($config->RAID_CREATION_EX_GYM_MARKER && $gym['ex_gym'] == 1) {
-                $ex_raid_gym_marker = (strtolower($config->RAID_EX_GYM_MARKER) == 'icon') ? EMOJI_STAR : RAID_EX_GYM_MARKER;
-                $gym_name = $ex_raid_gym_marker . SP . $gym['gym_name'];
-            } else {
-                $gym_name = $gym['gym_name'];
-            }
-
-            $keys[] = array(
-                'text'          => $gym_name,
-                'callback_data' => $first . ':' . $action . ':' . $arg
-            );
+        
+        $active_raid = active_raid_duplication_check($gym['id']);
+        
+        // Show Ex-Gym-Marker?
+        if($config->RAID_CREATION_EX_GYM_MARKER && $gym['ex_gym'] == 1) {
+            $ex_raid_gym_marker = (strtolower($config->RAID_EX_GYM_MARKER) == 'icon') ? EMOJI_STAR : $config->RAID_EX_GYM_MARKER;
+            $gym_name = $ex_raid_gym_marker . SP . $gym['gym_name'];
+        } else {
+            $gym_name = $gym['gym_name'];
         }
-        // No active raid, but ex raid gym
-        else if(($gym['active_raid'] == 0 || $warn = false) && $gym['ex_gym'] == 1) {
-            $keys[] = array(
-                'text'          => EMOJI_STAR . SP . $gym['gym_name'],
-                'callback_data' => $first . ':' . $action . ':' . $arg
-            );
+        // Add warning emoji for active raid
+        if ($active_raid > 0) {
+            $gym_name = EMOJI_WARN . SP . $gym_name;
         }
-        // Add warning emoji for active raid and no ex raid gym
-        else if ($gym['active_raid'] == 1 && $gym['ex_gym'] == 0) {
-            $keys[] = array(
-                'text'          => EMOJI_WARN . SP . $gym['gym_name'],
-                'callback_data' => $first . ':' . $action . ':' . $arg
-            );
-        }
-        // Add warning emoji for active raid and ex raid gym
-        else if ($gym['active_raid'] == 1 && $gym['ex_gym'] == 1) {
-            $keys[] = array(
-                'text'          => EMOJI_WARN . SP . EMOJI_STAR . SP . $gym['gym_name'],
-                'callback_data' => $first . ':' . $action . ':' . $arg
-            );
-        }
+        $keys[] = array(
+            'text'          => $gym_name,
+            'callback_data' => $first . ':' . $action . ':' . $arg
+        );
     }
 
     // Get the inline key array.

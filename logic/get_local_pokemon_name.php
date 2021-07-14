@@ -10,7 +10,7 @@ function get_local_pokemon_name($pokemon_id, $pokemon_form_id, $override_languag
 {
     $q = my_query("SELECT pokemon_name, pokemon_form_name FROM pokemon WHERE pokedex_id = '{$pokemon_id}' AND pokemon_form_id = '{$pokemon_form_id}'");
     $res = $q->fetch();
-    $pokemon_form_name = $res['pokemon_form_name'];
+    $pokemon_form_name = $res['pokemon_form_name'] ?? 'normal';
 
     debug_log('Pokemon_form: ' . $pokemon_form_name);
     

@@ -36,6 +36,8 @@ if($count_att == 0 && $config->SHARE_AFTER_ATTENDANCE && !empty($config->SHARE_C
     }
 }
 
+// Request Raid and Gym - Infos
+$raid = get_raid($data['id']);
 
 // Check if the user has voted for this raid before.
 if($count_att > 0){
@@ -45,6 +47,7 @@ if($count_att > 0){
         FROM      attendance
           WHERE   raid_id = {$data['id']}
             AND   user_id = {$update['callback_query']['from']['id']}
+            LIMIT 1
         "
     );
 
@@ -82,11 +85,27 @@ if($now <= $attend_time || $vote_time == 0) {
       $remote_users = get_remote_users_count($data['id'], $update['callback_query']['from']['id'], $attend_time);
     }
     // Check if max remote users limit is already reached, unless voting for 'Anytime'
-    if ($answer['remote'] == 0 || $remote_users + $answer['user_count'] <= $config->RAID_REMOTEPASS_USERS_LIMIT || $vote_time == 0) {
+    if ((!empty($answer) && ($answer['remote'] == 0 || $remote_users + $answer['user_count'])) <= $config->RAID_REMOTEPASS_USERS_LIMIT || $vote_time == 0) {
         // User has voted before.
         if (!empty($answer)) {
             // Update attendance.
             alarm($data['id'],$update['callback_query']['from']['id'],'change_time', $attend_time);
+            $update_pokemon_sql = '';
+            if(!in_array($raid['pokemon'], $eggs)) {
+                // If raid egg has hatched
+                // -> clean up attendance table from votes for other pokemon
+                // -> leave one entry remaining and set the pokemon to 0 there
+                my_query("
+                    DELETE  a1
+                    FROM    attendance a1
+                    INNER JOIN attendance a2
+                    WHERE   a1.id < a2.id
+                       AND  a1.user_id = a2.user_id
+                       AND  a2.raid_id = {$raid['id']}
+                       AND  a1.raid_id = {$raid['id']}
+                    ");
+                $update_pokemon_sql = 'pokemon = \'0\',';
+            }
             my_query(
                 "
                 UPDATE    attendance
@@ -94,6 +113,7 @@ if($now <= $attend_time || $vote_time == 0) {
                           cancel = 0,
                           arrived = 0,
                           raid_done = 0,
+                          {$update_pokemon_sql}
                           late = 0
                   WHERE   raid_id = {$data['id']}
                     AND   user_id = {$update['callback_query']['from']['id']}
@@ -103,8 +123,6 @@ if($now <= $attend_time || $vote_time == 0) {
         // User has not voted before.
         } else {
             // Create attendance.
-            // Send Alarm.
-            alarm($data['id'],$update['callback_query']['from']['id'],'new_att', $attend_time);
             // Save attandence to DB + Set Auto-Alarm on/off according to config
             $insert_sql="INSERT INTO attendance SET
               raid_id = :raid_id,
@@ -117,6 +135,8 @@ if($now <= $attend_time || $vote_time == 0) {
               'attend_time' => $attend_time,
               'alarm' => ($config->RAID_AUTOMATIC_ALARM ? 1 : 0)
             ]);
+            // Send Alarm.
+            alarm($data['id'],$update['callback_query']['from']['id'],'new_att', $attend_time);
 
             // Enable alerts message. -> only if alert is on
             if($config->RAID_AUTOMATIC_ALARM) {
@@ -130,21 +150,17 @@ if($now <= $attend_time || $vote_time == 0) {
           // TODO(artanicus): This code is very WET, I'm sure we have functions somewhere to send a raid share -_-
             // Share Raid to another Channel
             $chat = $config->SHARE_CHATS_AFTER_ATTENDANCE;
-            // Request Raid and Gym - Infos
-            $answer_gym = get_gym_raid($data['id']);
             // Set text.
-            $text = show_raid_poll($answer_gym);
+            $text = show_raid_poll($raid);
             // Set keys.
-            $keys = keys_vote($answer_gym);
-            // Set reply to.
-            $reply_to = $chat;
+            $keys = keys_vote($raid);
             // Send the message.
             if($config->RAID_PICTURE) {
                 require_once(LOGIC_PATH . '/raid_picture.php');
                 $picture_url = raid_picture_url($data);
-                $tg_json[] = send_photo($chat, $picture_url, $text['short'], $keys, ['reply_to_message_id' => $reply_to, 'reply_markup' => ['selective' => true, 'one_time_keyboard' => true], 'disable_web_page_preview' => 'true'], true);
+                $tg_json[] = send_photo($chat, $picture_url, $text['short'], $keys, ['disable_web_page_preview' => 'true'], true);
             } else {
-                $tg_json[] = send_message($chat, $text['full'], $keys, ['reply_to_message_id' => $reply_to, 'reply_markup' => ['selective' => true, 'one_time_keyboard' => true], 'disable_web_page_preview' => 'true'], true);
+                $tg_json[] = send_message($chat, $text['full'], $keys, ['disable_web_page_preview' => 'true'], true);
             }
             // Telegram multicurl request.
             curl_json_multi_request($tg_json);
@@ -168,44 +184,3 @@ if($now <= $attend_time || $vote_time == 0) {
     }
 
 exit();
-
-/**
- *  get all raid info - very detailed,
- *  because gyms->gym_id (ingress portal id) is different to
- *  raids->gym_id (the real one)
- * @param $raid_id
- * @return array
- */
-function get_gym_raid($raid_id){
-  $request_gym = my_query(
-      "
-      SELECT
-          r.id AS id,
-          r.user_id AS user_id,
-          r.pokemon AS pokemon,
-          r.pokemon_form AS pokemon_form,
-          r.first_seen AS first_seen,
-          r.start_time AS start_time,
-          r.end_time AS end_time,
-          r.gym_team AS gym_team,
-          r.gym_id AS gym_id,
-          r.move1 AS move1,
-          r.move2 AS move2,
-          r.gender AS gender,
-          g.lon AS lon,
-          g.lat AS lat,
-          g.address AS address,
-          g.gym_name AS gym_name,
-          g.ex_gym AS ex_gym,
-          g.show_gym AS show_gym,
-          g.gym_note AS gym_note,
-          g.gym_id AS gym_id2,
-          g.img_url AS img_url
-      FROM raids as r
-      left join gyms as g on r.gym_id = g.id
-      WHERE r.id = {$raid_id}
-      "
-  );
-  $answer_gym = $request_gym->fetch();
-  return $answer_gym;
-}

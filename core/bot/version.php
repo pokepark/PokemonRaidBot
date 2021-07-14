@@ -29,7 +29,7 @@ if($nodot_current == $nodot_latest) {
             $msg .= 'Server: ' . $_SERVER['SERVER_ADDR'] . CR;
             $msg .= 'User: ' . $_SERVER['REMOTE_ADDR'] . ' ' . isset($_SERVER['HTTP_X_FORWARDED_FOR']) . CR;
             $msg .= 'Your version: ' . $current . CR . 'Latest version: ' . $latest;
-            sendMessageEcho($config->MAINTAINER_ID, $msg);
+            sendMessage($config->MAINTAINER_ID, $msg);
         } else {
             // Write to standard error log.
             error_log('ERROR! The config item MAINTAINER_ID is not defined!');
@@ -49,7 +49,7 @@ if($nodot_current == $nodot_latest) {
             $msg .= 'Server: ' . $_SERVER['SERVER_ADDR'] . CR;
             $msg .= 'User: ' . $_SERVER['REMOTE_ADDR'] . ' ' . isset($_SERVER['HTTP_X_FORWARDED_FOR']) . CR;
             $msg .= 'Your version: ' . $current . CR . 'Latest version: ' . $latest;
-            sendMessageEcho($config->MAINTAINER_ID, $msg);
+            sendMessage($config->MAINTAINER_ID, $msg);
         } else {
             // Write to standard error log.
             error_log('ERROR! The config item MAINTAINER_ID is not defined!');
@@ -69,7 +69,7 @@ if($nodot_current == $nodot_latest) {
             // Tell user an upgrade is required!
             if(!empty($config->MAINTAINER_ID)) {
                 // Echo data.
-                sendMessageEcho($config->MAINTAINER_ID, 'ERROR! BOT UPGRADE REQUIRED!' . CR . 'Server: ' . $_SERVER['SERVER_ADDR'] . CR . 'User: ' . $_SERVER['REMOTE_ADDR'] . ' ' . isset($_SERVER['HTTP_X_FORWARDED_FOR']) . CR . 'Your version: ' . $current . CR . 'Latest version: ' . $latest);
+                sendMessage($config->MAINTAINER_ID, 'ERROR! BOT UPGRADE REQUIRED!' . CR . 'Server: ' . $_SERVER['SERVER_ADDR'] . CR . 'User: ' . $_SERVER['REMOTE_ADDR'] . ' ' . isset($_SERVER['HTTP_X_FORWARDED_FOR']) . CR . 'Your version: ' . $current . CR . 'Latest version: ' . $latest);
             } else {
                 // Write to standard error log.
                 error_log('ERROR! The config item MAINTAINER_ID is not defined!');

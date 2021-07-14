@@ -3,7 +3,7 @@
  * Get last 12 active raids.
  * @return array
  */
-function get_active_raids()
+function get_active_raids($event_permissions = false)
 {
     // Get last 12 active raids data.
     $rs = my_query(
@@ -17,6 +17,7 @@ function get_active_raids()
         LEFT JOIN  gyms
         ON         raids.gym_id = gyms.id
         WHERE      end_time>UTC_TIMESTAMP()
+        ".($event_permissions?"":"AND event IS NULL")."
         ORDER BY   end_time ASC
         LIMIT      12
         "

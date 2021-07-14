@@ -96,7 +96,7 @@ if ($update['callback_query']['message']['chat']['type'] == 'private') {
             [
                 [
                     'text'          => getTranslation('change_raid_duration'),
-                    'callback_data' => $id . ':edit_time:0,0,more,1'
+                    'callback_data' => $id . ':edit_time:0,0,0,0,more,1'
                 ]
             ]
         ];
@@ -105,10 +105,9 @@ if ($update['callback_query']['message']['chat']['type'] == 'private') {
 
     // Get raid times.
     $raid = get_raid($data['id']);
-    $raid_duration = $raid['t_duration'];
 
     // Get raid level.
-    $raid_level = get_raid_level($raid['pokemon'], $raid['pokemon_form']);
+    $raid_level = $raid['level'];
     $const = 'SHARE_CHATS_LEVEL_' . $raid_level;
     $const_chats = $config->{$const};
 
@@ -124,9 +123,25 @@ if ($update['callback_query']['message']['chat']['type'] == 'private') {
         $chats = '';
     }
 
-    // Share keys
-    $pre_text = EMOJI_CLOCK . SP . $raid_duration . getTranslation('minutes_short') . SP . '+' . SP;
-    $keys_share = share_keys($id, 'raid_share', $update, $chats, $pre_text);
+    if($raid['event']!==NULL) {
+        if($raid['event_note']==NULL) {
+            $event_button_text = getTranslation("event_note_add");
+        }else {
+            $event_button_text = getTranslation("event_note_edit");
+        }
+        $keys_edit_event_note = [
+            [
+                [
+                    'text'          => $event_button_text,
+                    'callback_data' => $id . ':edit_event_note:0'
+                ]
+            ]
+        ];
+        $keys = array_merge($keys, $keys_edit_event_note);
+    }
+    
+    // Add keys to share.
+    $keys_share = share_keys($id, 'raid_share', $update, $chats);
     $keys = array_merge($keys, $keys_share);
 
     // Build message string.
@@ -139,7 +154,7 @@ if ($update['callback_query']['message']['chat']['type'] == 'private') {
 
     // Gym Name
     if(!empty($raid['gym_name']) && ($raid['gym_name'] != $user_id_tag)) {
-	$msg .= getTranslation('set_gym_team') . CR2;
+    $msg .= getTranslation('set_gym_team') . CR2;
     } else {
         $msg .= getTranslation('set_gym_name_and_team') . CR2;
         $msg .= getTranslation('set_gym_name_command') . CR;

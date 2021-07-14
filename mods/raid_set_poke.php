@@ -11,34 +11,17 @@ raid_access_check($update, $data, 'pokemon');
 
 // Set the id.
 $id = $data['id'];
-$pokemon_id_form = explode("-", $data['arg'], 2);
+$pokemon_id_form = get_pokemon_by_table_id($data['arg']);
 
 // Update pokemon in the raid table.
 my_query(
     "
     UPDATE    raids
-    SET       pokemon = '{$pokemon_id_form[0]}',
-              pokemon_form = '{$pokemon_id_form[1]}'
+    SET       pokemon = '{$pokemon_id_form['pokedex_id']}',
+              pokemon_form = '{$pokemon_id_form['pokemon_form_id']}'
       WHERE   id = {$id}
     "
 );
-
-// Get eggs.
-$eggs = $GLOBALS['eggs'];
-
-// Do not update if pokedex_id is an egg.
-if(!in_array($pokemon_id_form[0], $eggs)) {
-    // Update users in attendance table.
-    // Helps to proper sort users as they are ordered by pokemon.
-    my_query(
-        "
-        UPDATE    attendance
-        SET       pokemon = '{$data['arg']}'
-          WHERE   raid_id = {$id}
-          AND     pokemon = '0'
-        "
-    );
-}
 
 // Get raid times.
 $raid = get_raid($data['id']);
@@ -81,7 +64,7 @@ if($config->RAID_PICTURE) {
     require_once(LOGIC_PATH . '/raid_picture.php');
     while ($raidmsg = $rs->fetch()) {
         $picture_url = raid_picture_url($raid);
-        $tg_json[] = editMessageMedia($raidmsg['message_id'], $updated_msg['short'], $updated_keys, $raidmsg['chat_id'], ['disable_web_page_preview' => 'true'], false, $picture_url);
+        $tg_json[] = editMessageMedia($raidmsg['message_id'], $updated_msg['short'], $updated_keys, $raidmsg['chat_id'], ['disable_web_page_preview' => 'true'], true, $picture_url);
     } 
 } else {
     while ($raidmsg = $rs->fetch()) {

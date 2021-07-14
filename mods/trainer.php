@@ -12,28 +12,36 @@ bot_access_check($update, 'trainer');
 // Set message.
 $msg = '<b>' . getTranslation('trainerinfo_set_yours') . '</b>';
 
+$user_id = $update['callback_query']['from']['id'];
+$msg .= CR.CR.get_user($user_id);
+
 // Init empty keys array.
 $keys = [];
-
+$keys_top_row = [];
 // Create keys array.
-$keys = [
-/*    [
+if($config->CUSTOM_TRAINERNAME){
+    $keys[0][] =
+            [
+                'text'          => getTranslation('name'),
+                'callback_data' => '0:trainer_name:0'
+            ];
+}
+if($config->RAID_POLL_SHOW_TRAINERCODE){
+    $keys[0][] =
+            [
+                'text'          => getTranslation('trainercode'),
+                'callback_data' => '0:trainer_code:0'
+            ];
+}
+$keys[] = [
         [
-            'text'          => getTranslation('name'),
-            'callback_data' => '0:trainer_name:0'
-        ]
-    ],
-*/
-    [
-	[
             'text'          => getTranslation('team'),
             'callback_data' => '0:trainer_team:0'
         ],
-	[
+        [
             'text'          => getTranslation('level'),
             'callback_data' => '0:trainer_level:0'
         ]
-    ]
 ];
 
 // Check access.

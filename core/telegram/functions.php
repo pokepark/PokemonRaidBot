@@ -45,10 +45,6 @@ function sendMessage($chat_id, $text = [], $multicurl = false)
       exit();
     }
 
-    if (isset($inline_keyboard)) {
-        $reply_content['reply_markup'] = ['inline_keyboard' => $inline_keyboard];
-    }
-
     // Encode data to json.
     $reply_json = json_encode($reply_content);
 
@@ -552,7 +548,6 @@ function delete_message($chat_id, $message_id, $multicurl = false)
         'method'     => 'deleteMessage',
         'chat_id'    => $chat_id,
         'message_id' => $message_id,
-        'parse_mode' => 'HTML',
     ];
     if(!is_valid_target($chat_id, $message_id)){
       info_log("{$chat_id}/{$message_id}", 'ERROR: Cannot delete invalid chat/message id:');
@@ -584,7 +579,6 @@ function get_chat($chat_id, $multicurl = false)
     $reply_content = [
         'method'     => 'getChat',
         'chat_id'    => $chat_id,
-        'parse_mode' => 'HTML',
     ];
     if(!is_valid_target($chat_id, null, false, true)){
       info_log($chat_id, 'ERROR: Cannot get invalid chat id:');
@@ -616,7 +610,6 @@ function get_admins($chat_id, $multicurl = false)
     $reply_content = [
         'method'     => 'getChatAdministrators',
         'chat_id'    => $chat_id,
-        'parse_mode' => 'HTML',
     ];
     if(!is_valid_target($chat_id, null, false, true)){
       info_log($chat_id, 'ERROR: Cannot get invalid chat id:');
@@ -650,7 +643,6 @@ function get_chatmember($chat_id, $user_id, $multicurl = false)
         'method'     => 'getChatMember',
         'chat_id'    => $chat_id,
         'user_id'    => $user_id,
-        'parse_mode' => 'HTML',
     ];
     if(!is_valid_target($chat_id, null, false, true)){
       info_log($chat_id, 'ERROR: Cannot get invalid chat id:');

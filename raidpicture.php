@@ -26,7 +26,13 @@ if(isset($_GET['debug']) && $_GET['debug'] == 1) {
 // Raid info
 if(array_key_exists('raid', $_GET) && $_GET['raid']!="") {
     $raid_id = preg_replace("/\D/","",$_GET['raid']);
-    $raid = get_raid_with_pokemon($raid_id);
+    $raid = get_raid($raid_id);
+    $q_img_url = my_query("SELECT img_url FROM gyms WHERE id='".$raid['gym_id']."' LIMIT 1")->fetch();
+    $q_pokemon_info = my_query(" SELECT pokemon.min_cp, pokemon.max_cp, pokemon.min_weather_cp, pokemon.max_weather_cp, pokemon.weather, pokemon.shiny, pokemon.asset_suffix 
+                    FROM pokemon
+                    WHERE pokedex_id = '".$raid['pokemon']."'
+                    AND pokemon_form_id = '".$raid['pokemon_form']."' LIMIT 1")->fetch();
+    $raid = array_merge($raid, $q_img_url, $q_pokemon_info);
 } else {
   info_log('Called without a raid id, things will fail');
   $raid = null;
@@ -74,13 +80,42 @@ $font_color = imagecolorallocate($canvas,$font_rgb[0],$font_rgb[1],$font_rgb[2])
 $transparent_rgb = [0,255,0];
 
 // Gym image
-$gym_url = $raid['img_url'];
-if (!empty($gym_url)) {
-  $img_gym = grab_img($gym_url);
-} else {
-    info_log('No gym img_url given, using default gym image');
+if($config->RAID_PICTURE_STORE_GYM_IMAGES_LOCALLY) {
+    if(substr($raid['img_url'], 0, 7) == 'file://') {
+        $gym_image_path = $raid['img_url'];
+        info_log($gym_image_path, 'Found an image imported via a portal bot: ');
+    }else {
+        $file_name = explode('/', $raid['img_url'])[3];
+        $gym_image_path = PORTAL_IMAGES_PATH .'/'. $file_name.'.png';
+        info_log($gym_image_path, 'Attempting to use locally stored gym image');
+        if(!file_exists($gym_image_path)) {
+            info_log($raid['img_url'], 'Gym image not found, attempting to downloading it from: ');
+            // Get file.
+            $data = curl_get_contents($raid['img_url']);
+
+            // Write to file.
+            if(empty($data)) {
+                info_log($raid['img_url'], 'Error downloading file, no data received!');
+            } else {
+                $file = fopen($gym_image_path, "w+");
+                fwrite($file, $data);
+                fflush($file);
+                fclose($file);
+            }
+        }
+    }
+    $img_gym = grab_img($gym_image_path);
+}else {
+    $gym_url = $raid['img_url'];
+    $img_gym = false;
+    if (!empty($gym_url)) {
+        $img_gym = grab_img($gym_url);
+    }
+}
+if($img_gym == false) {
+    info_log($img_gym, 'Loading the gym image failed, using default gym image');
     if(is_file($config->RAID_DEFAULT_PICTURE)) {
-      $img_gym = grab_img($config->RAID_DEFAULT_PICTURE);
+        $img_gym = grab_img($config->RAID_DEFAULT_PICTURE);
     } else {
         info_log($config->RAID_DEFAULT_PICTURE, 'Cannot read default gym image:');
         $img_gym = grab_img(IMAGES_PATH . "/gym_default.png");
@@ -189,16 +224,16 @@ if($time_now < $raid['end_time']) {
         $icon_suffix = $raid['asset_suffix'];
     }else {
         $pad_zeroes = '';
-        for ($o=3-strlen($raid['pokedex_id']);$o>0;$o--) {
+        for ($o=3-strlen($raid['pokemon']);$o>0;$o--) {
             $pad_zeroes .= 0;
         }
-        $icon_suffix = $pad_zeroes.$raid['pokedex_id'] . "_" . $raid['asset_suffix'];
+        $icon_suffix = $pad_zeroes.$raid['pokemon'] . "_" . $raid['asset_suffix'];
     }
 
     // Raid Egg
-    if($raid['pokedex_id'] > 9990) {
+    if($raid['pokemon'] > 9990) {
         // Getting the actual icon
-        $img_pokemon = grab_img(IMAGES_PATH . "/raid_eggs/pokemon_icon_" . $raid['pokedex_id'] . "_00.png");
+        $img_pokemon = grab_img(IMAGES_PATH . "/raid_eggs/pokemon_icon_" . $raid['pokemon'] . "_00.png");
 
         // Position and size of the picture
         $dst_x = $dst_y = 150;
@@ -208,7 +243,7 @@ if($time_now < $raid['end_time']) {
     //Pokemon
     } else {
         // Formatting the id from 1 digit to 3 digit (1 -> 001)
-        $pokemon_id = str_pad($raid['pokedex_id'], 3, '0', STR_PAD_LEFT);
+        $pokemon_id = str_pad($raid['pokemon'], 3, '0', STR_PAD_LEFT);
 
         // Getting the actual icon filename
         $p_icon = "pokemon_icon_" . $icon_suffix;
@@ -240,8 +275,8 @@ if($time_now < $raid['end_time']) {
           info_log($p_icon, 'Failed to find an image in any pokemon image collection for:');
           $img_fallback_file = null;
           // If we know the raid level, fallback to egg image
-          if(array_key_exists('raid_level', $raid) && $raid['raid_level'] !== null && $raid['raid_level'] != 0) {
-            $img_fallback_file = IMAGES_PATH . "/raid_eggs/pokemon_icon_999" . $raid['raid_level'] . "_00.png";
+          if(array_key_exists('level', $raid) && $raid['level'] !== null && $raid['level'] != 0) {
+            $img_fallback_file = IMAGES_PATH . "/raid_eggs/pokemon_icon_999" . $raid['level'] . "_00.png";
           } else {
             info_log('Unknown raid level, using fallback icon.');
             $img_fallback_file = $config->RAID_PICTURE_POKEMON_FALLBACK;
@@ -285,7 +320,7 @@ imagecopyresampled($canvas,$img_pokemon,$dst_x,$dst_y,0,0,$dst_w,$dst_h,$src_w,$
 
 
 // Ex-Raid?
-if($raid['raid_level'] == 'X') {
+if($raid['level'] == 'X') {
     $img_expass = grab_img(IMAGES_PATH . "/expass.png");
     imagesavealpha($img_expass,true);
 
@@ -376,7 +411,7 @@ for($y=0;$y<count($gym_name_lines);$y++){
     $max_y = max(array($box[1], $box[3], $box[5], $box[7]));
     // Get text width and height
     $textwidth = ($max_x - $min_x);
-    $textheight = ($max_y - $min_y);
+    $textheight = $fontsize_gym*1.1;
     // Calculate distance from left and top for positioning the gym name text.
     $gym_name_top = (($y+1)*($textheight))+($y*$spacing_gym);
     $gym_name_left = imagesx($mask) + (((imagesx($canvas) - imagesx($mask) - $spacing_right) - $textwidth)/2);
@@ -495,7 +530,7 @@ for($pa=0;$pa<$num_pokemon_lines;$pa++){
 }
 
 // Pokemon CP
-if($raid['pokedex_id'] < 9990) {
+if($raid['pokemon'] < 9990) {
     $cp_text_top = $poke_text_top+$text_size+$spacing;
     $cp_text = $raid['min_cp']." - ".$raid['max_cp'];
     $cp_text2 =  "(".$raid['min_weather_cp']."-".$raid['max_weather_cp'].")";
@@ -543,4 +578,3 @@ imagedestroy($img_gym);
 imagedestroy($img_pokemon);
 imagedestroy($canvas);
 ?>
-

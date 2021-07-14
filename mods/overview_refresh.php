@@ -34,6 +34,7 @@ foreach($overviews as $overview_row) {
             SELECT
               raids.id, raids.pokemon, raids.pokemon_form, raids.start_time, raids.end_time, raids.gym_id,
               MAX(cleanup.message_id) as message_id,
+              events.name as event_name,
               gyms.lat, gyms.lon, gyms.address, gyms.gym_name, gyms.ex_gym,
               TIME_FORMAT(TIMEDIFF(end_time, UTC_TIMESTAMP()) + INTERVAL 1 MINUTE, '%k:%i') AS t_left
             FROM      cleanup
@@ -41,9 +42,11 @@ foreach($overviews as $overview_row) {
             ON        raids.id = cleanup.raid_id
             LEFT JOIN gyms
             ON        raids.gym_id = gyms.id
-            WHERE     cleanup.chat_id = '{$overview_row['chat_id']}'
+            LEFT JOIN  events
+            ON         events.id = raids.event 
+	        WHERE     cleanup.chat_id = '{$overview_row['chat_id']}'
             AND       raids.end_time>UTC_TIMESTAMP()
-            GROUP BY  raids.id, raids.pokemon, raids.pokemon_form, raids.start_time, raids.end_time, raids.gym_id, gyms.lat, gyms.lon, gyms.address, gyms.gym_name, gyms.ex_gym
+            GROUP BY  raids.id, raids.pokemon, raids.pokemon_form, raids.start_time, raids.end_time, raids.gym_id, gyms.lat, gyms.lon, gyms.address, gyms.gym_name, gyms.ex_gym, events.name
             ORDER BY  raids.end_time ASC, gyms.gym_name
     ");
     // Write active raids to array

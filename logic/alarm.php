@@ -8,11 +8,16 @@
  */
 function alarm($raid, $user, $action, $info = '')
 {
+    // Get config
+    global $config;
     // Name of the user, which executes a status update
     $request = my_query("SELECT * FROM users WHERE user_id = {$user}");
     $answer_quests = $request->fetch();
+    // Get Trainername
+    $answer_quests = check_trainername($answer_quests);
     $username = $answer_quests['name'];
-
+    // Get Trainercode
+    $trainercode = $answer_quests['trainercode'];
     // Gym name and raid times
     $request = my_query("SELECT * FROM raids as r left join gyms as g on r.gym_id = g.id WHERE r.id = {$raid}");
     $answer = $request->fetch();
@@ -36,6 +41,7 @@ function alarm($raid, $user, $action, $info = '')
         $msg_text .= EMOJI_HERE . SP . $gymname . SP . '(' . $raidtimes . ')' . CR;
         $msg_text .= EMOJI_SINGLE . SP . $username . SP . '+' . $color . CR;
         $msg_text .= EMOJI_CLOCK . SP . check_time($attendtime);
+        $msg_text .= create_traincode_msg($attendtime,$trainercode);
         sendalarm($msg_text, $raid, $user);
 
     // Updating status - here or cancel
@@ -48,6 +54,7 @@ function alarm($raid, $user, $action, $info = '')
             $msg_text .= EMOJI_HERE . SP . $gymname . SP . '(' . $raidtimes . ')' . CR;
             $msg_text .= EMOJI_SINGLE . SP . $username . CR;
             $msg_text .= EMOJI_CLOCK . SP . check_time($attendtime);
+            $msg_text .= create_traincode_msg($attendtime,$trainercode);
             sendalarm($msg_text, $raid, $user);
         } else if($info == 'cancel') {
             debug_log('Alarm cancel: ' . $info);
@@ -70,6 +77,7 @@ function alarm($raid, $user, $action, $info = '')
             $msg_text .= EMOJI_HERE . SP . $gymname . SP . '(' . $raidtimes . ')' . CR;
             $msg_text .= EMOJI_SINGLE . SP . $username . CR;
             $msg_text .= EMOJI_CLOCK . SP . check_time($attendtime);
+            $msg_text .= create_traincode_msg($attendtime,$trainercode);
             sendalarm($msg_text, $raid, $user);
         // Any pokemon
         } else {
@@ -77,6 +85,7 @@ function alarm($raid, $user, $action, $info = '')
             $msg_text .= EMOJI_HERE . SP . $gymname . SP . '(' . $raidtimes . ')' . CR;
             $msg_text .= EMOJI_SINGLE . SP . $username . CR;
             $msg_text .= EMOJI_CLOCK . SP . check_time($attendtime);
+            $msg_text .= create_traincode_msg($attendtime,$trainercode);
             sendalarm($msg_text, $raid, $user);
         }
 
@@ -89,6 +98,7 @@ function alarm($raid, $user, $action, $info = '')
         $msg_text .= EMOJI_HERE . SP . $gymname . SP . '(' . $raidtimes . ')' . CR;
         $msg_text .= EMOJI_SINGLE . SP . $username . CR;
         $msg_text .= EMOJI_CLOCK . SP . check_time($attendtime);
+        $msg_text .= create_traincode_msg($attendtime,$trainercode);
         sendalarm($msg_text, $raid, $user);
 
     // New attendance
@@ -99,6 +109,7 @@ function alarm($raid, $user, $action, $info = '')
         $msg_text .= EMOJI_HERE . SP . $gymname . SP . '(' . $raidtimes . ')' . CR;
         $msg_text .= EMOJI_SINGLE . SP . $username . CR;
         $msg_text .= EMOJI_CLOCK . SP . check_time($info);
+        $msg_text .= create_traincode_msg($attendtime,$trainercode);
         sendalarm($msg_text, $raid, $user);
 
     // Attendance time change
@@ -109,6 +120,7 @@ function alarm($raid, $user, $action, $info = '')
         $msg_text .= EMOJI_HERE . SP . $gymname . SP . '(' . $raidtimes . ')' . CR;
         $msg_text .= EMOJI_SINGLE . SP . $username . CR;
         $msg_text .= EMOJI_CLOCK . SP . '<b>' . check_time($info) . '</b>';
+        $msg_text .= create_traincode_msg($attendtime,$trainercode);
         sendalarm($msg_text, $raid, $user);
 
     // Attendance from remote
@@ -119,6 +131,7 @@ function alarm($raid, $user, $action, $info = '')
         $msg_text .= EMOJI_REMOTE . SP . $gymname . SP . '(' . $raidtimes . ')' . CR;
         $msg_text .= EMOJI_SINGLE . SP . $username . CR;
         $msg_text .= EMOJI_CLOCK . SP . '<b>' . check_time($attendtime) . '</b>';
+        $msg_text .= create_traincode_msg($attendtime,$trainercode);
         sendalarm($msg_text, $raid, $user);
 
     // Attendance no longer from remote
@@ -138,6 +151,7 @@ function alarm($raid, $user, $action, $info = '')
         $msg_text .= EMOJI_HERE . SP . $gymname . SP . '(' . $raidtimes . ')' . CR;
         $msg_text .= EMOJI_SINGLE . SP . $username . CR;
         $msg_text .= EMOJI_CLOCK . SP . check_time($attendtime);
+        $msg_text .= create_traincode_msg($attendtime,$trainercode);
         sendalarm($msg_text, $raid, $user);
 
     // Group code public
@@ -173,8 +187,9 @@ function alarm($raid, $user, $action, $info = '')
         debug_log('Alarm invite begging changed: ' . $info);
         $msg_text = '<b>' . getTranslation('alert_want_invite') . '</b>' . CR;
         $msg_text .= EMOJI_WANT_INVITE . SP . $gymname . SP . '(' . $raidtimes . ')' . CR;
-        $msg_text .= EMOJI_SINGLE . SP . $username . CR;  // TODO: Add friend code here?
+        $msg_text .= EMOJI_SINGLE . SP . $username . CR;
         $msg_text .= EMOJI_CLOCK . SP . '<b>' . check_time($attendtime) . '</b>';
+        $msg_text .= create_traincode_msg($attendtime,$trainercode);
         sendalarm($msg_text, $raid, $user);
 
     // Attendance no longer from remote
@@ -182,10 +197,27 @@ function alarm($raid, $user, $action, $info = '')
         debug_log('Alarm invite begging changed: ' . $info);
         $msg_text = '<b>' . getTranslation('alert_no_want_invite') . '</b>' . CR;
         $msg_text .= EMOJI_WANT_INVITE . SP . $gymname . SP . '(' . $raidtimes . ')' . CR;
-        $msg_text .= EMOJI_SINGLE . SP . $username . CR;  // TODO: Add friend code here?
+        $msg_text .= EMOJI_SINGLE . SP . $username . CR;
         $msg_text .= EMOJI_CLOCK . SP . '<b>' . check_time($attendtime) . '</b>';
+        $msg_text .= create_traincode_msg($attendtime,$trainercode);
         sendalarm($msg_text, $raid, $user);
     }
+}
+
+/**
+ * Set Trainercode in alert message
+ * @param $attendtime
+ * @param $trainercode
+ * @return $message
+ */
+function create_traincode_msg($attendtime,$trainercode){
+  // Get config
+  global $config;
+  $message = '';
+  if($config->RAID_POLL_SHOW_TRAINERCODE == true && !is_null($trainercode)) {
+      $message = CR . EMOJI_FRIEND . SP . '<code>' . $trainercode . '</code>';
+  }
+  return $message;
 }
 
 ?>

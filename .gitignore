@@ -14,6 +14,7 @@ README.md.*
 /config/**
 !/config/*.json.example
 !/config/defaults-*.json
+!/config/*.php.example
 
 # Ignore several icon directories + their content
 # Ignoring directories itself allows to replace them with symlinks

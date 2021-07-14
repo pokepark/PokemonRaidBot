@@ -51,7 +51,7 @@ function send_response_vote($update, $data, $new = false, $text = true)
         $tg_json = array();
 
         // Send the message.
-        $tg_json[] = send_message($update['callback_query']['message']['chat']['id'], $msg . "\n", $keys, ['disable_web_page_preview' => 'true', 'reply_to_message_id' => $loc['result']['message_id']], true);
+        $tg_json[] = send_message($update['callback_query']['message']['chat']['id'], $msg . "\n", $keys, ['disable_web_page_preview' => 'true'], true);
 
         // Answer the callback.
         $tg_json[] = answerCallbackQuery($update['callback_query']['id'], $msg, true);

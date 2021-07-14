@@ -1,0 +1,1 @@
+INSERT INTO pokemon (pokedex_id, pokemon_name, pokemon_form_name, pokemon_form_id, asset_suffix, min_cp, max_cp, min_weather_cp, max_weather_cp, weather, shiny) VALUES ('229','Houndoom','mega','-1','51','1432','1505','1790','1882','812','0')

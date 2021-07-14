@@ -670,5 +670,17 @@
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
     "FI": "Muu"
+  },
+  "tutorial_vote_failed": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "You can't vote before going through the tutorial.",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Et voi äänestää ennen kuin olet käynyt ohjeen läpi."
   }
 }

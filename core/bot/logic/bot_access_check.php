@@ -7,7 +7,7 @@
  * @param $return_access
  * @return bool (if requested)
  */
-function bot_access_check($update, $permission = 'access-bot', $return_result = false, $return_access = false)
+function bot_access_check($update, $permission = 'access-bot', $return_result = false, $return_access = false, $new_user = false)
 {
     global $config;
     // Start with deny access
@@ -78,6 +78,8 @@ function bot_access_check($update, $permission = 'access-bot', $return_result = 
 
     // Record why access was granted
     $access_granted_by = false;
+
+    $access_file = $afile = "UNDEFINED";
 
     // Make sure we checked the BOT_ADMINS
     $admins_checked = false;
@@ -174,8 +176,13 @@ function bot_access_check($update, $permission = 'access-bot', $return_result = 
                         debug_log('Access file:');
                         debug_log($access_file);
 
+                        // If a config file matching users status was found, check if tutorial is forced
+                        if(is_array($access_file) && $config->TUTORIAL_MODE && $new_user && in_array("force-tutorial",$access_file)) {
+                            $access_file = NULL;
+                        }
+
                         // Check user status/role and permission to access the function
-                        if($chat_obj['result']['user']['id'] == $update_id && isset($access_file) && in_array($permission,$access_file)) {
+                        if($chat_obj['result']['user']['id'] == $update_id && is_array($access_file) && in_array($permission,$access_file)) {
                             debug_log($afile, 'Positive result on access check in file:');
                             debug_log($chat_object['result']['title'], 'Positive result on access check from chat:');
                             $allow_access = true;
@@ -219,7 +226,7 @@ function bot_access_check($update, $permission = 'access-bot', $return_result = 
                         $afile = 'access' . $chat;
 
                         // ID matching $chat, private chat type and permission to access the function
-                        if($chat_obj['result']['id'] == $update_id && $chat_obj['result']['type'] == 'private' && isset($access_file) && in_array($permission,$access_file)) {
+                        if($chat_obj['result']['id'] == $update_id && $chat_obj['result']['type'] == 'private' && is_array($access_file) && in_array($permission,$access_file)) {
                             debug_log($afile, 'Positive result on access check in file:');
                             debug_log($chat_object['result']['first_name'], 'Positive result on access check for user:');
                             $allow_access = true;

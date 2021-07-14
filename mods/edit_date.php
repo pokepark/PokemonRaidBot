@@ -15,8 +15,11 @@ $gym_id = explode(',',$data['id'])[0];
 
 // Get the argument.
 $arg = $data['arg'];
-$pokemon_id = explode(',', $arg)[0];
-$raid_time = explode(',', $arg)[1];
+$arg_data = explode(',', $arg);
+$event_id = $arg_data[0];
+$raid_level = $arg_data[1];
+$pokemon_id = $arg_data[2];
+$raid_time = $arg_data[3];
 
 // Init empty keys array and set keys count.
 $keys = [];
@@ -78,7 +81,7 @@ if (substr_count($raid_time, '-') == 2) {
     // Adding button to continue with next step in raid creation
     $keys[] = array(
         'text'          => getTranslation('next'),
-        'callback_data' => $id . ':edit_time:' . $pokemon_id . ',' . $utc_raid_time . ',X,0'
+        'callback_data' => $id . ':edit_time:' . $event_id . ','. $raid_level . ',' . $pokemon_id . ',' . $utc_raid_time . ',X,0'
     );
 
     // Set message.

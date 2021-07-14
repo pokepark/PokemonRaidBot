@@ -26,7 +26,7 @@ $keys = [
     [
         [
             'text'          => getTranslation('update_pokemon'),
-            'callback_data' => $raid['id'] . ':raid_edit_poke:' . $raid['pokemon'],
+            'callback_data' => $raid['id'] . ':raid_edit_poke:' . $raid['level'],
         ]
     ],
     [

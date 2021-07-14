@@ -19,7 +19,7 @@ function get_overview( $active_raids, $chat_id )
         $chat_username = $chat_obj['result']['username'];
         debug_log('Username of the chat: ' . $chat_obj['result']['username']);
     }
-    $chat_title = get_chat_title($chat_id);
+    $chat_title = get_chat_title(false, $chat_obj);
     $msg = '<b>' . getPublicTranslation('raid_overview_for_chat') . ' ' . $chat_title . ' ' . getPublicTranslation('from') . ' '. dt2time('now') . '</b>' .  CR . CR;
 
     $now = utcnow();
@@ -54,6 +54,10 @@ function get_overview( $active_raids, $chat_id )
             $msg .= !empty($chat_username) ? '<a href="https://t.me/' . $chat_username . '/' . $row['message_id'] . '">' . htmlspecialchars($gym) . '</a>' : $gym;
             $msg .= CR;
 
+            if(isset($row['event_name']) && $row['event_name'] != "") {
+                $msg .= "<b>" . $row['event_name'] . "</b>" . CR;
+            }
+
             // Raid has not started yet - adjust time left message
             if ($now < $start_time) {
                 $msg .= get_raid_times($row, true);
@@ -62,7 +66,10 @@ function get_overview( $active_raids, $chat_id )
                 // Add time left message.
                 $msg .= $pokemon . ' — <b>' . getPublicTranslation('still') . SP . $time_left . 'h</b>' . CR;
             }
-
+            $exclude_pokemon_sql = "";
+            if(!in_array($row['pokemon'], $GLOBALS['eggs'])) {
+                $exclude_pokemon_sql = 'AND (pokemon = \''.$row['pokemon'].'-'.$row['pokemon_form'].'\' or pokemon = \'0\')';
+            }
             // Count attendances
             $rs_att = my_query(
             "
@@ -80,6 +87,7 @@ function get_overview( $active_raids, $chat_id )
                           AND ( attend_time > UTC_TIMESTAMP() or attend_time = '" . ANYTIME . "' )
                           AND raid_done != 1
                           AND cancel != 1
+                          {$exclude_pokemon_sql}
                         ) as attendance
             LEFT JOIN   users
             ON          attendance.user_id = users.user_id

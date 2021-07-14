@@ -9,6 +9,9 @@ define('RAID_LEVEL_ALL', '654321');
 define('ANYTIME', '1970-01-01 00:00:00');
 define('ANYTIME_TS', preg_replace("/[^0-9]/", "", ANYTIME));
 
+// Ex-raid event ID
+defined('EVENT_ID_EX') 		or define('EVENT_ID_EX', '999');
+
 // Icons.
 defined('TEAM_B') 		or define('TEAM_B',        iconv('UCS-4LE', 'UTF-8', pack('V', 0x1F499)));
 defined('TEAM_R') 		or define('TEAM_R',        iconv('UCS-4LE', 'UTF-8', pack('V', 0x2764)));
@@ -30,6 +33,7 @@ defined('EMOJI_CLOCK')		or define('EMOJI_CLOCK',   iconv('UCS-4LE', 'UTF-8', pac
 defined('EMOJI_CAMERA')		or define('EMOJI_CAMERA',  iconv('UCS-4LE', 'UTF-8', pack('V', 0x1F4F7)));
 defined('EMOJI_ALARM')		or define('EMOJI_ALARM',   iconv('UCS-4LE', 'UTF-8', pack('V', 0x1F514)));
 defined('EMOJI_NO_ALARM')	or define('EMOJI_NO_ALARM',iconv('UCS-4LE', 'UTF-8', pack('V', 0x1F515)));
+defined('EMOJI_FRIEND')	    or define('EMOJI_FRIEND',       iconv('UCS-4LE', 'UTF-8', pack('V', 0x1F91D)));
 defined('EMOJI_WANT_INVITE')or define('EMOJI_WANT_INVITE',  iconv('UCS-4LE', 'UTF-8', pack('V', 0x1F4E5)));
  
 // Weather Icons.

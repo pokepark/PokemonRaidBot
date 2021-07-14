@@ -56,7 +56,7 @@ if($id == 0) {
 
     // Get pogoinfo data.
     debug_log('Getting raid bosses from pogoinfo repository now...');
-    $link = 'https://raw.githubusercontent.com/ccev/pogoinfo/info/raid-bosses.json';
+    $link = 'https://raw.githubusercontent.com/ccev/pogoinfo/v2/active/raids.json';
     $data = curl_get_contents($link);
     $data = json_decode($data,true);
 
@@ -118,27 +118,14 @@ if($id == 0) {
 
         // Get raid bosses for each raid level.
         foreach($tier_pokemon as $raid_id_form) {
-            $split_mon_id = explode('_', $raid_id_form);
-            if(!is_numeric($split_mon_id[0])) {
-                $query = my_query("SELECT pokedex_id, pokemon_form_id FROM pokemon WHERE asset_suffix='{$raid_id_form}' LIMIT 1");
-                $res = $query->fetch();
-                $dex_id = $res['pokedex_id'];
-                $dex_form = $res['pokemon_form_id'];
-            }else {
-                if(count($split_mon_id) == 3) {
-                    // Mega received
-                    $dex_id = intval($split_mon_id[0]);
-                    $dex_form = '-'.$split_mon_id[2];
-                }else {
-                    $dex_id = intval($split_mon_id[0]);
-                    $dex_form = intval($split_mon_id[1]);
-                    if($dex_form == 0) {
-                        $form_id_query = my_query("SELECT pokemon_form_id FROM pokemon WHERE pokedex_id='{$dex_id}' AND pokemon_form_name='normal' LIMIT 1");
-                        $form_res = $form_id_query->fetch();
-                        $dex_form = $form_res['pokemon_form_id'];
-                    }
-                }
+            $dex_id = $raid_id_form['id'];
+            $dex_form = 0;
+            if(isset($raid_id_form['temp_evolution_id'])) {
+                $dex_form = '-'.$raid_id_form['temp_evolution_id'];
+            }elseif(isset($raid_id_form['form'])) {
+                $dex_form = $raid_id_form['form'];
             }
+
             $pokemon_arg = $dex_id . $dex_form;
 
             // Get ID and form name used internally.
@@ -182,12 +169,10 @@ if($id == 0) {
                 // Save to database?
                 if(strpos($arg, 'save#') === 0) {
                     // Update raid level of pokemon
-                    $rs = my_query(
+                    my_query(
                             "
-                            UPDATE    pokemon
-                            SET       raid_level = '{$tier}'
-                            WHERE     pokedex_id = {$dex_id}
-                            AND       pokemon_form_id = '{$dex_form}'
+                            INSERT INTO raid_bosses (pokedex_id, pokemon_form_id, raid_level)
+                            VALUES ('{$dex_id}', '{$dex_form}', '{$tier}')
                             "
                         );
                     continue;
@@ -213,28 +198,6 @@ if($id == 0) {
             }
         }
 
-        // Add raid egg?
-        if($config->POKEBATTLER_IMPORT_DISABLE_REDUNDANT_EGGS && $bosscount <= 1) {
-            debug_log('Not creating egg for level ' . $tier . ' since there are not 2 or more bosses.');
-        } else {
-            // Add pokemon to message.
-            $translated_egg = getTranslation('egg_' . $tier);
-            $msg .= $translated_egg. SP . '(#999' . $tier . ')' . CR;
-            $egg_id = '999'  . $tier;
-            debug_log("Adding raid level {$tier} egg '{$translated_egg}' with id: . {$egg_id}");
-
-            // Save raid egg.
-            if(strpos($arg, 'save#') === 0) {
-                $re = my_query(
-                        "
-                        UPDATE    pokemon
-                        SET       raid_level = '{$tier}'
-                        WHERE     pokedex_id = {$egg_id}
-                        AND       pokemon_form_name = 'normal'
-                        "
-                    );
-            }
-        }
         $msg .= CR;
     }
 
@@ -246,10 +209,15 @@ if($id == 0) {
         // Get all pokemon with raid levels from database.
         $rs = my_query(
             "
-            SELECT    pokedex_id, pokemon_form_name, pokemon_form_id, raid_level
-            FROM      pokemon
-            WHERE     raid_level IN ({$clear})
-            ORDER BY  raid_level, pokedex_id, pokemon_form_name != 'normal', pokemon_form_name, pokemon_form_id
+            SELECT    raid_bosses.pokedex_id, raid_bosses.pokemon_form_id, raid_bosses.raid_level
+            FROM      raid_bosses
+            LEFT JOIN pokemon
+            ON        raid_bosses.pokedex_id = pokemon.pokedex_id
+            AND       raid_bosses.pokemon_form_id = pokemon.pokemon_form_id
+            WHERE     raid_bosses.raid_level IN ({$clear})
+            AND       raid_bosses.date_start = '1970-01-01 00:00:01'
+            AND       raid_bosses.date_end = '2038-01-19 03:14:07'
+            ORDER BY  raid_bosses.raid_level, raid_bosses.pokedex_id, pokemon.pokemon_form_name != 'normal', pokemon.pokemon_form_name, raid_bosses.pokemon_form_id
             "
         );
 
