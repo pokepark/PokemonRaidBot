@@ -1,11 +1,6 @@
 name: Docker image
 
-on:
-  push:
-    branches:
-      - main
-    tags:
-      - 'v*'
+on: push
 
 env:
   REGISTRY: ghcr.io
