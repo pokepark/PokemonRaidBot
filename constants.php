@@ -10,9 +10,9 @@ define('ANYTIME', '1970-01-01 00:00:00');
 define('ANYTIME_TS', preg_replace("/[^0-9]/", "", ANYTIME));
 
 // Icons.
-defined('TEAM_B') 		or define('TEAM_B',        iconv('UCS-4LE', 'UTF-8', pack('V', 0x2744)));
-defined('TEAM_R') 		or define('TEAM_R',        iconv('UCS-4LE', 'UTF-8', pack('V', 0x1F525)));
-defined('TEAM_Y') 		or define('TEAM_Y',        iconv('UCS-4LE', 'UTF-8', pack('V', 0x26A1)));
+defined('TEAM_B') 		or define('TEAM_B',        iconv('UCS-4LE', 'UTF-8', pack('V', 0x1F499)));
+defined('TEAM_R') 		or define('TEAM_R',        iconv('UCS-4LE', 'UTF-8', pack('V', 0x2764)));
+defined('TEAM_Y') 		or define('TEAM_Y',        iconv('UCS-4LE', 'UTF-8', pack('V', 0x1F49B)));
 defined('TEAM_CANCEL') 		or define('TEAM_CANCEL',   iconv('UCS-4LE', 'UTF-8', pack('V', 0x1F494)));
 defined('TEAM_DONE') 		or define('TEAM_DONE',     iconv('UCS-4LE', 'UTF-8', pack('V', 0x1F4AA)));
 defined('TEAM_UNKNOWN')		or define('TEAM_UNKNOWN',  iconv('UCS-4LE', 'UTF-8', pack('V', 0x1F680)));
