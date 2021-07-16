@@ -57,7 +57,7 @@ if($count_att > 0){
     // Write to log.
     debug_log($answer);
 }else{
-    $answer = null;
+    $answer = [];
 }
 
 $vote_time = $data['arg'];
