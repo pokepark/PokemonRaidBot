@@ -10,9 +10,9 @@ define('ANYTIME', '1970-01-01 00:00:00');
 define('ANYTIME_TS', preg_replace("/[^0-9]/", "", ANYTIME));
 
 // Icons.
-defined('TEAM_B') 		or define('TEAM_B',        iconv('UCS-4LE', 'UTF-8', pack('V', 0x1F499)));
-defined('TEAM_R') 		or define('TEAM_R',        iconv('UCS-4LE', 'UTF-8', pack('V', 0x2764)));
-defined('TEAM_Y') 		or define('TEAM_Y',        iconv('UCS-4LE', 'UTF-8', pack('V', 0x1F49B)));
+defined('TEAM_B') 		or define('TEAM_B',        iconv('UCS-4LE', 'UTF-8', pack('V', 0x2744)));
+defined('TEAM_R') 		or define('TEAM_R',        iconv('UCS-4LE', 'UTF-8', pack('V', 0x1F525)));
+defined('TEAM_Y') 		or define('TEAM_Y',        iconv('UCS-4LE', 'UTF-8', pack('V', 0x26A1)));
 defined('TEAM_CANCEL') 		or define('TEAM_CANCEL',   iconv('UCS-4LE', 'UTF-8', pack('V', 0x1F494)));
 defined('TEAM_DONE') 		or define('TEAM_DONE',     iconv('UCS-4LE', 'UTF-8', pack('V', 0x1F4AA)));
 defined('TEAM_UNKNOWN')		or define('TEAM_UNKNOWN',  iconv('UCS-4LE', 'UTF-8', pack('V', 0x1F680)));
@@ -30,6 +30,7 @@ defined('EMOJI_CLOCK')		or define('EMOJI_CLOCK',   iconv('UCS-4LE', 'UTF-8', pac
 defined('EMOJI_CAMERA')		or define('EMOJI_CAMERA',  iconv('UCS-4LE', 'UTF-8', pack('V', 0x1F4F7)));
 defined('EMOJI_ALARM')		or define('EMOJI_ALARM',   iconv('UCS-4LE', 'UTF-8', pack('V', 0x1F514)));
 defined('EMOJI_NO_ALARM')	or define('EMOJI_NO_ALARM',iconv('UCS-4LE', 'UTF-8', pack('V', 0x1F515)));
+defined('EMOJI_FRIEND')	    or define('EMOJI_FRIEND',       iconv('UCS-4LE', 'UTF-8', pack('V', 0x1F91D)));
 defined('EMOJI_WANT_INVITE')or define('EMOJI_WANT_INVITE',  iconv('UCS-4LE', 'UTF-8', pack('V', 0x1F4E5)));
  
 // Weather Icons.

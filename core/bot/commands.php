@@ -49,3 +49,8 @@ if (substr($update['message']['text'], 0, 1) == '/') {
         sendMessage($update['message']['chat']['id'], '<b>' . getTranslation('not_supported') . '</b>');
     }
 }
+// IF a Message type is private and there is no leading '/'
+else if($update['message']['chat']['type'] == 'private'){  
+    // Get Message from User sent to Bot and check what to do
+    evaluate_priv_message($update);
+}

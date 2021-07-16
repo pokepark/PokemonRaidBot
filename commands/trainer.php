@@ -16,25 +16,83 @@ $msg = '<b>' . getTranslation('trainerinfo_set_yours') . '</b>';
 $keys = [];
 
 // Create keys array.
-$keys = [
-/*    [
+if($config->CUSTOM_TRAINERNAME && $config->RAID_POLL_SHOW_TRAINERCODE){
+    $keys = [
         [
-            'text'          => getTranslation('name'),
-            'callback_data' => '0:trainer_name:0'
-        ]
-    ],
-*/
-    [
-	[
-            'text'          => getTranslation('team'),
-            'callback_data' => '0:trainer_team:0'
+            [
+                'text'          => getTranslation('name'),
+                'callback_data' => '0:trainer_name:0'
+            ],
+            [
+                'text'          => getTranslation('trainercode'),
+                'callback_data' => '0:trainer_code:0'
+            ]
         ],
-	[
-            'text'          => getTranslation('level'),
-            'callback_data' => '0:trainer_level:0'
+        [
+        [
+                'text'          => getTranslation('team'),
+                'callback_data' => '0:trainer_team:0'
+            ],
+        [
+                'text'          => getTranslation('level'),
+                'callback_data' => '0:trainer_level:0'
+            ]
         ]
-    ]
-];
+    ];
+}elseif($config->CUSTOM_TRAINERNAME){
+    $keys = [
+        [
+            [
+                'text'          => getTranslation('name'),
+                'callback_data' => '0:trainer_name:0'
+            ]
+        ],
+        [
+        [
+                'text'          => getTranslation('team'),
+                'callback_data' => '0:trainer_team:0'
+            ],
+        [
+                'text'          => getTranslation('level'),
+                'callback_data' => '0:trainer_level:0'
+            ]
+        ]
+    ];
+}elseif($config->RAID_POLL_SHOW_TRAINERCODE){
+    $keys = [
+        [
+            [
+                'text'          => getTranslation('trainercode'),
+                'callback_data' => '0:trainer_code:0'
+            ]
+        ],
+        [
+        [
+                'text'          => getTranslation('team'),
+                'callback_data' => '0:trainer_team:0'
+            ],
+        [
+                'text'          => getTranslation('level'),
+                'callback_data' => '0:trainer_level:0'
+            ]
+        ]
+    ];
+}else{
+    $keys = [
+        [
+        [
+                'text'          => getTranslation('team'),
+                'callback_data' => '0:trainer_team:0'
+            ],
+        [
+                'text'          => getTranslation('level'),
+                'callback_data' => '0:trainer_level:0'
+            ]
+        ]
+    ];
+}
+
+
 
 // Check access.
 $access = bot_access_check($update, 'trainer-share', true, true);

@@ -1036,7 +1036,9 @@ Example input: `/team Mystic`
 
 ## Command: /trainer
 
-The bot will give you a list of chats to share the trainer message which allows users to set team and level+/- data. You can also delete the shared trainer messages via the `/trainer` command.
+The bot will give you a list of chats to share the trainer message which allows users to set `team` and `level`+/- data. You can also delete the shared trainer messages via the `/trainer` command.
+With the option `trainercode` you can setup your friendscode, which will viewed inside the raidpoll, when you are asking for an invite.
+Your trainername can be changed with the option `name`, so that you can use a custom name inside the bot different to your telegram name.
 
 ## Command: /gym
 

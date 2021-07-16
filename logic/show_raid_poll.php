@@ -106,6 +106,9 @@ function show_raid_poll($raid)
         "
         SELECT          attendance.*,
                         users.name,
+                        users.nick,
+                        users.trainername,
+                        users.trainercode,
                         users.level,
                         users.team
         FROM            attendance
@@ -137,6 +140,8 @@ function show_raid_poll($raid)
     while ($attendance = $rs_attendance->fetch()) {
         // Attendance found
         $cnt_all = 1;
+        // Check trainername
+        $attendance = check_trainername($attendance);
 
         // Define variables if necessary
         if(!isset($cnt_array[$attendance['attend_time']][$attendance['pokemon']]))$cnt_array[$attendance['attend_time']][$attendance['pokemon']]['mystic']=$cnt_array[$attendance['attend_time']][$attendance['pokemon']]['valor']=$cnt_array[$attendance['attend_time']][$attendance['pokemon']]['instinct']=$cnt_array[$attendance['attend_time']][$attendance['pokemon']]['noteam']=$cnt_array[$attendance['attend_time']][$attendance['pokemon']]['late']=$cnt_array[$attendance['attend_time']][$attendance['pokemon']]['remote']=$cnt_array[$attendance['attend_time']][$attendance['pokemon']]['want_invite']=$cnt_array[$attendance['attend_time']][$attendance['pokemon']]['total']=0;
@@ -202,6 +207,9 @@ function show_raid_poll($raid)
         "
         SELECT          attendance.*,
                         users.name,
+                        users.nick,
+                        users.trainername,
+                        users.trainercode,
                         users.level,
                         users.team
         FROM            attendance
@@ -221,6 +229,7 @@ function show_raid_poll($raid)
     while ($attendance = $rs_attendance_want_inv->fetch()) {
         // Attendance found
         $cnt_want_invite = 1;
+        $attendance = check_trainername($attendance);
 
         // Fill attendance array with results
         $att_array[$attendance['attend_time']][$attendance['pokemon']][] = $attendance;
@@ -325,6 +334,8 @@ function show_raid_poll($raid)
                         $msg = raid_poll_message($msg, ($att_row['extra_valor']) ? ('+' . $att_row['extra_valor'] . TEAM_R . ' ') : '');
                         $msg = raid_poll_message($msg, ($att_row['extra_instinct']) ? ('+' . $att_row['extra_instinct'] . TEAM_Y . ' ') : '');
                         $msg = raid_poll_message($msg, ($att_row['want_invite']) ? (EMOJI_WANT_INVITE) : '');
+                        $msg = raid_poll_message($msg, ($config->RAID_POLL_SHOW_TRAINERCODE && $att_row['want_invite'] && !is_null($att_row['trainercode'])) ? $att_row['trainercode'] : '');
+
                         $msg = raid_poll_message($msg, CR);
 
                         // Prepare next result

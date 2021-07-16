@@ -33,37 +33,37 @@
     "PL":"Galarian"
   },
   "pokemon_form_mega":{
-    "NL":"TRANSLATE",
-    "DE":"TRANSLATE",
+    "NL":"Mega",
+    "DE":"Mega",
     "EN":"Mega",
-    "IT":"TRANSLATE",
-    "PT-BR":"TRANSLATE",
-    "RU":"TRANSLATE",
-    "NO":"TRANSLATE",
-    "FR":"TRANSLATE",
-    "PL":"TRANSLATE"
+    "IT":"Mega",
+    "PT-BR":"Mega",
+    "RU":"Mega",
+    "NO":"Mega",
+    "FR":"Mega",
+    "PL":"Mega"
   },
   "pokemon_form_mega_x":{
-    "NL":"TRANSLATE",
-    "DE":"TRANSLATE",
+    "NL":"Mega X",
+    "DE":"Mega X",
     "EN":"Mega",
-    "IT":"TRANSLATE",
-    "PT-BR":"TRANSLATE",
-    "RU":"TRANSLATE",
-    "NO":"TRANSLATE",
-    "FR":"TRANSLATE",
-    "PL":"TRANSLATE"
+    "IT":"Mega X",
+    "PT-BR":"Mega X",
+    "RU":"Mega X",
+    "NO":"Mega X",
+    "FR":"Mega X",
+    "PL":"Mega X"
   },
   "pokemon_form_mega_y":{
-    "NL":"TRANSLATE",
-    "DE":"TRANSLATE",
+    "NL":"Mega Y",
+    "DE":"Mega Y",
     "EN":"Mega",
-    "IT":"TRANSLATE",
-    "PT-BR":"TRANSLATE",
-    "RU":"TRANSLATE",
-    "NO":"TRANSLATE",
-    "FR":"TRANSLATE",
-    "PL":"TRANSLATE"
+    "IT":"Mega Y",
+    "PT-BR":"Mega Y",
+    "RU":"Mega Y",
+    "NO":"Mega Y",
+    "FR":"Mega Y",
+    "PL":"Mega Y"
   },
   "pokemon_form_armored":{
     "NL":"Armored",
