@@ -18,25 +18,18 @@ if($raid_id != 0) $sql_condition = 'AND raids.id = ' . $raid_id . ' LIMIT 1';
 else $sql_condition = 'AND  gyms.id = ' . $gym_id;
 $rs = my_query(
     "
-    SELECT     raids.*,
-               gyms.lat, gyms.lon, gyms.address, gyms.gym_name, gyms.ex_gym, gyms.gym_note,
-               users.name,
-               events.name as event_name, events.description as event_description, events.vote_key_mode as event_vote_key_mode, events.time_slots as event_time_slots, events.raid_duration as event_raid_duration, events.hide_raid_picture as event_hide_raid_picture,
-               TIME_FORMAT(TIMEDIFF(end_time, UTC_TIMESTAMP()) + INTERVAL 1 MINUTE, '%k:%i') AS t_left
+    SELECT     raids.id
     FROM       raids
     LEFT JOIN  gyms
     ON         raids.gym_id = gyms.id
-    LEFT JOIN  users
-    ON         raids.user_id = users.user_id
-    LEFT JOIN  events
-    ON         events.id = raids.event
     WHERE      end_time > UTC_TIMESTAMP() - INTERVAL 10 MINUTE
     {$sql_condition}
     "
 );
 if($rs->rowcount() == 1) {
     // Get the row.
-    $raid = $rs->fetch();
+    $raid_fetch = $rs->fetch();
+    $raid = get_raid($raid_fetch['id']);
 
     debug_log($raid);
 
@@ -79,11 +72,11 @@ if($rs->rowcount() == 1) {
     $msg = show_raid_poll_small($raid);
 
 }else {
-    $raids = $rs->fetchAll();
     $msg = getTranslation('list_all_active_raids').':'. CR;
     $keys = [];
     $i = 1;
-    foreach($raids as $raid) {
+    while($raid_fetch = $rs->fetch()) {
+        $raid = get_raid($raid_fetch['id']);
         $raid_pokemon_name = get_local_pokemon_name($raid['pokemon'], $raid['pokemon_form']);
         $msg .= '<b>' . $i .'. ' . $raid_pokemon_name . '</b>' . CR;
         if(!empty($raid['event_name'])) $msg .= $raid['event_name'] . CR;

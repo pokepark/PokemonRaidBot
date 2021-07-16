@@ -45,7 +45,7 @@ function get_raid($raid_id)
         $statement = $dbh->prepare( $query );
         $statement->execute([
           ':raid_level' => $raid['level'],
-          ':spawn' => $raid['spawn'],
+          ':spawn' => dt2time($raid['spawn'],'Y-m-d H:i'),
         ]);
         if($statement->rowCount() == 1) {
             $result = $statement->fetch();

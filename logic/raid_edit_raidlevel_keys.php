@@ -28,13 +28,14 @@ function raid_edit_raidlevel_keys($gym_id, $gym_first_letter, $admin_access = [f
         ON        pokemon.pokedex_id = raid_bosses.pokedex_id
         AND       pokemon.pokemon_form_id = raid_bosses.pokemon_form_id
         WHERE     (
-                  DATE_SUB(\'' . $time_now . '\', INTERVAL '.$config->RAID_EGG_DURATION.' MINUTE) > date_start 
-            AND   DATE_ADD(\'' . $time_now . '\', INTERVAL '.$config->RAID_DURATION.' MINUTE) < date_end
+                  DATE_SUB(\'' . $time_now . '\', INTERVAL '.$config->RAID_EGG_DURATION.' MINUTE) between date_start and date_end
+            OR    DATE_ADD(\'' . $time_now . '\', INTERVAL '.$config->RAID_DURATION.' MINUTE) between date_start and date_end
             )
             '.$query_event.'
         GROUP BY  raid_bosses.raid_level
         ORDER BY  FIELD(raid_bosses.raid_level, \'6\', \'5\', \'4\', \'3\', \'2\', \'1\', \'X\')
         ';
+        error_log($query);
     // Get all raid levels from database
     $rs = my_query($query);
 
