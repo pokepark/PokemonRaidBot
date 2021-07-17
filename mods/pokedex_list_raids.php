@@ -38,7 +38,7 @@ while ($pokemon = $rs->fetch()) {
 
     if($previous_date_start != $current_date_start || $previous_date_end != $current_date_end || $previous_date_start == 'FIRST_RUN') {
         // Formatting.
-        if($previous_date != 'FIRST_RUN') {
+        if($previous_date_start != 'FIRST_RUN') {
             $msg .= CR;
         }
         // Add header.
