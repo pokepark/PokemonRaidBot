@@ -35,7 +35,6 @@ function raid_edit_raidlevel_keys($gym_id, $gym_first_letter, $admin_access = [f
         GROUP BY  raid_bosses.raid_level
         ORDER BY  FIELD(raid_bosses.raid_level, \'6\', \'5\', \'4\', \'3\', \'2\', \'1\', \'X\')
         ';
-        error_log($query);
     // Get all raid levels from database
     $rs = my_query($query);
 
