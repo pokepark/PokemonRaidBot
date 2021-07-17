@@ -44,11 +44,12 @@ catch (PDOException $exception) {
     $dbh = null;
     exit;
 }
-
-if($res['want_invite'] == 1) {
-    alarm($data['id'],$update['callback_query']['from']['id'],'want_invite');
-} else {
-    alarm($data['id'],$update['callback_query']['from']['id'],'no_want_invite');
+if($statement_select->rowCount() > 0) {
+    if($res['want_invite'] == 1) {
+        alarm($data['id'],$update['callback_query']['from']['id'],'want_invite');
+    } else {
+        alarm($data['id'],$update['callback_query']['from']['id'],'no_want_invite');
+    }
 }
 
 // Send vote response.
