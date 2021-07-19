@@ -13,7 +13,7 @@ function active_raid_duplication_check($gym_id)
         "
         SELECT id, event
         FROM   raids
-        WHERE  end_time > (UTC_TIMESTAMP() - INTERVAL 10 MINUTE)
+        WHERE  end_time > (UTC_TIMESTAMP() - INTERVAL 5 MINUTE)
         AND    gym_id = {$gym_id}
         ORDER BY event IS NOT NULL
         "
