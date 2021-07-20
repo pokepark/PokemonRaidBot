@@ -520,17 +520,19 @@ Set `RAID_PICTURE_HIDE_LEVEL` to the raid levels (1-5 and X) for which the raid 
 
 Set `RAID_PICTURE_HIDE_POKEMON` to the pokedex IDs (e.g. '1' for Bulbasaur) or pokedex ID and form combined by a minus sign (e.g. '386-normal' for Deoxys Normal form or '386-attack' for Deoxys Attack form) for which the raid message is shared without the picture even if `RAID_PICTURE` is set to true.
 
-Set `RAID_PICTURE_BG_COLOR` to an RGB value to specify the background color of the raid picture.
+Set `RAID_PICTURE_BG_COLOR` to an RGB value to specify the background color of the raid picture. (Default: black)
 
-Set `RAID_PICTURE_TEXT_COLOR` to an RGB value to specify the text color of the raid picture.
+Set `RAID_PICTURE_TEXT_COLOR` to an RGB value to specify the text color of the raid picture. (Default: white)
 
 Set `RAID_PICTURE_STORE_GYM_IMAGES_LOCALLY` to `true` if you want to download and store gym photos in `images/gyms/` instead of fetching them from the cloud every time an image is created.
 
-Set `RAID_PICTURE_ICONS_WHITE` to true to use white weather icons for the raid picture. Especially useful when you defined a dark background color.
+Set `RAID_PICTURE_ICONS_WHITE` to `true` to use white weather icons for the raid picture. Especially useful when you defined a dark background color. (Default: true)
 
 Set `RAID_PICTURE_FILE_FORMAT` to either `gif`, `jpeg`, `jpg` or `png` to specify the output format of the raid picture.
 
 Set `RAID_DEFAULT_PICTURE` to the url of a default gym picture in case no gym image url is stored in the database for a gym.
+
+Set `RAID_PICTURE_POKEMON_TYPES` to `true` (default true) to display the type icons of the raid boss.
 
 ### Portal Import
 
@@ -1181,6 +1183,7 @@ Updates to the config file are NOT checked automatically. Therefore always check
 | RAID_PICTURE_ICONS_WHITE| Bool, use white icons in `RAID_PICTURE` instead of black |
 | RAID_PICTURE_POKEMON_ICONS| Comma separated list of pokemon icon sources (currently PokeMiners and ZeChrales) |
 | RAID_PICTURE_TEXT_COLOR| List of RGB values for `RAID_PICTURE` poll text color, e.g "255,255,255" for white |
+| RAID_PICTURE_POKEMON_TYPES| Bool, display the raid boss' typing icons in raid picture |
 | RAID_PICTURE_URL| Fully qualified HTTPS URL to `raidpicture.php`, for example `https://example.com/raidbot/raidpicture.php` |
 | RAID_PIN_MESSAGE| Custom message added to the bottom of the raid overview messages |
 | RAID_POLL_HIDE_BUTTONS_POKEMON| List of Pokemon dex IDs for which voting buttons are disabled |

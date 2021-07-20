@@ -5,17 +5,28 @@ include_once(__DIR__ . '/core/bot/db.php');
 
 // Init SQL stuff.
 $SQL = '';
-$SQL_UPDATE = '';
-$SQL_eggs = '';
 $SQL_file = __DIR__ . '/sql/game-master-raid-boss-pokedex.sql';
 $SQL_file_update = __DIR__ . '/sql/update-pokemon-table.sql';
 
-$proto_url = "https://raw.githubusercontent.com/Furtif/POGOProtos/master/base/vbase.proto";
+$proto_url = "https://raw.githubusercontent.com/Furtif/POGOProtos/master/base/v0.213.x_p_obf.proto";
 $game_master_url = "https://raw.githubusercontent.com/PokeMiners/game_masters/master/latest/latest.json";
 
 $update = false;
 if(isset($argv[1]) && $argv[1] == 'update') {
     $update = true;
+    $q = $dbh->query('SELECT pokedex_id, pokemon_form_name, shiny FROM pokemon');
+    $pokemon_shiny = [];
+    while($res = $q->fetch()) {
+        $pokemon_shiny[$res['pokedex_id']][$res['pokemon_form_name']] = $res['shiny'];
+    }
+}
+function check_shiny($pokemon_id,$pokemon_form){
+    global $update, $pokemon_shiny;
+    $shiny = 0;
+    if($update && isset($pokemon_shiny[$pokemon_id][$pokemon_form])) {
+        $shiny = $pokemon_shiny[$pokemon_id][$pokemon_form];
+    }
+    return $shiny;
 }
 
 //Parse the form ID's from pogoprotos
@@ -107,7 +118,6 @@ foreach($master as $row) {
                 // Ho-oh
                 $poke_name = str_replace('_','-',$poke_name);
 
-                $poke_shiny = 0;
                 if(!isset($form_ids[$form['form']])) {
                     $form_id = 0;
                 }else {
@@ -118,8 +128,7 @@ foreach($master as $row) {
                 $pokemon_array[$pokemon_id][$form_name] = [ 'pokemon_name'=>$poke_name,
                                                             'pokemon_form_name'=>$form_name,
                                                             'pokemon_form_id'=>$form_id,
-                                                            'asset_suffix'=>$form_asset_suffix,
-                                                            'shiny'=>$poke_shiny
+                                                            'asset_suffix'=>$form_asset_suffix
                                                           ];
                 
             }
@@ -144,14 +153,12 @@ foreach($master as $row) {
 
             $form_name = str_replace("TEMP_EVOLUTION_","",$form['temporaryEvolutionId']);
             $form_asset_suffix = $form['assetBundleValue'];
-            $poke_shiny = 0;
             $form_id = $mega_ids[$form_name];
 
             $pokemon_array[$pokemon_id][$form_name] = [ "pokemon_name"=>$poke_name,
                                                         "pokemon_form_name"=>$form_name,
                                                         "pokemon_form_id"=>$form_id,
-                                                        "asset_suffix"=>$form_asset_suffix,
-                                                        "shiny"=>$poke_shiny
+                                                        "asset_suffix"=>$form_asset_suffix
                                                       ];
         }
     }else if ($part[1] == "POKEMON" && $part[0][0] == "V" && isset($row['data']['pokemonSettings'])) {
@@ -174,13 +181,17 @@ foreach($master as $row) {
             $min_weather_cp = $CPs[2];
             $max_weather_cp = $CPs[3];
 
+            $type = strtolower(str_replace('POKEMON_TYPE_','', $row['data']['pokemonSettings']['type']));
+            $type2 = '';
+
             $weather = $weatherboost_table[$row['data']['pokemonSettings']['type']];
-            # Add type2 weather boost only if there is a second type and it's not the same weather as the first type!
-            if(
-              isset($row['data']['pokemonSettings']['type2'])
-              && $weatherboost_table[$row['data']['pokemonSettings']['type2']] != $weatherboost_table[$row['data']['pokemonSettings']['type']]
-            ) {
-                $weather .= $weatherboost_table[$row['data']['pokemonSettings']['type2']];
+            if(isset($row['data']['pokemonSettings']['type2'])) {
+                $type2 = strtolower(str_replace('POKEMON_TYPE_','', $row['data']['pokemonSettings']['type2']));
+
+                # Add type2 weather boost only if there is a second type and it's not the same weather as the first type!
+                if($weatherboost_table[$row['data']['pokemonSettings']['type2']] != $weatherboost_table[$row['data']['pokemonSettings']['type']]) {
+                    $weather .= $weatherboost_table[$row['data']['pokemonSettings']['type2']];
+                }
             }
             if(isset($pokemon_array[$pokemon_id][$form_name])) {
                 $pokemon_array[$pokemon_id][$form_name]['min_cp'] = $min_cp;
@@ -188,6 +199,9 @@ foreach($master as $row) {
                 $pokemon_array[$pokemon_id][$form_name]['min_weather_cp'] = $min_weather_cp;
                 $pokemon_array[$pokemon_id][$form_name]['max_weather_cp'] = $max_weather_cp;
                 $pokemon_array[$pokemon_id][$form_name]['weather'] = $weather;
+                $pokemon_array[$pokemon_id][$form_name]['type'] = $type;
+                $pokemon_array[$pokemon_id][$form_name]['type2'] = $type2;
+                $pokemon_array[$pokemon_id][$form_name]['shiny'] = check_shiny($pokemon_id,$form_name);
             }else {
                 // Fill data for Pokemon that have form data but no stats for forms specifically
                 foreach($pokemon_array[$pokemon_id] as $form=>$data) {
@@ -196,6 +210,9 @@ foreach($master as $row) {
                     $pokemon_array[$pokemon_id][$form]['min_weather_cp'] = $min_weather_cp;
                     $pokemon_array[$pokemon_id][$form]['max_weather_cp'] = $max_weather_cp;
                     $pokemon_array[$pokemon_id][$form]['weather'] = $weather;
+                    $pokemon_array[$pokemon_id][$form]['type'] = $type;
+                    $pokemon_array[$pokemon_id][$form]['type2'] = $type2;
+                    $pokemon_array[$pokemon_id][$form]['shiny'] = check_shiny($pokemon_id,$form_name);
                 }
             }
             if(isset($row['data']['pokemonSettings']['evolutionBranch'])) {
@@ -207,16 +224,20 @@ foreach($master as $row) {
                         $pokemon_array[$pokemon_id][$form_name]['min_weather_cp'] = $min_weather_cp;
                         $pokemon_array[$pokemon_id][$form_name]['max_weather_cp'] = $max_weather_cp;
                         $pokemon_array[$pokemon_id][$form_name]['weather'] = $weather;
+                        $pokemon_array[$pokemon_id][$form_name]['type'] = $type;
+                        $pokemon_array[$pokemon_id][$form_name]['type2'] = $type2;
+                        $pokemon_array[$pokemon_id][$form_name]['shiny'] = check_shiny($pokemon_id,$form_name);
                     }
                 }
             }
         }
-   }
+    }
 }
 // Save data to file.
 if(!empty($pokemon_array)) {
     if($update) {
-        $DEL = '';
+        $PRE = 'REPLACE INTO `pokemon`' . PHP_EOL;
+        $PRE .= '(pokedex_id, pokemon_name, pokemon_form_name, pokemon_form_id, asset_suffix, min_cp, max_cp, min_weather_cp, max_weather_cp, type, type2, weather, shiny) VALUES';
     }else {
         // Add eggs to SQL data.
         echo 'Adding raids eggs to pokemons' . PHP_EOL;
@@ -233,14 +254,20 @@ if(!empty($pokemon_array)) {
                                                         'max_cp'=>0,
                                                         'min_weather_cp'=>0,
                                                         'max_weather_cp'=>0,
+                                                        'type' => '',
+                                                        'type2' => '',
+                                                        'shiny'=>0,
                                                         'weather'=>0
                                                       ];
         }
         // Add delete command to SQL data.
         echo 'Adding delete sql command to the beginning' . PHP_EOL;
-        $DEL = 'DELETE FROM `pokemon`;' . PHP_EOL;
-        $DEL .= 'TRUNCATE `pokemon`;' . PHP_EOL;
+        $PRE = 'DELETE FROM `pokemon`;' . PHP_EOL;
+        $PRE .= 'TRUNCATE `pokemon`;' . PHP_EOL;
+        $PRE .= 'INSERT INTO `pokemon`' . PHP_EOL;
+        $PRE .= '(pokedex_id, pokemon_name, pokemon_form_name, pokemon_form_id, asset_suffix, min_cp, max_cp, min_weather_cp, max_weather_cp, type, type2, weather) VALUES';
     }
+    $i = 0;
     foreach($pokemon_array as $id => $forms) {
         $pokemon_id = $id;
         foreach($forms as $form=>$data) {
@@ -255,7 +282,8 @@ if(!empty($pokemon_array)) {
                 $poke_max_cp = $data['max_cp'];
                 $poke_min_weather_cp = $data['min_weather_cp'];
                 $poke_max_weather_cp = $data['max_weather_cp'];
-
+                $poke_type = $data['type'];
+                $poke_type2 = $data['type2'];
                 $poke_weather  = $data['weather'];
 
                 $poke_shiny = $data['shiny'];
@@ -266,11 +294,12 @@ if(!empty($pokemon_array)) {
                 }else {
                     $poke_form = strtolower($data['pokemon_form_name']);
                 }
-                $SQL .= "REPLACE INTO pokemon SET pokedex_id=\"${pokemon_id}\", pokemon_name=\"${poke_name}\", pokemon_form_name=\"${poke_form}\", pokemon_form_id=\"${form_id}\", asset_suffix=\"${form_asset_suffix}\", min_cp=\"${poke_min_cp}\", max_cp=\"${poke_max_cp}\", min_weather_cp=\"${poke_min_weather_cp}\", max_weather_cp=\"${poke_max_weather_cp}\", weather=\"${poke_weather}\", shiny=\"${poke_shiny}\";" . PHP_EOL;
+                if($i==0) $i=1; else $SQL .= ",";
+                $SQL .= PHP_EOL . "(\"${pokemon_id}\", \"${poke_name}\", \"${poke_form}\", \"${form_id}\", \"${form_asset_suffix}\", \"${poke_min_cp}\", \"${poke_max_cp}\", \"${poke_min_weather_cp}\", \"${poke_max_weather_cp}\", \"${poke_type}\", \"${poke_type2}\", \"${poke_weather}\"" . (($update) ? ", \"${poke_shiny}\"" : "") . ")";
             }
         }
     }
-    $SQL = $DEL . $SQL . $SQL_UPDATE;
+    $SQL = $PRE . $SQL .';';
     if($update) $save_file = $SQL_file_update;
     else $save_file = $SQL_file;
     echo 'Saving data to ' . $save_file . PHP_EOL;

@@ -1,916 +1,918 @@
 DELETE FROM `pokemon`;
 TRUNCATE `pokemon`;
-REPLACE INTO pokemon SET pokedex_id="1", pokemon_name="Bulbasaur", pokemon_form_name="normal", pokemon_form_id="163", asset_suffix="00", min_cp="590", max_cp="637", min_weather_cp="737", max_weather_cp="796", weather="125", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="1", pokemon_name="Bulbasaur", pokemon_form_name="fall_2019", pokemon_form_id="897", asset_suffix="pm0001_00_pgo_fall2019", min_cp="590", max_cp="637", min_weather_cp="737", max_weather_cp="796", weather="125", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="2", pokemon_name="Ivysaur", pokemon_form_name="normal", pokemon_form_id="166", asset_suffix="00", min_cp="912", max_cp="970", min_weather_cp="1141", max_weather_cp="1213", weather="125", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="3", pokemon_name="Venusaur", pokemon_form_name="normal", pokemon_form_id="169", asset_suffix="00", min_cp="1480", max_cp="1554", min_weather_cp="1851", max_weather_cp="1943", weather="125", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="3", pokemon_name="Venusaur", pokemon_form_name="copy_2019", pokemon_form_id="950", asset_suffix="pm0003_00_pgo_copy2019", min_cp="1480", max_cp="1554", min_weather_cp="1851", max_weather_cp="1943", weather="125", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="3", pokemon_name="Venusaur", pokemon_form_name="mega", pokemon_form_id="-1", asset_suffix="51", min_cp="1480", max_cp="1554", min_weather_cp="1851", max_weather_cp="1943", weather="125", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="4", pokemon_name="Charmander", pokemon_form_name="normal", pokemon_form_id="172", asset_suffix="00", min_cp="516", max_cp="560", min_weather_cp="645", max_weather_cp="700", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="4", pokemon_name="Charmander", pokemon_form_name="fall_2019", pokemon_form_id="896", asset_suffix="pm0004_00_pgo_fall2019", min_cp="516", max_cp="560", min_weather_cp="645", max_weather_cp="700", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="5", pokemon_name="Charmeleon", pokemon_form_name="normal", pokemon_form_id="175", asset_suffix="00", min_cp="887", max_cp="944", min_weather_cp="1109", max_weather_cp="1180", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="6", pokemon_name="Charizard", pokemon_form_name="normal", pokemon_form_id="178", asset_suffix="00", min_cp="1574", max_cp="1651", min_weather_cp="1968", max_weather_cp="2064", weather="126", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="6", pokemon_name="Charizard", pokemon_form_name="copy_2019", pokemon_form_id="951", asset_suffix="pm0006_00_pgo_copy2019", min_cp="1574", max_cp="1651", min_weather_cp="1968", max_weather_cp="2064", weather="126", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="6", pokemon_name="Charizard", pokemon_form_name="mega_x", pokemon_form_id="-2", asset_suffix="51", min_cp="1574", max_cp="1651", min_weather_cp="1968", max_weather_cp="2064", weather="126", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="6", pokemon_name="Charizard", pokemon_form_name="mega_y", pokemon_form_id="-3", asset_suffix="52", min_cp="1574", max_cp="1651", min_weather_cp="1968", max_weather_cp="2064", weather="126", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="7", pokemon_name="Squirtle", pokemon_form_name="normal", pokemon_form_id="181", asset_suffix="00", min_cp="497", max_cp="540", min_weather_cp="621", max_weather_cp="675", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="7", pokemon_name="Squirtle", pokemon_form_name="fall_2019", pokemon_form_id="895", asset_suffix="pm0007_00_pgo_fall2019", min_cp="497", max_cp="540", min_weather_cp="621", max_weather_cp="675", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="8", pokemon_name="Wartortle", pokemon_form_name="normal", pokemon_form_id="184", asset_suffix="00", min_cp="795", max_cp="850", min_weather_cp="995", max_weather_cp="1063", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="9", pokemon_name="Blastoise", pokemon_form_name="normal", pokemon_form_id="187", asset_suffix="00", min_cp="1338", max_cp="1409", min_weather_cp="1673", max_weather_cp="1761", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="9", pokemon_name="Blastoise", pokemon_form_name="copy_2019", pokemon_form_id="952", asset_suffix="pm0009_00_pgo_copy2019", min_cp="1338", max_cp="1409", min_weather_cp="1673", max_weather_cp="1761", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="9", pokemon_name="Blastoise", pokemon_form_name="mega", pokemon_form_id="-1", asset_suffix="51", min_cp="1338", max_cp="1409", min_weather_cp="1673", max_weather_cp="1761", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="10", pokemon_name="Caterpie", pokemon_form_name="normal", pokemon_form_id="953", asset_suffix="00", min_cp="219", max_cp="249", min_weather_cp="274", max_weather_cp="312", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="11", pokemon_name="Metapod", pokemon_form_name="normal", pokemon_form_id="956", asset_suffix="00", min_cp="225", max_cp="257", min_weather_cp="282", max_weather_cp="321", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="12", pokemon_name="Butterfree", pokemon_form_name="normal", pokemon_form_id="959", asset_suffix="00", min_cp="983", max_cp="1044", min_weather_cp="1229", max_weather_cp="1305", weather="36", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="13", pokemon_name="Weedle", pokemon_form_name="normal", pokemon_form_id="616", asset_suffix="00", min_cp="230", max_cp="260", min_weather_cp="287", max_weather_cp="325", weather="35", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="14", pokemon_name="Kakuna", pokemon_form_name="normal", pokemon_form_id="619", asset_suffix="00", min_cp="216", max_cp="246", min_weather_cp="270", max_weather_cp="308", weather="35", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="15", pokemon_name="Beedrill", pokemon_form_name="normal", pokemon_form_id="622", asset_suffix="00", min_cp="994", max_cp="1054", min_weather_cp="1242", max_weather_cp="1318", weather="35", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="15", pokemon_name="Beedrill", pokemon_form_name="mega", pokemon_form_id="-1", asset_suffix="51", min_cp="994", max_cp="1054", min_weather_cp="1242", max_weather_cp="1318", weather="35", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="16", pokemon_name="Pidgey", pokemon_form_name="normal", pokemon_form_id="962", asset_suffix="00", min_cp="352", max_cp="388", min_weather_cp="440", max_weather_cp="486", weather="46", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="17", pokemon_name="Pidgeotto", pokemon_form_name="normal", pokemon_form_id="965", asset_suffix="00", min_cp="633", max_cp="682", min_weather_cp="792", max_weather_cp="853", weather="46", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="18", pokemon_name="Pidgeot", pokemon_form_name="normal", pokemon_form_id="968", asset_suffix="00", min_cp="1151", max_cp="1216", min_weather_cp="1439", max_weather_cp="1521", weather="46", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="18", pokemon_name="Pidgeot", pokemon_form_name="mega", pokemon_form_id="-1", asset_suffix="51", min_cp="1151", max_cp="1216", min_weather_cp="1439", max_weather_cp="1521", weather="46", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="19", pokemon_name="Rattata", pokemon_form_name="normal", pokemon_form_id="45", asset_suffix="00", min_cp="381", max_cp="419", min_weather_cp="477", max_weather_cp="524", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="19", pokemon_name="Rattata", pokemon_form_name="alola", pokemon_form_id="46", asset_suffix="61", min_cp="381", max_cp="419", min_weather_cp="477", max_weather_cp="524", weather="84", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="20", pokemon_name="Raticate", pokemon_form_name="normal", pokemon_form_id="47", asset_suffix="00", min_cp="930", max_cp="989", min_weather_cp="1163", max_weather_cp="1236", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="20", pokemon_name="Raticate", pokemon_form_name="alola", pokemon_form_id="48", asset_suffix="61", min_cp="915", max_cp="974", min_weather_cp="1144", max_weather_cp="1217", weather="84", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="21", pokemon_name="Spearow", pokemon_form_name="normal", pokemon_form_id="971", asset_suffix="00", min_cp="415", max_cp="456", min_weather_cp="519", max_weather_cp="570", weather="46", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="22", pokemon_name="Fearow", pokemon_form_name="normal", pokemon_form_id="974", asset_suffix="00", min_cp="1077", max_cp="1141", min_weather_cp="1347", max_weather_cp="1426", weather="46", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="23", pokemon_name="Ekans", pokemon_form_name="normal", pokemon_form_id="697", asset_suffix="00", min_cp="487", max_cp="529", min_weather_cp="609", max_weather_cp="662", weather="5", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="24", pokemon_name="Arbok", pokemon_form_name="normal", pokemon_form_id="700", asset_suffix="00", min_cp="1035", max_cp="1097", min_weather_cp="1295", max_weather_cp="1372", weather="5", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="25", pokemon_name="Pikachu", pokemon_form_name="normal", pokemon_form_id="598", asset_suffix="00", min_cp="493", max_cp="536", min_weather_cp="616", max_weather_cp="670", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="25", pokemon_name="Pikachu", pokemon_form_name="fall_2019", pokemon_form_id="894", asset_suffix="pm0025_00_pgo_fall2019", min_cp="493", max_cp="536", min_weather_cp="616", max_weather_cp="670", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="25", pokemon_name="Pikachu", pokemon_form_name="copy_2019", pokemon_form_id="949", asset_suffix="pm0025_00_pgo_copy2019", min_cp="493", max_cp="536", min_weather_cp="616", max_weather_cp="670", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="25", pokemon_name="Pikachu", pokemon_form_name="vs_2019", pokemon_form_id="901", asset_suffix="16", min_cp="493", max_cp="536", min_weather_cp="616", max_weather_cp="670", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="25", pokemon_name="Pikachu", pokemon_form_name="costume_2020", pokemon_form_id="2332", asset_suffix="pm0025_00_pgo_4thanniversary", min_cp="493", max_cp="536", min_weather_cp="616", max_weather_cp="670", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="25", pokemon_name="Pikachu", pokemon_form_name="adventure_hat_2020", pokemon_form_id="2669", asset_suffix="pm0025_00_pgo_movie2020", min_cp="493", max_cp="536", min_weather_cp="616", max_weather_cp="670", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="25", pokemon_name="Pikachu", pokemon_form_name="winter_2020", pokemon_form_id="2670", asset_suffix="pm0025_00_pgo_winter2020", min_cp="493", max_cp="536", min_weather_cp="616", max_weather_cp="670", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="25", pokemon_name="Pikachu", pokemon_form_name="kariyushi", pokemon_form_id="2675", asset_suffix="pm0025_00_pikachu_pgo_kariyushi", min_cp="493", max_cp="536", min_weather_cp="616", max_weather_cp="670", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="25", pokemon_name="Pikachu", pokemon_form_name="pop_star", pokemon_form_id="2676", asset_suffix="pm0025_00_pgo_popstar", min_cp="493", max_cp="536", min_weather_cp="616", max_weather_cp="670", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="25", pokemon_name="Pikachu", pokemon_form_name="rock_star", pokemon_form_id="2677", asset_suffix="pm0025_00_pgo_rockstar", min_cp="493", max_cp="536", min_weather_cp="616", max_weather_cp="670", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="25", pokemon_name="Pikachu", pokemon_form_name="flying_5th_anniv", pokemon_form_id="2678", asset_suffix="pm0025_00_pgo_5thanniversary", min_cp="493", max_cp="536", min_weather_cp="616", max_weather_cp="670", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="26", pokemon_name="Raichu", pokemon_form_name="normal", pokemon_form_id="49", asset_suffix="00", min_cp="1180", max_cp="1247", min_weather_cp="1476", max_weather_cp="1558", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="26", pokemon_name="Raichu", pokemon_form_name="alola", pokemon_form_id="50", asset_suffix="61", min_cp="1238", max_cp="1306", min_weather_cp="1548", max_weather_cp="1633", weather="36", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="27", pokemon_name="Sandshrew", pokemon_form_name="normal", pokemon_form_id="51", asset_suffix="00", min_cp="670", max_cp="720", min_weather_cp="838", max_weather_cp="901", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="27", pokemon_name="Sandshrew", pokemon_form_name="alola", pokemon_form_id="52", asset_suffix="61", min_cp="688", max_cp="739", min_weather_cp="860", max_weather_cp="924", weather="7", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="28", pokemon_name="Sandslash", pokemon_form_name="normal", pokemon_form_id="53", asset_suffix="00", min_cp="1288", max_cp="1356", min_weather_cp="1610", max_weather_cp="1696", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="28", pokemon_name="Sandslash", pokemon_form_name="alola", pokemon_form_id="54", asset_suffix="61", min_cp="1320", max_cp="1390", min_weather_cp="1650", max_weather_cp="1737", weather="7", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="29", pokemon_name="Nidoran♀", pokemon_form_name="normal", pokemon_form_id="776", asset_suffix="00", min_cp="425", max_cp="466", min_weather_cp="532", max_weather_cp="583", weather="5", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="30", pokemon_name="Nidorina", pokemon_form_name="normal", pokemon_form_id="779", asset_suffix="00", min_cp="697", max_cp="748", min_weather_cp="871", max_weather_cp="935", weather="5", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="31", pokemon_name="Nidoqueen", pokemon_form_name="normal", pokemon_form_id="782", asset_suffix="00", min_cp="1351", max_cp="1421", min_weather_cp="1689", max_weather_cp="1777", weather="512", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="32", pokemon_name="Nidoran♂", pokemon_form_name="normal", pokemon_form_id="776", asset_suffix="00", min_cp="450", max_cp="491", min_weather_cp="562", max_weather_cp="614", weather="5", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="33", pokemon_name="Nidorino", pokemon_form_name="normal", pokemon_form_id="785", asset_suffix="00", min_cp="743", max_cp="796", min_weather_cp="929", max_weather_cp="995", weather="5", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="34", pokemon_name="Nidoking", pokemon_form_name="normal", pokemon_form_id="788", asset_suffix="00", min_cp="1395", max_cp="1466", min_weather_cp="1743", max_weather_cp="1833", weather="512", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="35", pokemon_name="Clefairy", pokemon_form_name="normal", pokemon_form_id="981", asset_suffix="00", min_cp="611", max_cp="660", min_weather_cp="764", max_weather_cp="825", weather="5", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="36", pokemon_name="Clefable", pokemon_form_name="normal", pokemon_form_id="984", asset_suffix="00", min_cp="1322", max_cp="1392", min_weather_cp="1653", max_weather_cp="1741", weather="5", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="37", pokemon_name="Vulpix", pokemon_form_name="normal", pokemon_form_id="55", asset_suffix="00", min_cp="463", max_cp="504", min_weather_cp="579", max_weather_cp="631", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="37", pokemon_name="Vulpix", pokemon_form_name="alola", pokemon_form_id="56", asset_suffix="61", min_cp="463", max_cp="504", min_weather_cp="579", max_weather_cp="631", weather="7", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="38", pokemon_name="Ninetales", pokemon_form_name="normal", pokemon_form_id="57", asset_suffix="00", min_cp="1235", max_cp="1302", min_weather_cp="1544", max_weather_cp="1628", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="38", pokemon_name="Ninetales", pokemon_form_name="alola", pokemon_form_id="58", asset_suffix="61", min_cp="1251", max_cp="1319", min_weather_cp="1564", max_weather_cp="1649", weather="75", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="39", pokemon_name="Jigglypuff", pokemon_form_name="normal", pokemon_form_id="987", asset_suffix="00", min_cp="370", max_cp="413", min_weather_cp="463", max_weather_cp="517", weather="45", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="40", pokemon_name="Wigglytuff", pokemon_form_name="normal", pokemon_form_id="990", asset_suffix="00", min_cp="1034", max_cp="1101", min_weather_cp="1293", max_weather_cp="1376", weather="45", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="41", pokemon_name="Zubat", pokemon_form_name="normal", pokemon_form_id="157", asset_suffix="00", min_cp="344", max_cp="381", min_weather_cp="430", max_weather_cp="476", weather="56", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="42", pokemon_name="Golbat", pokemon_form_name="normal", pokemon_form_id="160", asset_suffix="00", min_cp="1066", max_cp="1129", min_weather_cp="1333", max_weather_cp="1412", weather="56", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="43", pokemon_name="Oddish", pokemon_form_name="normal", pokemon_form_id="265", asset_suffix="00", min_cp="652", max_cp="702", min_weather_cp="816", max_weather_cp="877", weather="125", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="44", pokemon_name="Gloom", pokemon_form_name="normal", pokemon_form_id="268", asset_suffix="00", min_cp="902", max_cp="960", min_weather_cp="1128", max_weather_cp="1200", weather="125", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="45", pokemon_name="Vileplume", pokemon_form_name="normal", pokemon_form_id="271", asset_suffix="00", min_cp="1391", max_cp="1462", min_weather_cp="1739", max_weather_cp="1828", weather="125", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="46", pokemon_name="Paras", pokemon_form_name="normal", pokemon_form_id="993", asset_suffix="00", min_cp="536", max_cp="581", min_weather_cp="671", max_weather_cp="727", weather="312", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="47", pokemon_name="Parasect", pokemon_form_name="normal", pokemon_form_id="996", asset_suffix="00", min_cp="1002", max_cp="1062", min_weather_cp="1252", max_weather_cp="1328", weather="312", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="48", pokemon_name="Venonat", pokemon_form_name="normal", pokemon_form_id="259", asset_suffix="00", min_cp="528", max_cp="573", min_weather_cp="661", max_weather_cp="717", weather="35", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="49", pokemon_name="Venomoth", pokemon_form_name="normal", pokemon_form_id="262", asset_suffix="00", min_cp="1125", max_cp="1190", min_weather_cp="1407", max_weather_cp="1487", weather="35", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="50", pokemon_name="Diglett", pokemon_form_name="normal", pokemon_form_id="59", asset_suffix="00", min_cp="349", max_cp="386", min_weather_cp="437", max_weather_cp="483", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="50", pokemon_name="Diglett", pokemon_form_name="alola", pokemon_form_id="60", asset_suffix="61", min_cp="352", max_cp="389", min_weather_cp="440", max_weather_cp="486", weather="127", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="51", pokemon_name="Dugtrio", pokemon_form_name="normal", pokemon_form_id="61", asset_suffix="00", min_cp="833", max_cp="889", min_weather_cp="1042", max_weather_cp="1112", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="51", pokemon_name="Dugtrio", pokemon_form_name="alola", pokemon_form_id="62", asset_suffix="61", min_cp="1021", max_cp="1084", min_weather_cp="1276", max_weather_cp="1355", weather="127", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="52", pokemon_name="Meowth", pokemon_form_name="normal", pokemon_form_id="63", asset_suffix="00", min_cp="389", max_cp="427", min_weather_cp="486", max_weather_cp="534", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="52", pokemon_name="Meowth", pokemon_form_name="alola", pokemon_form_id="64", asset_suffix="61", min_cp="416", max_cp="455", min_weather_cp="520", max_weather_cp="569", weather="8", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="52", pokemon_name="Meowth", pokemon_form_name="galarian", pokemon_form_id="2335", asset_suffix="31", min_cp="546", max_cp="591", min_weather_cp="682", max_weather_cp="739", weather="7", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="53", pokemon_name="Persian", pokemon_form_name="normal", pokemon_form_id="65", asset_suffix="00", min_cp="907", max_cp="965", min_weather_cp="1134", max_weather_cp="1206", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="53", pokemon_name="Persian", pokemon_form_name="alola", pokemon_form_id="66", asset_suffix="61", min_cp="952", max_cp="1012", min_weather_cp="1191", max_weather_cp="1265", weather="8", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="54", pokemon_name="Psyduck", pokemon_form_name="normal", pokemon_form_id="286", asset_suffix="00", min_cp="585", max_cp="632", min_weather_cp="731", max_weather_cp="790", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="55", pokemon_name="Golduck", pokemon_form_name="normal", pokemon_form_id="289", asset_suffix="00", min_cp="1330", max_cp="1400", min_weather_cp="1663", max_weather_cp="1750", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="56", pokemon_name="Mankey", pokemon_form_name="normal", pokemon_form_id="999", asset_suffix="00", min_cp="616", max_cp="665", min_weather_cp="770", max_weather_cp="832", weather="5", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="57", pokemon_name="Primeape", pokemon_form_name="normal", pokemon_form_id="1002", asset_suffix="00", min_cp="1239", max_cp="1307", min_weather_cp="1549", max_weather_cp="1634", weather="5", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="58", pokemon_name="Growlithe", pokemon_form_name="normal", pokemon_form_id="280", asset_suffix="00", min_cp="660", max_cp="710", min_weather_cp="825", max_weather_cp="888", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="59", pokemon_name="Arcanine", pokemon_form_name="normal", pokemon_form_id="283", asset_suffix="00", min_cp="1652", max_cp="1731", min_weather_cp="2066", max_weather_cp="2164", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="60", pokemon_name="Poliwag", pokemon_form_name="normal", pokemon_form_id="235", asset_suffix="00", min_cp="433", max_cp="473", min_weather_cp="541", max_weather_cp="592", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="61", pokemon_name="Poliwhirl", pokemon_form_name="normal", pokemon_form_id="238", asset_suffix="00", min_cp="757", max_cp="811", min_weather_cp="947", max_weather_cp="1013", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="62", pokemon_name="Poliwrath", pokemon_form_name="normal", pokemon_form_id="241", asset_suffix="00", min_cp="1405", max_cp="1477", min_weather_cp="1757", max_weather_cp="1847", weather="35", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="63", pokemon_name="Abra", pokemon_form_name="normal", pokemon_form_id="304", asset_suffix="00", min_cp="712", max_cp="767", min_weather_cp="890", max_weather_cp="958", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="64", pokemon_name="Kadabra", pokemon_form_name="normal", pokemon_form_id="307", asset_suffix="00", min_cp="1109", max_cp="1176", min_weather_cp="1387", max_weather_cp="1471", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="65", pokemon_name="Alakazam", pokemon_form_name="normal", pokemon_form_id="310", asset_suffix="00", min_cp="1666", max_cp="1747", min_weather_cp="2083", max_weather_cp="2184", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="66", pokemon_name="Machop", pokemon_form_name="normal", pokemon_form_id="809", asset_suffix="00", min_cp="678", max_cp="730", min_weather_cp="848", max_weather_cp="913", weather="5", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="67", pokemon_name="Machoke", pokemon_form_name="normal", pokemon_form_id="812", asset_suffix="00", min_cp="1096", max_cp="1160", min_weather_cp="1370", max_weather_cp="1451", weather="5", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="68", pokemon_name="Machamp", pokemon_form_name="normal", pokemon_form_id="815", asset_suffix="00", min_cp="1667", max_cp="1746", min_weather_cp="2084", max_weather_cp="2183", weather="5", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="69", pokemon_name="Bellsprout", pokemon_form_name="normal", pokemon_form_id="664", asset_suffix="00", min_cp="543", max_cp="590", min_weather_cp="679", max_weather_cp="738", weather="125", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="70", pokemon_name="Weepinbell", pokemon_form_name="normal", pokemon_form_id="667", asset_suffix="00", min_cp="862", max_cp="921", min_weather_cp="1078", max_weather_cp="1151", weather="125", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="71", pokemon_name="Victreebel", pokemon_form_name="normal", pokemon_form_id="670", asset_suffix="00", min_cp="1318", max_cp="1389", min_weather_cp="1648", max_weather_cp="1736", weather="125", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="72", pokemon_name="Tentacool", pokemon_form_name="normal", pokemon_form_id="1005", asset_suffix="00", min_cp="549", max_cp="594", min_weather_cp="686", max_weather_cp="743", weather="35", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="73", pokemon_name="Tentacruel", pokemon_form_name="normal", pokemon_form_id="1008", asset_suffix="00", min_cp="1314", max_cp="1384", min_weather_cp="1643", max_weather_cp="1730", weather="35", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="74", pokemon_name="Geodude", pokemon_form_name="normal", pokemon_form_id="67", asset_suffix="00", min_cp="688", max_cp="739", min_weather_cp="860", max_weather_cp="923", weather="412", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="74", pokemon_name="Geodude", pokemon_form_name="alola", pokemon_form_id="68", asset_suffix="61", min_cp="688", max_cp="739", min_weather_cp="860", max_weather_cp="923", weather="43", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="75", pokemon_name="Graveler", pokemon_form_name="normal", pokemon_form_id="69", asset_suffix="00", min_cp="1023", max_cp="1084", min_weather_cp="1278", max_weather_cp="1355", weather="412", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="75", pokemon_name="Graveler", pokemon_form_name="alola", pokemon_form_id="70", asset_suffix="61", min_cp="1023", max_cp="1084", min_weather_cp="1278", max_weather_cp="1355", weather="43", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="76", pokemon_name="Golem", pokemon_form_name="normal", pokemon_form_id="71", asset_suffix="00", min_cp="1608", max_cp="1685", min_weather_cp="2010", max_weather_cp="2106", weather="412", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="76", pokemon_name="Golem", pokemon_form_name="alola", pokemon_form_id="72", asset_suffix="61", min_cp="1608", max_cp="1685", min_weather_cp="2010", max_weather_cp="2106", weather="43", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="77", pokemon_name="Ponyta", pokemon_form_name="normal", pokemon_form_id="1011", asset_suffix="00", min_cp="911", max_cp="969", min_weather_cp="1139", max_weather_cp="1212", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="77", pokemon_name="Ponyta", pokemon_form_name="galarian", pokemon_form_id="2336", asset_suffix="31", min_cp="911", max_cp="969", min_weather_cp="1139", max_weather_cp="1212", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="78", pokemon_name="Rapidash", pokemon_form_name="normal", pokemon_form_id="1014", asset_suffix="00", min_cp="1335", max_cp="1406", min_weather_cp="1669", max_weather_cp="1757", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="78", pokemon_name="Rapidash", pokemon_form_name="galarian", pokemon_form_id="2337", asset_suffix="31", min_cp="1335", max_cp="1406", min_weather_cp="1669", max_weather_cp="1757", weather="65", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="79", pokemon_name="Slowpoke", pokemon_form_name="normal", pokemon_form_id="1017", asset_suffix="00", min_cp="650", max_cp="700", min_weather_cp="812", max_weather_cp="876", weather="36", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="79", pokemon_name="Slowpoke", pokemon_form_name="2020", pokemon_form_id="2673", asset_suffix="pm0079_00_pgo_2020", min_cp="650", max_cp="700", min_weather_cp="812", max_weather_cp="876", weather="36", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="79", pokemon_name="Slowpoke", pokemon_form_name="galarian", pokemon_form_id="2582", asset_suffix="31", min_cp="650", max_cp="700", min_weather_cp="812", max_weather_cp="876", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="80", pokemon_name="Slowbro", pokemon_form_name="normal", pokemon_form_id="1020", asset_suffix="00", min_cp="1382", max_cp="1454", min_weather_cp="1728", max_weather_cp="1817", weather="36", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="80", pokemon_name="Slowbro", pokemon_form_name="2021", pokemon_form_id="2674", asset_suffix="pm0080_00_pgo_2021", min_cp="1382", max_cp="1454", min_weather_cp="1728", max_weather_cp="1817", weather="36", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="80", pokemon_name="Slowbro", pokemon_form_name="galarian", pokemon_form_id="2583", asset_suffix="31", min_cp="1327", max_cp="1397", min_weather_cp="1659", max_weather_cp="1746", weather="56", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="80", pokemon_name="Slowbro", pokemon_form_name="mega", pokemon_form_id="-1", asset_suffix="51", min_cp="1382", max_cp="1454", min_weather_cp="1728", max_weather_cp="1817", weather="36", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="81", pokemon_name="Magnemite", pokemon_form_name="normal", pokemon_form_id="655", asset_suffix="00", min_cp="725", max_cp="778", min_weather_cp="906", max_weather_cp="973", weather="37", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="82", pokemon_name="Magneton", pokemon_form_name="normal", pokemon_form_id="658", asset_suffix="00", min_cp="1348", max_cp="1420", min_weather_cp="1686", max_weather_cp="1775", weather="37", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="83", pokemon_name="Farfetchd", pokemon_form_name="normal", pokemon_form_id="1023", asset_suffix="00", min_cp="657", max_cp="706", min_weather_cp="821", max_weather_cp="883", weather="46", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="83", pokemon_name="Farfetchd", pokemon_form_name="galarian", pokemon_form_id="2338", asset_suffix="31", min_cp="898", max_cp="956", min_weather_cp="1123", max_weather_cp="1196", weather="5", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="84", pokemon_name="Doduo", pokemon_form_name="normal", pokemon_form_id="1026", asset_suffix="00", min_cp="636", max_cp="686", min_weather_cp="795", max_weather_cp="857", weather="46", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="85", pokemon_name="Dodrio", pokemon_form_name="normal", pokemon_form_id="1029", asset_suffix="00", min_cp="1280", max_cp="1349", min_weather_cp="1600", max_weather_cp="1687", weather="46", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="86", pokemon_name="Seel", pokemon_form_name="normal", pokemon_form_id="1032", asset_suffix="00", min_cp="510", max_cp="555", min_weather_cp="638", max_weather_cp="694", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="87", pokemon_name="Dewgong", pokemon_form_name="normal", pokemon_form_id="1035", asset_suffix="00", min_cp="1071", max_cp="1134", min_weather_cp="1339", max_weather_cp="1418", weather="37", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="88", pokemon_name="Grimer", pokemon_form_name="normal", pokemon_form_id="73", asset_suffix="00", min_cp="731", max_cp="785", min_weather_cp="914", max_weather_cp="981", weather="5", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="88", pokemon_name="Grimer", pokemon_form_name="alola", pokemon_form_id="74", asset_suffix="61", min_cp="731", max_cp="785", min_weather_cp="914", max_weather_cp="981", weather="58", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="89", pokemon_name="Muk", pokemon_form_name="normal", pokemon_form_id="75", asset_suffix="00", min_cp="1501", max_cp="1575", min_weather_cp="1876", max_weather_cp="1969", weather="5", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="89", pokemon_name="Muk", pokemon_form_name="alola", pokemon_form_id="76", asset_suffix="61", min_cp="1501", max_cp="1575", min_weather_cp="1876", max_weather_cp="1969", weather="58", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="90", pokemon_name="Shellder", pokemon_form_name="normal", pokemon_form_id="876", asset_suffix="00", min_cp="571", max_cp="617", min_weather_cp="713", max_weather_cp="771", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="91", pokemon_name="Cloyster", pokemon_form_name="normal", pokemon_form_id="879", asset_suffix="00", min_cp="1383", max_cp="1455", min_weather_cp="1729", max_weather_cp="1819", weather="37", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="92", pokemon_name="Gastly", pokemon_form_name="normal", pokemon_form_id="1038", asset_suffix="00", min_cp="649", max_cp="702", min_weather_cp="812", max_weather_cp="878", weather="85", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="93", pokemon_name="Haunter", pokemon_form_name="normal", pokemon_form_id="1041", asset_suffix="00", min_cp="1056", max_cp="1121", min_weather_cp="1320", max_weather_cp="1402", weather="85", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="94", pokemon_name="Gengar", pokemon_form_name="normal", pokemon_form_id="1044", asset_suffix="00", min_cp="1566", max_cp="1644", min_weather_cp="1958", max_weather_cp="2055", weather="85", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="94", pokemon_name="Gengar", pokemon_form_name="costume_2020", pokemon_form_id="2586", asset_suffix="26", min_cp="1566", max_cp="1644", min_weather_cp="1958", max_weather_cp="2055", weather="85", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="94", pokemon_name="Gengar", pokemon_form_name="mega", pokemon_form_id="-1", asset_suffix="51", min_cp="1566", max_cp="1644", min_weather_cp="1958", max_weather_cp="2055", weather="85", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="95", pokemon_name="Onix", pokemon_form_name="normal", pokemon_form_id="902", asset_suffix="00", min_cp="580", max_cp="629", min_weather_cp="725", max_weather_cp="787", weather="412", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="96", pokemon_name="Drowzee", pokemon_form_name="normal", pokemon_form_id="214", asset_suffix="00", min_cp="548", max_cp="594", min_weather_cp="685", max_weather_cp="743", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="97", pokemon_name="Hypno", pokemon_form_name="normal", pokemon_form_id="217", asset_suffix="00", min_cp="1129", max_cp="1194", min_weather_cp="1411", max_weather_cp="1493", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="98", pokemon_name="Krabby", pokemon_form_name="normal", pokemon_form_id="870", asset_suffix="00", min_cp="835", max_cp="892", min_weather_cp="1043", max_weather_cp="1115", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="99", pokemon_name="Kingler", pokemon_form_name="normal", pokemon_form_id="873", asset_suffix="00", min_cp="1540", max_cp="1616", min_weather_cp="1925", max_weather_cp="2020", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="100", pokemon_name="Voltorb", pokemon_form_name="normal", pokemon_form_id="1047", asset_suffix="00", min_cp="532", max_cp="577", min_weather_cp="665", max_weather_cp="721", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="101", pokemon_name="Electrode", pokemon_form_name="normal", pokemon_form_id="1050", asset_suffix="00", min_cp="1134", max_cp="1199", min_weather_cp="1418", max_weather_cp="1499", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="102", pokemon_name="Exeggcute", pokemon_form_name="normal", pokemon_form_id="729", asset_suffix="00", min_cp="623", max_cp="671", min_weather_cp="779", max_weather_cp="839", weather="126", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="103", pokemon_name="Exeggutor", pokemon_form_name="normal", pokemon_form_id="77", asset_suffix="00", min_cp="1643", max_cp="1722", min_weather_cp="2055", max_weather_cp="2153", weather="126", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="103", pokemon_name="Exeggutor", pokemon_form_name="alola", pokemon_form_id="78", asset_suffix="61", min_cp="1643", max_cp="1722", min_weather_cp="2055", max_weather_cp="2153", weather="126", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="104", pokemon_name="Cubone", pokemon_form_name="normal", pokemon_form_id="224", asset_suffix="00", min_cp="536", max_cp="582", min_weather_cp="671", max_weather_cp="728", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="105", pokemon_name="Marowak", pokemon_form_name="normal", pokemon_form_id="79", asset_suffix="00", min_cp="988", max_cp="1048", min_weather_cp="1235", max_weather_cp="1311", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="105", pokemon_name="Marowak", pokemon_form_name="alola", pokemon_form_id="80", asset_suffix="61", min_cp="988", max_cp="1048", min_weather_cp="1235", max_weather_cp="1311", weather="128", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="106", pokemon_name="Hitmonlee", pokemon_form_name="normal", pokemon_form_id="713", asset_suffix="00", min_cp="1399", max_cp="1472", min_weather_cp="1749", max_weather_cp="1840", weather="5", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="107", pokemon_name="Hitmonchan", pokemon_form_name="normal", pokemon_form_id="277", asset_suffix="00", min_cp="1263", max_cp="1332", min_weather_cp="1579", max_weather_cp="1665", weather="5", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="108", pokemon_name="Lickitung", pokemon_form_name="normal", pokemon_form_id="1053", asset_suffix="00", min_cp="752", max_cp="806", min_weather_cp="940", max_weather_cp="1008", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="109", pokemon_name="Koffing", pokemon_form_name="normal", pokemon_form_id="703", asset_suffix="00", min_cp="645", max_cp="694", min_weather_cp="806", max_weather_cp="867", weather="5", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="110", pokemon_name="Weezing", pokemon_form_name="normal", pokemon_form_id="706", asset_suffix="00", min_cp="1242", max_cp="1310", min_weather_cp="1553", max_weather_cp="1637", weather="5", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="110", pokemon_name="Weezing", pokemon_form_name="galarian", pokemon_form_id="944", asset_suffix="31", min_cp="1242", max_cp="1310", min_weather_cp="1553", max_weather_cp="1637", weather="5", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="111", pokemon_name="Rhyhorn", pokemon_form_name="normal", pokemon_form_id="846", asset_suffix="00", min_cp="886", max_cp="943", min_weather_cp="1107", max_weather_cp="1179", weather="124", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="112", pokemon_name="Rhydon", pokemon_form_name="normal", pokemon_form_id="849", asset_suffix="00", min_cp="1736", max_cp="1816", min_weather_cp="2170", max_weather_cp="2270", weather="124", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="113", pokemon_name="Chansey", pokemon_form_name="normal", pokemon_form_id="1056", asset_suffix="00", min_cp="654", max_cp="717", min_weather_cp="817", max_weather_cp="896", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="114", pokemon_name="Tangela", pokemon_form_name="normal", pokemon_form_id="1059", asset_suffix="00", min_cp="1212", max_cp="1278", min_weather_cp="1515", max_weather_cp="1598", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="115", pokemon_name="Kangaskhan", pokemon_form_name="normal", pokemon_form_id="839", asset_suffix="00", min_cp="1405", max_cp="1477", min_weather_cp="1757", max_weather_cp="1847", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="116", pokemon_name="Horsea", pokemon_form_name="normal", pokemon_form_id="1062", asset_suffix="00", min_cp="558", max_cp="603", min_weather_cp="697", max_weather_cp="754", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="117", pokemon_name="Seadra", pokemon_form_name="normal", pokemon_form_id="1065", asset_suffix="00", min_cp="1131", max_cp="1196", min_weather_cp="1414", max_weather_cp="1495", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="118", pokemon_name="Goldeen", pokemon_form_name="normal", pokemon_form_id="1068", asset_suffix="00", min_cp="610", max_cp="658", min_weather_cp="763", max_weather_cp="823", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="119", pokemon_name="Seaking", pokemon_form_name="normal", pokemon_form_id="1071", asset_suffix="00", min_cp="1169", max_cp="1235", min_weather_cp="1462", max_weather_cp="1544", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="120", pokemon_name="Staryu", pokemon_form_name="normal", pokemon_form_id="1074", asset_suffix="00", min_cp="613", max_cp="661", min_weather_cp="766", max_weather_cp="826", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="121", pokemon_name="Starmie", pokemon_form_name="normal", pokemon_form_id="1077", asset_suffix="00", min_cp="1404", max_cp="1476", min_weather_cp="1756", max_weather_cp="1846", weather="36", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="122", pokemon_name="Mr-mime", pokemon_form_name="normal", pokemon_form_id="1080", asset_suffix="00", min_cp="1205", max_cp="1273", min_weather_cp="1506", max_weather_cp="1591", weather="65", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="122", pokemon_name="Mr-mime", pokemon_form_name="galarian", pokemon_form_id="2339", asset_suffix="31", min_cp="1117", max_cp="1181", min_weather_cp="1396", max_weather_cp="1477", weather="76", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="123", pokemon_name="Scyther", pokemon_form_name="normal", pokemon_form_id="247", asset_suffix="00", min_cp="1472", max_cp="1546", min_weather_cp="1841", max_weather_cp="1933", weather="36", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="124", pokemon_name="Jynx", pokemon_form_name="normal", pokemon_form_id="1083", asset_suffix="00", min_cp="1387", max_cp="1460", min_weather_cp="1734", max_weather_cp="1825", weather="76", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="125", pokemon_name="Electabuzz", pokemon_form_name="normal", pokemon_form_id="640", asset_suffix="00", min_cp="1265", max_cp="1333", min_weather_cp="1582", max_weather_cp="1667", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="126", pokemon_name="Magmar", pokemon_form_name="normal", pokemon_form_id="634", asset_suffix="00", min_cp="1298", max_cp="1367", min_weather_cp="1623", max_weather_cp="1710", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="127", pokemon_name="Pinsir", pokemon_form_name="normal", pokemon_form_id="898", asset_suffix="00", min_cp="1613", max_cp="1690", min_weather_cp="2016", max_weather_cp="2113", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="128", pokemon_name="Tauros", pokemon_form_name="normal", pokemon_form_id="1086", asset_suffix="00", min_cp="1425", max_cp="1497", min_weather_cp="1781", max_weather_cp="1872", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="129", pokemon_name="Magikarp", pokemon_form_name="normal", pokemon_form_id="253", asset_suffix="00", min_cp="132", max_cp="157", min_weather_cp="165", max_weather_cp="196", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="130", pokemon_name="Gyarados", pokemon_form_name="normal", pokemon_form_id="256", asset_suffix="00", min_cp="1855", max_cp="1937", min_weather_cp="2319", max_weather_cp="2422", weather="36", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="130", pokemon_name="Gyarados", pokemon_form_name="mega", pokemon_form_id="-1", asset_suffix="51", min_cp="1855", max_cp="1937", min_weather_cp="2319", max_weather_cp="2422", weather="36", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="131", pokemon_name="Lapras", pokemon_form_name="normal", pokemon_form_id="322", asset_suffix="00", min_cp="1435", max_cp="1509", min_weather_cp="1794", max_weather_cp="1886", weather="37", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="132", pokemon_name="Ditto", pokemon_form_name="normal", pokemon_form_id="1089", asset_suffix="00", min_cp="434", max_cp="475", min_weather_cp="543", max_weather_cp="594", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="133", pokemon_name="Eevee", pokemon_form_name="normal", pokemon_form_id="1092", asset_suffix="00", min_cp="565", max_cp="612", min_weather_cp="707", max_weather_cp="765", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="134", pokemon_name="Vaporeon", pokemon_form_name="normal", pokemon_form_id="1095", asset_suffix="00", min_cp="1699", max_cp="1779", min_weather_cp="2124", max_weather_cp="2225", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="135", pokemon_name="Jolteon", pokemon_form_name="normal", pokemon_form_id="1098", asset_suffix="00", min_cp="1574", max_cp="1650", min_weather_cp="1967", max_weather_cp="2063", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="136", pokemon_name="Flareon", pokemon_form_name="normal", pokemon_form_id="1101", asset_suffix="00", min_cp="1652", max_cp="1730", min_weather_cp="2065", max_weather_cp="2163", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="137", pokemon_name="Porygon", pokemon_form_name="normal", pokemon_form_id="677", asset_suffix="00", min_cp="924", max_cp="982", min_weather_cp="1155", max_weather_cp="1228", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="138", pokemon_name="Omanyte", pokemon_form_name="normal", pokemon_form_id="740", asset_suffix="00", min_cp="826", max_cp="882", min_weather_cp="1033", max_weather_cp="1103", weather="43", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="139", pokemon_name="Omastar", pokemon_form_name="normal", pokemon_form_id="743", asset_suffix="00", min_cp="1517", max_cp="1592", min_weather_cp="1897", max_weather_cp="1990", weather="43", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="140", pokemon_name="Kabuto", pokemon_form_name="normal", pokemon_form_id="1104", asset_suffix="00", min_cp="730", max_cp="783", min_weather_cp="913", max_weather_cp="979", weather="43", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="141", pokemon_name="Kabutops", pokemon_form_name="normal", pokemon_form_id="1107", asset_suffix="00", min_cp="1476", max_cp="1550", min_weather_cp="1845", max_weather_cp="1938", weather="43", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="142", pokemon_name="Aerodactyl", pokemon_form_name="normal", pokemon_form_id="1110", asset_suffix="00", min_cp="1515", max_cp="1590", min_weather_cp="1894", max_weather_cp="1988", weather="46", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="143", pokemon_name="Snorlax", pokemon_form_name="normal", pokemon_form_id="199", asset_suffix="00", min_cp="1760", max_cp="1843", min_weather_cp="2201", max_weather_cp="2304", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="144", pokemon_name="Articuno", pokemon_form_name="normal", pokemon_form_id="716", asset_suffix="00", min_cp="1665", max_cp="1743", min_weather_cp="2082", max_weather_cp="2179", weather="76", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="145", pokemon_name="Zapdos", pokemon_form_name="normal", pokemon_form_id="773", asset_suffix="00", min_cp="1930", max_cp="2015", min_weather_cp="2413", max_weather_cp="2519", weather="36", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="146", pokemon_name="Moltres", pokemon_form_name="normal", pokemon_form_id="836", asset_suffix="00", min_cp="1896", max_cp="1980", min_weather_cp="2370", max_weather_cp="2475", weather="126", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="147", pokemon_name="Dratini", pokemon_form_name="normal", pokemon_form_id="190", asset_suffix="00", min_cp="529", max_cp="574", min_weather_cp="661", max_weather_cp="717", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="148", pokemon_name="Dragonair", pokemon_form_name="normal", pokemon_form_id="193", asset_suffix="00", min_cp="957", max_cp="1017", min_weather_cp="1197", max_weather_cp="1271", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="149", pokemon_name="Dragonite", pokemon_form_name="normal", pokemon_form_id="196", asset_suffix="00", min_cp="2079", max_cp="2167", min_weather_cp="2599", max_weather_cp="2709", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="150", pokemon_name="Mewtwo", pokemon_form_name="normal", pokemon_form_id="135", asset_suffix="00", min_cp="2294", max_cp="2387", min_weather_cp="2868", max_weather_cp="2984", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="150", pokemon_name="Mewtwo", pokemon_form_name="armored", pokemon_form_id="133", asset_suffix="pm0150_00_pgo_a", min_cp="1740", max_cp="1821", min_weather_cp="2175", max_weather_cp="2276", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="151", pokemon_name="Mew", pokemon_form_name="normal", pokemon_form_id="1115", asset_suffix="00", min_cp="1785", max_cp="1865", min_weather_cp="2231", max_weather_cp="2332", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="152", pokemon_name="Chikorita", pokemon_form_name="normal", pokemon_form_id="1118", asset_suffix="00", min_cp="491", max_cp="534", min_weather_cp="614", max_weather_cp="668", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="153", pokemon_name="Bayleef", pokemon_form_name="normal", pokemon_form_id="1121", asset_suffix="00", min_cp="777", max_cp="831", min_weather_cp="971", max_weather_cp="1039", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="154", pokemon_name="Meganium", pokemon_form_name="normal", pokemon_form_id="1124", asset_suffix="00", min_cp="1308", max_cp="1377", min_weather_cp="1635", max_weather_cp="1721", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="155", pokemon_name="Cyndaquil", pokemon_form_name="normal", pokemon_form_id="1127", asset_suffix="00", min_cp="516", max_cp="560", min_weather_cp="645", max_weather_cp="700", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="156", pokemon_name="Quilava", pokemon_form_name="normal", pokemon_form_id="1130", asset_suffix="00", min_cp="887", max_cp="944", min_weather_cp="1109", max_weather_cp="1180", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="157", pokemon_name="Typhlosion", pokemon_form_name="normal", pokemon_form_id="1133", asset_suffix="00", min_cp="1574", max_cp="1651", min_weather_cp="1968", max_weather_cp="2064", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="158", pokemon_name="Totodile", pokemon_form_name="normal", pokemon_form_id="1136", asset_suffix="00", min_cp="599", max_cp="646", min_weather_cp="749", max_weather_cp="808", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="159", pokemon_name="Croconaw", pokemon_form_name="normal", pokemon_form_id="1139", asset_suffix="00", min_cp="925", max_cp="984", min_weather_cp="1157", max_weather_cp="1230", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="160", pokemon_name="Feraligatr", pokemon_form_name="normal", pokemon_form_id="1142", asset_suffix="00", min_cp="1557", max_cp="1632", min_weather_cp="1946", max_weather_cp="2040", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="161", pokemon_name="Sentret", pokemon_form_name="normal", pokemon_form_id="1145", asset_suffix="00", min_cp="318", max_cp="353", min_weather_cp="397", max_weather_cp="441", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="162", pokemon_name="Furret", pokemon_form_name="normal", pokemon_form_id="1148", asset_suffix="00", min_cp="944", max_cp="1004", min_weather_cp="1181", max_weather_cp="1255", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="163", pokemon_name="Hoothoot", pokemon_form_name="normal", pokemon_form_id="1151", asset_suffix="00", min_cp="349", max_cp="387", min_weather_cp="436", max_weather_cp="484", weather="46", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="164", pokemon_name="Noctowl", pokemon_form_name="normal", pokemon_form_id="1154", asset_suffix="00", min_cp="1092", max_cp="1156", min_weather_cp="1365", max_weather_cp="1446", weather="46", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="165", pokemon_name="Ledyba", pokemon_form_name="normal", pokemon_form_id="1157", asset_suffix="00", min_cp="377", max_cp="416", min_weather_cp="471", max_weather_cp="520", weather="36", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="166", pokemon_name="Ledian", pokemon_form_name="normal", pokemon_form_id="1160", asset_suffix="00", min_cp="716", max_cp="769", min_weather_cp="896", max_weather_cp="961", weather="36", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="167", pokemon_name="Spinarak", pokemon_form_name="normal", pokemon_form_id="1163", asset_suffix="00", min_cp="426", max_cp="466", min_weather_cp="532", max_weather_cp="583", weather="35", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="168", pokemon_name="Ariados", pokemon_form_name="normal", pokemon_form_id="1166", asset_suffix="00", min_cp="953", max_cp="1012", min_weather_cp="1191", max_weather_cp="1265", weather="35", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="169", pokemon_name="Crobat", pokemon_form_name="normal", pokemon_form_id="202", asset_suffix="00", min_cp="1439", max_cp="1512", min_weather_cp="1799", max_weather_cp="1890", weather="56", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="170", pokemon_name="Chinchou", pokemon_form_name="normal", pokemon_form_id="1169", asset_suffix="00", min_cp="591", max_cp="639", min_weather_cp="739", max_weather_cp="799", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="171", pokemon_name="Lanturn", pokemon_form_name="normal", pokemon_form_id="1172", asset_suffix="00", min_cp="1125", max_cp="1191", min_weather_cp="1406", max_weather_cp="1489", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="172", pokemon_name="Pichu", pokemon_form_name="normal", pokemon_form_id="1175", asset_suffix="00", min_cp="240", max_cp="270", min_weather_cp="300", max_weather_cp="338", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="173", pokemon_name="Cleffa", pokemon_form_name="normal", pokemon_form_id="1178", asset_suffix="00", min_cp="346", max_cp="383", min_weather_cp="433", max_weather_cp="479", weather="5", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="174", pokemon_name="Igglybuff", pokemon_form_name="normal", pokemon_form_id="1181", asset_suffix="00", min_cp="269", max_cp="306", min_weather_cp="336", max_weather_cp="382", weather="45", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="175", pokemon_name="Togepi", pokemon_form_name="normal", pokemon_form_id="1184", asset_suffix="00", min_cp="339", max_cp="375", min_weather_cp="424", max_weather_cp="470", weather="5", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="176", pokemon_name="Togetic", pokemon_form_name="normal", pokemon_form_id="1187", asset_suffix="00", min_cp="917", max_cp="976", min_weather_cp="1147", max_weather_cp="1220", weather="56", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="177", pokemon_name="Natu", pokemon_form_name="normal", pokemon_form_id="1190", asset_suffix="00", min_cp="583", max_cp="630", min_weather_cp="728", max_weather_cp="787", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="178", pokemon_name="Xatu", pokemon_form_name="normal", pokemon_form_id="1193", asset_suffix="00", min_cp="1184", max_cp="1250", min_weather_cp="1480", max_weather_cp="1563", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="179", pokemon_name="Mareep", pokemon_form_name="normal", pokemon_form_id="646", asset_suffix="00", min_cp="521", max_cp="566", min_weather_cp="651", max_weather_cp="708", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="180", pokemon_name="Flaaffy", pokemon_form_name="normal", pokemon_form_id="649", asset_suffix="00", min_cp="814", max_cp="869", min_weather_cp="1017", max_weather_cp="1086", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="181", pokemon_name="Ampharos", pokemon_form_name="normal", pokemon_form_id="652", asset_suffix="00", min_cp="1554", max_cp="1630", min_weather_cp="1943", max_weather_cp="2037", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="181", pokemon_name="Ampharos", pokemon_form_name="mega", pokemon_form_id="-1", asset_suffix="51", min_cp="1554", max_cp="1630", min_weather_cp="1943", max_weather_cp="2037", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="182", pokemon_name="Bellossom", pokemon_form_name="normal", pokemon_form_id="274", asset_suffix="00", min_cp="1236", max_cp="1303", min_weather_cp="1545", max_weather_cp="1629", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="183", pokemon_name="Marill", pokemon_form_name="normal", pokemon_form_id="1196", asset_suffix="00", min_cp="229", max_cp="263", min_weather_cp="287", max_weather_cp="329", weather="35", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="184", pokemon_name="Azumarill", pokemon_form_name="normal", pokemon_form_id="1199", asset_suffix="00", min_cp="849", max_cp="907", min_weather_cp="1061", max_weather_cp="1134", weather="35", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="185", pokemon_name="Sudowoodo", pokemon_form_name="normal", pokemon_form_id="1202", asset_suffix="00", min_cp="1162", max_cp="1227", min_weather_cp="1452", max_weather_cp="1534", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="186", pokemon_name="Politoed", pokemon_form_name="normal", pokemon_form_id="244", asset_suffix="00", min_cp="1329", max_cp="1399", min_weather_cp="1662", max_weather_cp="1749", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="187", pokemon_name="Hoppip", pokemon_form_name="normal", pokemon_form_id="1205", asset_suffix="00", min_cp="308", max_cp="342", min_weather_cp="385", max_weather_cp="428", weather="126", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="188", pokemon_name="Skiploom", pokemon_form_name="normal", pokemon_form_id="1208", asset_suffix="00", min_cp="513", max_cp="557", min_weather_cp="641", max_weather_cp="697", weather="126", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="189", pokemon_name="Jumpluff", pokemon_form_name="normal", pokemon_form_id="1211", asset_suffix="00", min_cp="877", max_cp="935", min_weather_cp="1096", max_weather_cp="1168", weather="126", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="190", pokemon_name="Aipom", pokemon_form_name="normal", pokemon_form_id="1214", asset_suffix="00", min_cp="718", max_cp="770", min_weather_cp="898", max_weather_cp="963", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="191", pokemon_name="Sunkern", pokemon_form_name="normal", pokemon_form_id="1217", asset_suffix="00", min_cp="197", max_cp="226", min_weather_cp="247", max_weather_cp="282", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="192", pokemon_name="Sunflora", pokemon_form_name="normal", pokemon_form_id="1220", asset_suffix="00", min_cp="1158", max_cp="1223", min_weather_cp="1447", max_weather_cp="1529", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="193", pokemon_name="Yanma", pokemon_form_name="normal", pokemon_form_id="1223", asset_suffix="00", min_cp="785", max_cp="840", min_weather_cp="981", max_weather_cp="1050", weather="36", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="194", pokemon_name="Wooper", pokemon_form_name="normal", pokemon_form_id="1226", asset_suffix="00", min_cp="330", max_cp="366", min_weather_cp="412", max_weather_cp="458", weather="312", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="195", pokemon_name="Quagsire", pokemon_form_name="normal", pokemon_form_id="1229", asset_suffix="00", min_cp="1075", max_cp="1138", min_weather_cp="1343", max_weather_cp="1423", weather="312", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="196", pokemon_name="Espeon", pokemon_form_name="normal", pokemon_form_id="1232", asset_suffix="00", min_cp="1730", max_cp="1811", min_weather_cp="2162", max_weather_cp="2264", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="197", pokemon_name="Umbreon", pokemon_form_name="normal", pokemon_form_id="1235", asset_suffix="00", min_cp="1153", max_cp="1221", min_weather_cp="1442", max_weather_cp="1526", weather="8", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="198", pokemon_name="Murkrow", pokemon_form_name="normal", pokemon_form_id="855", asset_suffix="00", min_cp="835", max_cp="892", min_weather_cp="1044", max_weather_cp="1116", weather="86", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="199", pokemon_name="Slowking", pokemon_form_name="normal", pokemon_form_id="1238", asset_suffix="00", min_cp="1382", max_cp="1454", min_weather_cp="1728", max_weather_cp="1817", weather="36", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="199", pokemon_name="Slowking", pokemon_form_name="galarian", pokemon_form_id="2584", asset_suffix="31", min_cp="1479", max_cp="1552", min_weather_cp="1848", max_weather_cp="1941", weather="56", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="200", pokemon_name="Misdreavus", pokemon_form_name="normal", pokemon_form_id="719", asset_suffix="00", min_cp="1039", max_cp="1100", min_weather_cp="1298", max_weather_cp="1376", weather="8", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="201", pokemon_name="Unown", pokemon_form_name="f", pokemon_form_id="6", asset_suffix="16", min_cp="628", max_cp="677", min_weather_cp="785", max_weather_cp="846", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="201", pokemon_name="Unown", pokemon_form_name="a", pokemon_form_id="1", asset_suffix="11", min_cp="628", max_cp="677", min_weather_cp="785", max_weather_cp="846", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="201", pokemon_name="Unown", pokemon_form_name="b", pokemon_form_id="2", asset_suffix="12", min_cp="628", max_cp="677", min_weather_cp="785", max_weather_cp="846", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="201", pokemon_name="Unown", pokemon_form_name="c", pokemon_form_id="3", asset_suffix="13", min_cp="628", max_cp="677", min_weather_cp="785", max_weather_cp="846", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="201", pokemon_name="Unown", pokemon_form_name="d", pokemon_form_id="4", asset_suffix="14", min_cp="628", max_cp="677", min_weather_cp="785", max_weather_cp="846", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="201", pokemon_name="Unown", pokemon_form_name="e", pokemon_form_id="5", asset_suffix="15", min_cp="628", max_cp="677", min_weather_cp="785", max_weather_cp="846", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="201", pokemon_name="Unown", pokemon_form_name="g", pokemon_form_id="7", asset_suffix="17", min_cp="628", max_cp="677", min_weather_cp="785", max_weather_cp="846", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="201", pokemon_name="Unown", pokemon_form_name="h", pokemon_form_id="8", asset_suffix="18", min_cp="628", max_cp="677", min_weather_cp="785", max_weather_cp="846", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="201", pokemon_name="Unown", pokemon_form_name="i", pokemon_form_id="9", asset_suffix="19", min_cp="628", max_cp="677", min_weather_cp="785", max_weather_cp="846", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="201", pokemon_name="Unown", pokemon_form_name="j", pokemon_form_id="10", asset_suffix="20", min_cp="628", max_cp="677", min_weather_cp="785", max_weather_cp="846", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="201", pokemon_name="Unown", pokemon_form_name="k", pokemon_form_id="11", asset_suffix="21", min_cp="628", max_cp="677", min_weather_cp="785", max_weather_cp="846", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="201", pokemon_name="Unown", pokemon_form_name="l", pokemon_form_id="12", asset_suffix="22", min_cp="628", max_cp="677", min_weather_cp="785", max_weather_cp="846", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="201", pokemon_name="Unown", pokemon_form_name="m", pokemon_form_id="13", asset_suffix="23", min_cp="628", max_cp="677", min_weather_cp="785", max_weather_cp="846", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="201", pokemon_name="Unown", pokemon_form_name="n", pokemon_form_id="14", asset_suffix="24", min_cp="628", max_cp="677", min_weather_cp="785", max_weather_cp="846", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="201", pokemon_name="Unown", pokemon_form_name="o", pokemon_form_id="15", asset_suffix="25", min_cp="628", max_cp="677", min_weather_cp="785", max_weather_cp="846", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="201", pokemon_name="Unown", pokemon_form_name="p", pokemon_form_id="16", asset_suffix="26", min_cp="628", max_cp="677", min_weather_cp="785", max_weather_cp="846", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="201", pokemon_name="Unown", pokemon_form_name="q", pokemon_form_id="17", asset_suffix="27", min_cp="628", max_cp="677", min_weather_cp="785", max_weather_cp="846", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="201", pokemon_name="Unown", pokemon_form_name="r", pokemon_form_id="18", asset_suffix="28", min_cp="628", max_cp="677", min_weather_cp="785", max_weather_cp="846", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="201", pokemon_name="Unown", pokemon_form_name="s", pokemon_form_id="19", asset_suffix="29", min_cp="628", max_cp="677", min_weather_cp="785", max_weather_cp="846", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="201", pokemon_name="Unown", pokemon_form_name="t", pokemon_form_id="20", asset_suffix="30", min_cp="628", max_cp="677", min_weather_cp="785", max_weather_cp="846", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="201", pokemon_name="Unown", pokemon_form_name="u", pokemon_form_id="21", asset_suffix="31", min_cp="628", max_cp="677", min_weather_cp="785", max_weather_cp="846", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="201", pokemon_name="Unown", pokemon_form_name="v", pokemon_form_id="22", asset_suffix="32", min_cp="628", max_cp="677", min_weather_cp="785", max_weather_cp="846", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="201", pokemon_name="Unown", pokemon_form_name="w", pokemon_form_id="23", asset_suffix="33", min_cp="628", max_cp="677", min_weather_cp="785", max_weather_cp="846", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="201", pokemon_name="Unown", pokemon_form_name="x", pokemon_form_id="24", asset_suffix="34", min_cp="628", max_cp="677", min_weather_cp="785", max_weather_cp="846", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="201", pokemon_name="Unown", pokemon_form_name="y", pokemon_form_id="25", asset_suffix="35", min_cp="628", max_cp="677", min_weather_cp="785", max_weather_cp="846", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="201", pokemon_name="Unown", pokemon_form_name="z", pokemon_form_id="26", asset_suffix="36", min_cp="628", max_cp="677", min_weather_cp="785", max_weather_cp="846", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="201", pokemon_name="Unown", pokemon_form_name="exclamation_point", pokemon_form_id="27", asset_suffix="37", min_cp="628", max_cp="677", min_weather_cp="785", max_weather_cp="846", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="201", pokemon_name="Unown", pokemon_form_name="question_mark", pokemon_form_id="28", asset_suffix="38", min_cp="628", max_cp="677", min_weather_cp="785", max_weather_cp="846", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="202", pokemon_name="Wobbuffet", pokemon_form_name="normal", pokemon_form_id="602", asset_suffix="00", min_cp="532", max_cp="586", min_weather_cp="665", max_weather_cp="733", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="203", pokemon_name="Girafarig", pokemon_form_name="normal", pokemon_form_id="1241", asset_suffix="00", min_cp="1105", max_cp="1169", min_weather_cp="1381", max_weather_cp="1462", weather="46", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="204", pokemon_name="Pineco", pokemon_form_name="normal", pokemon_form_id="1244", asset_suffix="00", min_cp="586", max_cp="633", min_weather_cp="733", max_weather_cp="791", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="205", pokemon_name="Forretress", pokemon_form_name="normal", pokemon_form_id="1247", asset_suffix="00", min_cp="1236", max_cp="1304", min_weather_cp="1545", max_weather_cp="1630", weather="37", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="206", pokemon_name="Dunsparce", pokemon_form_name="normal", pokemon_form_id="1250", asset_suffix="00", min_cp="906", max_cp="965", min_weather_cp="1132", max_weather_cp="1206", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="207", pokemon_name="Gligar", pokemon_form_name="normal", pokemon_form_id="803", asset_suffix="00", min_cp="1000", max_cp="1061", min_weather_cp="1250", max_weather_cp="1326", weather="126", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="208", pokemon_name="Steelix", pokemon_form_name="normal", pokemon_form_id="905", asset_suffix="00", min_cp="1308", max_cp="1379", min_weather_cp="1635", max_weather_cp="1724", weather="712", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="209", pokemon_name="Snubbull", pokemon_form_name="normal", pokemon_form_id="1253", asset_suffix="00", min_cp="656", max_cp="707", min_weather_cp="821", max_weather_cp="884", weather="5", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="210", pokemon_name="Granbull", pokemon_form_name="normal", pokemon_form_id="1256", asset_suffix="00", min_cp="1385", max_cp="1458", min_weather_cp="1732", max_weather_cp="1823", weather="5", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="211", pokemon_name="Qwilfish", pokemon_form_name="normal", pokemon_form_id="1259", asset_suffix="00", min_cp="1107", max_cp="1172", min_weather_cp="1384", max_weather_cp="1465", weather="35", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="212", pokemon_name="Scizor", pokemon_form_name="normal", pokemon_form_id="250", asset_suffix="00", min_cp="1636", max_cp="1714", min_weather_cp="2046", max_weather_cp="2143", weather="37", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="213", pokemon_name="Shuckle", pokemon_form_name="normal", pokemon_form_id="827", asset_suffix="00", min_cp="189", max_cp="231", min_weather_cp="236", max_weather_cp="289", weather="34", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="214", pokemon_name="Heracross", pokemon_form_name="normal", pokemon_form_id="1262", asset_suffix="00", min_cp="1693", max_cp="1772", min_weather_cp="2116", max_weather_cp="2215", weather="35", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="215", pokemon_name="Sneasel", pokemon_form_name="normal", pokemon_form_id="797", asset_suffix="00", min_cp="1107", max_cp="1172", min_weather_cp="1384", max_weather_cp="1465", weather="87", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="216", pokemon_name="Teddiursa", pokemon_form_name="normal", pokemon_form_id="1265", asset_suffix="00", min_cp="707", max_cp="759", min_weather_cp="884", max_weather_cp="949", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="217", pokemon_name="Ursaring", pokemon_form_name="normal", pokemon_form_id="1268", asset_suffix="00", min_cp="1604", max_cp="1682", min_weather_cp="2006", max_weather_cp="2103", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="218", pokemon_name="Slugma", pokemon_form_name="normal", pokemon_form_id="1271", asset_suffix="00", min_cp="468", max_cp="511", min_weather_cp="585", max_weather_cp="639", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="219", pokemon_name="Magcargo", pokemon_form_name="normal", pokemon_form_id="1274", asset_suffix="00", min_cp="914", max_cp="972", min_weather_cp="1142", max_weather_cp="1215", weather="124", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="220", pokemon_name="Swinub", pokemon_form_name="normal", pokemon_form_id="1277", asset_suffix="00", min_cp="384", max_cp="423", min_weather_cp="480", max_weather_cp="529", weather="712", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="221", pokemon_name="Piloswine", pokemon_form_name="normal", pokemon_form_id="1280", asset_suffix="00", min_cp="1271", max_cp="1340", min_weather_cp="1589", max_weather_cp="1675", weather="712", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="222", pokemon_name="Corsola", pokemon_form_name="normal", pokemon_form_id="1283", asset_suffix="00", min_cp="735", max_cp="787", min_weather_cp="918", max_weather_cp="984", weather="34", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="223", pokemon_name="Remoraid", pokemon_form_name="normal", pokemon_form_id="1286", asset_suffix="00", min_cp="478", max_cp="521", min_weather_cp="597", max_weather_cp="651", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="224", pokemon_name="Octillery", pokemon_form_name="normal", pokemon_form_id="1289", asset_suffix="00", min_cp="1254", max_cp="1322", min_weather_cp="1568", max_weather_cp="1653", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="225", pokemon_name="Delibird", pokemon_form_name="normal", pokemon_form_id="938", asset_suffix="00", min_cp="578", max_cp="625", min_weather_cp="723", max_weather_cp="781", weather="76", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="225", pokemon_name="Delibird", pokemon_form_name="winter_2020", pokemon_form_id="2671", asset_suffix="pm0225_00_pgo_winter2020", min_cp="578", max_cp="625", min_weather_cp="723", max_weather_cp="781", weather="76", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="226", pokemon_name="Mantine", pokemon_form_name="normal", pokemon_form_id="1292", asset_suffix="00", min_cp="1139", max_cp="1204", min_weather_cp="1424", max_weather_cp="1506", weather="36", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="227", pokemon_name="Skarmory", pokemon_form_name="normal", pokemon_form_id="1295", asset_suffix="00", min_cp="1139", max_cp="1204", min_weather_cp="1424", max_weather_cp="1506", weather="76", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="228", pokemon_name="Houndour", pokemon_form_name="normal", pokemon_form_id="229", asset_suffix="00", min_cp="654", max_cp="705", min_weather_cp="818", max_weather_cp="881", weather="812", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="229", pokemon_name="Houndoom", pokemon_form_name="normal", pokemon_form_id="232", asset_suffix="00", min_cp="1432", max_cp="1505", min_weather_cp="1790", max_weather_cp="1882", weather="812", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="229", pokemon_name="Houndoom", pokemon_form_name="mega", pokemon_form_id="-1", asset_suffix="51", min_cp="1432", max_cp="1505", min_weather_cp="1790", max_weather_cp="1882", weather="812", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="230", pokemon_name="Kingdra", pokemon_form_name="normal", pokemon_form_id="1298", asset_suffix="00", min_cp="1437", max_cp="1509", min_weather_cp="1796", max_weather_cp="1887", weather="36", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="231", pokemon_name="Phanpy", pokemon_form_name="normal", pokemon_form_id="1301", asset_suffix="00", min_cp="639", max_cp="689", min_weather_cp="799", max_weather_cp="862", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="232", pokemon_name="Donphan", pokemon_form_name="normal", pokemon_form_id="1304", asset_suffix="00", min_cp="1644", max_cp="1722", min_weather_cp="2055", max_weather_cp="2152", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="233", pokemon_name="Porygon2", pokemon_form_name="normal", pokemon_form_id="680", asset_suffix="00", min_cp="1475", max_cp="1549", min_weather_cp="1844", max_weather_cp="1936", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="234", pokemon_name="Stantler", pokemon_form_name="normal", pokemon_form_id="941", asset_suffix="00", min_cp="1170", max_cp="1236", min_weather_cp="1463", max_weather_cp="1546", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="235", pokemon_name="Smeargle", pokemon_form_name="normal", pokemon_form_id="1307", asset_suffix="00", min_cp="214", max_cp="246", min_weather_cp="268", max_weather_cp="308", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="236", pokemon_name="Tyrogue", pokemon_form_name="normal", pokemon_form_id="1310", asset_suffix="00", min_cp="249", max_cp="281", min_weather_cp="312", max_weather_cp="351", weather="5", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="237", pokemon_name="Hitmontop", pokemon_form_name="normal", pokemon_form_id="1313", asset_suffix="00", min_cp="1166", max_cp="1232", min_weather_cp="1458", max_weather_cp="1540", weather="5", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="238", pokemon_name="Smoochum", pokemon_form_name="normal", pokemon_form_id="1316", asset_suffix="00", min_cp="686", max_cp="738", min_weather_cp="858", max_weather_cp="922", weather="76", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="239", pokemon_name="Elekid", pokemon_form_name="normal", pokemon_form_id="1319", asset_suffix="00", min_cp="640", max_cp="689", min_weather_cp="800", max_weather_cp="861", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="240", pokemon_name="Magby", pokemon_form_name="normal", pokemon_form_id="1322", asset_suffix="00", min_cp="704", max_cp="756", min_weather_cp="880", max_weather_cp="945", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="241", pokemon_name="Miltank", pokemon_form_name="normal", pokemon_form_id="1325", asset_suffix="00", min_cp="1276", max_cp="1345", min_weather_cp="1595", max_weather_cp="1682", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="242", pokemon_name="Blissey", pokemon_form_name="normal", pokemon_form_id="1328", asset_suffix="00", min_cp="1492", max_cp="1575", min_weather_cp="1866", max_weather_cp="1969", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="243", pokemon_name="Raikou", pokemon_form_name="normal", pokemon_form_id="1331", asset_suffix="00", min_cp="1889", max_cp="1972", min_weather_cp="2361", max_weather_cp="2466", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="244", pokemon_name="Entei", pokemon_form_name="normal", pokemon_form_id="1334", asset_suffix="00", min_cp="1900", max_cp="1984", min_weather_cp="2375", max_weather_cp="2480", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="245", pokemon_name="Suicune", pokemon_form_name="normal", pokemon_form_id="1337", asset_suffix="00", min_cp="1627", max_cp="1704", min_weather_cp="2033", max_weather_cp="2130", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="246", pokemon_name="Larvitar", pokemon_form_name="normal", pokemon_form_id="313", asset_suffix="00", min_cp="548", max_cp="594", min_weather_cp="686", max_weather_cp="743", weather="412", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="247", pokemon_name="Pupitar", pokemon_form_name="normal", pokemon_form_id="316", asset_suffix="00", min_cp="949", max_cp="1009", min_weather_cp="1187", max_weather_cp="1261", weather="412", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="248", pokemon_name="Tyranitar", pokemon_form_name="normal", pokemon_form_id="319", asset_suffix="00", min_cp="2103", max_cp="2191", min_weather_cp="2629", max_weather_cp="2739", weather="48", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="249", pokemon_name="Lugia", pokemon_form_name="normal", pokemon_form_id="1340", asset_suffix="00", min_cp="2028", max_cp="2115", min_weather_cp="2535", max_weather_cp="2645", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="250", pokemon_name="Ho-oh", pokemon_form_name="normal", pokemon_form_id="1343", asset_suffix="00", min_cp="2119", max_cp="2207", min_weather_cp="2649", max_weather_cp="2759", weather="126", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="251", pokemon_name="Celebi", pokemon_form_name="normal", pokemon_form_id="1346", asset_suffix="00", min_cp="1785", max_cp="1865", min_weather_cp="2231", max_weather_cp="2332", weather="612", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="252", pokemon_name="Treecko", pokemon_form_name="normal", pokemon_form_id="1349", asset_suffix="00", min_cp="556", max_cp="601", min_weather_cp="695", max_weather_cp="752", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="253", pokemon_name="Grovyle", pokemon_form_name="normal", pokemon_form_id="1352", asset_suffix="00", min_cp="897", max_cp="956", min_weather_cp="1122", max_weather_cp="1195", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="254", pokemon_name="Sceptile", pokemon_form_name="normal", pokemon_form_id="1355", asset_suffix="00", min_cp="1500", max_cp="1575", min_weather_cp="1876", max_weather_cp="1969", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="255", pokemon_name="Torchic", pokemon_form_name="normal", pokemon_form_id="1358", asset_suffix="00", min_cp="578", max_cp="624", min_weather_cp="722", max_weather_cp="781", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="256", pokemon_name="Combusken", pokemon_form_name="normal", pokemon_form_id="1361", asset_suffix="00", min_cp="886", max_cp="944", min_weather_cp="1108", max_weather_cp="1180", weather="125", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="257", pokemon_name="Blaziken", pokemon_form_name="normal", pokemon_form_id="1364", asset_suffix="00", min_cp="1550", max_cp="1627", min_weather_cp="1938", max_weather_cp="2034", weather="125", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="258", pokemon_name="Mudkip", pokemon_form_name="normal", pokemon_form_id="205", asset_suffix="00", min_cp="597", max_cp="644", min_weather_cp="746", max_weather_cp="805", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="259", pokemon_name="Marshtomp", pokemon_form_name="normal", pokemon_form_id="208", asset_suffix="00", min_cp="955", max_cp="1015", min_weather_cp="1194", max_weather_cp="1269", weather="312", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="260", pokemon_name="Swampert", pokemon_form_name="normal", pokemon_form_id="211", asset_suffix="00", min_cp="1622", max_cp="1699", min_weather_cp="2027", max_weather_cp="2124", weather="312", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="261", pokemon_name="Poochyena", pokemon_form_name="normal", pokemon_form_id="1367", asset_suffix="00", min_cp="350", max_cp="387", min_weather_cp="438", max_weather_cp="484", weather="8", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="262", pokemon_name="Mightyena", pokemon_form_name="normal", pokemon_form_id="1370", asset_suffix="00", min_cp="1038", max_cp="1100", min_weather_cp="1298", max_weather_cp="1375", weather="8", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="263", pokemon_name="Zigzagoon", pokemon_form_name="normal", pokemon_form_id="945", asset_suffix="00", min_cp="258", max_cp="290", min_weather_cp="323", max_weather_cp="363", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="263", pokemon_name="Zigzagoon", pokemon_form_name="galarian", pokemon_form_id="946", asset_suffix="31", min_cp="258", max_cp="290", min_weather_cp="323", max_weather_cp="363", weather="84", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="264", pokemon_name="Linoone", pokemon_form_name="normal", pokemon_form_id="947", asset_suffix="00", min_cp="892", max_cp="949", min_weather_cp="1115", max_weather_cp="1187", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="264", pokemon_name="Linoone", pokemon_form_name="galarian", pokemon_form_id="948", asset_suffix="31", min_cp="892", max_cp="949", min_weather_cp="1115", max_weather_cp="1187", weather="84", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="265", pokemon_name="Wurmple", pokemon_form_name="normal", pokemon_form_id="600", asset_suffix="00", min_cp="296", max_cp="330", min_weather_cp="370", max_weather_cp="413", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="266", pokemon_name="Silcoon", pokemon_form_name="normal", pokemon_form_id="1379", asset_suffix="00", min_cp="282", max_cp="316", min_weather_cp="353", max_weather_cp="395", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="267", pokemon_name="Beautifly", pokemon_form_name="normal", pokemon_form_id="1382", asset_suffix="00", min_cp="948", max_cp="1009", min_weather_cp="1185", max_weather_cp="1261", weather="36", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="268", pokemon_name="Cascoon", pokemon_form_name="normal", pokemon_form_id="1385", asset_suffix="00", min_cp="282", max_cp="316", min_weather_cp="353", max_weather_cp="395", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="269", pokemon_name="Dustox", pokemon_form_name="normal", pokemon_form_id="1388", asset_suffix="00", min_cp="649", max_cp="699", min_weather_cp="811", max_weather_cp="874", weather="35", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="270", pokemon_name="Lotad", pokemon_form_name="normal", pokemon_form_id="1391", asset_suffix="00", min_cp="307", max_cp="342", min_weather_cp="384", max_weather_cp="427", weather="312", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="271", pokemon_name="Lombre", pokemon_form_name="normal", pokemon_form_id="1394", asset_suffix="00", min_cp="635", max_cp="684", min_weather_cp="794", max_weather_cp="855", weather="312", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="272", pokemon_name="Ludicolo", pokemon_form_name="normal", pokemon_form_id="1397", asset_suffix="00", min_cp="1259", max_cp="1327", min_weather_cp="1574", max_weather_cp="1659", weather="312", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="273", pokemon_name="Seedot", pokemon_form_name="normal", pokemon_form_id="625", asset_suffix="00", min_cp="307", max_cp="342", min_weather_cp="384", max_weather_cp="427", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="274", pokemon_name="Nuzleaf", pokemon_form_name="normal", pokemon_form_id="628", asset_suffix="00", min_cp="650", max_cp="701", min_weather_cp="813", max_weather_cp="876", weather="128", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="275", pokemon_name="Shiftry", pokemon_form_name="normal", pokemon_form_id="631", asset_suffix="00", min_cp="1263", max_cp="1333", min_weather_cp="1579", max_weather_cp="1666", weather="128", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="276", pokemon_name="Taillow", pokemon_form_name="normal", pokemon_form_id="1400", asset_suffix="00", min_cp="397", max_cp="437", min_weather_cp="497", max_weather_cp="546", weather="46", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="277", pokemon_name="Swellow", pokemon_form_name="normal", pokemon_form_id="1403", asset_suffix="00", min_cp="1034", max_cp="1097", min_weather_cp="1293", max_weather_cp="1371", weather="46", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="278", pokemon_name="Wingull", pokemon_form_name="normal", pokemon_form_id="1406", asset_suffix="00", min_cp="397", max_cp="437", min_weather_cp="497", max_weather_cp="546", weather="36", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="279", pokemon_name="Pelipper", pokemon_form_name="normal", pokemon_form_id="1409", asset_suffix="00", min_cp="1150", max_cp="1215", min_weather_cp="1438", max_weather_cp="1519", weather="36", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="280", pokemon_name="Ralts", pokemon_form_name="normal", pokemon_form_id="292", asset_suffix="00", min_cp="275", max_cp="308", min_weather_cp="344", max_weather_cp="385", weather="65", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="281", pokemon_name="Kirlia", pokemon_form_name="normal", pokemon_form_id="295", asset_suffix="00", min_cp="508", max_cp="552", min_weather_cp="635", max_weather_cp="690", weather="65", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="282", pokemon_name="Gardevoir", pokemon_form_name="normal", pokemon_form_id="298", asset_suffix="00", min_cp="1688", max_cp="1767", min_weather_cp="2110", max_weather_cp="2209", weather="65", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="283", pokemon_name="Surskit", pokemon_form_name="normal", pokemon_form_id="1412", asset_suffix="00", min_cp="412", max_cp="452", min_weather_cp="516", max_weather_cp="565", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="284", pokemon_name="Masquerain", pokemon_form_name="normal", pokemon_form_id="1415", asset_suffix="00", min_cp="1230", max_cp="1297", min_weather_cp="1537", max_weather_cp="1622", weather="36", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="285", pokemon_name="Shroomish", pokemon_form_name="normal", pokemon_form_id="1418", asset_suffix="00", min_cp="421", max_cp="463", min_weather_cp="527", max_weather_cp="578", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="286", pokemon_name="Breloom", pokemon_form_name="normal", pokemon_form_id="1421", asset_suffix="00", min_cp="1427", max_cp="1502", min_weather_cp="1785", max_weather_cp="1877", weather="125", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="287", pokemon_name="Slakoth", pokemon_form_name="normal", pokemon_form_id="1424", asset_suffix="00", min_cp="527", max_cp="572", min_weather_cp="659", max_weather_cp="716", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="288", pokemon_name="Vigoroth", pokemon_form_name="normal", pokemon_form_id="1427", asset_suffix="00", min_cp="1061", max_cp="1124", min_weather_cp="1327", max_weather_cp="1405", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="289", pokemon_name="Slaking", pokemon_form_name="normal", pokemon_form_id="1430", asset_suffix="00", min_cp="2435", max_cp="2532", min_weather_cp="3044", max_weather_cp="3165", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="290", pokemon_name="Nincada", pokemon_form_name="normal", pokemon_form_id="1433", asset_suffix="00", min_cp="399", max_cp="439", min_weather_cp="499", max_weather_cp="549", weather="312", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="291", pokemon_name="Ninjask", pokemon_form_name="normal", pokemon_form_id="1436", asset_suffix="00", min_cp="1061", max_cp="1125", min_weather_cp="1326", max_weather_cp="1406", weather="36", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="292", pokemon_name="Shedinja", pokemon_form_name="normal", pokemon_form_id="1439", asset_suffix="00", min_cp="175", max_cp="224", min_weather_cp="219", max_weather_cp="281", weather="38", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="293", pokemon_name="Whismur", pokemon_form_name="normal", pokemon_form_id="1442", asset_suffix="00", min_cp="344", max_cp="383", min_weather_cp="430", max_weather_cp="479", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="294", pokemon_name="Loudred", pokemon_form_name="normal", pokemon_form_id="1445", asset_suffix="00", min_cp="705", max_cp="758", min_weather_cp="881", max_weather_cp="948", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="295", pokemon_name="Exploud", pokemon_form_name="normal", pokemon_form_id="1448", asset_suffix="00", min_cp="1272", max_cp="1341", min_weather_cp="1590", max_weather_cp="1677", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="296", pokemon_name="Makuhita", pokemon_form_name="normal", pokemon_form_id="1451", asset_suffix="00", min_cp="424", max_cp="467", min_weather_cp="530", max_weather_cp="583", weather="5", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="297", pokemon_name="Hariyama", pokemon_form_name="normal", pokemon_form_id="1454", asset_suffix="00", min_cp="1537", max_cp="1616", min_weather_cp="1921", max_weather_cp="2020", weather="5", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="298", pokemon_name="Azurill", pokemon_form_name="normal", pokemon_form_id="1457", asset_suffix="00", min_cp="179", max_cp="208", min_weather_cp="223", max_weather_cp="260", weather="45", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="299", pokemon_name="Nosepass", pokemon_form_name="normal", pokemon_form_id="1460", asset_suffix="00", min_cp="521", max_cp="567", min_weather_cp="651", max_weather_cp="709", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="300", pokemon_name="Skitty", pokemon_form_name="normal", pokemon_form_id="1463", asset_suffix="00", min_cp="383", max_cp="422", min_weather_cp="479", max_weather_cp="527", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="301", pokemon_name="Delcatty", pokemon_form_name="normal", pokemon_form_id="1466", asset_suffix="00", min_cp="800", max_cp="854", min_weather_cp="1000", max_weather_cp="1068", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="302", pokemon_name="Sableye", pokemon_form_name="normal", pokemon_form_id="923", asset_suffix="00", min_cp="789", max_cp="843", min_weather_cp="986", max_weather_cp="1054", weather="8", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="302", pokemon_name="Sableye", pokemon_form_name="costume_2020", pokemon_form_id="2668", asset_suffix="pm0302_00_pgo_fall2020", min_cp="789", max_cp="843", min_weather_cp="986", max_weather_cp="1054", weather="8", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="303", pokemon_name="Mawile", pokemon_form_name="normal", pokemon_form_id="833", asset_suffix="00", min_cp="877", max_cp="934", min_weather_cp="1096", max_weather_cp="1167", weather="75", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="304", pokemon_name="Aron", pokemon_form_name="normal", pokemon_form_id="1469", asset_suffix="00", min_cp="696", max_cp="747", min_weather_cp="870", max_weather_cp="934", weather="74", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="305", pokemon_name="Lairon", pokemon_form_name="normal", pokemon_form_id="1472", asset_suffix="00", min_cp="1110", max_cp="1174", min_weather_cp="1388", max_weather_cp="1468", weather="74", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="306", pokemon_name="Aggron", pokemon_form_name="normal", pokemon_form_id="1475", asset_suffix="00", min_cp="1636", max_cp="1714", min_weather_cp="2045", max_weather_cp="2143", weather="74", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="307", pokemon_name="Meditite", pokemon_form_name="normal", pokemon_form_id="1478", asset_suffix="00", min_cp="359", max_cp="396", min_weather_cp="449", max_weather_cp="495", weather="56", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="308", pokemon_name="Medicham", pokemon_form_name="normal", pokemon_form_id="1481", asset_suffix="00", min_cp="764", max_cp="817", min_weather_cp="955", max_weather_cp="1022", weather="56", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="309", pokemon_name="Electrike", pokemon_form_name="normal", pokemon_form_id="1484", asset_suffix="00", min_cp="507", max_cp="551", min_weather_cp="634", max_weather_cp="689", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="310", pokemon_name="Manectric", pokemon_form_name="normal", pokemon_form_id="1487", asset_suffix="00", min_cp="1267", max_cp="1337", min_weather_cp="1585", max_weather_cp="1672", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="310", pokemon_name="Manectric", pokemon_form_name="mega", pokemon_form_id="-1", asset_suffix="51", min_cp="1267", max_cp="1337", min_weather_cp="1585", max_weather_cp="1672", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="311", pokemon_name="Plusle", pokemon_form_name="normal", pokemon_form_id="1490", asset_suffix="00", min_cp="956", max_cp="1016", min_weather_cp="1195", max_weather_cp="1270", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="312", pokemon_name="Minun", pokemon_form_name="normal", pokemon_form_id="1493", asset_suffix="00", min_cp="910", max_cp="968", min_weather_cp="1138", max_weather_cp="1210", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="313", pokemon_name="Volbeat", pokemon_form_name="normal", pokemon_form_id="1496", asset_suffix="00", min_cp="952", max_cp="1012", min_weather_cp="1191", max_weather_cp="1265", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="314", pokemon_name="Illumise", pokemon_form_name="normal", pokemon_form_id="1499", asset_suffix="00", min_cp="952", max_cp="1012", min_weather_cp="1191", max_weather_cp="1265", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="315", pokemon_name="Roselia", pokemon_form_name="normal", pokemon_form_id="1502", asset_suffix="00", min_cp="1007", max_cp="1068", min_weather_cp="1258", max_weather_cp="1335", weather="125", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="316", pokemon_name="Gulpin", pokemon_form_name="normal", pokemon_form_id="1505", asset_suffix="00", min_cp="452", max_cp="495", min_weather_cp="565", max_weather_cp="618", weather="5", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="317", pokemon_name="Swalot", pokemon_form_name="normal", pokemon_form_id="1508", asset_suffix="00", min_cp="1066", max_cp="1130", min_weather_cp="1333", max_weather_cp="1413", weather="5", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="318", pokemon_name="Carvanha", pokemon_form_name="normal", pokemon_form_id="734", asset_suffix="00", min_cp="531", max_cp="583", min_weather_cp="664", max_weather_cp="729", weather="38", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="319", pokemon_name="Sharpedo", pokemon_form_name="normal", pokemon_form_id="737", asset_suffix="00", min_cp="1174", max_cp="1246", min_weather_cp="1468", max_weather_cp="1558", weather="38", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="320", pokemon_name="Wailmer", pokemon_form_name="normal", pokemon_form_id="1511", asset_suffix="00", min_cp="779", max_cp="838", min_weather_cp="974", max_weather_cp="1048", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="321", pokemon_name="Wailord", pokemon_form_name="normal", pokemon_form_id="1514", asset_suffix="00", min_cp="1228", max_cp="1302", min_weather_cp="1535", max_weather_cp="1628", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="322", pokemon_name="Numel", pokemon_form_name="normal", pokemon_form_id="1517", asset_suffix="00", min_cp="557", max_cp="604", min_weather_cp="697", max_weather_cp="755", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="323", pokemon_name="Camerupt", pokemon_form_name="normal", pokemon_form_id="1520", asset_suffix="00", min_cp="1186", max_cp="1253", min_weather_cp="1483", max_weather_cp="1566", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="324", pokemon_name="Torkoal", pokemon_form_name="normal", pokemon_form_id="1523", asset_suffix="00", min_cp="1131", max_cp="1196", min_weather_cp="1414", max_weather_cp="1495", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="325", pokemon_name="Spoink", pokemon_form_name="normal", pokemon_form_id="1526", asset_suffix="00", min_cp="711", max_cp="762", min_weather_cp="888", max_weather_cp="953", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="326", pokemon_name="Grumpig", pokemon_form_name="normal", pokemon_form_id="1529", asset_suffix="00", min_cp="1285", max_cp="1354", min_weather_cp="1606", max_weather_cp="1692", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="327", pokemon_name="Spinda", pokemon_form_name="00", pokemon_form_id="37", asset_suffix="11", min_cp="648", max_cp="697", min_weather_cp="810", max_weather_cp="872", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="327", pokemon_name="Spinda", pokemon_form_name="01", pokemon_form_id="38", asset_suffix="12", min_cp="648", max_cp="697", min_weather_cp="810", max_weather_cp="872", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="327", pokemon_name="Spinda", pokemon_form_name="02", pokemon_form_id="39", asset_suffix="13", min_cp="648", max_cp="697", min_weather_cp="810", max_weather_cp="872", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="327", pokemon_name="Spinda", pokemon_form_name="03", pokemon_form_id="40", asset_suffix="14", min_cp="648", max_cp="697", min_weather_cp="810", max_weather_cp="872", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="327", pokemon_name="Spinda", pokemon_form_name="04", pokemon_form_id="41", asset_suffix="15", min_cp="648", max_cp="697", min_weather_cp="810", max_weather_cp="872", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="327", pokemon_name="Spinda", pokemon_form_name="05", pokemon_form_id="42", asset_suffix="16", min_cp="648", max_cp="697", min_weather_cp="810", max_weather_cp="872", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="327", pokemon_name="Spinda", pokemon_form_name="06", pokemon_form_id="43", asset_suffix="17", min_cp="648", max_cp="697", min_weather_cp="810", max_weather_cp="872", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="327", pokemon_name="Spinda", pokemon_form_name="07", pokemon_form_id="44", asset_suffix="18", min_cp="648", max_cp="697", min_weather_cp="810", max_weather_cp="872", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="327", pokemon_name="Spinda", pokemon_form_name="08", pokemon_form_id="121", asset_suffix="19", min_cp="648", max_cp="697", min_weather_cp="810", max_weather_cp="872", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="327", pokemon_name="Spinda", pokemon_form_name="09", pokemon_form_id="122", asset_suffix="20", min_cp="648", max_cp="697", min_weather_cp="810", max_weather_cp="872", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="327", pokemon_name="Spinda", pokemon_form_name="10", pokemon_form_id="123", asset_suffix="21", min_cp="648", max_cp="697", min_weather_cp="810", max_weather_cp="872", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="327", pokemon_name="Spinda", pokemon_form_name="11", pokemon_form_id="124", asset_suffix="22", min_cp="648", max_cp="697", min_weather_cp="810", max_weather_cp="872", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="327", pokemon_name="Spinda", pokemon_form_name="12", pokemon_form_id="125", asset_suffix="23", min_cp="648", max_cp="697", min_weather_cp="810", max_weather_cp="872", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="327", pokemon_name="Spinda", pokemon_form_name="13", pokemon_form_id="126", asset_suffix="24", min_cp="648", max_cp="697", min_weather_cp="810", max_weather_cp="872", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="327", pokemon_name="Spinda", pokemon_form_name="14", pokemon_form_id="127", asset_suffix="25", min_cp="648", max_cp="697", min_weather_cp="810", max_weather_cp="872", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="327", pokemon_name="Spinda", pokemon_form_name="15", pokemon_form_id="128", asset_suffix="26", min_cp="648", max_cp="697", min_weather_cp="810", max_weather_cp="872", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="327", pokemon_name="Spinda", pokemon_form_name="16", pokemon_form_id="129", asset_suffix="27", min_cp="648", max_cp="697", min_weather_cp="810", max_weather_cp="872", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="327", pokemon_name="Spinda", pokemon_form_name="17", pokemon_form_id="130", asset_suffix="28", min_cp="648", max_cp="697", min_weather_cp="810", max_weather_cp="872", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="327", pokemon_name="Spinda", pokemon_form_name="18", pokemon_form_id="131", asset_suffix="29", min_cp="648", max_cp="697", min_weather_cp="810", max_weather_cp="872", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="327", pokemon_name="Spinda", pokemon_form_name="19", pokemon_form_id="132", asset_suffix="30", min_cp="648", max_cp="697", min_weather_cp="810", max_weather_cp="872", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="328", pokemon_name="Trapinch", pokemon_form_name="normal", pokemon_form_id="746", asset_suffix="00", min_cp="676", max_cp="728", min_weather_cp="845", max_weather_cp="910", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="329", pokemon_name="Vibrava", pokemon_form_name="normal", pokemon_form_id="749", asset_suffix="00", min_cp="650", max_cp="699", min_weather_cp="813", max_weather_cp="875", weather="126", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="330", pokemon_name="Flygon", pokemon_form_name="normal", pokemon_form_id="752", asset_suffix="00", min_cp="1447", max_cp="1520", min_weather_cp="1809", max_weather_cp="1901", weather="126", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="331", pokemon_name="Cacnea", pokemon_form_name="normal", pokemon_form_id="610", asset_suffix="00", min_cp="658", max_cp="709", min_weather_cp="822", max_weather_cp="887", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="332", pokemon_name="Cacturne", pokemon_form_name="normal", pokemon_form_id="613", asset_suffix="00", min_cp="1243", max_cp="1313", min_weather_cp="1554", max_weather_cp="1641", weather="128", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="333", pokemon_name="Swablu", pokemon_form_name="normal", pokemon_form_id="1532", asset_suffix="00", min_cp="429", max_cp="470", min_weather_cp="537", max_weather_cp="588", weather="46", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="334", pokemon_name="Altaria", pokemon_form_name="normal", pokemon_form_id="1535", asset_suffix="00", min_cp="1081", max_cp="1145", min_weather_cp="1352", max_weather_cp="1432", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="334", pokemon_name="Altaria", pokemon_form_name="mega", pokemon_form_id="-1", asset_suffix="51", min_cp="1081", max_cp="1145", min_weather_cp="1352", max_weather_cp="1432", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="335", pokemon_name="Zangoose", pokemon_form_name="normal", pokemon_form_id="1538", asset_suffix="00", min_cp="1310", max_cp="1381", min_weather_cp="1638", max_weather_cp="1727", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="336", pokemon_name="Seviper", pokemon_form_name="normal", pokemon_form_id="1541", asset_suffix="00", min_cp="1137", max_cp="1203", min_weather_cp="1421", max_weather_cp="1504", weather="5", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="337", pokemon_name="Lunatone", pokemon_form_name="normal", pokemon_form_id="1544", asset_suffix="00", min_cp="1261", max_cp="1330", min_weather_cp="1577", max_weather_cp="1662", weather="46", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="338", pokemon_name="Solrock", pokemon_form_name="normal", pokemon_form_id="1547", asset_suffix="00", min_cp="1261", max_cp="1330", min_weather_cp="1577", max_weather_cp="1662", weather="46", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="339", pokemon_name="Barboach", pokemon_form_name="normal", pokemon_form_id="1550", asset_suffix="00", min_cp="427", max_cp="468", min_weather_cp="534", max_weather_cp="585", weather="312", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="340", pokemon_name="Whiscash", pokemon_form_name="normal", pokemon_form_id="1553", asset_suffix="00", min_cp="1120", max_cp="1186", min_weather_cp="1401", max_weather_cp="1482", weather="312", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="341", pokemon_name="Corphish", pokemon_form_name="normal", pokemon_form_id="1556", asset_suffix="00", min_cp="653", max_cp="703", min_weather_cp="817", max_weather_cp="879", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="342", pokemon_name="Crawdaunt", pokemon_form_name="normal", pokemon_form_id="1559", asset_suffix="00", min_cp="1342", max_cp="1413", min_weather_cp="1678", max_weather_cp="1767", weather="38", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="343", pokemon_name="Baltoy", pokemon_form_name="normal", pokemon_form_id="1562", asset_suffix="00", min_cp="409", max_cp="449", min_weather_cp="512", max_weather_cp="562", weather="126", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="344", pokemon_name="Claydol", pokemon_form_name="normal", pokemon_form_id="1565", asset_suffix="00", min_cp="1063", max_cp="1126", min_weather_cp="1328", max_weather_cp="1408", weather="126", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="345", pokemon_name="Lileep", pokemon_form_name="normal", pokemon_form_id="1568", asset_suffix="00", min_cp="686", max_cp="738", min_weather_cp="858", max_weather_cp="922", weather="412", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="346", pokemon_name="Cradily", pokemon_form_name="normal", pokemon_form_id="1571", asset_suffix="00", min_cp="1196", max_cp="1263", min_weather_cp="1495", max_weather_cp="1579", weather="412", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="347", pokemon_name="Anorith", pokemon_form_name="normal", pokemon_form_id="1574", asset_suffix="00", min_cp="817", max_cp="874", min_weather_cp="1022", max_weather_cp="1092", weather="43", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="348", pokemon_name="Armaldo", pokemon_form_name="normal", pokemon_form_id="1577", asset_suffix="00", min_cp="1552", max_cp="1627", min_weather_cp="1940", max_weather_cp="2035", weather="43", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="349", pokemon_name="Feebas", pokemon_form_name="normal", pokemon_form_id="1580", asset_suffix="00", min_cp="132", max_cp="157", min_weather_cp="165", max_weather_cp="196", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="350", pokemon_name="Milotic", pokemon_form_name="normal", pokemon_form_id="1583", asset_suffix="00", min_cp="1640", max_cp="1717", min_weather_cp="2050", max_weather_cp="2147", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="351", pokemon_name="Castform", pokemon_form_name="normal", pokemon_form_id="29", asset_suffix="11", min_cp="875", max_cp="932", min_weather_cp="1094", max_weather_cp="1165", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="351", pokemon_name="Castform", pokemon_form_name="sunny", pokemon_form_id="30", asset_suffix="12", min_cp="875", max_cp="932", min_weather_cp="1094", max_weather_cp="1165", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="351", pokemon_name="Castform", pokemon_form_name="rainy", pokemon_form_id="31", asset_suffix="13", min_cp="875", max_cp="932", min_weather_cp="1094", max_weather_cp="1165", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="351", pokemon_name="Castform", pokemon_form_name="snowy", pokemon_form_id="32", asset_suffix="14", min_cp="875", max_cp="932", min_weather_cp="1094", max_weather_cp="1165", weather="7", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="352", pokemon_name="Kecleon", pokemon_form_name="normal", pokemon_form_id="1586", asset_suffix="00", min_cp="1105", max_cp="1169", min_weather_cp="1382", max_weather_cp="1462", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="353", pokemon_name="Shuppet", pokemon_form_name="normal", pokemon_form_id="908", asset_suffix="00", min_cp="535", max_cp="581", min_weather_cp="669", max_weather_cp="727", weather="8", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="354", pokemon_name="Banette", pokemon_form_name="normal", pokemon_form_id="911", asset_suffix="00", min_cp="1244", max_cp="1313", min_weather_cp="1555", max_weather_cp="1642", weather="8", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="355", pokemon_name="Duskull", pokemon_form_name="normal", pokemon_form_id="914", asset_suffix="00", min_cp="364", max_cp="403", min_weather_cp="456", max_weather_cp="504", weather="8", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="356", pokemon_name="Dusclops", pokemon_form_name="normal", pokemon_form_id="917", asset_suffix="00", min_cp="851", max_cp="909", min_weather_cp="1064", max_weather_cp="1136", weather="8", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="357", pokemon_name="Tropius", pokemon_form_name="normal", pokemon_form_id="1589", asset_suffix="00", min_cp="1046", max_cp="1109", min_weather_cp="1307", max_weather_cp="1386", weather="126", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="358", pokemon_name="Chimecho", pokemon_form_name="normal", pokemon_form_id="1592", asset_suffix="00", min_cp="1224", max_cp="1291", min_weather_cp="1530", max_weather_cp="1614", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="359", pokemon_name="Absol", pokemon_form_name="normal", pokemon_form_id="830", asset_suffix="00", min_cp="1370", max_cp="1443", min_weather_cp="1712", max_weather_cp="1805", weather="8", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="360", pokemon_name="Wynaut", pokemon_form_name="normal", pokemon_form_id="1595", asset_suffix="00", min_cp="268", max_cp="305", min_weather_cp="335", max_weather_cp="381", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="361", pokemon_name="Snorunt", pokemon_form_name="normal", pokemon_form_id="926", asset_suffix="00", min_cp="465", max_cp="507", min_weather_cp="581", max_weather_cp="634", weather="7", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="362", pokemon_name="Glalie", pokemon_form_name="normal", pokemon_form_id="929", asset_suffix="00", min_cp="1138", max_cp="1203", min_weather_cp="1423", max_weather_cp="1504", weather="7", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="363", pokemon_name="Spheal", pokemon_form_name="normal", pokemon_form_id="1598", asset_suffix="00", min_cp="505", max_cp="550", min_weather_cp="631", max_weather_cp="687", weather="73", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="364", pokemon_name="Sealeo", pokemon_form_name="normal", pokemon_form_id="1601", asset_suffix="00", min_cp="920", max_cp="979", min_weather_cp="1151", max_weather_cp="1225", weather="73", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="365", pokemon_name="Walrein", pokemon_form_name="normal", pokemon_form_id="1604", asset_suffix="00", min_cp="1483", max_cp="1557", min_weather_cp="1854", max_weather_cp="1947", weather="73", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="366", pokemon_name="Clamperl", pokemon_form_name="normal", pokemon_form_id="1607", asset_suffix="00", min_cp="675", max_cp="726", min_weather_cp="845", max_weather_cp="907", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="367", pokemon_name="Huntail", pokemon_form_name="normal", pokemon_form_id="1610", asset_suffix="00", min_cp="1268", max_cp="1337", min_weather_cp="1585", max_weather_cp="1671", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="368", pokemon_name="Gorebyss", pokemon_form_name="normal", pokemon_form_id="1613", asset_suffix="00", min_cp="1354", max_cp="1425", min_weather_cp="1692", max_weather_cp="1781", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="369", pokemon_name="Relicanth", pokemon_form_name="normal", pokemon_form_id="1616", asset_suffix="00", min_cp="1373", max_cp="1444", min_weather_cp="1716", max_weather_cp="1806", weather="34", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="370", pokemon_name="Luvdisc", pokemon_form_name="normal", pokemon_form_id="1619", asset_suffix="00", min_cp="443", max_cp="484", min_weather_cp="554", max_weather_cp="605", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="371", pokemon_name="Bagon", pokemon_form_name="normal", pokemon_form_id="755", asset_suffix="00", min_cp="612", max_cp="660", min_weather_cp="765", max_weather_cp="826", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="372", pokemon_name="Shelgon", pokemon_form_name="normal", pokemon_form_id="758", asset_suffix="00", min_cp="1097", max_cp="1160", min_weather_cp="1371", max_weather_cp="1451", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="373", pokemon_name="Salamence", pokemon_form_name="normal", pokemon_form_id="761", asset_suffix="00", min_cp="2054", max_cp="2142", min_weather_cp="2568", max_weather_cp="2678", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="374", pokemon_name="Beldum", pokemon_form_name="normal", pokemon_form_id="764", asset_suffix="00", min_cp="513", max_cp="558", min_weather_cp="642", max_weather_cp="697", weather="76", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="375", pokemon_name="Metang", pokemon_form_name="normal", pokemon_form_id="767", asset_suffix="00", min_cp="925", max_cp="983", min_weather_cp="1156", max_weather_cp="1229", weather="76", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="376", pokemon_name="Metagross", pokemon_form_name="normal", pokemon_form_id="770", asset_suffix="00", min_cp="2078", max_cp="2166", min_weather_cp="2598", max_weather_cp="2708", weather="76", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="377", pokemon_name="Regirock", pokemon_form_name="normal", pokemon_form_id="1622", asset_suffix="00", min_cp="1703", max_cp="1784", min_weather_cp="2129", max_weather_cp="2230", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="378", pokemon_name="Regice", pokemon_form_name="normal", pokemon_form_id="1625", asset_suffix="00", min_cp="1703", max_cp="1784", min_weather_cp="2129", max_weather_cp="2230", weather="7", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="379", pokemon_name="Registeel", pokemon_form_name="normal", pokemon_form_id="1628", asset_suffix="00", min_cp="1326", max_cp="1398", min_weather_cp="1658", max_weather_cp="1748", weather="7", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="380", pokemon_name="Latias", pokemon_form_name="normal", pokemon_form_id="1631", asset_suffix="00", min_cp="1921", max_cp="2006", min_weather_cp="2402", max_weather_cp="2507", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="381", pokemon_name="Latios", pokemon_form_name="normal", pokemon_form_id="1634", asset_suffix="00", min_cp="2090", max_cp="2178", min_weather_cp="2613", max_weather_cp="2723", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="382", pokemon_name="Kyogre", pokemon_form_name="normal", pokemon_form_id="1637", asset_suffix="00", min_cp="2260", max_cp="2351", min_weather_cp="2825", max_weather_cp="2939", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="383", pokemon_name="Groudon", pokemon_form_name="normal", pokemon_form_id="1640", asset_suffix="00", min_cp="2260", max_cp="2351", min_weather_cp="2825", max_weather_cp="2939", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="384", pokemon_name="Rayquaza", pokemon_form_name="normal", pokemon_form_id="1643", asset_suffix="00", min_cp="2102", max_cp="2191", min_weather_cp="2627", max_weather_cp="2739", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="385", pokemon_name="Jirachi", pokemon_form_name="normal", pokemon_form_id="1646", asset_suffix="00", min_cp="1785", max_cp="1865", min_weather_cp="2231", max_weather_cp="2332", weather="76", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="386", pokemon_name="Deoxys", pokemon_form_name="normal", pokemon_form_id="33", asset_suffix="11", min_cp="1717", max_cp="1806", min_weather_cp="2146", max_weather_cp="2257", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="386", pokemon_name="Deoxys", pokemon_form_name="attack", pokemon_form_id="34", asset_suffix="12", min_cp="1372", max_cp="1474", min_weather_cp="1716", max_weather_cp="1842", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="386", pokemon_name="Deoxys", pokemon_form_name="defense", pokemon_form_id="35", asset_suffix="13", min_cp="1228", max_cp="1299", min_weather_cp="1535", max_weather_cp="1624", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="386", pokemon_name="Deoxys", pokemon_form_name="speed", pokemon_form_id="36", asset_suffix="14", min_cp="1568", max_cp="1645", min_weather_cp="1960", max_weather_cp="2056", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="387", pokemon_name="Turtwig", pokemon_form_name="normal", pokemon_form_id="688", asset_suffix="00", min_cp="629", max_cp="678", min_weather_cp="787", max_weather_cp="848", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="388", pokemon_name="Grotle", pokemon_form_name="normal", pokemon_form_id="691", asset_suffix="00", min_cp="1018", max_cp="1080", min_weather_cp="1273", max_weather_cp="1350", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="389", pokemon_name="Torterra", pokemon_form_name="normal", pokemon_form_id="694", asset_suffix="00", min_cp="1600", max_cp="1677", min_weather_cp="2000", max_weather_cp="2096", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="390", pokemon_name="Chimchar", pokemon_form_name="normal", pokemon_form_id="818", asset_suffix="00", min_cp="503", max_cp="547", min_weather_cp="629", max_weather_cp="683", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="391", pokemon_name="Monferno", pokemon_form_name="normal", pokemon_form_id="821", asset_suffix="00", min_cp="843", max_cp="899", min_weather_cp="1054", max_weather_cp="1124", weather="125", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="392", pokemon_name="Infernape", pokemon_form_name="normal", pokemon_form_id="824", asset_suffix="00", min_cp="1459", max_cp="1533", min_weather_cp="1824", max_weather_cp="1916", weather="125", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="393", pokemon_name="Piplup", pokemon_form_name="normal", pokemon_form_id="1649", asset_suffix="00", min_cp="568", max_cp="614", min_weather_cp="710", max_weather_cp="767", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="394", pokemon_name="Prinplup", pokemon_form_name="normal", pokemon_form_id="1652", asset_suffix="00", min_cp="914", max_cp="972", min_weather_cp="1142", max_weather_cp="1215", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="395", pokemon_name="Empoleon", pokemon_form_name="normal", pokemon_form_id="1655", asset_suffix="00", min_cp="1581", max_cp="1657", min_weather_cp="1976", max_weather_cp="2072", weather="37", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="396", pokemon_name="Starly", pokemon_form_name="normal", pokemon_form_id="1658", asset_suffix="00", min_cp="372", max_cp="410", min_weather_cp="465", max_weather_cp="513", weather="46", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="397", pokemon_name="Staravia", pokemon_form_name="normal", pokemon_form_id="1661", asset_suffix="00", min_cp="690", max_cp="742", min_weather_cp="863", max_weather_cp="927", weather="46", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="398", pokemon_name="Staraptor", pokemon_form_name="normal", pokemon_form_id="1664", asset_suffix="00", min_cp="1538", max_cp="1614", min_weather_cp="1922", max_weather_cp="2018", weather="46", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="399", pokemon_name="Bidoof", pokemon_form_name="normal", pokemon_form_id="1667", asset_suffix="00", min_cp="373", max_cp="412", min_weather_cp="467", max_weather_cp="515", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="400", pokemon_name="Bibarel", pokemon_form_name="normal", pokemon_form_id="1670", asset_suffix="00", min_cp="981", max_cp="1041", min_weather_cp="1226", max_weather_cp="1302", weather="43", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="401", pokemon_name="Kricketot", pokemon_form_name="normal", pokemon_form_id="1673", asset_suffix="00", min_cp="200", max_cp="229", min_weather_cp="250", max_weather_cp="286", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="402", pokemon_name="Kricketune", pokemon_form_name="normal", pokemon_form_id="1676", asset_suffix="00", min_cp="886", max_cp="944", min_weather_cp="1107", max_weather_cp="1181", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="403", pokemon_name="Shinx", pokemon_form_name="normal", pokemon_form_id="1679", asset_suffix="00", min_cp="458", max_cp="500", min_weather_cp="572", max_weather_cp="625", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="404", pokemon_name="Luxio", pokemon_form_name="normal", pokemon_form_id="1682", asset_suffix="00", min_cp="793", max_cp="849", min_weather_cp="992", max_weather_cp="1061", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="405", pokemon_name="Luxray", pokemon_form_name="normal", pokemon_form_id="1685", asset_suffix="00", min_cp="1573", max_cp="1650", min_weather_cp="1967", max_weather_cp="2063", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="406", pokemon_name="Budew", pokemon_form_name="normal", pokemon_form_id="1688", asset_suffix="00", min_cp="448", max_cp="489", min_weather_cp="560", max_weather_cp="611", weather="125", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="407", pokemon_name="Roserade", pokemon_form_name="normal", pokemon_form_id="1691", asset_suffix="00", min_cp="1619", max_cp="1697", min_weather_cp="2024", max_weather_cp="2122", weather="125", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="408", pokemon_name="Cranidos", pokemon_form_name="normal", pokemon_form_id="1694", asset_suffix="00", min_cp="974", max_cp="1040", min_weather_cp="1217", max_weather_cp="1300", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="409", pokemon_name="Rampardos", pokemon_form_name="normal", pokemon_form_id="1697", asset_suffix="00", min_cp="1796", max_cp="1884", min_weather_cp="2246", max_weather_cp="2355", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="410", pokemon_name="Shieldon", pokemon_form_name="normal", pokemon_form_id="1700", asset_suffix="00", min_cp="465", max_cp="509", min_weather_cp="581", max_weather_cp="636", weather="47", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="411", pokemon_name="Bastiodon", pokemon_form_name="normal", pokemon_form_id="1703", asset_suffix="00", min_cp="820", max_cp="879", min_weather_cp="1025", max_weather_cp="1100", weather="47", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="412", pokemon_name="Burmy", pokemon_form_name="plant", pokemon_form_id="118", asset_suffix="11", min_cp="247", max_cp="279", min_weather_cp="309", max_weather_cp="348", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="412", pokemon_name="Burmy", pokemon_form_name="sandy", pokemon_form_id="119", asset_suffix="12", min_cp="247", max_cp="279", min_weather_cp="309", max_weather_cp="348", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="412", pokemon_name="Burmy", pokemon_form_name="trash", pokemon_form_id="120", asset_suffix="13", min_cp="247", max_cp="279", min_weather_cp="309", max_weather_cp="348", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="413", pokemon_name="Wormadam", pokemon_form_name="plant", pokemon_form_id="87", asset_suffix="11", min_cp="954", max_cp="1013", min_weather_cp="1192", max_weather_cp="1267", weather="312", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="413", pokemon_name="Wormadam", pokemon_form_name="sandy", pokemon_form_id="88", asset_suffix="12", min_cp="954", max_cp="1013", min_weather_cp="1192", max_weather_cp="1267", weather="312", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="413", pokemon_name="Wormadam", pokemon_form_name="trash", pokemon_form_id="89", asset_suffix="13", min_cp="854", max_cp="910", min_weather_cp="1067", max_weather_cp="1138", weather="37", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="414", pokemon_name="Mothim", pokemon_form_name="normal", pokemon_form_id="1712", asset_suffix="00", min_cp="975", max_cp="1037", min_weather_cp="1219", max_weather_cp="1297", weather="36", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="415", pokemon_name="Combee", pokemon_form_name="normal", pokemon_form_id="1715", asset_suffix="00", min_cp="251", max_cp="282", min_weather_cp="314", max_weather_cp="353", weather="36", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="416", pokemon_name="Vespiquen", pokemon_form_name="normal", pokemon_form_id="1718", asset_suffix="00", min_cp="1082", max_cp="1145", min_weather_cp="1353", max_weather_cp="1432", weather="36", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="417", pokemon_name="Pachirisu", pokemon_form_name="normal", pokemon_form_id="1721", asset_suffix="00", min_cp="643", max_cp="693", min_weather_cp="804", max_weather_cp="867", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="418", pokemon_name="Buizel", pokemon_form_name="normal", pokemon_form_id="1724", asset_suffix="00", min_cp="555", max_cp="602", min_weather_cp="694", max_weather_cp="753", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="419", pokemon_name="Floatzel", pokemon_form_name="normal", pokemon_form_id="1727", asset_suffix="00", min_cp="1323", max_cp="1396", min_weather_cp="1655", max_weather_cp="1745", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="420", pokemon_name="Cherubi", pokemon_form_name="normal", pokemon_form_id="1730", asset_suffix="00", min_cp="499", max_cp="542", min_weather_cp="624", max_weather_cp="678", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="421", pokemon_name="Cherrim", pokemon_form_name="overcast", pokemon_form_id="94", asset_suffix="11", min_cp="1106", max_cp="1170", min_weather_cp="1383", max_weather_cp="1462", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="421", pokemon_name="Cherrim", pokemon_form_name="sunny", pokemon_form_id="95", asset_suffix="12", min_cp="1106", max_cp="1170", min_weather_cp="1383", max_weather_cp="1462", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="422", pokemon_name="Shellos", pokemon_form_name="west_sea", pokemon_form_id="96", asset_suffix="11", min_cp="600", max_cp="649", min_weather_cp="751", max_weather_cp="811", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="422", pokemon_name="Shellos", pokemon_form_name="east_sea", pokemon_form_id="97", asset_suffix="12", min_cp="600", max_cp="649", min_weather_cp="751", max_weather_cp="811", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="423", pokemon_name="Gastrodon", pokemon_form_name="west_sea", pokemon_form_id="98", asset_suffix="11", min_cp="1259", max_cp="1328", min_weather_cp="1574", max_weather_cp="1660", weather="312", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="423", pokemon_name="Gastrodon", pokemon_form_name="east_sea", pokemon_form_id="99", asset_suffix="12", min_cp="1259", max_cp="1328", min_weather_cp="1574", max_weather_cp="1660", weather="312", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="424", pokemon_name="Ambipom", pokemon_form_name="normal", pokemon_form_id="1742", asset_suffix="00", min_cp="1311", max_cp="1381", min_weather_cp="1639", max_weather_cp="1727", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="425", pokemon_name="Drifloon", pokemon_form_name="normal", pokemon_form_id="1745", asset_suffix="00", min_cp="633", max_cp="684", min_weather_cp="791", max_weather_cp="855", weather="86", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="426", pokemon_name="Drifblim", pokemon_form_name="normal", pokemon_form_id="1748", asset_suffix="00", min_cp="1287", max_cp="1361", min_weather_cp="1609", max_weather_cp="1701", weather="86", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="427", pokemon_name="Buneary", pokemon_form_name="normal", pokemon_form_id="1751", asset_suffix="00", min_cp="669", max_cp="719", min_weather_cp="836", max_weather_cp="899", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="428", pokemon_name="Lopunny", pokemon_form_name="normal", pokemon_form_id="1754", asset_suffix="00", min_cp="1112", max_cp="1177", min_weather_cp="1391", max_weather_cp="1471", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="428", pokemon_name="Lopunny", pokemon_form_name="mega", pokemon_form_id="-1", asset_suffix="51", min_cp="1112", max_cp="1177", min_weather_cp="1391", max_weather_cp="1471", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="429", pokemon_name="Mismagius", pokemon_form_name="normal", pokemon_form_id="722", asset_suffix="00", min_cp="1421", max_cp="1494", min_weather_cp="1777", max_weather_cp="1868", weather="8", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="430", pokemon_name="Honchkrow", pokemon_form_name="normal", pokemon_form_id="858", asset_suffix="00", min_cp="1471", max_cp="1549", min_weather_cp="1839", max_weather_cp="1937", weather="86", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="431", pokemon_name="Glameow", pokemon_form_name="normal", pokemon_form_id="1757", asset_suffix="00", min_cp="490", max_cp="533", min_weather_cp="613", max_weather_cp="667", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="432", pokemon_name="Purugly", pokemon_form_name="normal", pokemon_form_id="1760", asset_suffix="00", min_cp="1053", max_cp="1116", min_weather_cp="1317", max_weather_cp="1395", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="433", pokemon_name="Chingling", pokemon_form_name="normal", pokemon_form_id="1763", asset_suffix="00", min_cp="530", max_cp="574", min_weather_cp="662", max_weather_cp="718", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="434", pokemon_name="Stunky", pokemon_form_name="normal", pokemon_form_id="791", asset_suffix="00", min_cp="609", max_cp="657", min_weather_cp="762", max_weather_cp="822", weather="58", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="435", pokemon_name="Skuntank", pokemon_form_name="normal", pokemon_form_id="794", asset_suffix="00", min_cp="1278", max_cp="1347", min_weather_cp="1597", max_weather_cp="1684", weather="58", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="436", pokemon_name="Bronzor", pokemon_form_name="normal", pokemon_form_id="1766", asset_suffix="00", min_cp="305", max_cp="344", min_weather_cp="381", max_weather_cp="430", weather="76", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="437", pokemon_name="Bronzong", pokemon_form_name="normal", pokemon_form_id="1769", asset_suffix="00", min_cp="1212", max_cp="1279", min_weather_cp="1515", max_weather_cp="1599", weather="76", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="438", pokemon_name="Bonsly", pokemon_form_name="normal", pokemon_form_id="1772", asset_suffix="00", min_cp="693", max_cp="744", min_weather_cp="866", max_weather_cp="930", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="439", pokemon_name="Mime-jr", pokemon_form_name="normal", pokemon_form_id="1775", asset_suffix="00", min_cp="578", max_cp="626", min_weather_cp="723", max_weather_cp="782", weather="65", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="440", pokemon_name="Happiny", pokemon_form_name="normal", pokemon_form_id="1778", asset_suffix="00", min_cp="178", max_cp="212", min_weather_cp="223", max_weather_cp="265", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="441", pokemon_name="Chatot", pokemon_form_name="normal", pokemon_form_id="1781", asset_suffix="00", min_cp="961", max_cp="1023", min_weather_cp="1202", max_weather_cp="1279", weather="46", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="442", pokemon_name="Spiritomb", pokemon_form_name="normal", pokemon_form_id="1784", asset_suffix="00", min_cp="1119", max_cp="1184", min_weather_cp="1399", max_weather_cp="1480", weather="8", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="443", pokemon_name="Gible", pokemon_form_name="normal", pokemon_form_id="861", asset_suffix="00", min_cp="588", max_cp="635", min_weather_cp="735", max_weather_cp="794", weather="612", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="444", pokemon_name="Gabite", pokemon_form_name="normal", pokemon_form_id="864", asset_suffix="00", min_cp="1009", max_cp="1071", min_weather_cp="1262", max_weather_cp="1339", weather="612", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="445", pokemon_name="Garchomp", pokemon_form_name="normal", pokemon_form_id="867", asset_suffix="00", min_cp="2174", max_cp="2264", min_weather_cp="2718", max_weather_cp="2830", weather="612", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="446", pokemon_name="Munchlax", pokemon_form_name="normal", pokemon_form_id="1787", asset_suffix="00", min_cp="1017", max_cp="1081", min_weather_cp="1271", max_weather_cp="1351", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="447", pokemon_name="Riolu", pokemon_form_name="normal", pokemon_form_id="1790", asset_suffix="00", min_cp="522", max_cp="567", min_weather_cp="653", max_weather_cp="709", weather="5", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="448", pokemon_name="Lucario", pokemon_form_name="normal", pokemon_form_id="1793", asset_suffix="00", min_cp="1469", max_cp="1544", min_weather_cp="1837", max_weather_cp="1930", weather="57", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="449", pokemon_name="Hippopotas", pokemon_form_name="normal", pokemon_form_id="888", asset_suffix="00", min_cp="723", max_cp="776", min_weather_cp="904", max_weather_cp="970", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="450", pokemon_name="Hippowdon", pokemon_form_name="normal", pokemon_form_id="891", asset_suffix="00", min_cp="1684", max_cp="1763", min_weather_cp="2105", max_weather_cp="2204", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="451", pokemon_name="Skorupi", pokemon_form_name="normal", pokemon_form_id="1796", asset_suffix="00", min_cp="531", max_cp="576", min_weather_cp="664", max_weather_cp="721", weather="53", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="452", pokemon_name="Drapion", pokemon_form_name="normal", pokemon_form_id="1799", asset_suffix="00", min_cp="1331", max_cp="1401", min_weather_cp="1665", max_weather_cp="1752", weather="58", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="453", pokemon_name="Croagunk", pokemon_form_name="normal", pokemon_form_id="1802", asset_suffix="00", min_cp="500", max_cp="544", min_weather_cp="625", max_weather_cp="680", weather="5", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="454", pokemon_name="Toxicroak", pokemon_form_name="normal", pokemon_form_id="1805", asset_suffix="00", min_cp="1350", max_cp="1421", min_weather_cp="1688", max_weather_cp="1777", weather="5", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="455", pokemon_name="Carnivine", pokemon_form_name="normal", pokemon_form_id="1808", asset_suffix="00", min_cp="1167", max_cp="1233", min_weather_cp="1459", max_weather_cp="1542", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="456", pokemon_name="Finneon", pokemon_form_name="normal", pokemon_form_id="1811", asset_suffix="00", min_cp="511", max_cp="555", min_weather_cp="639", max_weather_cp="694", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="457", pokemon_name="Lumineon", pokemon_form_name="normal", pokemon_form_id="1814", asset_suffix="00", min_cp="976", max_cp="1036", min_weather_cp="1220", max_weather_cp="1295", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="458", pokemon_name="Mantyke", pokemon_form_name="normal", pokemon_form_id="1817", asset_suffix="00", min_cp="662", max_cp="713", min_weather_cp="828", max_weather_cp="891", weather="36", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="459", pokemon_name="Snover", pokemon_form_name="normal", pokemon_form_id="932", asset_suffix="00", min_cp="614", max_cp="662", min_weather_cp="768", max_weather_cp="828", weather="127", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="460", pokemon_name="Abomasnow", pokemon_form_name="normal", pokemon_form_id="935", asset_suffix="00", min_cp="1281", max_cp="1349", min_weather_cp="1601", max_weather_cp="1687", weather="127", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="460", pokemon_name="Abomasnow", pokemon_form_name="mega", pokemon_form_id="-1", asset_suffix="51", min_cp="1281", max_cp="1349", min_weather_cp="1601", max_weather_cp="1687", weather="127", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="461", pokemon_name="Weavile", pokemon_form_name="normal", pokemon_form_id="800", asset_suffix="00", min_cp="1638", max_cp="1717", min_weather_cp="2048", max_weather_cp="2146", weather="87", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="462", pokemon_name="Magnezone", pokemon_form_name="normal", pokemon_form_id="661", asset_suffix="00", min_cp="1750", max_cp="1831", min_weather_cp="2188", max_weather_cp="2289", weather="37", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="463", pokemon_name="Lickilicky", pokemon_form_name="normal", pokemon_form_id="1820", asset_suffix="00", min_cp="1338", max_cp="1409", min_weather_cp="1673", max_weather_cp="1762", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="464", pokemon_name="Rhyperior", pokemon_form_name="normal", pokemon_form_id="852", asset_suffix="00", min_cp="2046", max_cp="2133", min_weather_cp="2558", max_weather_cp="2667", weather="124", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="465", pokemon_name="Tangrowth", pokemon_form_name="normal", pokemon_form_id="1823", asset_suffix="00", min_cp="1653", max_cp="1731", min_weather_cp="2067", max_weather_cp="2164", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="466", pokemon_name="Electivire", pokemon_form_name="normal", pokemon_form_id="643", asset_suffix="00", min_cp="1680", max_cp="1759", min_weather_cp="2100", max_weather_cp="2199", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="467", pokemon_name="Magmortar", pokemon_form_name="normal", pokemon_form_id="637", asset_suffix="00", min_cp="1710", max_cp="1790", min_weather_cp="2137", max_weather_cp="2237", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="468", pokemon_name="Togekiss", pokemon_form_name="normal", pokemon_form_id="1826", asset_suffix="00", min_cp="1822", max_cp="1904", min_weather_cp="2278", max_weather_cp="2380", weather="56", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="469", pokemon_name="Yanmega", pokemon_form_name="normal", pokemon_form_id="1829", asset_suffix="00", min_cp="1605", max_cp="1683", min_weather_cp="2007", max_weather_cp="2104", weather="36", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="470", pokemon_name="Leafeon", pokemon_form_name="normal", pokemon_form_id="1832", asset_suffix="00", min_cp="1605", max_cp="1682", min_weather_cp="2006", max_weather_cp="2103", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="471", pokemon_name="Glaceon", pokemon_form_name="normal", pokemon_form_id="1835", asset_suffix="00", min_cp="1706", max_cp="1786", min_weather_cp="2133", max_weather_cp="2233", weather="7", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="472", pokemon_name="Gliscor", pokemon_form_name="normal", pokemon_form_id="806", asset_suffix="00", min_cp="1464", max_cp="1538", min_weather_cp="1831", max_weather_cp="1923", weather="126", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="473", pokemon_name="Mamoswine", pokemon_form_name="normal", pokemon_form_id="1838", asset_suffix="00", min_cp="1818", max_cp="1902", min_weather_cp="2273", max_weather_cp="2377", weather="712", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="474", pokemon_name="Porygon-z", pokemon_form_name="normal", pokemon_form_id="683", asset_suffix="00", min_cp="1783", max_cp="1866", min_weather_cp="2230", max_weather_cp="2333", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="475", pokemon_name="Gallade", pokemon_form_name="normal", pokemon_form_id="301", asset_suffix="00", min_cp="1688", max_cp="1767", min_weather_cp="2110", max_weather_cp="2209", weather="65", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="476", pokemon_name="Probopass", pokemon_form_name="normal", pokemon_form_id="1841", asset_suffix="00", min_cp="1122", max_cp="1188", min_weather_cp="1402", max_weather_cp="1485", weather="47", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="477", pokemon_name="Dusknoir", pokemon_form_name="normal", pokemon_form_id="920", asset_suffix="00", min_cp="1294", max_cp="1364", min_weather_cp="1617", max_weather_cp="1706", weather="8", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="478", pokemon_name="Froslass", pokemon_form_name="normal", pokemon_form_id="1844", asset_suffix="00", min_cp="1102", max_cp="1166", min_weather_cp="1377", max_weather_cp="1457", weather="78", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="479", pokemon_name="Rotom", pokemon_form_name="normal", pokemon_form_id="81", asset_suffix="11", min_cp="1096", max_cp="1160", min_weather_cp="1371", max_weather_cp="1451", weather="38", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="479", pokemon_name="Rotom", pokemon_form_name="heat", pokemon_form_id="86", asset_suffix="12", min_cp="1401", max_cp="1474", min_weather_cp="1751", max_weather_cp="1842", weather="312", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="479", pokemon_name="Rotom", pokemon_form_name="wash", pokemon_form_id="85", asset_suffix="13", min_cp="1401", max_cp="1474", min_weather_cp="1751", max_weather_cp="1842", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="479", pokemon_name="Rotom", pokemon_form_name="frost", pokemon_form_id="82", asset_suffix="14", min_cp="1401", max_cp="1474", min_weather_cp="1751", max_weather_cp="1842", weather="37", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="479", pokemon_name="Rotom", pokemon_form_name="fan", pokemon_form_id="83", asset_suffix="15", min_cp="1401", max_cp="1474", min_weather_cp="1751", max_weather_cp="1842", weather="36", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="479", pokemon_name="Rotom", pokemon_form_name="mow", pokemon_form_id="84", asset_suffix="16", min_cp="1401", max_cp="1474", min_weather_cp="1751", max_weather_cp="1842", weather="312", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="480", pokemon_name="Uxie", pokemon_form_name="normal", pokemon_form_id="1847", asset_suffix="00", min_cp="1370", max_cp="1442", min_weather_cp="1712", max_weather_cp="1803", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="481", pokemon_name="Mesprit", pokemon_form_name="normal", pokemon_form_id="1850", asset_suffix="00", min_cp="1669", max_cp="1747", min_weather_cp="2086", max_weather_cp="2184", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="482", pokemon_name="Azelf", pokemon_form_name="normal", pokemon_form_id="1853", asset_suffix="00", min_cp="1752", max_cp="1834", min_weather_cp="2190", max_weather_cp="2293", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="483", pokemon_name="Dialga", pokemon_form_name="normal", pokemon_form_id="1856", asset_suffix="00", min_cp="2217", max_cp="2307", min_weather_cp="2771", max_weather_cp="2884", weather="76", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="484", pokemon_name="Palkia", pokemon_form_name="normal", pokemon_form_id="1859", asset_suffix="00", min_cp="2190", max_cp="2280", min_weather_cp="2737", max_weather_cp="2850", weather="36", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="485", pokemon_name="Heatran", pokemon_form_name="normal", pokemon_form_id="1862", asset_suffix="00", min_cp="2058", max_cp="2145", min_weather_cp="2573", max_weather_cp="2681", weather="127", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="486", pokemon_name="Regigigas", pokemon_form_name="normal", pokemon_form_id="1865", asset_suffix="00", min_cp="2389", max_cp="2483", min_weather_cp="2987", max_weather_cp="3104", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="487", pokemon_name="Giratina", pokemon_form_name="altered", pokemon_form_id="90", asset_suffix="11", min_cp="1848", max_cp="1931", min_weather_cp="2310", max_weather_cp="2414", weather="86", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="487", pokemon_name="Giratina", pokemon_form_name="origin", pokemon_form_id="91", asset_suffix="12", min_cp="2018", max_cp="2105", min_weather_cp="2523", max_weather_cp="2631", weather="86", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="488", pokemon_name="Cresselia", pokemon_form_name="normal", pokemon_form_id="1871", asset_suffix="00", min_cp="1555", max_cp="1633", min_weather_cp="1944", max_weather_cp="2041", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="489", pokemon_name="Phione", pokemon_form_name="normal", pokemon_form_id="1874", asset_suffix="00", min_cp="1138", max_cp="1203", min_weather_cp="1423", max_weather_cp="1504", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="490", pokemon_name="Manaphy", pokemon_form_name="normal", pokemon_form_id="1877", asset_suffix="00", min_cp="1785", max_cp="1865", min_weather_cp="2231", max_weather_cp="2332", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="491", pokemon_name="Darkrai", pokemon_form_name="normal", pokemon_form_id="1880", asset_suffix="00", min_cp="2048", max_cp="2136", min_weather_cp="2560", max_weather_cp="2671", weather="8", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="492", pokemon_name="Shaymin", pokemon_form_name="land", pokemon_form_id="93", asset_suffix="11", min_cp="1785", max_cp="1865", min_weather_cp="2231", max_weather_cp="2332", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="492", pokemon_name="Shaymin", pokemon_form_name="sky", pokemon_form_id="92", asset_suffix="12", min_cp="1966", max_cp="2052", min_weather_cp="2458", max_weather_cp="2566", weather="126", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="493", pokemon_name="Arceus", pokemon_form_name="normal", pokemon_form_id="100", asset_suffix="11", min_cp="2190", max_cp="2279", min_weather_cp="2738", max_weather_cp="2850", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="493", pokemon_name="Arceus", pokemon_form_name="fighting", pokemon_form_id="101", asset_suffix="12", min_cp="2190", max_cp="2279", min_weather_cp="2738", max_weather_cp="2850", weather="5", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="493", pokemon_name="Arceus", pokemon_form_name="flying", pokemon_form_id="102", asset_suffix="13", min_cp="2190", max_cp="2279", min_weather_cp="2738", max_weather_cp="2850", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="493", pokemon_name="Arceus", pokemon_form_name="poison", pokemon_form_id="103", asset_suffix="14", min_cp="2190", max_cp="2279", min_weather_cp="2738", max_weather_cp="2850", weather="5", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="493", pokemon_name="Arceus", pokemon_form_name="ground", pokemon_form_id="104", asset_suffix="15", min_cp="2190", max_cp="2279", min_weather_cp="2738", max_weather_cp="2850", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="493", pokemon_name="Arceus", pokemon_form_name="rock", pokemon_form_id="105", asset_suffix="16", min_cp="2190", max_cp="2279", min_weather_cp="2738", max_weather_cp="2850", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="493", pokemon_name="Arceus", pokemon_form_name="bug", pokemon_form_id="106", asset_suffix="17", min_cp="2190", max_cp="2279", min_weather_cp="2738", max_weather_cp="2850", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="493", pokemon_name="Arceus", pokemon_form_name="ghost", pokemon_form_id="107", asset_suffix="18", min_cp="2190", max_cp="2279", min_weather_cp="2738", max_weather_cp="2850", weather="8", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="493", pokemon_name="Arceus", pokemon_form_name="steel", pokemon_form_id="108", asset_suffix="19", min_cp="2190", max_cp="2279", min_weather_cp="2738", max_weather_cp="2850", weather="7", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="493", pokemon_name="Arceus", pokemon_form_name="fire", pokemon_form_id="109", asset_suffix="20", min_cp="2190", max_cp="2279", min_weather_cp="2738", max_weather_cp="2850", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="493", pokemon_name="Arceus", pokemon_form_name="water", pokemon_form_id="110", asset_suffix="21", min_cp="2190", max_cp="2279", min_weather_cp="2738", max_weather_cp="2850", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="493", pokemon_name="Arceus", pokemon_form_name="grass", pokemon_form_id="111", asset_suffix="22", min_cp="2190", max_cp="2279", min_weather_cp="2738", max_weather_cp="2850", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="493", pokemon_name="Arceus", pokemon_form_name="electric", pokemon_form_id="112", asset_suffix="23", min_cp="2190", max_cp="2279", min_weather_cp="2738", max_weather_cp="2850", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="493", pokemon_name="Arceus", pokemon_form_name="psychic", pokemon_form_id="113", asset_suffix="24", min_cp="2190", max_cp="2279", min_weather_cp="2738", max_weather_cp="2850", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="493", pokemon_name="Arceus", pokemon_form_name="ice", pokemon_form_id="114", asset_suffix="25", min_cp="2190", max_cp="2279", min_weather_cp="2738", max_weather_cp="2850", weather="7", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="493", pokemon_name="Arceus", pokemon_form_name="dragon", pokemon_form_id="115", asset_suffix="26", min_cp="2190", max_cp="2279", min_weather_cp="2738", max_weather_cp="2850", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="493", pokemon_name="Arceus", pokemon_form_name="dark", pokemon_form_id="116", asset_suffix="27", min_cp="2190", max_cp="2279", min_weather_cp="2738", max_weather_cp="2850", weather="8", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="493", pokemon_name="Arceus", pokemon_form_name="fairy", pokemon_form_id="117", asset_suffix="28", min_cp="2190", max_cp="2279", min_weather_cp="2738", max_weather_cp="2850", weather="5", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="494", pokemon_name="Victini", pokemon_form_name="normal", pokemon_form_id="1886", asset_suffix="00", min_cp="1785", max_cp="1865", min_weather_cp="2231", max_weather_cp="2332", weather="612", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="495", pokemon_name="Snivy", pokemon_form_name="normal", pokemon_form_id="1889", asset_suffix="00", min_cp="444", max_cp="485", min_weather_cp="555", max_weather_cp="606", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="496", pokemon_name="Servine", pokemon_form_name="normal", pokemon_form_id="1892", asset_suffix="00", min_cp="770", max_cp="823", min_weather_cp="962", max_weather_cp="1029", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="497", pokemon_name="Serperior", pokemon_form_name="normal", pokemon_form_id="1895", asset_suffix="00", min_cp="1233", max_cp="1301", min_weather_cp="1542", max_weather_cp="1626", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="498", pokemon_name="Tepig", pokemon_form_name="normal", pokemon_form_id="1898", asset_suffix="00", min_cp="571", max_cp="618", min_weather_cp="714", max_weather_cp="773", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="499", pokemon_name="Pignite", pokemon_form_name="normal", pokemon_form_id="1901", asset_suffix="00", min_cp="1036", max_cp="1099", min_weather_cp="1295", max_weather_cp="1374", weather="125", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="500", pokemon_name="Emboar", pokemon_form_name="normal", pokemon_form_id="1904", asset_suffix="00", min_cp="1624", max_cp="1704", min_weather_cp="2030", max_weather_cp="2130", weather="125", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="501", pokemon_name="Oshawott", pokemon_form_name="normal", pokemon_form_id="1907", asset_suffix="00", min_cp="551", max_cp="597", min_weather_cp="689", max_weather_cp="747", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="502", pokemon_name="Dewott", pokemon_form_name="normal", pokemon_form_id="1910", asset_suffix="00", min_cp="935", max_cp="995", min_weather_cp="1169", max_weather_cp="1243", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="503", pokemon_name="Samurott", pokemon_form_name="normal", pokemon_form_id="1913", asset_suffix="00", min_cp="1539", max_cp="1614", min_weather_cp="1924", max_weather_cp="2018", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="504", pokemon_name="Patrat", pokemon_form_name="normal", pokemon_form_id="1916", asset_suffix="00", min_cp="412", max_cp="452", min_weather_cp="515", max_weather_cp="565", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="505", pokemon_name="Watchog", pokemon_form_name="normal", pokemon_form_id="1919", asset_suffix="00", min_cp="979", max_cp="1039", min_weather_cp="1224", max_weather_cp="1299", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="506", pokemon_name="Lillipup", pokemon_form_name="normal", pokemon_form_id="1922", asset_suffix="00", min_cp="480", max_cp="523", min_weather_cp="600", max_weather_cp="654", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="507", pokemon_name="Herdier", pokemon_form_name="normal", pokemon_form_id="1925", asset_suffix="00", min_cp="848", max_cp="904", min_weather_cp="1060", max_weather_cp="1130", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="508", pokemon_name="Stoutland", pokemon_form_name="normal", pokemon_form_id="1928", asset_suffix="00", min_cp="1540", max_cp="1615", min_weather_cp="1925", max_weather_cp="2019", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="509", pokemon_name="Purrloin", pokemon_form_name="normal", pokemon_form_id="1931", asset_suffix="00", min_cp="401", max_cp="441", min_weather_cp="502", max_weather_cp="551", weather="8", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="510", pokemon_name="Liepard", pokemon_form_name="normal", pokemon_form_id="1934", asset_suffix="00", min_cp="993", max_cp="1055", min_weather_cp="1241", max_weather_cp="1318", weather="8", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="511", pokemon_name="Pansage", pokemon_form_name="normal", pokemon_form_id="1937", asset_suffix="00", min_cp="503", max_cp="546", min_weather_cp="628", max_weather_cp="683", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="512", pokemon_name="Simisage", pokemon_form_name="normal", pokemon_form_id="1940", asset_suffix="00", min_cp="1273", max_cp="1343", min_weather_cp="1592", max_weather_cp="1679", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="513", pokemon_name="Pansear", pokemon_form_name="normal", pokemon_form_id="1943", asset_suffix="00", min_cp="503", max_cp="546", min_weather_cp="628", max_weather_cp="683", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="514", pokemon_name="Simisear", pokemon_form_name="normal", pokemon_form_id="1946", asset_suffix="00", min_cp="1273", max_cp="1343", min_weather_cp="1592", max_weather_cp="1679", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="515", pokemon_name="Panpour", pokemon_form_name="normal", pokemon_form_id="1949", asset_suffix="00", min_cp="503", max_cp="546", min_weather_cp="628", max_weather_cp="683", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="516", pokemon_name="Simipour", pokemon_form_name="normal", pokemon_form_id="1952", asset_suffix="00", min_cp="1273", max_cp="1343", min_weather_cp="1592", max_weather_cp="1679", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="517", pokemon_name="Munna", pokemon_form_name="normal", pokemon_form_id="1955", asset_suffix="00", min_cp="605", max_cp="654", min_weather_cp="757", max_weather_cp="818", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="518", pokemon_name="Musharna", pokemon_form_name="normal", pokemon_form_id="1958", asset_suffix="00", min_cp="1481", max_cp="1556", min_weather_cp="1852", max_weather_cp="1945", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="519", pokemon_name="Pidove", pokemon_form_name="normal", pokemon_form_id="1961", asset_suffix="00", min_cp="443", max_cp="484", min_weather_cp="554", max_weather_cp="605", weather="46", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="520", pokemon_name="Tranquill", pokemon_form_name="normal", pokemon_form_id="1964", asset_suffix="00", min_cp="770", max_cp="824", min_weather_cp="963", max_weather_cp="1030", weather="46", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="521", pokemon_name="Unfezant", pokemon_form_name="normal", pokemon_form_id="1967", asset_suffix="00", min_cp="1487", max_cp="1562", min_weather_cp="1859", max_weather_cp="1953", weather="46", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="522", pokemon_name="Blitzle", pokemon_form_name="normal", pokemon_form_id="1970", asset_suffix="00", min_cp="461", max_cp="504", min_weather_cp="577", max_weather_cp="630", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="523", pokemon_name="Zebstrika", pokemon_form_name="normal", pokemon_form_id="1973", asset_suffix="00", min_cp="1317", max_cp="1387", min_weather_cp="1646", max_weather_cp="1734", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="524", pokemon_name="Roggenrola", pokemon_form_name="normal", pokemon_form_id="1976", asset_suffix="00", min_cp="639", max_cp="688", min_weather_cp="799", max_weather_cp="860", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="525", pokemon_name="Boldore", pokemon_form_name="normal", pokemon_form_id="1979", asset_suffix="00", min_cp="1095", max_cp="1159", min_weather_cp="1369", max_weather_cp="1449", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="526", pokemon_name="Gigalith", pokemon_form_name="normal", pokemon_form_id="1982", asset_suffix="00", min_cp="1764", max_cp="1844", min_weather_cp="2205", max_weather_cp="2306", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="527", pokemon_name="Woobat", pokemon_form_name="normal", pokemon_form_id="1985", asset_suffix="00", min_cp="535", max_cp="580", min_weather_cp="669", max_weather_cp="726", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="528", pokemon_name="Swoobat", pokemon_form_name="normal", pokemon_form_id="1988", asset_suffix="00", min_cp="922", max_cp="980", min_weather_cp="1152", max_weather_cp="1226", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="529", pokemon_name="Drilbur", pokemon_form_name="normal", pokemon_form_id="1991", asset_suffix="00", min_cp="732", max_cp="786", min_weather_cp="916", max_weather_cp="983", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="530", pokemon_name="Excadrill", pokemon_form_name="normal", pokemon_form_id="1994", asset_suffix="00", min_cp="1770", max_cp="1853", min_weather_cp="2212", max_weather_cp="2317", weather="127", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="531", pokemon_name="Audino", pokemon_form_name="normal", pokemon_form_id="1997", asset_suffix="00", min_cp="901", max_cp="961", min_weather_cp="1127", max_weather_cp="1201", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="532", pokemon_name="Timburr", pokemon_form_name="normal", pokemon_form_id="2000", asset_suffix="00", min_cp="699", max_cp="751", min_weather_cp="874", max_weather_cp="939", weather="5", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="533", pokemon_name="Gurdurr", pokemon_form_name="normal", pokemon_form_id="2003", asset_suffix="00", min_cp="1173", max_cp="1239", min_weather_cp="1467", max_weather_cp="1549", weather="5", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="534", pokemon_name="Conkeldurr", pokemon_form_name="normal", pokemon_form_id="2006", asset_suffix="00", min_cp="1824", max_cp="1907", min_weather_cp="2280", max_weather_cp="2384", weather="5", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="535", pokemon_name="Tympole", pokemon_form_name="normal", pokemon_form_id="2009", asset_suffix="00", min_cp="438", max_cp="479", min_weather_cp="548", max_weather_cp="599", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="536", pokemon_name="Palpitoad", pokemon_form_name="normal", pokemon_form_id="2012", asset_suffix="00", min_cp="742", max_cp="795", min_weather_cp="928", max_weather_cp="994", weather="312", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="537", pokemon_name="Seismitoad", pokemon_form_name="normal", pokemon_form_id="2015", asset_suffix="00", min_cp="1393", max_cp="1465", min_weather_cp="1741", max_weather_cp="1832", weather="312", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="538", pokemon_name="Throh", pokemon_form_name="normal", pokemon_form_id="2018", asset_suffix="00", min_cp="1391", max_cp="1464", min_weather_cp="1739", max_weather_cp="1830", weather="5", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="539", pokemon_name="Sawk", pokemon_form_name="normal", pokemon_form_id="2021", asset_suffix="00", min_cp="1517", max_cp="1593", min_weather_cp="1897", max_weather_cp="1991", weather="5", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="540", pokemon_name="Sewaddle", pokemon_form_name="normal", pokemon_form_id="2024", asset_suffix="00", min_cp="514", max_cp="558", min_weather_cp="643", max_weather_cp="698", weather="312", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="541", pokemon_name="Swadloon", pokemon_form_name="normal", pokemon_form_id="2027", asset_suffix="00", min_cp="730", max_cp="783", min_weather_cp="913", max_weather_cp="979", weather="312", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="542", pokemon_name="Leavanny", pokemon_form_name="normal", pokemon_form_id="2030", asset_suffix="00", min_cp="1402", max_cp="1474", min_weather_cp="1753", max_weather_cp="1843", weather="312", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="543", pokemon_name="Venipede", pokemon_form_name="normal", pokemon_form_id="2033", asset_suffix="00", min_cp="366", max_cp="403", min_weather_cp="458", max_weather_cp="504", weather="35", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="544", pokemon_name="Whirlipede", pokemon_form_name="normal", pokemon_form_id="2036", asset_suffix="00", min_cp="605", max_cp="653", min_weather_cp="756", max_weather_cp="817", weather="35", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="545", pokemon_name="Scolipede", pokemon_form_name="normal", pokemon_form_id="2039", asset_suffix="00", min_cp="1328", max_cp="1398", min_weather_cp="1660", max_weather_cp="1747", weather="35", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="546", pokemon_name="Cottonee", pokemon_form_name="normal", pokemon_form_id="2042", asset_suffix="00", min_cp="362", max_cp="400", min_weather_cp="453", max_weather_cp="500", weather="125", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="547", pokemon_name="Whimsicott", pokemon_form_name="normal", pokemon_form_id="2045", asset_suffix="00", min_cp="1087", max_cp="1151", min_weather_cp="1359", max_weather_cp="1439", weather="125", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="548", pokemon_name="Petilil", pokemon_form_name="normal", pokemon_form_id="2048", asset_suffix="00", min_cp="543", max_cp="588", min_weather_cp="679", max_weather_cp="736", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="549", pokemon_name="Lilligant", pokemon_form_name="normal", pokemon_form_id="2051", asset_suffix="00", min_cp="1385", max_cp="1457", min_weather_cp="1731", max_weather_cp="1821", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="550", pokemon_name="Basculin", pokemon_form_name="red_striped", pokemon_form_id="136", asset_suffix="11", min_cp="1129", max_cp="1194", min_weather_cp="1412", max_weather_cp="1493", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="550", pokemon_name="Basculin", pokemon_form_name="blue_striped", pokemon_form_id="137", asset_suffix="12", min_cp="1129", max_cp="1194", min_weather_cp="1412", max_weather_cp="1493", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="551", pokemon_name="Sandile", pokemon_form_name="normal", pokemon_form_id="2054", asset_suffix="00", min_cp="546", max_cp="592", min_weather_cp="682", max_weather_cp="741", weather="128", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="552", pokemon_name="Krokorok", pokemon_form_name="normal", pokemon_form_id="2057", asset_suffix="00", min_cp="756", max_cp="810", min_weather_cp="945", max_weather_cp="1013", weather="128", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="553", pokemon_name="Krookodile", pokemon_form_name="normal", pokemon_form_id="2060", asset_suffix="00", min_cp="1662", max_cp="1740", min_weather_cp="2077", max_weather_cp="2176", weather="128", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="554", pokemon_name="Darumaka", pokemon_form_name="normal", pokemon_form_id="2063", asset_suffix="00", min_cp="768", max_cp="823", min_weather_cp="961", max_weather_cp="1030", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="554", pokemon_name="Darumaka", pokemon_form_name="galarian", pokemon_form_id="2341", asset_suffix="31", min_cp="768", max_cp="823", min_weather_cp="961", max_weather_cp="1030", weather="7", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="555", pokemon_name="Darmanitan", pokemon_form_name="standard", pokemon_form_id="138", asset_suffix="11", min_cp="1691", max_cp="1774", min_weather_cp="2114", max_weather_cp="2218", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="555", pokemon_name="Darmanitan", pokemon_form_name="zen", pokemon_form_id="139", asset_suffix="12", min_cp="2049", max_cp="2136", min_weather_cp="2561", max_weather_cp="2670", weather="126", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="555", pokemon_name="Darmanitan", pokemon_form_name="galarian_standard", pokemon_form_id="2342", asset_suffix="31", min_cp="1691", max_cp="1774", min_weather_cp="2114", max_weather_cp="2218", weather="7", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="555", pokemon_name="Darmanitan", pokemon_form_name="galarian_zen", pokemon_form_id="2343", asset_suffix="32", min_cp="2136", max_cp="2231", min_weather_cp="2670", max_weather_cp="2789", weather="712", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="556", pokemon_name="Maractus", pokemon_form_name="normal", pokemon_form_id="2066", asset_suffix="00", min_cp="1231", max_cp="1299", min_weather_cp="1539", max_weather_cp="1624", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="557", pokemon_name="Dwebble", pokemon_form_name="normal", pokemon_form_id="2069", asset_suffix="00", min_cp="650", max_cp="699", min_weather_cp="813", max_weather_cp="874", weather="34", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="558", pokemon_name="Crustle", pokemon_form_name="normal", pokemon_form_id="2072", asset_suffix="00", min_cp="1381", max_cp="1452", min_weather_cp="1726", max_weather_cp="1815", weather="34", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="559", pokemon_name="Scraggy", pokemon_form_name="normal", pokemon_form_id="2075", asset_suffix="00", min_cp="732", max_cp="784", min_weather_cp="915", max_weather_cp="980", weather="85", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="560", pokemon_name="Scrafty", pokemon_form_name="normal", pokemon_form_id="2078", asset_suffix="00", min_cp="1236", max_cp="1304", min_weather_cp="1546", max_weather_cp="1631", weather="85", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="561", pokemon_name="Sigilyph", pokemon_form_name="normal", pokemon_form_id="2081", asset_suffix="00", min_cp="1385", max_cp="1457", min_weather_cp="1732", max_weather_cp="1821", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="562", pokemon_name="Yamask", pokemon_form_name="normal", pokemon_form_id="2084", asset_suffix="00", min_cp="516", max_cp="561", min_weather_cp="646", max_weather_cp="701", weather="8", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="562", pokemon_name="Yamask", pokemon_form_name="galarian", pokemon_form_id="2344", asset_suffix="31", min_cp="516", max_cp="561", min_weather_cp="646", max_weather_cp="701", weather="128", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="563", pokemon_name="Cofagrigus", pokemon_form_name="normal", pokemon_form_id="2087", asset_suffix="00", min_cp="1231", max_cp="1299", min_weather_cp="1539", max_weather_cp="1624", weather="8", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="564", pokemon_name="Tirtouga", pokemon_form_name="normal", pokemon_form_id="2090", asset_suffix="00", min_cp="796", max_cp="850", min_weather_cp="995", max_weather_cp="1063", weather="34", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="565", pokemon_name="Carracosta", pokemon_form_name="normal", pokemon_form_id="2093", asset_suffix="00", min_cp="1425", max_cp="1498", min_weather_cp="1782", max_weather_cp="1872", weather="34", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="566", pokemon_name="Archen", pokemon_form_name="normal", pokemon_form_id="2096", asset_suffix="00", min_cp="989", max_cp="1052", min_weather_cp="1236", max_weather_cp="1316", weather="46", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="567", pokemon_name="Archeops", pokemon_form_name="normal", pokemon_form_id="2099", asset_suffix="00", min_cp="1818", max_cp="1903", min_weather_cp="2272", max_weather_cp="2379", weather="46", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="568", pokemon_name="Trubbish", pokemon_form_name="normal", pokemon_form_id="2102", asset_suffix="00", min_cp="526", max_cp="571", min_weather_cp="658", max_weather_cp="714", weather="5", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="569", pokemon_name="Garbodor", pokemon_form_name="normal", pokemon_form_id="2105", asset_suffix="00", min_cp="1271", max_cp="1339", min_weather_cp="1589", max_weather_cp="1675", weather="5", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="570", pokemon_name="Zorua", pokemon_form_name="normal", pokemon_form_id="2108", asset_suffix="00", min_cp="622", max_cp="671", min_weather_cp="777", max_weather_cp="839", weather="8", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="571", pokemon_name="Zoroark", pokemon_form_name="normal", pokemon_form_id="2111", asset_suffix="00", min_cp="1395", max_cp="1469", min_weather_cp="1743", max_weather_cp="1836", weather="8", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="572", pokemon_name="Minccino", pokemon_form_name="normal", pokemon_form_id="2114", asset_suffix="00", min_cp="456", max_cp="498", min_weather_cp="570", max_weather_cp="623", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="573", pokemon_name="Cinccino", pokemon_form_name="normal", pokemon_form_id="2117", asset_suffix="00", min_cp="1213", max_cp="1281", min_weather_cp="1517", max_weather_cp="1601", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="574", pokemon_name="Gothita", pokemon_form_name="normal", pokemon_form_id="2120", asset_suffix="00", min_cp="500", max_cp="543", min_weather_cp="625", max_weather_cp="679", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="575", pokemon_name="Gothorita", pokemon_form_name="normal", pokemon_form_id="2123", asset_suffix="00", min_cp="860", max_cp="916", min_weather_cp="1075", max_weather_cp="1146", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="576", pokemon_name="Gothitelle", pokemon_form_name="normal", pokemon_form_id="2126", asset_suffix="00", min_cp="1313", max_cp="1382", min_weather_cp="1641", max_weather_cp="1728", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="577", pokemon_name="Solosis", pokemon_form_name="normal", pokemon_form_id="2129", asset_suffix="00", min_cp="727", max_cp="781", min_weather_cp="909", max_weather_cp="977", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="578", pokemon_name="Duosion", pokemon_form_name="normal", pokemon_form_id="2132", asset_suffix="00", min_cp="1087", max_cp="1153", min_weather_cp="1359", max_weather_cp="1441", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="579", pokemon_name="Reuniclus", pokemon_form_name="normal", pokemon_form_id="2135", asset_suffix="00", min_cp="1595", max_cp="1672", min_weather_cp="1994", max_weather_cp="2091", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="580", pokemon_name="Ducklett", pokemon_form_name="normal", pokemon_form_id="2138", asset_suffix="00", min_cp="447", max_cp="489", min_weather_cp="559", max_weather_cp="612", weather="36", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="581", pokemon_name="Swanna", pokemon_form_name="normal", pokemon_form_id="2141", asset_suffix="00", min_cp="1128", max_cp="1193", min_weather_cp="1410", max_weather_cp="1491", weather="36", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="582", pokemon_name="Vanillite", pokemon_form_name="normal", pokemon_form_id="2144", asset_suffix="00", min_cp="545", max_cp="590", min_weather_cp="682", max_weather_cp="738", weather="7", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="583", pokemon_name="Vanillish", pokemon_form_name="normal", pokemon_form_id="2147", asset_suffix="00", min_cp="853", max_cp="909", min_weather_cp="1066", max_weather_cp="1136", weather="7", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="584", pokemon_name="Vanilluxe", pokemon_form_name="normal", pokemon_form_id="2150", asset_suffix="00", min_cp="1537", max_cp="1612", min_weather_cp="1921", max_weather_cp="2015", weather="7", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="585", pokemon_name="Deerling", pokemon_form_name="spring", pokemon_form_id="585", asset_suffix="11", min_cp="601", max_cp="648", min_weather_cp="751", max_weather_cp="810", weather="412", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="585", pokemon_name="Deerling", pokemon_form_name="summer", pokemon_form_id="586", asset_suffix="12", min_cp="601", max_cp="648", min_weather_cp="751", max_weather_cp="810", weather="412", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="585", pokemon_name="Deerling", pokemon_form_name="autumn", pokemon_form_id="587", asset_suffix="13", min_cp="601", max_cp="648", min_weather_cp="751", max_weather_cp="810", weather="412", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="585", pokemon_name="Deerling", pokemon_form_name="winter", pokemon_form_id="588", asset_suffix="14", min_cp="601", max_cp="648", min_weather_cp="751", max_weather_cp="810", weather="412", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="586", pokemon_name="Sawsbuck", pokemon_form_name="spring", pokemon_form_id="589", asset_suffix="11", min_cp="1311", max_cp="1381", min_weather_cp="1639", max_weather_cp="1726", weather="412", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="586", pokemon_name="Sawsbuck", pokemon_form_name="summer", pokemon_form_id="590", asset_suffix="12", min_cp="1311", max_cp="1381", min_weather_cp="1639", max_weather_cp="1726", weather="412", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="586", pokemon_name="Sawsbuck", pokemon_form_name="autumn", pokemon_form_id="591", asset_suffix="13", min_cp="1311", max_cp="1381", min_weather_cp="1639", max_weather_cp="1726", weather="412", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="586", pokemon_name="Sawsbuck", pokemon_form_name="winter", pokemon_form_id="592", asset_suffix="14", min_cp="1311", max_cp="1381", min_weather_cp="1639", max_weather_cp="1726", weather="412", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="587", pokemon_name="Emolga", pokemon_form_name="normal", pokemon_form_id="2153", asset_suffix="00", min_cp="876", max_cp="933", min_weather_cp="1095", max_weather_cp="1166", weather="36", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="588", pokemon_name="Karrablast", pokemon_form_name="normal", pokemon_form_id="2156", asset_suffix="00", min_cp="626", max_cp="675", min_weather_cp="783", max_weather_cp="844", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="589", pokemon_name="Escavalier", pokemon_form_name="normal", pokemon_form_id="2159", asset_suffix="00", min_cp="1574", max_cp="1650", min_weather_cp="1968", max_weather_cp="2063", weather="37", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="590", pokemon_name="Foongus", pokemon_form_name="normal", pokemon_form_id="2162", asset_suffix="00", min_cp="514", max_cp="559", min_weather_cp="643", max_weather_cp="699", weather="125", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="591", pokemon_name="Amoonguss", pokemon_form_name="normal", pokemon_form_id="2165", asset_suffix="00", min_cp="1156", max_cp="1223", min_weather_cp="1446", max_weather_cp="1529", weather="125", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="592", pokemon_name="Frillish", pokemon_form_name="normal", pokemon_form_id="2168", asset_suffix="00", min_cp="668", max_cp="718", min_weather_cp="835", max_weather_cp="898", weather="38", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="592", pokemon_name="Frillish", pokemon_form_name="female", pokemon_form_id="2330", asset_suffix="1", min_cp="668", max_cp="718", min_weather_cp="835", max_weather_cp="898", weather="38", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="593", pokemon_name="Jellicent", pokemon_form_name="normal", pokemon_form_id="2171", asset_suffix="00", min_cp="1267", max_cp="1336", min_weather_cp="1584", max_weather_cp="1670", weather="38", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="593", pokemon_name="Jellicent", pokemon_form_name="female", pokemon_form_id="2331", asset_suffix="1", min_cp="1267", max_cp="1336", min_weather_cp="1584", max_weather_cp="1670", weather="38", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="594", pokemon_name="Alomomola", pokemon_form_name="normal", pokemon_form_id="2174", asset_suffix="00", min_cp="1170", max_cp="1239", min_weather_cp="1462", max_weather_cp="1549", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="595", pokemon_name="Joltik", pokemon_form_name="normal", pokemon_form_id="2177", asset_suffix="00", min_cp="539", max_cp="584", min_weather_cp="674", max_weather_cp="730", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="596", pokemon_name="Galvantula", pokemon_form_name="normal", pokemon_form_id="2180", asset_suffix="00", min_cp="1193", max_cp="1260", min_weather_cp="1491", max_weather_cp="1575", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="597", pokemon_name="Ferroseed", pokemon_form_name="normal", pokemon_form_id="2183", asset_suffix="00", min_cp="493", max_cp="537", min_weather_cp="617", max_weather_cp="672", weather="127", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="598", pokemon_name="Ferrothorn", pokemon_form_name="normal", pokemon_form_id="2186", asset_suffix="00", min_cp="1258", max_cp="1326", min_weather_cp="1572", max_weather_cp="1658", weather="127", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="599", pokemon_name="Klink", pokemon_form_name="normal", pokemon_form_id="2189", asset_suffix="00", min_cp="502", max_cp="546", min_weather_cp="628", max_weather_cp="683", weather="7", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="600", pokemon_name="Klang", pokemon_form_name="normal", pokemon_form_id="2192", asset_suffix="00", min_cp="994", max_cp="1055", min_weather_cp="1243", max_weather_cp="1319", weather="7", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="601", pokemon_name="Klinklang", pokemon_form_name="normal", pokemon_form_id="2195", asset_suffix="00", min_cp="1433", max_cp="1506", min_weather_cp="1792", max_weather_cp="1883", weather="7", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="602", pokemon_name="Tynamo", pokemon_form_name="normal", pokemon_form_id="2198", asset_suffix="00", min_cp="423", max_cp="463", min_weather_cp="529", max_weather_cp="579", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="603", pokemon_name="Eelektrik", pokemon_form_name="normal", pokemon_form_id="2201", asset_suffix="00", min_cp="921", max_cp="980", min_weather_cp="1152", max_weather_cp="1225", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="604", pokemon_name="Eelektross", pokemon_form_name="normal", pokemon_form_id="2204", asset_suffix="00", min_cp="1487", max_cp="1561", min_weather_cp="1859", max_weather_cp="1952", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="605", pokemon_name="Elgyem", pokemon_form_name="normal", pokemon_form_id="2207", asset_suffix="00", min_cp="738", max_cp="791", min_weather_cp="923", max_weather_cp="989", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="606", pokemon_name="Beheeyem", pokemon_form_name="normal", pokemon_form_id="2210", asset_suffix="00", min_cp="1498", max_cp="1573", min_weather_cp="1873", max_weather_cp="1966", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="607", pokemon_name="Litwick", pokemon_form_name="normal", pokemon_form_id="2213", asset_suffix="00", min_cp="530", max_cp="575", min_weather_cp="663", max_weather_cp="719", weather="812", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="608", pokemon_name="Lampent", pokemon_form_name="normal", pokemon_form_id="2216", asset_suffix="00", min_cp="917", max_cp="976", min_weather_cp="1146", max_weather_cp="1220", weather="812", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="609", pokemon_name="Chandelure", pokemon_form_name="normal", pokemon_form_id="2219", asset_suffix="00", min_cp="1784", max_cp="1867", min_weather_cp="2231", max_weather_cp="2335", weather="812", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="610", pokemon_name="Axew", pokemon_form_name="normal", pokemon_form_id="2222", asset_suffix="00", min_cp="729", max_cp="782", min_weather_cp="912", max_weather_cp="977", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="611", pokemon_name="Fraxure", pokemon_form_name="normal", pokemon_form_id="2225", asset_suffix="00", min_cp="1208", max_cp="1276", min_weather_cp="1511", max_weather_cp="1596", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="612", pokemon_name="Haxorus", pokemon_form_name="normal", pokemon_form_id="2228", asset_suffix="00", min_cp="1966", max_cp="2053", min_weather_cp="2458", max_weather_cp="2566", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="613", pokemon_name="Cubchoo", pokemon_form_name="normal", pokemon_form_id="2231", asset_suffix="00", min_cp="563", max_cp="610", min_weather_cp="704", max_weather_cp="763", weather="7", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="613", pokemon_name="Cubchoo", pokemon_form_name="winter_2020", pokemon_form_id="2672", asset_suffix="pm0613_00_pgo_winter2020", min_cp="563", max_cp="610", min_weather_cp="704", max_weather_cp="763", weather="7", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="614", pokemon_name="Beartic", pokemon_form_name="normal", pokemon_form_id="2234", asset_suffix="00", min_cp="1659", max_cp="1738", min_weather_cp="2074", max_weather_cp="2173", weather="7", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="615", pokemon_name="Cryogonal", pokemon_form_name="normal", pokemon_form_id="2237", asset_suffix="00", min_cp="1524", max_cp="1598", min_weather_cp="1905", max_weather_cp="1998", weather="7", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="616", pokemon_name="Shelmet", pokemon_form_name="normal", pokemon_form_id="2240", asset_suffix="00", min_cp="434", max_cp="476", min_weather_cp="543", max_weather_cp="595", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="617", pokemon_name="Accelgor", pokemon_form_name="normal", pokemon_form_id="2243", asset_suffix="00", min_cp="1323", max_cp="1395", min_weather_cp="1654", max_weather_cp="1744", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="618", pokemon_name="Stunfisk", pokemon_form_name="normal", pokemon_form_id="2246", asset_suffix="00", min_cp="1169", max_cp="1235", min_weather_cp="1461", max_weather_cp="1544", weather="123", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="618", pokemon_name="Stunfisk", pokemon_form_name="galarian", pokemon_form_id="2345", asset_suffix="31", min_cp="1169", max_cp="1235", min_weather_cp="1461", max_weather_cp="1544", weather="127", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="619", pokemon_name="Mienfoo", pokemon_form_name="normal", pokemon_form_id="2249", asset_suffix="00", min_cp="740", max_cp="793", min_weather_cp="925", max_weather_cp="992", weather="5", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="620", pokemon_name="Mienshao", pokemon_form_name="normal", pokemon_form_id="2252", asset_suffix="00", min_cp="1472", max_cp="1548", min_weather_cp="1840", max_weather_cp="1936", weather="5", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="621", pokemon_name="Druddigon", pokemon_form_name="normal", pokemon_form_id="2255", asset_suffix="00", min_cp="1487", max_cp="1561", min_weather_cp="1859", max_weather_cp="1951", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="622", pokemon_name="Golett", pokemon_form_name="normal", pokemon_form_id="2258", asset_suffix="00", min_cp="630", max_cp="679", min_weather_cp="788", max_weather_cp="849", weather="128", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="623", pokemon_name="Golurk", pokemon_form_name="normal", pokemon_form_id="2261", asset_suffix="00", min_cp="1554", max_cp="1630", min_weather_cp="1943", max_weather_cp="2038", weather="128", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="624", pokemon_name="Pawniard", pokemon_form_name="normal", pokemon_form_id="2264", asset_suffix="00", min_cp="765", max_cp="819", min_weather_cp="957", max_weather_cp="1024", weather="87", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="625", pokemon_name="Bisharp", pokemon_form_name="normal", pokemon_form_id="2267", asset_suffix="00", min_cp="1549", max_cp="1625", min_weather_cp="1936", max_weather_cp="2031", weather="87", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="626", pokemon_name="Bouffalant", pokemon_form_name="normal", pokemon_form_id="2270", asset_suffix="00", min_cp="1524", max_cp="1598", min_weather_cp="1905", max_weather_cp="1998", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="627", pokemon_name="Rufflet", pokemon_form_name="normal", pokemon_form_id="2273", asset_suffix="00", min_cp="796", max_cp="852", min_weather_cp="996", max_weather_cp="1065", weather="46", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="628", pokemon_name="Braviary", pokemon_form_name="normal", pokemon_form_id="2276", asset_suffix="00", min_cp="1685", max_cp="1764", min_weather_cp="2106", max_weather_cp="2206", weather="46", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="629", pokemon_name="Vullaby", pokemon_form_name="normal", pokemon_form_id="2279", asset_suffix="00", min_cp="675", max_cp="726", min_weather_cp="844", max_weather_cp="908", weather="86", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="630", pokemon_name="Mandibuzz", pokemon_form_name="normal", pokemon_form_id="2282", asset_suffix="00", min_cp="1154", max_cp="1221", min_weather_cp="1443", max_weather_cp="1527", weather="86", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="631", pokemon_name="Heatmor", pokemon_form_name="normal", pokemon_form_id="2285", asset_suffix="00", min_cp="1298", max_cp="1368", min_weather_cp="1623", max_weather_cp="1711", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="632", pokemon_name="Durant", pokemon_form_name="normal", pokemon_form_id="2288", asset_suffix="00", min_cp="1446", max_cp="1519", min_weather_cp="1808", max_weather_cp="1900", weather="37", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="633", pokemon_name="Deino", pokemon_form_name="normal", pokemon_form_id="2291", asset_suffix="00", min_cp="560", max_cp="606", min_weather_cp="701", max_weather_cp="758", weather="86", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="634", pokemon_name="Zweilous", pokemon_form_name="normal", pokemon_form_id="2294", asset_suffix="00", min_cp="990", max_cp="1051", min_weather_cp="1238", max_weather_cp="1313", weather="86", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="635", pokemon_name="Hydreigon", pokemon_form_name="normal", pokemon_form_id="2297", asset_suffix="00", min_cp="1985", max_cp="2071", min_weather_cp="2482", max_weather_cp="2589", weather="86", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="636", pokemon_name="Larvesta", pokemon_form_name="normal", pokemon_form_id="2300", asset_suffix="00", min_cp="800", max_cp="855", min_weather_cp="1000", max_weather_cp="1069", weather="312", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="637", pokemon_name="Volcarona", pokemon_form_name="normal", pokemon_form_id="2303", asset_suffix="00", min_cp="1989", max_cp="2075", min_weather_cp="2487", max_weather_cp="2594", weather="312", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="638", pokemon_name="Cobalion", pokemon_form_name="normal", pokemon_form_id="2306", asset_suffix="00", min_cp="1649", max_cp="1727", min_weather_cp="2061", max_weather_cp="2159", weather="75", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="639", pokemon_name="Terrakion", pokemon_form_name="normal", pokemon_form_id="2309", asset_suffix="00", min_cp="2026", max_cp="2113", min_weather_cp="2533", max_weather_cp="2641", weather="45", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="640", pokemon_name="Virizion", pokemon_form_name="normal", pokemon_form_id="2312", asset_suffix="00", min_cp="1649", max_cp="1727", min_weather_cp="2061", max_weather_cp="2159", weather="125", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="641", pokemon_name="Tornadus", pokemon_form_name="incarnate", pokemon_form_id="140", asset_suffix="11", min_cp="1828", max_cp="1911", min_weather_cp="2285", max_weather_cp="2389", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="641", pokemon_name="Tornadus", pokemon_form_name="therian", pokemon_form_id="141", asset_suffix="12", min_cp="1756", max_cp="1837", min_weather_cp="2196", max_weather_cp="2296", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="642", pokemon_name="Thundurus", pokemon_form_name="incarnate", pokemon_form_id="142", asset_suffix="11", min_cp="1828", max_cp="1911", min_weather_cp="2285", max_weather_cp="2389", weather="36", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="642", pokemon_name="Thundurus", pokemon_form_name="therian", pokemon_form_id="143", asset_suffix="12", min_cp="2002", max_cp="2091", min_weather_cp="2503", max_weather_cp="2614", weather="36", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="643", pokemon_name="Reshiram", pokemon_form_name="normal", pokemon_form_id="2315", asset_suffix="00", min_cp="2217", max_cp="2307", min_weather_cp="2771", max_weather_cp="2884", weather="612", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="644", pokemon_name="Zekrom", pokemon_form_name="normal", pokemon_form_id="2318", asset_suffix="00", min_cp="2217", max_cp="2307", min_weather_cp="2771", max_weather_cp="2884", weather="63", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="645", pokemon_name="Landorus", pokemon_form_name="incarnate", pokemon_form_id="144", asset_suffix="11", min_cp="1965", max_cp="2050", min_weather_cp="2456", max_weather_cp="2563", weather="126", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="645", pokemon_name="Landorus", pokemon_form_name="therian", pokemon_form_id="145", asset_suffix="12", min_cp="2151", max_cp="2241", min_weather_cp="2688", max_weather_cp="2801", weather="126", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="646", pokemon_name="Kyurem", pokemon_form_name="normal", pokemon_form_id="146", asset_suffix="11", min_cp="1957", max_cp="2042", min_weather_cp="2446", max_weather_cp="2553", weather="67", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="646", pokemon_name="Kyurem", pokemon_form_name="white", pokemon_form_id="148", asset_suffix="12", min_cp="2533", max_cp="2631", min_weather_cp="3167", max_weather_cp="3289", weather="67", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="646", pokemon_name="Kyurem", pokemon_form_name="black", pokemon_form_id="147", asset_suffix="13", min_cp="2533", max_cp="2631", min_weather_cp="3167", max_weather_cp="3289", weather="67", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="647", pokemon_name="Keldeo", pokemon_form_name="ordinary", pokemon_form_id="149", asset_suffix="11", min_cp="2026", max_cp="2113", min_weather_cp="2533", max_weather_cp="2641", weather="35", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="647", pokemon_name="Keldeo", pokemon_form_name="resolute", pokemon_form_id="150", asset_suffix="12", min_cp="2026", max_cp="2113", min_weather_cp="2533", max_weather_cp="2641", weather="35", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="648", pokemon_name="Meloetta", pokemon_form_name="aria", pokemon_form_id="151", asset_suffix="11", min_cp="2180", max_cp="2269", min_weather_cp="2725", max_weather_cp="2837", weather="46", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="648", pokemon_name="Meloetta", pokemon_form_name="pirouette", pokemon_form_id="152", asset_suffix="12", min_cp="2147", max_cp="2237", min_weather_cp="2684", max_weather_cp="2796", weather="45", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="649", pokemon_name="Genesect", pokemon_form_name="normal", pokemon_form_id="593", asset_suffix="11", min_cp="1833", max_cp="1916", min_weather_cp="2292", max_weather_cp="2395", weather="37", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="649", pokemon_name="Genesect", pokemon_form_name="douse", pokemon_form_id="597", asset_suffix="12", min_cp="1833", max_cp="1916", min_weather_cp="2292", max_weather_cp="2395", weather="37", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="649", pokemon_name="Genesect", pokemon_form_name="shock", pokemon_form_id="594", asset_suffix="13", min_cp="1833", max_cp="1916", min_weather_cp="2292", max_weather_cp="2395", weather="37", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="649", pokemon_name="Genesect", pokemon_form_name="burn", pokemon_form_id="595", asset_suffix="14", min_cp="1833", max_cp="1916", min_weather_cp="2292", max_weather_cp="2395", weather="37", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="649", pokemon_name="Genesect", pokemon_form_name="chill", pokemon_form_id="596", asset_suffix="15", min_cp="1833", max_cp="1916", min_weather_cp="2292", max_weather_cp="2395", weather="37", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="650", pokemon_name="Chespin", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="579", max_cp="626", min_weather_cp="724", max_weather_cp="783", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="651", pokemon_name="Quilladin", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="924", max_cp="982", min_weather_cp="1155", max_weather_cp="1228", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="652", pokemon_name="Chesnaught", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="1611", max_cp="1688", min_weather_cp="2014", max_weather_cp="2110", weather="125", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="653", pokemon_name="Fennekin", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="542", max_cp="587", min_weather_cp="678", max_weather_cp="734", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="654", pokemon_name="Braixen", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="975", max_cp="1036", min_weather_cp="1219", max_weather_cp="1295", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="655", pokemon_name="Delphox", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="1669", max_cp="1748", min_weather_cp="2087", max_weather_cp="2185", weather="126", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="656", pokemon_name="Froakie", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="522", max_cp="567", min_weather_cp="653", max_weather_cp="709", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="657", pokemon_name="Frogadier", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="877", max_cp="935", min_weather_cp="1097", max_weather_cp="1169", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="658", pokemon_name="Greninja", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="1443", max_cp="1516", min_weather_cp="1804", max_weather_cp="1896", weather="38", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="659", pokemon_name="Bunnelby", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="282", max_cp="316", min_weather_cp="353", max_weather_cp="395", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="660", pokemon_name="Diggersby", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="806", max_cp="862", min_weather_cp="1008", max_weather_cp="1078", weather="412", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="661", pokemon_name="Fletchling", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="417", max_cp="457", min_weather_cp="522", max_weather_cp="571", weather="46", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="662", pokemon_name="Fletchinder", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="785", max_cp="839", min_weather_cp="981", max_weather_cp="1049", weather="126", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="663", pokemon_name="Talonflame", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="1193", max_cp="1260", min_weather_cp="1492", max_weather_cp="1575", weather="126", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="664", pokemon_name="Scatterbug", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="249", max_cp="281", min_weather_cp="312", max_weather_cp="351", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="665", pokemon_name="Spewpa", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="241", max_cp="274", min_weather_cp="302", max_weather_cp="342", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="666", pokemon_name="Vivillon", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="997", max_cp="1060", min_weather_cp="1247", max_weather_cp="1325", weather="36", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="667", pokemon_name="Litleo", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="761", max_cp="814", min_weather_cp="951", max_weather_cp="1018", weather="124", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="668", pokemon_name="Pyroar", pokemon_form_name="normal", pokemon_form_id="2587", asset_suffix="00", min_cp="1506", max_cp="1581", min_weather_cp="1883", max_weather_cp="1977", weather="124", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="668", pokemon_name="Pyroar", pokemon_form_name="female", pokemon_form_id="2588", asset_suffix="1", min_cp="1506", max_cp="1581", min_weather_cp="1883", max_weather_cp="1977", weather="124", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="669", pokemon_name="Flabebe", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="562", max_cp="607", min_weather_cp="702", max_weather_cp="759", weather="5", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="670", pokemon_name="Floette", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="820", max_cp="875", min_weather_cp="1025", max_weather_cp="1094", weather="5", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="671", pokemon_name="Florges", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="1767", max_cp="1848", min_weather_cp="2209", max_weather_cp="2310", weather="5", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="672", pokemon_name="Skiddo", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="664", max_cp="714", min_weather_cp="830", max_weather_cp="893", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="673", pokemon_name="Gogoat", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="1522", max_cp="1598", min_weather_cp="1903", max_weather_cp="1998", weather="12", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="674", pokemon_name="Pancham", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="796", max_cp="850", min_weather_cp="995", max_weather_cp="1063", weather="5", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="675", pokemon_name="Pangoro", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="1581", max_cp="1658", min_weather_cp="1976", max_weather_cp="2073", weather="58", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="676", pokemon_name="Furfrou", pokemon_form_name="natural", pokemon_form_id="2629", asset_suffix="11", min_cp="1141", max_cp="1206", min_weather_cp="1427", max_weather_cp="1508", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="676", pokemon_name="Furfrou", pokemon_form_name="heart", pokemon_form_id="2630", asset_suffix="12", min_cp="1141", max_cp="1206", min_weather_cp="1427", max_weather_cp="1508", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="676", pokemon_name="Furfrou", pokemon_form_name="star", pokemon_form_id="2631", asset_suffix="13", min_cp="1141", max_cp="1206", min_weather_cp="1427", max_weather_cp="1508", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="676", pokemon_name="Furfrou", pokemon_form_name="diamond", pokemon_form_id="2632", asset_suffix="14", min_cp="1141", max_cp="1206", min_weather_cp="1427", max_weather_cp="1508", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="676", pokemon_name="Furfrou", pokemon_form_name="debutante", pokemon_form_id="2633", asset_suffix="15", min_cp="1141", max_cp="1206", min_weather_cp="1427", max_weather_cp="1508", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="676", pokemon_name="Furfrou", pokemon_form_name="matron", pokemon_form_id="2634", asset_suffix="16", min_cp="1141", max_cp="1206", min_weather_cp="1427", max_weather_cp="1508", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="676", pokemon_name="Furfrou", pokemon_form_name="dandy", pokemon_form_id="2635", asset_suffix="17", min_cp="1141", max_cp="1206", min_weather_cp="1427", max_weather_cp="1508", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="676", pokemon_name="Furfrou", pokemon_form_name="la_reine", pokemon_form_id="2636", asset_suffix="18", min_cp="1141", max_cp="1206", min_weather_cp="1427", max_weather_cp="1508", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="676", pokemon_name="Furfrou", pokemon_form_name="kabuki", pokemon_form_id="2637", asset_suffix="19", min_cp="1141", max_cp="1206", min_weather_cp="1427", max_weather_cp="1508", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="676", pokemon_name="Furfrou", pokemon_form_name="pharaoh", pokemon_form_id="2638", asset_suffix="20", min_cp="1141", max_cp="1206", min_weather_cp="1427", max_weather_cp="1508", weather="4", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="677", pokemon_name="Espurr", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="669", max_cp="719", min_weather_cp="837", max_weather_cp="899", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="678", pokemon_name="Meowstic", pokemon_form_name="normal", pokemon_form_id="2589", asset_suffix="00", min_cp="1148", max_cp="1213", min_weather_cp="1436", max_weather_cp="1517", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="678", pokemon_name="Meowstic", pokemon_form_name="female", pokemon_form_id="2590", asset_suffix="1", min_cp="1148", max_cp="1213", min_weather_cp="1436", max_weather_cp="1517", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="682", pokemon_name="Spritzee", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="664", max_cp="715", min_weather_cp="831", max_weather_cp="894", weather="5", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="683", pokemon_name="Aromatisse", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="1269", max_cp="1337", min_weather_cp="1586", max_weather_cp="1672", weather="5", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="684", pokemon_name="Swirlix", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="625", max_cp="673", min_weather_cp="781", max_weather_cp="842", weather="5", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="685", pokemon_name="Slurpuff", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="1190", max_cp="1256", min_weather_cp="1488", max_weather_cp="1570", weather="5", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="686", pokemon_name="Inkay", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="486", max_cp="529", min_weather_cp="608", max_weather_cp="662", weather="86", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="687", pokemon_name="Malamar", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="1279", max_cp="1347", min_weather_cp="1599", max_weather_cp="1685", weather="86", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="688", pokemon_name="Binacle", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="497", max_cp="540", min_weather_cp="621", max_weather_cp="675", weather="43", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="689", pokemon_name="Barbaracle", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="1455", max_cp="1528", min_weather_cp="1820", max_weather_cp="1911", weather="43", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="690", pokemon_name="Skrelp", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="561", max_cp="607", min_weather_cp="702", max_weather_cp="759", weather="53", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="691", pokemon_name="Dragalge", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="1293", max_cp="1362", min_weather_cp="1616", max_weather_cp="1702", weather="56", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="692", pokemon_name="Clauncher", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="575", max_cp="621", min_weather_cp="719", max_weather_cp="777", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="693", pokemon_name="Clawitzer", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="1504", max_cp="1579", min_weather_cp="1880", max_weather_cp="1974", weather="3", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="694", pokemon_name="Helioptile", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="489", max_cp="533", min_weather_cp="612", max_weather_cp="666", weather="34", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="695", pokemon_name="Heliolisk", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="1413", max_cp="1485", min_weather_cp="1766", max_weather_cp="1857", weather="34", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="696", pokemon_name="Tyrunt", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="877", max_cp="934", min_weather_cp="1096", max_weather_cp="1168", weather="46", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="697", pokemon_name="Tyrantrum", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="1708", max_cp="1787", min_weather_cp="2135", max_weather_cp="2234", weather="46", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="698", pokemon_name="Amaura", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="726", max_cp="779", min_weather_cp="908", max_weather_cp="974", weather="47", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="699", pokemon_name="Aurorus", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="1525", max_cp="1601", min_weather_cp="1907", max_weather_cp="2001", weather="47", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="700", pokemon_name="Sylveon", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="1675", max_cp="1753", min_weather_cp="2094", max_weather_cp="2192", weather="5", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="701", pokemon_name="Hawlucha", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="1307", max_cp="1377", min_weather_cp="1634", max_weather_cp="1721", weather="56", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="702", pokemon_name="Dedenne", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="991", max_cp="1051", min_weather_cp="1239", max_weather_cp="1315", weather="35", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="703", pokemon_name="Carbink", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="780", max_cp="838", min_weather_cp="975", max_weather_cp="1047", weather="45", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="704", pokemon_name="Goomy", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="514", max_cp="557", min_weather_cp="642", max_weather_cp="697", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="705", pokemon_name="Sliggoo", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="1100", max_cp="1164", min_weather_cp="1375", max_weather_cp="1455", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="706", pokemon_name="Goodra", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="1919", max_cp="2003", min_weather_cp="2399", max_weather_cp="2504", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="707", pokemon_name="Klefki", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="1051", max_cp="1114", min_weather_cp="1314", max_weather_cp="1392", weather="75", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="708", pokemon_name="Phantump", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="595", max_cp="642", min_weather_cp="743", max_weather_cp="802", weather="812", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="709", pokemon_name="Trevenant", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="1390", max_cp="1462", min_weather_cp="1738", max_weather_cp="1828", weather="812", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="710", pokemon_name="Pumpkaboo", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="649", max_cp="698", min_weather_cp="811", max_weather_cp="872", weather="812", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="711", pokemon_name="Gourgeist", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="1296", max_cp="1366", min_weather_cp="1621", max_weather_cp="1707", weather="812", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="712", pokemon_name="Bergmite", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="645", max_cp="694", min_weather_cp="806", max_weather_cp="868", weather="7", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="713", pokemon_name="Avalugg", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="1747", max_cp="1827", min_weather_cp="2184", max_weather_cp="2284", weather="7", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="714", pokemon_name="Noibat", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="344", max_cp="381", min_weather_cp="430", max_weather_cp="476", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="715", pokemon_name="Noivern", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="1505", max_cp="1579", min_weather_cp="1881", max_weather_cp="1974", weather="6", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="716", pokemon_name="Xerneas", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="2073", max_cp="2160", min_weather_cp="2591", max_weather_cp="2701", weather="5", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="717", pokemon_name="Yveltal", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="00", min_cp="2073", max_cp="2160", min_weather_cp="2591", max_weather_cp="2701", weather="86", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="808", pokemon_name="Meltan", pokemon_form_name="normal", pokemon_form_id="2321", asset_suffix="00", min_cp="564", max_cp="610", min_weather_cp="705", max_weather_cp="762", weather="7", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="809", pokemon_name="Melmetal", pokemon_form_name="normal", pokemon_form_id="2324", asset_suffix="00", min_cp="1971", max_cp="2056", min_weather_cp="2464", max_weather_cp="2571", weather="7", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="862", pokemon_name="Obstagoon", pokemon_form_name="normal", pokemon_form_id="2501", asset_suffix="31", min_cp="1443", max_cp="1515", min_weather_cp="1803", max_weather_cp="1894", weather="84", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="863", pokemon_name="Perrserker", pokemon_form_name="normal", pokemon_form_id="2504", asset_suffix="31", min_cp="1294", max_cp="1363", min_weather_cp="1618", max_weather_cp="1704", weather="7", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="865", pokemon_name="Sirfetchd", pokemon_form_name="normal", pokemon_form_id="2510", asset_suffix="31", min_cp="1627", max_cp="1706", min_weather_cp="2034", max_weather_cp="2132", weather="5", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="866", pokemon_name="Mr-rime", pokemon_form_name="normal", pokemon_form_id="2513", asset_suffix="31", min_cp="1540", max_cp="1615", min_weather_cp="1925", max_weather_cp="2019", weather="76", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="867", pokemon_name="Runerigus", pokemon_form_name="normal", pokemon_form_id="2516", asset_suffix="31", min_cp="1231", max_cp="1299", min_weather_cp="1539", max_weather_cp="1624", weather="128", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="9991", pokemon_name="Level 1 Egg", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="0", min_cp="0", max_cp="0", min_weather_cp="0", max_weather_cp="0", weather="0", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="9992", pokemon_name="Level 2 Egg", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="0", min_cp="0", max_cp="0", min_weather_cp="0", max_weather_cp="0", weather="0", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="9993", pokemon_name="Level 3 Egg", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="0", min_cp="0", max_cp="0", min_weather_cp="0", max_weather_cp="0", weather="0", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="9994", pokemon_name="Level 4 Egg", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="0", min_cp="0", max_cp="0", min_weather_cp="0", max_weather_cp="0", weather="0", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="9995", pokemon_name="Level 5 Egg", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="0", min_cp="0", max_cp="0", min_weather_cp="0", max_weather_cp="0", weather="0", shiny="0";
-REPLACE INTO pokemon SET pokedex_id="9996", pokemon_name="Level 6 Egg", pokemon_form_name="normal", pokemon_form_id="0", asset_suffix="0", min_cp="0", max_cp="0", min_weather_cp="0", max_weather_cp="0", weather="0", shiny="0";
+INSERT INTO `pokemon`
+(pokedex_id, pokemon_name, pokemon_form_name, pokemon_form_id, asset_suffix, min_cp, max_cp, min_weather_cp, max_weather_cp, type, type2, weather) VALUES
+("1", "Bulbasaur", "normal", "163", "00", "590", "637", "737", "796", "grass", "poison", "125"),
+("1", "Bulbasaur", "fall_2019", "897", "pm0001_00_pgo_fall2019", "590", "637", "737", "796", "grass", "poison", "125"),
+("2", "Ivysaur", "normal", "166", "00", "912", "970", "1141", "1213", "grass", "poison", "125"),
+("3", "Venusaur", "normal", "169", "00", "1480", "1554", "1851", "1943", "grass", "poison", "125"),
+("3", "Venusaur", "copy_2019", "950", "pm0003_00_pgo_copy2019", "1480", "1554", "1851", "1943", "grass", "poison", "125"),
+("3", "Venusaur", "mega", "-1", "51", "1480", "1554", "1851", "1943", "grass", "poison", "125"),
+("4", "Charmander", "normal", "172", "00", "516", "560", "645", "700", "fire", "", "12"),
+("4", "Charmander", "fall_2019", "896", "pm0004_00_pgo_fall2019", "516", "560", "645", "700", "fire", "", "12"),
+("5", "Charmeleon", "normal", "175", "00", "887", "944", "1109", "1180", "fire", "", "12"),
+("6", "Charizard", "normal", "178", "00", "1574", "1651", "1968", "2064", "fire", "flying", "126"),
+("6", "Charizard", "copy_2019", "951", "pm0006_00_pgo_copy2019", "1574", "1651", "1968", "2064", "fire", "flying", "126"),
+("6", "Charizard", "mega_x", "-2", "51", "1574", "1651", "1968", "2064", "fire", "flying", "126"),
+("6", "Charizard", "mega_y", "-3", "52", "1574", "1651", "1968", "2064", "fire", "flying", "126"),
+("7", "Squirtle", "normal", "181", "00", "497", "540", "621", "675", "water", "", "3"),
+("7", "Squirtle", "fall_2019", "895", "pm0007_00_pgo_fall2019", "497", "540", "621", "675", "water", "", "3"),
+("8", "Wartortle", "normal", "184", "00", "795", "850", "995", "1063", "water", "", "3"),
+("9", "Blastoise", "normal", "187", "00", "1338", "1409", "1673", "1761", "water", "", "3"),
+("9", "Blastoise", "copy_2019", "952", "pm0009_00_pgo_copy2019", "1338", "1409", "1673", "1761", "water", "", "3"),
+("9", "Blastoise", "mega", "-1", "51", "1338", "1409", "1673", "1761", "water", "", "3"),
+("10", "Caterpie", "normal", "953", "00", "219", "249", "274", "312", "bug", "", "3"),
+("11", "Metapod", "normal", "956", "00", "225", "257", "282", "321", "bug", "", "3"),
+("12", "Butterfree", "normal", "959", "00", "983", "1044", "1229", "1305", "bug", "flying", "36"),
+("13", "Weedle", "normal", "616", "00", "230", "260", "287", "325", "bug", "poison", "35"),
+("14", "Kakuna", "normal", "619", "00", "216", "246", "270", "308", "bug", "poison", "35"),
+("15", "Beedrill", "normal", "622", "00", "994", "1054", "1242", "1318", "bug", "poison", "35"),
+("15", "Beedrill", "mega", "-1", "51", "994", "1054", "1242", "1318", "bug", "poison", "35"),
+("16", "Pidgey", "normal", "962", "00", "352", "388", "440", "486", "normal", "flying", "46"),
+("17", "Pidgeotto", "normal", "965", "00", "633", "682", "792", "853", "normal", "flying", "46"),
+("18", "Pidgeot", "normal", "968", "00", "1151", "1216", "1439", "1521", "normal", "flying", "46"),
+("18", "Pidgeot", "mega", "-1", "51", "1151", "1216", "1439", "1521", "normal", "flying", "46"),
+("19", "Rattata", "normal", "45", "00", "381", "419", "477", "524", "normal", "", "4"),
+("19", "Rattata", "alola", "46", "61", "381", "419", "477", "524", "dark", "normal", "84"),
+("20", "Raticate", "normal", "47", "00", "930", "989", "1163", "1236", "normal", "", "4"),
+("20", "Raticate", "alola", "48", "61", "915", "974", "1144", "1217", "dark", "normal", "84"),
+("21", "Spearow", "normal", "971", "00", "415", "456", "519", "570", "normal", "flying", "46"),
+("22", "Fearow", "normal", "974", "00", "1077", "1141", "1347", "1426", "normal", "flying", "46"),
+("23", "Ekans", "normal", "697", "00", "487", "529", "609", "662", "poison", "", "5"),
+("24", "Arbok", "normal", "700", "00", "1035", "1097", "1295", "1372", "poison", "", "5"),
+("25", "Pikachu", "normal", "598", "00", "493", "536", "616", "670", "electric", "", "3"),
+("25", "Pikachu", "fall_2019", "894", "pm0025_00_pgo_fall2019", "493", "536", "616", "670", "electric", "", "3"),
+("25", "Pikachu", "copy_2019", "949", "pm0025_00_pgo_copy2019", "493", "536", "616", "670", "electric", "", "3"),
+("25", "Pikachu", "vs_2019", "901", "16", "493", "536", "616", "670", "electric", "", "3"),
+("25", "Pikachu", "costume_2020", "2332", "pm0025_00_pgo_4thanniversary", "493", "536", "616", "670", "electric", "", "3"),
+("25", "Pikachu", "adventure_hat_2020", "2669", "pm0025_00_pgo_movie2020", "493", "536", "616", "670", "electric", "", "3"),
+("25", "Pikachu", "winter_2020", "2670", "pm0025_00_pgo_winter2020", "493", "536", "616", "670", "electric", "", "3"),
+("25", "Pikachu", "kariyushi", "2675", "pm0025_00_pikachu_pgo_kariyushi", "493", "536", "616", "670", "electric", "", "3"),
+("25", "Pikachu", "pop_star", "2676", "pm0025_00_pgo_popstar", "493", "536", "616", "670", "electric", "", "3"),
+("25", "Pikachu", "rock_star", "2677", "pm0025_00_pgo_rockstar", "493", "536", "616", "670", "electric", "", "3"),
+("25", "Pikachu", "flying_5th_anniv", "2678", "pm0025_00_pgo_5thanniversary", "493", "536", "616", "670", "electric", "", "3"),
+("26", "Raichu", "normal", "49", "00", "1180", "1247", "1476", "1558", "electric", "", "3"),
+("26", "Raichu", "alola", "50", "61", "1238", "1306", "1548", "1633", "electric", "psychic", "36"),
+("27", "Sandshrew", "normal", "51", "00", "670", "720", "838", "901", "ground", "", "12"),
+("27", "Sandshrew", "alola", "52", "61", "688", "739", "860", "924", "ice", "steel", "7"),
+("28", "Sandslash", "normal", "53", "00", "1288", "1356", "1610", "1696", "ground", "", "12"),
+("28", "Sandslash", "alola", "54", "61", "1320", "1390", "1650", "1737", "ice", "steel", "7"),
+("29", "Nidoran♀", "normal", "776", "00", "425", "466", "532", "583", "poison", "", "5"),
+("30", "Nidorina", "normal", "779", "00", "697", "748", "871", "935", "poison", "", "5"),
+("31", "Nidoqueen", "normal", "782", "00", "1351", "1421", "1689", "1777", "poison", "ground", "512"),
+("32", "Nidoran♂", "normal", "776", "00", "450", "491", "562", "614", "poison", "", "5"),
+("33", "Nidorino", "normal", "785", "00", "743", "796", "929", "995", "poison", "", "5"),
+("34", "Nidoking", "normal", "788", "00", "1395", "1466", "1743", "1833", "poison", "ground", "512"),
+("35", "Clefairy", "normal", "981", "00", "611", "660", "764", "825", "fairy", "", "5"),
+("36", "Clefable", "normal", "984", "00", "1322", "1392", "1653", "1741", "fairy", "", "5"),
+("37", "Vulpix", "normal", "55", "00", "463", "504", "579", "631", "fire", "", "12"),
+("37", "Vulpix", "alola", "56", "61", "463", "504", "579", "631", "ice", "", "7"),
+("38", "Ninetales", "normal", "57", "00", "1235", "1302", "1544", "1628", "fire", "", "12"),
+("38", "Ninetales", "alola", "58", "61", "1251", "1319", "1564", "1649", "ice", "fairy", "75"),
+("39", "Jigglypuff", "normal", "987", "00", "370", "413", "463", "517", "normal", "fairy", "45"),
+("40", "Wigglytuff", "normal", "990", "00", "1034", "1101", "1293", "1376", "normal", "fairy", "45"),
+("41", "Zubat", "normal", "157", "00", "344", "381", "430", "476", "poison", "flying", "56"),
+("42", "Golbat", "normal", "160", "00", "1066", "1129", "1333", "1412", "poison", "flying", "56"),
+("43", "Oddish", "normal", "265", "00", "652", "702", "816", "877", "grass", "poison", "125"),
+("44", "Gloom", "normal", "268", "00", "902", "960", "1128", "1200", "grass", "poison", "125"),
+("45", "Vileplume", "normal", "271", "00", "1391", "1462", "1739", "1828", "grass", "poison", "125"),
+("46", "Paras", "normal", "993", "00", "536", "581", "671", "727", "bug", "grass", "312"),
+("47", "Parasect", "normal", "996", "00", "1002", "1062", "1252", "1328", "bug", "grass", "312"),
+("48", "Venonat", "normal", "259", "00", "528", "573", "661", "717", "bug", "poison", "35"),
+("49", "Venomoth", "normal", "262", "00", "1125", "1190", "1407", "1487", "bug", "poison", "35"),
+("50", "Diglett", "normal", "59", "00", "349", "386", "437", "483", "ground", "", "12"),
+("50", "Diglett", "alola", "60", "61", "352", "389", "440", "486", "ground", "steel", "127"),
+("51", "Dugtrio", "normal", "61", "00", "833", "889", "1042", "1112", "ground", "", "12"),
+("51", "Dugtrio", "alola", "62", "61", "1021", "1084", "1276", "1355", "ground", "steel", "127"),
+("52", "Meowth", "normal", "63", "00", "389", "427", "486", "534", "normal", "", "4"),
+("52", "Meowth", "alola", "64", "61", "416", "455", "520", "569", "dark", "", "8"),
+("52", "Meowth", "galarian", "2335", "31", "546", "591", "682", "739", "steel", "", "7"),
+("53", "Persian", "normal", "65", "00", "907", "965", "1134", "1206", "normal", "", "4"),
+("53", "Persian", "alola", "66", "61", "952", "1012", "1191", "1265", "dark", "", "8"),
+("54", "Psyduck", "normal", "286", "00", "585", "632", "731", "790", "water", "", "3"),
+("55", "Golduck", "normal", "289", "00", "1330", "1400", "1663", "1750", "water", "", "3"),
+("56", "Mankey", "normal", "999", "00", "616", "665", "770", "832", "fighting", "", "5"),
+("57", "Primeape", "normal", "1002", "00", "1239", "1307", "1549", "1634", "fighting", "", "5"),
+("58", "Growlithe", "normal", "280", "00", "660", "710", "825", "888", "fire", "", "12"),
+("59", "Arcanine", "normal", "283", "00", "1652", "1731", "2066", "2164", "fire", "", "12"),
+("60", "Poliwag", "normal", "235", "00", "433", "473", "541", "592", "water", "", "3"),
+("61", "Poliwhirl", "normal", "238", "00", "757", "811", "947", "1013", "water", "", "3"),
+("62", "Poliwrath", "normal", "241", "00", "1405", "1477", "1757", "1847", "water", "fighting", "35"),
+("63", "Abra", "normal", "304", "00", "712", "767", "890", "958", "psychic", "", "6"),
+("64", "Kadabra", "normal", "307", "00", "1109", "1176", "1387", "1471", "psychic", "", "6"),
+("65", "Alakazam", "normal", "310", "00", "1666", "1747", "2083", "2184", "psychic", "", "6"),
+("66", "Machop", "normal", "809", "00", "678", "730", "848", "913", "fighting", "", "5"),
+("67", "Machoke", "normal", "812", "00", "1096", "1160", "1370", "1451", "fighting", "", "5"),
+("68", "Machamp", "normal", "815", "00", "1667", "1746", "2084", "2183", "fighting", "", "5"),
+("69", "Bellsprout", "normal", "664", "00", "543", "590", "679", "738", "grass", "poison", "125"),
+("70", "Weepinbell", "normal", "667", "00", "862", "921", "1078", "1151", "grass", "poison", "125"),
+("71", "Victreebel", "normal", "670", "00", "1318", "1389", "1648", "1736", "grass", "poison", "125"),
+("72", "Tentacool", "normal", "1005", "00", "549", "594", "686", "743", "water", "poison", "35"),
+("73", "Tentacruel", "normal", "1008", "00", "1314", "1384", "1643", "1730", "water", "poison", "35"),
+("74", "Geodude", "normal", "67", "00", "688", "739", "860", "923", "rock", "ground", "412"),
+("74", "Geodude", "alola", "68", "61", "688", "739", "860", "923", "rock", "electric", "43"),
+("75", "Graveler", "normal", "69", "00", "1023", "1084", "1278", "1355", "rock", "ground", "412"),
+("75", "Graveler", "alola", "70", "61", "1023", "1084", "1278", "1355", "rock", "electric", "43"),
+("76", "Golem", "normal", "71", "00", "1608", "1685", "2010", "2106", "rock", "ground", "412"),
+("76", "Golem", "alola", "72", "61", "1608", "1685", "2010", "2106", "rock", "electric", "43"),
+("77", "Ponyta", "normal", "1011", "00", "911", "969", "1139", "1212", "fire", "", "12"),
+("77", "Ponyta", "galarian", "2336", "31", "911", "969", "1139", "1212", "psychic", "", "6"),
+("78", "Rapidash", "normal", "1014", "00", "1335", "1406", "1669", "1757", "fire", "", "12"),
+("78", "Rapidash", "galarian", "2337", "31", "1335", "1406", "1669", "1757", "psychic", "fairy", "65"),
+("79", "Slowpoke", "normal", "1017", "00", "650", "700", "812", "876", "water", "psychic", "36"),
+("79", "Slowpoke", "2020", "2673", "pm0079_00_pgo_2020", "650", "700", "812", "876", "water", "psychic", "36"),
+("79", "Slowpoke", "galarian", "2582", "31", "650", "700", "812", "876", "psychic", "", "6"),
+("80", "Slowbro", "normal", "1020", "00", "1382", "1454", "1728", "1817", "water", "psychic", "36"),
+("80", "Slowbro", "2021", "2674", "pm0080_00_pgo_2021", "1382", "1454", "1728", "1817", "water", "psychic", "36"),
+("80", "Slowbro", "galarian", "2583", "31", "1327", "1397", "1659", "1746", "poison", "psychic", "56"),
+("80", "Slowbro", "mega", "-1", "51", "1382", "1454", "1728", "1817", "water", "psychic", "36"),
+("81", "Magnemite", "normal", "655", "00", "725", "778", "906", "973", "electric", "steel", "37"),
+("82", "Magneton", "normal", "658", "00", "1348", "1420", "1686", "1775", "electric", "steel", "37"),
+("83", "Farfetchd", "normal", "1023", "00", "657", "706", "821", "883", "normal", "flying", "46"),
+("83", "Farfetchd", "galarian", "2338", "31", "898", "956", "1123", "1196", "fighting", "", "5"),
+("84", "Doduo", "normal", "1026", "00", "636", "686", "795", "857", "normal", "flying", "46"),
+("85", "Dodrio", "normal", "1029", "00", "1280", "1349", "1600", "1687", "normal", "flying", "46"),
+("86", "Seel", "normal", "1032", "00", "510", "555", "638", "694", "water", "", "3"),
+("87", "Dewgong", "normal", "1035", "00", "1071", "1134", "1339", "1418", "water", "ice", "37"),
+("88", "Grimer", "normal", "73", "00", "731", "785", "914", "981", "poison", "", "5"),
+("88", "Grimer", "alola", "74", "61", "731", "785", "914", "981", "poison", "dark", "58"),
+("89", "Muk", "normal", "75", "00", "1501", "1575", "1876", "1969", "poison", "", "5"),
+("89", "Muk", "alola", "76", "61", "1501", "1575", "1876", "1969", "poison", "dark", "58"),
+("90", "Shellder", "normal", "876", "00", "571", "617", "713", "771", "water", "", "3"),
+("91", "Cloyster", "normal", "879", "00", "1383", "1455", "1729", "1819", "water", "ice", "37"),
+("92", "Gastly", "normal", "1038", "00", "649", "702", "812", "878", "ghost", "poison", "85"),
+("93", "Haunter", "normal", "1041", "00", "1056", "1121", "1320", "1402", "ghost", "poison", "85"),
+("94", "Gengar", "normal", "1044", "00", "1566", "1644", "1958", "2055", "ghost", "poison", "85"),
+("94", "Gengar", "costume_2020", "2586", "26", "1566", "1644", "1958", "2055", "ghost", "poison", "85"),
+("94", "Gengar", "mega", "-1", "51", "1566", "1644", "1958", "2055", "ghost", "poison", "85"),
+("95", "Onix", "normal", "902", "00", "580", "629", "725", "787", "rock", "ground", "412"),
+("96", "Drowzee", "normal", "214", "00", "548", "594", "685", "743", "psychic", "", "6"),
+("97", "Hypno", "normal", "217", "00", "1129", "1194", "1411", "1493", "psychic", "", "6"),
+("98", "Krabby", "normal", "870", "00", "835", "892", "1043", "1115", "water", "", "3"),
+("99", "Kingler", "normal", "873", "00", "1540", "1616", "1925", "2020", "water", "", "3"),
+("100", "Voltorb", "normal", "1047", "00", "532", "577", "665", "721", "electric", "", "3"),
+("101", "Electrode", "normal", "1050", "00", "1134", "1199", "1418", "1499", "electric", "", "3"),
+("102", "Exeggcute", "normal", "729", "00", "623", "671", "779", "839", "grass", "psychic", "126"),
+("103", "Exeggutor", "normal", "77", "00", "1643", "1722", "2055", "2153", "grass", "psychic", "126"),
+("103", "Exeggutor", "alola", "78", "61", "1643", "1722", "2055", "2153", "grass", "dragon", "126"),
+("104", "Cubone", "normal", "224", "00", "536", "582", "671", "728", "ground", "", "12"),
+("105", "Marowak", "normal", "79", "00", "988", "1048", "1235", "1311", "ground", "", "12"),
+("105", "Marowak", "alola", "80", "61", "988", "1048", "1235", "1311", "fire", "ghost", "128"),
+("106", "Hitmonlee", "normal", "713", "00", "1399", "1472", "1749", "1840", "fighting", "", "5"),
+("107", "Hitmonchan", "normal", "277", "00", "1263", "1332", "1579", "1665", "fighting", "", "5"),
+("108", "Lickitung", "normal", "1053", "00", "752", "806", "940", "1008", "normal", "", "4"),
+("109", "Koffing", "normal", "703", "00", "645", "694", "806", "867", "poison", "", "5"),
+("110", "Weezing", "normal", "706", "00", "1242", "1310", "1553", "1637", "poison", "", "5"),
+("110", "Weezing", "galarian", "944", "31", "1242", "1310", "1553", "1637", "poison", "fairy", "5"),
+("111", "Rhyhorn", "normal", "846", "00", "886", "943", "1107", "1179", "ground", "rock", "124"),
+("112", "Rhydon", "normal", "849", "00", "1736", "1816", "2170", "2270", "ground", "rock", "124"),
+("113", "Chansey", "normal", "1056", "00", "654", "717", "817", "896", "normal", "", "4"),
+("114", "Tangela", "normal", "1059", "00", "1212", "1278", "1515", "1598", "grass", "", "12"),
+("115", "Kangaskhan", "normal", "839", "00", "1405", "1477", "1757", "1847", "normal", "", "4"),
+("116", "Horsea", "normal", "1062", "00", "558", "603", "697", "754", "water", "", "3"),
+("117", "Seadra", "normal", "1065", "00", "1131", "1196", "1414", "1495", "water", "", "3"),
+("118", "Goldeen", "normal", "1068", "00", "610", "658", "763", "823", "water", "", "3"),
+("119", "Seaking", "normal", "1071", "00", "1169", "1235", "1462", "1544", "water", "", "3"),
+("120", "Staryu", "normal", "1074", "00", "613", "661", "766", "826", "water", "", "3"),
+("121", "Starmie", "normal", "1077", "00", "1404", "1476", "1756", "1846", "water", "psychic", "36"),
+("122", "Mr-mime", "normal", "1080", "00", "1205", "1273", "1506", "1591", "psychic", "fairy", "65"),
+("122", "Mr-mime", "galarian", "2339", "31", "1117", "1181", "1396", "1477", "ice", "psychic", "76"),
+("123", "Scyther", "normal", "247", "00", "1472", "1546", "1841", "1933", "bug", "flying", "36"),
+("124", "Jynx", "normal", "1083", "00", "1387", "1460", "1734", "1825", "ice", "psychic", "76"),
+("125", "Electabuzz", "normal", "640", "00", "1265", "1333", "1582", "1667", "electric", "", "3"),
+("126", "Magmar", "normal", "634", "00", "1298", "1367", "1623", "1710", "fire", "", "12"),
+("127", "Pinsir", "normal", "898", "00", "1613", "1690", "2016", "2113", "bug", "", "3"),
+("128", "Tauros", "normal", "1086", "00", "1425", "1497", "1781", "1872", "normal", "", "4"),
+("129", "Magikarp", "normal", "253", "00", "132", "157", "165", "196", "water", "", "3"),
+("130", "Gyarados", "normal", "256", "00", "1855", "1937", "2319", "2422", "water", "flying", "36"),
+("130", "Gyarados", "mega", "-1", "51", "1855", "1937", "2319", "2422", "water", "flying", "36"),
+("131", "Lapras", "normal", "322", "00", "1435", "1509", "1794", "1886", "water", "ice", "37"),
+("132", "Ditto", "normal", "1089", "00", "434", "475", "543", "594", "normal", "", "4"),
+("133", "Eevee", "normal", "1092", "00", "565", "612", "707", "765", "normal", "", "4"),
+("134", "Vaporeon", "normal", "1095", "00", "1699", "1779", "2124", "2225", "water", "", "3"),
+("135", "Jolteon", "normal", "1098", "00", "1574", "1650", "1967", "2063", "electric", "", "3"),
+("136", "Flareon", "normal", "1101", "00", "1652", "1730", "2065", "2163", "fire", "", "12"),
+("137", "Porygon", "normal", "677", "00", "924", "982", "1155", "1228", "normal", "", "4"),
+("138", "Omanyte", "normal", "740", "00", "826", "882", "1033", "1103", "rock", "water", "43"),
+("139", "Omastar", "normal", "743", "00", "1517", "1592", "1897", "1990", "rock", "water", "43"),
+("140", "Kabuto", "normal", "1104", "00", "730", "783", "913", "979", "rock", "water", "43"),
+("141", "Kabutops", "normal", "1107", "00", "1476", "1550", "1845", "1938", "rock", "water", "43"),
+("142", "Aerodactyl", "normal", "1110", "00", "1515", "1590", "1894", "1988", "rock", "flying", "46"),
+("143", "Snorlax", "normal", "199", "00", "1760", "1843", "2201", "2304", "normal", "", "4"),
+("144", "Articuno", "normal", "716", "00", "1665", "1743", "2082", "2179", "ice", "flying", "76"),
+("145", "Zapdos", "normal", "773", "00", "1930", "2015", "2413", "2519", "electric", "flying", "36"),
+("146", "Moltres", "normal", "836", "00", "1896", "1980", "2370", "2475", "fire", "flying", "126"),
+("147", "Dratini", "normal", "190", "00", "529", "574", "661", "717", "dragon", "", "6"),
+("148", "Dragonair", "normal", "193", "00", "957", "1017", "1197", "1271", "dragon", "", "6"),
+("149", "Dragonite", "normal", "196", "00", "2079", "2167", "2599", "2709", "dragon", "flying", "6"),
+("150", "Mewtwo", "normal", "135", "00", "2294", "2387", "2868", "2984", "psychic", "", "6"),
+("150", "Mewtwo", "armored", "133", "pm0150_00_pgo_a", "1740", "1821", "2175", "2276", "psychic", "", "6"),
+("151", "Mew", "normal", "1115", "00", "1785", "1865", "2231", "2332", "psychic", "", "6"),
+("152", "Chikorita", "normal", "1118", "00", "491", "534", "614", "668", "grass", "", "12"),
+("153", "Bayleef", "normal", "1121", "00", "777", "831", "971", "1039", "grass", "", "12"),
+("154", "Meganium", "normal", "1124", "00", "1308", "1377", "1635", "1721", "grass", "", "12"),
+("155", "Cyndaquil", "normal", "1127", "00", "516", "560", "645", "700", "fire", "", "12"),
+("156", "Quilava", "normal", "1130", "00", "887", "944", "1109", "1180", "fire", "", "12"),
+("157", "Typhlosion", "normal", "1133", "00", "1574", "1651", "1968", "2064", "fire", "", "12"),
+("158", "Totodile", "normal", "1136", "00", "599", "646", "749", "808", "water", "", "3"),
+("159", "Croconaw", "normal", "1139", "00", "925", "984", "1157", "1230", "water", "", "3"),
+("160", "Feraligatr", "normal", "1142", "00", "1557", "1632", "1946", "2040", "water", "", "3"),
+("161", "Sentret", "normal", "1145", "00", "318", "353", "397", "441", "normal", "", "4"),
+("162", "Furret", "normal", "1148", "00", "944", "1004", "1181", "1255", "normal", "", "4"),
+("163", "Hoothoot", "normal", "1151", "00", "349", "387", "436", "484", "normal", "flying", "46"),
+("164", "Noctowl", "normal", "1154", "00", "1092", "1156", "1365", "1446", "normal", "flying", "46"),
+("165", "Ledyba", "normal", "1157", "00", "377", "416", "471", "520", "bug", "flying", "36"),
+("166", "Ledian", "normal", "1160", "00", "716", "769", "896", "961", "bug", "flying", "36"),
+("167", "Spinarak", "normal", "1163", "00", "426", "466", "532", "583", "bug", "poison", "35"),
+("168", "Ariados", "normal", "1166", "00", "953", "1012", "1191", "1265", "bug", "poison", "35"),
+("169", "Crobat", "normal", "202", "00", "1439", "1512", "1799", "1890", "poison", "flying", "56"),
+("170", "Chinchou", "normal", "1169", "00", "591", "639", "739", "799", "water", "electric", "3"),
+("171", "Lanturn", "normal", "1172", "00", "1125", "1191", "1406", "1489", "water", "electric", "3"),
+("172", "Pichu", "normal", "1175", "00", "240", "270", "300", "338", "electric", "", "3"),
+("173", "Cleffa", "normal", "1178", "00", "346", "383", "433", "479", "fairy", "", "5"),
+("174", "Igglybuff", "normal", "1181", "00", "269", "306", "336", "382", "normal", "fairy", "45"),
+("175", "Togepi", "normal", "1184", "00", "339", "375", "424", "470", "fairy", "", "5"),
+("176", "Togetic", "normal", "1187", "00", "917", "976", "1147", "1220", "fairy", "flying", "56"),
+("177", "Natu", "normal", "1190", "00", "583", "630", "728", "787", "psychic", "flying", "6"),
+("178", "Xatu", "normal", "1193", "00", "1184", "1250", "1480", "1563", "psychic", "flying", "6"),
+("179", "Mareep", "normal", "646", "00", "521", "566", "651", "708", "electric", "", "3"),
+("180", "Flaaffy", "normal", "649", "00", "814", "869", "1017", "1086", "electric", "", "3"),
+("181", "Ampharos", "normal", "652", "00", "1554", "1630", "1943", "2037", "electric", "", "3"),
+("181", "Ampharos", "mega", "-1", "51", "1554", "1630", "1943", "2037", "electric", "", "3"),
+("182", "Bellossom", "normal", "274", "00", "1236", "1303", "1545", "1629", "grass", "", "12"),
+("183", "Marill", "normal", "1196", "00", "229", "263", "287", "329", "water", "fairy", "35"),
+("184", "Azumarill", "normal", "1199", "00", "849", "907", "1061", "1134", "water", "fairy", "35"),
+("185", "Sudowoodo", "normal", "1202", "00", "1162", "1227", "1452", "1534", "rock", "", "4"),
+("186", "Politoed", "normal", "244", "00", "1329", "1399", "1662", "1749", "water", "", "3"),
+("187", "Hoppip", "normal", "1205", "00", "308", "342", "385", "428", "grass", "flying", "126"),
+("188", "Skiploom", "normal", "1208", "00", "513", "557", "641", "697", "grass", "flying", "126"),
+("189", "Jumpluff", "normal", "1211", "00", "877", "935", "1096", "1168", "grass", "flying", "126"),
+("190", "Aipom", "normal", "1214", "00", "718", "770", "898", "963", "normal", "", "4"),
+("191", "Sunkern", "normal", "1217", "00", "197", "226", "247", "282", "grass", "", "12"),
+("192", "Sunflora", "normal", "1220", "00", "1158", "1223", "1447", "1529", "grass", "", "12"),
+("193", "Yanma", "normal", "1223", "00", "785", "840", "981", "1050", "bug", "flying", "36"),
+("194", "Wooper", "normal", "1226", "00", "330", "366", "412", "458", "water", "ground", "312"),
+("195", "Quagsire", "normal", "1229", "00", "1075", "1138", "1343", "1423", "water", "ground", "312"),
+("196", "Espeon", "normal", "1232", "00", "1730", "1811", "2162", "2264", "psychic", "", "6"),
+("197", "Umbreon", "normal", "1235", "00", "1153", "1221", "1442", "1526", "dark", "", "8"),
+("198", "Murkrow", "normal", "855", "00", "835", "892", "1044", "1116", "dark", "flying", "86"),
+("199", "Slowking", "normal", "1238", "00", "1382", "1454", "1728", "1817", "water", "psychic", "36"),
+("199", "Slowking", "galarian", "2584", "31", "1479", "1552", "1848", "1941", "poison", "psychic", "56"),
+("200", "Misdreavus", "normal", "719", "00", "1039", "1100", "1298", "1376", "ghost", "", "8"),
+("201", "Unown", "f", "6", "16", "628", "677", "785", "846", "psychic", "", "6"),
+("201", "Unown", "a", "1", "11", "628", "677", "785", "846", "psychic", "", "6"),
+("201", "Unown", "b", "2", "12", "628", "677", "785", "846", "psychic", "", "6"),
+("201", "Unown", "c", "3", "13", "628", "677", "785", "846", "psychic", "", "6"),
+("201", "Unown", "d", "4", "14", "628", "677", "785", "846", "psychic", "", "6"),
+("201", "Unown", "e", "5", "15", "628", "677", "785", "846", "psychic", "", "6"),
+("201", "Unown", "g", "7", "17", "628", "677", "785", "846", "psychic", "", "6"),
+("201", "Unown", "h", "8", "18", "628", "677", "785", "846", "psychic", "", "6"),
+("201", "Unown", "i", "9", "19", "628", "677", "785", "846", "psychic", "", "6"),
+("201", "Unown", "j", "10", "20", "628", "677", "785", "846", "psychic", "", "6"),
+("201", "Unown", "k", "11", "21", "628", "677", "785", "846", "psychic", "", "6"),
+("201", "Unown", "l", "12", "22", "628", "677", "785", "846", "psychic", "", "6"),
+("201", "Unown", "m", "13", "23", "628", "677", "785", "846", "psychic", "", "6"),
+("201", "Unown", "n", "14", "24", "628", "677", "785", "846", "psychic", "", "6"),
+("201", "Unown", "o", "15", "25", "628", "677", "785", "846", "psychic", "", "6"),
+("201", "Unown", "p", "16", "26", "628", "677", "785", "846", "psychic", "", "6"),
+("201", "Unown", "q", "17", "27", "628", "677", "785", "846", "psychic", "", "6"),
+("201", "Unown", "r", "18", "28", "628", "677", "785", "846", "psychic", "", "6"),
+("201", "Unown", "s", "19", "29", "628", "677", "785", "846", "psychic", "", "6"),
+("201", "Unown", "t", "20", "30", "628", "677", "785", "846", "psychic", "", "6"),
+("201", "Unown", "u", "21", "31", "628", "677", "785", "846", "psychic", "", "6"),
+("201", "Unown", "v", "22", "32", "628", "677", "785", "846", "psychic", "", "6"),
+("201", "Unown", "w", "23", "33", "628", "677", "785", "846", "psychic", "", "6"),
+("201", "Unown", "x", "24", "34", "628", "677", "785", "846", "psychic", "", "6"),
+("201", "Unown", "y", "25", "35", "628", "677", "785", "846", "psychic", "", "6"),
+("201", "Unown", "z", "26", "36", "628", "677", "785", "846", "psychic", "", "6"),
+("201", "Unown", "exclamation_point", "27", "37", "628", "677", "785", "846", "psychic", "", "6"),
+("201", "Unown", "question_mark", "28", "38", "628", "677", "785", "846", "psychic", "", "6"),
+("202", "Wobbuffet", "normal", "602", "00", "532", "586", "665", "733", "psychic", "", "6"),
+("203", "Girafarig", "normal", "1241", "00", "1105", "1169", "1381", "1462", "normal", "psychic", "46"),
+("204", "Pineco", "normal", "1244", "00", "586", "633", "733", "791", "bug", "", "3"),
+("205", "Forretress", "normal", "1247", "00", "1236", "1304", "1545", "1630", "bug", "steel", "37"),
+("206", "Dunsparce", "normal", "1250", "00", "906", "965", "1132", "1206", "normal", "", "4"),
+("207", "Gligar", "normal", "803", "00", "1000", "1061", "1250", "1326", "ground", "flying", "126"),
+("208", "Steelix", "normal", "905", "00", "1308", "1379", "1635", "1724", "steel", "ground", "712"),
+("209", "Snubbull", "normal", "1253", "00", "656", "707", "821", "884", "fairy", "", "5"),
+("210", "Granbull", "normal", "1256", "00", "1385", "1458", "1732", "1823", "fairy", "", "5"),
+("211", "Qwilfish", "normal", "1259", "00", "1107", "1172", "1384", "1465", "water", "poison", "35"),
+("212", "Scizor", "normal", "250", "00", "1636", "1714", "2046", "2143", "bug", "steel", "37"),
+("213", "Shuckle", "normal", "827", "00", "189", "231", "236", "289", "bug", "rock", "34"),
+("214", "Heracross", "normal", "1262", "00", "1693", "1772", "2116", "2215", "bug", "fighting", "35"),
+("215", "Sneasel", "normal", "797", "00", "1107", "1172", "1384", "1465", "dark", "ice", "87"),
+("216", "Teddiursa", "normal", "1265", "00", "707", "759", "884", "949", "normal", "", "4"),
+("217", "Ursaring", "normal", "1268", "00", "1604", "1682", "2006", "2103", "normal", "", "4"),
+("218", "Slugma", "normal", "1271", "00", "468", "511", "585", "639", "fire", "", "12"),
+("219", "Magcargo", "normal", "1274", "00", "914", "972", "1142", "1215", "fire", "rock", "124"),
+("220", "Swinub", "normal", "1277", "00", "384", "423", "480", "529", "ice", "ground", "712"),
+("221", "Piloswine", "normal", "1280", "00", "1271", "1340", "1589", "1675", "ice", "ground", "712"),
+("222", "Corsola", "normal", "1283", "00", "735", "787", "918", "984", "water", "rock", "34"),
+("223", "Remoraid", "normal", "1286", "00", "478", "521", "597", "651", "water", "", "3"),
+("224", "Octillery", "normal", "1289", "00", "1254", "1322", "1568", "1653", "water", "", "3"),
+("225", "Delibird", "normal", "938", "00", "578", "625", "723", "781", "ice", "flying", "76"),
+("225", "Delibird", "winter_2020", "2671", "pm0225_00_pgo_winter2020", "578", "625", "723", "781", "ice", "flying", "76"),
+("226", "Mantine", "normal", "1292", "00", "1139", "1204", "1424", "1506", "water", "flying", "36"),
+("227", "Skarmory", "normal", "1295", "00", "1139", "1204", "1424", "1506", "steel", "flying", "76"),
+("228", "Houndour", "normal", "229", "00", "654", "705", "818", "881", "dark", "fire", "812"),
+("229", "Houndoom", "normal", "232", "00", "1432", "1505", "1790", "1882", "dark", "fire", "812"),
+("229", "Houndoom", "mega", "-1", "51", "1432", "1505", "1790", "1882", "dark", "fire", "812"),
+("230", "Kingdra", "normal", "1298", "00", "1437", "1509", "1796", "1887", "water", "dragon", "36"),
+("231", "Phanpy", "normal", "1301", "00", "639", "689", "799", "862", "ground", "", "12"),
+("232", "Donphan", "normal", "1304", "00", "1644", "1722", "2055", "2152", "ground", "", "12"),
+("233", "Porygon2", "normal", "680", "00", "1475", "1549", "1844", "1936", "normal", "", "4"),
+("234", "Stantler", "normal", "941", "00", "1170", "1236", "1463", "1546", "normal", "", "4"),
+("235", "Smeargle", "normal", "1307", "00", "214", "246", "268", "308", "normal", "", "4"),
+("236", "Tyrogue", "normal", "1310", "00", "249", "281", "312", "351", "fighting", "", "5"),
+("237", "Hitmontop", "normal", "1313", "00", "1166", "1232", "1458", "1540", "fighting", "", "5"),
+("238", "Smoochum", "normal", "1316", "00", "686", "738", "858", "922", "ice", "psychic", "76"),
+("239", "Elekid", "normal", "1319", "00", "640", "689", "800", "861", "electric", "", "3"),
+("240", "Magby", "normal", "1322", "00", "704", "756", "880", "945", "fire", "", "12"),
+("241", "Miltank", "normal", "1325", "00", "1276", "1345", "1595", "1682", "normal", "", "4"),
+("242", "Blissey", "normal", "1328", "00", "1492", "1575", "1866", "1969", "normal", "", "4"),
+("243", "Raikou", "normal", "1331", "00", "1889", "1972", "2361", "2466", "electric", "", "3"),
+("244", "Entei", "normal", "1334", "00", "1900", "1984", "2375", "2480", "fire", "", "12"),
+("245", "Suicune", "normal", "1337", "00", "1627", "1704", "2033", "2130", "water", "", "3"),
+("246", "Larvitar", "normal", "313", "00", "548", "594", "686", "743", "rock", "ground", "412"),
+("247", "Pupitar", "normal", "316", "00", "949", "1009", "1187", "1261", "rock", "ground", "412"),
+("248", "Tyranitar", "normal", "319", "00", "2103", "2191", "2629", "2739", "rock", "dark", "48"),
+("249", "Lugia", "normal", "1340", "00", "2028", "2115", "2535", "2645", "psychic", "flying", "6"),
+("250", "Ho-oh", "normal", "1343", "00", "2119", "2207", "2649", "2759", "fire", "flying", "126"),
+("251", "Celebi", "normal", "1346", "00", "1785", "1865", "2231", "2332", "psychic", "grass", "612"),
+("252", "Treecko", "normal", "1349", "00", "556", "601", "695", "752", "grass", "", "12"),
+("253", "Grovyle", "normal", "1352", "00", "897", "956", "1122", "1195", "grass", "", "12"),
+("254", "Sceptile", "normal", "1355", "00", "1500", "1575", "1876", "1969", "grass", "", "12"),
+("255", "Torchic", "normal", "1358", "00", "578", "624", "722", "781", "fire", "", "12"),
+("256", "Combusken", "normal", "1361", "00", "886", "944", "1108", "1180", "fire", "fighting", "125"),
+("257", "Blaziken", "normal", "1364", "00", "1550", "1627", "1938", "2034", "fire", "fighting", "125"),
+("258", "Mudkip", "normal", "205", "00", "597", "644", "746", "805", "water", "", "3"),
+("259", "Marshtomp", "normal", "208", "00", "955", "1015", "1194", "1269", "water", "ground", "312"),
+("260", "Swampert", "normal", "211", "00", "1622", "1699", "2027", "2124", "water", "ground", "312"),
+("261", "Poochyena", "normal", "1367", "00", "350", "387", "438", "484", "dark", "", "8"),
+("262", "Mightyena", "normal", "1370", "00", "1038", "1100", "1298", "1375", "dark", "", "8"),
+("263", "Zigzagoon", "normal", "945", "00", "258", "290", "323", "363", "normal", "", "4"),
+("263", "Zigzagoon", "galarian", "946", "31", "258", "290", "323", "363", "dark", "normal", "84"),
+("264", "Linoone", "normal", "947", "00", "892", "949", "1115", "1187", "normal", "", "4"),
+("264", "Linoone", "galarian", "948", "31", "892", "949", "1115", "1187", "dark", "normal", "84"),
+("265", "Wurmple", "normal", "600", "00", "296", "330", "370", "413", "bug", "", "3"),
+("266", "Silcoon", "normal", "1379", "00", "282", "316", "353", "395", "bug", "", "3"),
+("267", "Beautifly", "normal", "1382", "00", "948", "1009", "1185", "1261", "bug", "flying", "36"),
+("268", "Cascoon", "normal", "1385", "00", "282", "316", "353", "395", "bug", "", "3"),
+("269", "Dustox", "normal", "1388", "00", "649", "699", "811", "874", "bug", "poison", "35"),
+("270", "Lotad", "normal", "1391", "00", "307", "342", "384", "427", "water", "grass", "312"),
+("271", "Lombre", "normal", "1394", "00", "635", "684", "794", "855", "water", "grass", "312"),
+("272", "Ludicolo", "normal", "1397", "00", "1259", "1327", "1574", "1659", "water", "grass", "312"),
+("273", "Seedot", "normal", "625", "00", "307", "342", "384", "427", "grass", "", "12"),
+("274", "Nuzleaf", "normal", "628", "00", "650", "701", "813", "876", "grass", "dark", "128"),
+("275", "Shiftry", "normal", "631", "00", "1263", "1333", "1579", "1666", "grass", "dark", "128"),
+("276", "Taillow", "normal", "1400", "00", "397", "437", "497", "546", "normal", "flying", "46"),
+("277", "Swellow", "normal", "1403", "00", "1034", "1097", "1293", "1371", "normal", "flying", "46"),
+("278", "Wingull", "normal", "1406", "00", "397", "437", "497", "546", "water", "flying", "36"),
+("279", "Pelipper", "normal", "1409", "00", "1150", "1215", "1438", "1519", "water", "flying", "36"),
+("280", "Ralts", "normal", "292", "00", "275", "308", "344", "385", "psychic", "fairy", "65"),
+("281", "Kirlia", "normal", "295", "00", "508", "552", "635", "690", "psychic", "fairy", "65"),
+("282", "Gardevoir", "normal", "298", "00", "1688", "1767", "2110", "2209", "psychic", "fairy", "65"),
+("283", "Surskit", "normal", "1412", "00", "412", "452", "516", "565", "bug", "water", "3"),
+("284", "Masquerain", "normal", "1415", "00", "1230", "1297", "1537", "1622", "bug", "flying", "36"),
+("285", "Shroomish", "normal", "1418", "00", "421", "463", "527", "578", "grass", "", "12"),
+("286", "Breloom", "normal", "1421", "00", "1427", "1502", "1785", "1877", "grass", "fighting", "125"),
+("287", "Slakoth", "normal", "1424", "00", "527", "572", "659", "716", "normal", "", "4"),
+("288", "Vigoroth", "normal", "1427", "00", "1061", "1124", "1327", "1405", "normal", "", "4"),
+("289", "Slaking", "normal", "1430", "00", "2435", "2532", "3044", "3165", "normal", "", "4"),
+("290", "Nincada", "normal", "1433", "00", "399", "439", "499", "549", "bug", "ground", "312"),
+("291", "Ninjask", "normal", "1436", "00", "1061", "1125", "1326", "1406", "bug", "flying", "36"),
+("292", "Shedinja", "normal", "1439", "00", "175", "224", "219", "281", "bug", "ghost", "38"),
+("293", "Whismur", "normal", "1442", "00", "344", "383", "430", "479", "normal", "", "4"),
+("294", "Loudred", "normal", "1445", "00", "705", "758", "881", "948", "normal", "", "4"),
+("295", "Exploud", "normal", "1448", "00", "1272", "1341", "1590", "1677", "normal", "", "4"),
+("296", "Makuhita", "normal", "1451", "00", "424", "467", "530", "583", "fighting", "", "5"),
+("297", "Hariyama", "normal", "1454", "00", "1537", "1616", "1921", "2020", "fighting", "", "5"),
+("298", "Azurill", "normal", "1457", "00", "179", "208", "223", "260", "normal", "fairy", "45"),
+("299", "Nosepass", "normal", "1460", "00", "521", "567", "651", "709", "rock", "", "4"),
+("300", "Skitty", "normal", "1463", "00", "383", "422", "479", "527", "normal", "", "4"),
+("301", "Delcatty", "normal", "1466", "00", "800", "854", "1000", "1068", "normal", "", "4"),
+("302", "Sableye", "normal", "923", "00", "789", "843", "986", "1054", "dark", "ghost", "8"),
+("302", "Sableye", "costume_2020", "2668", "pm0302_00_pgo_fall2020", "789", "843", "986", "1054", "dark", "ghost", "8"),
+("303", "Mawile", "normal", "833", "00", "877", "934", "1096", "1167", "steel", "fairy", "75"),
+("304", "Aron", "normal", "1469", "00", "696", "747", "870", "934", "steel", "rock", "74"),
+("305", "Lairon", "normal", "1472", "00", "1110", "1174", "1388", "1468", "steel", "rock", "74"),
+("306", "Aggron", "normal", "1475", "00", "1636", "1714", "2045", "2143", "steel", "rock", "74"),
+("307", "Meditite", "normal", "1478", "00", "359", "396", "449", "495", "fighting", "psychic", "56"),
+("308", "Medicham", "normal", "1481", "00", "764", "817", "955", "1022", "fighting", "psychic", "56"),
+("309", "Electrike", "normal", "1484", "00", "507", "551", "634", "689", "electric", "", "3"),
+("310", "Manectric", "normal", "1487", "00", "1267", "1337", "1585", "1672", "electric", "", "3"),
+("310", "Manectric", "mega", "-1", "51", "1267", "1337", "1585", "1672", "electric", "", "3"),
+("311", "Plusle", "normal", "1490", "00", "956", "1016", "1195", "1270", "electric", "", "3"),
+("312", "Minun", "normal", "1493", "00", "910", "968", "1138", "1210", "electric", "", "3"),
+("313", "Volbeat", "normal", "1496", "00", "952", "1012", "1191", "1265", "bug", "", "3"),
+("314", "Illumise", "normal", "1499", "00", "952", "1012", "1191", "1265", "bug", "", "3"),
+("315", "Roselia", "normal", "1502", "00", "1007", "1068", "1258", "1335", "grass", "poison", "125"),
+("316", "Gulpin", "normal", "1505", "00", "452", "495", "565", "618", "poison", "", "5"),
+("317", "Swalot", "normal", "1508", "00", "1066", "1130", "1333", "1413", "poison", "", "5"),
+("318", "Carvanha", "normal", "734", "00", "531", "583", "664", "729", "water", "dark", "38"),
+("319", "Sharpedo", "normal", "737", "00", "1174", "1246", "1468", "1558", "water", "dark", "38"),
+("320", "Wailmer", "normal", "1511", "00", "779", "838", "974", "1048", "water", "", "3"),
+("321", "Wailord", "normal", "1514", "00", "1228", "1302", "1535", "1628", "water", "", "3"),
+("322", "Numel", "normal", "1517", "00", "557", "604", "697", "755", "fire", "ground", "12"),
+("323", "Camerupt", "normal", "1520", "00", "1186", "1253", "1483", "1566", "fire", "ground", "12"),
+("324", "Torkoal", "normal", "1523", "00", "1131", "1196", "1414", "1495", "fire", "", "12"),
+("325", "Spoink", "normal", "1526", "00", "711", "762", "888", "953", "psychic", "", "6"),
+("326", "Grumpig", "normal", "1529", "00", "1285", "1354", "1606", "1692", "psychic", "", "6"),
+("327", "Spinda", "00", "37", "11", "648", "697", "810", "872", "normal", "", "4"),
+("327", "Spinda", "01", "38", "12", "648", "697", "810", "872", "normal", "", "4"),
+("327", "Spinda", "02", "39", "13", "648", "697", "810", "872", "normal", "", "4"),
+("327", "Spinda", "03", "40", "14", "648", "697", "810", "872", "normal", "", "4"),
+("327", "Spinda", "04", "41", "15", "648", "697", "810", "872", "normal", "", "4"),
+("327", "Spinda", "05", "42", "16", "648", "697", "810", "872", "normal", "", "4"),
+("327", "Spinda", "06", "43", "17", "648", "697", "810", "872", "normal", "", "4"),
+("327", "Spinda", "07", "44", "18", "648", "697", "810", "872", "normal", "", "4"),
+("327", "Spinda", "08", "121", "19", "648", "697", "810", "872", "normal", "", "4"),
+("327", "Spinda", "09", "122", "20", "648", "697", "810", "872", "normal", "", "4"),
+("327", "Spinda", "10", "123", "21", "648", "697", "810", "872", "normal", "", "4"),
+("327", "Spinda", "11", "124", "22", "648", "697", "810", "872", "normal", "", "4"),
+("327", "Spinda", "12", "125", "23", "648", "697", "810", "872", "normal", "", "4"),
+("327", "Spinda", "13", "126", "24", "648", "697", "810", "872", "normal", "", "4"),
+("327", "Spinda", "14", "127", "25", "648", "697", "810", "872", "normal", "", "4"),
+("327", "Spinda", "15", "128", "26", "648", "697", "810", "872", "normal", "", "4"),
+("327", "Spinda", "16", "129", "27", "648", "697", "810", "872", "normal", "", "4"),
+("327", "Spinda", "17", "130", "28", "648", "697", "810", "872", "normal", "", "4"),
+("327", "Spinda", "18", "131", "29", "648", "697", "810", "872", "normal", "", "4"),
+("327", "Spinda", "19", "132", "30", "648", "697", "810", "872", "normal", "", "4"),
+("328", "Trapinch", "normal", "746", "00", "676", "728", "845", "910", "ground", "", "12"),
+("329", "Vibrava", "normal", "749", "00", "650", "699", "813", "875", "ground", "dragon", "126"),
+("330", "Flygon", "normal", "752", "00", "1447", "1520", "1809", "1901", "ground", "dragon", "126"),
+("331", "Cacnea", "normal", "610", "00", "658", "709", "822", "887", "grass", "", "12"),
+("332", "Cacturne", "normal", "613", "00", "1243", "1313", "1554", "1641", "grass", "dark", "128"),
+("333", "Swablu", "normal", "1532", "00", "429", "470", "537", "588", "normal", "flying", "46"),
+("334", "Altaria", "normal", "1535", "00", "1081", "1145", "1352", "1432", "dragon", "flying", "6"),
+("334", "Altaria", "mega", "-1", "51", "1081", "1145", "1352", "1432", "dragon", "flying", "6"),
+("335", "Zangoose", "normal", "1538", "00", "1310", "1381", "1638", "1727", "normal", "", "4"),
+("336", "Seviper", "normal", "1541", "00", "1137", "1203", "1421", "1504", "poison", "", "5"),
+("337", "Lunatone", "normal", "1544", "00", "1261", "1330", "1577", "1662", "rock", "psychic", "46"),
+("338", "Solrock", "normal", "1547", "00", "1261", "1330", "1577", "1662", "rock", "psychic", "46"),
+("339", "Barboach", "normal", "1550", "00", "427", "468", "534", "585", "water", "ground", "312"),
+("340", "Whiscash", "normal", "1553", "00", "1120", "1186", "1401", "1482", "water", "ground", "312"),
+("341", "Corphish", "normal", "1556", "00", "653", "703", "817", "879", "water", "", "3"),
+("342", "Crawdaunt", "normal", "1559", "00", "1342", "1413", "1678", "1767", "water", "dark", "38"),
+("343", "Baltoy", "normal", "1562", "00", "409", "449", "512", "562", "ground", "psychic", "126"),
+("344", "Claydol", "normal", "1565", "00", "1063", "1126", "1328", "1408", "ground", "psychic", "126"),
+("345", "Lileep", "normal", "1568", "00", "686", "738", "858", "922", "rock", "grass", "412"),
+("346", "Cradily", "normal", "1571", "00", "1196", "1263", "1495", "1579", "rock", "grass", "412"),
+("347", "Anorith", "normal", "1574", "00", "817", "874", "1022", "1092", "rock", "bug", "43"),
+("348", "Armaldo", "normal", "1577", "00", "1552", "1627", "1940", "2035", "rock", "bug", "43"),
+("349", "Feebas", "normal", "1580", "00", "132", "157", "165", "196", "water", "", "3"),
+("350", "Milotic", "normal", "1583", "00", "1640", "1717", "2050", "2147", "water", "", "3"),
+("351", "Castform", "normal", "29", "11", "875", "932", "1094", "1165", "normal", "", "4"),
+("351", "Castform", "sunny", "30", "12", "875", "932", "1094", "1165", "fire", "", "12"),
+("351", "Castform", "rainy", "31", "13", "875", "932", "1094", "1165", "water", "", "3"),
+("351", "Castform", "snowy", "32", "14", "875", "932", "1094", "1165", "ice", "", "7"),
+("352", "Kecleon", "normal", "1586", "00", "1105", "1169", "1382", "1462", "normal", "", "4"),
+("353", "Shuppet", "normal", "908", "00", "535", "581", "669", "727", "ghost", "", "8"),
+("354", "Banette", "normal", "911", "00", "1244", "1313", "1555", "1642", "ghost", "", "8"),
+("355", "Duskull", "normal", "914", "00", "364", "403", "456", "504", "ghost", "", "8"),
+("356", "Dusclops", "normal", "917", "00", "851", "909", "1064", "1136", "ghost", "", "8"),
+("357", "Tropius", "normal", "1589", "00", "1046", "1109", "1307", "1386", "grass", "flying", "126"),
+("358", "Chimecho", "normal", "1592", "00", "1224", "1291", "1530", "1614", "psychic", "", "6"),
+("359", "Absol", "normal", "830", "00", "1370", "1443", "1712", "1805", "dark", "", "8"),
+("360", "Wynaut", "normal", "1595", "00", "268", "305", "335", "381", "psychic", "", "6"),
+("361", "Snorunt", "normal", "926", "00", "465", "507", "581", "634", "ice", "", "7"),
+("362", "Glalie", "normal", "929", "00", "1138", "1203", "1423", "1504", "ice", "", "7"),
+("363", "Spheal", "normal", "1598", "00", "505", "550", "631", "687", "ice", "water", "73"),
+("364", "Sealeo", "normal", "1601", "00", "920", "979", "1151", "1225", "ice", "water", "73"),
+("365", "Walrein", "normal", "1604", "00", "1483", "1557", "1854", "1947", "ice", "water", "73"),
+("366", "Clamperl", "normal", "1607", "00", "675", "726", "845", "907", "water", "", "3"),
+("367", "Huntail", "normal", "1610", "00", "1268", "1337", "1585", "1671", "water", "", "3"),
+("368", "Gorebyss", "normal", "1613", "00", "1354", "1425", "1692", "1781", "water", "", "3"),
+("369", "Relicanth", "normal", "1616", "00", "1373", "1444", "1716", "1806", "water", "rock", "34"),
+("370", "Luvdisc", "normal", "1619", "00", "443", "484", "554", "605", "water", "", "3"),
+("371", "Bagon", "normal", "755", "00", "612", "660", "765", "826", "dragon", "", "6"),
+("372", "Shelgon", "normal", "758", "00", "1097", "1160", "1371", "1451", "dragon", "", "6"),
+("373", "Salamence", "normal", "761", "00", "2054", "2142", "2568", "2678", "dragon", "flying", "6"),
+("374", "Beldum", "normal", "764", "00", "513", "558", "642", "697", "steel", "psychic", "76"),
+("375", "Metang", "normal", "767", "00", "925", "983", "1156", "1229", "steel", "psychic", "76"),
+("376", "Metagross", "normal", "770", "00", "2078", "2166", "2598", "2708", "steel", "psychic", "76"),
+("377", "Regirock", "normal", "1622", "00", "1703", "1784", "2129", "2230", "rock", "", "4"),
+("378", "Regice", "normal", "1625", "00", "1703", "1784", "2129", "2230", "ice", "", "7"),
+("379", "Registeel", "normal", "1628", "00", "1326", "1398", "1658", "1748", "steel", "", "7"),
+("380", "Latias", "normal", "1631", "00", "1921", "2006", "2402", "2507", "dragon", "psychic", "6"),
+("381", "Latios", "normal", "1634", "00", "2090", "2178", "2613", "2723", "dragon", "psychic", "6"),
+("382", "Kyogre", "normal", "1637", "00", "2260", "2351", "2825", "2939", "water", "", "3"),
+("383", "Groudon", "normal", "1640", "00", "2260", "2351", "2825", "2939", "ground", "", "12"),
+("384", "Rayquaza", "normal", "1643", "00", "2102", "2191", "2627", "2739", "dragon", "flying", "6"),
+("385", "Jirachi", "normal", "1646", "00", "1785", "1865", "2231", "2332", "steel", "psychic", "76"),
+("386", "Deoxys", "normal", "33", "11", "1717", "1806", "2146", "2257", "psychic", "", "6"),
+("386", "Deoxys", "attack", "34", "12", "1372", "1474", "1716", "1842", "psychic", "", "6"),
+("386", "Deoxys", "defense", "35", "13", "1228", "1299", "1535", "1624", "psychic", "", "6"),
+("386", "Deoxys", "speed", "36", "14", "1568", "1645", "1960", "2056", "psychic", "", "6"),
+("387", "Turtwig", "normal", "688", "00", "629", "678", "787", "848", "grass", "", "12"),
+("388", "Grotle", "normal", "691", "00", "1018", "1080", "1273", "1350", "grass", "", "12"),
+("389", "Torterra", "normal", "694", "00", "1600", "1677", "2000", "2096", "grass", "ground", "12"),
+("390", "Chimchar", "normal", "818", "00", "503", "547", "629", "683", "fire", "", "12"),
+("391", "Monferno", "normal", "821", "00", "843", "899", "1054", "1124", "fire", "fighting", "125"),
+("392", "Infernape", "normal", "824", "00", "1459", "1533", "1824", "1916", "fire", "fighting", "125"),
+("393", "Piplup", "normal", "1649", "00", "568", "614", "710", "767", "water", "", "3"),
+("394", "Prinplup", "normal", "1652", "00", "914", "972", "1142", "1215", "water", "", "3"),
+("395", "Empoleon", "normal", "1655", "00", "1581", "1657", "1976", "2072", "water", "steel", "37"),
+("396", "Starly", "normal", "1658", "00", "372", "410", "465", "513", "normal", "flying", "46"),
+("397", "Staravia", "normal", "1661", "00", "690", "742", "863", "927", "normal", "flying", "46"),
+("398", "Staraptor", "normal", "1664", "00", "1538", "1614", "1922", "2018", "normal", "flying", "46"),
+("399", "Bidoof", "normal", "1667", "00", "373", "412", "467", "515", "normal", "", "4"),
+("400", "Bibarel", "normal", "1670", "00", "981", "1041", "1226", "1302", "normal", "water", "43"),
+("401", "Kricketot", "normal", "1673", "00", "200", "229", "250", "286", "bug", "", "3"),
+("402", "Kricketune", "normal", "1676", "00", "886", "944", "1107", "1181", "bug", "", "3"),
+("403", "Shinx", "normal", "1679", "00", "458", "500", "572", "625", "electric", "", "3"),
+("404", "Luxio", "normal", "1682", "00", "793", "849", "992", "1061", "electric", "", "3"),
+("405", "Luxray", "normal", "1685", "00", "1573", "1650", "1967", "2063", "electric", "", "3"),
+("406", "Budew", "normal", "1688", "00", "448", "489", "560", "611", "grass", "poison", "125"),
+("407", "Roserade", "normal", "1691", "00", "1619", "1697", "2024", "2122", "grass", "poison", "125"),
+("408", "Cranidos", "normal", "1694", "00", "974", "1040", "1217", "1300", "rock", "", "4"),
+("409", "Rampardos", "normal", "1697", "00", "1796", "1884", "2246", "2355", "rock", "", "4"),
+("410", "Shieldon", "normal", "1700", "00", "465", "509", "581", "636", "rock", "steel", "47"),
+("411", "Bastiodon", "normal", "1703", "00", "820", "879", "1025", "1100", "rock", "steel", "47"),
+("412", "Burmy", "plant", "118", "11", "247", "279", "309", "348", "bug", "", "3"),
+("412", "Burmy", "sandy", "119", "12", "247", "279", "309", "348", "bug", "", "3"),
+("412", "Burmy", "trash", "120", "13", "247", "279", "309", "348", "bug", "", "3"),
+("413", "Wormadam", "plant", "87", "11", "954", "1013", "1192", "1267", "bug", "grass", "312"),
+("413", "Wormadam", "sandy", "88", "12", "954", "1013", "1192", "1267", "bug", "ground", "312"),
+("413", "Wormadam", "trash", "89", "13", "854", "910", "1067", "1138", "bug", "steel", "37"),
+("414", "Mothim", "normal", "1712", "00", "975", "1037", "1219", "1297", "bug", "flying", "36"),
+("415", "Combee", "normal", "1715", "00", "251", "282", "314", "353", "bug", "flying", "36"),
+("416", "Vespiquen", "normal", "1718", "00", "1082", "1145", "1353", "1432", "bug", "flying", "36"),
+("417", "Pachirisu", "normal", "1721", "00", "643", "693", "804", "867", "electric", "", "3"),
+("418", "Buizel", "normal", "1724", "00", "555", "602", "694", "753", "water", "", "3"),
+("419", "Floatzel", "normal", "1727", "00", "1323", "1396", "1655", "1745", "water", "", "3"),
+("420", "Cherubi", "normal", "1730", "00", "499", "542", "624", "678", "grass", "", "12"),
+("421", "Cherrim", "overcast", "94", "11", "1106", "1170", "1383", "1462", "grass", "", "12"),
+("421", "Cherrim", "sunny", "95", "12", "1106", "1170", "1383", "1462", "grass", "", "12"),
+("422", "Shellos", "west_sea", "96", "11", "600", "649", "751", "811", "water", "", "3"),
+("422", "Shellos", "east_sea", "97", "12", "600", "649", "751", "811", "water", "", "3"),
+("423", "Gastrodon", "west_sea", "98", "11", "1259", "1328", "1574", "1660", "water", "ground", "312"),
+("423", "Gastrodon", "east_sea", "99", "12", "1259", "1328", "1574", "1660", "water", "ground", "312"),
+("424", "Ambipom", "normal", "1742", "00", "1311", "1381", "1639", "1727", "normal", "", "4"),
+("425", "Drifloon", "normal", "1745", "00", "633", "684", "791", "855", "ghost", "flying", "86"),
+("426", "Drifblim", "normal", "1748", "00", "1287", "1361", "1609", "1701", "ghost", "flying", "86"),
+("427", "Buneary", "normal", "1751", "00", "669", "719", "836", "899", "normal", "", "4"),
+("428", "Lopunny", "normal", "1754", "00", "1112", "1177", "1391", "1471", "normal", "", "4"),
+("428", "Lopunny", "mega", "-1", "51", "1112", "1177", "1391", "1471", "normal", "", "4"),
+("429", "Mismagius", "normal", "722", "00", "1421", "1494", "1777", "1868", "ghost", "", "8"),
+("430", "Honchkrow", "normal", "858", "00", "1471", "1549", "1839", "1937", "dark", "flying", "86"),
+("431", "Glameow", "normal", "1757", "00", "490", "533", "613", "667", "normal", "", "4"),
+("432", "Purugly", "normal", "1760", "00", "1053", "1116", "1317", "1395", "normal", "", "4"),
+("433", "Chingling", "normal", "1763", "00", "530", "574", "662", "718", "psychic", "", "6"),
+("434", "Stunky", "normal", "791", "00", "609", "657", "762", "822", "poison", "dark", "58"),
+("435", "Skuntank", "normal", "794", "00", "1278", "1347", "1597", "1684", "poison", "dark", "58"),
+("436", "Bronzor", "normal", "1766", "00", "305", "344", "381", "430", "steel", "psychic", "76"),
+("437", "Bronzong", "normal", "1769", "00", "1212", "1279", "1515", "1599", "steel", "psychic", "76"),
+("438", "Bonsly", "normal", "1772", "00", "693", "744", "866", "930", "rock", "", "4"),
+("439", "Mime-jr", "normal", "1775", "00", "578", "626", "723", "782", "psychic", "fairy", "65"),
+("440", "Happiny", "normal", "1778", "00", "178", "212", "223", "265", "normal", "", "4"),
+("441", "Chatot", "normal", "1781", "00", "961", "1023", "1202", "1279", "normal", "flying", "46"),
+("442", "Spiritomb", "normal", "1784", "00", "1119", "1184", "1399", "1480", "ghost", "dark", "8"),
+("443", "Gible", "normal", "861", "00", "588", "635", "735", "794", "dragon", "ground", "612"),
+("444", "Gabite", "normal", "864", "00", "1009", "1071", "1262", "1339", "dragon", "ground", "612"),
+("445", "Garchomp", "normal", "867", "00", "2174", "2264", "2718", "2830", "dragon", "ground", "612"),
+("446", "Munchlax", "normal", "1787", "00", "1017", "1081", "1271", "1351", "normal", "", "4"),
+("447", "Riolu", "normal", "1790", "00", "522", "567", "653", "709", "fighting", "", "5"),
+("448", "Lucario", "normal", "1793", "00", "1469", "1544", "1837", "1930", "fighting", "steel", "57"),
+("449", "Hippopotas", "normal", "888", "00", "723", "776", "904", "970", "ground", "", "12"),
+("450", "Hippowdon", "normal", "891", "00", "1684", "1763", "2105", "2204", "ground", "", "12"),
+("451", "Skorupi", "normal", "1796", "00", "531", "576", "664", "721", "poison", "bug", "53"),
+("452", "Drapion", "normal", "1799", "00", "1331", "1401", "1665", "1752", "poison", "dark", "58"),
+("453", "Croagunk", "normal", "1802", "00", "500", "544", "625", "680", "poison", "fighting", "5"),
+("454", "Toxicroak", "normal", "1805", "00", "1350", "1421", "1688", "1777", "poison", "fighting", "5"),
+("455", "Carnivine", "normal", "1808", "00", "1167", "1233", "1459", "1542", "grass", "", "12"),
+("456", "Finneon", "normal", "1811", "00", "511", "555", "639", "694", "water", "", "3"),
+("457", "Lumineon", "normal", "1814", "00", "976", "1036", "1220", "1295", "water", "", "3"),
+("458", "Mantyke", "normal", "1817", "00", "662", "713", "828", "891", "water", "flying", "36"),
+("459", "Snover", "normal", "932", "00", "614", "662", "768", "828", "grass", "ice", "127"),
+("460", "Abomasnow", "normal", "935", "00", "1281", "1349", "1601", "1687", "grass", "ice", "127"),
+("460", "Abomasnow", "mega", "-1", "51", "1281", "1349", "1601", "1687", "grass", "ice", "127"),
+("461", "Weavile", "normal", "800", "00", "1638", "1717", "2048", "2146", "dark", "ice", "87"),
+("462", "Magnezone", "normal", "661", "00", "1750", "1831", "2188", "2289", "electric", "steel", "37"),
+("463", "Lickilicky", "normal", "1820", "00", "1338", "1409", "1673", "1762", "normal", "", "4"),
+("464", "Rhyperior", "normal", "852", "00", "2046", "2133", "2558", "2667", "ground", "rock", "124"),
+("465", "Tangrowth", "normal", "1823", "00", "1653", "1731", "2067", "2164", "grass", "", "12"),
+("466", "Electivire", "normal", "643", "00", "1680", "1759", "2100", "2199", "electric", "", "3"),
+("467", "Magmortar", "normal", "637", "00", "1710", "1790", "2137", "2237", "fire", "", "12"),
+("468", "Togekiss", "normal", "1826", "00", "1822", "1904", "2278", "2380", "fairy", "flying", "56"),
+("469", "Yanmega", "normal", "1829", "00", "1605", "1683", "2007", "2104", "bug", "flying", "36"),
+("470", "Leafeon", "normal", "1832", "00", "1605", "1682", "2006", "2103", "grass", "", "12"),
+("471", "Glaceon", "normal", "1835", "00", "1706", "1786", "2133", "2233", "ice", "", "7"),
+("472", "Gliscor", "normal", "806", "00", "1464", "1538", "1831", "1923", "ground", "flying", "126"),
+("473", "Mamoswine", "normal", "1838", "00", "1818", "1902", "2273", "2377", "ice", "ground", "712"),
+("474", "Porygon-z", "normal", "683", "00", "1783", "1866", "2230", "2333", "normal", "", "4"),
+("475", "Gallade", "normal", "301", "00", "1688", "1767", "2110", "2209", "psychic", "fighting", "65"),
+("476", "Probopass", "normal", "1841", "00", "1122", "1188", "1402", "1485", "rock", "steel", "47"),
+("477", "Dusknoir", "normal", "920", "00", "1294", "1364", "1617", "1706", "ghost", "", "8"),
+("478", "Froslass", "normal", "1844", "00", "1102", "1166", "1377", "1457", "ice", "ghost", "78"),
+("479", "Rotom", "normal", "81", "11", "1096", "1160", "1371", "1451", "electric", "ghost", "38"),
+("479", "Rotom", "heat", "86", "12", "1401", "1474", "1751", "1842", "electric", "fire", "312"),
+("479", "Rotom", "wash", "85", "13", "1401", "1474", "1751", "1842", "electric", "water", "3"),
+("479", "Rotom", "frost", "82", "14", "1401", "1474", "1751", "1842", "electric", "ice", "37"),
+("479", "Rotom", "fan", "83", "15", "1401", "1474", "1751", "1842", "electric", "flying", "36"),
+("479", "Rotom", "mow", "84", "16", "1401", "1474", "1751", "1842", "electric", "grass", "312"),
+("480", "Uxie", "normal", "1847", "00", "1370", "1442", "1712", "1803", "psychic", "", "6"),
+("481", "Mesprit", "normal", "1850", "00", "1669", "1747", "2086", "2184", "psychic", "", "6"),
+("482", "Azelf", "normal", "1853", "00", "1752", "1834", "2190", "2293", "psychic", "", "6"),
+("483", "Dialga", "normal", "1856", "00", "2217", "2307", "2771", "2884", "steel", "dragon", "76"),
+("484", "Palkia", "normal", "1859", "00", "2190", "2280", "2737", "2850", "water", "dragon", "36"),
+("485", "Heatran", "normal", "1862", "00", "2058", "2145", "2573", "2681", "fire", "steel", "127"),
+("486", "Regigigas", "normal", "1865", "00", "2389", "2483", "2987", "3104", "normal", "", "4"),
+("487", "Giratina", "altered", "90", "11", "1848", "1931", "2310", "2414", "ghost", "dragon", "86"),
+("487", "Giratina", "origin", "91", "12", "2018", "2105", "2523", "2631", "ghost", "dragon", "86"),
+("488", "Cresselia", "normal", "1871", "00", "1555", "1633", "1944", "2041", "psychic", "", "6"),
+("489", "Phione", "normal", "1874", "00", "1138", "1203", "1423", "1504", "water", "", "3"),
+("490", "Manaphy", "normal", "1877", "00", "1785", "1865", "2231", "2332", "water", "", "3"),
+("491", "Darkrai", "normal", "1880", "00", "2048", "2136", "2560", "2671", "dark", "", "8"),
+("492", "Shaymin", "land", "93", "11", "1785", "1865", "2231", "2332", "grass", "", "12"),
+("492", "Shaymin", "sky", "92", "12", "1966", "2052", "2458", "2566", "grass", "flying", "126"),
+("493", "Arceus", "normal", "100", "11", "2190", "2279", "2738", "2850", "normal", "", "4"),
+("493", "Arceus", "fighting", "101", "12", "2190", "2279", "2738", "2850", "fighting", "", "5"),
+("493", "Arceus", "flying", "102", "13", "2190", "2279", "2738", "2850", "flying", "", "6"),
+("493", "Arceus", "poison", "103", "14", "2190", "2279", "2738", "2850", "poison", "", "5"),
+("493", "Arceus", "ground", "104", "15", "2190", "2279", "2738", "2850", "ground", "", "12"),
+("493", "Arceus", "rock", "105", "16", "2190", "2279", "2738", "2850", "rock", "", "4"),
+("493", "Arceus", "bug", "106", "17", "2190", "2279", "2738", "2850", "bug", "", "3"),
+("493", "Arceus", "ghost", "107", "18", "2190", "2279", "2738", "2850", "ghost", "", "8"),
+("493", "Arceus", "steel", "108", "19", "2190", "2279", "2738", "2850", "steel", "", "7"),
+("493", "Arceus", "fire", "109", "20", "2190", "2279", "2738", "2850", "fire", "", "12"),
+("493", "Arceus", "water", "110", "21", "2190", "2279", "2738", "2850", "water", "", "3"),
+("493", "Arceus", "grass", "111", "22", "2190", "2279", "2738", "2850", "grass", "", "12"),
+("493", "Arceus", "electric", "112", "23", "2190", "2279", "2738", "2850", "electric", "", "3"),
+("493", "Arceus", "psychic", "113", "24", "2190", "2279", "2738", "2850", "psychic", "", "6"),
+("493", "Arceus", "ice", "114", "25", "2190", "2279", "2738", "2850", "ice", "", "7"),
+("493", "Arceus", "dragon", "115", "26", "2190", "2279", "2738", "2850", "dragon", "", "6"),
+("493", "Arceus", "dark", "116", "27", "2190", "2279", "2738", "2850", "dark", "", "8"),
+("493", "Arceus", "fairy", "117", "28", "2190", "2279", "2738", "2850", "fairy", "", "5"),
+("494", "Victini", "normal", "1886", "00", "1785", "1865", "2231", "2332", "psychic", "fire", "612"),
+("495", "Snivy", "normal", "1889", "00", "444", "485", "555", "606", "grass", "", "12"),
+("496", "Servine", "normal", "1892", "00", "770", "823", "962", "1029", "grass", "", "12"),
+("497", "Serperior", "normal", "1895", "00", "1233", "1301", "1542", "1626", "grass", "", "12"),
+("498", "Tepig", "normal", "1898", "00", "571", "618", "714", "773", "fire", "", "12"),
+("499", "Pignite", "normal", "1901", "00", "1036", "1099", "1295", "1374", "fire", "fighting", "125"),
+("500", "Emboar", "normal", "1904", "00", "1624", "1704", "2030", "2130", "fire", "fighting", "125"),
+("501", "Oshawott", "normal", "1907", "00", "551", "597", "689", "747", "water", "", "3"),
+("502", "Dewott", "normal", "1910", "00", "935", "995", "1169", "1243", "water", "", "3"),
+("503", "Samurott", "normal", "1913", "00", "1539", "1614", "1924", "2018", "water", "", "3"),
+("504", "Patrat", "normal", "1916", "00", "412", "452", "515", "565", "normal", "", "4"),
+("505", "Watchog", "normal", "1919", "00", "979", "1039", "1224", "1299", "normal", "", "4"),
+("506", "Lillipup", "normal", "1922", "00", "480", "523", "600", "654", "normal", "", "4"),
+("507", "Herdier", "normal", "1925", "00", "848", "904", "1060", "1130", "normal", "", "4"),
+("508", "Stoutland", "normal", "1928", "00", "1540", "1615", "1925", "2019", "normal", "", "4"),
+("509", "Purrloin", "normal", "1931", "00", "401", "441", "502", "551", "dark", "", "8"),
+("510", "Liepard", "normal", "1934", "00", "993", "1055", "1241", "1318", "dark", "", "8"),
+("511", "Pansage", "normal", "1937", "00", "503", "546", "628", "683", "grass", "", "12"),
+("512", "Simisage", "normal", "1940", "00", "1273", "1343", "1592", "1679", "grass", "", "12"),
+("513", "Pansear", "normal", "1943", "00", "503", "546", "628", "683", "fire", "", "12"),
+("514", "Simisear", "normal", "1946", "00", "1273", "1343", "1592", "1679", "fire", "", "12"),
+("515", "Panpour", "normal", "1949", "00", "503", "546", "628", "683", "water", "", "3"),
+("516", "Simipour", "normal", "1952", "00", "1273", "1343", "1592", "1679", "water", "", "3"),
+("517", "Munna", "normal", "1955", "00", "605", "654", "757", "818", "psychic", "", "6"),
+("518", "Musharna", "normal", "1958", "00", "1481", "1556", "1852", "1945", "psychic", "", "6"),
+("519", "Pidove", "normal", "1961", "00", "443", "484", "554", "605", "normal", "flying", "46"),
+("520", "Tranquill", "normal", "1964", "00", "770", "824", "963", "1030", "normal", "flying", "46"),
+("521", "Unfezant", "normal", "1967", "00", "1487", "1562", "1859", "1953", "normal", "flying", "46"),
+("522", "Blitzle", "normal", "1970", "00", "461", "504", "577", "630", "electric", "", "3"),
+("523", "Zebstrika", "normal", "1973", "00", "1317", "1387", "1646", "1734", "electric", "", "3"),
+("524", "Roggenrola", "normal", "1976", "00", "639", "688", "799", "860", "rock", "", "4"),
+("525", "Boldore", "normal", "1979", "00", "1095", "1159", "1369", "1449", "rock", "", "4"),
+("526", "Gigalith", "normal", "1982", "00", "1764", "1844", "2205", "2306", "rock", "", "4"),
+("527", "Woobat", "normal", "1985", "00", "535", "580", "669", "726", "psychic", "flying", "6"),
+("528", "Swoobat", "normal", "1988", "00", "922", "980", "1152", "1226", "psychic", "flying", "6"),
+("529", "Drilbur", "normal", "1991", "00", "732", "786", "916", "983", "ground", "", "12"),
+("530", "Excadrill", "normal", "1994", "00", "1770", "1853", "2212", "2317", "ground", "steel", "127"),
+("531", "Audino", "normal", "1997", "00", "901", "961", "1127", "1201", "normal", "", "4"),
+("532", "Timburr", "normal", "2000", "00", "699", "751", "874", "939", "fighting", "", "5"),
+("533", "Gurdurr", "normal", "2003", "00", "1173", "1239", "1467", "1549", "fighting", "", "5"),
+("534", "Conkeldurr", "normal", "2006", "00", "1824", "1907", "2280", "2384", "fighting", "", "5"),
+("535", "Tympole", "normal", "2009", "00", "438", "479", "548", "599", "water", "", "3"),
+("536", "Palpitoad", "normal", "2012", "00", "742", "795", "928", "994", "water", "ground", "312"),
+("537", "Seismitoad", "normal", "2015", "00", "1393", "1465", "1741", "1832", "water", "ground", "312"),
+("538", "Throh", "normal", "2018", "00", "1391", "1464", "1739", "1830", "fighting", "", "5"),
+("539", "Sawk", "normal", "2021", "00", "1517", "1593", "1897", "1991", "fighting", "", "5"),
+("540", "Sewaddle", "normal", "2024", "00", "514", "558", "643", "698", "bug", "grass", "312"),
+("541", "Swadloon", "normal", "2027", "00", "730", "783", "913", "979", "bug", "grass", "312"),
+("542", "Leavanny", "normal", "2030", "00", "1402", "1474", "1753", "1843", "bug", "grass", "312"),
+("543", "Venipede", "normal", "2033", "00", "366", "403", "458", "504", "bug", "poison", "35"),
+("544", "Whirlipede", "normal", "2036", "00", "605", "653", "756", "817", "bug", "poison", "35"),
+("545", "Scolipede", "normal", "2039", "00", "1328", "1398", "1660", "1747", "bug", "poison", "35"),
+("546", "Cottonee", "normal", "2042", "00", "362", "400", "453", "500", "grass", "fairy", "125"),
+("547", "Whimsicott", "normal", "2045", "00", "1087", "1151", "1359", "1439", "grass", "fairy", "125"),
+("548", "Petilil", "normal", "2048", "00", "543", "588", "679", "736", "grass", "", "12"),
+("549", "Lilligant", "normal", "2051", "00", "1385", "1457", "1731", "1821", "grass", "", "12"),
+("550", "Basculin", "red_striped", "136", "11", "1129", "1194", "1412", "1493", "water", "", "3"),
+("550", "Basculin", "blue_striped", "137", "12", "1129", "1194", "1412", "1493", "water", "", "3"),
+("551", "Sandile", "normal", "2054", "00", "546", "592", "682", "741", "ground", "dark", "128"),
+("552", "Krokorok", "normal", "2057", "00", "756", "810", "945", "1013", "ground", "dark", "128"),
+("553", "Krookodile", "normal", "2060", "00", "1662", "1740", "2077", "2176", "ground", "dark", "128"),
+("554", "Darumaka", "normal", "2063", "00", "768", "823", "961", "1030", "fire", "", "12"),
+("554", "Darumaka", "galarian", "2341", "31", "768", "823", "961", "1030", "ice", "", "7"),
+("555", "Darmanitan", "standard", "138", "11", "1691", "1774", "2114", "2218", "fire", "", "12"),
+("555", "Darmanitan", "zen", "139", "12", "2049", "2136", "2561", "2670", "fire", "psychic", "126"),
+("555", "Darmanitan", "galarian_standard", "2342", "31", "1691", "1774", "2114", "2218", "ice", "", "7"),
+("555", "Darmanitan", "galarian_zen", "2343", "32", "2136", "2231", "2670", "2789", "ice", "fire", "712"),
+("556", "Maractus", "normal", "2066", "00", "1231", "1299", "1539", "1624", "grass", "", "12"),
+("557", "Dwebble", "normal", "2069", "00", "650", "699", "813", "874", "bug", "rock", "34"),
+("558", "Crustle", "normal", "2072", "00", "1381", "1452", "1726", "1815", "bug", "rock", "34"),
+("559", "Scraggy", "normal", "2075", "00", "732", "784", "915", "980", "dark", "fighting", "85"),
+("560", "Scrafty", "normal", "2078", "00", "1236", "1304", "1546", "1631", "dark", "fighting", "85"),
+("561", "Sigilyph", "normal", "2081", "00", "1385", "1457", "1732", "1821", "psychic", "flying", "6"),
+("562", "Yamask", "normal", "2084", "00", "516", "561", "646", "701", "ghost", "", "8"),
+("562", "Yamask", "galarian", "2344", "31", "516", "561", "646", "701", "ground", "ghost", "128"),
+("563", "Cofagrigus", "normal", "2087", "00", "1231", "1299", "1539", "1624", "ghost", "", "8"),
+("564", "Tirtouga", "normal", "2090", "00", "796", "850", "995", "1063", "water", "rock", "34"),
+("565", "Carracosta", "normal", "2093", "00", "1425", "1498", "1782", "1872", "water", "rock", "34"),
+("566", "Archen", "normal", "2096", "00", "989", "1052", "1236", "1316", "rock", "flying", "46"),
+("567", "Archeops", "normal", "2099", "00", "1818", "1903", "2272", "2379", "rock", "flying", "46"),
+("568", "Trubbish", "normal", "2102", "00", "526", "571", "658", "714", "poison", "", "5"),
+("569", "Garbodor", "normal", "2105", "00", "1271", "1339", "1589", "1675", "poison", "", "5"),
+("570", "Zorua", "normal", "2108", "00", "622", "671", "777", "839", "dark", "", "8"),
+("571", "Zoroark", "normal", "2111", "00", "1395", "1469", "1743", "1836", "dark", "", "8"),
+("572", "Minccino", "normal", "2114", "00", "456", "498", "570", "623", "normal", "", "4"),
+("573", "Cinccino", "normal", "2117", "00", "1213", "1281", "1517", "1601", "normal", "", "4"),
+("574", "Gothita", "normal", "2120", "00", "500", "543", "625", "679", "psychic", "", "6"),
+("575", "Gothorita", "normal", "2123", "00", "860", "916", "1075", "1146", "psychic", "", "6"),
+("576", "Gothitelle", "normal", "2126", "00", "1313", "1382", "1641", "1728", "psychic", "", "6"),
+("577", "Solosis", "normal", "2129", "00", "727", "781", "909", "977", "psychic", "", "6"),
+("578", "Duosion", "normal", "2132", "00", "1087", "1153", "1359", "1441", "psychic", "", "6"),
+("579", "Reuniclus", "normal", "2135", "00", "1595", "1672", "1994", "2091", "psychic", "", "6"),
+("580", "Ducklett", "normal", "2138", "00", "447", "489", "559", "612", "water", "flying", "36"),
+("581", "Swanna", "normal", "2141", "00", "1128", "1193", "1410", "1491", "water", "flying", "36"),
+("582", "Vanillite", "normal", "2144", "00", "545", "590", "682", "738", "ice", "", "7"),
+("583", "Vanillish", "normal", "2147", "00", "853", "909", "1066", "1136", "ice", "", "7"),
+("584", "Vanilluxe", "normal", "2150", "00", "1537", "1612", "1921", "2015", "ice", "", "7"),
+("585", "Deerling", "spring", "585", "11", "601", "648", "751", "810", "normal", "grass", "412"),
+("585", "Deerling", "summer", "586", "12", "601", "648", "751", "810", "normal", "grass", "412"),
+("585", "Deerling", "autumn", "587", "13", "601", "648", "751", "810", "normal", "grass", "412"),
+("585", "Deerling", "winter", "588", "14", "601", "648", "751", "810", "normal", "grass", "412"),
+("586", "Sawsbuck", "spring", "589", "11", "1311", "1381", "1639", "1726", "normal", "grass", "412"),
+("586", "Sawsbuck", "summer", "590", "12", "1311", "1381", "1639", "1726", "normal", "grass", "412"),
+("586", "Sawsbuck", "autumn", "591", "13", "1311", "1381", "1639", "1726", "normal", "grass", "412"),
+("586", "Sawsbuck", "winter", "592", "14", "1311", "1381", "1639", "1726", "normal", "grass", "412"),
+("587", "Emolga", "normal", "2153", "00", "876", "933", "1095", "1166", "electric", "flying", "36"),
+("588", "Karrablast", "normal", "2156", "00", "626", "675", "783", "844", "bug", "", "3"),
+("589", "Escavalier", "normal", "2159", "00", "1574", "1650", "1968", "2063", "bug", "steel", "37"),
+("590", "Foongus", "normal", "2162", "00", "514", "559", "643", "699", "grass", "poison", "125"),
+("591", "Amoonguss", "normal", "2165", "00", "1156", "1223", "1446", "1529", "grass", "poison", "125"),
+("592", "Frillish", "normal", "2168", "00", "668", "718", "835", "898", "water", "ghost", "38"),
+("592", "Frillish", "female", "2330", "1", "668", "718", "835", "898", "water", "ghost", "38"),
+("593", "Jellicent", "normal", "2171", "00", "1267", "1336", "1584", "1670", "water", "ghost", "38"),
+("593", "Jellicent", "female", "2331", "1", "1267", "1336", "1584", "1670", "water", "ghost", "38"),
+("594", "Alomomola", "normal", "2174", "00", "1170", "1239", "1462", "1549", "water", "", "3"),
+("595", "Joltik", "normal", "2177", "00", "539", "584", "674", "730", "bug", "electric", "3"),
+("596", "Galvantula", "normal", "2180", "00", "1193", "1260", "1491", "1575", "bug", "electric", "3"),
+("597", "Ferroseed", "normal", "2183", "00", "493", "537", "617", "672", "grass", "steel", "127"),
+("598", "Ferrothorn", "normal", "2186", "00", "1258", "1326", "1572", "1658", "grass", "steel", "127"),
+("599", "Klink", "normal", "2189", "00", "502", "546", "628", "683", "steel", "", "7"),
+("600", "Klang", "normal", "2192", "00", "994", "1055", "1243", "1319", "steel", "", "7"),
+("601", "Klinklang", "normal", "2195", "00", "1433", "1506", "1792", "1883", "steel", "", "7"),
+("602", "Tynamo", "normal", "2198", "00", "423", "463", "529", "579", "electric", "", "3"),
+("603", "Eelektrik", "normal", "2201", "00", "921", "980", "1152", "1225", "electric", "", "3"),
+("604", "Eelektross", "normal", "2204", "00", "1487", "1561", "1859", "1952", "electric", "", "3"),
+("605", "Elgyem", "normal", "2207", "00", "738", "791", "923", "989", "psychic", "", "6"),
+("606", "Beheeyem", "normal", "2210", "00", "1498", "1573", "1873", "1966", "psychic", "", "6"),
+("607", "Litwick", "normal", "2213", "00", "530", "575", "663", "719", "ghost", "fire", "812"),
+("608", "Lampent", "normal", "2216", "00", "917", "976", "1146", "1220", "ghost", "fire", "812"),
+("609", "Chandelure", "normal", "2219", "00", "1784", "1867", "2231", "2335", "ghost", "fire", "812"),
+("610", "Axew", "normal", "2222", "00", "729", "782", "912", "977", "dragon", "", "6"),
+("611", "Fraxure", "normal", "2225", "00", "1208", "1276", "1511", "1596", "dragon", "", "6"),
+("612", "Haxorus", "normal", "2228", "00", "1966", "2053", "2458", "2566", "dragon", "", "6"),
+("613", "Cubchoo", "normal", "2231", "00", "563", "610", "704", "763", "ice", "", "7"),
+("613", "Cubchoo", "winter_2020", "2672", "pm0613_00_pgo_winter2020", "563", "610", "704", "763", "ice", "", "7"),
+("614", "Beartic", "normal", "2234", "00", "1659", "1738", "2074", "2173", "ice", "", "7"),
+("615", "Cryogonal", "normal", "2237", "00", "1524", "1598", "1905", "1998", "ice", "", "7"),
+("616", "Shelmet", "normal", "2240", "00", "434", "476", "543", "595", "bug", "", "3"),
+("617", "Accelgor", "normal", "2243", "00", "1323", "1395", "1654", "1744", "bug", "", "3"),
+("618", "Stunfisk", "normal", "2246", "00", "1169", "1235", "1461", "1544", "ground", "electric", "123"),
+("618", "Stunfisk", "galarian", "2345", "31", "1169", "1235", "1461", "1544", "ground", "steel", "127"),
+("619", "Mienfoo", "normal", "2249", "00", "740", "793", "925", "992", "fighting", "", "5"),
+("620", "Mienshao", "normal", "2252", "00", "1472", "1548", "1840", "1936", "fighting", "", "5"),
+("621", "Druddigon", "normal", "2255", "00", "1487", "1561", "1859", "1951", "dragon", "", "6"),
+("622", "Golett", "normal", "2258", "00", "630", "679", "788", "849", "ground", "ghost", "128"),
+("623", "Golurk", "normal", "2261", "00", "1554", "1630", "1943", "2038", "ground", "ghost", "128"),
+("624", "Pawniard", "normal", "2264", "00", "765", "819", "957", "1024", "dark", "steel", "87"),
+("625", "Bisharp", "normal", "2267", "00", "1549", "1625", "1936", "2031", "dark", "steel", "87"),
+("626", "Bouffalant", "normal", "2270", "00", "1524", "1598", "1905", "1998", "normal", "", "4"),
+("627", "Rufflet", "normal", "2273", "00", "796", "852", "996", "1065", "normal", "flying", "46"),
+("628", "Braviary", "normal", "2276", "00", "1685", "1764", "2106", "2206", "normal", "flying", "46"),
+("629", "Vullaby", "normal", "2279", "00", "675", "726", "844", "908", "dark", "flying", "86"),
+("630", "Mandibuzz", "normal", "2282", "00", "1154", "1221", "1443", "1527", "dark", "flying", "86"),
+("631", "Heatmor", "normal", "2285", "00", "1298", "1368", "1623", "1711", "fire", "", "12"),
+("632", "Durant", "normal", "2288", "00", "1446", "1519", "1808", "1900", "bug", "steel", "37"),
+("633", "Deino", "normal", "2291", "00", "560", "606", "701", "758", "dark", "dragon", "86"),
+("634", "Zweilous", "normal", "2294", "00", "990", "1051", "1238", "1313", "dark", "dragon", "86"),
+("635", "Hydreigon", "normal", "2297", "00", "1985", "2071", "2482", "2589", "dark", "dragon", "86"),
+("636", "Larvesta", "normal", "2300", "00", "800", "855", "1000", "1069", "bug", "fire", "312"),
+("637", "Volcarona", "normal", "2303", "00", "1989", "2075", "2487", "2594", "bug", "fire", "312"),
+("638", "Cobalion", "normal", "2306", "00", "1649", "1727", "2061", "2159", "steel", "fighting", "75"),
+("639", "Terrakion", "normal", "2309", "00", "2026", "2113", "2533", "2641", "rock", "fighting", "45"),
+("640", "Virizion", "normal", "2312", "00", "1649", "1727", "2061", "2159", "grass", "fighting", "125"),
+("641", "Tornadus", "incarnate", "140", "11", "1828", "1911", "2285", "2389", "flying", "", "6"),
+("641", "Tornadus", "therian", "141", "12", "1756", "1837", "2196", "2296", "flying", "", "6"),
+("642", "Thundurus", "incarnate", "142", "11", "1828", "1911", "2285", "2389", "electric", "flying", "36"),
+("642", "Thundurus", "therian", "143", "12", "2002", "2091", "2503", "2614", "electric", "flying", "36"),
+("643", "Reshiram", "normal", "2315", "00", "2217", "2307", "2771", "2884", "dragon", "fire", "612"),
+("644", "Zekrom", "normal", "2318", "00", "2217", "2307", "2771", "2884", "dragon", "electric", "63"),
+("645", "Landorus", "incarnate", "144", "11", "1965", "2050", "2456", "2563", "ground", "flying", "126"),
+("645", "Landorus", "therian", "145", "12", "2151", "2241", "2688", "2801", "ground", "flying", "126"),
+("646", "Kyurem", "normal", "146", "11", "1957", "2042", "2446", "2553", "dragon", "ice", "67"),
+("646", "Kyurem", "white", "148", "12", "2533", "2631", "3167", "3289", "dragon", "ice", "67"),
+("646", "Kyurem", "black", "147", "13", "2533", "2631", "3167", "3289", "dragon", "ice", "67"),
+("647", "Keldeo", "ordinary", "149", "11", "2026", "2113", "2533", "2641", "water", "fighting", "35"),
+("647", "Keldeo", "resolute", "150", "12", "2026", "2113", "2533", "2641", "water", "fighting", "35"),
+("648", "Meloetta", "aria", "151", "11", "2180", "2269", "2725", "2837", "normal", "psychic", "46"),
+("648", "Meloetta", "pirouette", "152", "12", "2147", "2237", "2684", "2796", "normal", "fighting", "45"),
+("649", "Genesect", "normal", "593", "11", "1833", "1916", "2292", "2395", "bug", "steel", "37"),
+("649", "Genesect", "douse", "597", "12", "1833", "1916", "2292", "2395", "bug", "steel", "37"),
+("649", "Genesect", "shock", "594", "13", "1833", "1916", "2292", "2395", "bug", "steel", "37"),
+("649", "Genesect", "burn", "595", "14", "1833", "1916", "2292", "2395", "bug", "steel", "37"),
+("649", "Genesect", "chill", "596", "15", "1833", "1916", "2292", "2395", "bug", "steel", "37"),
+("650", "Chespin", "normal", "0", "00", "579", "626", "724", "783", "grass", "", "12"),
+("651", "Quilladin", "normal", "0", "00", "924", "982", "1155", "1228", "grass", "", "12"),
+("652", "Chesnaught", "normal", "0", "00", "1611", "1688", "2014", "2110", "grass", "fighting", "125"),
+("653", "Fennekin", "normal", "0", "00", "542", "587", "678", "734", "fire", "", "12"),
+("654", "Braixen", "normal", "0", "00", "975", "1036", "1219", "1295", "fire", "", "12"),
+("655", "Delphox", "normal", "0", "00", "1669", "1748", "2087", "2185", "fire", "psychic", "126"),
+("656", "Froakie", "normal", "0", "00", "522", "567", "653", "709", "water", "", "3"),
+("657", "Frogadier", "normal", "0", "00", "877", "935", "1097", "1169", "water", "", "3"),
+("658", "Greninja", "normal", "0", "00", "1443", "1516", "1804", "1896", "water", "dark", "38"),
+("659", "Bunnelby", "normal", "0", "00", "282", "316", "353", "395", "normal", "", "4"),
+("660", "Diggersby", "normal", "0", "00", "806", "862", "1008", "1078", "normal", "ground", "412"),
+("661", "Fletchling", "normal", "0", "00", "417", "457", "522", "571", "normal", "flying", "46"),
+("662", "Fletchinder", "normal", "0", "00", "785", "839", "981", "1049", "fire", "flying", "126"),
+("663", "Talonflame", "normal", "0", "00", "1193", "1260", "1492", "1575", "fire", "flying", "126"),
+("664", "Scatterbug", "normal", "0", "00", "249", "281", "312", "351", "bug", "", "3"),
+("665", "Spewpa", "normal", "0", "00", "241", "274", "302", "342", "bug", "", "3"),
+("666", "Vivillon", "normal", "0", "00", "997", "1060", "1247", "1325", "bug", "flying", "36"),
+("667", "Litleo", "normal", "0", "00", "761", "814", "951", "1018", "fire", "normal", "124"),
+("668", "Pyroar", "normal", "2587", "00", "1506", "1581", "1883", "1977", "fire", "normal", "124"),
+("668", "Pyroar", "female", "2588", "1", "1506", "1581", "1883", "1977", "fire", "normal", "124"),
+("669", "Flabebe", "normal", "0", "00", "562", "607", "702", "759", "fairy", "", "5"),
+("670", "Floette", "normal", "0", "00", "820", "875", "1025", "1094", "fairy", "", "5"),
+("671", "Florges", "normal", "0", "00", "1767", "1848", "2209", "2310", "fairy", "", "5"),
+("672", "Skiddo", "normal", "0", "00", "664", "714", "830", "893", "grass", "", "12"),
+("673", "Gogoat", "normal", "0", "00", "1522", "1598", "1903", "1998", "grass", "", "12"),
+("674", "Pancham", "normal", "0", "00", "796", "850", "995", "1063", "fighting", "", "5"),
+("675", "Pangoro", "normal", "0", "00", "1581", "1658", "1976", "2073", "fighting", "dark", "58"),
+("676", "Furfrou", "natural", "2629", "11", "1141", "1206", "1427", "1508", "normal", "", "4"),
+("676", "Furfrou", "heart", "2630", "12", "1141", "1206", "1427", "1508", "normal", "", "4"),
+("676", "Furfrou", "star", "2631", "13", "1141", "1206", "1427", "1508", "normal", "", "4"),
+("676", "Furfrou", "diamond", "2632", "14", "1141", "1206", "1427", "1508", "normal", "", "4"),
+("676", "Furfrou", "debutante", "2633", "15", "1141", "1206", "1427", "1508", "normal", "", "4"),
+("676", "Furfrou", "matron", "2634", "16", "1141", "1206", "1427", "1508", "normal", "", "4"),
+("676", "Furfrou", "dandy", "2635", "17", "1141", "1206", "1427", "1508", "normal", "", "4"),
+("676", "Furfrou", "la_reine", "2636", "18", "1141", "1206", "1427", "1508", "normal", "", "4"),
+("676", "Furfrou", "kabuki", "2637", "19", "1141", "1206", "1427", "1508", "normal", "", "4"),
+("676", "Furfrou", "pharaoh", "2638", "20", "1141", "1206", "1427", "1508", "normal", "", "4"),
+("677", "Espurr", "normal", "0", "00", "669", "719", "837", "899", "psychic", "", "6"),
+("678", "Meowstic", "normal", "2589", "00", "1148", "1213", "1436", "1517", "psychic", "", "6"),
+("678", "Meowstic", "female", "2590", "1", "1148", "1213", "1436", "1517", "psychic", "", "6"),
+("682", "Spritzee", "normal", "0", "00", "664", "715", "831", "894", "fairy", "", "5"),
+("683", "Aromatisse", "normal", "0", "00", "1269", "1337", "1586", "1672", "fairy", "", "5"),
+("684", "Swirlix", "normal", "0", "00", "625", "673", "781", "842", "fairy", "", "5"),
+("685", "Slurpuff", "normal", "0", "00", "1190", "1256", "1488", "1570", "fairy", "", "5"),
+("686", "Inkay", "normal", "0", "00", "486", "529", "608", "662", "dark", "psychic", "86"),
+("687", "Malamar", "normal", "0", "00", "1279", "1347", "1599", "1685", "dark", "psychic", "86"),
+("688", "Binacle", "normal", "0", "00", "497", "540", "621", "675", "rock", "water", "43"),
+("689", "Barbaracle", "normal", "0", "00", "1455", "1528", "1820", "1911", "rock", "water", "43"),
+("690", "Skrelp", "normal", "0", "00", "561", "607", "702", "759", "poison", "water", "53"),
+("691", "Dragalge", "normal", "0", "00", "1293", "1362", "1616", "1702", "poison", "dragon", "56"),
+("692", "Clauncher", "normal", "0", "00", "575", "621", "719", "777", "water", "", "3"),
+("693", "Clawitzer", "normal", "0", "00", "1504", "1579", "1880", "1974", "water", "", "3"),
+("694", "Helioptile", "normal", "0", "00", "489", "533", "612", "666", "electric", "normal", "34"),
+("695", "Heliolisk", "normal", "0", "00", "1413", "1485", "1766", "1857", "electric", "normal", "34"),
+("696", "Tyrunt", "normal", "0", "00", "877", "934", "1096", "1168", "rock", "dragon", "46"),
+("697", "Tyrantrum", "normal", "0", "00", "1708", "1787", "2135", "2234", "rock", "dragon", "46"),
+("698", "Amaura", "normal", "0", "00", "726", "779", "908", "974", "rock", "ice", "47"),
+("699", "Aurorus", "normal", "0", "00", "1525", "1601", "1907", "2001", "rock", "ice", "47"),
+("700", "Sylveon", "normal", "0", "00", "1675", "1753", "2094", "2192", "fairy", "", "5"),
+("701", "Hawlucha", "normal", "0", "00", "1307", "1377", "1634", "1721", "fighting", "flying", "56"),
+("702", "Dedenne", "normal", "0", "00", "991", "1051", "1239", "1315", "electric", "fairy", "35"),
+("703", "Carbink", "normal", "0", "00", "780", "838", "975", "1047", "rock", "fairy", "45"),
+("704", "Goomy", "normal", "0", "00", "514", "557", "642", "697", "dragon", "", "6"),
+("705", "Sliggoo", "normal", "0", "00", "1100", "1164", "1375", "1455", "dragon", "", "6"),
+("706", "Goodra", "normal", "0", "00", "1919", "2003", "2399", "2504", "dragon", "", "6"),
+("707", "Klefki", "normal", "0", "00", "1051", "1114", "1314", "1392", "steel", "fairy", "75"),
+("708", "Phantump", "normal", "0", "00", "595", "642", "743", "802", "ghost", "grass", "812"),
+("709", "Trevenant", "normal", "0", "00", "1390", "1462", "1738", "1828", "ghost", "grass", "812"),
+("710", "Pumpkaboo", "normal", "0", "00", "649", "698", "811", "872", "ghost", "grass", "812"),
+("711", "Gourgeist", "normal", "0", "00", "1296", "1366", "1621", "1707", "ghost", "grass", "812"),
+("712", "Bergmite", "normal", "0", "00", "645", "694", "806", "868", "ice", "", "7"),
+("713", "Avalugg", "normal", "0", "00", "1747", "1827", "2184", "2284", "ice", "", "7"),
+("714", "Noibat", "normal", "0", "00", "344", "381", "430", "476", "flying", "dragon", "6"),
+("715", "Noivern", "normal", "0", "00", "1505", "1579", "1881", "1974", "flying", "dragon", "6"),
+("716", "Xerneas", "normal", "0", "00", "2073", "2160", "2591", "2701", "fairy", "", "5"),
+("717", "Yveltal", "normal", "0", "00", "2073", "2160", "2591", "2701", "dark", "flying", "86"),
+("808", "Meltan", "normal", "2321", "00", "564", "610", "705", "762", "steel", "", "7"),
+("809", "Melmetal", "normal", "2324", "00", "1971", "2056", "2464", "2571", "steel", "", "7"),
+("862", "Obstagoon", "normal", "2501", "31", "1443", "1515", "1803", "1894", "dark", "normal", "84"),
+("863", "Perrserker", "normal", "2504", "31", "1294", "1363", "1618", "1704", "steel", "", "7"),
+("865", "Sirfetchd", "normal", "2510", "31", "1627", "1706", "2034", "2132", "fighting", "", "5"),
+("866", "Mr-rime", "normal", "2513", "31", "1540", "1615", "1925", "2019", "ice", "psychic", "76"),
+("867", "Runerigus", "normal", "2516", "31", "1231", "1299", "1539", "1624", "ground", "ghost", "128"),
+("9991", "Level 1 Egg", "normal", "0", "0", "0", "0", "0", "0", "", "", "0"),
+("9992", "Level 2 Egg", "normal", "0", "0", "0", "0", "0", "0", "", "", "0"),
+("9993", "Level 3 Egg", "normal", "0", "0", "0", "0", "0", "0", "", "", "0"),
+("9994", "Level 4 Egg", "normal", "0", "0", "0", "0", "0", "0", "", "", "0"),
+("9995", "Level 5 Egg", "normal", "0", "0", "0", "0", "0", "0", "", "", "0"),
+("9996", "Level 6 Egg", "normal", "0", "0", "0", "0", "0", "0", "", "", "0");

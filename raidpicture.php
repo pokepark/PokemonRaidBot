@@ -28,7 +28,8 @@ if(array_key_exists('raid', $_GET) && $_GET['raid']!="") {
     $raid_id = preg_replace("/\D/","",$_GET['raid']);
     $raid = get_raid($raid_id);
     $q_img_url = my_query("SELECT img_url FROM gyms WHERE id='".$raid['gym_id']."' LIMIT 1")->fetch();
-    $q_pokemon_info = my_query(" SELECT pokemon.min_cp, pokemon.max_cp, pokemon.min_weather_cp, pokemon.max_weather_cp, pokemon.weather, pokemon.shiny, pokemon.asset_suffix 
+    $q_pokemon_info = my_query("
+                    SELECT min_cp, max_cp, min_weather_cp, max_weather_cp, weather, shiny, asset_suffix, type, type2
                     FROM pokemon
                     WHERE pokedex_id = '".$raid['pokemon']."'
                     AND pokemon_form_id = '".$raid['pokemon_form']."' LIMIT 1")->fetch();
@@ -218,6 +219,7 @@ if($raid['ex_gym'] == 1) {
 // Get current time.
 $time_now = utcnow();
 
+$show_boss_pokemon_types = false;
 // Raid running
 if($time_now < $raid['end_time']) {
     if(strlen($raid['asset_suffix']) > 2) {
@@ -289,6 +291,8 @@ if($time_now < $raid['end_time']) {
         // Position and size of the picture
         $dst_x = $dst_y = 100;
         $dst_w = $dst_h = $src_w = $src_h = 256;
+        
+        if($raid['type'] != '') $show_boss_pokemon_types = true;
     }
 
 // Raid ended
@@ -317,10 +321,23 @@ if($debug) {
 // Add pokemon to image
 imagecopyresampled($canvas,$img_pokemon,$dst_x,$dst_y,0,0,$dst_w,$dst_h,$src_w,$src_h);
 
+// Add pokemon types
+if($config->RAID_PICTURE_POKEMON_TYPES && $show_boss_pokemon_types) {
+    $img_type = grab_img(IMAGES_PATH . "/types/".$raid['type'].".png");
+    $type1_x = 300;
+    imagesavealpha($img_type, true);
+    if($raid['type2'] != '') {
+        $img_type2 = grab_img(IMAGES_PATH . "/types/".$raid['type2'].".png");
+        imagesavealpha($img_type2, true);
+        imagecopyresampled($canvas,$img_type2,300,300,0,0,40,40,64,64);
+        $type1_x -= 50;
+    }        
+    imagecopyresampled($canvas,$img_type,$type1_x,300,0,0,40,40,64,64);
+}
 
 
 // Ex-Raid?
-if($raid['level'] == 'X') {
+if($raid['event'] == EVENT_ID_EX) {
     $img_expass = grab_img(IMAGES_PATH . "/expass.png");
     imagesavealpha($img_expass,true);
 
