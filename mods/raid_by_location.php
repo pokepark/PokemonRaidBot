@@ -38,7 +38,7 @@ $address = format_address($addr);
 
 // Temporary gym_name
 if($config->RAID_VIA_LOCATION_TEMPORARY_ONLY) {
-    $gym_name = getTranslation('remote_raid') . ': '.$addr['district'];
+    $gym_name = getPublicTranslation('remote_raid') . ': '.$addr['district'];
     $gym = false;
     $gym_letter = substr($gym_name, 0, 1);
 }else {
@@ -100,21 +100,14 @@ try {
 
     $row = $rs->fetch();
 
-    $parameters = [
-      'gym_name' => $gym_name,
-      'lat' => $lat,
-      'lon' => $lon,
-      'address' => $address
-    ];
     // Gym already in database or new
     if (empty($row['count']) or $config->RAID_VIA_LOCATION_TEMPORARY_ONLY) {
         // insert gym in table.
         debug_log('Gym not found in database gym list! Inserting gym "' . $gym_name . '" now.');
         $query = '
-        INSERT INTO gyms (gym_name, lat, lon, address, show_gym, gym_id)
-        VALUES (:gym_name, :lat, :lon, :address, 0, :tmp)
+        INSERT INTO gyms (gym_name, lat, lon, address, show_gym)
+        VALUES (:gym_name, :lat, :lon, :address, 0)
     ';  
-        $parameters['tmp'] = 'temporary';
     } else {
         // Update gyms table to reflect gym changes.
         debug_log('Gym found in database gym list! Updating gym "' . $gym_name . '" now.');
@@ -127,7 +120,11 @@ try {
         ';
     }
     $statement = $dbh->prepare($query);
-    $statement->execute($parameters);
+    $statement->execute([ 'gym_name' => $gym_name,
+                          'lat' => $lat,
+                          'lon' => $lon,
+                          'address' => $address, 
+                        ]);
     // Get gym id from insert.
     if($gym_id == 0) {
         $gym_id = $dbh->lastInsertId();

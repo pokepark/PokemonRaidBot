@@ -47,7 +47,7 @@ function run_cleanup ($telegram = 2, $database = 2) {
             // Get cleanup info.
             $rs = my_query(
                 "
-                SELECT    cleanup.*, gyms.gym_id as temp, raids.gym_id
+                SELECT    cleanup.*, gyms.gym_name, raids.gym_id
                 FROM      cleanup
                 left join raids
                 on cleanup.raid_id = raids.id
@@ -73,7 +73,7 @@ function run_cleanup ($telegram = 2, $database = 2) {
             // Get cleanup info for database cleanup.
             $rs_db = my_query(
                 "
-                SELECT    cleanup.*, gyms.gym_id as temp, raids.gym_id
+                SELECT    cleanup.*, gyms.gym_name, raids.gym_id
                 FROM      cleanup
                 left join raids
                 on cleanup.raid_id = raids.id
@@ -243,7 +243,8 @@ function run_cleanup ($telegram = 2, $database = 2) {
                         WHERE   id = {$row['cleaned']}
                     ", true
                     );
-                    if($row['temp'] == 'temporary') {
+                    $remote_string = getPublicTranslation('remote_raid');
+                    if(substr($row['gym_name'],0,strlen($remote_string)-1) == $remote_string) {
                         my_query("DELETE FROM gyms WHERE id = {$row['gym_id']}");
                         cleanup_log('Deleting temporary gym ' . $row['gym_id'] . ' from database.');
                     }

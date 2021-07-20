@@ -163,14 +163,20 @@ function get_address($lat, $lon)
 
         // Received valid data from.
         if (!empty($data) && !empty($data['address'])) {
-            $location['street'] = $data['address']['road'];
+            $location['street'] = (isset($data['address']['road']) ? $data['address']['road'] : '');
             $location['street_number'] = (isset($data['address']['house_number']) ? $data['address']['house_number'] : '');
-            $location['postal_code'] = $data['address']['postcode'];
+            $location['postal_code'] = (isset($data['address']['postcode']) ? $data['address']['postcode'] : '');
 
             if(isset($data['address']['city_district']) && !empty($data['address']['city_district'])) {
                 $location['district'] = $data['address']['city_district'];
             }elseif(isset($data['address']['city']) && !empty($data['address']['city'])) {
                 $location['district'] = $data['address']['city'];
+            }elseif(isset($data['address']['town']) && !empty($data['address']['town'])) {
+                $location['district'] = $data['address']['town'];
+            }elseif(isset($data['address']['village']) && !empty($data['address']['village'])) {
+                $location['district'] = $data['address']['village'];
+            }elseif(isset($data['address']['county']) && !empty($data['address']['county'])) {
+                $location['district'] = $data['address']['county'];
             }
         // No valid data received.
         } else {
