@@ -81,22 +81,23 @@ $font_color = imagecolorallocate($canvas,$font_rgb[0],$font_rgb[1],$font_rgb[2])
 $transparent_rgb = [0,255,0];
 
 // Gym image
-if($config->RAID_PICTURE_STORE_GYM_IMAGES_LOCALLY) {
-    if(substr($raid['img_url'], 0, 7) == 'file://') {
-        $gym_image_path = $raid['img_url'];
+$gym_url = $raid['img_url'];
+if($config->RAID_PICTURE_STORE_GYM_IMAGES_LOCALLY && !empty($gym_url)) {
+    if(substr($gym_url, 0, 7) == 'file://') {
+        $gym_image_path = $gym_url;
         info_log($gym_image_path, 'Found an image imported via a portal bot: ');
     }else {
-        $file_name = explode('/', $raid['img_url'])[3];
+        $file_name = explode('/', $gym_url)[3];
         $gym_image_path = PORTAL_IMAGES_PATH .'/'. $file_name.'.png';
         info_log($gym_image_path, 'Attempting to use locally stored gym image');
         if(!file_exists($gym_image_path)) {
-            info_log($raid['img_url'], 'Gym image not found, attempting to downloading it from: ');
+            info_log($gym_url, 'Gym image not found, attempting to downloading it from: ');
             // Get file.
-            $data = curl_get_contents($raid['img_url']);
+            $data = curl_get_contents($gym_url);
 
             // Write to file.
             if(empty($data)) {
-                info_log($raid['img_url'], 'Error downloading file, no data received!');
+                info_log($gym_url, 'Error downloading file, no data received!');
             } else {
                 $file = fopen($gym_image_path, "w+");
                 fwrite($file, $data);
@@ -107,7 +108,6 @@ if($config->RAID_PICTURE_STORE_GYM_IMAGES_LOCALLY) {
     }
     $img_gym = grab_img($gym_image_path);
 }else {
-    $gym_url = $raid['img_url'];
     $img_gym = false;
     if (!empty($gym_url)) {
         $img_gym = grab_img($gym_url);

@@ -599,6 +599,18 @@
     "PL": "TRANSLATE",
     "FI": "Julkinen"
   },
+  "remote_raid": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Remote raid",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Etäraidi"
+  },
   "remote_participants": {
     "NL": "Deelnemers op afstand!",
     "DE": "Fern-Teilnahmen!",

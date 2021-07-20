@@ -37,11 +37,16 @@ $addr = get_address($lat, $lon);
 $address = format_address($addr);
 
 // Temporary gym_name
-$gym_name = '#' . $update['message']['chat']['id'];
-$gym_letter = substr($gym_name, 0, 1);
-
-// Get gym by temporary name.
-$gym = get_gym_by_telegram_id($gym_name);
+if($config->RAID_VIA_LOCATION_TEMPORARY_ONLY) {
+    $gym_name = getTranslation('remote_raid') . ': '.$addr['district'];
+    $gym = false;
+    $gym_letter = substr($gym_name, 0, 1);
+}else {
+    $gym_name = '#' . $update['message']['chat']['id'];
+    $gym_letter = substr($gym_name, 0, 1);
+    // Get gym by temporary name.
+    $gym = get_gym_by_telegram_id($gym_name);
+}
 
 // If gym is already in the database, make sure no raid is active before continuing!
 if($gym) {
@@ -95,14 +100,21 @@ try {
 
     $row = $rs->fetch();
 
+    $parameters = [
+      'gym_name' => $gym_name,
+      'lat' => $lat,
+      'lon' => $lon,
+      'address' => $address
+    ];
     // Gym already in database or new
-    if (empty($row['count'])) {
+    if (empty($row['count']) or $config->RAID_VIA_LOCATION_TEMPORARY_ONLY) {
         // insert gym in table.
         debug_log('Gym not found in database gym list! Inserting gym "' . $gym_name . '" now.');
         $query = '
-        INSERT INTO gyms (gym_name, lat, lon, address, show_gym)
-        VALUES (:gym_name, :lat, :lon, :address, 0)
-    ';
+        INSERT INTO gyms (gym_name, lat, lon, address, show_gym, gym_id)
+        VALUES (:gym_name, :lat, :lon, :address, 0, :tmp)
+    ';  
+        $parameters['tmp'] = 'temporary';
     } else {
         // Update gyms table to reflect gym changes.
         debug_log('Gym found in database gym list! Updating gym "' . $gym_name . '" now.');
@@ -114,14 +126,8 @@ try {
             WHERE      gym_name = :gym_name
         ';
     }
-
     $statement = $dbh->prepare($query);
-    $statement->execute([
-      'gym_name' => $gym_name,
-      'lat' => $lat,
-      'lon' => $lon,
-      'address' => $address
-    ]);
+    $statement->execute($parameters);
     // Get gym id from insert.
     if($gym_id == 0) {
         $gym_id = $dbh->lastInsertId();

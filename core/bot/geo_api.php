@@ -8,7 +8,7 @@
 function get_address($lat, $lon)
 {
     global $config;
-    // Maps lookup?
+    // Google Maps lookup?
     if($config->MAPS_LOOKUP && !empty($config->MAPS_API_KEY)) {
         // Init defaults.
         $location = [];
@@ -126,8 +126,62 @@ function get_address($lat, $lon)
             return false;
         }
 
-    // No maps lookup.
-    } else {
+    // OpenStreetMap lookup?
+    } elseif($config->OSM_LOOKUP) {
+        // Init defaults.
+        $location = [];
+        $location['street'] = '';
+        $location['street_number'] = '';
+        $location['postal_code'] = '';
+        $location['district'] = '';
+
+        // Set maps geocode url.
+        $language = strtolower($config->LANGUAGE_PUBLIC);
+        $MapsApiKey = $config->MAPS_API_KEY;
+        $url = 'https://nominatim.openstreetmap.org/reverse?lat=' . $lat . '&lon=' . $lon . '&format=json&accept-language=' . $language;
+
+        // Curl request.
+        $curl = curl_init($url);
+        curl_setopt($curl,  CURLOPT_HTTPHEADER, array("User-Agent: PokemonRaidBot"));
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+        // Proxy server?
+        // Use Proxyserver for curl if configured
+        if ($config->CURL_USEPROXY) {
+            curl_setopt($curl, CURLOPT_PROXY, $config->CURL_PROXYSERVER);
+        }
+
+        // Curl response.
+        $json_response = curl_exec($curl);
+
+        // Write request and response to log.
+        debug_log($url, 'OSM>');
+        debug_log($json_response, '<OSM');
+
+        // Get response object from reverse method using Maps API.
+        $data = json_decode($json_response,true);
+
+        // Received valid data from.
+        if (!empty($data) && !empty($data['address'])) {
+            $location['street'] = $data['address']['road'];
+            $location['street_number'] = (isset($data['address']['house_number']) ? $data['address']['house_number'] : '');
+            $location['postal_code'] = $data['address']['postcode'];
+
+            if(isset($data['address']['city_district']) && !empty($data['address']['city_district'])) {
+                $location['district'] = $data['address']['city_district'];
+            }elseif(isset($data['address']['city']) && !empty($data['address']['city'])) {
+                $location['district'] = $data['address']['city'];
+            }
+        // No valid data received.
+        } else {
+            return false;
+        }
+
+        // Return the location array.
+        return $location;
+
+    // No geocoding
+    }else {
         return false;
     }
 }
