@@ -19,7 +19,7 @@ function get_user($user_id)
     // Fetch the row.
     $row = $rs->fetch();
     // get Username
-    $row = check_trainername($row);
+    $row = add_trainername($row);
     // Build message string.
     $msg = '';
 
@@ -57,7 +57,7 @@ function get_user($user_id)
  * @param array $row
  * @return array $row
  */
-function check_trainername($row){
+function add_trainername($row){
     global $config;
     if($config->CUSTOM_TRAINERNAME==true){ // if Custom Trainername is enabled by config
         if(!empty($row['trainername'])){ // trainername not set by user
