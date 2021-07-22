@@ -27,7 +27,7 @@ function get_raid($raid_id)
     $raid = $rs->fetch();
 
     // Check trainername
-    $raid = check_trainername($raid);
+    $raid = add_trainername($raid);
 
     // Inject raid level
     $raid['level'] = get_raid_level($raid['pokemon'], $raid['pokemon_form']);
