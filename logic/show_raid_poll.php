@@ -141,7 +141,7 @@ function show_raid_poll($raid)
         // Attendance found
         $cnt_all = 1;
         // Check trainername
-        $attendance = check_trainername($attendance);
+        $attendance = add_trainername($attendance);
 
         // Define variables if necessary
         if(!isset($cnt_array[$attendance['attend_time']][$attendance['pokemon']]))$cnt_array[$attendance['attend_time']][$attendance['pokemon']]['mystic']=$cnt_array[$attendance['attend_time']][$attendance['pokemon']]['valor']=$cnt_array[$attendance['attend_time']][$attendance['pokemon']]['instinct']=$cnt_array[$attendance['attend_time']][$attendance['pokemon']]['noteam']=$cnt_array[$attendance['attend_time']][$attendance['pokemon']]['late']=$cnt_array[$attendance['attend_time']][$attendance['pokemon']]['remote']=$cnt_array[$attendance['attend_time']][$attendance['pokemon']]['want_invite']=$cnt_array[$attendance['attend_time']][$attendance['pokemon']]['total']=0;
@@ -229,7 +229,7 @@ function show_raid_poll($raid)
     while ($attendance = $rs_attendance_want_inv->fetch()) {
         // Attendance found
         $cnt_want_invite = 1;
-        $attendance = check_trainername($attendance);
+        $attendance = add_trainername($attendance);
 
         // Fill attendance array with results
         $att_array[$attendance['attend_time']][$attendance['pokemon']][] = $attendance;
