@@ -68,6 +68,12 @@ if(count($keys) == 0 ) {
         ],
         [
             [
+                'text'          => getTranslation('import') . SP . 'shiny (Pokebattler)',
+                'callback_data' => '0:import_shinyinfo:0'
+            ]
+        ],
+        [
+            [
                 'text'          => getTranslation('import') . SP . '(ccev pogoinfo)',
                 'callback_data' => '0:pogoinfo:0'
             ]
