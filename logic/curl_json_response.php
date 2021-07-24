@@ -15,7 +15,7 @@ function curl_json_response($json_response, $json)
     $response = json_decode($json_response, true);
 
     // Validate response.
-    if ($response['ok'] != true || isset($response['update_id'])) {
+    if ((isset($response['ok']) && $response['ok'] != true) || isset($response['update_id'])) {
         info_log("{$json} -> {$json_response}", 'ERROR:');
     } else {
 	// Result seems ok, get message_id and chat_id if supergroup or channel message

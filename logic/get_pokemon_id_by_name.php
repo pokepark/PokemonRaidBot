@@ -50,8 +50,12 @@ function get_pokemon_id_by_name($pokemon_name, $get_from_db = false)
                 ");
         $stmt->execute(['poke_name' => $poke_name, 'form_name' => $pokemon_form]);
         $res = $stmt->fetch();
-        $pokemon_form_id = $res['pokemon_form_id'];
-        $pokemon_id = $res['pokedex_id'];
+        if($stmt->rowCount() > 0) {
+            $pokemon_form_id = $res['pokemon_form_id'];
+            $pokemon_id = $res['pokedex_id'];
+        }else {
+            $pokemon_form_id = 0;
+        }
     }else {
         // Get translation file
         $str = file_get_contents(CORE_LANG_PATH . '/pokemon.json');
@@ -119,7 +123,7 @@ function get_pokemon_id_by_name($pokemon_name, $get_from_db = false)
                 ");
         $stmt->execute(['pokedex_id' => $pokemon_id, 'form_name' => $pokemon_form]);
         $res = $stmt->fetch();
-        $pokemon_form_id = $res['pokemon_form_id'];
+        $pokemon_form_id = isset($res['pokemon_form_id']) ? $res['pokemon_form_id'] : '';
     }
 
     // Write to log.
