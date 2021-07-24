@@ -92,17 +92,22 @@ if($config->RAID_PICTURE_STORE_GYM_IMAGES_LOCALLY && !empty($gym_url)) {
         info_log($gym_image_path, 'Attempting to use locally stored gym image');
         if(!file_exists($gym_image_path)) {
             info_log($gym_url, 'Gym image not found, attempting to downloading it from: ');
-            // Get file.
-            $data = curl_get_contents($gym_url);
+            if(is_writable(PORTAL_IMAGES_PATH)) {
+                // Get file.
+                $data = curl_get_contents($gym_url);
 
-            // Write to file.
-            if(empty($data)) {
-                info_log($gym_url, 'Error downloading file, no data received!');
-            } else {
-                $file = fopen($gym_image_path, "w+");
-                fwrite($file, $data);
-                fflush($file);
-                fclose($file);
+                // Write to file.
+                if(empty($data)) {
+                    info_log($gym_url, 'Error downloading file, no data received!');
+                } else {
+                    $file = fopen($gym_image_path, "w+");
+                    fwrite($file, $data);
+                    fflush($file);
+                    fclose($file);
+                }
+            }else {
+                $gym_image_path = $gym_url;
+                info_log(PORTAL_IMAGES_PATH, 'Failed to write new gym image, incorrect permissions in directory ');
             }
         }
     }
