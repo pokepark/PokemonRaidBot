@@ -18,11 +18,11 @@ function bot_access_check($update, $permission = 'access-bot', $return_result = 
     $update_type = !empty($update['message']['from']['id']) ? 'message' : $update_type;
     $update_type = (empty($update_type) && !empty($update['callback_query']['from']['id'])) ? 'callback_query' : $update_type;
     $update_type = (empty($update_type) && !empty($update['inline_query']['from']['id'])) ? 'inline_query' : $update_type;
-    $update_id = $update[$update_type]['from']['id'];
+    $user_id = $update[$update_type]['from']['id'];
 
     // Write to log.
     debug_log('Telegram message type: ' . $update_type);
-    debug_log('Checking access for ID: ' . $update_id);
+    debug_log('Checking access for ID: ' . $user_id);
     debug_log('Checking permission: ' . $permission);
 
     // Get all chat files for groups/channels like -100111222333
@@ -44,7 +44,7 @@ function bot_access_check($update, $permission = 'access-bot', $return_result = 
 
     // Kicked
     $kicked_chats = array();
-    $kicked_chats = str_replace(ACCESS_PATH . '/members','',glob(ACCESS_PATH . '/kicked-*'));
+    $kicked_chats = str_replace(ACCESS_PATH . '/kicked','',glob(ACCESS_PATH . '/kicked-*'));
 
     // Access chats
     $access_chats = array();
@@ -61,9 +61,9 @@ function bot_access_check($update, $permission = 'access-bot', $return_result = 
             }
         }
     }
-    // Add update_id
-    if (is_file(ACCESS_PATH . '/access' . $update_id)) {
-        $access_chats[] = $update_id;
+    // Add user_id
+    if (is_file(ACCESS_PATH . '/access' . $user_id)) {
+        $access_chats[] = $user_id;
     }
     // Delete duplicates
     $access_chats = array_unique($access_chats);
@@ -108,7 +108,7 @@ function bot_access_check($update, $permission = 'access-bot', $return_result = 
             if($chat[0] == '-') {
                // Get chat member object and check status
                debug_log("Getting user from chat '$tg_chat'");
-               $chat_obj = get_chatmember($tg_chat, $update_id);
+               $chat_obj = get_chatmember($tg_chat, $user_id);
 
                // Make sure we get a proper response
                if($chat_obj['ok'] == true) {
@@ -116,11 +116,11 @@ function bot_access_check($update, $permission = 'access-bot', $return_result = 
 
                     // Admin?
                     $admins = explode(',', $config->BOT_ADMINS);
-                    if(in_array($tg_chat,$admins) || in_array($update_id,$admins)) {
+                    if(in_array($tg_chat,$admins) || in_array($user_id,$admins)) {
                         debug_log('Positive result on access check for Bot Admins');
                         debug_log('Bot Admins: ' . $config->BOT_ADMINS);
                         debug_log('chat: ' . $tg_chat);
-                        debug_log('update_id: ' . $update_id);
+                        debug_log('user_id: ' . $user_id);
                         $admins_checked = true;
                         $allow_access = true;
                         $access_granted_by = 'BOT_ADMINS';
@@ -182,7 +182,7 @@ function bot_access_check($update, $permission = 'access-bot', $return_result = 
                         }
 
                         // Check user status/role and permission to access the function
-                        if($chat_obj['result']['user']['id'] == $update_id && is_array($access_file) && in_array($permission,$access_file)) {
+                        if($chat_obj['result']['user']['id'] == $user_id && is_array($access_file) && in_array($permission,$access_file)) {
                             debug_log($afile, 'Positive result on access check in file:');
                             debug_log($chat_object['result']['title'], 'Positive result on access check from chat:');
                             $allow_access = true;
@@ -212,7 +212,7 @@ function bot_access_check($update, $permission = 'access-bot', $return_result = 
 
                     // Admin?
                     $admins = explode(',',$config->BOT_ADMINS);
-                    if(in_array($tg_chat,$admins) || in_array($update_id,$admins)) {
+                    if(in_array($tg_chat,$admins) || in_array($user_id,$admins)) {
                         debug_log('Positive result on access check for Bot Admins');
                         $admins_checked = true;
                         $allow_access = true;
@@ -226,7 +226,7 @@ function bot_access_check($update, $permission = 'access-bot', $return_result = 
                         $afile = 'access' . $chat;
 
                         // ID matching $chat, private chat type and permission to access the function
-                        if($chat_obj['result']['id'] == $update_id && $chat_obj['result']['type'] == 'private' && is_array($access_file) && in_array($permission,$access_file)) {
+                        if($chat_obj['result']['id'] == $user_id && $chat_obj['result']['type'] == 'private' && is_array($access_file) && in_array($permission,$access_file)) {
                             debug_log($afile, 'Positive result on access check in file:');
                             debug_log($chat_object['result']['first_name'], 'Positive result on access check for user:');
                             $allow_access = true;
@@ -250,46 +250,46 @@ function bot_access_check($update, $permission = 'access-bot', $return_result = 
         // Check BOT_ADMINS if not checked already and not access was granted yet.
         if($admins_checked == false && $allow_access == false) {
             // Get chat object
-            debug_log("Getting chat object for '" . $update_id . "'");
-            $chat_user = get_chat($update_id);
+            debug_log("Getting chat object for '" . $user_id . "'");
+            $chat_user = get_chat($user_id);
 
             // Check chat object for proper response.
             if($chat_user['ok'] == true) {
                 debug_log('Proper chat object received, continuing with access check.');
                 // Admin?
                 $admins = explode(',',$config->BOT_ADMINS);
-                if(in_array($update_id,$admins)) {
+                if(in_array($user_id,$admins)) {
                     debug_log('Positive result on access check for Bot Admins');
                     $allow_access = true;
                     $access_granted_by = 'BOT_ADMINS';
                 } else {
-                    debug_log('Negative result on access check for Bot Admins for user with ID: ' . $update_id);
+                    debug_log('Negative result on access check for Bot Admins for user with ID: ' . $user_id);
                 }
             } else {
-                info_log('Error! Chat ' . $update_id . ' does not exist!');
+                info_log('Error! Chat ' . $user_id . ' does not exist!');
             }
         }
 
     // Check BOT_ADMINS in case no access files are existing
     } else {
         // Get chat object
-        debug_log("Getting chat object for '" . $update_id . "'");
-        $chat_user = get_chat($update_id);
+        debug_log("Getting chat object for '" . $user_id . "'");
+        $chat_user = get_chat($user_id);
 
         // Check chat object for proper response.
         if($chat_user['ok'] == true) {
             debug_log('Proper chat object received, continuing with access check.');
             // Admin?
             $admins = explode(',',$config->BOT_ADMINS);
-            if(in_array($update_id,$admins)) {
+            if(in_array($user_id,$admins)) {
                 debug_log('Positive result on access check for Bot Admins');
                 $allow_access = true;
                 $access_granted_by = 'BOT_ADMINS';
             } else {
-                debug_log('Negative result on access check for Bot Admins for user with ID: ' . $update_id);
+                debug_log('Negative result on access check for Bot Admins for user with ID: ' . $user_id);
             }
         } else {
-            info_log('Error! Chat ' . $update_id . ' does not exist!');
+            info_log('Error! Chat ' . $user_id . ' does not exist!');
         }
     }
 
