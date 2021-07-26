@@ -9,15 +9,64 @@ debug_log('LIST()');
 // Check access.
 bot_access_check($update, 'list');
 
-// Include
-include(ROOT_PATH . '/logic/get_active_raids.php');
-
 // Init text and keys.
 $text = '';
 $keys = [];
 
-// Get raids.
-$raids = get_active_raids(bot_access_check($update, 'event',true));
+$event_permissions = bot_access_check($update, 'event',true);
+
+// Get last 12 active raids data.
+$rs = my_query(
+    '
+    SELECT     IF (raids.pokemon = 0,
+                    IF((SELECT  count(*)
+                        FROM    raid_bosses
+                        WHERE   raid_level = raids.level
+                        AND     raids.spawn BETWEEN date_start AND date_end) = 1,
+                        (SELECT  pokedex_id
+                        FROM    raid_bosses
+                        WHERE   raid_level = raids.level
+                        AND     raids.spawn BETWEEN date_start AND date_end),
+                        (select concat(\'999\', raids.level) as pokemon)
+                        )
+               ,pokemon) as pokemon,
+               IF (raids.pokemon = 0,
+                    IF((SELECT  count(*) as count
+                        FROM    raid_bosses
+                        WHERE   raid_level = raids.level
+                        AND     raids.spawn BETWEEN date_start AND date_end) = 1,
+                        (SELECT  pokemon_form_id
+                        FROM    raid_bosses
+                        WHERE   raid_level = raids.level
+                        AND     raids.spawn BETWEEN date_start AND date_end),
+                        \'0\'
+                        ),
+                    IF(raids.pokemon_form = 0,
+                        (SELECT pokemon_form_id FROM pokemon
+                        WHERE
+                            pokedex_id = raids.pokemon AND
+                            pokemon_form_name = \'normal\'
+                        LIMIT 1), raids.pokemon_form)
+                       ) as pokemon_form,
+               raids.id, raids.user_id, raids.start_time, raids.end_time, raids.gym_team, raids.gym_id, raids.level, raids.move1, raids.move2, raids.gender, raids.event, raids.event_note,
+               gyms.lat, gyms.lon, gyms.address, gyms.gym_name, gyms.ex_gym, gyms.gym_note,
+               start_time, end_time,
+               TIME_FORMAT(TIMEDIFF(end_time, UTC_TIMESTAMP()) + INTERVAL 1 MINUTE, \'%k:%i\') AS t_left,
+               (SELECT COUNT(*) FROM raids WHERE end_time>UTC_TIMESTAMP()) AS r_active
+    FROM       raids
+    LEFT JOIN  gyms
+    ON         raids.gym_id = gyms.id
+    WHERE      end_time>UTC_TIMESTAMP()
+    ' . ($event_permissions ? '' : 'AND event IS NULL' ) . '
+    ORDER BY   end_time ASC
+    LIMIT      12
+    '
+);
+
+// Get the raids.
+$raids = $rs->fetchAll();
+
+debug_log($raids);
 
 // Did we get any raids?
 if(isset($raids[0]['r_active'])) {

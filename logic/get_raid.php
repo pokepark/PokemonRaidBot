@@ -13,7 +13,37 @@ function get_raid($raid_id)
     // Get the raid data by id.
     $rs = my_query(
         '
-        SELECT     raids.*,
+        SELECT     IF (raids.pokemon = 0,
+						IF((SELECT  count(*)
+							FROM    raid_bosses
+							WHERE   raid_level = raids.level
+							AND     raids.spawn BETWEEN date_start AND date_end) = 1,
+							(SELECT  pokedex_id
+							FROM    raid_bosses
+							WHERE   raid_level = raids.level
+							AND     raids.spawn BETWEEN date_start AND date_end),
+                            (select concat(\'999\', raids.level) as pokemon)
+                            )
+                   ,pokemon) as pokemon,
+                   IF (raids.pokemon = 0,
+						IF((SELECT  count(*) as count
+							FROM    raid_bosses
+							WHERE   raid_level = raids.level
+							AND     raids.spawn BETWEEN date_start AND date_end) = 1,
+							(SELECT  pokemon_form_id
+							FROM    raid_bosses
+							WHERE   raid_level = raids.level
+							AND     raids.spawn BETWEEN date_start AND date_end),
+                            \'0\'
+                            ),
+                        IF(raids.pokemon_form = 0,
+                            (SELECT pokemon_form_id FROM pokemon
+                            WHERE
+                                pokedex_id = raids.pokemon AND
+                                pokemon_form_name = \'normal\'
+                            LIMIT 1), raids.pokemon_form)
+                           ) as pokemon_form,
+                   raids.id, raids.user_id, raids.start_time, raids.end_time, raids.gym_team, raids.gym_id, raids.level, raids.move1, raids.move2, raids.gender, raids.event, raids.event_note,
                    gyms.lat, gyms.lon, gyms.address, gyms.gym_name, gyms.ex_gym, gyms.gym_note,
                    users.name, users.trainername, users.nick,
                    events.name as event_name, events.description as event_description, events.vote_key_mode as event_vote_key_mode, events.time_slots as event_time_slots, events.raid_duration as event_raid_duration, events.hide_raid_picture as event_hide_raid_picture,
@@ -29,43 +59,8 @@ function get_raid($raid_id)
         LIMIT 1
         '
     );
-
     // Get the row.
     $raid = $rs->fetch();
-
-    if ($raid['pokemon'] == 0) {
-        // Just an egg
-        $query = '
-                    SELECT  pokemon_form_id, 
-                            pokedex_id 
-                    FROM    raid_bosses 
-                    WHERE   raid_level = :raid_level
-                    AND     :spawn BETWEEN date_start AND date_end
-                ';
-        $statement = $dbh->prepare( $query );
-        $statement->execute([
-          ':raid_level' => $raid['level'],
-          ':spawn' => dt2time($raid['spawn'],'Y-m-d H:i'),
-        ]);
-        if($statement->rowCount() == 1) {
-            $result = $statement->fetch();
-            $raid['pokemon'] = $result['pokedex_id'];
-            $raid['pokemon_form'] = $result['pokemon_form_id'];
-        }else {
-            $raid['pokemon'] = '999' . $raid['level'];
-        }
-    }else {
-        if ($raid['pokemon_form'] == '0') {
-            // If no form is set, look up the normal form's id from pokemon table
-            $form_query = my_query('(SELECT pokemon_form_id FROM pokemon
-            WHERE
-                pokedex_id = '.$raid['pokemon'].' AND
-                pokemon_form_name = \'normal\'
-            LIMIT 1)');
-            $form_rs = $form_query->fetch();
-            $raid['pokemon_form'] = $form_rs['pokemon_form_id'];
-        }
-    }
 
     // Check trainername
     $raid = check_trainername($raid);
