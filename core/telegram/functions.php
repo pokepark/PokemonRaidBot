@@ -818,6 +818,10 @@ function curl_json_request($json)
     // Execute curl request.
     $json_response = curl_exec($curl);
 
+    if($json_response === false) {
+       info_log(curl_error($curl));
+    }
+
     // Close connection.
     curl_close($curl);
 
@@ -893,8 +897,12 @@ function curl_json_multi_request($json)
     $running = null;
     do {
         curl_multi_select($mh);
-        curl_multi_exec($mh, $running);
-    } while($running > 0);
+        $status = curl_multi_exec($mh, $running);
+    } while($running > 0 && $status === CURLM_OK);
+
+    if ($status != CURLM_OK) {
+        info_log(curl_multi_strerror($status));
+    }
 
     // Get content and remove handles.
     foreach($curly as $id => $content) {
