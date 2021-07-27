@@ -27,13 +27,14 @@ if(isset($_GET['debug']) && $_GET['debug'] == 1) {
 if(array_key_exists('raid', $_GET) && $_GET['raid']!="") {
     $raid_id = preg_replace("/\D/","",$_GET['raid']);
     $raid = get_raid($raid_id);
-    $q_img_url = my_query("SELECT img_url FROM gyms WHERE id='".$raid['gym_id']."' LIMIT 1")->fetch();
     $q_pokemon_info = my_query("
-                    SELECT min_cp, max_cp, min_weather_cp, max_weather_cp, weather, shiny, asset_suffix, type, type2
+                    SELECT
+                        min_cp, max_cp, min_weather_cp, max_weather_cp, weather, shiny, asset_suffix, type, type2,
+                        (SELECT img_url FROM gyms WHERE id='".$raid['gym_id']."' LIMIT 1) as img_url
                     FROM pokemon
                     WHERE pokedex_id = '".$raid['pokemon']."'
                     AND pokemon_form_id = '".$raid['pokemon_form']."' LIMIT 1")->fetch();
-    $raid = array_merge($raid, $q_img_url, $q_pokemon_info);
+    $raid = array_merge($raid, $q_pokemon_info);
 } else {
   info_log('Called without a raid id, things will fail');
   $raid = null;
@@ -89,9 +90,9 @@ if($config->RAID_PICTURE_STORE_GYM_IMAGES_LOCALLY && !empty($gym_url)) {
     }else {
         $file_name = explode('/', $gym_url)[3];
         $gym_image_path = PORTAL_IMAGES_PATH .'/'. $file_name.'.png';
-        info_log($gym_image_path, 'Attempting to use locally stored gym image');
+        debug_log($gym_image_path, 'Attempting to use locally stored gym image');
         if(!file_exists($gym_image_path)) {
-            info_log($gym_url, 'Gym image not found, attempting to downloading it from: ');
+            debug_log($gym_url, 'Gym image not found, attempting to downloading it from: ');
             if(is_writable(PORTAL_IMAGES_PATH)) {
                 // Get file.
                 $data = curl_get_contents($gym_url);
