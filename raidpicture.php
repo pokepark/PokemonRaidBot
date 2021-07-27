@@ -257,6 +257,7 @@ if($time_now < $raid['end_time']) {
         $p_icon = "pokemon_icon_" . $icon_suffix;
         if($raid['shiny'] == 1 && $config->RAID_PICTURE_SHOW_SHINY) {
             $p_icon = $p_icon . "_shiny";
+            $shiny_icon = grab_img(IMAGES_PATH . "/shinystars.png");
         }
         $p_icon = $p_icon . ".png";
 
@@ -340,7 +341,12 @@ if($config->RAID_PICTURE_POKEMON_TYPES && $show_boss_pokemon_types) {
     }        
     imagecopyresampled($canvas,$img_type,$type1_x,300,0,0,40,40,64,64);
 }
-
+if(isset($shiny_icon)) {
+    imagesavealpha($shiny_icon,true);
+    $light_white = imagecolorallocatealpha($canvas, 255,255,255,50);
+    imagefilledellipse($canvas, $type1_x-35 ,320,40,40,$light_white);
+    imagecopyresampled($canvas,$shiny_icon,$type1_x-52,301,0,0,35,35,100,100);
+}
 
 // Ex-Raid?
 if($raid['event'] == EVENT_ID_EX) {
