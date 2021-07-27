@@ -124,6 +124,9 @@ if($id == 0) {
                 $dex_form = '-'.$raid_id_form['temp_evolution_id'];
             }elseif(isset($raid_id_form['form'])) {
                 $dex_form = $raid_id_form['form'];
+            }else {
+                $query_form_id = my_query("SELECT pokemon_form_id FROM pokemon WHERE pokedex_id='".$dex_id."' and pokemon_form_name='normal' LIMIT 1")->fetch();
+                $dex_form = $query_form_id['pokemon_form_id'];
             }
 
             $pokemon_arg = $dex_id . $dex_form;
