@@ -244,7 +244,7 @@ function run_cleanup ($telegram = 2, $database = 2) {
                     ", true
                     );
                     $remote_string = getPublicTranslation('remote_raid');
-                    if(substr($row['gym_name'],0,strlen($remote_string)-1) == $remote_string) {
+                    if(substr($row['gym_name'],0,strlen($remote_string)) == $remote_string) {
                         my_query("DELETE FROM gyms WHERE id = {$row['gym_id']}");
                         cleanup_log('Deleting temporary gym ' . $row['gym_id'] . ' from database.');
                     }

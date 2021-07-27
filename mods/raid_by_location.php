@@ -37,7 +37,7 @@ $addr = get_address($lat, $lon);
 $address = format_address($addr);
 
 // Temporary gym_name
-if($config->RAID_VIA_LOCATION_TEMPORARY_ONLY) {
+if($config->RAID_VIA_LOCATION_REMOTE_RAID) {
     $gym_name = getPublicTranslation('remote_raid') . ': '.$addr['district'];
     $gym = false;
     $gym_letter = substr($gym_name, 0, 1);
@@ -101,7 +101,7 @@ try {
     $row = $rs->fetch();
 
     // Gym already in database or new
-    if (empty($row['count']) or $config->RAID_VIA_LOCATION_TEMPORARY_ONLY) {
+    if (empty($row['count']) or $config->RAID_VIA_LOCATION_REMOTE_RAID) {
         // insert gym in table.
         debug_log('Gym not found in database gym list! Inserting gym "' . $gym_name . '" now.');
         $query = '
