@@ -41,7 +41,7 @@ function run_cleanup ($telegram = 2, $database = 2) {
                     LEFT JOIN   gyms
                     ON          raids.gym_id = gyms.id
                 WHERE     raids.end_time < DATE_SUB(\''.$now.'\', INTERVAL '.$config->CLEANUP_TIME_TG.' MINUTE)
-                ', true);
+                ');
             $cleanup_ids = [];
             $cleanup_gyms = [];
             $tg_json = [];
@@ -66,8 +66,8 @@ function run_cleanup ($telegram = 2, $database = 2) {
         }
         if($database == 1) {
             cleanup_log('Database cleanup called.');
-            $q_a = my_query('DELETE FROM attendance WHERE raid_id IN (SELECT id FROM raids WHERE raids.end_time < DATE_SUB(\''.$now.'\', INTERVAL '.$config->CLEANUP_TIME_DB.' MINUTE))', true);
-            $q_r = my_query('DELETE FROM raids WHERE end_time < DATE_SUB(\''.$now.'\', INTERVAL '.$config->CLEANUP_TIME_DB.' MINUTE)', true);
+            $q_a = my_query('DELETE FROM attendance WHERE raid_id IN (SELECT id FROM raids WHERE raids.end_time < DATE_SUB(\''.$now.'\', INTERVAL '.$config->CLEANUP_TIME_DB.' MINUTE))');
+            $q_r = my_query('DELETE FROM raids WHERE end_time < DATE_SUB(\''.$now.'\', INTERVAL '.$config->CLEANUP_TIME_DB.' MINUTE)');
             cleanup_log('Cleaned ' . $q_a->rowCount() . ' rows from attendance table');
             cleanup_log('Cleaned ' . $q_r->rowCount() . ' rows from raids table');
         }
