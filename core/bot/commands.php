@@ -3,7 +3,7 @@
 $command = NULL;
 
 // Check message text for a leading slash.
-if (substr($update['message']['text'], 0, 1) == '/') {
+if (isset($update['message']['text']) && substr($update['message']['text'], 0, 1) == '/') {
     // Get command name.
     if($config->BOT_NAME) {
         $com = strtolower(str_replace('/', '', str_replace($config->BOT_NAME, '', explode(' ', $update['message']['text'])[0])));
