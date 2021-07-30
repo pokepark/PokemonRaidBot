@@ -35,10 +35,15 @@ if($mode == "edit") {
     $data['arg'] = $config->RAID_DURATION;
     require_once("edit_save.php");
 }else {
-    $q = my_query("SELECT * FROM events WHERE id='{$raid['event']}'");
-    $res = $q->fetch();
+    if($raid['event'] == EVENT_ID_EX) {
+        $event_name = getTranslation('Xstars');
+    }else {
+        $q = my_query("SELECT * FROM events WHERE id='{$raid['event']}'");
+        $res = $q->fetch();
+        $event_name = $res['name'];
+    }
 
-    $msg.= getTranslation("event") . ": <b>".$res['name']."</b>".CR;
+    $msg.= getTranslation("event") . ": <b>".$event_name."</b>".CR;
     $msg.= getTranslation("event_add_note_description");
     
     // Create an entry to user_input table
