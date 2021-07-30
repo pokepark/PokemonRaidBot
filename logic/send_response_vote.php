@@ -128,8 +128,6 @@ function get_all_active_raid_channels($update,$data){
         'chat_id' => $update['callback_query']['message']['chat']['id'],
         'message_id' => $update['callback_query']['message']['message_id'],
       ]];
-    // TODO(artanicus): It's probably a bug that we have cleanup entries with chat_id = 0
-    // but dropping them from the query at least stops them from hurting us
     $rs_chann = my_query(
         "
         SELECT *
