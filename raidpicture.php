@@ -86,7 +86,7 @@ $gym_url = $raid['img_url'];
 if($config->RAID_PICTURE_STORE_GYM_IMAGES_LOCALLY && !empty($gym_url)) {
     if(substr($gym_url, 0, 7) == 'file://') {
         $gym_image_path = $gym_url;
-        info_log($gym_image_path, 'Found an image imported via a portal bot: ');
+        debug_log($gym_image_path, 'Found an image imported via a portal bot: ');
     }else {
         $file_name = explode('/', $gym_url)[3];
         $gym_image_path = PORTAL_IMAGES_PATH .'/'. $file_name.'.png';
@@ -94,18 +94,7 @@ if($config->RAID_PICTURE_STORE_GYM_IMAGES_LOCALLY && !empty($gym_url)) {
         if(!file_exists($gym_image_path)) {
             debug_log($gym_url, 'Gym image not found, attempting to downloading it from: ');
             if(is_writable(PORTAL_IMAGES_PATH)) {
-                // Get file.
-                $data = curl_get_contents($gym_url);
-
-                // Write to file.
-                if(empty($data)) {
-                    info_log($gym_url, 'Error downloading file, no data received!');
-                } else {
-                    $file = fopen($gym_image_path, "w+");
-                    fwrite($file, $data);
-                    fflush($file);
-                    fclose($file);
-                }
+                download_Portal_Image($gym_url, PORTAL_IMAGES_PATH, $file_name . '.png');
             }else {
                 $gym_image_path = $gym_url;
                 info_log(PORTAL_IMAGES_PATH, 'Failed to write new gym image, incorrect permissions in directory ');
