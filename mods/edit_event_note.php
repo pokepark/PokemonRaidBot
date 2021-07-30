@@ -1,7 +1,4 @@
 <?php
-///////////
-// TODO
-// - Make the cancel button actually work
 
 // Set the id.
 $raid_id = $data['id'];
@@ -35,7 +32,7 @@ if($mode == "edit") {
     my_query("INSERT INTO user_input SET user_id='{$userid}', modifiers='{$modifiers}', handler='{$handler}'");
 }elseif($mode == "cancel") {
     my_query("DELETE FROM user_input WHERE user_id='{$userid}'");
-    $data['arg'] = $arg[0];
+    $data['arg'] = $config->RAID_DURATION;
     require_once("edit_save.php");
 }else {
     $q = my_query("SELECT * FROM events WHERE id='{$raid['event']}'");
