@@ -1920,16 +1920,16 @@
     "FI": "Aloitusaika asetettu klo"
   },
   "end_time": {
-    "NL": "Eindtijd gezet op ",
-    "DE": "Ablaufzeit gesetzt auf ",
-    "EN": "Endtime set to ",
+    "NL": "Eindtijd gezet op",
+    "DE": "Ablaufzeit gesetzt auf",
+    "EN": "Endtime set to",
     "IT": "Orario di fine impostato alle",
-    "PT-BR": "Hora de término determinada para ",
+    "PT-BR": "Hora de término determinada para",
     "RU": "Установить время окончания",
     "NO": "Ferdig klokken",
     "FR": "Heure de fin réglée à",
     "PL": "Czas zakończenia ustawiony na",
-    "FI": "Loppuaika asetettu klo"
+    "FI": "Raidin kestoksi asetettu"
   },
   "raid_select_date": {
     "NL": "Selecteer de <b>datum</b> van de raid:",

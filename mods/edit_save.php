@@ -162,7 +162,7 @@ if ($update['callback_query']['message']['chat']['type'] == 'private') {
     $msg .= getTranslation('set_gym_team_command');
 
     // Build callback message string.
-    $callback_response = getTranslation('end_time') . $data['arg'] . ' ' . getTranslation('minutes');
+    $callback_response = getTranslation('end_time') . ' ' . $data['arg'] . ' ' . getTranslation('minutes');
 
     // Answer callback.
     $tg_json[] = answerCallbackQuery($update['callback_query']['id'], $callback_response, true);
