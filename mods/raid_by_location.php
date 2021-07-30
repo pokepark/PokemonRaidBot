@@ -104,6 +104,7 @@ try {
     if (empty($row['count']) or $config->RAID_VIA_LOCATION_REMOTE_RAID) {
         // insert gym in table.
         debug_log('Gym not found in database gym list! Inserting gym "' . $gym_name . '" now.');
+        $gym_img_url = 'file://' . IMAGES_PATH . '/gym_default.png';
         $query = '
         INSERT INTO gyms (gym_name, lat, lon, address, show_gym)
         VALUES (:gym_name, :lat, :lon, :address, 0)
