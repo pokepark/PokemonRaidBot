@@ -26,7 +26,7 @@ if(substr_count($data['id'], ',') == 1) {
 $userid = $update['callback_query']['from']['id'];
 
 // Update only if time is not equal to RAID_DURATION
-if($arg != $config->RAID_DURATION) {
+if($arg != $config->RAID_DURATION && $arg != 0) {
 
     // Build query.
     my_query(
@@ -162,7 +162,11 @@ if ($update['callback_query']['message']['chat']['type'] == 'private') {
     $msg .= getTranslation('set_gym_team_command');
 
     // Build callback message string.
-    $callback_response = getTranslation('end_time') . ' ' . $data['arg'] . ' ' . getTranslation('minutes');
+    if($arg == 0) {
+        $callback_response = 'OK';
+    }else {
+        $callback_response = getTranslation('end_time') . ' ' . $data['arg'] . ' ' . getTranslation('minutes');
+    }
 
     // Answer callback.
     $tg_json[] = answerCallbackQuery($update['callback_query']['id'], $callback_response, true);
@@ -179,7 +183,7 @@ if ($update['callback_query']['message']['chat']['type'] == 'private') {
     $keys = keys_vote($raid);
 
     // Build callback message string.
-    $callback_response = getTranslation('end_time') . $data['arg'] . ' ' . getTranslation('minutes');
+    $callback_response = getTranslation('end_time') . ' ' . $data['arg'] . ' ' . getTranslation('minutes');
 
     // Answer callback.
     $tg_json[] = answerCallbackQuery($update['callback_query']['id'], $callback_response, true);

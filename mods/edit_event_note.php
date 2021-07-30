@@ -32,7 +32,7 @@ if($mode == "edit") {
     my_query("INSERT INTO user_input SET user_id='{$userid}', modifiers='{$modifiers}', handler='{$handler}'");
 }elseif($mode == "cancel") {
     my_query("DELETE FROM user_input WHERE user_id='{$userid}'");
-    $data['arg'] = $config->RAID_DURATION;
+    $data['arg'] = 0;
     require_once("edit_save.php");
 }else {
     if($raid['event'] == EVENT_ID_EX) {
