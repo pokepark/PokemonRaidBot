@@ -97,7 +97,6 @@ function send_response_vote($update, $data, $new = false, $text = true)
                     // Edit the picture - raid ended.
                     $time_now = utcnow();
                     if($time_now > $raid['end_time'] && $data['arg'] == 0) {
-                        // TODO(artanicus): There's no logic for when RAID_PICTURE is not enabled, which is probably bad
                         require_once(LOGIC_PATH . '/raid_picture.php');
                         $raid['pokemon'] = 'ended';
                         $picture_url = raid_picture_url($raid);
