@@ -100,7 +100,7 @@ function send_response_vote($update, $data, $new = false, $text = true)
                         require_once(LOGIC_PATH . '/raid_picture.php');
                         $raid['pokemon'] = 'ended';
                         $picture_url = raid_picture_url($raid);
-                        $tg_json[] = editMessageMedia($message, $msg, $keys, $chat, ['disable_web_page_preview' => 'true'], false, $picture_url);
+                        $tg_json[] = editMessageMedia($message, $msg, $keys, $chat, ['disable_web_page_preview' => 'true'], true, $picture_url);
                     }
                 }
             }
