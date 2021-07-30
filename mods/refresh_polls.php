@@ -15,6 +15,7 @@ if($config->AUTO_REFRESH_POLLS) {
     debug_log("REFRESH POLLS:");
     debug_log("Num rows: ".$query_messages->rowCount());
     $tg_json = [];
+    $time_now = utcnow();
     while($res_messages = $query_messages->fetch()) {
         debug_log("message id: ".$res_messages['message_id']);
         debug_log("chat id: ".$res_messages['chat_id']);
