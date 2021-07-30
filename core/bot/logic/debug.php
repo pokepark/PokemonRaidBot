@@ -1,41 +1,5 @@
 <?php
 /**
- * Naive DB query without proper param handling.
- * You should prefer doing your own prepare, bindParam & execute!
- * @param $query
- * @return PDOStatement
- */
-function my_query($query, $cleanup_query = false)
-{
-    global $dbh;
-    global $config;
-
-    if($config->DEBUG_SQL) {
-        if ($cleanup_query == true) {
-            debug_log($query, '?', true);
-        } else {
-            debug_log($query, '?');
-        }
-    }
-    $stmt = $dbh->prepare($query);
-    if ($stmt && $stmt->execute()) {
-        if ($cleanup_query == true) {
-            debug_log_sql('Query success', '$', true);
-        } else {
-            debug_log_sql('Query success', '$');
-        }
-    } else {
-        if ($cleanup_query == true) {
-            info_log($dbh->errorInfo(), '!', true);
-        } else {
-            info_log($dbh->errorInfo(), '!');
-        }
-    }
-
-    return $stmt;
-}
-
-/**
  * Write any log level.
  * @param $val
  * @param string $type

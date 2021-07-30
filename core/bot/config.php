@@ -88,4 +88,5 @@ function build_config() {
 
 // Object, access a config option with e.g. $config->VERSION
 $config = build_config();
+
 ?>

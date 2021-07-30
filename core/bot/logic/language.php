@@ -31,7 +31,6 @@ function getTranslation($text, $override = false, $override_language = '')
     if($override == true && $override_language != '') {
         $language = $override_language;
     } else {
-        require_once('userlanguage.php');
         $language = USERLANGUAGE;
     }
 
