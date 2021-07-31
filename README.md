@@ -121,37 +121,11 @@ Preferrably:
 The following apache packages need to be installed:
 - PDO_mysql (ubuntu: php-mysql)
 - PHP_curl (ubuntu: php-curl)
+- PHP_GD (ubuntu: php-gd) for raid picture mode
 
 ## Git clone
 
-### Core module inside bot folder
-
-For git 2.13 and above:
-
-`git clone --recurse-submodules https://github.com/florianbecker/PokemonRaidBot.git`
-
-If you're running an older version of git use the deprecated recursive command:
-
-`git clone --recursive https://github.com/florianbecker/PokemonRaidBot.git`
-
-### Core module outside bot folder
-
-If you like to keep the core repo outside the bot folder so multiple bots can access the core (e.g. via the [PokemonBotBridge](https://github.com/florianbecker/PokemonBotBridge.git "PokemonBotBridge")) you can do the following:
-
-Clone the bot repo to e.g. `var/www/html`:
-
-`git clone https://github.com/florianbecker/PokemonRaidBot.git`
-
-Clone the core repo to e.g. `var/www/html`:
-
-`git clone https://github.com/florianbecker/php.core.telegram.git`
-
-Change to the bot folder and create a symlink to make core accessible for the bot:
-```
-cd /var/www/html/PokemonRaidBot
-rm -rf core/
-ln -sf /var/www/html/php.core.telegram core
-```
+`git clone https://github.com/pokepark/PokemonRaidBot.git`
 
 ## Bot token
 
@@ -178,7 +152,7 @@ Flush privileges: `FLUSH PRIVILEGES;`
 
 Just use exit to logout from database.
 
-Import `pokemon-raid-bot.sql` as default DB structure and `raid-boss-pokedex.sql` for the current raid bosses. You can find these files in the sql folder.
+Import `pokemon-raid-bot.sql` as default DB structure and `game-master-raid-boss-pokedex.sql` for the latest data of Pokemon in the game. You can find these files in the sql folder.
 
 Command DB structure: `mysql -u USERNAME -p DATABASENAME < sql/pokemon-raid-bot.sql`
 
@@ -266,7 +240,7 @@ While in some contexts public groups, channels and supergroups could use their p
 | Supergroup | -1001122334455 | Negative number padded to 13 characters (prepend -100) |
 
 #### Finding public IDs
-Counterintuitively getting the ID of a public user, group, channel or supergroup is more difficult since most ways will replace the @name where a numeric ID would be visible. These methods will also work for private versions but will cause spam to the group. The easiest way is via @RawDataBot:
+Counterintuitively getting the ID of a public user, group, channel or supergroup is more difficult since most ways will replace the @name where a numeric ID would be visible. These methods will also work for private versions but will cause spam to the chat. The easiest way is via @RawDataBot:
 
 **Group or Supergroup:**
 
@@ -335,7 +309,7 @@ Set `APIKEY_HASH` to the hashed value of your bot token (preferably lowercase) u
 
 Set `DDOS_MAXIMUM` to the amount of callback queries each user is allowed to do each minute. If the amount is reached any further callback query is rejected by the DDOS check. Default value: 10.
 
-Set `BRIDGE_MODE` to true when you're using the PokemonBotBridge. If you're not using the PokemonBotBridge the default value of false is used. PokemonBotBridge: https://github.com/florianbecker/PokemonBotBridge
+Set `BRIDGE_MODE` to true when you're using the PokemonBotBridge. If you're not using the PokemonBotBridge the default value of false is used. PokemonBotBridge: https://github.com/pokepark/PokemonBotBridge
 
 
 ## Installing the Webhook
@@ -386,9 +360,13 @@ So if you want to have the bot communication based on the users Telegram languag
 "LANGUAGE_PUBLIC":"DE",
 ```
 
-### Timezone and Google maps API
+### Timezone, Google maps API and OpenStreetMap API
+
+#### Timezone
 
 Set `TIMEZONE` to the timezone you wish to use for the bot. Predefined value from the example config is "Europe/Berlin".
+
+#### Google maps API
 
 Optionally you can you use Google maps API to lookup addresses of gyms based on latitude and longitude. Therefore get a Google maps API key.
 
@@ -409,6 +387,14 @@ https://console.developers.google.com/apis/library/geocoding-backend.googleapis.
 Finally check the dashboard again and make sure Google Maps Geocoding API and Google Maps Time Zone API are listed as enabled services.
 
 Set `MAPS_LOOKUP` to true and put the API key in `MAPS_API_KEY` in your config.
+
+#### OpenStreetMap API
+
+To use OpenStreetMap's Nominatim API to lookup addresses of gyms, set `OSM_LOOKUP` to `true` and  `MAPS_LOOKUP` to `false`.
+
+Quote from [Nominatim documentation](https://nominatim.org/release-docs/latest/api/Reverse/):
+
+`The reverse geocoding API does not exactly compute the address for the coordinate it receives. It works by finding the closest suitable OSM object and returning its address information. This may occasionally lead to unexpected results.`
 
 ### Raid creation options
 
@@ -641,17 +627,17 @@ Set `MAP_URL` to the URL of your map to add it to each raid poll.
 
 ## Cleanup
 
-The bot features an automatic cleanup of telegram raid poll messages as well as cleanup of the database (attendance and raids tables).
+The bot features an automatic cleanup of Telegram raid poll messages as well as cleanup of the database (attendance and raids tables).
 
-To activate cleanup you need to [make sure your groups are Supergroups or Channels](#which-group-type-should-i-use--how-do-i-make-a-group-a-supergroup), enable cleanup in the config and create a cronjob to trigger the cleanup process.
+To activate cleanup you need to [make sure your groups are Supergroups or Channels](#which-group-type-should-i-use--how-do-i-make-a-group-a-supergroup), make your bot an admin in this chat, enable cleanup in the config and create a cronjob to trigger the cleanup process.
 
 1. Set the `CLEANUP` in the config to `true` and define a cleanup secret/passphrase under `CLEANUP_SECRET`.
 2. Activate the cleanup of Telegram messages and/or the database for raids by setting `CLEANUP_TELEGRAM` / `CLEANUP_DATABASE` to true.
    - **Do note** that `CLEANUP_TELEGRAM` will not work in groups that are not Supergroups or Channels!
 3. Specify the amount of minutes which need to pass by after raid has ended before the bot executes the cleanup.
-   - Times are in minutes in `CLEANUP_TIME_TG` for telegram cleanup and `CLEANUP_TIME_DB` for database cleanup.
-   - The value for the minutes of the database cleanup `CLEANUP_TIME_DB` must be greater than then one for telegram cleanup `CLEANUP_TIME_TG`. Otherwise cleanup will do nothing and exit due to misconfiguration!
-4. Finally set up a cronjob to trigger the cleanup. You can also trigger telegram / database cleanup per cronjob: For no cleanup use 0, for cleanup use 1 and to use your config file use 2 or leave "telegram" and "database" out of the request data array.
+   - Times are in minutes in `CLEANUP_TIME_TG` for Telegram cleanup and `CLEANUP_TIME_DB` for database cleanup.
+   - The value for the minutes of the database cleanup `CLEANUP_TIME_DB` must be greater than then one for Telegram cleanup `CLEANUP_TIME_TG`. Otherwise cleanup will do nothing and exit due to misconfiguration!
+4. Finally set up a cronjob to trigger the cleanup. You can also trigger Telegram / database cleanup per cronjob: For no cleanup use 0, for cleanup use 1 and to use your config file use 2 or leave "Telegram" and "database" out of the request data array.
    - See the examples below for curl based calls. Any HTTP client capable of a POST request will work.
 
 ### Examples
@@ -668,17 +654,17 @@ curl -k -d '{"cleanup":{"secret":"your-cleanup-secret/passphrase"}}' https://loc
 curl -k -d '{"cleanup":{"secret":"your-cleanup-secret/passphrase","telegram":"2","database":"2"}}' https://localhost/index.php?apikey=111111111:AABBCCDDEEFFGGHHIIJJKKLLMMNNOOPP123
 ```
 
-- Clean up telegram raid poll messages only: telegram = 1 and database = 0
+- Clean up Telegram raid poll messages only: Telegram = 1 and database = 0
 ```
 curl -k -d '{"cleanup":{"secret":"your-cleanup-secret/passphrase","telegram":"1","database":"0"}}' https://localhost/index.php?apikey=111111111:AABBCCDDEEFFGGHHIIJJKKLLMMNNOOPP123
 ```
 
-- Clean up telegram raid poll messages and database: telegram = 1 and database = 1
+- Clean up Telegram raid poll messages and database: Telegram = 1 and database = 1
 ```
 curl -k -d '{"cleanup":{"secret":"your-cleanup-secret/passphrase","telegram":"1","database":"1"}}' https://localhost/index.php?apikey=111111111:AABBCCDDEEFFGGHHIIJJKKLLMMNNOOPP123
 ```
 
-- Clean up database and maybe telegram raid poll messages (when specified in config): telegram = 2 and database = 1
+- Clean up database and maybe Telegram raid poll messages (when specified in config): Telegram = 2 and database = 1
 ```
 curl -k -d '{"cleanup":{"secret":"your-cleanup-secret/passphrase","telegram":"2","database":"1"}}' https://localhost/index.php?apikey=111111111:AABBCCDDEEFFGGHHIIJJKKLLMMNNOOPP123
 ```
@@ -687,7 +673,7 @@ curl -k -d '{"cleanup":{"secret":"your-cleanup-secret/passphrase","telegram":"2"
 
 ### Public access
 
-When no telegram id, group, supergroup or channel is specified in `BOT_ADMINS` the bot will allow everyone to use it (public access).
+When no Telegram id, group, supergroup or channel is specified in `BOT_ADMINS` the bot will allow everyone to use it (public access).
 
 Example for public access: `"BOT_ADMINS":""`
 
@@ -699,7 +685,7 @@ The `BOT_ADMINS` have all permissions and can use any feature of the bot.
 
 Telegram Users can only vote on raid polls, but have no access to other bot functions (unless you configured it).
 
-In order to allow telegram chats to access the bot and use commands/features, you need to create an access file.
+In order to allow Telegram chats to access the bot and use commands/features, you need to create an access file.
 
 It does not matter if a chat is a user, group, supergroup or channel - any kind of chat is supported as every chat has a chat id!
 
@@ -1014,7 +1000,7 @@ Delete the shared overview message:
 
 ## Command: /delete
 
-Delete an existing raid poll. With this command you can delete a raid poll from telegram and the database. Use with care!
+Delete an existing raid poll. With this command you can delete a raid poll from Telegram and the database. Use with care!
 
 Based on your access to the bot, you may can only delete raid polls you created yourself and cannot delete raid polls from other bot users.
 
@@ -1076,7 +1062,7 @@ Example input: `/gymgps 34, 52.5145434,13.3501189`
 
 The bot will set the note for gym to your input. The id of the gym is required. You can delete the gym note using the keyword 'reset'.
 
-Example input: `/gymnote 34, Meeting point: Behind the buildung`
+Example input: `/gymnote 34, Meeting point: Behind the building`
 
 Example input to delete the gym note: `/gymnote 34, reset`
 
@@ -1104,6 +1090,14 @@ After any upgrade you need to make sure to change the bot version in your config
 
 Updates to the config file are NOT checked automatically. Therefore always check for changes to the config.json.example and add any new config variables you want to override to your own config.json. Most new variables should get added to defaults-config.json so you'll get the new default automatically on update.
 
+## Local updates
+
+To keep local data, such as `pokemon` table and Pokemon icons directory, up to date, you can schedule some scripts to be run:
+
+`php getDB.php update; mysql -u=USERNAME -database=DATABASE < sql/update-pokemon-table.sql`
+
+`php getPokemonIcons.php pokeminers`
+
 
 # Config reference
 
@@ -1117,7 +1111,7 @@ Updates to the config file are NOT checked automatically. Therefore always check
 | Option | Description |
 |--------|------------ |
 | APIKEY_HASH | Telegram API key hashed in sha256 |
-| BOT_ADMINS| List of admin identifiers (comma separated telegram ids) |
+| BOT_ADMINS| List of admin identifiers (comma separated Telegram ids) |
 | BOT_ID| One letter ID for the bot used in debug logging. Mostly useful if you run multiple. |
 | BOT_NAME| Name of the bot. |
 | BRIDGE_MODE| Bool, whether to enable bridge mode. |
@@ -1144,14 +1138,15 @@ Updates to the config file are NOT checked automatically. Therefore always check
 | DEBUG_SQL_LOGFILE | Full path to SQL debug logfile|
 | DEFAULTS_WARNING | json files don't support comments, this is just a comment warning you not to edit defaults. |
 | LANGUAGE_PRIVATE| Language to use in private messages. Leave empty to infer language from users Telegram language |
-| LANGUAGE_PUBLIC| Language to use in groups |
+| LANGUAGE_PUBLIC| Language to use in chats |
 | LOGGING_INFO | Log INFO level messages to the file defined by LOGGING_INFO_LOGFILE. Useful for identifying potential issues. |
 | LOGGING_INFO_LOGFILE | Path to logfile. |
 | MAINTAINER_ID| Telegram ID of main maintainer |
 | MAINTAINER| Name of main maintainer |
 | MAPS_API_KEY| Google Maps API key for `MAPS_LOOKUP` |
 | MAPS_LOOKUP| Boolean, resolve missing gym addresses via Google Maps |
-| MAP_URL| ? |
+| OSM_LOOKUP | Boolean, resolve missing gym addresses via OpenStreetMap |
+| MAP_URL| URL to your map. This is displayed under every raid poll. |
 | CUSTOM_TRAINERNAME | Book, allow users to add custom trainernames via `/trainer` command |
 | PORTAL_IMPORT| Bool, allow importing gyms via portal import Telegram bots |
 | RAID_ANYTIME| Bool, enable a final timeslot for attending at any given time. |
@@ -1209,13 +1204,13 @@ Updates to the config file are NOT checked automatically. Therefore always check
 | RAID_VIA_LOCATION| Bool, enable creating raids by sharing a location with the bot |
 | RAID_VOTE_ICONS| Bool, use icons on raid poll buttons |
 | RAID_VOTE_TEXT| Bool, use text on raid poll buttons |
-| SHARE_CHATS_LEVEL_1| List of Telegram group IDs available for sharing raids of level 1 |
-| SHARE_CHATS_LEVEL_2| List of Telegram group IDs available for sharing raids of level 2 |
-| SHARE_CHATS_LEVEL_3| List of Telegram group IDs available for sharing raids of level 3 |
-| SHARE_CHATS_LEVEL_4| List of Telegram group IDs available for sharing raids of level 4 |
-| SHARE_CHATS_LEVEL_5| List of Telegram group IDs available for sharing raids of level 5 |
-| SHARE_CHATS_LEVEL_X| List of Telegram group IDs available for sharing Ex-Raids |
-| SHARE_CHATS| List of Telegram group IDs available for sharing any raids |
+| SHARE_CHATS_LEVEL_1| List of Telegram chat IDs available for sharing raids of level 1 |
+| SHARE_CHATS_LEVEL_2| List of Telegram chat IDs available for sharing raids of level 2 |
+| SHARE_CHATS_LEVEL_3| List of Telegram chat IDs available for sharing raids of level 3 |
+| SHARE_CHATS_LEVEL_4| List of Telegram chat IDs available for sharing raids of level 4 |
+| SHARE_CHATS_LEVEL_5| List of Telegram chat IDs available for sharing raids of level 5 |
+| SHARE_CHATS_LEVEL_X| List of Telegram chat IDs available for sharing Ex-Raids |
+| SHARE_CHATS| List of Telegram chat IDs available for sharing any raids |
 | SHOW_GYM_NAME_IN_ADDRESS| Good for Raid-Picture - Will show the Gym Name infront of the Gym-Address. In Message-Preview you'll know which gym the raid is and you don't have to load the image to know which gym it will be.
 | MYSQL_SORT_COLLATE | Charset added to SQL query for sorting gym names |
 | LIST_BY_LOCATION | Bool, If true, when sending location to bot, instead of creating a raid, it lists nearby active raids |
@@ -1226,23 +1221,15 @@ Updates to the config file are NOT checked automatically. Therefore always check
 | UPGRADE_SQL_AUTO | When a DB schema upgrade is detected, run it automatically and bump config version to match. |
 | SHARE_AFTER_ATTENDANCE | Bool, enable raid sharing to preset chats after first attending vote |
 | SHARE_CHATS_AFTER_ATTENDANCE | ID (only one) of chat to auto-share raids to after first attending vote |
-| WEBHOOK_CHATS_LEVEL_1_0| ? |
-| WEBHOOK_CHATS_LEVEL_1_1| ? |
-| WEBHOOK_CHATS_LEVEL_1| List of Telegram group IDs to autoshare raids of level 1 |
-| WEBHOOK_CHATS_LEVEL_2_0| ? |
-| WEBHOOK_CHATS_LEVEL_2_1| ? |
-| WEBHOOK_CHATS_LEVEL_2| List of Telegram group IDs to autoshare raids of level 2 |
-| WEBHOOK_CHATS_LEVEL_3_0| ? |
-| WEBHOOK_CHATS_LEVEL_3_1| ? |
-| WEBHOOK_CHATS_LEVEL_3| List of Telegram group IDs to autoshare raids of level 3 |
-| WEBHOOK_CHATS_LEVEL_4_0| ? |
-| WEBHOOK_CHATS_LEVEL_4_1| ? |
-| WEBHOOK_CHATS_LEVEL_4| List of Telegram group IDs to autoshare raids of level 4 |
-| WEBHOOK_CHATS_LEVEL_5_0| ? |
-| WEBHOOK_CHATS_LEVEL_5_1| ? |
-| WEBHOOK_CHATS_LEVEL_5| List of Telegram group IDs to autoshare raids of level 5 |
-| WEBHOOK_CHATS| List of Telegram group IDs to autoshare raids of any level  |
-| WEBHOOK_CREATE_ONLY| Bool, only create raids, don't autoshare them to any group |
+| WEBHOOK_CHATS_LEVEL_1| List of Telegram chat IDs to autoshare raids of level 1 |
+| WEBHOOK_CHATS_LEVEL_1_0| List of Telegram chat IDs to autoshare raids of level 1 inside geofence ID 0 |
+| WEBHOOK_CHATS_LEVEL_1_1| List of Telegram chat IDs to autoshare raids of level 1 inside geofence ID 1 |
+| WEBHOOK_CHATS_LEVEL_2| List of Telegram chat IDs to autoshare raids of level 2 |
+| WEBHOOK_CHATS_LEVEL_3| List of Telegram chat IDs to autoshare raids of level 3 |
+| WEBHOOK_CHATS_LEVEL_4| List of Telegram chat IDs to autoshare raids of level 4 |
+| WEBHOOK_CHATS_LEVEL_5| List of Telegram chat IDs to autoshare raids of level 5 |
+| WEBHOOK_CHATS| List of Telegram chat IDs to autoshare raids of any level  |
+| WEBHOOK_CREATE_ONLY| Bool, only create raids, don't autoshare them to any chat |
 | WEBHOOK_CREATOR| Telegram ID of the bot or user to credit as having created webhook raids |
 | WEBHOOK_EXCLUDE_POKEMON| List of Pokemon dex IDs to exclude from webhook raid creation |
 | WEBHOOK_EXCLUDE_RAID_LEVEL| List of raid levels to exclude from webhook raid creation |
