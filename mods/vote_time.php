@@ -28,7 +28,6 @@ if($count_att == 0 && $config->SHARE_AFTER_ATTENDANCE && !empty($config->SHARE_C
         FROM cleanup
           WHERE raid_id = {$data['id']}
           AND chat_id = {$config->SHARE_CHATS_AFTER_ATTENDANCE}
-          AND cleaned = 0
         ");
     // IF Chat was not shared to target channel we want to share it
     if ($rs_chann->rowCount() == 0) {

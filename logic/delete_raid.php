@@ -37,7 +37,6 @@ function delete_raid($raid_id)
         "
         DELETE FROM   cleanup
         WHERE   raid_id = '{$raid_id}'
-           OR   cleaned = '{$raid_id}'
         "
     );
 

@@ -133,7 +133,6 @@ function get_all_active_raid_channels($update,$data){
         SELECT *
         FROM cleanup
           WHERE raid_id = {$data['id']}
-          AND cleaned = 0
           AND chat_id <> 0
         ");
     // IF Chat was shared only to target channel -> no extra update
