@@ -43,7 +43,8 @@ $tg_json = [];
 
 // Share an overview
 if($chat_id != 0) {
-    $overview_message = get_overview($active_raids[$chat_id], $chat_id);
+    $chat_title_username = get_chat_title_username($chat_id);
+    $overview_message = get_overview($active_raids[$chat_id], $chat_title_username[1], $chat_title_username[0]);
     // Shared overview
     $keys = [];
 
@@ -64,12 +65,12 @@ if($chat_id != 0) {
         // Make sure it's not already shared
         $rs = my_query(
             "
-            SELECT    chat_id, message_id
+            SELECT    chat_id, message_id, chat_title, chat_username
             FROM      overview
             WHERE      chat_id = '{$chat_id}'
+            LIMIT 1
             "
         );
-        $overview_message = get_overview($active_raids[$chat_id], $chat_id);
         // Already shared
         if($rs->rowCount() > 0 ) {
             $keys = [
@@ -84,8 +85,13 @@ if($chat_id != 0) {
                     ]
                 ]
             ];
+            $res = $rs->fetch();
+            $chat_title = $res['chat_title'];
+            $chat_username = $res['chat_username'];
         }else {
-            $chat_title = get_chat_title($chat_id);
+            $chat_title_username = get_chat_title_username($chat_id);
+            $chat_title = $chat_title_username[0];
+            $chat_username = $chat_title_username[1];
             $keys = [
                 [
                     [
@@ -95,6 +101,7 @@ if($chat_id != 0) {
                 ]
             ];
         }
+        $overview_message = get_overview($active_raids[$chat_id], $chat_title, $chat_username);
         // Send the message, but disable the web preview!
         $tg_json[] = send_message($update['callback_query']['message']['chat']['id'], $overview_message, $keys, ['disable_web_page_preview' => 'true'], true);
     }

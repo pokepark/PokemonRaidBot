@@ -14,7 +14,7 @@ include('logic/delete_raid.php');
 include('logic/delete_trainerinfo.php');
 include('logic/disable_raid_level.php');
 include('logic/edit_pokedex_keys.php');
-include('logic/get_chat_title.php');
+include('logic/get_chat_title_username.php');
 include('logic/get_formatted_pokemon_cp.php');
 include('logic/get_gym_by_telegram_id.php');
 include('logic/get_gym_details.php');

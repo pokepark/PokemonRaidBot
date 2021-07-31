@@ -18,12 +18,12 @@ function curl_json_response($json_response, $json)
     if ((isset($response['ok']) && $response['ok'] != true) || isset($response['update_id'])) {
         info_log("{$json} -> {$json_response}", 'ERROR:');
     } else {
-	// Result seems ok, get message_id and chat_id if supergroup or channel message
-	if (isset($response['result']['chat']['type']) && ($response['result']['chat']['type'] == "channel" || $response['result']['chat']['type'] == "supergroup")) {
+        // Result seems ok, get message_id and chat_id if supergroup or channel message
+        if (isset($response['result']['chat']['type']) && ($response['result']['chat']['type'] == "channel" || $response['result']['chat']['type'] == "supergroup")) {
             // Init cleanup_id
             $cleanup_id = 0;
 
-	    // Set chat and message_id
+            // Set chat and message_id
             $chat_id = $response['result']['chat']['id'];
             $message_id = $response['result']['message_id'];
 
@@ -34,16 +34,16 @@ function curl_json_response($json_response, $json)
             debug_log('Message was shared with ' . $response['result']['chat']['type'] . ' ' . $response['result']['chat']['title']);
             debug_log('Checking input for cleanup info now...');
 
-	    // Check if callback_data is present to get the cleanup id
+            // Check if callback_data is present to get the cleanup id
             if (!empty($response['result']['reply_markup']['inline_keyboard']['0']['0']['callback_data'])) {
                 debug_log('Callback Data of this message likely contains cleanup info!');
                 $split_callback_data = explode(':', $response['result']['reply_markup']['inline_keyboard']['0']['0']['callback_data']);
-	        // Get raid_id, but check for $config->BRIDGE_MODE first
-	        if($config->BRIDGE_MODE) {
-		    $cleanup_id = $split_callback_data[1];
-		} else {
-		    $cleanup_id = $split_callback_data[0];
-	        }
+                // Get raid_id, but check for $config->BRIDGE_MODE first
+                if($config->BRIDGE_MODE) {
+                    $cleanup_id = $split_callback_data[1];
+                } else {
+                    $cleanup_id = $split_callback_data[0];
+                }
 
             // Check if it's a venue and get raid id
             } else if (isset($response['result']['venue']['address']) && !empty($response['result']['venue']['address'])) {
@@ -82,13 +82,13 @@ function curl_json_response($json_response, $json)
                 debug_log('Chat_ID: ' . $chat_id);
                 debug_log('Message_ID: ' . $message_id);
 
-	        // Trigger cleanup preparation process when necessary id's are not empty and numeric
-	        if (!empty($chat_id) && !empty($message_id) && !empty($cleanup_id)) {
-		    debug_log('Calling cleanup preparation now!');
-		    insert_cleanup($chat_id, $message_id, $cleanup_id);
-	        } else {
-		    info_log($cleanup_id, 'Missing input! Cannot call cleanup preparation for raid:');
-		}
+                // Trigger cleanup preparation process when necessary id's are not empty and numeric
+                if (!empty($chat_id) && !empty($message_id) && !empty($cleanup_id)) {
+                    debug_log('Calling cleanup preparation now!');
+                    insert_cleanup($chat_id, $message_id, $cleanup_id);
+                } else {
+                    info_log($cleanup_id, 'Missing input! Cannot call cleanup preparation for raid:');
+                }
             } else if($cleanup_id != '0' && $cleanup_id == 'trainer') {
                 debug_log('Detected trainer info message from callback_data!');
                 debug_log('Chat_ID: ' . $chat_id);
@@ -119,9 +119,12 @@ function curl_json_response($json_response, $json)
 
                 // Write raid overview data to database
                 debug_log('Adding overview info to database now!');
-                insert_overview($chat_id, $message_id);
+                $chat_title = $response['result']['chat']['title'];
+                $chat_username = isset($response['result']['chat']['username']) ? $response['result']['chat']['username'] : '';
+
+                insert_overview($chat_id, $message_id, $chat_title, $chat_username);
             }
-	}
+        }
     }
 
     // Return response.

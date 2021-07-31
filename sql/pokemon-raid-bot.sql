@@ -79,6 +79,9 @@ CREATE TABLE `overview` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `chat_id` bigint(20) NOT NULL,
   `message_id` bigint(20) unsigned NOT NULL,
+  `chat_title` varchar(128) DEFAULT NULL,
+  `chat_username` varchar(32) DEFAULT NULL,
+  `updated` date DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

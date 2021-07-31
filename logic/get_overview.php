@@ -2,24 +2,14 @@
 /**
  * Return the overview message for a specific chat.
  * @param $active_raids - Custom array of gym and raid info
- * @param $chat_id - String
+ * @param $chat_title - String
+ * @param $chat_username - String
  * @return string
  */
-function get_overview( $active_raids, $chat_id )
+function get_overview( $active_raids, $chat_title, $chat_username )
 {
     global $config;
 
-    // Get info about chat for username.
-    debug_log('Getting chat object for chat_id: ' . $chat_id);
-    $chat_obj = get_chat($chat_id);
-    $chat_username = '';
-
-    // Set chat username if available.
-    if ($chat_obj['ok'] == 'true' && isset($chat_obj['result']['username'])) {
-        $chat_username = $chat_obj['result']['username'];
-        debug_log('Username of the chat: ' . $chat_obj['result']['username']);
-    }
-    $chat_title = get_chat_title(false, $chat_obj);
     $msg = '<b>' . getPublicTranslation('raid_overview_for_chat') . ' ' . $chat_title . ' ' . getPublicTranslation('from') . ' '. dt2time('now') . '</b>' .  CR . CR;
 
     $now = utcnow();

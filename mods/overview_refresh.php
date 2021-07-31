@@ -18,7 +18,7 @@ if ($chat_id != 0) {
 
 $request_overviews = my_query(
     "
-    SELECT    chat_id, message_id
+    SELECT    chat_id, message_id, chat_title, chat_username, (IF(updated < DATE(NOW()) or updated IS NULL, 1, 0)) as update_needed
     FROM      overview
     {$query_chat}
     "
@@ -83,7 +83,22 @@ foreach($overviews as $overview_row) {
     debug_log('Active raids:');
     debug_log($active_raids);
 
-    $overview_message = get_overview($active_raids, $overview_row['chat_id']);
+    if($overview_row['update_needed'] == 1) {
+        $chat_title_username = get_chat_title_username($overview_row['chat_id']);
+        $chat_title = $chat_title_username[0];
+        $chat_username = $chat_title_username[1];
+        my_query('
+                UPDATE  overview
+                SET     chat_title = \''.$chat_title.'\',
+                        chat_username = \''.$chat_username.'\',
+                        updated = DATE(NOW())
+                WHERE   chat_id = \''.$overview_row['chat_id'].'\'
+                ');
+    }else {
+        $chat_title = $overview_row['chat_title'];
+        $chat_username = $overview_row['chat_username'];
+    }
+    $overview_message = get_overview($active_raids, $chat_title, $chat_username);
     // Triggered from user or cronjob?
     if (!empty($update['callback_query']['id'])) {
         // Answer the callback.
