@@ -9,7 +9,8 @@ function send_response_vote($update, $data, $new = false, $text = true)
 {
     global $config;
     // get all channel, where the raid polls where shared
-    $chats_to_update = get_all_active_raid_channels($update, $data);
+    if(isset($update['callback_query']['inline_message_id'])) $chats_to_update = [['inline'=>true]];
+    else $chats_to_update = get_all_active_raid_channels($update, $data);
     // Initial text status
     $initial_text = $text;
     // Get the raid data by id.
@@ -67,11 +68,13 @@ function send_response_vote($update, $data, $new = false, $text = true)
         $tg_json[] = answerCallbackQuery($update['callback_query']['id'], $callback_msg, true, true);
 
         foreach($chats_to_update as $chat_id_msg_id) {
-            $chat = $chat_id_msg_id['chat_id'];
-            $message = $chat_id_msg_id['message_id'];
-            // Modify the $update to also handle messages in other chats than the one where the vote came from
-            $update['callback_query']['message']['message_id'] = $message;
-            $update['callback_query']['message']['chat']['id'] = $chat;
+            if(!isset($chat_id_msg_id['inline'])) {
+                $chat = $chat_id_msg_id['chat_id'];
+                $message = $chat_id_msg_id['message_id'];
+                // Modify the $update to also handle messages in other chats than the one where the vote came from
+                $update['callback_query']['message']['message_id'] = $message;
+                $update['callback_query']['message']['chat']['id'] = $chat;
+            }
             if($text) {
                 // Make sure to only send if picture with caption and not text message
                 if($initial_text == false && !(isset($update['callback_query']['message']['text']))) {
@@ -86,11 +89,7 @@ function send_response_vote($update, $data, $new = false, $text = true)
                 }
             } else {
                 // Make sure it's a picture with caption.
-                if(isset($update['callback_query']['message']['text'])) {
-                    // Do not switch back to picture with caption. Only allow switch from picture with caption to text message.
-                    // Edit the message.
-                    $tg_json[] = edit_message($update, $full_msg, $keys, ['disable_web_page_preview' => 'true'], true);
-                } else {
+                if(isset($update['callback_query']['message']['caption'])) {
                     // Edit the caption.
                     $tg_json[] = edit_caption($update, $msg, $keys, ['disable_web_page_preview' => 'true'], true);
 
@@ -102,6 +101,10 @@ function send_response_vote($update, $data, $new = false, $text = true)
                         $picture_url = raid_picture_url($raid);
                         $tg_json[] = editMessageMedia($message, $msg, $keys, $chat, ['disable_web_page_preview' => 'true'], true, $picture_url);
                     }
+                } else {
+                    // Do not switch back to picture with caption. Only allow switch from picture with caption to text message.
+                    // Edit the message.
+                    $tg_json[] = edit_message($update, $full_msg, $keys, ['disable_web_page_preview' => 'true'], true);
                 }
             }
         }
