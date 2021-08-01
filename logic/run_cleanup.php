@@ -27,7 +27,6 @@ function run_cleanup ($telegram = 2, $database = 2) {
     if ($database == 2) {
         $database = ($config->CLEANUP_DATABASE) ? 1 : 0;
     }
-    $now = utcnow();
     // Start cleanup when at least one parameter is set to trigger cleanup
     if ($telegram == 1 || $database == 1) {
         // Query for telegram cleanup without database cleanup
@@ -40,7 +39,7 @@ function run_cleanup ($telegram = 2, $database = 2) {
                     ON          cleanup.raid_id = raids.id 
                     LEFT JOIN   gyms
                     ON          raids.gym_id = gyms.id
-                WHERE     raids.end_time < DATE_SUB(\''.$now.'\', INTERVAL '.$config->CLEANUP_TIME_TG.' MINUTE)
+                WHERE     raids.end_time < DATE_SUB(UTC_TIMESTAMP(), INTERVAL '.$config->CLEANUP_TIME_TG.' MINUTE)
                 ');
             $cleanup_ids = [];
             $cleanup_gyms = [];
@@ -66,8 +65,8 @@ function run_cleanup ($telegram = 2, $database = 2) {
         }
         if($database == 1) {
             cleanup_log('Database cleanup called.');
-            $q_a = my_query('DELETE FROM attendance WHERE raid_id IN (SELECT id FROM raids WHERE raids.end_time < DATE_SUB(\''.$now.'\', INTERVAL '.$config->CLEANUP_TIME_DB.' MINUTE))');
-            $q_r = my_query('DELETE FROM raids WHERE end_time < DATE_SUB(\''.$now.'\', INTERVAL '.$config->CLEANUP_TIME_DB.' MINUTE)');
+            $q_a = my_query('DELETE FROM attendance WHERE raid_id IN (SELECT id FROM raids WHERE raids.end_time < DATE_SUB(UTC_TIMESTAMP(), INTERVAL '.$config->CLEANUP_TIME_DB.' MINUTE))');
+            $q_r = my_query('DELETE FROM raids WHERE end_time < DATE_SUB(UTC_TIMESTAMP(), INTERVAL '.$config->CLEANUP_TIME_DB.' MINUTE)');
             cleanup_log('Cleaned ' . $q_a->rowCount() . ' rows from attendance table');
             cleanup_log('Cleaned ' . $q_r->rowCount() . ' rows from raids table');
         }
