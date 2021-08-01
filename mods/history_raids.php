@@ -27,6 +27,8 @@ $rs = my_query(
     LEFT JOIN attendance
     ON        attendance.raid_id = raids.id
     WHERE     gyms.id = "'.$gym_id.'"
+    AND       attendance.id IS NOT NULL
+    GROUP BY  raids.id, raids.start_time, raids.pokemon, raids.pokemon_form, gyms.gym_name
     ORDER BY  start_time
     '
 );
