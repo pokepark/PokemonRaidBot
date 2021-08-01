@@ -3178,5 +3178,65 @@
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
     "FI": "Et ole vielä tallentanut tietoja pelihahmostasi. Haluaisitko tehdä sen nyt?"
+  },
+  "history_title": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "View raid poll history.",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Katsele vanhoja raidi-ilmoituksia."
+  },
+  "history_displaying_month": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Currently displaying raids for",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Tällä hetkellä näytetään"
+  },
+  "history_select_raid": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Select raid",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Valitse raidi"
+  },
+  "history_no_raids_found": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "No raids with attendees found!",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Yhtään raidia ei löytynyt jossa olisi osallistujia!"
+  },
+  "date": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Date",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Päivämäärä"
   }
 }

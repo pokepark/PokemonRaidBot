@@ -11,8 +11,6 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
    * [Installation and configuration](#installation-and-configuration)
       * [Webserver](#webserver)
       * [Git clone](#git-clone)
-         * [Core module inside bot folder](#core-module-inside-bot-folder)
-         * [Core module outside bot folder](#core-module-outside-bot-folder)
       * [Bot token](#bot-token)
       * [Database](#database)
       * [Docker](#docker)
@@ -30,7 +28,10 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
       * [More config options](#more-config-options)
          * [Proxy](#proxy)
          * [Languages](#languages)
-         * [Timezone and Google maps API](#timezone-and-google-maps-api)
+         * [Timezone, Google maps API and OpenStreetMap API](#timezone-google-maps-api-and-openstreetmap-api)
+            * [Timezone](#timezone)
+            * [Google maps API](#google-maps-api)
+            * [OpenStreetMap API](#openstreetmap-api)
          * [Raid creation options](#raid-creation-options)
          * [Raid time customization](#raid-time-customization)
          * [Raid poll design and layout](#raid-poll-design-and-layout)
@@ -80,6 +81,7 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
       * [Command: /deletegym](#command-deletegym)
    * [Debugging](#debugging)
    * [Updates](#updates)
+      * [Local updates](#local-updates)
    * [Config reference](#config-reference)
    * [Development](#development)
       * [Releasing a new version](#releasing-a-new-version)
@@ -91,7 +93,7 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
          * [translate.py](#translatepy)
             * [Usage](#usage)
 
-<!-- Added by: ninjasoturi, at: Tue Jul 13 20:43:07 EEST 2021 -->
+<!-- Added by: BotAdmin, at: Sun Aug  1 14:29:39 EEST 2021 -->
 
 <!--te-->
 
@@ -752,6 +754,7 @@ A few examples for access files can be found below the permission overview table
 |            | Manage overview `/overview`                                      | `overview`                               |
 |            | Delete OWN raid polls `/delete`                                  | `delete-own`                             |
 |            | Delete ALL raid polls `/delete`                                  | `delete-all`                             |
+|            | View raid poll history `/history`                                | `history`                                |
 |            |                                                                  |                                          |
 | Sharing    | Share OWN created raids to predefined chats 'SHARE_CHATS'        | `share-own`                              |
 |            | Share ALL created raids to predefined chats 'SHARE_CHATS'        | `share-all`                              |
