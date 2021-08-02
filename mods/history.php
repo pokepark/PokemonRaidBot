@@ -42,7 +42,7 @@ if($current_day == 0) {
         $select_query = 'DISTINCT UPPER(SUBSTR(gym_name, 1, 1))';
     }
     $date = $current_year_month.'-'.$current_day;
-    error_log($date);
+
     $rs = my_query(
             '
             SELECT '.$select_query.' AS first_letter
