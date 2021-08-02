@@ -53,6 +53,7 @@ $rs = my_query(
     ON        attendance.raid_id = raids.id
     WHERE     UPPER(LEFT(gym_name, ' . $first_length . ')) = UPPER("' . $first . '")
     AND       date_format(start_time, "%Y-%m-%d") =  "' . $current_date . '"
+    AND       raids.end_time < UTC_TIMESTAMP()
     AND       attendance.id IS NOT NULL
     ' . $not . '
     GROUP BY  gym_name, raids.gym_id, gyms.id, gyms.ex_gym

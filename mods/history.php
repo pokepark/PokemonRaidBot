@@ -42,7 +42,7 @@ if($current_day == 0) {
         $select_query = 'DISTINCT UPPER(SUBSTR(gym_name, 1, 1))';
     }
     $date = $current_year_month.'-'.$current_day;
-
+    error_log($date);
     $rs = my_query(
             '
             SELECT '.$select_query.' AS first_letter
@@ -52,7 +52,9 @@ if($current_day == 0) {
             LEFT JOIN attendance
             ON        attendance.raid_id = raids.id
             WHERE     date_format(start_time, "%Y-%m-%d") =  \''.$date.'\'
+            AND       raids.end_time < UTC_TIMESTAMP()
             AND       attendance.id IS NOT NULL
+            AND       gyms.gym_name IS NOT NULL
             GROUP BY  gym_name
             ORDER BY  gym_name
             '
