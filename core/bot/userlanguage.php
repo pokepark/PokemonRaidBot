@@ -11,6 +11,8 @@ if ($config->LANGUAGE_PRIVATE == '') {
         $language_code = $update['callback_query']['from']['language_code'];
     } else if(isset($update['inline_query']['from']['language_code'])) {
         $language_code = $update['inline_query']['from']['language_code'];
+    }else {
+        $language_code = '';
     }
 
     // Get and define userlanguage.
