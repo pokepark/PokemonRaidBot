@@ -9,8 +9,8 @@ if ($config->LANGUAGE_PRIVATE == '') {
         $language_code = $update['message']['from']['language_code'];
     } else if(isset($update['callback_query']['from']['language_code'])) {
         $language_code = $update['callback_query']['from']['language_code'];
-    } else {
-        $language_code = $config->LANGUAGE_PUBLIC;
+    } else if(isset($update['inline_query']['from']['language_code'])) {
+        $language_code = $update['inline_query']['from']['language_code'];
     }
 
     // Get and define userlanguage.
@@ -20,7 +20,7 @@ if ($config->LANGUAGE_PRIVATE == '') {
     if(array_key_exists($language_code, $languages)) {
         $userlanguage = $languages[$language_code];
     } else {
-        $userlanguage = $config->DEFAULT_LANGUAGE;
+        $userlanguage = DEFAULT_LANGUAGE;
     }
 
     debug_log('User language: ' . $userlanguage);
