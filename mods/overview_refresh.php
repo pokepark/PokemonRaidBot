@@ -36,11 +36,11 @@ foreach($overviews as $overview_row) {
 						IF((SELECT  count(*)
 							FROM    raid_bosses
 							WHERE   raid_level = raids.level
-							AND     raids.convert_tz(raids.spawn,"+00:00","'.$tz_diff.'") BETWEEN date_start AND date_end) = 1,
+							AND     convert_tz(raids.spawn,"+00:00","'.$tz_diff.'") BETWEEN date_start AND date_end) = 1,
 							(SELECT  pokedex_id
 							FROM    raid_bosses
 							WHERE   raid_level = raids.level
-							AND     raids.convert_tz(raids.spawn,"+00:00","'.$tz_diff.'") BETWEEN date_start AND date_end),
+							AND     convert_tz(raids.spawn,"+00:00","'.$tz_diff.'") BETWEEN date_start AND date_end),
                             (select concat(\'999\', raids.level) as pokemon)
                             )
                    ,pokemon) as pokemon,
@@ -48,11 +48,11 @@ foreach($overviews as $overview_row) {
 						IF((SELECT  count(*) as count
 							FROM    raid_bosses
 							WHERE   raid_level = raids.level
-							AND     raids.convert_tz(raids.spawn,"+00:00","'.$tz_diff.'") BETWEEN date_start AND date_end) = 1,
+							AND     convert_tz(raids.spawn,"+00:00","'.$tz_diff.'") BETWEEN date_start AND date_end) = 1,
 							(SELECT  pokemon_form_id
 							FROM    raid_bosses
 							WHERE   raid_level = raids.level
-							AND     raids.convert_tz(raids.spawn,"+00:00","'.$tz_diff.'") BETWEEN date_start AND date_end),
+							AND     convert_tz(raids.spawn,"+00:00","'.$tz_diff.'") BETWEEN date_start AND date_end),
                             \'0\'
                             ),
                         IF(raids.pokemon_form = 0,
