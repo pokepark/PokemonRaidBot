@@ -76,7 +76,7 @@ if($config->RAID_PICTURE) {
 curl_json_multi_request($tg_json);
 
 // Alert users.
-alarm($data['id'], $update['callback_query']['from']['id'], 'new_boss');
+alarm($raid, '', 'new_boss');
 
 // Exit.
 exit();

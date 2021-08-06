@@ -1,28 +1,38 @@
 <?php
 /**
  * Send raid alerts to user.
- * @param $raid_id
- * @param $user_id
- * @param $action
- * @param $info
+ * @param $raid_id_array - raid id or the result of get_raid()
+ * @param $user_id - ID of the user that executed the call
+ * @param $action - which alarm action to perform
+ * @param $info - additional info for the action if required
  */
-function alarm($raid_id, $user_id, $action, $info = '')
+function alarm($raid_id_array, $user_id, $action, $info = '')
 {
     // Get config
     global $config;
-    // Name of the user, which executes a status update
-    $request = my_query("SELECT * FROM users WHERE user_id = {$user}");
-    $answer_quests = $request->fetch();
-    // Get Trainername
-    $answer_quests = check_trainername($answer_quests);
-    $username = '<a href="tg://user?id=' . $answer_quests['user_id'] . '">' . $answer_quests['name'] . '</a>';
-    // Get Trainercode
-    $trainercode = $answer_quests['trainercode'];
+
+    // Get user info if it's needed for the alarm
+    if(!empty($user_id)) {
+        // Name of the user, which executes a status update
+        $request = my_query("SELECT * FROM users WHERE user_id = {$user_id}");
+        $answer_quests = $request->fetch();
+        // Get Trainername
+        $answer_quests = check_trainername($answer_quests);
+        $username = '<a href="tg://user?id=' . $answer_quests['user_id'] . '">' . $answer_quests['name'] . '</a>';
+        // Get Trainercode
+        $trainercode = $answer_quests['trainercode'];
+    }
+
     // Gym name and raid times
-    $raid = get_raid($raid_id);
+    if(is_array($raid_id_array)) {
+        $raid = $raid_id_array;
+    }else {
+        $raid = get_raid($raid_id_array);
+    }
+    $raid_id = $raid['id'];
 
     $gymname = $raid['gym_name'];
-    $raidtimes = str_replace(CR, '', str_replace(' ', '', get_raid_times($answer, false, true)));
+    $raidtimes = str_replace(CR, '', str_replace(' ', '', get_raid_times($raid, false, true)));
 
     // Get attend time.
     if(!in_array($action, ['new_att','change_time','group_code_private','group_code_public'])) {
