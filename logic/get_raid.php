@@ -10,6 +10,8 @@ function get_raid($raid_id)
     // Remove all non-numeric characters
     $raidid = preg_replace( '/[^0-9]/', '', $raid_id );
 
+    $tz_diff = tz_diff();
+
     // Get the raid data by id.
     $rs = my_query(
         '
@@ -17,11 +19,11 @@ function get_raid($raid_id)
 						IF((SELECT  count(*)
 							FROM    raid_bosses
 							WHERE   raid_level = raids.level
-							AND     raids.spawn BETWEEN date_start AND date_end) = 1,
+							AND     convert_tz(raids.spawn,"+00:00","'.$tz_diff.'")  BETWEEN date_start AND date_end) = 1,
 							(SELECT  pokedex_id
 							FROM    raid_bosses
 							WHERE   raid_level = raids.level
-							AND     raids.spawn BETWEEN date_start AND date_end),
+							AND     convert_tz(raids.spawn,"+00:00","'.$tz_diff.'") BETWEEN date_start AND date_end),
                             (select concat(\'999\', raids.level) as pokemon)
                             )
                    ,pokemon) as pokemon,
@@ -29,11 +31,11 @@ function get_raid($raid_id)
 						IF((SELECT  count(*) as count
 							FROM    raid_bosses
 							WHERE   raid_level = raids.level
-							AND     raids.spawn BETWEEN date_start AND date_end) = 1,
+							AND     convert_tz(raids.spawn,"+00:00","'.$tz_diff.'") BETWEEN date_start AND date_end) = 1,
 							(SELECT  pokemon_form_id
 							FROM    raid_bosses
 							WHERE   raid_level = raids.level
-							AND     raids.spawn BETWEEN date_start AND date_end),
+							AND     convert_tz(raids.spawn,"+00:00","'.$tz_diff.'") BETWEEN date_start AND date_end),
                             \'0\'
                             ),
                         IF(raids.pokemon_form = 0,

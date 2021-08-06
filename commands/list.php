@@ -15,6 +15,8 @@ $keys = [];
 
 $event_permissions = bot_access_check($update, 'event',true);
 
+$tz_diff = tz_diff();
+
 // Get last 12 active raids data.
 $rs = my_query(
     '
@@ -22,11 +24,11 @@ $rs = my_query(
                     IF((SELECT  count(*)
                         FROM    raid_bosses
                         WHERE   raid_level = raids.level
-                        AND     raids.spawn BETWEEN date_start AND date_end) = 1,
+                        AND     convert_tz(raids.spawn,"+00:00","'.$tz_diff.'") BETWEEN date_start AND date_end) = 1,
                         (SELECT  pokedex_id
                         FROM    raid_bosses
                         WHERE   raid_level = raids.level
-                        AND     raids.spawn BETWEEN date_start AND date_end),
+                        AND     convert_tz(raids.spawn,"+00:00","'.$tz_diff.'") BETWEEN date_start AND date_end),
                         (select concat(\'999\', raids.level) as pokemon)
                         )
                ,pokemon) as pokemon,
@@ -34,11 +36,11 @@ $rs = my_query(
                     IF((SELECT  count(*) as count
                         FROM    raid_bosses
                         WHERE   raid_level = raids.level
-                        AND     raids.spawn BETWEEN date_start AND date_end) = 1,
+                        AND     convert_tz(raids.spawn,"+00:00","'.$tz_diff.'") BETWEEN date_start AND date_end) = 1,
                         (SELECT  pokemon_form_id
                         FROM    raid_bosses
                         WHERE   raid_level = raids.level
-                        AND     raids.spawn BETWEEN date_start AND date_end),
+                        AND     convert_tz(raids.spawn,"+00:00","'.$tz_diff.'") BETWEEN date_start AND date_end),
                         \'0\'
                         ),
                     IF(raids.pokemon_form = 0,

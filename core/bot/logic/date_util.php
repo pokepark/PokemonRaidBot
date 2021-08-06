@@ -83,4 +83,23 @@ function dt2time($datetime_value, $format = 'H:i', $tz = NULL)
     return $datetime->format($format);
 }
 
+function tz_diff($src = 'UTC', $dst = NULL) {
+    global $config;
+    if($dst == NULL){
+      $dst = $config->TIMEZONE;
+    }
+    $dateTimeZoneSrc = new DateTimeZone($src);
+    $dateTimeZoneDst = new DateTimeZone($dst);
+    $dateTimeSrc = new datetime('now',$dateTimeZoneSrc);
+    $diff = $dateTimeZoneDst->getOffset($dateTimeSrc);
+
+    $hours = str_pad(floor($diff/60/60),2,'0',STR_PAD_LEFT);
+    $minutes = str_pad(floor(($diff-$hours*60*60)/60),2,'0',STR_PAD_LEFT);
+    if($diff < 0) {
+        $res = '-'.$hours.':'.$minutes;
+    }else {
+        $res = '+'.$hours.':'.$minutes;
+    }
+    return $res;
+}
 ?>
