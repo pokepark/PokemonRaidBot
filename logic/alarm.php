@@ -1,12 +1,12 @@
 <?php
 /**
  * Send raid alerts to user.
- * @param $raid
- * @param $user
+ * @param $raid_id
+ * @param $user_id
  * @param $action
  * @param $info
  */
-function alarm($raid, $user, $action, $info = '')
+function alarm($raid_id, $user_id, $action, $info = '')
 {
     // Get config
     global $config;
@@ -19,14 +19,14 @@ function alarm($raid, $user, $action, $info = '')
     // Get Trainercode
     $trainercode = $answer_quests['trainercode'];
     // Gym name and raid times
-    $request = my_query("SELECT * FROM raids as r left join gyms as g on r.gym_id = g.id WHERE r.id = {$raid}");
-    $answer = $request->fetch();
-    $gymname = $answer['gym_name'];
+    $raid = get_raid($raid_id);
+
+    $gymname = $raid['gym_name'];
     $raidtimes = str_replace(CR, '', str_replace(' ', '', get_raid_times($answer, false, true)));
 
     // Get attend time.
     if(!in_array($action, ['new_att','change_time','group_code_private','group_code_public'])) {
-        $r = my_query("SELECT DISTINCT attend_time FROM attendance WHERE raid_id = {$raid} and user_id = {$user}");
+        $r = my_query("SELECT DISTINCT attend_time FROM attendance WHERE raid_id = {$raid_id} and user_id = {$user_id}");
         $a = $r->fetch();
         if(isset($a['attend_time'])) {
             $attendtime = $a['attend_time'];
@@ -38,14 +38,14 @@ function alarm($raid, $user, $action, $info = '')
     if($action == 'group_code_public' or $action == 'group_code_private') {
         $request = my_query("   SELECT DISTINCT attendance.user_id, attendance.remote, users.lang
                                 FROM attendance
-                                WHERE raid_id = {$raid}
-                                AND attend_time = (SELECT attend_time from attendance WHERE raid_id = {$raid} AND user_id = {$user})
+                                WHERE raid_id = {$raid_id}
+                                AND attend_time = (SELECT attend_time from attendance WHERE raid_id = {$raid_id} AND user_id = {$user_id})
                             ");
     }else {
         $request = my_query("   SELECT DISTINCT attendance.user_id, users.lang
                                 FROM attendance LEFT JOIN users on users.id = attendance.user_id
-                                WHERE raid_id = {$raid}
-                                AND attendance.user_id != {$user}
+                                WHERE raid_id = {$raid_id}
+                                AND attendance.user_id != {$user_id}
                                 AND cancel = 0
                                 AND raid_done = 0
                                 AND alarm = 1
@@ -126,6 +126,12 @@ function alarm($raid, $user, $action, $info = '')
             $msg_text .= EMOJI_SINGLE . SP . $username . CR;
             $msg_text .= EMOJI_CLOCK . SP . check_time($attendtime);
             $msg_text .= create_traincode_msg($trainercode);
+            $tg_json[] = sendMessage($answer['user_id'], $msg_text, true);
+
+        } else if($action == "new_boss") {
+            $msg_text = '<b>' . getTranslation('alert_raid_boss') . '</b>' . CR;
+            $msg_text .= EMOJI_HERE . SP . $gymname . SP . '(' . $raidtimes . ')' . CR;
+            $msg_text .= EMOJI_EGG . SP . '<b>' . get_local_pokemon_name($raid['pokemon'], $raid['pokemon_form']) . '</b>' . CR;
             $tg_json[] = sendMessage($answer['user_id'], $msg_text, true);
 
         // New attendance
