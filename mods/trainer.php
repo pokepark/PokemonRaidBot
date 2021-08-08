@@ -13,7 +13,7 @@ bot_access_check($update, 'trainer');
 $msg = '<b>' . getTranslation('trainerinfo_set_yours') . '</b>';
 
 $user_id = $update['callback_query']['from']['id'];
-$msg .= CR.CR.get_user($user_id);
+$msg .= CR.CR.get_user($user_id, false);
 
 // Init empty keys array.
 $keys = [];
