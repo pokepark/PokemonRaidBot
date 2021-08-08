@@ -29,20 +29,20 @@ if (file_exists(CONFIG_PATH . '/geoconfig.json')) {
 
 // Telegram JSON array.
 $tg_json = [];
-info_log(count($update),"Received raids:");
+debug_log(count($update),"Received raids:");
 foreach ($update as $raid) {
     $level = $raid['message']['level'];
     $pokemon = $raid['message']['pokemon_id'];
     $exclude_raid_levels = explode(',', $config->WEBHOOK_EXCLUDE_RAID_LEVEL);
     $exclude_pokemons = explode(',', $config->WEBHOOK_EXCLUDE_POKEMON);
     if ((!empty($level) && in_array($level, $exclude_raid_levels)) || (!empty($pokemon) && in_array($pokemon, $exclude_pokemons))) {
-        info_log($pokemon.' Tier: '.$level,'Ignoring raid, the pokemon or raid level is excluded:');
+        debug_log($pokemon.' Tier: '.$level,'Ignoring raid, the pokemon or raid level is excluded:');
         continue;
     }
 
     $gym_name = $raid['message']['name'];
     if ($config->WEBHOOK_EXCLUDE_UNKNOWN && $gym_name === 'unknown') {
-        info_log($raid['message']['gym_id'],'Ignoring raid, the gym name is unknown and WEBHOOK_EXCLUDE_UNKNOWN says to ignore. id:');
+        debug_log($raid['message']['gym_id'],'Ignoring raid, the gym name is unknown and WEBHOOK_EXCLUDE_UNKNOWN says to ignore. id:');
         continue;
     }
     $gym_lat = $raid['message']['latitude'];
@@ -61,11 +61,11 @@ foreach ($update as $raid) {
             if (isPointInsidePolygon($point, $polygon)) {
                 $inside_geofences[] = $geofence_id;
                 $insideGeoFence = true;
-                info_log($geofence_id,'Raid inside geofence:');
+                debug_log($geofence_id,'Raid inside geofence:');
             }
         }
         if ($insideGeoFence === false) {
-            info_log($gym_name,'Ignoring raid, not inside any geofence:');
+            debug_log($gym_name,'Ignoring raid, not inside any geofence:');
             continue;
         }
     }
@@ -93,12 +93,12 @@ foreach ($update as $raid) {
         ]);
         if($statement->rowCount() == 1) {
             $gym_internal_id = $dbh->lastInsertId();
-            info_log($gym_internal_id, 'New gym '.$gym_name.' created with internal id of:');
+            debug_log($gym_internal_id, 'New gym '.$gym_name.' created with internal id of:');
         }else {
             $statement = $dbh->prepare('SELECT id FROM gyms WHERE gym_id LIKE :gym_id LIMIT 1');
             $statement->execute(['gym_id'=>$gym_id]);
             $gym_internal_id = $statement->fetch()['id'];
-            info_log($gym_internal_id, 'Gym info updated. Internal id:');
+            debug_log($gym_internal_id, 'Gym info updated. Internal id:');
         }
     }
     catch (PDOException $exception) {
@@ -193,9 +193,9 @@ foreach ($update as $raid) {
         // If update was needed, send them to TG
         if($statement->rowCount() > 0) {
             $send_updates = true;
-            info_log($raid_id, 'Raid updated:');
+            debug_log($raid_id, 'Raid updated:');
         }else {
-            info_log($gym_name,'Nothing was updated, moving on:');
+            debug_log($gym_name,'Nothing was updated, moving on:');
             continue;
         }
     }else {
@@ -222,7 +222,7 @@ foreach ($update as $raid) {
             $statement = $dbh->prepare( $query );
             $statement->execute($execute_array);
             $raid_id = $dbh->lastInsertId();
-            info_log($raid_id, 'New raid created, raid id:');
+            debug_log($raid_id, 'New raid created, raid id:');
         }
         catch (PDOException $exception) {
             error_log($exception->getMessage());
@@ -232,7 +232,7 @@ foreach ($update as $raid) {
 
         // Skip posting if create only -mode is set or raid time is greater than value set in config
         if ($config->WEBHOOK_CREATE_ONLY or ($raid['message']['end']-$raid['message']['start']) > ($config->WEBHOOK_EXCLUDE_AUTOSHARE_DURATION * 60) ) {
-            info_log($gym_name,'Not autoposting raid, WEBHOOK_CREATE_ONLY is set to true or raids duration is over the WEBHOOK_EXCLUDE_AUTOSHARE_DURATION threshold:');
+            debug_log($gym_name,'Not autoposting raid, WEBHOOK_CREATE_ONLY is set to true or raids duration is over the WEBHOOK_EXCLUDE_AUTOSHARE_DURATION threshold:');
             continue;
         }
     }
@@ -295,7 +295,7 @@ foreach ($update as $raid) {
 
         // Post raid polls.
         foreach ($chats as $chat) {
-            info_log('Posting poll to chat: ' . $chat);
+            debug_log('Posting poll to chat: ' . $chat);
 
             // Send location.
             if ($config->RAID_LOCATION) {
@@ -303,7 +303,7 @@ foreach ($update as $raid) {
                 $msg_text = !empty($raid['address']) ? $raid['address'] . ', ' . substr(strtoupper($config->BOT_ID), 0, 1) . '-ID = ' . $raid['id'] : $raid['pokemon'] . ', ' . substr(strtoupper($config->BOT_ID), 0, 1) . '-ID = ' . $raid['id']; // DO NOT REMOVE ' ID = ' --> NEEDED FOR $config->CLEANUP PREPARATION!
                 $loc = send_venue($chat, $raid['lat'], $raid['lon'], '', $msg_text, true);
                 $tg_json[] = $loc;
-                info_log($loc, 'Location:');
+                debug_log($loc, 'Location:');
             }
 
             // Send the message.
