@@ -33,38 +33,46 @@ function run_cleanup ($telegram = 2, $database = 2) {
         if ($telegram == 1) {
             // Get cleanup info for telegram cleanup.
             $rs = my_query('
-                SELECT    cleanup.id, cleanup.raid_id, cleanup.chat_id, cleanup.message_id, gyms.gym_name, raids.gym_id
+                SELECT    cleanup.id, cleanup.raid_id, cleanup.chat_id, cleanup.message_id, raids.gym_id
                 FROM      cleanup
-                    LEFT JOIN   raids 
-                    ON          cleanup.raid_id = raids.id 
-                    LEFT JOIN   gyms
-                    ON          raids.gym_id = gyms.id
+                    LEFT JOIN   raids
+                    ON          cleanup.raid_id = raids.id
                 WHERE     raids.end_time < DATE_SUB(UTC_TIMESTAMP(), INTERVAL '.$config->CLEANUP_TIME_TG.' MINUTE)
                 ');
             $cleanup_ids = [];
-            $cleanup_gyms = [];
             $tg_json = [];
-            $remote_string = getPublicTranslation('remote_raid');
             cleanup_log('Telegram cleanup starting. Found ' . $rs->rowCount() . ' entries for cleanup.');
             if($rs->rowCount() > 0) {
                 while($row = $rs->fetch()) {
                     $tg_json[] = delete_message($row['chat_id'], $row['message_id'], true);
                     cleanup_log('Deleting raid: '.$row['raid_id'].' from chat '.$row['chat_id'].' (message_id: '.$row['message_id'].')');
                     $cleanup_ids[] = $row['id'];
-                    if(substr($row['gym_name'],0,strlen($remote_string)) == $remote_string) {
-                        $cleanup_gyms[] = $row['gym_id'];
-                        cleanup_log('Deleting temporary gym ' . $row['gym_id'] . ' from database.');
-                    }
                 }
                 my_query('DELETE FROM cleanup WHERE id IN (' . implode(',', $cleanup_ids) . ')');
-                if(count($cleanup_gyms) > 0) {
-                    my_query('DELETE FROM gyms WHERE id IN (' . implode(',', $cleanup_gyms) . ')');
-                }
                 curl_json_multi_request($tg_json);
             }
         }
         if($database == 1) {
             cleanup_log('Database cleanup called.');
+            $remote_string = getPublicTranslation('remote_raid');
+            $rs_temp_gyms = my_query('
+                SELECT      raids.gym_id
+                FROM        raids
+                LEFT JOIN   gyms
+                ON          raids.gym_id = gyms.id
+                WHERE       raids.end_time < DATE_SUB(UTC_TIMESTAMP(), INTERVAL '.$config->CLEANUP_TIME_DB.' MINUTE)
+                AND         SUBSTR(gyms.gym_name, 1, "'.strlen($remote_string).'") = "'.$remote_string.'"
+                ');
+            if($rs_temp_gyms->rowCount() > 0) {
+                $cleanup_gyms = [];
+                while($row = $rs_temp_gyms->fetch()) {
+                    $cleanup_gyms[] = $row['gym_id'];
+                    cleanup_log('Deleting temporary gym ' . $row['gym_id'] . ' from database.');
+                }
+                if(count($cleanup_gyms) > 0) {
+                    my_query('DELETE FROM gyms WHERE id IN (' . implode(',', $cleanup_gyms) . ')');
+                }
+            }
             $q_a = my_query('DELETE FROM attendance WHERE raid_id IN (SELECT id FROM raids WHERE raids.end_time < DATE_SUB(UTC_TIMESTAMP(), INTERVAL '.$config->CLEANUP_TIME_DB.' MINUTE))');
             $q_r = my_query('DELETE FROM raids WHERE end_time < DATE_SUB(UTC_TIMESTAMP(), INTERVAL '.$config->CLEANUP_TIME_DB.' MINUTE)');
             cleanup_log('Cleaned ' . $q_a->rowCount() . ' rows from attendance table');
