@@ -116,7 +116,7 @@ CREATE TABLE `raid_bosses` (
   `date_end` datetime NOT NULL DEFAULT '2038-01-19 03:14:07',
   `raid_level` enum('1','2','3','4','5','6','X') DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=utf8mb4
+) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -172,6 +172,7 @@ CREATE TABLE `users` (
   `trainercode` varchar(12) CHARACTER SET utf8mb4 DEFAULT NULL,
   `team` enum('mystic','valor','instinct') DEFAULT NULL,
   `level` int(10) unsigned DEFAULT '0',
+  `lang` VARCHAR(10) NULL,
   `tutorial` TINYINT(1) NOT NULL DEFAULT 0,
    PRIMARY KEY (`id`),
   UNIQUE KEY `i_userid` (`user_id`)
