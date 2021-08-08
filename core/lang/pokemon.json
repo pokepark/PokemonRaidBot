@@ -4325,48 +4325,6 @@
         "DE": "Volcanion",
         "RU": "Вулканион"
     },
-    "pokemon_id_808": {
-        "EN": "Meltan",
-        "FR": "Meltan",
-        "DE": "Meltan",
-        "RU": "Мелтан"
-    },
-    "pokemon_id_809": {
-        "EN": "Melmetal",
-        "FR": "Melmetal",
-        "DE": "Melmetal",
-        "RU": "Мелметал"
-    },
-    "pokemon_id_862": {
-        "EN": "Obstagoon",
-        "FR": "Ixon",
-        "DE": "Barrikadax",
-        "RU": "Обстагун"
-    },
-    "pokemon_id_863": {
-        "EN": "Perrserker",
-        "FR": "Berserkatt",
-        "DE": "Mauzinger",
-        "RU": "Перрсеркер"
-    },
-    "pokemon_id_865": {
-        "EN": "Sirfetch'd",
-        "FR": "Palarticho",
-        "DE": "Lauchzelot",
-        "RU": "Сирфетчд"
-    },
-    "pokemon_id_866": {
-        "EN": "Mr. Rime",
-        "FR": "M. Glaquette",
-        "DE": "Pantifrost",
-        "RU": "Мистер Райм"
-    },
-    "pokemon_id_867": {
-        "EN": "Runerigus",
-        "FR": "Tutétékri",
-        "DE": "Oghnatoll",
-        "RU": "Рунеригус"
-    },
     "pokemon_id_722": {
         "EN": "Rowlet",
         "FR": "Brindibou",
@@ -4883,6 +4841,18 @@
         "DE": "Zeraora",
         "RU": "Зераора"
     },
+    "pokemon_id_808": {
+        "EN": "Meltan",
+        "FR": "Meltan",
+        "DE": "Meltan",
+        "RU": "Мелтан"
+    },
+    "pokemon_id_809": {
+        "EN": "Melmetal",
+        "FR": "Melmetal",
+        "DE": "Melmetal",
+        "RU": "Мелметал"
+    },
     "pokemon_id_810": {
         "EN": "Grookey",
         "FR": "Ouistempo",
@@ -5195,11 +5165,41 @@
         "DE": "Olangaar",
         "RU": "Гриммснарл"
     },
+    "pokemon_id_862": {
+        "EN": "Obstagoon",
+        "FR": "Ixon",
+        "DE": "Barrikadax",
+        "RU": "Обстагун"
+    },
+    "pokemon_id_863": {
+        "EN": "Perrserker",
+        "FR": "Berserkatt",
+        "DE": "Mauzinger",
+        "RU": "Перрсеркер"
+    },
     "pokemon_id_864": {
         "EN": "Cursola",
         "FR": "Corayôme",
         "DE": "Gorgasonn",
         "RU": "Курсола"
+    },
+    "pokemon_id_865": {
+        "EN": "Sirfetch'd",
+        "FR": "Palarticho",
+        "DE": "Lauchzelot",
+        "RU": "Сирфетчд"
+    },
+    "pokemon_id_866": {
+        "EN": "Mr. Rime",
+        "FR": "M. Glaquette",
+        "DE": "Pantifrost",
+        "RU": "Мистер Райм"
+    },
+    "pokemon_id_867": {
+        "EN": "Runerigus",
+        "FR": "Tutétékri",
+        "DE": "Oghnatoll",
+        "RU": "Рунеригус"
     },
     "pokemon_id_868": {
         "EN": "Milcery",
