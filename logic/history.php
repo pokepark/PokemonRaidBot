@@ -5,7 +5,7 @@ function create_history_date_msg_keys($current = '(SELECT max(start_time) FROM r
         // Reformat YYYY-MM to DATETIME
         $current = '\''.$current.'-01 00:00:00\'';
     }
-    $q = my_query(' SELECT    	DATE_FORMAT(start_time, "%d") as day, DATE_FORMAT(start_time, "%e") as day_disp, DATE_FORMAT('.$current.', "%Y-%m") as current_y_m,
+    $q = my_query(' SELECT  DISTINCT    DATE_FORMAT(start_time, "%d") as day, DATE_FORMAT(start_time, "%e") as day_disp, DATE_FORMAT('.$current.', "%Y-%m") as current_y_m,
                     if((SELECT count(*) FROM raids left join attendance on attendance.raid_id = raids.id where end_time < UTC_TIMESTAMP() and date_format(start_time, "%Y-%m") = date_format(DATE_SUB('.$current.', INTERVAL 1 MONTH), "%Y-%m") and attendance.id is not null limit 1), date_format(DATE_SUB('.$current.', INTERVAL 1 MONTH), "%Y-%m"), 0) as prev,
                     if((SELECT count(*) FROM raids left join attendance on attendance.raid_id = raids.id where end_time < UTC_TIMESTAMP() and date_format(start_time, "%Y-%m") = date_format(DATE_ADD('.$current.', INTERVAL 1 MONTH), "%Y-%m") and attendance.id is not null limit 1), date_format(DATE_ADD('.$current.', INTERVAL 1 MONTH), "%Y-%m"), 0) as next
                     FROM        raids
@@ -14,8 +14,7 @@ function create_history_date_msg_keys($current = '(SELECT max(start_time) FROM r
                     WHERE 		end_time < UTC_TIMESTAMP()
                     AND			date_format(start_time, "%Y-%m") = DATE_FORMAT('.$current.', "%Y-%m")
                     AND 		attendance.id IS NOT NULL
-                    GROUP BY    DATE_FORMAT(start_time, "%d")
-                    ORDER BY    start_time ASC
+                    ORDER BY    DATE_FORMAT(start_time, "%d") ASC
                     ');
     $day_keys = [];
     $current_y_m = '';

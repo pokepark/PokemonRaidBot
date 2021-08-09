@@ -55,8 +55,7 @@ if($current_day == 0) {
             AND       raids.end_time < UTC_TIMESTAMP()
             AND       attendance.id IS NOT NULL
             AND       gyms.gym_name IS NOT NULL
-            GROUP BY  gym_name
-            ORDER BY  gym_name
+            ORDER BY  first_letter
             '
         );
 
