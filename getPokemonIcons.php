@@ -30,42 +30,6 @@ if(empty($argv[1]) || (!empty($argv[1]) && strtolower($argv[1]) == "pokeminers")
 // Get download function curl_get_contents
 include('logic/curl_get_contents.php');
 
-// Download file
-function downloadFile($URL, $destination, $filename) {
-    // Input and output filename.
-    $input = $URL . $filename;
-    $output = $destination . $filename;
-
-    // Get file.
-    $data = curl_get_contents($input);
-
-    // Write to file.
-    if(empty($data)) {
-        echo 'Error downloading file, no data received!' . PHP_EOL;
-    } else {
-        $file = fopen($output, "w+");
-        fwrite($file, $data);
-        fflush($file);
-        fclose($file);
-        clearstatcache(); // Otherwise filesize will return stale dat
-    }
-
-    return $output;
-}
-
-// Verify download
-function verifyDownload($file, $git_filesize) {
-    // File successfully created?
-    if(!is_file($file)) {
-      echo 'Error downloading file, no output file was found: ' . $file . PHP_EOL;
-    } else {
-      $real_filesize = filesize($file);
-      if ($real_filesize != $git_filesize) {
-        echo "Error downloading file, size doesn't match (" . $real_filesize . " != " . $git_filesize . ")!" . PHP_EOL;
-      }
-    }
-}
-
 // Check whether the file exists already and if so, has it been updated since then
 function is_updated($path, $file_object) {
   $github_magic_header = "blob 9\x00";
@@ -150,16 +114,29 @@ foreach ($repos as $key => $r)
     if(is_array($content)) {
         $count_unchanged = 0;
         $count_extension = 0;
+        $i = 0;
+        $multi_handle = curl_multi_init();
+        $file_pointers = [];
+        $curl_handles = [];
+        $output_info = [];
         foreach($content['tree'] as $c) {
             // Filter by file extension
             $ext = '.' . pathinfo($c['path'], PATHINFO_EXTENSION);
             if($filter == $ext) {
               // Only get files that don't exist or where the hash doesn't match
               if(is_updated($dest . $c['path'], $c)) {
-                echo 'Downloading ' . $c['path'] . ': ';
-                $download_path = downloadFile($repo_raw, $dest, $c['path']);
-                echo filesize($download_path) . '/' . $c['size'] . ' bytes' . PHP_EOL;
-                verifyDownload($download_path, $c['size']);
+                echo 'Downloading ' . $c['path'] . PHP_EOL;
+                $input = $repo_raw . $c['path'];
+                $output = $dest . $c['path'];
+
+                $output_info[] = ['file'=>$output, 'source_size'=>$c['size']];
+                $curl_handles[$i] = curl_init($input);
+                $file_pointers[$i] = fopen($output, 'w');
+                curl_setopt($curl_handles[$i], CURLOPT_FILE, $file_pointers[$i]);
+                curl_setopt($curl_handles[$i], CURLOPT_HEADER, 0);
+                curl_setopt($curl_handles[$i], CURLOPT_CONNECTTIMEOUT, 60);
+                curl_multi_add_handle($multi_handle,$curl_handles[$i]);
+                $i++;
               } else {
                   $count_unchanged = $count_unchanged + 1;
                   // Debug
@@ -171,6 +148,32 @@ foreach ($repos as $key => $r)
                 // echo 'Skipping file: ' . $c['path'] . ' (File extension filtering)' . PHP_EOL;
             }
         }
+        // Download the files
+        do {
+            curl_multi_exec($multi_handle,$running);
+        } while ($running > 0);
+
+        $successfull_count = 0;
+        for($o=0;$o<$i;$o++) {
+            curl_multi_remove_handle($multi_handle, $curl_handles[$o]);
+            curl_close($curl_handles[$o]);
+            fclose ($file_pointers[$o]);
+
+            // Verify download
+            // File successfully created?
+            if(!is_file($output_info[$o]['file'])) {
+              echo 'Error downloading file, no output file was found: ' . $output_info[$o]['file'] . PHP_EOL;
+            } else {
+              $real_filesize = filesize($output_info[$o]['file']);
+              if ($real_filesize != $output_info[$o]['source_size']) {
+                echo "Error downloading file, size doesn't match (" . $real_filesize . " != " . $output_info[$o]['source_size'] . ")!" . PHP_EOL;
+              }else {
+                $successfull_count++;
+              }
+            }
+        }
+        echo $successfull_count . '/' . $o . ' files downloaded successfully!' . PHP_EOL . PHP_EOL;
+        curl_multi_close($multi_handle);
         // Unchanged files
         if($count_unchanged > 0) {
             echo 'Skipped ' . $count_unchanged . ' unchanged files' . PHP_EOL;
