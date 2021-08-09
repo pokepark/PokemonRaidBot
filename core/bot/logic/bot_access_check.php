@@ -177,7 +177,7 @@ function bot_access_check($update, $permission = 'access-bot', $return_result = 
                         debug_log($access_file);
 
                         // If a config file matching users status was found, check if tutorial is forced
-                        if(is_array($access_file) && $config->TUTORIAL_MODE && $new_user && in_array("force-tutorial",$access_file)) {
+                        if(is_array($access_file) && $config->TUTORIAL_MODE && $access_granted_by != 'BOT_ADMINS' && $new_user && in_array("force-tutorial",$access_file)) {
                             $access_file = NULL;
                         }
 
