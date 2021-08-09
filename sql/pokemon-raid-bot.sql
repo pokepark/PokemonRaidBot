@@ -53,7 +53,7 @@ CREATE TABLE `events` (
   `raid_duration` int(3) unsigned NOT NULL DEFAULT 0,
   `hide_raid_picture` tinyint(1) DEFAULT 0,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -116,7 +116,7 @@ CREATE TABLE `raid_bosses` (
   `date_end` datetime NOT NULL DEFAULT '2038-01-19 03:14:07',
   `raid_level` enum('1','2','3','4','5','6','X') DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
