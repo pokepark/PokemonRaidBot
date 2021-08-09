@@ -142,7 +142,7 @@ function get_address($lat, $lon)
 
         // Curl request.
         $curl = curl_init($url);
-        curl_setopt($curl,  CURLOPT_HTTPHEADER, array("User-Agent: PokemonRaidBot"));
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array("User-Agent: PokemonRaidBot"));
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 
         // Proxy server?
@@ -167,9 +167,7 @@ function get_address($lat, $lon)
             $location['street_number'] = (isset($data['address']['house_number']) ? $data['address']['house_number'] : '');
             $location['postal_code'] = (isset($data['address']['postcode']) ? $data['address']['postcode'] : '');
 
-            if(isset($data['address']['city_district']) && !empty($data['address']['city_district'])) {
-                $location['district'] = $data['address']['city_district'];
-            }elseif(isset($data['address']['city']) && !empty($data['address']['city'])) {
+            if(isset($data['address']['city']) && !empty($data['address']['city'])) {
                 if(isset($data['address']['town']) && $data['address']['town'] != $data['address']['city']) {
                     $location['district'] = $data['address']['town'] . ', ' . $data['address']['city'];
                 } else {
