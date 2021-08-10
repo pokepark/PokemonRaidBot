@@ -72,11 +72,11 @@ if (!empty($answer)) {
                 if($answer['is_remote_gym'] == '1' && $answer['user_is_creator']) {
                     $keys = [[
                                 [
-                                'text'          =>  getTranslation('yes',$answer['lang']),
+                                'text'          =>  getTranslation('yes'),
                                 'callback_data' =>  $data['id'].':end_remote_raid:0'
                                 ],
                                 [
-                                'text'          =>  getTranslation('no',$answer['lang']),
+                                'text'          =>  getTranslation('no'),
                                 'callback_data' =>  '0:exit:0'
                                 ],
                              ]];
@@ -94,7 +94,7 @@ if (!empty($answer)) {
            send_response_vote($update, $data);
         }
     }else {
-        $msg = getTranslation('vote_status_not_allowed', $answer['lang']);
+        $msg = getTranslation('vote_status_not_allowed');
         answerCallbackQuery($update['callback_query']['id'], $msg);
     }
 } else {
