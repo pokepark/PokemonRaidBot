@@ -156,11 +156,14 @@ Just use exit to logout from database.
 
 Import `pokemon-raid-bot.sql` as default DB structure and `game-master-raid-boss-pokedex.sql` for the latest data of Pokemon in the game. You can find these files in the sql folder.
 
-Command DB structure: `mysql -u USERNAME -p DATABASENAME < sql/pokemon-raid-bot.sql`
+Command DB structure: 
+```
+mysql -u USERNAME -p DATABASENAME < sql/pokemon-raid-bot.sql
+```
 
 To get raid bosses:
 ```
-mysql -u USERNAME -p DATABASENAME < sql/game-master-raid-boss-pokedex.sql`
+mysql -u USERNAME -p DATABASENAME < sql/game-master-raid-boss-pokedex.sql
 ```
 
 Important: The raid level is NOT set when importing the raid bosses from the sql file! Set them via the /pokedex command, explained below in this readme.
