@@ -12,7 +12,7 @@ function user_tutorial($user_id) {
         $statement = $dbh->prepare( $query );
         $statement->execute([":user_id"=>$user_id]);
         $res = $statement->fetch();
-        if($res->rowCount() > 0) $result = $res['tutorial'];
+        if($statement->rowCount() > 0) $result = $res['tutorial'];
         else $result = 0;
         debug_log("Result: ".$result);
         return $result;
