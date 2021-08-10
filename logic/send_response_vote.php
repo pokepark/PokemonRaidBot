@@ -127,10 +127,7 @@ function send_response_vote($update, $data, $new = false, $text = true)
 
 function get_all_active_raid_channels($update,$data){
     global $config;
-    $channel_id = [[
-        'chat_id' => $update['callback_query']['message']['chat']['id'],
-        'message_id' => $update['callback_query']['message']['message_id'],
-      ]];
+    $channel_id = [];
     $rs_chann = my_query(
         "
         SELECT *
@@ -138,18 +135,13 @@ function get_all_active_raid_channels($update,$data){
           WHERE raid_id = {$data['id']}
           AND chat_id <> 0
         ");
-    // IF Chat was shared only to target channel -> no extra update
-    if ($rs_chann->rowCount() > 1) {
-        // share to multiple chats
+    if ($rs_chann->rowCount() > 0) {
         $answer = $rs_chann->fetchAll();
         foreach($answer as $channel){
             array_push($channel_id,['chat_id' => $channel['chat_id'],'message_id' => $channel['message_id']]);
         }
-        return $channel_id;
-    }else{
-        // Only one Chat to update
-        return $channel_id;
     }
+    return $channel_id;
 }
 
 ?>

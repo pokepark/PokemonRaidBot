@@ -635,6 +635,30 @@
     "PL": "TRANSLATE",
     "FI": "(max. REMOTE_MAX_USERS kerrallaan)"
   },
+  "delete_remote_raid": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "You have played the remote raid you created. Can we delete the raid poll?",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Olet pelannut luomasi etäraidin. Saako raidi-ilmoituksen poistaa?"
+  },
+  "remote_raid_marked_ended": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Thank you! Remote raid marked as ended!",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Kiitos! Etäraidi merkattu päättyneeksi!"
+  },
   "group_code": {
     "NL": "Groep code",
     "DE": "Gruppencode",
