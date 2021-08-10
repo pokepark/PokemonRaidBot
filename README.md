@@ -1203,6 +1203,7 @@ To keep local data, such as `pokemon` table and Pokemon icons directory, up to d
 | RAID_POLL_SHOW_CREATOR | Display the creator of the raid in the bottom of raid poll. |
 | RAID_POLL_ENABLE_HYPERLINKS_IN_NAMES | Enable hyperlinks to user profiles in participant names in raid polls. It's recommended to disable this if you're running the bot in a supergroup and with `RAID_PICTURE` mode on. |
 | RAID_POLL_SHOW_NICK_OVER_NAME | Bool, If `CUSTOM_TRAINERNAME` is `false`, display user's Telegram nickname (@name) instead of name (first name + last name)|
+| RAID_ENDED_HIDE_KEYS | Bool, Hide the `Raid done` button in raid polls after the raid has ended |
 | RAID_REMOTEPASS_USERS | Bool, allow participation to raid polls with a remote pass |
 | RAID_REMOTEPASS_USERS_LIMIT | Integer, How many remote participants to allow into a single raid |
 | RAID_WANT_INVITE | Bool, allow participants to indicate that they wish to be invited to the raid |
