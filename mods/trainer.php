@@ -74,4 +74,8 @@ answerCallbackQuery($update['callback_query']['id'], 'OK');
 // Edit message.
 edit_message($update, $msg, $keys, false);
 
+// Exit.
+$dbh = null;
+exit();
+
 ?>
