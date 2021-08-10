@@ -13,7 +13,7 @@ if(!$access && bot_access_check($update, 'list', true) && !$new_user){
     require('list.php');
     exit;
 }
-if($config->TUTORIAL_MODE && $new_user && !$access or $access == 'BOT_ADMINS') {
+if($config->TUTORIAL_MODE && $new_user && (!$access or $access == 'BOT_ADMINS')) {
     // Tutorial
     if(is_file(ROOT_PATH . '/config/tutorial.php')) {
         require_once(ROOT_PATH . '/config/tutorial.php');
