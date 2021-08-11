@@ -69,7 +69,7 @@ function keys_vote($raid)
         ];
 
 
-        if($config->RAID_REMOTEPASS_USERS) {
+        if($config->RAID_REMOTEPASS_USERS && ($raid['event_allow_remote'] == null or $raid['event_allow_remote'] != 0)) {
             $buttons_extra[0] = array_merge($buttons_extra[0], $button_remote[0]);
         }
 
@@ -83,7 +83,7 @@ function keys_vote($raid)
             ]
         ];
 
-        if($config->RAID_WANT_INVITE) {
+        if($config->RAID_WANT_INVITE && ($raid['event_allow_invite'] == null or $raid['event_allow_invite'] != 0)) {
             $buttons_extra[0] = array_merge($buttons_extra[0], $button_want_invite[0]);
         }
 

@@ -52,6 +52,8 @@ CREATE TABLE `events` (
   `time_slots` int(3) DEFAULT NULL,
   `raid_duration` int(3) unsigned NOT NULL DEFAULT 0,
   `hide_raid_picture` tinyint(1) DEFAULT 0,
+  `allow_remote` TINYINT UNSIGNED NOT NULL DEFAULT 1,
+  `allow_invite` TINYINT UNSIGNED NOT NULL DEFAULT 1,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
