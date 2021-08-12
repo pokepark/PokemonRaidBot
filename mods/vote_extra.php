@@ -31,7 +31,7 @@ if (!empty($answer)) {
             "
             UPDATE    attendance
             SET       extra_in_person = 0,
-                    extra_remote = 0
+                    extra_alien = 0
             WHERE   raid_id = {$data['id']}
             AND   user_id = {$update['callback_query']['from']['id']}
             "
