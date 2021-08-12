@@ -69,14 +69,16 @@ function alarm($raid_id_array, $user_id, $action, $info = '')
         // Adding a guest
         if($action == "extra") {
             debug_log('Alarm additional trainer: ' . $info);
-            $color_old = array('mystic', 'valor', 'instinct');
-            $color_new = array (TEAM_B, TEAM_R, TEAM_Y);
-            $color = str_replace($color_old, $color_new, $info);
+            $icons = ['alien' => EMOJI_ALIEN, 'in_person' => EMOJI_IN_PERSON];
 
             // Sending message
-            $msg_text = '<b>' . getTranslation('alert_add_trainer', true, $recipient_language) . '</b>' . CR;
+            if($info == 'alien') {
+                $msg_text = '<b>' . getTranslation('alert_add_alien_trainer', true, $recipient_language) . '</b>' . CR;
+            }else {
+                $msg_text = '<b>' . getTranslation('alert_add_trainer', true, $recipient_language) . '</b>' . CR;
+            }
             $msg_text .= EMOJI_HERE . SP . $gymname . SP . '(' . $raidtimes . ')' . CR;
-            $msg_text .= EMOJI_SINGLE . SP . $username . SP . '+' . $color . CR;
+            $msg_text .= EMOJI_SINGLE . SP . $username . SP . '+' . $icons[$info] . CR;
             $msg_text .= EMOJI_CLOCK . SP . check_time($attendtime);
             $msg_text .= create_traincode_msg($trainercode);
             $tg_json[] = sendMessage($answer['user_id'], $msg_text, true);

@@ -44,47 +44,30 @@ function keys_vote($raid)
                     'callback_data' => $raid['id'] . ':vote_extra:0'
                 ],
                 [
-                    'text'          => '+ ' . TEAM_B,
-                    'callback_data' => $raid['id'] . ':vote_extra:mystic'
+                    'text'          => '+ ' . EMOJI_IN_PERSON,
+                    'callback_data' => $raid['id'] . ':vote_extra:in_person'
                 ],
                 [
-                    'text'          => '+ ' . TEAM_R,
-                    'callback_data' => $raid['id'] . ':vote_extra:valor'
-                ],
-                [
-                    'text'          => '+ ' . TEAM_Y,
-                    'callback_data' => $raid['id'] . ':vote_extra:instinct'
+                    'text'          => '+ ' . EMOJI_ALIEN,
+                    'callback_data' => $raid['id'] . ':vote_extra:alien'
                 ]
             ]
         ];
 
         // Remote Raid Pass key
-        $button_remote = [
-            [
-                [
-                    'text'          => EMOJI_REMOTE,
-                    'callback_data' => $raid['id'] . ':vote_remote:0'
-                ]
-            ]
-        ];
-
-
         if($config->RAID_REMOTEPASS_USERS && ($raid['event_allow_remote'] == null or $raid['event_allow_remote'] != 0)) {
-            $buttons_extra[0] = array_merge($buttons_extra[0], $button_remote[0]);
+            $buttons_extra[0][] = [
+                'text'          => EMOJI_REMOTE,
+                'callback_data' => $raid['id'] . ':vote_remote:0'
+            ];
         }
 
         // Want invite key
-        $button_want_invite = [
-            [
-                [
-                    'text'          => EMOJI_WANT_INVITE,
-                    'callback_data' => $raid['id'] . ':vote_want_invite:0'
-                ]
-            ]
-        ];
-
         if($config->RAID_WANT_INVITE && ($raid['event_allow_invite'] == null or $raid['event_allow_invite'] != 0)) {
-            $buttons_extra[0] = array_merge($buttons_extra[0], $button_want_invite[0]);
+            $buttons_extra[0][] = [
+                'text'          => EMOJI_WANT_INVITE,
+                'callback_data' => $raid['id'] . ':vote_want_invite:0'
+            ];
         }
 
         // Team and level keys.
@@ -176,7 +159,6 @@ function keys_vote($raid)
             ];
             $buttons_status[0] = array_merge($buttons_refresh[0], $buttons_status[0]);
         }
-
         // Get current pokemon
         $raid_pokemon_id = $raid['pokemon'];
         $raid_pokemon_form_id = $raid['pokemon_form'];
@@ -587,7 +569,7 @@ function keys_vote($raid)
                 //debug_log($keys_default);
 
                 // Add Ex-Raid Invite button for raid level X
-                if ($raid_level == 'X') {
+                if ($raid['event'] == EVENT_ID_EX) {
                     if($config->RAID_POLL_HIDE_BUTTONS_TEAM_LVL) {
                         $buttons_extra[0] = array_merge($buttons_extra[0], $button_invite[0]);
                     } else {

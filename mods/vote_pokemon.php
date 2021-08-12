@@ -116,9 +116,8 @@ if(!empty($atts)) {
               user_id,
               raid_id,
               attend_time,
-              extra_mystic,
-              extra_valor,
-              extra_instinct,
+              extra_in_person,
+              extra_alien,
               arrived,
               raid_done,
               cancel,
@@ -127,15 +126,15 @@ if(!empty($atts)) {
               invite,
               pokemon,
               alarm,
-              want_invite
+              want_invite,
+              can_invite
             )
             VALUES(
             '{$atts[0]['user_id']}',
             '{$atts[0]['raid_id']}',
             '{$atts[0]['attend_time']}',
-            '{$atts[0]['extra_mystic']}',
-            '{$atts[0]['extra_valor']}',
-            '{$atts[0]['extra_instinct']}',
+            '{$atts[0]['extra_in_person']}',
+            '{$atts[0]['extra_alien']}',
             '{$atts[0]['arrived']}',
             '{$atts[0]['raid_done']}',
             '{$atts[0]['cancel']}',
@@ -144,7 +143,8 @@ if(!empty($atts)) {
             '{$atts[0]['invite']}',
             '{$data['arg']}',
             '{$atts[0]['alarm']}',
-            '{$atts[0]['want_invite']}'
+            '{$atts[0]['want_invite']}',
+            '{$atts[0]['can_invite']}'
             )
             "
             );

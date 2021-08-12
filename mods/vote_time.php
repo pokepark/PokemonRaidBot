@@ -42,7 +42,7 @@ $raid = get_raid($data['id']);
 if($count_att > 0){
     $rs = my_query(
         "
-        SELECT    user_id, remote, (1 + extra_valor + extra_instinct + extra_mystic) as user_count
+        SELECT    user_id, remote, (1 + extra_in_person + extra_alien) as user_count
         FROM      attendance
           WHERE   raid_id = {$data['id']}
             AND   user_id = {$update['callback_query']['from']['id']}

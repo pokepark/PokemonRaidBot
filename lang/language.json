@@ -2903,6 +2903,18 @@
     "PL": "TRANSLATE",
     "FI": "Uusi osallistuja!"
   },
+  "alert_add_alien_trainer": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "User is inviting a player from outside the group!",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Pelaaja kutsuu kaverin ryhmän ulkopuolelta!"
+  },
   "alert_later": {
     "NL": "Late Speler!",
     "DE": "Verspäteter Trainer!",

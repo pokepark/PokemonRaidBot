@@ -43,9 +43,6 @@ function raid_edit_raidlevel_keys($gym_id, $gym_first_letter, $admin_access = [f
         // Raid level and action
         $raid_level = $level['raid_level'];
 
-        // Continue if user doesn't have permission to create ex-raid and raid_level is X
-        if($raid_level == 'X' && $admin_access[0] === false) continue;
-
         // Add key for pokemon if we have just 1 pokemon for a level
         if($level['raid_level_count'] == 1) {
             $query_mon = my_query('

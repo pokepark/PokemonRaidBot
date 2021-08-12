@@ -9,7 +9,7 @@ debug_log('vote_remote()');
 // Get current remote status of user
 $rs = my_query(
     "
-    SELECT remote, (1 + extra_valor + extra_instinct + extra_mystic) as user_count
+    SELECT remote, (1 + extra_in_person + extra_alien) as user_count
     FROM   attendance
     WHERE  raid_id = {$data['id']}
     AND   user_id = {$update['callback_query']['from']['id']}

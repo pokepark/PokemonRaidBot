@@ -149,6 +149,7 @@ function show_raid_poll($raid)
     $cnt_all = 0;
     $cnt_remote = 0;
     $cnt_want_invite = 0;
+    $cnt_extra_alien = 0;
     $cnt_latewait = 0;
     $cnt_cancel = 0;
     $cnt_done = 0;
@@ -161,7 +162,8 @@ function show_raid_poll($raid)
         $attendance = check_trainername($attendance);
 
         // Define variables if necessary
-        if(!isset($cnt_array[$attendance['attend_time']][$attendance_pokemon]))$cnt_array[$attendance['attend_time']][$attendance_pokemon]['mystic']=$cnt_array[$attendance['attend_time']][$attendance_pokemon]['valor']=$cnt_array[$attendance['attend_time']][$attendance_pokemon]['instinct']=$cnt_array[$attendance['attend_time']][$attendance_pokemon]['noteam']=$cnt_array[$attendance['attend_time']][$attendance_pokemon]['late']=$cnt_array[$attendance['attend_time']][$attendance_pokemon]['remote']=$cnt_array[$attendance['attend_time']][$attendance_pokemon]['want_invite']=$cnt_array[$attendance['attend_time']][$attendance_pokemon]['total']=0;
+        if(!isset($cnt_array[$attendance['attend_time']][$attendance_pokemon]))
+            $cnt_array[$attendance['attend_time']][$attendance_pokemon]['extra_alien']=$cnt_array[$attendance['attend_time']][$attendance_pokemon]['in_person']=$cnt_array[$attendance['attend_time']][$attendance_pokemon]['late']=$cnt_array[$attendance['attend_time']][$attendance_pokemon]['remote']=$cnt_array[$attendance['attend_time']][$attendance_pokemon]['want_invite']=$cnt_array[$attendance['attend_time']][$attendance_pokemon]['total']=0;
         if(!isset($cnt_array[$attendance['attend_time']]['other_pokemon'])) $cnt_array[$attendance['attend_time']]['other_pokemon'] = $cnt_array[$attendance['attend_time']]['raid_pokemon'] = $cnt_array[$attendance['attend_time']]['any_pokemon'] = 0;
 
         if($attendance['cancel'] == 0 && $attendance['raid_done'] == 0) {
@@ -175,26 +177,27 @@ function show_raid_poll($raid)
             }
 
             // Adding to total count of specific pokemon at specific time
-            $cnt_array[$attendance['attend_time']][$attendance_pokemon]['total'] += 1 + $attendance['extra_valor'] + $attendance['extra_instinct'] + $attendance['extra_mystic'];
+            $cnt_array[$attendance['attend_time']][$attendance_pokemon]['total'] += 1 + $attendance['extra_in_person'] + $attendance['extra_alien'];
 
             if($attendance['want_invite'] == 0) {
                 // Fill attendance array with results
                 $att_array[$attendance['attend_time']][$attendance_pokemon][] = $attendance;
 
                 // Fill counts array
-                if(!in_array($attendance['team'],["valor","mystic","instinct"])) $user_team = "noteam"; else $user_team = $attendance['team'];
-                $cnt_array[$attendance['attend_time']][$attendance_pokemon][$user_team] += 1; // Add 1 to user's own team's count
-                $cnt_array[$attendance['attend_time']][$attendance_pokemon]['valor'] += $attendance['extra_valor']; // Add extras to team counts
-                $cnt_array[$attendance['attend_time']][$attendance_pokemon]['instinct'] += $attendance['extra_instinct'];
-                $cnt_array[$attendance['attend_time']][$attendance_pokemon]['mystic'] += $attendance['extra_mystic'];
+                if($attendance['extra_alien'] == 1) {
+                    $cnt_extra_alien = 1;
+                    $cnt_array[$attendance['attend_time']][$attendance_pokemon]['extra_alien'] += $attendance['extra_alien'];
+                }
 
                 if($attendance['late'] == 1) {
                     $cnt_latewait = 1;
-                    $cnt_array[$attendance['attend_time']][$attendance_pokemon]['late'] += 1 + $attendance['extra_valor'] + $attendance['extra_mystic'] + $attendance['extra_instinct'];
+                    $cnt_array[$attendance['attend_time']][$attendance_pokemon]['late'] += 1 + $attendance['extra_in_person'] + $attendance['extra_alien'];
                 }
                 if($attendance['remote'] == 1) {
                     $cnt_remote = 1;
-                    $cnt_array[$attendance['attend_time']][$attendance_pokemon]['remote'] += 1 + $attendance['extra_valor'] + $attendance['extra_mystic'] + $attendance['extra_instinct'];
+                    $cnt_array[$attendance['attend_time']][$attendance_pokemon]['remote'] += 1 + $attendance['extra_in_person'];
+                }else {
+                    $cnt_array[$attendance['attend_time']][$attendance_pokemon]['in_person'] += 1 + $attendance['extra_in_person'];
                 }
             }else if($attendance['want_invite'] == 1) {
                 // Create array key for attend time and pokemon to maintain correct sorting order
@@ -205,15 +208,15 @@ function show_raid_poll($raid)
                     $att_array[$attendance['attend_time']][$attendance_pokemon] = [];
                 }
 
-                $cnt_array[$attendance['attend_time']][$attendance_pokemon]['want_invite'] += 1 + $attendance['extra_valor'] + $attendance['extra_mystic'] + $attendance['extra_instinct'];
+                $cnt_array[$attendance['attend_time']][$attendance_pokemon]['want_invite'] += 1 + $attendance['extra_in_person'];
             }
         }else {
             if($attendance['raid_done']==1) {
-                $cnt_done += 1 + $attendance['extra_valor'] + $attendance['extra_instinct'] + $attendance['extra_mystic'];
+                $cnt_done += 1 + $attendance['extra_in_person'] + $attendance['extra_alien'];
                 $done_array[$attendance['user_id']] = $attendance; // Adding user_id as key to overwrite duplicate entries and thus only display user once even if they made multiple pokemon selections
             }
             if($attendance['cancel']==1) {
-                $cnt_cancel += 1 + $attendance['extra_valor'] + $attendance['extra_instinct'] + $attendance['extra_mystic'];
+                $cnt_cancel += 1 + $attendance['extra_in_person'] + $attendance['extra_alien'];
                 $cancel_array[$attendance['user_id']] = $attendance;
             }
         }
@@ -284,7 +287,7 @@ function show_raid_poll($raid)
         }
 
         // Add Ex-Raid Message if Pokemon is in Ex-Raid-List.
-        if($raid_level == 'X') {
+        if($raid['event'] == EVENT_ID_EX) {
             $msg = raid_poll_message($msg, CR . EMOJI_WARN . ' <b>' . getPublicTranslation('exraid_pass') . '</b> ' . EMOJI_WARN . CR);
         }
 
@@ -305,9 +308,9 @@ function show_raid_poll($raid)
             $previous_pokemon = 'FIRST_RUN';
 
             // Add hint for remote attendances.
-            if($config->RAID_REMOTEPASS_USERS && $cnt_remote > 0) {
+            if($config->RAID_REMOTEPASS_USERS && ($cnt_remote > 0 || $cnt_want_invite > 0 || $cnt_extra_alien > 0)) {
                 $remote_max_msg = str_replace('REMOTE_MAX_USERS', $config->RAID_REMOTEPASS_USERS_LIMIT, getPublicTranslation('remote_participants_max'));
-                $msg = raid_poll_message($msg, CR . EMOJI_REMOTE . SP . getPublicTranslation('remote_participants') . SP . '<i>' . $remote_max_msg . '</i>' . CR);
+                $msg = raid_poll_message($msg, CR . ($cnt_remote > 0 ? EMOJI_REMOTE : '') . ($cnt_extra_alien > 0 ? EMOJI_ALIEN : '') . ($cnt_want_invite > 0 ? EMOJI_WANT_INVITE : '') . SP . getPublicTranslation('remote_participants') . SP . '<i>' . $remote_max_msg . '</i>' . CR);
             }
             // Add start raid message
             if($cnt_all > 0 && $config->RAID_POLL_SHOW_START_LINK) {
@@ -376,10 +379,9 @@ function show_raid_poll($raid)
                         $msg = raid_poll_message($msg, ($att_row['level'] == 0) ? ('<b>00</b> ') : (($att_row['level'] < 10) ? ('<b>0' . $att_row['level'] . '</b> ') : ('<b>' . $att_row['level'] . '</b> ')));
                         $msg = raid_poll_message($msg, $trainername);
                         $msg = raid_poll_message($msg, ($att_row['remote']) ? (EMOJI_REMOTE) : '');
-                        $msg = raid_poll_message($msg, ($raid_level == 'X' && $att_row['invite']) ? (EMOJI_INVITE . ' ') : '');
-                        $msg = raid_poll_message($msg, ($att_row['extra_mystic']) ? ('+' . $att_row['extra_mystic'] . TEAM_B . ' ') : '');
-                        $msg = raid_poll_message($msg, ($att_row['extra_valor']) ? ('+' . $att_row['extra_valor'] . TEAM_R . ' ') : '');
-                        $msg = raid_poll_message($msg, ($att_row['extra_instinct']) ? ('+' . $att_row['extra_instinct'] . TEAM_Y . ' ') : '');
+                        $msg = raid_poll_message($msg, ($raid['event'] == EVENT_ID_EX && $att_row['invite']) ? (EMOJI_INVITE . ' ') : '');
+                        $msg = raid_poll_message($msg, ($att_row['extra_in_person']) ? ('+' . $att_row['extra_in_person'] . EMOJI_IN_PERSON . ' ') : '');
+                        $msg = raid_poll_message($msg, ($att_row['extra_alien']) ? ('+' . $att_row['extra_alien'] . EMOJI_ALIEN . ' ') : '');
                         $msg = raid_poll_message($msg, ($att_row['want_invite']) ? (EMOJI_WANT_INVITE) : '');
                         $msg = raid_poll_message($msg, ($config->RAID_POLL_SHOW_TRAINERCODE && $att_row['want_invite'] && !is_null($att_row['trainercode'])) ? ' <code>' . $att_row['trainercode'] . ' </code>': '');
 
@@ -427,13 +429,12 @@ function show_raid_poll($raid)
                 $msg = raid_poll_message($msg, ($row['team'] === NULL) ? ('└ ' . $GLOBALS['teams']['unknown'] . ' ') : ('└ ' . $GLOBALS['teams'][$row['team']] . ' '));
                 $msg = raid_poll_message($msg, ($row['level'] == 0) ? ('<b>00</b> ') : (($row['level'] < 10) ? ('<b>0' . $row['level'] . '</b> ') : ('<b>' . $row['level'] . '</b> ')));
                 $msg = raid_poll_message($msg, $trainername);
-                $msg = raid_poll_message($msg, ($raid_level == 'X' && $row['invite']) ? (EMOJI_INVITE . ' ') : '');
+                $msg = raid_poll_message($msg, ($raid['event'] == EVENT_ID_EX && $row['invite']) ? (EMOJI_INVITE . ' ') : '');
                 if($raid['event_vote_key_mode'] != 1) {
                     $msg = raid_poll_message($msg, ($row['cancel'] == 1 || $row['raid_done'] == 1) ? ('[' . (($row['attend_time'] == ANYTIME) ? (getPublicTranslation('anytime')) : ($dt_att_time)) . '] ') : '');
                 }
-                $msg = raid_poll_message($msg, ($row['extra_mystic']) ? ('+' . $row['extra_mystic'] . TEAM_B . ' ') : '');
-                $msg = raid_poll_message($msg, ($row['extra_valor']) ? ('+' . $row['extra_valor'] . TEAM_R . ' ') : '');
-                $msg = raid_poll_message($msg, ($row['extra_instinct']) ? ('+' . $row['extra_instinct'] . TEAM_Y . ' ') : '');
+                $msg = raid_poll_message($msg, ($row['extra_in_person']) ? ('+' . $row['extra_in_person'] . EMOJI_IN_PERSON . ' ') : '');
+                $msg = raid_poll_message($msg, ($row['extra_alien']) ? ('+' . $row['extra_alien'] . EMOJI_ALIEN . ' ') : '');
                 $msg = raid_poll_message($msg, CR);
             }
         }
@@ -473,21 +474,18 @@ function show_raid_poll($raid)
  */
 function raid_poll_print_counts($msg, $cnt_array) {
     // Attendance counts
-    $count_mystic = $cnt_array['mystic'];
-    $count_valor = $cnt_array['valor'];
-    $count_instinct = $cnt_array['instinct'];
+    $count_in_person = $cnt_array['in_person'];
     $count_remote = $cnt_array['remote'];
+    $count_extra_alien = $cnt_array['extra_alien'];
     $count_want_invite = $cnt_array['want_invite'];
     $count_late = $cnt_array['late'];
     $count_total = (is_numeric($cnt_array['total'])?$cnt_array['total']:0);
 
     // Add to message.
     $msg = raid_poll_message($msg, ' [' . ($count_total) . '] — ');
-    $msg = raid_poll_message($msg, (($count_mystic > 0) ? TEAM_B . $count_mystic . '  ' : ''));
-    $msg = raid_poll_message($msg, (($count_valor > 0) ? TEAM_R . $count_valor . '  ' : ''));
-    $msg = raid_poll_message($msg, (($count_instinct > 0) ? TEAM_Y . $count_instinct . '  ' : ''));
-    $msg = raid_poll_message($msg, (($cnt_array['noteam'] > 0) ? TEAM_UNKNOWN . $cnt_array['noteam'] . '  ' : ''));
+    $msg = raid_poll_message($msg, (($count_in_person > 0) ? EMOJI_IN_PERSON . $count_in_person . '  ' : ''));
     $msg = raid_poll_message($msg, (($count_remote > 0) ? EMOJI_REMOTE . $count_remote . '  ' : ''));
+    $msg = raid_poll_message($msg, (($count_extra_alien > 0) ? EMOJI_ALIEN . $count_extra_alien . '  ' : ''));
     $msg = raid_poll_message($msg, (($count_want_invite > 0) ? EMOJI_WANT_INVITE . $count_want_invite . '  ' : ''));
     $msg = raid_poll_message($msg, (($count_late > 0) ? EMOJI_LATE . $count_late . '  ' : ''));
     $msg = raid_poll_message($msg, CR);

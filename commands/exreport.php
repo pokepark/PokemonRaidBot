@@ -31,7 +31,7 @@ try {
             WHEN a.cancel = FALSE
             OR a.raid_done = FALSE THEN
                 (
-                    a.extra_mystic + a.extra_valor + a.extra_instinct + 1
+                    a.extra_in_person + a.extra_alien + 1
                 )
             ELSE
                 0
@@ -45,7 +45,7 @@ try {
                     WHEN a.cancel = FALSE
                     OR a.raid_done = FALSE THEN
                         (
-                            a.extra_mystic + a.extra_valor + a.extra_instinct + 1
+                            a.extra_in_person + a.extra_alien + 1
                         )
                     ELSE
                         0

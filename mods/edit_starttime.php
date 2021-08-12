@@ -189,7 +189,7 @@ $tg_json[] = answerCallbackQuery($update['callback_query']['id'], $callback_resp
 // Set the message.
 if ($arg == 'min') {
     $msg = getTranslation('raid_starts_when_minutes');
-} else if ($raid_level == 'X') {
+} else if ($event_id == EVENT_ID_EX) {
     $msg = getTranslation('raid_starts_when');
     $msg .= CR . CR . getTranslation('raid_select_date');
 } else {

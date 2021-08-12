@@ -64,13 +64,12 @@ function get_overview( $active_raids, $chat_title, $chat_username )
             $rs_att = my_query(
             "
             SELECT      count(attend_time)                                                                                  AS count,
-                        sum(team = 'mystic'     && want_invite = 0) + sum(case when want_invite = 0 then attendance.extra_mystic else 0 end)         AS count_mystic,
-                        sum(team = 'valor'      && want_invite = 0) + sum(case when want_invite = 0 then attendance.extra_valor else 0 end)          AS count_valor,
-                        sum(team = 'instinct'   && want_invite = 0) + sum(case when want_invite = 0 then attendance.extra_instinct else 0 end)       AS count_instinct,
-                        sum(team IS NULL        && want_invite = 0)                                                         AS count_no_team,
-                        sum(case when want_invite = 1 then 1+attendance.extra_mystic+extra_instinct+extra_valor else 0 end) AS count_want_invite
+                        sum(want_invite = 0 && remote = 0) + sum(case when want_invite = 0 && remote = 0 then attendance.extra_in_person else 0 end)    AS count_in_person,
+                        sum(want_invite = 0 && remote = 1) + sum(case when want_invite = 0 && remote = 1 then attendance.extra_in_person else 0 end)    AS count_remote,
+                        sum(case when want_invite = 0 then attendance.extra_alien else 0 end)                                                           AS extra_alien,
+                        sum(case when want_invite = 1 then 1 + attendance.extra_in_person else 0 end)                                                   AS count_want_invite
             FROM        ( 
-                          SELECT DISTINCT attend_time, user_id, extra_mystic, extra_valor, extra_instinct, want_invite
+                          SELECT DISTINCT attend_time, user_id, extra_in_person, extra_alien, remote, want_invite
                           FROM attendance
                           WHERE raid_id = {$raid_id}
                           AND attend_time IS NOT NULL
@@ -88,11 +87,10 @@ function get_overview( $active_raids, $chat_title, $chat_username )
 
             // Add to message.
             if ($att['count'] > 0) {
-                $msg .= EMOJI_GROUP . '<b> ' . ($att['count_mystic'] + $att['count_valor'] + $att['count_instinct'] + $att['count_no_team'] + $att['count_want_invite']) . '</b> — ';
-                $msg .= ((($att['count_mystic']) > 0) ? TEAM_B . ($att['count_mystic']) . '  ' : '');
-                $msg .= ((($att['count_valor']) > 0) ? TEAM_R . ($att['count_valor']) . '  ' : '');
-                $msg .= ((($att['count_instinct']) > 0) ? TEAM_Y . ($att['count_instinct']) . '  ' : '');
-                $msg .= (($att['count_no_team'] > 0) ? TEAM_UNKNOWN . $att['count_no_team'] : '');
+                $msg .= EMOJI_GROUP . '<b> ' . ($att['count_in_person'] + $att['count_remote'] + $att['extra_remote'] + $att['count_want_invite']) . '</b> — ';
+                $msg .= ((($att['count_in_person']) > 0) ? EMOJI_IN_PERSON . ($att['count_in_person']) . '  ' : '');
+                $msg .= ((($att['count_remote']) > 0) ? EMOJI_REMOTE . ($att['count_remote']) . '  ' : '');
+                $msg .= ((($att['extra_alien']) > 0) ? EMOJI_ALIEN . ($att['extra_alien']) . '  ' : '');
                 $msg .= (($att['count_want_invite'] > 0) ? EMOJI_WANT_INVITE . $att['count_want_invite'] : '');
                 $msg .= CR;
             }

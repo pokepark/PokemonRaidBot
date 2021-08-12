@@ -16,9 +16,8 @@ CREATE TABLE `attendance` (
   `user_id` bigint(20) DEFAULT NULL,
   `raid_id` int(10) unsigned DEFAULT NULL,
   `attend_time` datetime DEFAULT NULL,
-  `extra_mystic` tinyint(1) unsigned DEFAULT '0',
-  `extra_valor` tinyint(1) unsigned DEFAULT '0',
-  `extra_instinct` tinyint(1) unsigned DEFAULT '0',
+  `extra_in_person` tinyint(1) unsigned DEFAULT '0',
+  `extra_alien` tinyint(1) unsigned DEFAULT '0',
   `arrived` tinyint(1) unsigned DEFAULT '0',
   `raid_done` tinyint(1) unsigned DEFAULT '0',
   `cancel` tinyint(1) unsigned DEFAULT '0',
@@ -28,6 +27,7 @@ CREATE TABLE `attendance` (
   `pokemon` varchar(20) DEFAULT '0',
   `alarm` tinyint(1) unsigned DEFAULT '0',
   `want_invite` tinyint(1) unsigned DEFAULT '0',
+  `can_invite` TINYINT UNSIGNED NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `raid_id` (`raid_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
