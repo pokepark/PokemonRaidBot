@@ -459,13 +459,11 @@ Set `RAID_LATE_TIME` to the amount of minutes the local community will may be wa
 
 Set `RAID_POLL_HIDE_USERS_TIME` to the amount of minutes when a previous raid slot should be hidden. For example if there are 2 slots, 18:00 and 18:15, and you set the time to 10 minutes the first group of participants from 18:00 will be hidden once we reach 18:10. This helps to keep the raid poll message smaller and clearer if there are multiple groups. Set the value to 0 to always show all slots.
 
-Set `RAID_POLL_UI_ORDER` to the customize the order of the buttons rows for the raid polls. The default is 'extra,teamlvl,time,pokemon,status' but can be changed to any other order, e.g. 'time,pokemon,extra,status,teamlvl'.
+Set `RAID_POLL_UI_TEMPLATE` to the customize the order of the buttons for the raid polls. Supported elementa are `alone, extra, extra_alien, remote, inv_plz, can_inv, ex_inv, teamlvl, time, pokemon, refresh, alarm, here, late, done, cancel`. Some elements may be hidden by some other config values even if they are set in the template.
 
-Set `RAID_POLL_HIDE_BUTTONS_RAID_LEVEL` to the raid levels (1-5 and X) for which the voting buttons under the raid poll should be hidden. For example a level 1 raid can be done by a single player, but it is maybe interesting to be shared as some pokemon are only available in raids.
+Set `RAID_POLL_HIDE_BUTTONS_RAID_LEVEL` to the raid levels (1-5) for which the voting buttons under the raid poll should be hidden. For example a level 1 raid can be done by a single player, but it is maybe interesting to be shared as some pokemon are only available in raids.
 
 Set `RAID_POLL_HIDE_BUTTONS_POKEMON` to the pokedex IDs (e.g. '1' for Bulbasaur) or pokedex ID and form combined by a minus sign (e.g. '386-normal' for Deoxys Normal form or '386-attack' for Deoxys Attack form) for which the voting buttons under the raid poll should be hidden.
-
-Set `RAID_POLL_HIDE_BUTTONS_TEAM_LVL` to true to hide the team and level+/- buttons below each raid poll. That users are still able to set their team and level when the buttons are hidden, take a look at the '/trainer' command.
 
 Set `RAID_POLL_HIDE_DONE_CANCELED` to true to hide the users which are done with the raid or canceled and do not longer attend the raid.
 
@@ -1189,10 +1187,9 @@ To keep local data, such as `pokemon` table and Pokemon icons directory, up to d
 | RAID_PIN_MESSAGE| Custom message added to the bottom of the raid overview messages |
 | RAID_POLL_HIDE_BUTTONS_POKEMON| List of Pokemon dex IDs for which voting buttons are disabled |
 | RAID_POLL_HIDE_BUTTONS_RAID_LEVEL| List of raid levels for which voting buttons are disabled |
-| RAID_POLL_HIDE_BUTTONS_TEAM_LVL| Bool, true to hide the team and level+/- buttons below each raid poll |
 | RAID_POLL_HIDE_DONE_CANCELED| Bool, hide the Done and Cancel buttons from raid polls |
 | RAID_POLL_HIDE_USERS_TIME| In minutes, after what time the previous raid slots are hidden from a raid poll |
-| RAID_POLL_UI_ORDER| Order of elements in text based raid polls. Valid elements are: `extra, teamll, time, pokemon, status` |
+| RAID_POLL_UI_TEMPLATE| Array, Order of elements in raid polls. Supported elementa are `alone, extra, extra_alien, remote, inv_plz, can_inv, ex_inv, teamlvl, time, pokemon, refresh, alarm, here, late, done, cancel`. |
 | RAID_POLL_POKEMON_NAME_FIRST_LINE| Shows the Name of the Pokemon instead of `Raid:` - Good for Message Preview to see which Pokemon the Raid will be. |
 | RAID_POLL_CALCULATE_MAPS_ROUTE| TRUE: Will show the Route to the Gym while clicking onto gym-address - FALSE: Will open Google Maps and only show the gym as a point in the map. |
 | RAID_POLL_SHOW_NICK_OVER_NAME | Show users Telegram @username instead of name |
@@ -1204,7 +1201,6 @@ To keep local data, such as `pokemon` table and Pokemon icons directory, up to d
 | RAID_POLL_ENABLE_HYPERLINKS_IN_NAMES | Enable hyperlinks to user profiles in participant names in raid polls. It's recommended to disable this if you're running the bot in a supergroup and with `RAID_PICTURE` mode on. |
 | RAID_POLL_SHOW_NICK_OVER_NAME | Bool, If `CUSTOM_TRAINERNAME` is `false`, display user's Telegram nickname (@name) instead of name (first name + last name)|
 | RAID_ENDED_HIDE_KEYS | Bool, Hide the `Raid done` button in raid polls after the raid has ended |
-| RAID_REMOTEPASS_USERS | Bool, allow participation to raid polls with a remote pass |
 | RAID_REMOTEPASS_USERS_LIMIT | Integer, How many remote participants to allow into a single raid |
 | RAID_WANT_INVITE | Bool, allow participants to indicate that they wish to be invited to the raid |
 | RAID_SLOTS| Amount of minutes between raid poll voting slots |

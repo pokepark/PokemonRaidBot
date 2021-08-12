@@ -36,129 +36,6 @@ function keys_vote($raid)
         }
     // Raid is still running.
     } else {
-        // Extra Keys
-        $buttons_extra = [
-            [
-                [
-                    'text'          => EMOJI_SINGLE,
-                    'callback_data' => $raid['id'] . ':vote_extra:0'
-                ],
-                [
-                    'text'          => '+ ' . EMOJI_IN_PERSON,
-                    'callback_data' => $raid['id'] . ':vote_extra:in_person'
-                ],
-                [
-                    'text'          => '+ ' . EMOJI_ALIEN,
-                    'callback_data' => $raid['id'] . ':vote_extra:alien'
-                ]
-            ]
-        ];
-
-        // Remote Raid Pass key
-        if($config->RAID_REMOTEPASS_USERS && ($raid['event_allow_remote'] == null or $raid['event_allow_remote'] != 0)) {
-            $buttons_extra[0][] = [
-                'text'          => EMOJI_REMOTE,
-                'callback_data' => $raid['id'] . ':vote_remote:0'
-            ];
-        }
-
-        // Want invite key
-        if($config->RAID_WANT_INVITE && ($raid['event_allow_invite'] == null or $raid['event_allow_invite'] != 0)) {
-            $buttons_extra[0][] = [
-                'text'          => EMOJI_WANT_INVITE,
-                'callback_data' => $raid['id'] . ':vote_want_invite:0'
-            ];
-        }
-
-        // Team and level keys.
-        if($config->RAID_POLL_HIDE_BUTTONS_TEAM_LVL) {
-            $buttons_teamlvl = [];
-        } else {
-            $buttons_teamlvl = [
-                [
-                    [
-                        'text'          => 'Team',
-                        'callback_data' => $raid['id'] . ':vote_team:0'
-                    ],
-                    [
-                        'text'          => 'Lvl +',
-                        'callback_data' => $raid['id'] . ':vote_level:up'
-                    ],
-                    [
-                        'text'          => 'Lvl -',
-                        'callback_data' => $raid['id'] . ':vote_level:down'
-                    ]
-                ]
-            ];
-        }
-
-        // Ex-Raid Invite key
-        $button_invite = [
-            [
-                [
-                    'text'          => EMOJI_INVITE,
-                    'callback_data' => $raid['id'] . ':vote_invite:0'
-                ]
-            ]
-        ];
-
-        // Show icon, icon + text or just text.
-        // Icon.
-        if($config->RAID_VOTE_ICONS && !$config->RAID_VOTE_TEXT) {
-            $text_here = EMOJI_HERE;
-            $text_late = EMOJI_LATE;
-            $text_done = TEAM_DONE;
-            $text_cancel = TEAM_CANCEL;
-        // Icon + text.
-        } else if($config->RAID_VOTE_ICONS && $config->RAID_VOTE_TEXT) {
-            $text_here = EMOJI_HERE . getPublicTranslation('here');
-            $text_late = EMOJI_LATE . getPublicTranslation('late');
-            $text_done = TEAM_DONE . getPublicTranslation('done');
-            $text_cancel = TEAM_CANCEL . getPublicTranslation('cancellation');
-        // Text.
-        } else {
-            $text_here = getPublicTranslation('here');
-            $text_late = getPublicTranslation('late');
-            $text_done = getPublicTranslation('done');
-            $text_cancel = getPublicTranslation('cancellation');
-        }
-
-        // Status keys.
-        $buttons_status = [
-            [
-                [
-                  'text'          => EMOJI_ALARM,
-                  'callback_data' => $raid['id'] . ':vote_status:alarm'
-                ],
-                [
-                    'text'          => $text_here,
-                    'callback_data' => $raid['id'] . ':vote_status:arrived'
-                ],
-                [
-                    'text'          => $text_late,
-                    'callback_data' => $raid['id'] . ':vote_status:late'
-                ],
-                [
-                    'text'          => $text_done,
-                    'callback_data' => $raid['id'] . ':vote_status:raid_done'
-                ],
-                [
-                    'text'          => $text_cancel,
-                    'callback_data' => $raid['id'] . ':vote_status:cancel'
-                ],
-            ],
-        ];
-        if(!$config->AUTO_REFRESH_POLLS) {
-            $buttons_refresh = [
-                [
-                    [
-                        'text'          => EMOJI_REFRESH,
-                        'callback_data' => $raid['id'] . ':vote_refresh:0'
-                    ]
-                ]
-            ];
-            $buttons_status[0] = array_merge($buttons_refresh[0], $buttons_status[0]);
-        }
         // Get current pokemon
         $raid_pokemon_id = $raid['pokemon'];
         $raid_pokemon_form_id = $raid['pokemon_form'];
@@ -175,6 +52,118 @@ function keys_vote($raid)
         if(in_array($raid_level, $hide_buttons_raid_level) || in_array(($raid_pokemon_id . "-" . get_pokemon_form_name($raid_pokemon_id,$raid_pokemon_form_id)), $hide_buttons_pokemon) || in_array($raid_pokemon_id, $hide_buttons_pokemon)) {
             $keys = [];
         } else {
+            // Extra Keys
+            $buttons_alone = [
+                'text'          => EMOJI_SINGLE,
+                'callback_data' => $raid['id'] . ':vote_extra:0'
+            ];
+            $buttons_extra = [
+                'text'          => '+ ' . EMOJI_IN_PERSON,
+                'callback_data' => $raid['id'] . ':vote_extra:in_person'
+            ];
+            $buttons_extra_alien = [
+                'text'          => '+ ' . EMOJI_ALIEN,
+                'callback_data' => $raid['id'] . ':vote_extra:alien'
+            ];
+
+            // Can invite key
+            $buttons_can_inv = [
+                'text'          => EMOJI_CAN_INVITE,
+                'callback_data' => $raid['id'] . ':vote_can_invite:0'
+            ];
+
+            // Remote Raid Pass key
+            $buttons_remote = [
+                'text'          => EMOJI_REMOTE,
+                'callback_data' => $raid['id'] . ':vote_remote:0'
+            ];
+
+            // Want invite key
+            $buttons_inv_plz = [
+                'text'          => EMOJI_WANT_INVITE,
+                'callback_data' => $raid['id'] . ':vote_want_invite:0'
+            ];
+
+            // Team and level keys.
+            $buttons_teamlvl = [
+                [
+                    [
+                        'text'          => 'Team',
+                        'callback_data' => $raid['id'] . ':vote_team:0'
+                    ],
+                    [
+                        'text'          => 'Lvl +',
+                        'callback_data' => $raid['id'] . ':vote_level:up'
+                    ],
+                    [
+                        'text'          => 'Lvl -',
+                        'callback_data' => $raid['id'] . ':vote_level:down'
+                    ]
+                ]
+            ];
+
+            // Ex-Raid Invite key
+            if ($raid['event'] == EVENT_ID_EX) {
+                $buttons_ex_inv = [
+                            'text'          => EMOJI_INVITE,
+                            'callback_data' => $raid['id'] . ':vote_invite:0'
+                ];
+            }else {
+                $buttons_ex_inv = [];
+            }
+
+            // Show icon, icon + text or just text.
+            // Icon.
+            if($config->RAID_VOTE_ICONS && !$config->RAID_VOTE_TEXT) {
+                $text_here = EMOJI_HERE;
+                $text_late = EMOJI_LATE;
+                $text_done = TEAM_DONE;
+                $text_cancel = TEAM_CANCEL;
+            // Icon + text.
+            } else if($config->RAID_VOTE_ICONS && $config->RAID_VOTE_TEXT) {
+                $text_here = EMOJI_HERE . getPublicTranslation('here');
+                $text_late = EMOJI_LATE . getPublicTranslation('late');
+                $text_done = TEAM_DONE . getPublicTranslation('done');
+                $text_cancel = TEAM_CANCEL . getPublicTranslation('cancellation');
+            // Text.
+            } else {
+                $text_here = getPublicTranslation('here');
+                $text_late = getPublicTranslation('late');
+                $text_done = getPublicTranslation('done');
+                $text_cancel = getPublicTranslation('cancellation');
+            }
+
+            // Status keys.
+            $buttons_alarm = [
+                'text'          => EMOJI_ALARM,
+                'callback_data' => $raid['id'] . ':vote_status:alarm'
+            ];
+            $buttons_here = [
+                'text'          => $text_here,
+                'callback_data' => $raid['id'] . ':vote_status:arrived'
+            ];
+            $buttons_late = [
+                'text'          => $text_late,
+                'callback_data' => $raid['id'] . ':vote_status:late'
+            ];
+            $buttons_done = [
+                'text'          => $text_done,
+                'callback_data' => $raid['id'] . ':vote_status:raid_done'
+            ];
+            $buttons_cancel = [
+                'text'          => $text_cancel,
+                'callback_data' => $raid['id'] . ':vote_status:cancel'
+            ];
+
+            if(!$config->AUTO_REFRESH_POLLS) {
+                $buttons_refresh = [
+                            'text'          => EMOJI_REFRESH,
+                            'callback_data' => $raid['id'] . ':vote_refresh:0'
+                ];
+            }else {
+                $buttons_refresh = [];
+            }
+
             if($raid['event_vote_key_mode'] == 1) {
                 $keys_time = [
                                 [
@@ -521,15 +510,8 @@ function keys_vote($raid)
                 // Init keys pokemon array.
                 $buttons_pokemon = [];
 
-                // Hide keys for specific cases
-                $show_pokemon_keys = true;
-                // Make sure raid boss is not an egg
-                if(!in_array($raid_pokemon_id, $GLOBALS['eggs'])) {
-                    $show_pokemon_keys = false;
-                }
-
-                // Add pokemon keys if we found the raid boss
-                if ($raid_level != '0' && $show_pokemon_keys) {
+                // Show pokemon keys only if the raid boss is an egg
+                if(in_array($raid_pokemon_id, $GLOBALS['eggs'])) {
                     // Get pokemon from database
                     $raid_spawn = dt2time($raid['spawn'], 'Y-m-d H:i'); // Convert utc spawntime to local time
                     $raid_bosses = get_raid_bosses($raid_spawn, $raid_level);
@@ -561,31 +543,27 @@ function keys_vote($raid)
                 // Init keys array
                 $keys = [];
 
-                // Get UI order from config and apply if nothing is missing!
-                $keys_UI_config = explode(',', $config->RAID_POLL_UI_ORDER);
-                $keys_default = explode(',', 'extra,teamlvl,time,pokemon,status');
-
-                //debug_log($keys_UI_config);
-                //debug_log($keys_default);
-
-                // Add Ex-Raid Invite button for raid level X
-                if ($raid['event'] == EVENT_ID_EX) {
-                    if($config->RAID_POLL_HIDE_BUTTONS_TEAM_LVL) {
-                        $buttons_extra[0] = array_merge($buttons_extra[0], $button_invite[0]);
-                    } else {
-                        $buttons_teamlvl[0] = array_merge($buttons_teamlvl[0], $button_invite[0]);
+                if($raid['event_poll_template'] != null) $template = json_decode($raid['event_poll_template']);
+                else $template = $config->RAID_POLL_UI_TEMPLATE;
+                $r=0;
+                foreach($template as $row) {
+                    foreach($row as $key) {
+                        $v_name = 'buttons_'.$key;
+                        if($key == 'teamlvl' or $key == 'pokemon' or $key == 'time') {
+                            // Some button variables are "blocks" of keys, process them here
+                            if(empty(${$v_name})) continue;
+                            foreach(${$v_name} as $teamlvl) {
+                                if(!isset($keys[$r])) $keys[$r] = [];
+                                $keys[$r] = array_merge($keys[$r],$teamlvl);
+                                $r++;
+                            }
+                            $r--;
+                        }else {
+                            if(empty(${$v_name})) continue;
+                            $keys[$r][] = ${$v_name};
+                        }
                     }
-                }
-
-                // Compare if arrays have the same key/value pairs
-                if(count($keys_UI_config) == count($keys_default) && count(array_diff($keys_UI_config, $keys_default)) == 0){
-                    // Custom keys order
-                    foreach ($keys_UI_config as $keyname) {
-                        $keys = array_merge($keys, ${'buttons_' . $keyname});
-                    }
-                } else {
-                    // Default keys order
-                    $keys = array_merge($buttons_extra,$buttons_teamlvl,$buttons_time,$buttons_pokemon,$buttons_status);
+                    if(!empty($keys[$r][0])) $r++;
                 }
             }
         }

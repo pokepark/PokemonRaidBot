@@ -249,6 +249,26 @@ function alarm($raid_id_array, $user_id, $action, $info = '')
             $msg_text .= EMOJI_CLOCK . SP . '<b>' . check_time($attendtime) . '</b>';
             $msg_text .= create_traincode_msg($trainercode);
             $tg_json[] = sendMessage($answer['user_id'], $msg_text, true);
+
+        // Let others know you are not playing, but can invite others
+        } else if($action == "can_invite") {
+            debug_log('Alarm: ' . $action);
+            $msg_text = '<b>' . getTranslation('alert_can_invite', true, $recipient_language) . '</b>' . CR;
+            $msg_text .= EMOJI_CAN_INVITE . SP . $gymname . SP . '(' . $raidtimes . ')' . CR;
+            $msg_text .= EMOJI_SINGLE . SP . $username . CR;
+            $msg_text .= EMOJI_CLOCK . SP . '<b>' . check_time($attendtime) . '</b>';
+            $msg_text .= create_traincode_msg($trainercode);
+            $tg_json[] = sendMessage($answer['user_id'], $msg_text, true);
+
+        // Let others know you are not longer able to invite them
+        } else if($action == "no_can_invite") {
+            debug_log('Alarm: ' . $action);
+            $msg_text = '<b>' . getTranslation('alert_no_can_invite', true, $recipient_language) . '</b>' . CR;
+            $msg_text .= EMOJI_CAN_INVITE . SP . $gymname . SP . '(' . $raidtimes . ')' . CR;
+            $msg_text .= EMOJI_SINGLE . SP . $username . CR;
+            $msg_text .= EMOJI_CLOCK . SP . '<b>' . check_time($attendtime) . '</b>';
+            $msg_text .= create_traincode_msg($trainercode);
+            $tg_json[] = sendMessage($answer['user_id'], $msg_text, true);
         }
     }
     if(count($tg_json) > 0) curl_json_multi_request($tg_json);

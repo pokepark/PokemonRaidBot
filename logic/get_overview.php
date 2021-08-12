@@ -64,12 +64,13 @@ function get_overview( $active_raids, $chat_title, $chat_username )
             $rs_att = my_query(
             "
             SELECT      count(attend_time)                                                                                  AS count,
-                        sum(want_invite = 0 && remote = 0) + sum(case when want_invite = 0 && remote = 0 then attendance.extra_in_person else 0 end)    AS count_in_person,
-                        sum(want_invite = 0 && remote = 1) + sum(case when want_invite = 0 && remote = 1 then attendance.extra_in_person else 0 end)    AS count_remote,
-                        sum(case when want_invite = 0 then attendance.extra_alien else 0 end)                                                           AS extra_alien,
-                        sum(case when want_invite = 1 then 1 + attendance.extra_in_person else 0 end)                                                   AS count_want_invite
+                        sum(want_invite = 0 && remote = 0 && can_invite = 0) + sum(case when want_invite = 0 && remote = 0 then attendance.extra_in_person else 0 end)    AS count_in_person,
+                        sum(want_invite = 0 && remote = 1 && can_invite = 0) + sum(case when want_invite = 0 && remote = 1 then attendance.extra_in_person else 0 end)    AS count_remote,
+                        sum(case when want_invite = 0 && can_invite = 0 then attendance.extra_alien else 0 end)                                                           AS extra_alien,
+                        sum(case when want_invite = 1 && can_invite = 0 then 1 + attendance.extra_in_person else 0 end)                                                   AS count_want_invite,
+                        sum(can_invite = 1)                                                                                                                               AS count_can_invite
             FROM        ( 
-                          SELECT DISTINCT attend_time, user_id, extra_in_person, extra_alien, remote, want_invite
+                          SELECT DISTINCT attend_time, user_id, extra_in_person, extra_alien, remote, want_invite, can_invite
                           FROM attendance
                           WHERE raid_id = {$raid_id}
                           AND attend_time IS NOT NULL
@@ -88,6 +89,7 @@ function get_overview( $active_raids, $chat_title, $chat_username )
             // Add to message.
             if ($att['count'] > 0) {
                 $msg .= EMOJI_GROUP . '<b> ' . ($att['count_in_person'] + $att['count_remote'] + $att['extra_alien'] + $att['count_want_invite']) . '</b> — ';
+                $msg .= ((($att['count_can_invite']) > 0) ? EMOJI_CAN_INVITE . ($att['count_can_invite']) . '  ' : '');
                 $msg .= ((($att['count_in_person']) > 0) ? EMOJI_IN_PERSON . ($att['count_in_person']) . '  ' : '');
                 $msg .= ((($att['count_remote']) > 0) ? EMOJI_REMOTE . ($att['count_remote']) . '  ' : '');
                 $msg .= ((($att['extra_alien']) > 0) ? EMOJI_ALIEN . ($att['extra_alien']) . '  ' : '');

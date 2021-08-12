@@ -1,6 +1,6 @@
 <?php
 // Write to log.
-debug_log('vote_want_invite()');
+debug_log('vote_can_invite()');
 
 // For debug.
 //debug_log($update);
@@ -8,7 +8,7 @@ debug_log('vote_want_invite()');
 
 try {
     $query_select = "
-            SELECT  want_invite
+            SELECT  can_invite
             FROM    attendance
             WHERE   raid_id = :raid_id
             AND   user_id = :user_id
@@ -23,15 +23,16 @@ try {
     if($statement_select->rowCount() > 0) {
         $query = "
                 UPDATE    attendance
-                SET     want_invite = CASE
-                          WHEN want_invite = '0' THEN '1'
+                SET     can_invite = CASE
+                          WHEN can_invite = '0' THEN '1'
                           ELSE '0'
                         END,
                         late = 0,
                         arrived = 0,
                         remote = 0,
+                        want_invite = 0,
                         extra_alien = 0,
-                        can_invite = 0
+                        extra_in_person = 0
                 WHERE   raid_id = :raid_id
                 AND   user_id = :user_id
                 ";
@@ -49,10 +50,10 @@ catch (PDOException $exception) {
     exit;
 }
 if($statement_select->rowCount() > 0) {
-    if($res['want_invite'] == 0) {
-        alarm($data['id'],$update['callback_query']['from']['id'],'want_invite');
+    if($res['can_invite'] == 0) {
+        alarm($data['id'],$update['callback_query']['from']['id'],'can_invite');
     } else {
-        alarm($data['id'],$update['callback_query']['from']['id'],'no_want_invite');
+        alarm($data['id'],$update['callback_query']['from']['id'],'no_can_invite');
     }
     // Send vote response.
     if($config->RAID_PICTURE) {

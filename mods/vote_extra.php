@@ -9,7 +9,7 @@ debug_log('vote()');
 // Check if the user has voted for this raid before and check if they are attending remotely.
 $rs = my_query(
     "
-    SELECT    user_id, remote, want_invite, (1 + extra_in_person) as user_count
+    SELECT    user_id, remote, want_invite, can_invite, (1 + extra_in_person) as user_count
     FROM      attendance
       WHERE   raid_id = {$data['id']}
         AND   user_id = {$update['callback_query']['from']['id']}
@@ -37,6 +37,15 @@ if (!empty($answer)) {
             "
         );
         alarm($data['id'],$update['callback_query']['from']['id'],'extra_alone',$data['arg']);
+    } else if($answer['can_invite'] == 1 ) {
+        // People who are only inviting others can't add extras
+        $msg = getTranslation('vote_status_not_allowed');
+
+        // Answer the callback.
+        answerCallbackQuery($update['callback_query']['id'], $msg);
+
+        $dbh = null;
+        exit();
     } else {
         // Check if max remote users limit is already reached!
         $remote_users = get_remote_users_count($data['id'], $update['callback_query']['from']['id']);

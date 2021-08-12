@@ -134,6 +134,7 @@ function show_raid_poll($raid)
             AND         attend_time IS NOT NULL
           ORDER BY      attend_time,
                         {$order_by_sql}
+                        can_invite DESC,
                         users.team,
                         arrived,
                         users.level desc,
@@ -153,6 +154,7 @@ function show_raid_poll($raid)
     $cnt_latewait = 0;
     $cnt_cancel = 0;
     $cnt_done = 0;
+    $cnt_can_invite = 0;
     while ($attendance = $rs_attendance->fetch()) {
         // Attendance found
         $cnt_all = 1;
@@ -166,7 +168,7 @@ function show_raid_poll($raid)
             $cnt_array[$attendance['attend_time']][$attendance_pokemon]['extra_alien']=$cnt_array[$attendance['attend_time']][$attendance_pokemon]['in_person']=$cnt_array[$attendance['attend_time']][$attendance_pokemon]['late']=$cnt_array[$attendance['attend_time']][$attendance_pokemon]['remote']=$cnt_array[$attendance['attend_time']][$attendance_pokemon]['want_invite']=$cnt_array[$attendance['attend_time']][$attendance_pokemon]['total']=0;
         if(!isset($cnt_array[$attendance['attend_time']]['other_pokemon'])) $cnt_array[$attendance['attend_time']]['other_pokemon'] = $cnt_array[$attendance['attend_time']]['raid_pokemon'] = $cnt_array[$attendance['attend_time']]['any_pokemon'] = 0;
 
-        if($attendance['cancel'] == 0 && $attendance['raid_done'] == 0) {
+        if($attendance['cancel'] == 0 && $attendance['raid_done'] == 0 && $attendance['can_invite'] == 0) {
             // These counts are used to control printing of pokemon/time headers, so just number of entries is enough
             if($attendance['pokemon'] != 0 && $raid_pokemon != $attendance['pokemon']){
                 $cnt_array[$attendance['attend_time']]['other_pokemon']+=1;
@@ -214,10 +216,12 @@ function show_raid_poll($raid)
             if($attendance['raid_done']==1) {
                 $cnt_done += 1 + $attendance['extra_in_person'] + $attendance['extra_alien'];
                 $done_array[$attendance['user_id']] = $attendance; // Adding user_id as key to overwrite duplicate entries and thus only display user once even if they made multiple pokemon selections
-            }
-            if($attendance['cancel']==1) {
+            }else if($attendance['cancel']==1) {
                 $cnt_cancel += 1 + $attendance['extra_in_person'] + $attendance['extra_alien'];
                 $cancel_array[$attendance['user_id']] = $attendance;
+            }else if($attendance['can_invite']==1) {
+                $cnt_can_invite++;
+                $att_array[$attendance['attend_time']][$attendance_pokemon][] = $attendance;
             }
         }
     }
@@ -308,9 +312,13 @@ function show_raid_poll($raid)
             $previous_pokemon = 'FIRST_RUN';
 
             // Add hint for remote attendances.
-            if($config->RAID_REMOTEPASS_USERS && ($cnt_remote > 0 || $cnt_want_invite > 0 || $cnt_extra_alien > 0)) {
+            if($cnt_remote > 0 || $cnt_want_invite > 0 || $cnt_extra_alien > 0) {
                 $remote_max_msg = str_replace('REMOTE_MAX_USERS', $config->RAID_REMOTEPASS_USERS_LIMIT, getPublicTranslation('remote_participants_max'));
                 $msg = raid_poll_message($msg, CR . ($cnt_remote > 0 ? EMOJI_REMOTE : '') . ($cnt_extra_alien > 0 ? EMOJI_ALIEN : '') . ($cnt_want_invite > 0 ? EMOJI_WANT_INVITE : '') . SP . getPublicTranslation('remote_participants') . SP . '<i>' . $remote_max_msg . '</i>' . CR);
+            }
+            // Add hint for attendees that only invite.
+            if($config->RAID_POLL_CAN_INVITE && ($cnt_can_invite > 0)) {
+                $msg = raid_poll_message($msg, CR .  EMOJI_CAN_INVITE . SP . getPublicTranslation('alert_can_invite') . CR);
             }
             // Add start raid message
             if($cnt_all > 0 && $config->RAID_POLL_SHOW_START_LINK) {
@@ -383,6 +391,7 @@ function show_raid_poll($raid)
                         $msg = raid_poll_message($msg, ($att_row['extra_in_person']) ? ('+' . $att_row['extra_in_person'] . EMOJI_IN_PERSON . ' ') : '');
                         $msg = raid_poll_message($msg, ($att_row['extra_alien']) ? ('+' . $att_row['extra_alien'] . EMOJI_ALIEN . ' ') : '');
                         $msg = raid_poll_message($msg, ($att_row['want_invite']) ? (EMOJI_WANT_INVITE) : '');
+                        $msg = raid_poll_message($msg, ($att_row['can_invite']) ? (EMOJI_CAN_INVITE) : '');
                         $msg = raid_poll_message($msg, ($config->RAID_POLL_SHOW_TRAINERCODE && $att_row['want_invite'] && !is_null($att_row['trainercode'])) ? ' <code>' . $att_row['trainercode'] . ' </code>': '');
 
                         $msg = raid_poll_message($msg, CR);

@@ -88,7 +88,6 @@ if($now <= $attend_time || $vote_time == 0) {
         // User has voted before.
         if (!empty($answer)) {
             // Update attendance.
-            alarm($data['id'],$update['callback_query']['from']['id'],'change_time', $attend_time);
             $update_pokemon_sql = '';
             if(!in_array($raid['pokemon'], $eggs)) {
                 // If raid egg has hatched
@@ -118,6 +117,7 @@ if($now <= $attend_time || $vote_time == 0) {
                     AND   user_id = {$update['callback_query']['from']['id']}
                 "
             );
+            alarm($data['id'],$update['callback_query']['from']['id'],'change_time', $attend_time);
 
         // User has not voted before.
         } else {
