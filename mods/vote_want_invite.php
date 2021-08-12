@@ -30,7 +30,7 @@ try {
                         late = 0,
                         arrived = 0,
                         remote = 0,
-                        extra_remote = 0
+                        extra_alien = 0
                 WHERE   raid_id = :raid_id
                 AND   user_id = :user_id
                 ";
@@ -64,5 +64,5 @@ if($statement_select->rowCount() > 0) {
     send_vote_time_first($update);
 }
 
-
+$dbh = null;
 exit();

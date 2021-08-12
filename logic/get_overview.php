@@ -87,7 +87,7 @@ function get_overview( $active_raids, $chat_title, $chat_username )
 
             // Add to message.
             if ($att['count'] > 0) {
-                $msg .= EMOJI_GROUP . '<b> ' . ($att['count_in_person'] + $att['count_remote'] + $att['extra_remote'] + $att['count_want_invite']) . '</b> — ';
+                $msg .= EMOJI_GROUP . '<b> ' . ($att['count_in_person'] + $att['count_remote'] + $att['extra_alien'] + $att['count_want_invite']) . '</b> — ';
                 $msg .= ((($att['count_in_person']) > 0) ? EMOJI_IN_PERSON . ($att['count_in_person']) . '  ' : '');
                 $msg .= ((($att['count_remote']) > 0) ? EMOJI_REMOTE . ($att['count_remote']) . '  ' : '');
                 $msg .= ((($att['extra_alien']) > 0) ? EMOJI_ALIEN . ($att['extra_alien']) . '  ' : '');
