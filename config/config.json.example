@@ -14,6 +14,6 @@
   "LANGUAGE_PUBLIC":"EN",
   "TIMEZONE":"Europe/Berlin",
   "CUSTOM_TRAINERNAME": true,
-  "SHARE_CHATS":""
-  "RAID_POLL_UI_TEMPLATE":[["alone","extra","extra_alien","remote","inv_plz","can_inv","ex_inv"],["teamlvl"],["time"],["pokemon"],["refresh","alarm","here","late","done","cancel"]],
+  "SHARE_CHATS":"",
+  "RAID_POLL_UI_TEMPLATE":[["alone","extra","extra_alien","remote","inv_plz","can_inv","ex_inv"],["teamlvl"],["time"],["pokemon"],["refresh","alarm","here","late","done","cancel"]]
 }
