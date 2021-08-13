@@ -317,7 +317,7 @@ function show_raid_poll($raid)
                 $msg = raid_poll_message($msg, CR . ($cnt_remote > 0 ? EMOJI_REMOTE : '') . ($cnt_extra_alien > 0 ? EMOJI_ALIEN : '') . ($cnt_want_invite > 0 ? EMOJI_WANT_INVITE : '') . SP . getPublicTranslation('remote_participants') . SP . '<i>' . $remote_max_msg . '</i>' . CR);
             }
             // Add hint for attendees that only invite.
-            if($config->RAID_POLL_CAN_INVITE && ($cnt_can_invite > 0)) {
+            if($cnt_can_invite > 0) {
                 $msg = raid_poll_message($msg, CR .  EMOJI_CAN_INVITE . SP . getPublicTranslation('alert_can_invite') . CR);
             }
             // Add start raid message
