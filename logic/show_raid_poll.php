@@ -392,7 +392,7 @@ function show_raid_poll($raid)
                         $msg = raid_poll_message($msg, ($att_row['extra_alien']) ? ('+' . $att_row['extra_alien'] . EMOJI_ALIEN . ' ') : '');
                         $msg = raid_poll_message($msg, ($att_row['want_invite']) ? (EMOJI_WANT_INVITE) : '');
                         $msg = raid_poll_message($msg, ($att_row['can_invite']) ? (EMOJI_CAN_INVITE) : '');
-                        $msg = raid_poll_message($msg, ($config->RAID_POLL_SHOW_TRAINERCODE && $att_row['want_invite'] && !is_null($att_row['trainercode'])) ? ' <code>' . $att_row['trainercode'] . ' </code>': '');
+                        $msg = raid_poll_message($msg, ($config->RAID_POLL_SHOW_TRAINERCODE && ($att_row['want_invite'] || $att_row['can_invite']) && !is_null($att_row['trainercode'])) ? ' <code>' . $att_row['trainercode'] . ' </code>': '');
 
                         $msg = raid_poll_message($msg, CR);
 
