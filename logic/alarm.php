@@ -35,7 +35,7 @@ function alarm($raid_id_array, $user_id, $action, $info = '')
     $raidtimes = str_replace(CR, '', str_replace(' ', '', get_raid_times($raid, false, true)));
 
     // Get attend time.
-    if(!in_array($action, ['new_att','change_time','group_code_private','group_code_public'])) {
+    if(!in_array($action, ['new_att','new_boss','change_time','group_code_private','group_code_public'])) {
         $r = my_query("SELECT DISTINCT attend_time FROM attendance WHERE raid_id = {$raid_id} and user_id = {$user_id}");
         $a = $r->fetch();
         if(isset($a['attend_time'])) {
