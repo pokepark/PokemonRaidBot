@@ -62,7 +62,7 @@ function update_userdb($update)
         ON DUPLICATE KEY
         UPDATE      nick    = :nick,
                     name    = :name,
-                    lang    = :lang
+                    lang    = IF(lang_manual = 1, lang, :lang)
         "
     );
     $stmt->bindParam(':id', $id);

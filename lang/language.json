@@ -1127,6 +1127,42 @@
     "PL": "TRANSLATE",
     "FI": "Kouluttajaa ei löytynyt!"
   },
+  "bot_lang": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Bot language",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Botin kieli"
+  },
+  "change_lang": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Change the bot's language",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Vaihda botin kieli"
+  },
+  "new_lang_saved": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "New language saved!",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Kieli vaihdettu!"
+  },
   "display_name_explanation": {
     "NL": "TRANSLATE",
     "DE": "TRANSLATE",

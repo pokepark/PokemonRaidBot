@@ -28,14 +28,14 @@ foreach ($update as $raid) {
 // DDOS protection
 include_once(CORE_BOT_PATH . '/ddos.php');
 
+// Update the user
+update_user($update);
+
 // Get language
 include_once(CORE_BOT_PATH . '/userlanguage.php');
 
 // Run cleanup if requested
 include_once(CORE_BOT_PATH . '/cleanup_run.php');
-
-// Update the user
-update_user($update);
 
 // Callback query received.
 if (isset($update['callback_query'])) {

@@ -174,6 +174,7 @@ CREATE TABLE `users` (
   `team` enum('mystic','valor','instinct') DEFAULT NULL,
   `level` int(10) unsigned DEFAULT '0',
   `lang` VARCHAR(10) NULL,
+  `lang_manual` TINYINT UNSIGNED NOT NULL DEFAULT 0,
   `tutorial` TINYINT(1) NOT NULL DEFAULT 0,
    PRIMARY KEY (`id`),
   UNIQUE KEY `i_userid` (`user_id`)

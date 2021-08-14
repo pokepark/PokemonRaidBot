@@ -1,4 +1,16 @@
 {
+  "lang_name": {
+    "NL": "Nederlands",
+    "DE": "Deutsch",
+    "EN": "English",
+    "IT": "Italiano",
+    "PT-BR": "Português",
+    "RU": "Русский",
+    "NO": "Norsk",
+    "FR": "Français",
+    "PL": "Polski",
+    "FI": "Suomi"
+  },
   "weekday_1": {
     "NL": "Maandag",
     "DE": "Montag",

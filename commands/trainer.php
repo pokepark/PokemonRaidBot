@@ -17,7 +17,6 @@ $msg .= CR.CR.get_user($user_id, false);
 
 // Init empty keys array.
 $keys = [];
-$keys_top_row = [];
 // Create keys array.
 if($config->CUSTOM_TRAINERNAME){
     $keys[0][] =
@@ -43,6 +42,14 @@ $keys[] = [
             'callback_data' => '0:trainer_level:0'
         ]
 ];
+if ($config->LANGUAGE_PRIVATE == '') {
+    $keys[] = [
+        [
+            'text'          => getTranslation('bot_lang'),
+            'callback_data' => '0:bot_lang:0'
+        ]
+    ];
+}
 
 // Check access.
 $access = bot_access_check($update, 'trainer-share', true, true);
