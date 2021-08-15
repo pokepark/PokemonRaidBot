@@ -12,9 +12,13 @@ if ($config->LANGUAGE_PRIVATE == '') {
     } else if(isset($update['inline_query']['from'])) {
         $from = $update['inline_query']['from'];
     }
-    $q = my_query("SELECT lang FROM users WHERE user_id='".$from['id']."' LIMIT 1");
-    $res = $q->fetch();
-    $language_code = $res['lang'];
+    if(isset($from)) {
+        $q = my_query("SELECT lang FROM users WHERE user_id='".$from['id']."' LIMIT 1");
+        $res = $q->fetch();
+        $language_code = $res['lang'];
+    }else {
+        $language_code = '';
+    }
 
     // Get and define userlanguage.
     $languages = $GLOBALS['languages'];
