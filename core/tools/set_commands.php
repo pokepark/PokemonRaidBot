@@ -12,7 +12,7 @@
     <tr>
         <th colspan="3">
             API key: <input type="text" style="width:100%" name="API_KEY" class="input" value="<?php echo isset($_POST['API_KEY'])?$_POST['API_KEY']:'';?>" placeholder="123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11">
-        <?php if($_GET['post'] == 1 && (!isset($_POST['API_KEY']) || empty($_POST['API_KEY']))) echo 'ERROR! API key missing!';?>
+        <?php if(isset($_GET['post']) && $_GET['post'] == 1 && (!isset($_POST['API_KEY']) || empty($_POST['API_KEY']))) echo 'ERROR! API key missing!';?>
         </th>
     </tr>
     </thead>
@@ -27,7 +27,7 @@
                 <tbody>
                     <?php
                     $scopes = ['default','all_private_chats','all_group_chats','all_chat_administrators'];
-                    if($_GET['post'] == 1 && isset($_POST['API_KEY']) && !empty($_POST['API_KEY'])) {
+                    if(isset($_GET['post']) && $_GET['post'] == 1 && isset($_POST['API_KEY']) && !empty($_POST['API_KEY'])) {
                         if($_POST['action'] == 'Set' && $_POST['setscope'] != 'none') {
                             $commands = [];
                             for($i=0;$i<8;$i++) {
@@ -41,7 +41,6 @@
                                             'commands'=>$commands,
                                             'scope'=>$scope,
                                             ]);
-                                            print_r($request);
                             $response = curl_json_request($request);
                         }
                         if($_POST['action'] == 'Delete' && $_POST['delscope'] != 'none') {
