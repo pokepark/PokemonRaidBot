@@ -1,5 +1,5 @@
 <?php
-$file_contents = file_get_contents('config.json');
+$file_contents = file_get_contents( __DIR__ .'/config.json');
 
 if(! is_string($file_contents)){
     die('Config file not readable, cannot continue');
