@@ -24,7 +24,7 @@ $teams = array(
 );
 
 // Valid team name.
-if ($teams[$gym_team]) {
+if (!empty($gym_team) && $teams[$gym_team]) {
     // Update team in raids table.
     my_query(
         "
