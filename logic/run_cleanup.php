@@ -33,7 +33,7 @@ function run_cleanup ($telegram = 2, $database = 2) {
         if ($telegram == 1) {
             // Get cleanup info for telegram cleanup.
             $rs = my_query('
-                SELECT    cleanup.id, cleanup.raid_id, cleanup.chat_id, cleanup.message_id, raids.gym_id
+                SELECT    cleanup.id, cleanup.raid_id, cleanup.chat_id, cleanup.message_id, raids.gym_id, IF(date_of_posting < DATE_SUB(UTC_TIMESTAMP(), INTERVAL 48 HOUR), 1, 0) as skip_del_message
                 FROM      cleanup
                     LEFT JOIN   raids
                     ON          cleanup.raid_id = raids.id
@@ -44,8 +44,12 @@ function run_cleanup ($telegram = 2, $database = 2) {
             cleanup_log('Telegram cleanup starting. Found ' . $rs->rowCount() . ' entries for cleanup.');
             if($rs->rowCount() > 0) {
                 while($row = $rs->fetch()) {
-                    $tg_json[] = delete_message($row['chat_id'], $row['message_id'], true);
-                    cleanup_log('Deleting raid: '.$row['raid_id'].' from chat '.$row['chat_id'].' (message_id: '.$row['message_id'].')');
+                    if($row['skip_del_message'] == 0) {
+                        $tg_json[] = delete_message($row['chat_id'], $row['message_id'], true);
+                        cleanup_log('Deleting raid: '.$row['raid_id'].' from chat '.$row['chat_id'].' (message_id: '.$row['message_id'].')');
+                    } else {
+                        cleanup_log('Chat message for raid '.$row['raid_id'].' in chat '.$row['chat_id'].' is over 48 hours old. It can\'t be deleted by the bot. Skipping deletion and removing database entry.');
+                    }
                     $cleanup_ids[] = $row['id'];
                 }
                 my_query('DELETE FROM cleanup WHERE id IN (' . implode(',', $cleanup_ids) . ')');
