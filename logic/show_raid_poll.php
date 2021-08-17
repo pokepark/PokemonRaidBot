@@ -2,7 +2,7 @@
 /**
  * Show raid poll.
  * @param $raid
- * @return string
+ * @return array
  */
 function show_raid_poll($raid)
 {
@@ -186,7 +186,7 @@ function show_raid_poll($raid)
                 $att_array[$attendance['attend_time']][$attendance_pokemon][] = $attendance;
 
                 // Fill counts array
-                if($attendance['extra_alien'] == 1) {
+                if($attendance['extra_alien'] > 0) {
                     $cnt_extra_alien = 1;
                     $cnt_array[$attendance['attend_time']][$attendance_pokemon]['extra_alien'] += $attendance['extra_alien'];
                 }
