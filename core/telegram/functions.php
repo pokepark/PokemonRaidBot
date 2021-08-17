@@ -870,7 +870,7 @@ function curl_json_multi_request($json)
 
         // Use Proxyserver for curl if configured.
         if($config->CURL_USEPROXY && !empty($config->CURL_PROXYSERVER)) {
-            curl_setopt($curl, CURLOPT_PROXY, $config->CURL_PROXYSERVER);
+            curl_setopt($curly[$id], CURLOPT_PROXY, $config->CURL_PROXYSERVER);
         }
 
         // Bridge mode?
