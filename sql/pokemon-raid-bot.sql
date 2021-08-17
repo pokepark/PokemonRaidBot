@@ -63,10 +63,10 @@ CREATE TABLE `gyms` (
   `lat` decimal(19,16) DEFAULT NULL,
   `lon` decimal(19,16) DEFAULT NULL,
   `address` varchar(255) DEFAULT NULL,
-  `gym_name` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `gym_name` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `ex_gym` tinyint(1) unsigned DEFAULT '0',
   `show_gym` tinyint(1) unsigned DEFAULT '0',
-  `gym_note` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `gym_note` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `gym_id` varchar(40) DEFAULT NULL,
   `img_url` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -117,7 +117,7 @@ CREATE TABLE `raid_bosses` (
   `date_end` datetime NOT NULL DEFAULT '2038-01-19 03:14:07',
   `raid_level` enum('1','2','3','4','5','6','X') DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -136,7 +136,7 @@ CREATE TABLE `raids` (
   `move2` varchar(255) DEFAULT NULL,
   `gender` varchar(255) DEFAULT NULL,
   `event` int(3) unsigned DEFAULT NULL,
-  `event_note` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `event_note` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `end_time` (`end_time`),
   KEY `user_id` (`user_id`)
@@ -166,8 +166,8 @@ CREATE TABLE `user_input` (
 CREATE TABLE `users` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) DEFAULT NULL,
-  `nick` varchar(100) CHARACTER SET utf8mb4 DEFAULT NULL,
-  `name` varchar(200) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `nick` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
+  `name` varchar(200) CHARACTER SET utf8 DEFAULT NULL,
   `trainername` varchar(200) CHARACTER SET utf8mb4 DEFAULT NULL,
   `display_name` int(1) NOT NULL DEFAULT 0,
   `trainercode` varchar(12) CHARACTER SET utf8mb4 DEFAULT NULL,

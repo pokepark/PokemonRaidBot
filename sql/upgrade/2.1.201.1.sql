@@ -1,5 +1,5 @@
-ALTER TABLE `pokemon` ADD COLUMN IF NOT EXISTS `type` varchar(10) CHARACTER SET utf8mb4 DEFAULT '' AFTER `weather`;
-ALTER TABLE `pokemon` ADD COLUMN IF NOT EXISTS `type2` varchar(10) CHARACTER SET utf8mb4 DEFAULT '' AFTER `type`;
+ALTER TABLE `pokemon` ADD COLUMN IF NOT EXISTS `type` varchar(10) CHARACTER SET utf8 DEFAULT '' AFTER `weather`;
+ALTER TABLE `pokemon` ADD COLUMN IF NOT EXISTS `type2` varchar(10) CHARACTER SET utf8 DEFAULT '' AFTER `type`;
 ALTER TABLE `pokemon` CHANGE COLUMN `min_cp` `min_cp` int(10) unsigned NOT NULL DEFAULT 0;
 ALTER TABLE `pokemon` CHANGE COLUMN `max_cp` `max_cp` int(10) unsigned NOT NULL DEFAULT 0;
 ALTER TABLE `pokemon` CHANGE COLUMN `min_weather_cp` `min_weather_cp` int(10) unsigned NOT NULL DEFAULT 0;
