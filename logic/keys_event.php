@@ -5,18 +5,22 @@
  * @param $action
  * @return array
  */
-function event_keys($gym_id_plus_letter, $action) {
+function keys_event($gym_id_plus_letter, $action) {
     $q = my_query("
             SELECT      id,
                         name
-            FROM
-                        events
+            FROM        events
+            WHERE       id != 999
             ");
     while($event = $q->fetch()) {
-        $keys[] = array(
-            'text'          => $event['name'],
-            'callback_data' => $gym_id_plus_letter . ':' . $action . ':' . $event['id']
-        );
+        if(!empty($event['name'])) {
+            $keys[] = array(
+                'text'          => $event['name'],
+                'callback_data' => $gym_id_plus_letter . ':' . $action . ':' . $event['id']
+            );
+        }else {
+            info_log('Invalid event name on event '. $event['id']);
+        }
     }
     $keys[] = array(
         'text'          => getTranslation("Xstars"),

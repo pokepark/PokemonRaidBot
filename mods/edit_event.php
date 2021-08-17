@@ -13,7 +13,7 @@ bot_access_check($update, 'event-raids');
 $gym_id_plus_letter = $data['id'];
 
 // Get the keys.
-$keys = event_keys($gym_id_plus_letter, "edit_event_raidlevel");
+$keys = keys_event($gym_id_plus_letter, "edit_event_raidlevel");
 
 // No keys found.
 if (!$keys) {
