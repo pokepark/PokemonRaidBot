@@ -58,7 +58,7 @@ if($chat_id != 0) {
     $tg_json[] = edit_message($update, $msg_callback, $keys, ['disable_web_page_preview' => 'true'], true);
 
     // Send the message, but disable the web preview!
-    $tg_json[] = send_message($chat_id, $overview_message, $keys, ['disable_web_page_preview' => 'true'], true);
+    $tg_json[] = send_message($chat_id, $overview_message, $keys, ['disable_web_page_preview' => 'true'], true, 'overview');
 }else {
     // List all overviews to user
     foreach( array_keys($active_raids) as $chat_id ) {

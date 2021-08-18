@@ -15,7 +15,7 @@ function grab_img($uri){
   }
   return $img;
 }
-
+if(isset($_GET['sa']) && $_GET['sa'] == 1) $standalone_photo = true; else $standalone_photo = false;
 // Debug switch
 $debug = false;
 if(isset($_GET['debug']) && $_GET['debug'] == 1) {
@@ -470,6 +470,8 @@ if(strpos($time_text, ',') !== false) {
     $time_text_lines[] .= $time_text;
 }
 $num_text_lines = count($time_text_lines);
+// If the photo is sent without caption, we want to keep the bottom right corcer clear of text because Telegram covers it with a timestamp
+if($standalone_photo) $time_top -= 10;
 
 // Go through every line...
 for($ya=0;$ya<$num_text_lines;$ya++){
@@ -535,6 +537,9 @@ $poke_text_top = 310;
 if($num_pokemon_lines > 1) {
     $poke_text_top = 272;
 }
+
+// If the photo is sent without caption, we want to keep the bottom right corcer clear of text because Telegram covers it with a timestamp
+if($standalone_photo) $poke_text_top -= 50;
 
 // Add pokemon name to image
 for($pa=0;$pa<$num_pokemon_lines;$pa++){

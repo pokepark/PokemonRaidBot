@@ -10,7 +10,7 @@ $remote_string = getPublicTranslation('remote_raid');
 // Check if the user has voted for this raid before.
 $rs = my_query(
     "
-    SELECT    attendance.want_invite,
+    SELECT    attendance.want_invite, attendance.alarm,
               IF(SUBSTR(gyms.gym_name, 1, LENGTH('".$remote_string."')-1) = '".$remote_string."', 1, 0)     as is_remote_gym,
               IF(raids.user_id = {$update['callback_query']['from']['id']}, 1, 0)                           as user_is_creator
     FROM      attendance
@@ -50,9 +50,9 @@ if (!empty($answer)) {
             AND    user_id = {$update['callback_query']['from']['id']}
             "
             );
-
+            $new_alarm_value = $answer['alarm'] = 0 ? 1 : 0;
             // Inform User about change
-            sendAlertOnOffNotice($data, $update);
+            sendAlertOnOffNotice($data['id'], $update['callback_query']['from']['id'], $new_alarm_value);
         } else {
             // All other status-updates are using the short query
             my_query(
@@ -88,11 +88,13 @@ if (!empty($answer)) {
         }
 
        // Send vote response.
-       if($config->RAID_PICTURE) {
-           send_response_vote($update, $data,false,false);
-        } else {
-           send_response_vote($update, $data);
-        }
+        require_once(LOGIC_PATH . '/update_raid_poll.php');
+
+        $tg_json = update_raid_poll($data['id'], false, $update);
+
+        $tg_json[] = answerCallbackQuery($update['callback_query']['id'], getTranslation('vote_updated'), true);
+
+        curl_json_multi_request($tg_json);
     }else {
         $msg = getTranslation('vote_status_not_allowed');
         answerCallbackQuery($update['callback_query']['id'], $msg);

@@ -38,7 +38,7 @@ if($returnValue){
     send_message($userid, getTranslation('trainername_success').' <b>'.$trainername.'</b>', $keys);
 }else{
     // Trainer Name got unallowed Chars -> Error-Message
-    sendMessage($userid, getTranslation('trainername_fail'));
+    send_message($userid, getTranslation('trainername_fail'));
     exit();
 }
 

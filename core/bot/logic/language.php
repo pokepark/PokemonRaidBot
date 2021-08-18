@@ -1,8 +1,8 @@
 <?php
 /**
  * Call the translation function with override parameters.
- * @param $text
- * @return translation
+ * @param string $text
+ * @return string translation
  */
 function getPublicTranslation($text)
 {
@@ -14,10 +14,10 @@ function getPublicTranslation($text)
 
 /**
  * Gets a table translation out of the json file.
- * @param $text
- * @param $override
- * @param $override_language
- * @return translation
+ * @param string $text
+ * @param bool $override
+ * @param string $override_language
+ * @return string translation
  */
 function getTranslation($text, $override = false, $override_language = '')
 {

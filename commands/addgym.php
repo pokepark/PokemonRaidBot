@@ -33,7 +33,7 @@ if($count == 1) {
     $msg = '<b>' . getTranslation('invalid_input') . '</b>' . CR . CR;
     $msg .= getTranslation('gym_coordinates_format_error') . CR;
     $msg .= getTranslation('gym_coordinates_format_example');
-    sendMessage($update['message']['chat']['id'], $msg);
+    send_message($update['message']['chat']['id'], $msg);
     exit();
 }
 

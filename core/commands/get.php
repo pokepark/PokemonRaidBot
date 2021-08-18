@@ -70,6 +70,6 @@ if(!empty($config->ALLOWED_TELEGRAM_CONFIG)) {
     $msg .= getTranslation('not_supported');
 }
 
-sendMessage($update['message']['chat']['id'], $msg);
+send_message($update['message']['chat']['id'], $msg);
 
 ?>

@@ -19,21 +19,6 @@ $answer_count = $rs_count->fetch();
 $count_att = $answer_count['count'];
 // Write to log.
 debug_log($answer_count, 'Anyone Voted: ');
-$perform_share = false; // no sharing by default
-// Check if Raid has been posted to target channel
-if($count_att == 0 && $config->SHARE_AFTER_ATTENDANCE && !empty($config->SHARE_CHATS_AFTER_ATTENDANCE)){
-    $rs_chann = my_query(
-        "
-        SELECT *
-        FROM cleanup
-          WHERE raid_id = {$data['id']}
-          AND chat_id = {$config->SHARE_CHATS_AFTER_ATTENDANCE}
-        ");
-    // IF Chat was not shared to target channel we want to share it
-    if ($rs_chann->rowCount() == 0) {
-        $perform_share = true;
-    }
-}
 
 // Request Raid and Gym - Infos
 $raid = get_raid($data['id']);
@@ -58,6 +43,8 @@ if($count_att > 0){
 }else{
     $answer = [];
 }
+
+$tg_json = [];
 
 $vote_time = $data['arg'];
 // Raid anytime?
@@ -140,46 +127,47 @@ if($now <= $attend_time || $vote_time == 0) {
             // Enable alerts message. -> only if alert is on
             if($config->RAID_AUTOMATIC_ALARM) {
                 // Inform User about active alert
-                sendAlertOnOffNotice($data, $update, $config->RAID_AUTOMATIC_ALARM);
+                sendAlertOnOffNotice($data['id'], $update['callback_query']['from']['id'], 1, $raid);
             }
         }
-        // Check if RAID has no participants AND Raid should be shared to another Channel at first participant
-        // AND target channel was set in config AND Raid was not shared to target channel before
-        if($count_att == 0 && $config->SHARE_AFTER_ATTENDANCE && !empty($config->SHARE_CHATS_AFTER_ATTENDANCE) && $perform_share){
-          // TODO(artanicus): This code is very WET, I'm sure we have functions somewhere to send a raid share -_-
-            // Share Raid to another Channel
-            $chat = $config->SHARE_CHATS_AFTER_ATTENDANCE;
-            // Set text.
-            $text = show_raid_poll($raid);
-            // Set keys.
-            $keys = keys_vote($raid);
-            // Send the message.
-            if($config->RAID_PICTURE) {
-                require_once(LOGIC_PATH . '/raid_picture.php');
-                $picture_url = raid_picture_url($data);
-                $tg_json[] = send_photo($chat, $picture_url, $text['short'], $keys, ['disable_web_page_preview' => 'true'], true);
-            } else {
-                $tg_json[] = send_message($chat, $text['full'], $keys, ['disable_web_page_preview' => 'true'], true);
+        // Check if RAID has no participants AND Raid should be shared to another chat at first participant
+        // AND target chat was set in config AND Raid was not shared to target chat before
+        if($count_att == 0 && $config->SHARE_AFTER_ATTENDANCE && !empty($config->SHARE_CHATS_AFTER_ATTENDANCE)){
+            // Check if Raid has been posted to target chat
+            $rs_chann = my_query(
+                "
+                SELECT *
+                FROM cleanup
+                WHERE raid_id = {$data['id']}
+                AND chat_id = {$config->SHARE_CHATS_AFTER_ATTENDANCE}
+                ");
+            // IF raid was not shared to target chat, we want to share it
+            if ($rs_chann->rowCount() == 0) {
+                // Send the message.
+                require_once(LOGIC_PATH . '/send_raid_poll.php');
+                $tg_json = send_raid_poll($data['id'], $raid, $config->SHARE_CHATS_AFTER_ATTENDANCE, $tg_json);
             }
-            // Telegram multicurl request.
-            curl_json_multi_request($tg_json);
         }
     } else {
         // Send max remote users reached.
         send_vote_remote_users_limit_reached($update);
+        $dbh = null;
+        exit();
     }
 
 } else {
     // Send vote time first.
     send_vote_time_future($update);
-    send_response_vote($update, $data);
 }
 
-    // Send vote response.
-   if($config->RAID_PICTURE) {
-	    send_response_vote($update, $data,false,false);
-    } else {
-	    send_response_vote($update, $data);
-    }
+// Send vote response.
+require_once(LOGIC_PATH . '/update_raid_poll.php');
 
+$tg_json = update_raid_poll($data['id'], $raid, $update);
+
+$tg_json[] = answerCallbackQuery($update['callback_query']['id'], getTranslation('vote_updated'), true);
+
+curl_json_multi_request($tg_json);
+
+$dbh = null;
 exit();

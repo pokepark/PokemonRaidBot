@@ -15,7 +15,7 @@ if (isset($update['message']['text']) && substr($update['message']['text'], 0, 1
     }
 
     if($config->TUTORIAL_MODE && isset($update['message']['chat']['id']) && new_user($update['message']['chat']['id']) && $com != 'start') {
-        sendMessage($update['message']['chat']['id'],  getTranslation("tutorial_command_failed"));
+        send_message($update['message']['chat']['id'],  getTranslation("tutorial_command_failed"));
         $dbh = null;
         exit();
     }
@@ -52,6 +52,6 @@ if (isset($update['message']['text']) && substr($update['message']['text'], 0, 1
         // Include start file and exit.
         include_once($startcommand);
     } else {
-        sendMessage($update['message']['chat']['id'], '<b>' . getTranslation('not_supported') . '</b>');
+        send_message($update['message']['chat']['id'], '<b>' . getTranslation('not_supported') . '</b>');
     }
 }

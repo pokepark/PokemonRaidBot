@@ -77,7 +77,7 @@ if($access && (is_file(ROOT_PATH . '/access/' . $access) || $access == 'BOT_ADMI
 }
 
 // Send message.
-sendMessage($update['message']['from']['id'], $msg);
+send_message($update['message']['from']['id'], $msg);
 
 ?>
 

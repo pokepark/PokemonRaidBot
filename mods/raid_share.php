@@ -1,6 +1,7 @@
 <?php
 // Write to log.
 debug_log('raid_share()');
+require_once(LOGIC_PATH . '/send_raid_poll.php');
 
 // For debug.
 //debug_log($update);
@@ -15,47 +16,7 @@ $id = $data['id'];
 // Get chat id.
 $chat = $data['arg'];
 
-// Get raid data.
-$raid = get_raid($id);
-
-// Get text and keys.
-$text = show_raid_poll($raid);
-$keys = keys_vote($raid);
-
-// Send location.
-if ($config->RAID_LOCATION) {
-    // Send location.
-    $msg_text = !empty($raid['address']) ? ($raid['address'] . ', ' . substr(strtoupper($config->BOT_ID), 0, 1) . '-ID = ' . $raid['id']) : ($raid['pokemon'] . ', ' . $raid['id']); // DO NOT REMOVE "ID ="--> NEEDED FOR $config->CLEANUP PREPARATION!
-    $loc = send_venue($chat, $raid['lat'], $raid['lon'], '', $msg_text);
-
-    // Write to log.
-    debug_log('location:');
-    debug_log($loc);
-}
-
-// Telegram JSON array.
-$tg_json = array();
-
-// Raid picture
-if($config->RAID_PICTURE) {
-  require_once(LOGIC_PATH . '/raid_picture.php');
-  $picture_url = raid_picture_url($raid);
-}
-
-// Send the message.
-$raid_picture_hide_level = explode(",",$config->RAID_PICTURE_HIDE_LEVEL);
-$raid_picture_hide_pokemon = explode(",",$config->RAID_PICTURE_HIDE_POKEMON);
-
-$raid_pokemon_id = $raid['pokemon'];
-$raid_level = $raid['level'];
-$raid_pokemon_form_name = get_pokemon_form_name($raid_pokemon_id,$raid['pokemon_form']);
-$raid_pokemon = $raid_pokemon_id . "-" . $raid_pokemon_form_name;
-
-if($config->RAID_PICTURE && $raid['event_hide_raid_picture'] == 0 && !in_array($raid_level, $raid_picture_hide_level) && !in_array($raid_pokemon, $raid_picture_hide_pokemon) && !in_array($raid_pokemon_id, $raid_picture_hide_pokemon)) {
-    $tg_json[] = send_photo($chat, $picture_url, $text['short'], $keys, ['disable_web_page_preview' => 'true'], true);
-} else {
-    $tg_json[] = send_message($chat, $text['full'], $keys, ['disable_web_page_preview' => 'true'], true);
-}
+$tg_json = send_raid_poll($id, false, $chat);
 
 // Set callback keys and message
 $callback_msg = getTranslation('successfully_shared');
@@ -71,4 +32,5 @@ $tg_json[] = edit_message($update, $callback_msg, $callback_keys, false, true);
 curl_json_multi_request($tg_json);
 
 // Exit.
+$dbh = null;
 exit();

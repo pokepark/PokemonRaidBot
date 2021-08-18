@@ -1,10 +1,11 @@
 <?php
 /**
  * Show raid poll.
- * @param $raid
+ * @param array $raid
+ * @param bool $inline
  * @return array
  */
-function show_raid_poll($raid)
+function show_raid_poll($raid, $inline = false)
 {
     global $config;
     // Init empty message array.
@@ -155,6 +156,7 @@ function show_raid_poll($raid)
     $cnt_cancel = 0;
     $cnt_done = 0;
     $cnt_can_invite = 0;
+
     while ($attendance = $rs_attendance->fetch()) {
         // Attendance found
         $cnt_all = 1;
@@ -465,11 +467,10 @@ function show_raid_poll($raid)
     }
 
     // Add update time and raid id to message.
-    if(!$buttons_hidden) {
-        $msg = raid_poll_message($msg, CR . '<i>' . getPublicTranslation('updated') . ': ' . dt2time('now', 'H:i:s') . '</i>');
-    }else {
-        $msg = raid_poll_message($msg, SP . SP . substr(strtoupper($config->BOT_ID), 0, 1) . '-ID = ' . $raid['id']);   // DO NOT REMOVE! --> NEEDED FOR $config->CLEANUP PREPARATION!
-                                                                                                                        // Ninjasoturi: This is only needed when the message doesn't have inline keyboard attached to it
+    $msg = raid_poll_message($msg, CR . '<i>' . getPublicTranslation('updated') . ': ' . dt2time('now', 'H:i:s') . '</i>');
+    if($inline && ($buttons_hidden or ($raid['end_time'] < $time_now && $config->RAID_ENDED_HIDE_KEYS))) {
+        // Only case this is needed anymore is a poll shared via inline that has no vote keys
+        $msg = raid_poll_message($msg, SP . SP . substr(strtoupper($config->BOT_ID), 0, 1) . '-ID = ' . $raid['id']);
     }
     // Return the message.
     return $msg;

@@ -237,32 +237,10 @@ foreach ($update as $raid) {
         }
     }
 
-    // Get raid data.
-    $raid = get_raid($raid_id);
-
-    // Set text.
-    $text = show_raid_poll($raid);
-
-    // Set keys.
-    $keys = keys_vote($raid);
-
     if($send_updates == true) {
-        $cleanup_query = '
-            SELECT    *
-            FROM      cleanup
-                WHERE   raid_id = :id
-        ';
-        $cleanup_statement = $dbh->prepare( $cleanup_query );
-        $cleanup_statement->execute(['id' => $raid_id]);
-        while ($row = $cleanup_statement->fetch()) {
-            if($config->RAID_PICTURE) {
-                require_once(LOGIC_PATH . '/raid_picture.php');
-                $picture_url = raid_picture_url($raid);
-                $tg_json[] = editMessageMedia($row['message_id'], $text['short'], $keys, $row['chat_id'], ['disable_web_page_preview' => 'true'],true, $picture_url);
-            }else {
-                $tg_json[] = editMessageText($row['message_id'], $text['full'], $keys, $row['chat_id'], ['disable_web_page_preview' => 'true'],true);
-            }
-        }
+        require_once(LOGIC_PATH .'/update_raid_poll.php');
+        $update = update_raid_poll($raid_id, false, false, $tg_json); // update_raid_poll() will return false if the raid isn't shared to any chat
+        if($update != false) $tg_json = $update;
     }else {
         // Get chats to share to by raid level and geofence id
         $chats_geofence = [];
@@ -293,28 +271,8 @@ foreach ($update as $raid) {
         }
         $chats = array_merge($chats_geofence, $chats_raidlevel, $webhook_chats);
 
-        // Post raid polls.
-        foreach ($chats as $chat) {
-            debug_log('Posting poll to chat: ' . $chat);
-
-            // Send location.
-            if ($config->RAID_LOCATION) {
-
-                $msg_text = !empty($raid['address']) ? $raid['address'] . ', ' . substr(strtoupper($config->BOT_ID), 0, 1) . '-ID = ' . $raid['id'] : $raid['pokemon'] . ', ' . substr(strtoupper($config->BOT_ID), 0, 1) . '-ID = ' . $raid['id']; // DO NOT REMOVE ' ID = ' --> NEEDED FOR $config->CLEANUP PREPARATION!
-                $loc = send_venue($chat, $raid['lat'], $raid['lon'], '', $msg_text, true);
-                $tg_json[] = $loc;
-                debug_log($loc, 'Location:');
-            }
-
-            // Send the message.
-            if($config->RAID_PICTURE) {
-                require_once(LOGIC_PATH . '/raid_picture.php');
-                $picture_url = raid_picture_url($raid);
-                $tg_json[] = send_photo($chat, $picture_url, $text['short'], $keys, ['disable_web_page_preview' => 'true'], true);
-            } else {
-                $tg_json[] = send_message($chat, $text['full'], $keys, ['disable_web_page_preview' => 'true'], true);
-            }
-        }
+        require_once(LOGIC_PATH .'/send_raid_poll.php');
+        $tg_json = send_raid_poll($raid_id, $chats, $tg_json);
     }
 }
 

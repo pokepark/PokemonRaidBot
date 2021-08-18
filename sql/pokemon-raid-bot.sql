@@ -39,6 +39,7 @@ CREATE TABLE `cleanup` (
   `raid_id` int(10) unsigned NOT NULL,
   `chat_id` bigint(20) NOT NULL,
   `message_id` bigint(20) unsigned NOT NULL,
+  `type` VARCHAR(20) NULL,
   `date_of_posting` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

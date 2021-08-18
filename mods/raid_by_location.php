@@ -12,7 +12,7 @@ bot_access_check($update, 'create');
 // Enabled?
 if(!$config->RAID_VIA_LOCATION) {
     debug_log('Creating raids by sharing a location is not enabled in config! Exiting!');
-    sendMessage($update['message']['chat']['id'], '<b>' . getTranslation('bot_access_denied') . '</b>');
+    send_message($update['message']['chat']['id'], '<b>' . getTranslation('bot_access_denied') . '</b>');
     exit();
 }
 
@@ -24,7 +24,7 @@ if(isset($update['message']['location'])) {
     $lat = $data['id'];
     $lon = $data['arg'];
 } else {
-    sendMessage($update['message']['chat']['id'], '<b>' . getTranslation('invalid_input') . '</b>');
+    send_message($update['message']['chat']['id'], '<b>' . getTranslation('invalid_input') . '</b>');
     exit();
 }
 

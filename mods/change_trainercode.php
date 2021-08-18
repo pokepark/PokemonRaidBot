@@ -38,6 +38,6 @@ if(strlen($trainercode)==12){
     send_message($target_user_id, getTranslation('trainercode_success').' <b>'.$trainercode.'</b>', $keys);
 }else{
     // Trainer Code got unallowed Chars -> Error-Message
-    sendMessage($target_user_id, getTranslation('trainercode_fail'));
+    send_message($target_user_id, getTranslation('trainercode_fail'));
     exit();
 }

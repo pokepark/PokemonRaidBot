@@ -53,7 +53,7 @@ if(isset($data['arg']) && $data['arg'] == 1) {
         $lat = (float)$update['message']['location']['latitude'];
         $lon = (float)$update['message']['location']['longitude'];
     }else {
-        sendMessage($update['message']['chat']['id'], '<b>' . getTranslation('invalid_input') . '</b>');
+        send_message($update['message']['chat']['id'], '<b>' . getTranslation('invalid_input') . '</b>');
         exit();
     }
     $gps_diff = (float)0.01;

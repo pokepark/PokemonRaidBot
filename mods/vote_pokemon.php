@@ -33,9 +33,6 @@ debug_log($atts);
 if(!empty($atts)) {
     // Any pokemon?
     if($data['arg'] == 0) {
-        // Send alarm
-        alarm($data['id'],$update['callback_query']['from']['id'],'pok_individual',$data['arg']);
-
         // Update attendance.
         my_query(
         "
@@ -62,6 +59,9 @@ if(!empty($atts)) {
         AND user_id = {$update['callback_query']['from']['id']}
         "
         );
+
+        // Send alarm
+        alarm($data['id'],$update['callback_query']['from']['id'],'pok_individual',$data['arg']);
     } else {
         // Init found and count.
         $found = false;
@@ -166,12 +166,13 @@ if(!empty($atts)) {
         }
     }
 
-   // Send vote response.
-   if($config->RAID_PICTURE) {
-	    send_response_vote($update, $data,false,false);
-    } else {
-	    send_response_vote($update, $data);
-    }
+    require_once(LOGIC_PATH . '/update_raid_poll.php');
+
+    $tg_json = update_raid_poll($data['id'], false, $update);
+
+    $tg_json[] = answerCallbackQuery($update['callback_query']['id'], getTranslation('vote_updated'), true);
+
+    curl_json_multi_request($tg_json);
 } else {
     // Send vote time first.
     send_vote_time_first($update);

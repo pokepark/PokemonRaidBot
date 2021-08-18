@@ -459,7 +459,7 @@ Set `RAID_LATE_TIME` to the amount of minutes the local community will may be wa
 
 Set `RAID_POLL_HIDE_USERS_TIME` to the amount of minutes when a previous raid slot should be hidden. For example if there are 2 slots, 18:00 and 18:15, and you set the time to 10 minutes the first group of participants from 18:00 will be hidden once we reach 18:10. This helps to keep the raid poll message smaller and clearer if there are multiple groups. Set the value to 0 to always show all slots.
 
-Set `RAID_POLL_UI_TEMPLATE` to the customize the order of the buttons for the raid polls. Supported elementa are `alone, extra, extra_alien, remote, inv_plz, can_inv, ex_inv, teamlvl, time, pokemon, refresh, alarm, here, late, done, cancel`. Some elements may be hidden by some other config values even if they are set in the template.
+Edit `RAID_POLL_UI_TEMPLATE` to customize the order of the buttons for the raid polls. Supported elementa are `alone, extra, extra_alien, remote, inv_plz, can_inv, ex_inv, teamlvl, time, pokemon, refresh, alarm, here, late, done, cancel`. Some elements may be hidden by some other config values even if they are set in the template.
 
 Set `RAID_POLL_HIDE_BUTTONS_RAID_LEVEL` to the raid levels (1-5) for which the voting buttons under the raid poll should be hidden. For example a level 1 raid can be done by a single player, but it is maybe interesting to be shared as some pokemon are only available in raids.
 
@@ -1171,6 +1171,7 @@ To keep local data, such as `pokemon` table and Pokemon icons directory, up to d
 | RAID_LATE_TIME| How many minutes to advise waiting in `RAID_LATE_MSG` |
 | RAID_LOCATION| Bool, Send a separate attached location message in addition to a raid poll |
 | RAID_PICTURE | Bool, enable picture based raid polls instead of default text mode |
+| RAID_PICTURE_AUTOEXTEND | Bool, send the picture and poll as separate messages |
 | RAID_PICTURE_STORE_GYM_IMAGES_LOCALLY | Bool, option to store gym photos in `images/gyms` instead of fetching them from cloud every time |
 | RAID_PICTURE_BG_COLOR| List of RGB values for `RAID_PICTURE` poll background color, e.g. "0,0,0" for black |
 | RAID_PICTURE_FILE_FORMAT| Format for raid pictures for `RAID_PICTURE`, valid values are gif, jpg, jpeg, png |

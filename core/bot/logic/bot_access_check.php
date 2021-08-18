@@ -339,7 +339,7 @@ function bot_access_check($update, $permission = 'access-bot', $return_result = 
             // Telegram multicurl request.
             curl_json_multi_request($tg_json);
         } else {
-            sendMessage($update[$update_type]['from']['id'], $response_msg);
+            send_message($update[$update_type]['from']['id'], $response_msg);
         }
         exit;
     }

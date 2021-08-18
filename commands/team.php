@@ -36,12 +36,12 @@ if (!empty($gym_team) && $teams[$gym_team]) {
     );
 
     // Send the message.
-    sendMessage($update['message']['chat']['id'], getTranslation('gym_team_set_to') . ' ' . ucfirst($teams[$gym_team]));
+    send_message($update['message']['chat']['id'], getTranslation('gym_team_set_to') . ' ' . ucfirst($teams[$gym_team]));
 
 // Invalid team name.
 } else {
     // Send the message.
-    sendMessage($update['message']['chat']['id'], getTranslation('invalid_team'));
+    send_message($update['message']['chat']['id'], getTranslation('invalid_team'));
 }
 
 ?>
