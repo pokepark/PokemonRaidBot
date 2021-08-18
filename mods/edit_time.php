@@ -115,7 +115,7 @@ if ($raid_id == 0 && $gym_id != 0) {
                           spawn = DATE_SUB(start_time, INTERVAL ".$config->RAID_EGG_DURATION." MINUTE),
                           end_time = DATE_ADD(start_time, INTERVAL {$duration} MINUTE),
                           gym_id = '{$gym_id}',
-                          level = {$raid_level},
+                          level = '{$raid_level}',
                           event = {$event}
             "
         );
