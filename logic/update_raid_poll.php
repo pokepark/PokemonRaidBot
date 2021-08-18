@@ -89,7 +89,7 @@ function update_raid_poll($raid_id, $raid = false, $update = false, $tg_json = f
                     require_once(LOGIC_PATH . '/raid_picture.php');
                     $raid['pokemon'] = 'ended';
                     $picture_url = raid_picture_url($raid);
-                    $tg_json[] = editMessageMedia($message, $msg['short'], $keys, $chat, ['disable_web_page_preview' => 'true'], true, $picture_url);
+                    $tg_json[] = editMessageMedia($message, $text['short'], $keys, $chat, ['disable_web_page_preview' => 'true'], true, $picture_url);
                 }
             }
         }else if ($type == 'poll_text') {
