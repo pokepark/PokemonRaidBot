@@ -8,7 +8,7 @@ $SQL = '';
 $SQL_file = __DIR__ . '/sql/game-master-raid-boss-pokedex.sql';
 $SQL_file_update = __DIR__ . '/sql/update-pokemon-table.sql';
 
-$proto_url = "https://raw.githubusercontent.com/Furtif/POGOProtos/master/base/v0.213.x_p_obf.proto";
+$proto_url = "https://raw.githubusercontent.com/Furtif/POGOProtos/master/base/vbase.proto";
 $game_master_url = "https://raw.githubusercontent.com/PokeMiners/game_masters/master/latest/latest.json";
 
 $update = false;
