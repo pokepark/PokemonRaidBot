@@ -104,7 +104,7 @@ if($now <= $attend_time || $vote_time == 0) {
                     AND   user_id = {$update['callback_query']['from']['id']}
                 "
             );
-            alarm($data['id'],$update['callback_query']['from']['id'],'change_time', $attend_time);
+            $tg_json = alarm($data['id'],$update['callback_query']['from']['id'],'change_time', $attend_time, $tg_json);
 
         // User has not voted before.
         } else {
@@ -122,7 +122,7 @@ if($now <= $attend_time || $vote_time == 0) {
               'alarm' => ($config->RAID_AUTOMATIC_ALARM ? 1 : 0)
             ]);
             // Send Alarm.
-            alarm($data['id'],$update['callback_query']['from']['id'],'new_att', $attend_time);
+            $tg_json = alarm($data['id'],$update['callback_query']['from']['id'],'new_att', $attend_time, $tg_json);
 
             // Enable alerts message. -> only if alert is on
             if($config->RAID_AUTOMATIC_ALARM) {

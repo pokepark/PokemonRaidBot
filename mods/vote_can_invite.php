@@ -51,14 +51,16 @@ catch (PDOException $exception) {
 }
 if($statement_select->rowCount() > 0) {
     if($res['can_invite'] == 0) {
-        alarm($data['id'],$update['callback_query']['from']['id'],'can_invite');
+        $alarm_action = 'can_invite';
     } else {
-        alarm($data['id'],$update['callback_query']['from']['id'],'no_can_invite');
+        $alarm_action = 'no_can_invite';
     }
     // Send vote response.
     require_once(LOGIC_PATH . '/update_raid_poll.php');
 
     $tg_json = update_raid_poll($data['id'], false, $update);
+
+    $tg_json = alarm($data['id'],$update['callback_query']['from']['id'], $alarm_action, '', $tg_json);
 
     $tg_json[] = answerCallbackQuery($update['callback_query']['id'], getTranslation('vote_updated'), true);
 

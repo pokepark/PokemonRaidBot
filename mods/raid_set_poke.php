@@ -59,11 +59,11 @@ $rs = my_query(
 require_once(LOGIC_PATH .'/update_raid_poll.php');
 $tg_json = update_raid_poll($raid_id, $raid, false, $tg_json, false);
 
+// Alert users.
+$tg_json = alarm($raid, $update['callback_query']['from']['id'], 'new_boss', '', $tg_json);
+
 // Telegram multicurl request.
 curl_json_multi_request($tg_json);
-
-// Alert users.
-alarm($raid, $update['callback_query']['from']['id'], 'new_boss');
 
 // Exit.
 exit();

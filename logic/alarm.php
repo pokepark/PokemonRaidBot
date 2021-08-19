@@ -1,12 +1,14 @@
 <?php
 /**
  * Send raid alerts to user.
- * @param $raid_id_array - raid id or the result of get_raid()
- * @param $user_id - ID of the user that executed the call
- * @param $action - which alarm action to perform
- * @param $info - additional info for the action if required
+ * @param array $raid_id_array raid id or the result of get_raid()
+ * @param int $user_id ID of the user that executed the call
+ * @param string $action which alarm action to perform
+ * @param string $info additional info for the action if required
+ * @param array $tg_json multicurl array
+ * @return array multicurl array
  */
-function alarm($raid_id_array, $user_id, $action, $info = '')
+function alarm($raid_id_array, $user_id, $action, $info = '', $tg_json = [])
 {
     // Get config
     global $config;
@@ -65,7 +67,7 @@ function alarm($raid_id_array, $user_id, $action, $info = '')
                                 AND alarm = 1
                             ");
     }
-    $tg_json = [];
+
     while($answer = $request->fetch())
     {
         if(!isset($answer['lang']) or empty($answer['lang'])) $recipient_language = $config->LANGUAGE_PUBLIC;
@@ -255,7 +257,7 @@ function alarm($raid_id_array, $user_id, $action, $info = '')
         }
         $tg_json[] = send_message($answer['user_id'], $msg_text, false, false, true);
     }
-    if(count($tg_json) > 0) curl_json_multi_request($tg_json);
+    return $tg_json;
 }
 
 /**

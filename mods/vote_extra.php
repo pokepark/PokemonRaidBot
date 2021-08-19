@@ -19,6 +19,9 @@ $rs = my_query(
 // Get the answer.
 $answer = $rs->fetch();
 
+// Telegram JSON array.
+$tg_json = array();
+
 // Write to log.
 debug_log($answer);
 
@@ -36,7 +39,7 @@ if (!empty($answer)) {
             AND   user_id = {$update['callback_query']['from']['id']}
             "
         );
-        alarm($data['id'],$update['callback_query']['from']['id'],'extra_alone',$data['arg']);
+        $tg_json = alarm($data['id'],$update['callback_query']['from']['id'],'extra_alone',$data['arg'], $tg_json);
     } else if($answer['can_invite'] == 1 ) {
         // People who are only inviting others can't add extras
         $msg = getTranslation('vote_status_not_allowed');
@@ -68,7 +71,7 @@ if (!empty($answer)) {
                     AND   {$team} < 5
                 "
             );
-            alarm($data['id'],$update['callback_query']['from']['id'],'extra',$data['arg']);
+            $tg_json = alarm($data['id'],$update['callback_query']['from']['id'],'extra',$data['arg'], $tg_json);
         } else {
             // Send max remote users reached.
             send_vote_remote_users_limit_reached($update);
@@ -80,7 +83,7 @@ if (!empty($answer)) {
     // Send vote response.
     require_once(LOGIC_PATH . '/update_raid_poll.php');
 
-    $tg_json = update_raid_poll($data['id'], false, $update);
+    $tg_json = update_raid_poll($data['id'], false, $update, $tg_json);
 
     $tg_json[] = answerCallbackQuery($update['callback_query']['id'], getTranslation('vote_updated'), true);
 

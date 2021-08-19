@@ -43,15 +43,15 @@ if($rs->rowCount() > 0) {
         );
 
         if($remote_status == 0) {
-            alarm($data['id'],$update['callback_query']['from']['id'],'remote');
+            $tg_json = alarm($data['id'],$update['callback_query']['from']['id'],'remote');
         } else {
-            alarm($data['id'],$update['callback_query']['from']['id'],'no_remote');
+            $tg_json = alarm($data['id'],$update['callback_query']['from']['id'],'no_remote');
         }
 
         // Send vote response.
         require_once(LOGIC_PATH . '/update_raid_poll.php');
 
-        $tg_json = update_raid_poll($data['id'], false, $update);
+        $tg_json = update_raid_poll($data['id'], false, $update, $tg_json);
 
         $tg_json[] = answerCallbackQuery($update['callback_query']['id'], getTranslation('vote_updated'), true);
 

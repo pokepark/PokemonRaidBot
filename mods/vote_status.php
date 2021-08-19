@@ -29,6 +29,9 @@ $answer = $rs->fetch();
 // Write to log.
 debug_log($answer);
 
+// Telegram JSON array.
+$tg_json = array();
+
 // Get status to update
 $status = $data['arg'];
 
@@ -82,15 +85,15 @@ if (!empty($answer)) {
                              ]];
                     send_message($update['callback_query']['from']['id'], getTranslation("delete_remote_raid"), $keys);
                 }
-            }else {
-                alarm($data['id'],$update['callback_query']['from']['id'],'status',$status);
+            }elseif($status != 'arrived') {
+                $tg_json = alarm($data['id'],$update['callback_query']['from']['id'],'status',$status, $tg_json);
             }
         }
 
        // Send vote response.
         require_once(LOGIC_PATH . '/update_raid_poll.php');
 
-        $tg_json = update_raid_poll($data['id'], false, $update);
+        $tg_json = update_raid_poll($data['id'], false, $update, $tg_json);
 
         $tg_json[] = answerCallbackQuery($update['callback_query']['id'], getTranslation('vote_updated'), true);
 

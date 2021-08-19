@@ -61,7 +61,7 @@ if(!empty($atts)) {
         );
 
         // Send alarm
-        alarm($data['id'],$update['callback_query']['from']['id'],'pok_individual',$data['arg']);
+        $tg_json = alarm($data['id'],$update['callback_query']['from']['id'],'pok_individual',$data['arg']);
     } else {
         // Init found and count.
         $found = false;
@@ -92,7 +92,7 @@ if(!empty($atts)) {
                     );
                 }
                 // Send alarm
-                alarm($data['id'],$update['callback_query']['from']['id'],'pok_cancel_individual',$data['arg']);
+                $tg_json = alarm($data['id'],$update['callback_query']['from']['id'],'pok_cancel_individual',$data['arg']);
 
                 // Update count.
                 $count = $count - 1;
@@ -106,7 +106,7 @@ if(!empty($atts)) {
         // Not found? Insert!
         if(!$found) {
             // Send alarm
-            alarm($data['id'],$update['callback_query']['from']['id'],'pok_individual',$data['arg']);
+            $tg_json = alarm($data['id'],$update['callback_query']['from']['id'],'pok_individual',$data['arg']);
 
             // Insert vote.
             my_query(
@@ -168,7 +168,7 @@ if(!empty($atts)) {
 
     require_once(LOGIC_PATH . '/update_raid_poll.php');
 
-    $tg_json = update_raid_poll($data['id'], false, $update);
+    $tg_json = update_raid_poll($data['id'], false, $update, $tg_json);
 
     $tg_json[] = answerCallbackQuery($update['callback_query']['id'], getTranslation('vote_updated'), true);
 
