@@ -239,7 +239,7 @@ foreach ($update as $raid) {
 
     if($send_updates == true) {
         require_once(LOGIC_PATH .'/update_raid_poll.php');
-        $update = update_raid_poll($raid_id, false, false, $tg_json); // update_raid_poll() will return false if the raid isn't shared to any chat
+        $update = update_raid_poll($raid_id, false, false, $tg_json, false); // update_raid_poll() will return false if the raid isn't shared to any chat
         if($update != false) $tg_json = $update;
     }else {
         // Get chats to share to by raid level and geofence id
@@ -272,7 +272,7 @@ foreach ($update as $raid) {
         $chats = array_merge($chats_geofence, $chats_raidlevel, $webhook_chats);
 
         require_once(LOGIC_PATH .'/send_raid_poll.php');
-        $tg_json = send_raid_poll($raid_id, $chats, $tg_json);
+        $tg_json = send_raid_poll($raid_id, false, $chats, $tg_json);
     }
 }
 

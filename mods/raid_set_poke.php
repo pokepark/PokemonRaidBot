@@ -55,22 +55,9 @@ $rs = my_query(
     "
 );
 
-// Get updated raid poll message and keys.
-$updated_msg = show_raid_poll($raid);
-$updated_keys = keys_vote($raid);
-
 // Update the shared raid polls.
-if($config->RAID_PICTURE) {
-    require_once(LOGIC_PATH . '/raid_picture.php');
-    while ($raidmsg = $rs->fetch()) {
-        $picture_url = raid_picture_url($raid);
-        $tg_json[] = editMessageMedia($raidmsg['message_id'], $updated_msg['short'], $updated_keys, $raidmsg['chat_id'], ['disable_web_page_preview' => 'true'], true, $picture_url);
-    } 
-} else {
-    while ($raidmsg = $rs->fetch()) {
-        $tg_json[] = editMessageText($raidmsg['message_id'], $updated_msg['full'], $updated_keys, $raidmsg['chat_id'], ['disable_web_page_preview' => 'true'], true);    
-    }
-}
+require_once(LOGIC_PATH .'/update_raid_poll.php');
+$tg_json = update_raid_poll($raid_id, $raid, false, $tg_json, false);
 
 // Telegram multicurl request.
 curl_json_multi_request($tg_json);

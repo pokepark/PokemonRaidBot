@@ -10,7 +10,7 @@
  * @return array|false tg_json multicurl array
  */
 
-function update_raid_poll($raid_id, $raid = false, $update = false, $tg_json = false, $skip_picture_update = false)
+function update_raid_poll($raid_id, $raid = false, $update = false, $tg_json = false, $skip_picture_update = true)
 {
     global $config;
     $chat_and_message = [];
@@ -80,16 +80,18 @@ function update_raid_poll($raid_id, $raid = false, $update = false, $tg_json = f
                 // Resend raid poll as text message.
                 $tg_json[] = send_message($chat, $text['full'], $keys, ['disable_web_page_preview' => 'true'], true);
             } else {
-                // Edit the caption.
-                $tg_json[] = editMessageCaption($message, $text['short'], $keys, $chat, ['disable_web_page_preview' => 'true'], true);
-
-                // Edit the picture - raid ended.
-                $time_now = utcnow();
-                if($time_now > $raid['end_time'] && !$skip_picture_update) {
+                // Edit the picture and caption
+                if(!$skip_picture_update) {
+                    $time_now = utcnow();
+                    if($time_now > $raid['end_time'] ) {
+                        $raid['pokemon'] = 'ended';
+                    }
                     require_once(LOGIC_PATH . '/raid_picture.php');
-                    $raid['pokemon'] = 'ended';
                     $picture_url = raid_picture_url($raid);
                     $tg_json[] = editMessageMedia($message, $text['short'], $keys, $chat, ['disable_web_page_preview' => 'true'], true, $picture_url);
+                }else {
+                    // Edit the caption.
+                    $tg_json[] = editMessageCaption($message, $text['short'], $keys, $chat, ['disable_web_page_preview' => 'true'], true);
                 }
             }
         }else if ($type == 'poll_text') {
