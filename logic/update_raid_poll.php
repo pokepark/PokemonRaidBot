@@ -105,6 +105,14 @@ function update_raid_poll($raid_id, $raid = false, $update = false, $tg_json = f
             }else {
                 $tg_json[] = editMessageText($message, $text['full'], $keys, $chat, ['disable_web_page_preview' => 'true'], true);
             }
+        }else if ($type == 'photo') {
+            $time_now = utcnow();
+            if($time_now > $raid['end_time'] ) {
+                $raid['pokemon'] = 'ended';
+            }
+            require_once(LOGIC_PATH . '/raid_picture.php');
+            $picture_url = raid_picture_url($raid, 1);
+            $tg_json[] = editMessageMedia($message, '', '', $chat, [], true, $picture_url);
         }
     }
     return $tg_json;
