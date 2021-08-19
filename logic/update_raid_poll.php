@@ -105,7 +105,7 @@ function update_raid_poll($raid_id, $raid = false, $update = false, $tg_json = f
             }else {
                 $tg_json[] = editMessageText($message, $text['full'], $keys, $chat, ['disable_web_page_preview' => 'true'], true);
             }
-        }else if ($type == 'photo') {
+        }else if ($type == 'photo' && !$skip_picture_update) {
             $time_now = utcnow();
             if($time_now > $raid['end_time'] ) {
                 $raid['pokemon'] = 'ended';
