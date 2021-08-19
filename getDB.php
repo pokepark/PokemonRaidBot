@@ -1,7 +1,4 @@
 <?php
-define('CONFIG_PATH', __DIR__ . '/config');
-include_once(__DIR__ . '/core/bot/config.php');
-include_once(__DIR__ . '/core/bot/db.php');
 
 // Init SQL stuff.
 $SQL = '';
@@ -13,6 +10,9 @@ $game_master_url = "https://raw.githubusercontent.com/PokeMiners/game_masters/ma
 
 $update = false;
 if(isset($argv[1]) && $argv[1] == 'update') {
+    define('CONFIG_PATH', __DIR__ . '/config');
+    require_once(__DIR__ . '/core/bot/config.php');
+    require_once(__DIR__ . '/core/bot/db.php');
     $update = true;
     $q = $dbh->query('SELECT pokedex_id, pokemon_form_name, shiny FROM pokemon');
     $pokemon_shiny = [];
