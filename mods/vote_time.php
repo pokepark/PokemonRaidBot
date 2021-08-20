@@ -163,7 +163,7 @@ if($now <= $attend_time || $vote_time == 0) {
 // Send vote response.
 require_once(LOGIC_PATH . '/update_raid_poll.php');
 
-$tg_json = update_raid_poll($data['id'], $raid, $update);
+$tg_json = update_raid_poll($data['id'], $raid, $update, $tg_json);
 
 $tg_json[] = answerCallbackQuery($update['callback_query']['id'], getTranslation('vote_updated'), true);
 
