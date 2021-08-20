@@ -22,29 +22,7 @@ $dex_form = $dex_id_form[1];
 
 // Set raid level or show raid levels?
 if($data['arg'] == "setlevel") {
-    // Get raid levels from database.
-    $rs = my_query(
-            "
-            SHOW COLUMNS
-            FROM      pokemon
-            WHERE     field = 'raid_level'
-            "
-        );
-
-    //Get type information
-    while ($enum = $rs->fetch()) {
-        // Type should be something like this:                    enum('0','1','2','3','4','5','X')
-        $type = $enum['Type'];
-    }
-    
-    // Remove   enum('   from string, $raid_levels will now be:   0','1','2','3','4','5','X')
-    $raid_levels = str_replace("enum('", "", $type);
-
-    // Remove   ')   from string, $raid_levels will now be:       0','1','2','3','4','5','X
-    $raid_levels = str_replace("')", "", $raid_levels);
-
-    // Explode by   ','   so the resulting array will now be:     0 1 2 3 4 5 X
-    $raid_levels = explode("','", $raid_levels);
+    $raid_levels = [0,1,2,3,4,5,'X'];
 
     // Init empty keys array.
     $keys = [];
