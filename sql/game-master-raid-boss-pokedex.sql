@@ -1,5 +1,3 @@
-DELETE FROM `pokemon`;
-TRUNCATE `pokemon`;
 INSERT INTO `pokemon`
 (pokedex_id, pokemon_name, pokemon_form_name, pokemon_form_id, asset_suffix, min_cp, max_cp, min_weather_cp, max_weather_cp, type, type2, weather) VALUES
 ("1", "Bulbasaur", "normal", "163", "00", "590", "637", "737", "796", "grass", "poison", "125"),
@@ -1015,4 +1013,7 @@ INSERT INTO `pokemon`
 ("9993", "Level 3 Egg", "normal", "0", "0", "0", "0", "0", "0", "", "", "0"),
 ("9994", "Level 4 Egg", "normal", "0", "0", "0", "0", "0", "0", "", "", "0"),
 ("9995", "Level 5 Egg", "normal", "0", "0", "0", "0", "0", "0", "", "", "0"),
-("9996", "Level 6 Egg", "normal", "0", "0", "0", "0", "0", "0", "", "", "0");
+("9996", "Level 6 Egg", "normal", "0", "0", "0", "0", "0", "0", "", "", "0") as new
+ON DUPLICATE KEY UPDATE pokedex_id = new.pokedex_id, pokemon_name = new.pokemon_name, pokemon_form_name = new.pokemon_form_name,
+pokemon_form_id = new.pokemon_form_id, asset_suffix = new.asset_suffix, min_cp = new.min_cp, max_cp = new.max_cp,
+min_weather_cp = new.min_weather_cp, max_weather_cp = new.max_weather_cp, type = new.type, type2 = new.type2, weather = new.weather;

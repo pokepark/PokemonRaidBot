@@ -1090,15 +1090,13 @@ The bot will send a message to the MAINTAINER_ID when an upgrade is required. In
 
 Required SQL upgrades files can be found under the `sql/upgrade` folder and are applied automatically by default.
 
-After any upgrade you need to make sure to change the bot version in your config.json as that version is used for comparison against the latest bot version in the `VERSION` file.
-
 Updates to the config file are NOT checked automatically. Therefore always check for changes to the config.json.example and add any new config variables you want to override to your own config.json. Most new variables should get added to defaults-config.json so you'll get the new default automatically on update.
 
 ## Local updates
 
 To keep local data, such as `pokemon` table and Pokemon icons directory, up to date, you can schedule some scripts to be run:
 
-`php getDB.php update; mysql -u=USERNAME -database=DATABASE < sql/update-pokemon-table.sql`
+`php getDB.php; mysql -u USERNAME -p DATABASE < sql/game-master-raid-boss-pokedex.sql`
 
 `php getPokemonIcons.php pokeminers`
 
