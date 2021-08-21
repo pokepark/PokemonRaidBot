@@ -1013,7 +1013,8 @@ INSERT INTO `pokemon`
 ("9993", "Level 3 Egg", "normal", "0", "0", "0", "0", "0", "0", "", "", "0"),
 ("9994", "Level 4 Egg", "normal", "0", "0", "0", "0", "0", "0", "", "", "0"),
 ("9995", "Level 5 Egg", "normal", "0", "0", "0", "0", "0", "0", "", "", "0"),
-("9996", "Level 6 Egg", "normal", "0", "0", "0", "0", "0", "0", "", "", "0") as new
-ON DUPLICATE KEY UPDATE pokedex_id = new.pokedex_id, pokemon_name = new.pokemon_name, pokemon_form_name = new.pokemon_form_name,
-pokemon_form_id = new.pokemon_form_id, asset_suffix = new.asset_suffix, min_cp = new.min_cp, max_cp = new.max_cp,
-min_weather_cp = new.min_weather_cp, max_weather_cp = new.max_weather_cp, type = new.type, type2 = new.type2, weather = new.weather;
+("9996", "Level 6 Egg", "normal", "0", "0", "0", "0", "0", "0", "", "", "0")
+ON DUPLICATE KEY UPDATE pokedex_id = VALUES(pokedex_id), pokemon_name = VALUES(pokemon_name), pokemon_form_name = VALUES(pokemon_form_name),
+pokemon_form_id = VALUES(pokemon_form_id), asset_suffix = VALUES(asset_suffix), min_cp = VALUES(min_cp),
+max_cp = VALUES(max_cp), min_weather_cp = VALUES(min_weather_cp), max_weather_cp = VALUES(max_weather_cp),
+type = VALUES(type), type2 = VALUES(type2), weather = VALUES(weather);
