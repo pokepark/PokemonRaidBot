@@ -479,13 +479,14 @@ You also need to get the Pokemon sprites from known sources and put them in eith
 
 Pokemon Icons / Sprites:
 Link: https://github.com/PokeMiners/pogo_assets/tree/master/Images/Pokemon%20-%20256x256
-Link: https://github.com/ZeChrales/PogoAssets/tree/master/pokemon_icons
 
 To easily download you can use a special download script on the CLI: `php getPokemonIcons.php`
 
+The script downloads 20 files at a time by default. You can adjust the value by adding the argument `--chunk=` and a number.
+
+To save the sprites to a different location outside the actual PokemonRaidBot directory, you can use the argument `--dir=`, eg. `php getPokemonIcons.php --dir=/var/www/html/pokemon_sprites/`
+
 The script can also be triggered via command line arguments, eg. as cron job.
-Argument 1 is the source (either `ZeChrales` or `PokeMiners`), so eg. `php getPokemonIcons.php PokeMiners`
-Argument 2 is the destination folder where the images shall be saved. To save the sprites to a different location outside the actual PokemonRaidBot directory, just add that second argument, eg. `php getPokemonIcons.php PokeMiners /var/www/html/pokemon_sprites/`
 
 If you're sharing the pokemon icons with other bots or applications and therefore placed them outside the PokemonRaidBot directory, you can easily replace the images/pokemon with a softlink to that directory. It won't interfere with git status as we adjusted the .gitignore accordingly.
 

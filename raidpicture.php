@@ -28,7 +28,7 @@ if(array_key_exists('raid', $_GET) && $_GET['raid']!="") {
     $raid = get_raid($raid_id);
     $q_pokemon_info = my_query("
                     SELECT
-                        min_cp, max_cp, min_weather_cp, max_weather_cp, weather, shiny, asset_suffix, type, type2,
+                        pokemon_form_name, min_cp, max_cp, min_weather_cp, max_weather_cp, weather, shiny, asset_suffix, type, type2,
                         (SELECT img_url FROM gyms WHERE id='".$raid['gym_id']."' LIMIT 1) as img_url
                     FROM pokemon
                     WHERE pokedex_id = '".$raid['pokemon']."'
@@ -241,27 +241,39 @@ if($time_now < $raid['end_time']) {
         // Formatting the id from 1 digit to 3 digit (1 -> 001)
         $pokemon_id = str_pad($raid['pokemon'], 3, '0', STR_PAD_LEFT);
 
+        // Check pokemon icon source and create image
+        $img_file = null;
+        $p_sources = explode(',', $config->RAID_PICTURE_POKEMON_ICONS);
+
+        $addressable_icon = 'pm'.$raid['pokemon'];
+        if($raid['pokemon_form_name'] != 'normal') $addressable_icon .= '.f'.strtoupper($raid['pokemon_form_name']);
+
         // Getting the actual icon filename
         $p_icon = "pokemon_icon_" . $icon_suffix;
         if($raid['shiny'] == 1 && $config->RAID_PICTURE_SHOW_SHINY) {
             $p_icon = $p_icon . "_shiny";
+            $addressable_icon .= '.s';
             $shiny_icon = grab_img(IMAGES_PATH . "/shinystars.png");
         }
+        $addressable_icon .= '.icon.png';
         $p_icon = $p_icon . ".png";
 
-        // Check pokemon icon source and create image
-        $img_file = null;
-        $p_sources = explode(',', $config->RAID_PICTURE_POKEMON_ICONS);
         foreach($p_sources as $p_dir) {
             // Set pokemon icon dir
             $p_img = IMAGES_PATH . "/pokemon_" . $p_dir . "/" . $p_icon;
+            $p_add_img = IMAGES_PATH . "/pokemon_" . $p_dir . "/Addressable_Assets/" . $addressable_icon;
             
             // Icon dir named 'pokemon'? Then change path to not add '_repo-owner' to icon folder name
             if($p_dir == 'pokemon') {
                 $p_img = IMAGES_PATH . "/pokemon/" . $p_icon;
+                $p_add_img = IMAGES_PATH . "/pokemon/Addressable_Assets" . $addressable_icon;
             }
             // Check if file exists in this collection
-            if(file_exists($p_img) && filesize($p_img) > 0) {
+            // Prioritize addressable asset file
+            if(file_exists($p_add_img) && filesize($p_add_img) > 0) {
+                $img_file = $p_add_img;
+                break;
+            }else if(file_exists($p_img) && filesize($p_img) > 0) {
                 $img_file = $p_img;
                 break;
             }
