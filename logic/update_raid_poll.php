@@ -66,6 +66,14 @@ function update_raid_poll($raid_id, $raid = false, $update = false, $tg_json = f
 
     // Telegram JSON array.
     if($tg_json == false) $tg_json = [];
+    if($config->RAID_PICTURE) {
+        $time_now = utcnow();
+        if($time_now > $raid['end_time'] ) {
+            $raid['pokemon'] = 'ended';
+        }
+        require_once(LOGIC_PATH . '/raid_picture.php');
+        $picture_url = raid_picture_url($raid);
+    }
 
     foreach($chat_and_message as $chat_id_msg_id) {
         $chat = $chat_id_msg_id['chat_id'];
@@ -76,18 +84,14 @@ function update_raid_poll($raid_id, $raid = false, $update = false, $tg_json = f
             if($post_text == true) {
                 // Delete raid picture and caption.
                 $tg_json[] = delete_message($chat, $message, true);
+                my_query("DELETE FROM cleanup WHERE chat_id = '{$chat}' AND message_id = '{$message}'");
 
                 // Resend raid poll as text message.
-                $tg_json[] = send_message($chat, $text['full'], $keys, ['disable_web_page_preview' => 'true'], true);
+                send_photo($chat, $picture_url, '', [], [], false, $raid_id);
+                send_message($chat, $text['full'], $keys, ['disable_web_page_preview' => 'true'], false, $raid_id);
             } else {
                 // Edit the picture and caption
                 if(!$skip_picture_update) {
-                    $time_now = utcnow();
-                    if($time_now > $raid['end_time'] ) {
-                        $raid['pokemon'] = 'ended';
-                    }
-                    require_once(LOGIC_PATH . '/raid_picture.php');
-                    $picture_url = raid_picture_url($raid);
                     $tg_json[] = editMessageMedia($message, $text['short'], $keys, $chat, ['disable_web_page_preview' => 'true'], true, $picture_url);
                 }else {
                     // Edit the caption.

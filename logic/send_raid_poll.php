@@ -18,6 +18,20 @@ function send_raid_poll($raid_id, $raid = false, $chats, $tg_json = false) {
     $text = show_raid_poll($raid);
     $keys = keys_vote($raid);
 
+    $post_text = false;
+    if(array_key_exists('short', $text)) {
+        $msg_short_len = strlen(utf8_decode($text['short']));
+        debug_log($msg_short_len, 'Raid poll short message length:');
+        // Message short enough?
+        if($msg_short_len >= 1024) {
+            // Use full text and reset text to true regardless of prior value
+            $post_text = true;
+        }
+    } else {
+        // Use full text and reset text to true regardless of prior value
+        $post_text = true;
+    }
+
     // Telegram JSON array.
     if($tg_json == false) $tg_json = [];
 
@@ -30,6 +44,7 @@ function send_raid_poll($raid_id, $raid = false, $chats, $tg_json = false) {
     // Send the message.
     $raid_picture_hide_level = explode(",",$config->RAID_PICTURE_HIDE_LEVEL);
     $raid_picture_hide_pokemon = explode(",",$config->RAID_PICTURE_HIDE_POKEMON);
+    $raid_poll_hide_buttons_levels = explode(",",$config->RAID_POLL_HIDE_BUTTONS_RAID_LEVEL);
 
     $raid_pokemon_id = $raid['pokemon'];
     $raid_level = $raid['level'];
@@ -47,7 +62,7 @@ function send_raid_poll($raid_id, $raid = false, $chats, $tg_json = false) {
             send_message($chat_id, $text['full'], $keys, ['disable_web_page_preview' => 'true'], false, $raid_id);
         }else {
             if($config->RAID_PICTURE && $raid['event_hide_raid_picture'] == 0 && !in_array($raid_level, $raid_picture_hide_level) && !in_array($raid_pokemon, $raid_picture_hide_pokemon) && !in_array($raid_pokemon_id, $raid_picture_hide_pokemon)) {
-                if($config->RAID_PICTURE_AUTOEXTEND) {
+                if(($config->RAID_PICTURE_AUTOEXTEND && !in_array($raid['level'], $raid_poll_hide_buttons_levels)) or $post_text) {
                     send_photo($chat_id, $picture_url, '', [], [], false, $raid_id);
                     send_message($chat_id, $text['short'], $keys, ['disable_web_page_preview' => 'true'], false, $raid_id);
                 } else {
