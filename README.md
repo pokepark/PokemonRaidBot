@@ -562,7 +562,7 @@ Predefine sharing all raids to the chats -100111222333 and -100444555666, except
 
 You can receive Raids from a mapping system such as MAD via Webhook.
 For that you need to setup `WEBHOOK_CREATOR`, and to automatically share raids to chats, 
-`"WEBHOOK_CHATS":"-100444555666"`
+`"WEBHOOK_CHATS_ALL_LEVELS":"-100444555666"`
 or by Raidlevel `"WEBHOOK_CHATS_LEVEL_5":"-100444555666"`
 All incoming raids will be published in these chats.
 
@@ -1231,7 +1231,7 @@ To keep local data, such as `pokemon` table and Pokemon icons directory, up to d
 | WEBHOOK_CHATS_LEVEL_3| List of Telegram chat IDs to autoshare raids of level 3 |
 | WEBHOOK_CHATS_LEVEL_4| List of Telegram chat IDs to autoshare raids of level 4 |
 | WEBHOOK_CHATS_LEVEL_5| List of Telegram chat IDs to autoshare raids of level 5 |
-| WEBHOOK_CHATS| List of Telegram chat IDs to autoshare raids of any level  |
+| WEBHOOK_CHATS_ALL_LEVELS| List of Telegram chat IDs to autoshare raids of any level  |
 | WEBHOOK_CREATE_ONLY| Bool, only create raids, don't autoshare them to any chat |
 | WEBHOOK_CREATOR| Telegram ID of the bot or user to credit as having created webhook raids |
 | WEBHOOK_EXCLUDE_POKEMON| List of Pokemon dex IDs to exclude from webhook raid creation |
