@@ -72,7 +72,6 @@ function update_raid_poll($raid_id, $raid = false, $update = false, $tg_json = f
             $raid['pokemon'] = 'ended';
         }
         require_once(LOGIC_PATH . '/raid_picture.php');
-        $picture_url = raid_picture_url($raid);
     }
 
     foreach($chat_and_message as $chat_id_msg_id) {
@@ -80,6 +79,7 @@ function update_raid_poll($raid_id, $raid = false, $update = false, $tg_json = f
         $message = $chat_id_msg_id['message_id'];
         $type = $chat_id_msg_id['type'];
         if($type == 'poll_photo') {
+            $picture_url = raid_picture_url($raid);
             // If the poll message gets too long, we'll replace it with regular text based poll
             if($post_text == true) {
                 // Delete raid picture and caption.
@@ -110,11 +110,6 @@ function update_raid_poll($raid_id, $raid = false, $update = false, $tg_json = f
                 $tg_json[] = editMessageText($message, $text['full'], $keys, $chat, ['disable_web_page_preview' => 'true'], true);
             }
         }else if ($type == 'photo' && !$skip_picture_update) {
-            $time_now = utcnow();
-            if($time_now > $raid['end_time'] ) {
-                $raid['pokemon'] = 'ended';
-            }
-            require_once(LOGIC_PATH . '/raid_picture.php');
             $picture_url = raid_picture_url($raid, 1);
             $tg_json[] = editMessageMedia($message, '', '', $chat, [], true, $picture_url);
         }
