@@ -3,7 +3,7 @@
 $command = NULL;
 
 // Check message text for a leading slash.
-if (substr($update['message']['text'], 0, 1) == '/') {
+if (isset($update['message']['text']) && substr($update['message']['text'], 0, 1) == '/') {
     // Get command name.
     if($config->BOT_NAME) {
         $com = strtolower(str_replace('/', '', str_replace($config->BOT_NAME, '', explode(' ', $update['message']['text'])[0])));
@@ -12,6 +12,12 @@ if (substr($update['message']['text'], 0, 1) == '/') {
         info_log('BOT_NAME is missing! Please define it!', '!');
         $com = 'start';
         $altcom = 'start';
+    }
+
+    if($config->TUTORIAL_MODE && isset($update['message']['chat']['id']) && new_user($update['message']['chat']['id']) && $com != 'start') {
+        send_message($update['message']['chat']['id'],  getTranslation("tutorial_command_failed"));
+        $dbh = null;
+        exit();
     }
 
     // Set command paths.
@@ -46,6 +52,6 @@ if (substr($update['message']['text'], 0, 1) == '/') {
         // Include start file and exit.
         include_once($startcommand);
     } else {
-        sendMessage($update['message']['chat']['id'], '<b>' . getTranslation('not_supported') . '</b>');
+        send_message($update['message']['chat']['id'], '<b>' . getTranslation('not_supported') . '</b>');
     }
 }

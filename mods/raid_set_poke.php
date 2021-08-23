@@ -11,34 +11,17 @@ raid_access_check($update, $data, 'pokemon');
 
 // Set the id.
 $id = $data['id'];
-$pokemon_id_form = explode("-", $data['arg'], 2);
+$pokemon_id_form = get_pokemon_by_table_id($data['arg']);
 
 // Update pokemon in the raid table.
 my_query(
     "
     UPDATE    raids
-    SET       pokemon = '{$pokemon_id_form[0]}',
-              pokemon_form = '{$pokemon_id_form[1]}'
+    SET       pokemon = '{$pokemon_id_form['pokedex_id']}',
+              pokemon_form = '{$pokemon_id_form['pokemon_form_id']}'
       WHERE   id = {$id}
     "
 );
-
-// Get eggs.
-$eggs = $GLOBALS['eggs'];
-
-// Do not update if pokedex_id is an egg.
-if(!in_array($pokemon_id_form[0], $eggs)) {
-    // Update users in attendance table.
-    // Helps to proper sort users as they are ordered by pokemon.
-    my_query(
-        "
-        UPDATE    attendance
-        SET       pokemon = '{$data['arg']}'
-          WHERE   raid_id = {$id}
-          AND     pokemon = '0'
-        "
-    );
-}
 
 // Get raid times.
 $raid = get_raid($data['id']);
@@ -72,33 +55,15 @@ $rs = my_query(
     "
 );
 
-// Get updated raid poll message and keys.
-$updated_msg = show_raid_poll($raid);
-$updated_keys = keys_vote($raid);
-
 // Update the shared raid polls.
-if($config->RAID_PICTURE) {
-    require_once(LOGIC_PATH . '/raid_picture.php');
-    while ($raidmsg = $rs->fetch()) {
-        $picture_url = raid_picture_url($raid);
-        $tg_json[] = editMessageMedia($raidmsg['message_id'], $updated_msg['short'], $updated_keys, $raidmsg['chat_id'], ['disable_web_page_preview' => 'true'], false, $picture_url);
-    } 
-} else {
-    while ($raidmsg = $rs->fetch()) {
-        $tg_json[] = editMessageText($raidmsg['message_id'], $updated_msg['full'], $updated_keys, $raidmsg['chat_id'], ['disable_web_page_preview' => 'true'], true);    
-    }
-}
+require_once(LOGIC_PATH .'/update_raid_poll.php');
+$tg_json = update_raid_poll($id, $raid, false, $tg_json, false);
+
+// Alert users.
+$tg_json = alarm($raid, $update['callback_query']['from']['id'], 'new_boss', '', $tg_json);
 
 // Telegram multicurl request.
 curl_json_multi_request($tg_json);
-
-// Alert users.
-debug_log('Alarm raid boss updated: ' . $raid['pokemon']);
-$raidtimes = str_replace(CR, '', str_replace(' ', '', get_raid_times($raid, false, true)));
-$msg_text = '<b>' . getTranslation('alert_raid_boss') . '</b>' . CR;
-$msg_text .= EMOJI_HERE . SP . $raid['gym_name'] . SP . '(' . $raidtimes . ')' . CR;
-$msg_text .= EMOJI_EGG . SP . '<b>' . get_local_pokemon_name($raid['pokemon'], $raid['pokemon_form']) . '</b>' . CR;
-sendalarm($msg_text, $id, $update['callback_query']['from']['id']);
 
 // Exit.
 exit();

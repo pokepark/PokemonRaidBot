@@ -66,7 +66,7 @@
         // Invalid input or unknown bot - send message and end.
         $msg = '<b>' . getTranslation('invalid_input') . '</b>';
         $msg .= CR . CR . getTranslation('not_supported') . SP . getTranslation('or') . SP . getTranslation('internal_error');
-        sendMessage($update['message']['from']['id'], $msg);
+        send_message($update['message']['from']['id'], $msg);
         exit();
    }
 

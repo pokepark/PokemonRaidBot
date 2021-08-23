@@ -5,16 +5,32 @@ debug_log('Language Check');
 // Get language from user - otherwise use language from config.
 if ($config->LANGUAGE_PRIVATE == '') {
     // Message or callback?
-    if(isset($update['message']['from']['language_code'])) {
-        $language_code = $update['message']['from']['language_code'];
-    } else if(isset($update['callback_query']['from']['language_code'])) {
-        $language_code = $update['callback_query']['from']['language_code'];
-    } else {
-        $language_code = $config->LANGUAGE_PRIVATE;
+    if(isset($update['message']['from'])) {
+        $from = $update['message']['from'];
+    } else if(isset($update['callback_query']['from'])) {
+        $from = $update['callback_query']['from'];
+    } else if(isset($update['inline_query']['from'])) {
+        $from = $update['inline_query']['from'];
+    }
+    if(isset($from)) {
+        $q = my_query("SELECT lang FROM users WHERE user_id='".$from['id']."' LIMIT 1");
+        $res = $q->fetch();
+        $language_code = $res['lang'];
+    }else {
+        $language_code = '';
     }
 
     // Get and define userlanguage.
-    $userlanguage = get_user_language($language_code);
+    $languages = $GLOBALS['languages'];
+
+    // Get languages from normal translation.
+    if(array_key_exists($language_code, $languages)) {
+        $userlanguage = $languages[$language_code];
+    } else {
+        $userlanguage = DEFAULT_LANGUAGE;
+    }
+
+    debug_log('User language: ' . $userlanguage);
     define('USERLANGUAGE', $userlanguage);
 } else {
     // Set user language to language from config.

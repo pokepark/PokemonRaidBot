@@ -56,13 +56,19 @@ function bot_upgrade_check($current, $latest, $dbh)
                   }
                 }
             }
-            // Upgrade required.
-            return $require_upgrade;
         } else {
             // No upgrade files found! Return false as versions did not match but no upgrades are required!
             debug_log('NO SQL UPGRADE FILES FOUND', '!');
             return false;
         }
+        if (run_sql_file(ROOT_PATH . '/sql/game-master-raid-boss-pokedex.sql')) {
+          upgrade_config_version($latest);
+        } else {
+          $require_upgrade = true;
+          info_log('AUTO UPGRADE FAILED: ' . ROOT_PATH . '/sql/game-master-raid-boss-pokedex.sql!');
+        }
+        // Upgrade required.
+        return $require_upgrade;
     }
 }
 

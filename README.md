@@ -11,8 +11,6 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
    * [Installation and configuration](#installation-and-configuration)
       * [Webserver](#webserver)
       * [Git clone](#git-clone)
-         * [Core module inside bot folder](#core-module-inside-bot-folder)
-         * [Core module outside bot folder](#core-module-outside-bot-folder)
       * [Bot token](#bot-token)
       * [Database](#database)
       * [Docker](#docker)
@@ -23,7 +21,6 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
       * [Config](#config)
          * [Referring to groups, channels and users](#referring-to-groups-channels-and-users)
             * [Finding public IDs](#finding-public-ids)
-            * [Finding private IDs](#finding-private-ids)
             * [Which group type should I use? / How do I make a group a Supergroup](#which-group-type-should-i-use--how-do-i-make-a-group-a-supergroup)
          * [Database connection](#database-connection)
          * [General config and log files](#general-config-and-log-files)
@@ -31,7 +28,10 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
       * [More config options](#more-config-options)
          * [Proxy](#proxy)
          * [Languages](#languages)
-         * [Timezone and Google maps API](#timezone-and-google-maps-api)
+         * [Timezone, Google maps API and OpenStreetMap API](#timezone-google-maps-api-and-openstreetmap-api)
+            * [Timezone](#timezone)
+            * [Google maps API](#google-maps-api)
+            * [OpenStreetMap API](#openstreetmap-api)
          * [Raid creation options](#raid-creation-options)
          * [Raid time customization](#raid-time-customization)
          * [Raid poll design and layout](#raid-poll-design-and-layout)
@@ -44,6 +44,7 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
             * [Raids from Webhook](#raids-from-webhook)
             * [Filter Raids from Webhook / geoconfig.json](#filter-raids-from-webhook--geoconfigjson)
             * [Extended Raid-Sharing](#extended-raid-sharing)
+         * [Event raids](#event-raids)
       * [Trainer settings](#trainer-settings)
       * [Raid overview](#raid-overview)
       * [Raid Map](#raid-map)
@@ -54,6 +55,7 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
          * [Access and permissions](#access-and-permissions)
          * [Permissions overview](#permissions-overview)
             * [Examples](#examples-1)
+      * [Tutorial mode](#tutorial-mode)
    * [Customization](#customization)
       * [Custom icons](#custom-icons)
       * [Custom translation](#custom-translation)
@@ -62,7 +64,6 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
       * [Using inline search of @PortalMapBot or @Ingressportalbot](#using-inline-search-of-portalmapbot-or-ingressportalbot)
       * [Command: /start](#command-start)
       * [Command: /help](#command-help)
-      * [Command: /raid](#command-raid)
       * [Command: /pokemon](#command-pokemon)
       * [Command: /pokedex](#command-pokedex)
       * [Command: /list](#command-list)
@@ -80,6 +81,7 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
       * [Command: /deletegym](#command-deletegym)
    * [Debugging](#debugging)
    * [Updates](#updates)
+      * [Local updates](#local-updates)
    * [Config reference](#config-reference)
    * [Development](#development)
       * [Releasing a new version](#releasing-a-new-version)
@@ -91,7 +93,7 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
          * [translate.py](#translatepy)
             * [Usage](#usage)
 
-<!-- Added by: artanicus, at: Sat 10 Jul 2021 18:37:32 EEST -->
+<!-- Added by: artanicus, at: Mon 23 Aug 2021 08:57:34 EEST -->
 
 <!--te-->
 
@@ -121,37 +123,11 @@ Preferrably:
 The following apache packages need to be installed:
 - PDO_mysql (ubuntu: php-mysql)
 - PHP_curl (ubuntu: php-curl)
+- PHP_GD (ubuntu: php-gd) for raid picture mode
 
 ## Git clone
 
-### Core module inside bot folder
-
-For git 2.13 and above:
-
-`git clone --recurse-submodules https://github.com/florianbecker/PokemonRaidBot.git`
-
-If you're running an older version of git use the deprecated recursive command:
-
-`git clone --recursive https://github.com/florianbecker/PokemonRaidBot.git`
-
-### Core module outside bot folder
-
-If you like to keep the core repo outside the bot folder so multiple bots can access the core (e.g. via the [PokemonBotBridge](https://github.com/florianbecker/PokemonBotBridge.git "PokemonBotBridge")) you can do the following:
-
-Clone the bot repo to e.g. `var/www/html`:
-
-`git clone https://github.com/florianbecker/PokemonRaidBot.git`
-
-Clone the core repo to e.g. `var/www/html`:
-
-`git clone https://github.com/florianbecker/php.core.telegram.git`
-
-Change to the bot folder and create a symlink to make core accessible for the bot:
-```
-cd /var/www/html/PokemonRaidBot
-rm -rf core/
-ln -sf /var/www/html/php.core.telegram core
-```
+`git clone https://github.com/pokepark/PokemonRaidBot.git`
 
 ## Bot token
 
@@ -178,13 +154,16 @@ Flush privileges: `FLUSH PRIVILEGES;`
 
 Just use exit to logout from database.
 
-Import `pokemon-raid-bot.sql` as default DB structure and `raid-boss-pokedex.sql` for the current raid bosses. You can find these files in the sql folder.
+Import `pokemon-raid-bot.sql` as default DB structure and `game-master-raid-boss-pokedex.sql` for the latest data of Pokemon in the game. You can find these files in the sql folder.
 
-Command DB structure: `mysql -u USERNAME -p DATABASENAME < sql/pokemon-raid-bot.sql`
+Command DB structure: 
+```
+mysql -u USERNAME -p DATABASENAME < sql/pokemon-raid-bot.sql
+```
 
 To get raid bosses:
 ```
-mysql -u USERNAME -p DATABASENAME < sql/game-master-raid-boss-pokedex.sql`
+mysql -u USERNAME -p DATABASENAME < sql/game-master-raid-boss-pokedex.sql
 ```
 
 Important: The raid level is NOT set when importing the raid bosses from the sql file! Set them via the /pokedex command, explained below in this readme.
@@ -266,7 +245,7 @@ While in some contexts public groups, channels and supergroups could use their p
 | Supergroup | -1001122334455 | Negative number padded to 13 characters (prepend -100) |
 
 #### Finding public IDs
-Counterintuitively getting the ID of a public user, group, channel or supergroup is more difficult since most ways will replace the @name where a numeric ID would be visible. These methods will also work for private versions but will cause spam to the group. The easiest way is via @RawDataBot:
+Counterintuitively getting the ID of a public user, group, channel or supergroup is more difficult since most ways will replace the @name where a numeric ID would be visible. These methods will also work for private versions but will cause spam to the chat. The easiest way is via @RawDataBot:
 
 **Group or Supergroup:**
 
@@ -313,36 +292,6 @@ Forward a message to @RawDataBot which will get you a data package:
 *snip*
 ```
 
-#### Finding private IDs
-The above method works fine for private groups as well but if you don't want to spam the group there are less intrusive ways.
-One of the least intrusive ways is to use https://web.telegram.org to log in and select the entity in question in your chat list.
-The URL displayed in your browser can be converted into a usable ID.
-
-**Examples:**
-
-*Private user:*
-```
-https://web.telegram.org/#/im?p=u12345678_1122334455667788990011
-=> use 12345678
-```
-
-*Private group:*
-```
-https://web.telegram.org/#/im?p=g998877665
-=> use -998877665
-```
-
-*Private channel:*
-```
-https://web.telegram.org/#/im?p=c112233445566_1122334455667788990
-=> use -1112233445566 (notice the extra 1 prepended to pad to 13)
-```
-
-*Private supergroup:*
-```
-https://web.telegram.org/#/im?p=s1122334455_11223344556677889900
-=> use -1001122334455 (notice the extra 100 prepended to pad to 13)
-```
 
 #### Which group type should I use? / How do I make a group a Supergroup
 - Some features will only work with Supergroups (and Channels) since they enable more features needed for example for automatic cleanup. If in doubt use Supergroups.
@@ -365,7 +314,7 @@ Set `APIKEY_HASH` to the hashed value of your bot token (preferably lowercase) u
 
 Set `DDOS_MAXIMUM` to the amount of callback queries each user is allowed to do each minute. If the amount is reached any further callback query is rejected by the DDOS check. Default value: 10.
 
-Set `BRIDGE_MODE` to true when you're using the PokemonBotBridge. If you're not using the PokemonBotBridge the default value of false is used. PokemonBotBridge: https://github.com/florianbecker/PokemonBotBridge
+Set `BRIDGE_MODE` to true when you're using the PokemonBotBridge. If you're not using the PokemonBotBridge the default value of false is used. PokemonBotBridge: https://github.com/pokepark/PokemonBotBridge
 
 
 ## Installing the Webhook
@@ -416,9 +365,13 @@ So if you want to have the bot communication based on the users Telegram languag
 "LANGUAGE_PUBLIC":"DE",
 ```
 
-### Timezone and Google maps API
+### Timezone, Google maps API and OpenStreetMap API
+
+#### Timezone
 
 Set `TIMEZONE` to the timezone you wish to use for the bot. Predefined value from the example config is "Europe/Berlin".
+
+#### Google maps API
 
 Optionally you can you use Google maps API to lookup addresses of gyms based on latitude and longitude. Therefore get a Google maps API key.
 
@@ -439,6 +392,14 @@ https://console.developers.google.com/apis/library/geocoding-backend.googleapis.
 Finally check the dashboard again and make sure Google Maps Geocoding API and Google Maps Time Zone API are listed as enabled services.
 
 Set `MAPS_LOOKUP` to true and put the API key in `MAPS_API_KEY` in your config.
+
+#### OpenStreetMap API
+
+To use OpenStreetMap's Nominatim API to lookup addresses of gyms, set `OSM_LOOKUP` to `true` and  `MAPS_LOOKUP` to `false`.
+
+Quote from [Nominatim documentation](https://nominatim.org/release-docs/latest/api/Reverse/):
+
+`The reverse geocoding API does not exactly compute the address for the coordinate it receives. It works by finding the closest suitable OSM object and returning its address information. This may occasionally lead to unexpected results.`
 
 ### Raid creation options
 
@@ -498,13 +459,11 @@ Set `RAID_LATE_TIME` to the amount of minutes the local community will may be wa
 
 Set `RAID_POLL_HIDE_USERS_TIME` to the amount of minutes when a previous raid slot should be hidden. For example if there are 2 slots, 18:00 and 18:15, and you set the time to 10 minutes the first group of participants from 18:00 will be hidden once we reach 18:10. This helps to keep the raid poll message smaller and clearer if there are multiple groups. Set the value to 0 to always show all slots.
 
-Set `RAID_POLL_UI_ORDER` to the customize the order of the buttons rows for the raid polls. The default is 'extra,teamlvl,time,pokemon,status' but can be changed to any other order, e.g. 'time,pokemon,extra,status,teamlvl'.
+Edit `RAID_POLL_UI_TEMPLATE` to customize the order of the buttons for the raid polls. Supported elementa are `alone, extra, extra_alien, remote, inv_plz, can_inv, ex_inv, teamlvl, time, pokemon, refresh, alarm, here, late, done, cancel`. Some elements may be hidden by some other config values even if they are set in the template.
 
-Set `RAID_POLL_HIDE_BUTTONS_RAID_LEVEL` to the raid levels (1-5 and X) for which the voting buttons under the raid poll should be hidden. For example a level 1 raid can be done by a single player, but it is maybe interesting to be shared as some pokemon are only available in raids.
+Set `RAID_POLL_HIDE_BUTTONS_RAID_LEVEL` to the raid levels (1-5) for which the voting buttons under the raid poll should be hidden. For example a level 1 raid can be done by a single player, but it is maybe interesting to be shared as some pokemon are only available in raids.
 
 Set `RAID_POLL_HIDE_BUTTONS_POKEMON` to the pokedex IDs (e.g. '1' for Bulbasaur) or pokedex ID and form combined by a minus sign (e.g. '386-normal' for Deoxys Normal form or '386-attack' for Deoxys Attack form) for which the voting buttons under the raid poll should be hidden.
-
-Set `RAID_POLL_HIDE_BUTTONS_TEAM_LVL` to true to hide the team and level+/- buttons below each raid poll. That users are still able to set their team and level when the buttons are hidden, take a look at the '/trainer' command.
 
 Set `RAID_POLL_HIDE_DONE_CANCELED` to true to hide the users which are done with the raid or canceled and do not longer attend the raid.
 
@@ -520,13 +479,14 @@ You also need to get the Pokemon sprites from known sources and put them in eith
 
 Pokemon Icons / Sprites:
 Link: https://github.com/PokeMiners/pogo_assets/tree/master/Images/Pokemon%20-%20256x256
-Link: https://github.com/ZeChrales/PogoAssets/tree/master/pokemon_icons
 
 To easily download you can use a special download script on the CLI: `php getPokemonIcons.php`
 
+The script downloads 20 files at a time by default. You can adjust the value by adding the argument `--chunk=` and a number.
+
+To save the sprites to a different location outside the actual PokemonRaidBot directory, you can use the argument `--dir=`, eg. `php getPokemonIcons.php --dir=/var/www/html/pokemon_sprites/`
+
 The script can also be triggered via command line arguments, eg. as cron job.
-Argument 1 is the source (either `ZeChrales` or `PokeMiners`), so eg. `php getPokemonIcons.php PokeMiners`
-Argument 2 is the destination folder where the images shall be saved. To save the sprites to a different location outside the actual PokemonRaidBot directory, just add that second argument, eg. `php getPokemonIcons.php PokeMiners /var/www/html/pokemon_sprites/`
 
 If you're sharing the pokemon icons with other bots or applications and therefore placed them outside the PokemonRaidBot directory, you can easily replace the images/pokemon with a softlink to that directory. It won't interfere with git status as we adjusted the .gitignore accordingly.
 
@@ -550,21 +510,25 @@ Set `RAID_PICTURE_HIDE_LEVEL` to the raid levels (1-5 and X) for which the raid 
 
 Set `RAID_PICTURE_HIDE_POKEMON` to the pokedex IDs (e.g. '1' for Bulbasaur) or pokedex ID and form combined by a minus sign (e.g. '386-normal' for Deoxys Normal form or '386-attack' for Deoxys Attack form) for which the raid message is shared without the picture even if `RAID_PICTURE` is set to true.
 
-Set `RAID_PICTURE_BG_COLOR` to an RGB value to specify the background color of the raid picture.
+Set `RAID_PICTURE_BG_COLOR` to an RGB value to specify the background color of the raid picture. (Default: black)
 
-Set `RAID_PICTURE_TEXT_COLOR` to an RGB value to specify the text color of the raid picture.
+Set `RAID_PICTURE_TEXT_COLOR` to an RGB value to specify the text color of the raid picture. (Default: white)
 
-Set `RAID_PICTURE_ICONS_WHITE` to true to use white weather icons for the raid picture. Especially useful when you defined a dark background color.
+Set `RAID_PICTURE_STORE_GYM_IMAGES_LOCALLY` to `true` if you want to download and store gym photos in `images/gyms/` instead of fetching them from the cloud every time an image is created.
+
+Set `RAID_PICTURE_ICONS_WHITE` to `true` to use white weather icons for the raid picture. Especially useful when you defined a dark background color. (Default: true)
 
 Set `RAID_PICTURE_FILE_FORMAT` to either `gif`, `jpeg`, `jpg` or `png` to specify the output format of the raid picture.
 
 Set `RAID_DEFAULT_PICTURE` to the url of a default gym picture in case no gym image url is stored in the database for a gym.
 
+Set `RAID_PICTURE_POKEMON_TYPES` to `true` (default true) to display the type icons of the raid boss.
+
 ### Portal Import
 
 Set `PORTAL_IMPORT` to `true` to enable the possibility to import portals from Telegram Ingress Bots.
 
-Set `PORTAL_PICTURE_IMPORT` to `true` to download the portal image from Telegram Ingress Bots. When set to `false` the URL of the portal image is stored in the database.
+Set `RAID_PICTURE_STORE_GYM_IMAGES_LOCALLY` to `true` to download the portal image from Telegram Ingress Bots. When set to `false` the URL of the portal image is stored in the database.
 
 
 ### Raid sharing
@@ -597,10 +561,10 @@ Predefine sharing all raids to the chats -100111222333 and -100444555666, except
 #### Raids from Webhook
 
 You can receive Raids from a mapping system such as MAD via Webhook.
-For that you need to setup
+For that you need to setup `WEBHOOK_CREATOR`, and to automatically share raids to chats, 
 `"WEBHOOK_CHATS":"-100444555666"`
 or by Raidlevel `"WEBHOOK_CHATS_LEVEL_5":"-100444555666"`
-All raids will be published in these chats.
+All incoming raids will be published in these chats.
 
 #### Filter Raids from Webhook / geoconfig.json
 
@@ -615,9 +579,21 @@ The raids will only be posted into the defined chats.
 If you are using multiple Channel, you can setup one Channel as Main-Channel "SHARE_CHATS_AFTER_ATTENDANCE":"-100444555666" and on votes in different Channel, the Raid will be shared to your Main-Channel. Activate this function with "SHARE_AFTER_ATTENDANCE":true
 This is important for Raids from Webhooks. All Raids were posted to one Channel, which can be muted to the users. But if someone votes for a raid, this raid will be posted to a unmuted channel, where all others get a notification.
 
+### Event raids
+
+Users with the proper access rights can choose to create event raids. These can be handy for example on raid hours and raid days. These special raid polls have event specific name, description and poll settings that need to be set in database. Example of a few settings is in `sql/event-table-example.sql`.
+
+`vote_key_mode` currently supports 2 modes, 0 and 1. 0 is the standard mode where users vote for a time when they are attending. 1 is a mode with no timeslots, just a button for 'attending'.
+
+With `time_slots` you can set event secific time slots for vote keys when `vote_key_mode` 0 is selected.
+
+`raid_duration` is the duration of the raids of that event type.
+
+`hide_raid_picture` hides the raid picture from these event polls even if `RAID_PICTURE` is set to `true`.
+
 ## Trainer settings
 
-The command '/trainer' allows users of the bot to change their trainer data like team and level. It is also used to share a message that allows trainers to modify their trainer data like team and level to another chat. To share this message, every chat specified in the raid sharing list like SHARE_CHATS are used.
+The command '/trainer' allows users of the bot to change their trainer data like team, level, trainercode and trainername. It is also used to share a message that allows trainers to modify their trainer data like team and level to another chat. To share this message, every chat specified in the raid sharing list like SHARE_CHATS are used.
 
 With `TRAINER_CHATS` you can specify additional chats which should appear as buttons too for sharing the trainer message.
 
@@ -626,6 +602,10 @@ Set `TRAINER_BUTTONS_TOGGLE` to true to enable the toggle which shows/hides the 
 Add additional chats -100999555111 and -100888444222 to share the trainer message
 
 `"TRAINER_CHATS":"-100999555111,-100888444222"`
+
+Set `CUSTOM_TRAINERNAME` to true to enable custom trainernames.
+
+Set `RAID_POLL_SHOW_TRAINERCODE` to true to enable saving and displaying of trainercodes.
 
 ## Raid overview
 
@@ -647,21 +627,21 @@ With the `RAID_PIN_MESSAGE` in the config you can add a custom message to the bo
 
 ## Raid Map
 
-Set `MAP_URL` to the URL of the PokemonBotMap to add it to each raid poll. PokemonBotMap: https://github.com/florianbecker/PokemonBotMap
+Set `MAP_URL` to the URL of your map to add it to each raid poll.
 
 ## Cleanup
 
-The bot features an automatic cleanup of telegram raid poll messages as well as cleanup of the database (attendance and raids tables).
+The bot features an automatic cleanup of Telegram raid poll messages as well as cleanup of the database (attendance and raids tables).
 
-To activate cleanup you need to [make sure your groups are Supergroups or Channels](#which-group-type-should-i-use--how-do-i-make-a-group-a-supergroup), enable cleanup in the config and create a cronjob to trigger the cleanup process.
+To activate cleanup you need to [make sure your groups are Supergroups or Channels](#which-group-type-should-i-use--how-do-i-make-a-group-a-supergroup), make your bot an admin in this chat, enable cleanup in the config and create a cronjob to trigger the cleanup process.
 
 1. Set the `CLEANUP` in the config to `true` and define a cleanup secret/passphrase under `CLEANUP_SECRET`.
 2. Activate the cleanup of Telegram messages and/or the database for raids by setting `CLEANUP_TELEGRAM` / `CLEANUP_DATABASE` to true.
    - **Do note** that `CLEANUP_TELEGRAM` will not work in groups that are not Supergroups or Channels!
 3. Specify the amount of minutes which need to pass by after raid has ended before the bot executes the cleanup.
-   - Times are in minutes in `CLEANUP_TIME_TG` for telegram cleanup and `CLEANUP_TIME_DB` for database cleanup.
-   - The value for the minutes of the database cleanup `CLEANUP_TIME_DB` must be greater than then one for telegram cleanup `CLEANUP_TIME_TG`. Otherwise cleanup will do nothing and exit due to misconfiguration!
-4. Finally set up a cronjob to trigger the cleanup. You can also trigger telegram / database cleanup per cronjob: For no cleanup use 0, for cleanup use 1 and to use your config file use 2 or leave "telegram" and "database" out of the request data array.
+   - Times are in minutes in `CLEANUP_TIME_TG` for Telegram cleanup and `CLEANUP_TIME_DB` for database cleanup.
+   - The value for the minutes of the database cleanup `CLEANUP_TIME_DB` must be greater than then one for Telegram cleanup `CLEANUP_TIME_TG`. Otherwise cleanup will do nothing and exit due to misconfiguration!
+4. Finally set up a cronjob to trigger the cleanup. You can also trigger Telegram / database cleanup per cronjob: For no cleanup use 0, for cleanup use 1 and to use your config file use 2 or leave "Telegram" and "database" out of the request data array.
    - See the examples below for curl based calls. Any HTTP client capable of a POST request will work.
 
 ### Examples
@@ -678,17 +658,17 @@ curl -k -d '{"cleanup":{"secret":"your-cleanup-secret/passphrase"}}' https://loc
 curl -k -d '{"cleanup":{"secret":"your-cleanup-secret/passphrase","telegram":"2","database":"2"}}' https://localhost/index.php?apikey=111111111:AABBCCDDEEFFGGHHIIJJKKLLMMNNOOPP123
 ```
 
-- Clean up telegram raid poll messages only: telegram = 1 and database = 0
+- Clean up Telegram raid poll messages only: Telegram = 1 and database = 0
 ```
 curl -k -d '{"cleanup":{"secret":"your-cleanup-secret/passphrase","telegram":"1","database":"0"}}' https://localhost/index.php?apikey=111111111:AABBCCDDEEFFGGHHIIJJKKLLMMNNOOPP123
 ```
 
-- Clean up telegram raid poll messages and database: telegram = 1 and database = 1
+- Clean up Telegram raid poll messages and database: Telegram = 1 and database = 1
 ```
 curl -k -d '{"cleanup":{"secret":"your-cleanup-secret/passphrase","telegram":"1","database":"1"}}' https://localhost/index.php?apikey=111111111:AABBCCDDEEFFGGHHIIJJKKLLMMNNOOPP123
 ```
 
-- Clean up database and maybe telegram raid poll messages (when specified in config): telegram = 2 and database = 1
+- Clean up database and maybe Telegram raid poll messages (when specified in config): Telegram = 2 and database = 1
 ```
 curl -k -d '{"cleanup":{"secret":"your-cleanup-secret/passphrase","telegram":"2","database":"1"}}' https://localhost/index.php?apikey=111111111:AABBCCDDEEFFGGHHIIJJKKLLMMNNOOPP123
 ```
@@ -697,7 +677,7 @@ curl -k -d '{"cleanup":{"secret":"your-cleanup-secret/passphrase","telegram":"2"
 
 ### Public access
 
-When no telegram id, group, supergroup or channel is specified in `BOT_ADMINS` the bot will allow everyone to use it (public access).
+When no Telegram id, group, supergroup or channel is specified in `BOT_ADMINS` the bot will allow everyone to use it (public access).
 
 Example for public access: `"BOT_ADMINS":""`
 
@@ -709,7 +689,7 @@ The `BOT_ADMINS` have all permissions and can use any feature of the bot.
 
 Telegram Users can only vote on raid polls, but have no access to other bot functions (unless you configured it).
 
-In order to allow telegram chats to access the bot and use commands/features, you need to create an access file.
+In order to allow Telegram chats to access the bot and use commands/features, you need to create an access file.
 
 It does not matter if a chat is a user, group, supergroup or channel - any kind of chat is supported as every chat has a chat id!
 
@@ -770,11 +750,13 @@ A few examples for access files can be found below the permission overview table
 | Raid poll  | Vote on shared raid poll                                         | Not required!                            |
 |            | Create raids `/start`, `/raid`                                   | `create`                                 |
 |            | Create ex-raids `/start`                                         | `ex-raids`                               |
+|            | Create event raids `/start`                                      | `event-raids`                            |
 |            | Change raid duration `/start`                                    | `raid-duration`                          |
 |            | List all raids `/list` and `/listall`                            | `list`                                   |
 |            | Manage overview `/overview`                                      | `overview`                               |
 |            | Delete OWN raid polls `/delete`                                  | `delete-own`                             |
 |            | Delete ALL raid polls `/delete`                                  | `delete-all`                             |
+|            | View raid poll history `/history`                                | `history`                                |
 |            |                                                                  |                                          |
 | Sharing    | Share OWN created raids to predefined chats 'SHARE_CHATS'        | `share-own`                              |
 |            | Share ALL created raids to predefined chats 'SHARE_CHATS'        | `share-all`                              |
@@ -802,6 +784,9 @@ A few examples for access files can be found below the permission overview table
 | Pokedex    | Manage raid pokemon `/pokedex`                                   | `pokedex`                                |
 |            |                                                                  |                                          |
 | Help       | Show help `/help`                                                | `help`                                   |
+|            |                                                                  |                                          |
+| Tutorial   | Allow users to access tutorial                                   | `tutorial`             |
+|            | Force user to complete tutorial before allowing the use of any other command | `force-tutorial`             |
 
 
 #### Examples
@@ -833,6 +818,16 @@ share-all
 share-own
 share-any-chat
 ```
+
+## Tutorial mode
+
+To help with teaching users how to use the bot, you can force them to go through a tutorial (that you must create) before they are able to use any of the bot's commands. This feature is mainly intended to be used in small communities with one small raid group.
+
+To enable this feature:
+- Create `tutorial.php` in config folder. Use `tutorial.php.example` as reference
+- Set `TUTORIAL_MODE` to `true` in `config.json`
+- `tutorial` in access config file(s)
+- `force-tutorial` in access config file(s) to force users to go through the tutorial before they're able to use the bot.
 
 # Customization
 
@@ -874,9 +869,11 @@ To change translations you can do the following:
 
 ## Send your location to the bot
 
-The bot will guide you through the creation of a raid poll based on the settings in the config file.
+If `RAID_LOCATION` is set to `true` (default), the bot will guide you through the creation of a raid poll based on the settings in the config file.
 
 In case of a raid poll the bot will ask you for the raid level, the pokemon raid boss, the time until the raids starts and the time left for the raid. Afterwards you can set the gym name and gym team by using the /gym and /team commands.
+
+If `LIST_BY_LOCATION` is set to `true`, the bot will instead list all nearby saved raids.
 
 ## Using inline search of @PortalMapBot or @Ingressportalbot
 
@@ -923,17 +920,6 @@ Raid poll is created. Delete or share it:
 The bot will give a personal help based on the permissions you have to access and use it.
 
 
-## Command: /raid
-
-Create a new raid by gomap-notifier or other input. The raid command expects 8 parameters and an optional 9th parameter as input seperated by comma.
-
-Additionally the raid command checks for existing raids, so sending the same command multiple times to the bot will result in an update of the pokemon raid boss and gym team and won't create duplicate raids.
-
-Parameters: Pokemon raid boss id and form (combine with minus), latitude, longitude, raid duration in minutes, gym team, gym name, district or street, district or street, raid pre-hatch egg countdown in minutes (optional)
-
-Example input: `/raid 244-normal,52.516263,13.377755,45,Mystic,Brandenburger Tor,Pariser Platz 1, 10117 Berlin,30`
-
-
 ## Command: /pokemon
 
 Update pokemon of an existing raid poll. With this command you can change the pokemon raid boss from e.g. "Level 5 Egg" to "Lugia" once the egg has hatched.
@@ -945,7 +931,7 @@ Based on your access to the bot, you may can only change the pokemon raid boss o
 
 Show and update any pokemon raid boss. You can change the raid level (select raid level 0 to disable a raid boss), pokemon CP values and weather information of any pokemon raid boss.
 
-There is also a possibility to import the raids bosses from Pokebattler and disable all raid bosses for all or just a specific raid level which makes raid boss management pretty easy. By default the import will disable eggs for levels that only contain 1 raid boss. To disable this set `POKEBATTLER_IMPORT_DISABLE_REDUNDANT_EGGS` to `false`.
+There is also a possibility to import the raids bosses from Pokebattler and disable all raid bosses for all or just a specific raid level which makes raid boss management pretty easy.
 
 To quickly get to a specific pokemon raid boss, you can use the /pokedex command with the local name of the pokemon to get a list of it's all formes. A few examples:
 
@@ -1019,7 +1005,7 @@ Delete the shared overview message:
 
 ## Command: /delete
 
-Delete an existing raid poll. With this command you can delete a raid poll from telegram and the database. Use with care!
+Delete an existing raid poll. With this command you can delete a raid poll from Telegram and the database. Use with care!
 
 Based on your access to the bot, you may can only delete raid polls you created yourself and cannot delete raid polls from other bot users.
 
@@ -1081,7 +1067,7 @@ Example input: `/gymgps 34, 52.5145434,13.3501189`
 
 The bot will set the note for gym to your input. The id of the gym is required. You can delete the gym note using the keyword 'reset'.
 
-Example input: `/gymnote 34, Meeting point: Behind the buildung`
+Example input: `/gymnote 34, Meeting point: Behind the building`
 
 Example input to delete the gym note: `/gymnote 34, reset`
 
@@ -1105,9 +1091,15 @@ The bot will send a message to the MAINTAINER_ID when an upgrade is required. In
 
 Required SQL upgrades files can be found under the `sql/upgrade` folder and are applied automatically by default.
 
-After any upgrade you need to make sure to change the bot version in your config.json as that version is used for comparison against the latest bot version in the `VERSION` file.
-
 Updates to the config file are NOT checked automatically. Therefore always check for changes to the config.json.example and add any new config variables you want to override to your own config.json. Most new variables should get added to defaults-config.json so you'll get the new default automatically on update.
+
+## Local updates
+
+To keep local data, such as `pokemon` table and Pokemon icons directory, up to date, you can schedule some scripts to be run:
+
+`php getDB.php; mysql -u USERNAME -p DATABASE < sql/game-master-raid-boss-pokedex.sql`
+
+`php getPokemonIcons.php pokeminers`
 
 
 # Config reference
@@ -1122,7 +1114,7 @@ Updates to the config file are NOT checked automatically. Therefore always check
 | Option | Description |
 |--------|------------ |
 | APIKEY_HASH | Telegram API key hashed in sha256 |
-| BOT_ADMINS| List of admin identifiers (comma separated telegram ids) |
+| BOT_ADMINS| List of admin identifiers (comma separated Telegram ids) |
 | BOT_ID| One letter ID for the bot used in debug logging. Mostly useful if you run multiple. |
 | BOT_NAME| Name of the bot. |
 | BRIDGE_MODE| Bool, whether to enable bridge mode. |
@@ -1149,25 +1141,22 @@ Updates to the config file are NOT checked automatically. Therefore always check
 | DEBUG_SQL_LOGFILE | Full path to SQL debug logfile|
 | DEFAULTS_WARNING | json files don't support comments, this is just a comment warning you not to edit defaults. |
 | LANGUAGE_PRIVATE| Language to use in private messages. Leave empty to infer language from users Telegram language |
-| LANGUAGE_PUBLIC| Language to use in groups |
+| LANGUAGE_PUBLIC| Language to use in chats |
 | LOGGING_INFO | Log INFO level messages to the file defined by LOGGING_INFO_LOGFILE. Useful for identifying potential issues. |
 | LOGGING_INFO_LOGFILE | Path to logfile. |
 | MAINTAINER_ID| Telegram ID of main maintainer |
 | MAINTAINER| Name of main maintainer |
 | MAPS_API_KEY| Google Maps API key for `MAPS_LOOKUP` |
 | MAPS_LOOKUP| Boolean, resolve missing gym addresses via Google Maps |
-| MAP_URL| ? |
-| POKEBATTLER_IMPORT_DISABLE_REDUNDANT_EGGS| Boolean, when importing Pokedex from Pokebattler, disable creating an Egg raid for any level that only has one boss available. |
+| OSM_LOOKUP | Boolean, resolve missing gym addresses via OpenStreetMap |
+| MAP_URL| URL to your map. This is displayed under every raid poll. |
+| CUSTOM_TRAINERNAME | Book, allow users to add custom trainernames via `/trainer` command |
 | PORTAL_IMPORT| Bool, allow importing gyms via portal import Telegram bots |
-| PORTAL_PICTURE_IMPORT| Bool, download and use a local copy of gym pictures on import |
 | RAID_ANYTIME| Bool, enable a final timeslot for attending at any given time. |
 | RAID_AUTOMATIC_ALARM | Bool, sign up every attendee to the raid alarm automatically. They will get private messages of new participants as if they had enabled it themselves on the poll. |
 | RAID_CODE_POKEMON | List of Pokemon dex IDs in use for private group codes |
 | RAID_CREATION_EX_GYM_MARKER| Highlight gyms eligible for Ex-Raids in raid polls |
 | RAID_CUSTOM_GYM_LETTERS| List of custom "letters" to include in gym selector, e.g. "St." or "The" |
-| RAID_DAY| Bool, enable the raid day. Raid duration will change to RAID_DAY_DURATION |
-| RAID_DAY_DURATION| In minutes, default duration of raids during raid day, currently 180min |
-| RAID_DAY_CREATION_LIMIT| In raids, max. raids a user can create if RAID_HOUR is enabled. BOT_ADMINS are not affected |
 | RAID_DEFAULT_PICTURE| URL of image to use for raids if the portal photo is unknown. Only relevant for `RAID_PICTURE` |
 | RAID_DIRECT_START| Bool, Allow voting for starting raids as soon as it opens |
 | RAID_DURATION| In minutes, default duration of raids, currently 45min |
@@ -1176,14 +1165,13 @@ Updates to the config file are NOT checked automatically. Therefore always check
 | RAID_EXCLUDE_EXRAID_DUPLICATION| Bool, true to exclude ex-raids from the duplication check which allows to create an ex-raid and a normal raid at the same gym |
 | RAID_EX_GYM_MARKER| Enum, "icon" (default value, a star icon) or a custom text/icon to indicate an ex-raid gym in the raid polls |
 | RAID_FIRST_START| In minutes what the earliest timeslot is after egg has opened |
-| RAID_HOUR| Bool, enable the raid hour. Raid duration will change to RAID_HOUR_DURATION |
-| RAID_HOUR_DURATION| In minutes, default duration of raids during raid hour, currently 60min |
-| RAID_HOUR_CREATION_LIMIT| In raids, max. raids a user can create if RAID_HOUR is enabled. BOT_ADMINS are not affected |
 | RAID_LAST_START| In minutes what the last timeslot is before the raid ends |
 | RAID_LATE_MSG| Bool, add a message to the raidpoll if anyone has signaled they are late. |
 | RAID_LATE_TIME| How many minutes to advise waiting in `RAID_LATE_MSG` |
 | RAID_LOCATION| Bool, Send a separate attached location message in addition to a raid poll |
 | RAID_PICTURE | Bool, enable picture based raid polls instead of default text mode |
+| RAID_PICTURE_AUTOEXTEND | Bool, send the picture and poll as separate messages |
+| RAID_PICTURE_STORE_GYM_IMAGES_LOCALLY | Bool, option to store gym photos in `images/gyms` instead of fetching them from cloud every time |
 | RAID_PICTURE_BG_COLOR| List of RGB values for `RAID_PICTURE` poll background color, e.g. "0,0,0" for black |
 | RAID_PICTURE_FILE_FORMAT| Format for raid pictures for `RAID_PICTURE`, valid values are gif, jpg, jpeg, png |
 | RAID_PICTURE_FONT_GYM | Font used for gym names for regular raids. must match a ttf or otf file under `fonts/`. Probably should be of weight Bold. |
@@ -1194,50 +1182,57 @@ Updates to the config file are NOT checked automatically. Therefore always check
 | RAID_PICTURE_ICONS_WHITE| Bool, use white icons in `RAID_PICTURE` instead of black |
 | RAID_PICTURE_POKEMON_ICONS| Comma separated list of pokemon icon sources (currently PokeMiners and ZeChrales) |
 | RAID_PICTURE_TEXT_COLOR| List of RGB values for `RAID_PICTURE` poll text color, e.g "255,255,255" for white |
+| RAID_PICTURE_POKEMON_TYPES| Bool, display the raid boss' typing icons in raid picture |
 | RAID_PICTURE_URL| Fully qualified HTTPS URL to `raidpicture.php`, for example `https://example.com/raidbot/raidpicture.php` |
 | RAID_PIN_MESSAGE| Custom message added to the bottom of the raid overview messages |
 | RAID_POLL_HIDE_BUTTONS_POKEMON| List of Pokemon dex IDs for which voting buttons are disabled |
 | RAID_POLL_HIDE_BUTTONS_RAID_LEVEL| List of raid levels for which voting buttons are disabled |
-| RAID_POLL_HIDE_BUTTONS_TEAM_LVL| Bool, true to hide the team and level+/- buttons below each raid poll |
 | RAID_POLL_HIDE_DONE_CANCELED| Bool, hide the Done and Cancel buttons from raid polls |
 | RAID_POLL_HIDE_USERS_TIME| In minutes, after what time the previous raid slots are hidden from a raid poll |
-| RAID_POLL_UI_ORDER| Order of elements in text based raid polls. Valid elements are: `extra, teamll, time, pokemon, status` |
-| RAID_REMOTEPASS_USERS | Bool, allow participation to raid polls with a remote pass |
+| RAID_POLL_UI_TEMPLATE| Array, Order of elements in raid polls. Supported elementa are `alone, extra, extra_alien, remote, inv_plz, can_inv, ex_inv, teamlvl, time, pokemon, refresh, alarm, here, late, done, cancel`. |
+| RAID_POLL_POKEMON_NAME_FIRST_LINE| Shows the Name of the Pokemon instead of `Raid:` - Good for Message Preview to see which Pokemon the Raid will be. |
+| RAID_POLL_CALCULATE_MAPS_ROUTE| TRUE: Will show the Route to the Gym while clicking onto gym-address - FALSE: Will open Google Maps and only show the gym as a point in the map. |
+| RAID_POLL_SHOW_NICK_OVER_NAME | Show users Telegram @username instead of name |
+| RAID_WANT_INVITE | Bool, allow participants to indicate that they wish to be invited to the raid |
+| RAID_POLL_SHOW_TRAINERCODE| With /trainer everyone can set his trainercode and it will be shown on raidpolls, if the trainer chooses everytime (or renamed to invite me) and inside raidalarm messages |
+| RAID_POLL_SHOW_TRAINERNAME_STRING| Bool, Print every attendees', who wish to be invited, trainername in copyable search string within the raid poll|
+| RAID_POLL_SHOW_START_LINK| Display the `START`-link in raid poll that allows users to send lobby code to other participants. |
+| RAID_POLL_SHOW_CREATOR | Display the creator of the raid in the bottom of raid poll. |
+| RAID_POLL_ENABLE_HYPERLINKS_IN_NAMES | Enable hyperlinks to user profiles in participant names in raid polls. It's recommended to disable this if you're running the bot in a supergroup and with `RAID_PICTURE` mode on. |
+| RAID_POLL_SHOW_NICK_OVER_NAME | Bool, If `CUSTOM_TRAINERNAME` is `false`, display user's Telegram nickname (@name) instead of name (first name + last name)|
+| RAID_ENDED_HIDE_KEYS | Bool, Hide the `Raid done` button in raid polls after the raid has ended |
 | RAID_REMOTEPASS_USERS_LIMIT | Integer, How many remote participants to allow into a single raid |
 | RAID_WANT_INVITE | Bool, allow participants to indicate that they wish to be invited to the raid |
 | RAID_SLOTS| Amount of minutes between raid poll voting slots |
 | RAID_VIA_LOCATION| Bool, enable creating raids by sharing a location with the bot |
 | RAID_VOTE_ICONS| Bool, use icons on raid poll buttons |
 | RAID_VOTE_TEXT| Bool, use text on raid poll buttons |
-| SHARE_CHATS_LEVEL_1| List of Telegram group IDs available for sharing raids of level 1 |
-| SHARE_CHATS_LEVEL_2| List of Telegram group IDs available for sharing raids of level 2 |
-| SHARE_CHATS_LEVEL_3| List of Telegram group IDs available for sharing raids of level 3 |
-| SHARE_CHATS_LEVEL_4| List of Telegram group IDs available for sharing raids of level 4 |
-| SHARE_CHATS_LEVEL_5| List of Telegram group IDs available for sharing raids of level 5 |
-| SHARE_CHATS_LEVEL_X| List of Telegram group IDs available for sharing Ex-Raids |
-| SHARE_CHATS| List of Telegram group IDs available for sharing any raids |
+| SHARE_CHATS_LEVEL_1| List of Telegram chat IDs available for sharing raids of level 1 |
+| SHARE_CHATS_LEVEL_2| List of Telegram chat IDs available for sharing raids of level 2 |
+| SHARE_CHATS_LEVEL_3| List of Telegram chat IDs available for sharing raids of level 3 |
+| SHARE_CHATS_LEVEL_4| List of Telegram chat IDs available for sharing raids of level 4 |
+| SHARE_CHATS_LEVEL_5| List of Telegram chat IDs available for sharing raids of level 5 |
+| SHARE_CHATS_LEVEL_X| List of Telegram chat IDs available for sharing Ex-Raids |
+| SHARE_CHATS| List of Telegram chat IDs available for sharing any raids |
+| SHOW_GYM_NAME_IN_ADDRESS| Good for Raid-Picture - Will show the Gym Name infront of the Gym-Address. In Message-Preview you'll know which gym the raid is and you don't have to load the image to know which gym it will be.
+| MYSQL_SORT_COLLATE | Charset added to SQL query for sorting gym names |
+| LIST_BY_LOCATION | Bool, If true, when sending location to bot, instead of creating a raid, it lists nearby active raids |
 | TIMEZONE| Timezone definition to use as per [TZ database names](https://www.wikiwand.com/en/List_of_tz_database_time_zones#/List) |
 | TRAINER_MAX_LEVEL| Int, Maximum level a trainer can be (currently 50) |
 | TRAINER_BUTTONS_TOGGLE| Bool, true to show/hide the team and level+/- buttons below the trainer data setup messages once a users hits the "trainer info" button. False to always show the team and level+/- buttons. |
 | TRAINER_CHATS| List of chats where trainer data setup messages can be shared |
 | UPGRADE_SQL_AUTO | When a DB schema upgrade is detected, run it automatically and bump config version to match. |
-| WEBHOOK_CHATS_LEVEL_1_0| ? |
-| WEBHOOK_CHATS_LEVEL_1_1| ? |
-| WEBHOOK_CHATS_LEVEL_1| List of Telegram group IDs to autoshare raids of level 1 |
-| WEBHOOK_CHATS_LEVEL_2_0| ? |
-| WEBHOOK_CHATS_LEVEL_2_1| ? |
-| WEBHOOK_CHATS_LEVEL_2| List of Telegram group IDs to autoshare raids of level 2 |
-| WEBHOOK_CHATS_LEVEL_3_0| ? |
-| WEBHOOK_CHATS_LEVEL_3_1| ? |
-| WEBHOOK_CHATS_LEVEL_3| List of Telegram group IDs to autoshare raids of level 3 |
-| WEBHOOK_CHATS_LEVEL_4_0| ? |
-| WEBHOOK_CHATS_LEVEL_4_1| ? |
-| WEBHOOK_CHATS_LEVEL_4| List of Telegram group IDs to autoshare raids of level 4 |
-| WEBHOOK_CHATS_LEVEL_5_0| ? |
-| WEBHOOK_CHATS_LEVEL_5_1| ? |
-| WEBHOOK_CHATS_LEVEL_5| List of Telegram group IDs to autoshare raids of level 5 |
-| WEBHOOK_CHATS| List of Telegram group IDs to autoshare raids of any level  |
-| WEBHOOK_CREATE_ONLY| Bool, only create raids, don't autoshare them to any group |
+| SHARE_AFTER_ATTENDANCE | Bool, enable raid sharing to preset chats after first attending vote |
+| SHARE_CHATS_AFTER_ATTENDANCE | ID (only one) of chat to auto-share raids to after first attending vote |
+| WEBHOOK_CHATS_LEVEL_1| List of Telegram chat IDs to autoshare raids of level 1 |
+| WEBHOOK_CHATS_LEVEL_1_0| List of Telegram chat IDs to autoshare raids of level 1 inside geofence ID 0 |
+| WEBHOOK_CHATS_LEVEL_1_1| List of Telegram chat IDs to autoshare raids of level 1 inside geofence ID 1 |
+| WEBHOOK_CHATS_LEVEL_2| List of Telegram chat IDs to autoshare raids of level 2 |
+| WEBHOOK_CHATS_LEVEL_3| List of Telegram chat IDs to autoshare raids of level 3 |
+| WEBHOOK_CHATS_LEVEL_4| List of Telegram chat IDs to autoshare raids of level 4 |
+| WEBHOOK_CHATS_LEVEL_5| List of Telegram chat IDs to autoshare raids of level 5 |
+| WEBHOOK_CHATS| List of Telegram chat IDs to autoshare raids of any level  |
+| WEBHOOK_CREATE_ONLY| Bool, only create raids, don't autoshare them to any chat |
 | WEBHOOK_CREATOR| Telegram ID of the bot or user to credit as having created webhook raids |
 | WEBHOOK_EXCLUDE_POKEMON| List of Pokemon dex IDs to exclude from webhook raid creation |
 | WEBHOOK_EXCLUDE_RAID_LEVEL| List of raid levels to exclude from webhook raid creation |

@@ -12,13 +12,9 @@ raid_access_check($update, $data, 'pokemon');
 // Set the id.
 $raid_id = $data['id'];
 
-// Get current pokemon
-$old_pokemon = $data['arg'];
-
 // Get raid level
-$raid_level = '0';
-$pokemon_id_form = explode("-", $old_pokemon, 2);
-$raid_level = get_raid_level($pokemon_id_form[0], $pokemon_id_form[1]);
+$raid_level = $data['arg'];
+
 debug_log('Raid level of pokemon: ' . $raid_level);
 
 // Level found
@@ -54,8 +50,9 @@ $tg_json = array();
 // Answer callback.
 $tg_json[] = answerCallbackQuery($update['callback_query']['id'], $callback_response, true);
 
+$raid = get_raid($raid_id);
 // Set the message.
-$msg = getTranslation('raid_boss') . ':' . SP . get_local_pokemon_name($pokemon_id_form[0],$pokemon_id_form[1]) . CR . CR;
+$msg = getTranslation('raid_boss') . ':' . SP . get_local_pokemon_name($raid['pokemon'],$raid['pokemon_form']) . CR . CR;
 $msg .= '<b>' . getTranslation('select_raid_boss') . ':</b>';
 if (isset($update['callback_query']['inline_message_id'])) {
     $tg_json[] = editMessageText($update['callback_query']['inline_message_id'], $msg, $keys, NULL, false, true);

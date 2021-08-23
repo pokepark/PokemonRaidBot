@@ -18,7 +18,7 @@ if ($chat_id != 0) {
 
 $request_overviews = my_query(
     "
-    SELECT    chat_id, message_id
+    SELECT    chat_id, message_id, chat_title, chat_username, (IF(updated < DATE(NOW()) or updated IS NULL, 1, 0)) as update_needed
     FROM      overview
     {$query_chat}
     "
@@ -29,29 +29,77 @@ $overviews = $request_overviews->fetchAll();
 // Get active raids for every overview
 $active_raids = [];
 $tg_json = [];
+$tz_diff = tz_diff();
 foreach($overviews as $overview_row) {
-    $request_raids = my_query("
-            SELECT
-              raids.id, raids.pokemon, raids.pokemon_form, raids.start_time, raids.end_time, raids.gym_id,
+    $request_raids = my_query('
+            SELECT IF (raids.pokemon = 0,
+						IF((SELECT  count(*)
+							FROM    raid_bosses
+							WHERE   raid_level = raids.level
+							AND     convert_tz(raids.spawn,"+00:00","'.$tz_diff.'") BETWEEN date_start AND date_end) = 1,
+							(SELECT  pokedex_id
+							FROM    raid_bosses
+							WHERE   raid_level = raids.level
+							AND     convert_tz(raids.spawn,"+00:00","'.$tz_diff.'") BETWEEN date_start AND date_end),
+                            (select concat(\'999\', raids.level) as pokemon)
+                            )
+                   ,pokemon) as pokemon,
+                   IF (raids.pokemon = 0,
+						IF((SELECT  count(*) as count
+							FROM    raid_bosses
+							WHERE   raid_level = raids.level
+							AND     convert_tz(raids.spawn,"+00:00","'.$tz_diff.'") BETWEEN date_start AND date_end) = 1,
+							(SELECT  pokemon_form_id
+							FROM    raid_bosses
+							WHERE   raid_level = raids.level
+							AND     convert_tz(raids.spawn,"+00:00","'.$tz_diff.'") BETWEEN date_start AND date_end),
+                            \'0\'
+                            ),
+                        IF(raids.pokemon_form = 0,
+                            (SELECT pokemon_form_id FROM pokemon
+                            WHERE
+                                pokedex_id = raids.pokemon AND
+                                pokemon_form_name = \'normal\'
+                            LIMIT 1), raids.pokemon_form)
+                           ) as pokemon_form,
+              raids.id, raids.start_time, raids.end_time, raids.gym_id,
               MAX(cleanup.message_id) as message_id,
+              events.name as event_name,
               gyms.lat, gyms.lon, gyms.address, gyms.gym_name, gyms.ex_gym,
-              TIME_FORMAT(TIMEDIFF(end_time, UTC_TIMESTAMP()) + INTERVAL 1 MINUTE, '%k:%i') AS t_left
+              TIME_FORMAT(TIMEDIFF(end_time, UTC_TIMESTAMP()) + INTERVAL 1 MINUTE, \'%k:%i\') AS t_left
             FROM      cleanup
             LEFT JOIN raids
             ON        raids.id = cleanup.raid_id
             LEFT JOIN gyms
             ON        raids.gym_id = gyms.id
-            WHERE     cleanup.chat_id = '{$overview_row['chat_id']}'
+            LEFT JOIN  events
+            ON         events.id = raids.event 
+	        WHERE     cleanup.chat_id = \'' . $overview_row['chat_id'] . '\'
             AND       raids.end_time>UTC_TIMESTAMP()
-            GROUP BY  raids.id, raids.pokemon, raids.pokemon_form, raids.start_time, raids.end_time, raids.gym_id, gyms.lat, gyms.lon, gyms.address, gyms.gym_name, gyms.ex_gym
+            GROUP BY  raids.id, raids.pokemon, raids.pokemon_form, raids.start_time, raids.end_time, raids.gym_id, gyms.lat, gyms.lon, gyms.address, gyms.gym_name, gyms.ex_gym, events.name
             ORDER BY  raids.end_time ASC, gyms.gym_name
-    ");
+    ');
     // Write active raids to array
     $active_raids = $request_raids->fetchAll();
     debug_log('Active raids:');
     debug_log($active_raids);
 
-    $overview_message = get_overview($active_raids, $overview_row['chat_id']);
+    if($overview_row['update_needed'] == 1) {
+        $chat_title_username = get_chat_title_username($overview_row['chat_id']);
+        $chat_title = $chat_title_username[0];
+        $chat_username = $chat_title_username[1];
+        my_query('
+                UPDATE  overview
+                SET     chat_title = \''.$chat_title.'\',
+                        chat_username = \''.$chat_username.'\',
+                        updated = DATE(NOW())
+                WHERE   chat_id = \''.$overview_row['chat_id'].'\'
+                ');
+    }else {
+        $chat_title = $overview_row['chat_title'];
+        $chat_username = $overview_row['chat_username'];
+    }
+    $overview_message = get_overview($active_raids, $chat_title, $chat_username);
     // Triggered from user or cronjob?
     if (!empty($update['callback_query']['id'])) {
         // Answer the callback.

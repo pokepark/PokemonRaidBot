@@ -33,9 +33,6 @@ debug_log($atts);
 if(!empty($atts)) {
     // Any pokemon?
     if($data['arg'] == 0) {
-        // Send alarm
-        alarm($data['id'],$update['callback_query']['from']['id'],'pok_individual',$data['arg']);
-
         // Update attendance.
         my_query(
         "
@@ -62,6 +59,9 @@ if(!empty($atts)) {
         AND user_id = {$update['callback_query']['from']['id']}
         "
         );
+
+        // Send alarm
+        $tg_json = alarm($data['id'],$update['callback_query']['from']['id'],'pok_individual',$data['arg']);
     } else {
         // Init found and count.
         $found = false;
@@ -92,7 +92,7 @@ if(!empty($atts)) {
                     );
                 }
                 // Send alarm
-                alarm($data['id'],$update['callback_query']['from']['id'],'pok_cancel_individual',$data['arg']);
+                $tg_json = alarm($data['id'],$update['callback_query']['from']['id'],'pok_cancel_individual',$data['arg']);
 
                 // Update count.
                 $count = $count - 1;
@@ -106,7 +106,7 @@ if(!empty($atts)) {
         // Not found? Insert!
         if(!$found) {
             // Send alarm
-            alarm($data['id'],$update['callback_query']['from']['id'],'pok_individual',$data['arg']);
+            $tg_json = alarm($data['id'],$update['callback_query']['from']['id'],'pok_individual',$data['arg']);
 
             // Insert vote.
             my_query(
@@ -116,9 +116,8 @@ if(!empty($atts)) {
               user_id,
               raid_id,
               attend_time,
-              extra_mystic,
-              extra_valor,
-              extra_instinct,
+              extra_in_person,
+              extra_alien,
               arrived,
               raid_done,
               cancel,
@@ -127,15 +126,15 @@ if(!empty($atts)) {
               invite,
               pokemon,
               alarm,
-              want_invite
+              want_invite,
+              can_invite
             )
             VALUES(
             '{$atts[0]['user_id']}',
             '{$atts[0]['raid_id']}',
             '{$atts[0]['attend_time']}',
-            '{$atts[0]['extra_mystic']}',
-            '{$atts[0]['extra_valor']}',
-            '{$atts[0]['extra_instinct']}',
+            '{$atts[0]['extra_in_person']}',
+            '{$atts[0]['extra_alien']}',
             '{$atts[0]['arrived']}',
             '{$atts[0]['raid_done']}',
             '{$atts[0]['cancel']}',
@@ -144,7 +143,8 @@ if(!empty($atts)) {
             '{$atts[0]['invite']}',
             '{$data['arg']}',
             '{$atts[0]['alarm']}',
-            '{$atts[0]['want_invite']}'
+            '{$atts[0]['want_invite']}',
+            '{$atts[0]['can_invite']}'
             )
             "
             );
@@ -166,12 +166,13 @@ if(!empty($atts)) {
         }
     }
 
-   // Send vote response.
-   if($config->RAID_PICTURE) {
-	    send_response_vote($update, $data,false,false);
-    } else {
-	    send_response_vote($update, $data);
-    }
+    require_once(LOGIC_PATH . '/update_raid_poll.php');
+
+    $tg_json = update_raid_poll($data['id'], false, $update, $tg_json);
+
+    $tg_json[] = answerCallbackQuery($update['callback_query']['id'], getTranslation('vote_updated'), true);
+
+    curl_json_multi_request($tg_json);
 } else {
     // Send vote time first.
     send_vote_time_first($update);

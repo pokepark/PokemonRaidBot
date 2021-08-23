@@ -36,11 +36,13 @@ if($data['id'] == 'trainer') {
     send_trainerinfo($update, true);
 } else {
     // Send vote response.
-   if($config->RAID_PICTURE) {
-	    send_response_vote($update, $data,false,false);
-    } else {
-	    send_response_vote($update, $data);
-    } 
+    require_once(LOGIC_PATH . '/update_raid_poll.php');
+
+    $tg_json = update_raid_poll($data['id'], false, $update);
+
+    $tg_json[] = answerCallbackQuery($update['callback_query']['id'], getTranslation('vote_updated'), true);
+
+    curl_json_multi_request($tg_json);
 }
 
 exit();

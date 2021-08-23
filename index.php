@@ -28,14 +28,14 @@ foreach ($update as $raid) {
 // DDOS protection
 include_once(CORE_BOT_PATH . '/ddos.php');
 
+// Update the user
+update_user($update);
+
 // Get language
 include_once(CORE_BOT_PATH . '/userlanguage.php');
 
 // Run cleanup if requested
 include_once(CORE_BOT_PATH . '/cleanup_run.php');
-
-// Update the user
-update_user($update);
 
 // Callback query received.
 if (isset($update['callback_query'])) {
@@ -51,8 +51,12 @@ if (isset($update['callback_query'])) {
 
 // Location received.
 } else if (isset($update['message']['location']) && $update['message']['chat']['type'] == 'private') {
-    // Create raid and exit.
-    include_once(ROOT_PATH . '/mods/raid_by_location.php');
+    if($config->LIST_BY_LOCATION) {
+        include_once(ROOT_PATH . '/mods/share_raid_by_location.php');
+    }else {
+        // Create raid and exit.
+        include_once(ROOT_PATH . '/mods/raid_by_location.php');
+    }
     $dbh = null;
     exit();
 
@@ -68,6 +72,28 @@ if (isset($update['callback_query'])) {
         // Import portal.
         include_once(ROOT_PATH . '/mods/importal.php');
     } else {
+        // Check if user is expected to be posting something we want to save to db
+        if($update['message']['chat']['type'] == 'private') {
+            $q = my_query("SELECT id, handler, modifiers FROM user_input WHERE user_id='{$update['message']['from']['id']}' LIMIT 1");
+            if( $q->rowCount() > 0 ) {
+                debug_log("Expecting a response message from user: " . $update['message']['from']['id']);
+                $res = $q->fetch();
+                // Modifiers to pass to handler
+                $modifiers = json_decode($res['modifiers'], true);
+
+                debug_log("Calling: " . $res['handler'] . '.php');
+                debug_log("With modifiers: " . $res['modifiers']);
+                include_once(ROOT_PATH . '/mods/' . $res['handler'] . '.php');
+
+                debug_log("Response handeled successfully!");
+                // Delete the entry if the call was handled without errors
+                my_query("DELETE FROM user_input WHERE id='{$res['id']}'");
+                
+                $dbh = null;
+                exit();
+            }
+        }
+
         // Logic to get the command
         include_once(CORE_BOT_PATH . '/commands.php');
     }

@@ -23,4 +23,28 @@ function run_sql_file($file) {
   }
   return true;
 }
+
+/**
+ * Naive DB query without proper param handling.
+ * You should prefer doing your own prepare, bindParam & execute!
+ * @param $query
+ * @return PDOStatement
+ */
+function my_query($query)
+{
+    global $dbh;
+    global $config;
+
+    if($config->DEBUG_SQL) {
+        debug_log($query, '?');
+    }
+    $stmt = $dbh->prepare($query);
+    if ($stmt && $stmt->execute()) {
+        debug_log_sql('Query success', '$');
+    } else {
+        info_log($dbh->errorInfo(), '!');
+    }
+
+    return $stmt;
+}
 ?>

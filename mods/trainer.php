@@ -12,29 +12,44 @@ bot_access_check($update, 'trainer');
 // Set message.
 $msg = '<b>' . getTranslation('trainerinfo_set_yours') . '</b>';
 
+$user_id = $update['callback_query']['from']['id'];
+$msg .= CR.CR.get_user($user_id, false);
+
 // Init empty keys array.
 $keys = [];
-
 // Create keys array.
-$keys = [
-/*    [
+if($config->CUSTOM_TRAINERNAME){
+    $keys[0][] =
+            [
+                'text'          => getTranslation('name'),
+                'callback_data' => '0:trainer_name:0'
+            ];
+}
+if($config->RAID_POLL_SHOW_TRAINERCODE){
+    $keys[0][] =
+            [
+                'text'          => getTranslation('trainercode'),
+                'callback_data' => '0:trainer_code:0'
+            ];
+}
+$keys[] = [
         [
-            'text'          => getTranslation('name'),
-            'callback_data' => '0:trainer_name:0'
-        ]
-    ],
-*/
-    [
-	[
             'text'          => getTranslation('team'),
             'callback_data' => '0:trainer_team:0'
         ],
-	[
+        [
             'text'          => getTranslation('level'),
             'callback_data' => '0:trainer_level:0'
         ]
-    ]
 ];
+if ($config->LANGUAGE_PRIVATE == '') {
+    $keys[] = [
+        [
+            'text'          => getTranslation('bot_lang'),
+            'callback_data' => '0:bot_lang:0'
+        ]
+    ];
+}
 
 // Check access.
 $access = bot_access_check($update, 'trainer-share', true, true);
@@ -65,5 +80,9 @@ answerCallbackQuery($update['callback_query']['id'], 'OK');
 
 // Edit message.
 edit_message($update, $msg, $keys, false);
+
+// Exit.
+$dbh = null;
+exit();
 
 ?>

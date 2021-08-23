@@ -24,53 +24,18 @@ function is_valid_target($chat_id, $message_id, $no_chat = false, $no_message = 
   info_log("chat_id:{$chat_id}, message_id:{$message_id}", 'ERROR: Unhandled pair of chat_id & message_id, this is a bug:');
   return true;
 }
-/**
- * Send message.
- * @param $chat_id
- * @param array $text
- * @param $multicurl
- */
-function sendMessage($chat_id, $text = [], $multicurl = false)
-{
-    // Create response content array.
-    $reply_content = [
-        'method'     => 'sendMessage',
-        'chat_id'    => $chat_id,
-        'parse_mode' => 'HTML',
-        'text'       => $text
-    ];
-    if(!is_valid_target($chat_id, null, false, true)){
-      info_log($chat_id, 'ERROR: Cannot send to invalid chat id:');
-      info_log($reply_content, 'ERROR: data would have been:');
-      exit();
-    }
-
-    if (isset($inline_keyboard)) {
-        $reply_content['reply_markup'] = ['inline_keyboard' => $inline_keyboard];
-    }
-
-    // Encode data to json.
-    $reply_json = json_encode($reply_content);
-
-    // Set header to json.
-    header('Content-Type: application/json');
-
-    // Write to log.
-    debug_log($reply_json, '>');
-
-    // Send request to telegram api.
-    return curl_request($reply_json, $multicurl);
-}
 
 /**
  * Send message.
- * @param $chat_id
+ * @param int $chat_id
  * @param array $text
  * @param mixed $inline_keyboard
  * @param array $merge_args
- * @param $multicurl
- */
-function send_message($chat_id, $text = [], $inline_keyboard = false, $merge_args = [], $multicurl = false)
+ * @param array|false $multicurl
+ * @param int|string $identifier
+ * @return mixed
+*/
+function send_message($chat_id, $text = [], $inline_keyboard = false, $merge_args = [], $multicurl = false, $identifier = false)
 {
     // Create response content array.
     $reply_content = [
@@ -89,7 +54,7 @@ function send_message($chat_id, $text = [], $inline_keyboard = false, $merge_arg
     debug_log('KEYS');
     debug_log($inline_keyboard);
 
-    if (isset($inline_keyboard)) {
+    if ($inline_keyboard != false) {
         $reply_content['reply_markup'] = ['inline_keyboard' => $inline_keyboard];
     }
 
@@ -107,52 +72,7 @@ function send_message($chat_id, $text = [], $inline_keyboard = false, $merge_arg
     debug_log($reply_json, '>');
 
     // Send request to telegram api.
-    return curl_request($reply_json, $multicurl);
-}
-
-/**
- * Send location.
- * @param $chat_id
- * @param $lat
- * @param $lon
- * @param bool $inline_keyboard
- * @param $multicurl
- * @return mixed
- */
-function send_location($chat_id, $lat, $lon, $inline_keyboard = false, $multicurl = false)
-{
-    // Create reply content array.
-    $reply_content = [
-        'method'    => 'sendLocation',
-        'chat_id'   => $chat_id,
-        'latitude'  => $lat,
-        'longitude' => $lon
-    ];
-    if(!is_valid_target($chat_id, null, false, true)){
-      info_log($chat_id, 'ERROR: Cannot send to invalid chat id:');
-      info_log($reply_content, 'ERROR: data would have been:');
-      exit();
-    }
-
-    // Write to log.
-    debug_log('KEYS');
-    debug_log($inline_keyboard);
-
-    if (is_array($inline_keyboard)) {
-        $reply_content['reply_markup'] = ['inline_keyboard' => $inline_keyboard];
-    }
-
-    // Encode data to json.
-    $reply_json = json_encode($reply_content);
-
-    // Set header to json.
-    header('Content-Type: application/json');
-
-    // Write to log.
-    debug_log($reply_json, '>');
-
-    // Send request to telegram api and return response.
-    return curl_request($reply_json, $multicurl);
+    return curl_request($reply_json, $multicurl, $identifier);
 }
 
 /**
@@ -164,9 +84,10 @@ function send_location($chat_id, $lat, $lon, $inline_keyboard = false, $multicur
  * @param $address
  * @param bool $inline_keyboard
  * @param $multicurl
+ * @param $identifier
  * @return mixed
  */
-function send_venue($chat_id, $lat, $lon, $title, $address, $inline_keyboard = false, $multicurl = false)
+function send_venue($chat_id, $lat, $lon, $title, $address, $inline_keyboard = false, $multicurl = false, $identifier = false)
 {
     // Create reply content array.
     $reply_content = [
@@ -201,7 +122,7 @@ function send_venue($chat_id, $lat, $lon, $title, $address, $inline_keyboard = f
     debug_log($reply_json, '>');
 
     // Send request to telegram api and return response.
-    return curl_request($reply_json, $multicurl);
+    return curl_request($reply_json, $multicurl, $identifier);
 }
 
 /**
@@ -552,7 +473,6 @@ function delete_message($chat_id, $message_id, $multicurl = false)
         'method'     => 'deleteMessage',
         'chat_id'    => $chat_id,
         'message_id' => $message_id,
-        'parse_mode' => 'HTML',
     ];
     if(!is_valid_target($chat_id, $message_id)){
       info_log("{$chat_id}/{$message_id}", 'ERROR: Cannot delete invalid chat/message id:');
@@ -584,7 +504,6 @@ function get_chat($chat_id, $multicurl = false)
     $reply_content = [
         'method'     => 'getChat',
         'chat_id'    => $chat_id,
-        'parse_mode' => 'HTML',
     ];
     if(!is_valid_target($chat_id, null, false, true)){
       info_log($chat_id, 'ERROR: Cannot get invalid chat id:');
@@ -616,7 +535,6 @@ function get_admins($chat_id, $multicurl = false)
     $reply_content = [
         'method'     => 'getChatAdministrators',
         'chat_id'    => $chat_id,
-        'parse_mode' => 'HTML',
     ];
     if(!is_valid_target($chat_id, null, false, true)){
       info_log($chat_id, 'ERROR: Cannot get invalid chat id:');
@@ -650,7 +568,6 @@ function get_chatmember($chat_id, $user_id, $multicurl = false)
         'method'     => 'getChatMember',
         'chat_id'    => $chat_id,
         'user_id'    => $user_id,
-        'parse_mode' => 'HTML',
     ];
     if(!is_valid_target($chat_id, null, false, true)){
       info_log($chat_id, 'ERROR: Cannot get invalid chat id:');
@@ -679,8 +596,9 @@ function get_chatmember($chat_id, $user_id, $multicurl = false)
  * @param mixed $inline_keyboard
  * @param array $merge_args
  * @param array $multicurl
+ * @param int $identifier
  */
-function send_photo($chat_id, $photo_url, $text = array(), $inline_keyboard = false, $merge_args = [], $multicurl = false)
+function send_photo($chat_id, $photo_url, $text = array(), $inline_keyboard = false, $merge_args = [], $multicurl = false, $identifier = false)
 {
     // Create response content array.
     $reply_content = [
@@ -713,7 +631,7 @@ function send_photo($chat_id, $photo_url, $text = array(), $inline_keyboard = fa
     debug_log($reply_json, '>');
 
     // Send request to telegram api.
-    return curl_request($reply_json, $multicurl);
+    return curl_request($reply_json, $multicurl, $identifier);
 }
 
 /**
@@ -773,25 +691,27 @@ function editMessageMedia($id_val, $text_val, $markup_val, $chat_id = NULL, $mer
  * Send request to telegram api - single or multi?.
  * @param $json
  * @param $multicurl
+ * @param $identifier
  * @return mixed
  */
-function curl_request($json, $multicurl = false)
+function curl_request($json, $multicurl = false, $identifier = false)
 {
 
     // Send request to telegram api.
     if($multicurl == true) {
-        return $json;
+        return ['json' => $json, 'identifier' => $identifier];
     } else {
-        return curl_json_request($json);
+        return curl_json_request($json, $identifier);
     }
 }
 
 /**
  * Send request to telegram api.
  * @param $json
+ * @param $identifier
  * @return mixed
  */
-function curl_json_request($json)
+function curl_json_request($json, $identifier)
 {
     global $config;
     // Bridge mode?
@@ -826,11 +746,15 @@ function curl_json_request($json)
     // Execute curl request.
     $json_response = curl_exec($curl);
 
+    if($json_response === false) {
+       info_log(curl_error($curl));
+    }
+
     // Close connection.
     curl_close($curl);
 
     // Process response from telegram api.
-    $response = curl_json_response($json_response, $json);
+    $response = curl_json_response($json_response, $json, $identifier);
 
     // Return response.
     return $response;
@@ -856,9 +780,6 @@ function curl_json_multi_request($json)
     // Init multi handle.
     $mh = curl_multi_init();
 
-    // Init $data as array - since php 5.2 the CURLOPT_POSTFIELDS wants an array
-    $data = array();
-
     // Loop through json array, create curl handles and add them to the multi-handle.
     foreach ($json as $id => $data) {
         // Init.
@@ -874,7 +795,7 @@ function curl_json_multi_request($json)
 
         // Use Proxyserver for curl if configured.
         if($config->CURL_USEPROXY && !empty($config->CURL_PROXYSERVER)) {
-            curl_setopt($curl, CURLOPT_PROXY, $config->CURL_PROXYSERVER);
+            curl_setopt($curly[$id], CURLOPT_PROXY, $config->CURL_PROXYSERVER);
         }
 
         // Bridge mode?
@@ -883,26 +804,30 @@ function curl_json_multi_request($json)
             debug_log('Adding bot folder name "' . basename(ROOT_PATH) . '" to callback data');
             $search = '"callback_data":"';
             $replace = $search . basename(ROOT_PATH) . ':';
-            array_push($data, str_replace($search,$replace,$data));
+            array_push($data['json'], str_replace($search,$replace,$data['json']));
         }
 
         // Curl post.
         curl_setopt($curly[$id], CURLOPT_POST,       true);
-        curl_setopt($curly[$id], CURLOPT_POSTFIELDS, $data);
+        curl_setopt($curly[$id], CURLOPT_POSTFIELDS, $data['json']);
 
         // Add multi handle.
         curl_multi_add_handle($mh, $curly[$id]);
 
         // Write to log.
-        debug_log($data, '->');
+        debug_log($data['json'], '->');
     }
 
     // Execute the handles.
     $running = null;
     do {
         curl_multi_select($mh);
-        curl_multi_exec($mh, $running);
-    } while($running > 0);
+        $status = curl_multi_exec($mh, $running);
+    } while($running > 0 && $status === CURLM_OK);
+
+    if ($status != CURLM_OK) {
+        info_log(curl_multi_strerror($status));
+    }
 
     // Get content and remove handles.
     foreach($curly as $id => $content) {
@@ -915,15 +840,7 @@ function curl_json_multi_request($json)
 
     // Process response from telegram api.
     foreach($response as $id => $json_response) {
-        // Bot specific funtion to process response from telegram api.
-        if (function_exists('curl_json_response')) {
-            $response[$id] = curl_json_response($json_response, $response[$id]);
-        } else {
-            info_log('No function found to process response from Telegram API!', 'ERROR:');
-            info_log('Add a function named "curl_json_response" to process them!', 'ERROR:');
-            info_log('Arguments of that function need to be the response $json_response and the send data $json.', 'ERROR:');
-            info_log('For example: function curl_json_response($json_response, $json)', 'ERROR:');
-        }
+        $response[$id] = curl_json_response($response[$id], $json[$id]['json'], $json[$id]['identifier']);
         debug_log_incoming($json_response, '<-');
     }
 

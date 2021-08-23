@@ -35,6 +35,7 @@ function migrate_config($config, $file){
   $had_to_fix = false;
   foreach($config as $key => $val) {
     // Make "True" and "False" real true and false
+    if(is_array($val)) continue;
     if(strtolower($val) == "true") {
       $had_to_fix = true;
       $config[$key] = true;
@@ -88,4 +89,5 @@ function build_config() {
 
 // Object, access a config option with e.g. $config->VERSION
 $config = build_config();
+
 ?>

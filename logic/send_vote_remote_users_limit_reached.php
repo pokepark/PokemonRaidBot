@@ -6,7 +6,7 @@
 function send_vote_remote_users_limit_reached($update)
 {
     // Set the message.
-    $msg = getPublicTranslation('vote_remote_users_limit_reached');
+    $msg = getTranslation('vote_remote_users_limit_reached');
 
     // Answer the callback.
     answerCallbackQuery($update['callback_query']['id'], $msg);
