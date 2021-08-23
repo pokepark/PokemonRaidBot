@@ -7,7 +7,7 @@ debug_log('LIST');
 //debug_log($data);
 
 // Check access.
-bot_access_check($update, 'list');
+if(!isset($skip_access) or $skip_access != true) bot_access_check($update, 'list');
 
 // Set message.
 $msg = '<b>' . getTranslation('list_all_active_raids') . '</b>' . CR;

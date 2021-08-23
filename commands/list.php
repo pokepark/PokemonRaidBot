@@ -78,6 +78,7 @@ if(isset($raids[0]['r_active'])) {
     if($raids[0]['r_active'] > 12) {
         // Forward to /listall
         debug_log('Too much raids, forwarding to /listall');
+        $skip_access = true;
         include_once(ROOT_PATH . '/commands/listall.php');
         exit();
 

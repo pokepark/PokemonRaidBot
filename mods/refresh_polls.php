@@ -2,7 +2,7 @@
 
 // Refresh polls
 if($config->AUTO_REFRESH_POLLS) {
-    if(is_numeric($data['id'])) $where_chat = 'chat_id = '.$data['id']; else $where_chat = 'chat_id != 0';
+    if(strlen($data['id']) > 5) $where_chat = 'chat_id = '.$data['id']; else $where_chat = 'chat_id != 0';
     $query_messages = my_query("
                     SELECT      cleanup.*
                     FROM        cleanup
