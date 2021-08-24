@@ -684,7 +684,7 @@
     "FI": "Muu"
   },
   "tutorial_vote_failed": {
-    "NL": "TRANSLATE",
+    "NL": "Je kan niet meedoen voordat je de tutorial hebt doorlopen.",
     "DE": "TRANSLATE",
     "EN": "You can't vote before going through the tutorial.",
     "IT": "TRANSLATE",
@@ -696,7 +696,7 @@
     "FI": "Et voi äänestää ennen kuin olet käynyt ohjeen läpi."
   },
   "tutorial_command_failed": {
-    "NL": "TRANSLATE",
+    "NL": "Je kan dit commando niet gebruiken voordat je de tutorial hebt doorlopen.",
     "DE": "TRANSLATE",
     "EN": "You can't use this command before going through the tutorial.",
     "IT": "TRANSLATE",
