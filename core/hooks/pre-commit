@@ -1,43 +1,7 @@
 #!/bin/bash
 
-# Debug
-# set -x
-
-
-regen_version(){
-  # Old version
-  OLD_VERSION=$(cat VERSION)
-  echo 'Current version:' $OLD_VERSION
-
-  # Build new version string
-  MAJOR=$(date +%y | cut -c1)
-  MINOR=$(date +%y | cut -c2)
-  DAY=$(date +%j)
-  COMMIT=$((`git rev-list --count --since=midnight HEAD` + 1))
-  VERSION=$MAJOR.$MINOR.$DAY.$COMMIT
-
-  # Update version file
-  echo 'Updating project version to:' $VERSION
-  echo $VERSION > VERSION
-  # Update sample config VERSION
-  sed -E -i "s/(\"VERSION\":\")[0-9\.]+/\1$VERSION/" config/config.json.example
-
-  # Add version file to commit
-  echo 'Adding new version to commit'
-  echo
-  git add VERSION config/config.json.example
-
-  # Interrupt, so user can see output before commit
-  read -p "Press any key to continue..." </dev/tty
-  echo
-}
-
-# Tell the user we're running pre-commit hooks
-echo 'Running pre-commit hooks'
-
-# Run version regen on every commit if VERSION file present
-# TODO(artanicus): Is this truly the intention, to run at every commit? And should the update also go to the sample config?
-[ -f VERSION ] && regen_version
+# We don't currently have any precommit hooks so this one is a no-op.
+# Some may still have it configured though so we just do nothing instead of deleting it.
 
 # exit cleanly to let commit continue
 exit 0

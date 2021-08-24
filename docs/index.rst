@@ -1360,7 +1360,6 @@ To keep local data, such as ``pokemon`` table and Pokemon icons directory, up to
 Config reference
 ================
 
-
 * For default values, see ``config/defaults-config.json``.
 * Most values are strings.
 * Boolean values should use ``true`` & ``false``\ , not strings.
@@ -1628,85 +1627,34 @@ Config reference
 Development
 ===========
 
-Releasing a new version
------------------------
-
-Whenever significant enough changes are made that they should be minted into a new Docker image you'll need to tag the version to trigger an image build.
-
-
-#. In GitHub after merging a PR, head to the `Releases <https://github.com/pokepark/PokemonRaidBot/releases>`_ page.
-#. Create a new release giving it the contents of the VERSION file prepended with a ``v``. i.e. at time of writing, the latest release tag is ``v2.1.191.10``. The ``v`` is mandatory!
-#. Add the same tag as the release name, describe what's new. As soon as you submit you can find the image release running in the ``Actions`` tab.
-
-Alternatively from the CLI:
-
-.. code-block::
-
-   git tag -f v$(cat VERSION)
-   git push pokepark v$(cat VERSION)
-
-
-* The release name becomes the same as the tag name.
-* The release description comes from the description of the revision you tagged.
-
 Adding new config values
 ------------------------
-
 
 * Any previously undefined config value needs a sane default value in ``config/defaults-config.json``. Anyone updating will get that default!
 * If the new config item is something people will likely want to override, add it to ``config/config.json.example``.
 * You can access the new config item in code with ``$config->CONFIG_ITEM_NAME`` but if inside a function, remember to specify ``global $config;``
 * Don't break backwards compatibility if you can.
 
-Git Hooks
----------
+Schema changes
+--------------
 
-In the needed core repository we provide a folder with git hooks which can be used to automate development processes. Copy them to the ``.git/hooks/`` folder of this bot and make them executable (e.g. ``chmod +x .git/hooks/pre-commit``\ ) to use them, or set your local git config to use them directly:
+Schema changes should be done sparingly and grouped into larger updates that are first built in the ``dev`` branch. Once the branch is merged into ``main``
+the schema version is final and immutable and any schema changes need to happen in the next version.
 
-.. code-block::
-
-   git config --local core.hooksPath core/hooks
-
-pre-commit
-^^^^^^^^^^
-
-The pre-commit git hook will automatically update the VERSION file and table of contents whenever you do a ``git commit``.
-
-The bot version is automatically generated when using the pre-commit hook according to the following scheme consisting of 4 parts separated by dots:
+* If the schema version has been raised, a matching sql upgrade file must exist, for example ``sql/upgrade/3.sql``
+* The ``VERSION`` file contains the schema version required by the code it's checked in with.
+* The ``config/config.json`` file is expected to have a config item ``VERSION`` that records the latest schema that the DB has been upgraded to.
 
 
-* Current decade (1 char)
-* Current year (1 char)
-* Current day of the year (up to 3 chars)
-* Number of the commit at the current day of the year (1 or more chars)
+Pokedex updates
+---------------
 
-To give a little example the bot version ``1.9.256.4`` means:
-
-
-* Decade was 20\ **1**\ 0-20\ **1**\ 9
-* Year was 201\ **9**
-* Day number **256** (from 365 days in 2019) was the 13th September 2019
-* There have been **4** commits at that day
-
-This way it is easy to find out when a bot version was released and how old/new a version is.
-
-The following command is used to create the game-master-raid-boss-pokedex.sql file.
-
-game-master-raid-boss-pokedex.sql
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-The following command is used to create the game-master-raid-boss-pokedex.sql file. Normally this file is kept up to date by developers
+The following command is used to create the `game-master-raid-boss-pokedex.sql` file. Normally this file is kept up to date by developers
 but if no one has updated it yet, you can generate an updated version (and optionally also create a Pull Request.)
 
 .. code-block::
 
    php getDB.php
-
-To create the sql upgrade file, the following one-liner usually works:
-
-.. code-block::
-
-   git diff sql/ | egrep '^\+REPLACE' | tr -d + > sql/upgrade/$(cat VERSION).sql
 
 Translations
 ------------
@@ -1719,12 +1667,7 @@ translate.py
 To help in adding a new translation or improving an existing one the ``lang/`` folder has a tool called ``translate.py``
 It will add placeholders for a new language and allow you to incrementally and interatively translate strings. All changes are saved as you go.
 
-Usage
-~~~~~
-
 By default:
-
-
 * Translations are read from and saved directly into language.json but any other file(s) can be specified with ``--input`` and ``--output``
 * The current English translation is shown as context. The language can be chosen with ``--from_language``
 * Only missing translations are prompted (incremental mode), use ``--noincremental`` or ``--incremental=False`` to prompt every string.
