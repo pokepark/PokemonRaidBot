@@ -1,6 +1,8 @@
 # PokemonRaidBot
 
-Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome to join https://t.me/PokemonBotSupport
+|docs|
+
+Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome to join https://t.me/PokeParkSupport
 
 ## Documentation
 
@@ -76,3 +78,9 @@ docker run \
 - The raw docker run example above is only provided as an example and using some orchestration system is highly recommended in the long run.
 - A sample `docker-compose.yml` can be found in the `docker/` directory. This is a full example with Ofelia & MariaDB containers included.
 - A sample Nomad job can be found at `docker/pokemonraidbot.hcl`, it also includes labels for Traefik & Ofelia integration but does not include the jobs for them.
+
+
+
+.. |docs| image:: https://readthedocs.org/projects/pokemonraidbot/badge/?version=latest
+  :target: https://pokemonraidbot.readthedocs.io/en/latest/?badge=latest
+  :alt: Documentation Status
