@@ -264,7 +264,7 @@
     "FI": "Peru"
   },  
   "cancelled": {
-    "NL": "TRANSLATE",
+    "NL": "Afgezegd",
     "DE": "Abgesagt",
     "EN": "Cancelled",
     "IT": "TRANSLATE",
@@ -600,7 +600,7 @@
     "FI": "Julkinen"
   },
   "remote_raid": {
-    "NL": "TRANSLATE",
+    "NL": "Remote Raid",
     "DE": "TRANSLATE",
     "EN": "Remote raid",
     "IT": "TRANSLATE",
@@ -636,7 +636,7 @@
     "FI": "(max. REMOTE_MAX_USERS kerrallaan)"
   },
   "delete_remote_raid": {
-    "NL": "TRANSLATE",
+    "NL": "Je hebt de raid gespeeld die je hebt aangemaakt. Kan deze verwijderd worden?",
     "DE": "TRANSLATE",
     "EN": "You have played the remote raid you created. Can we delete the raid poll?",
     "IT": "TRANSLATE",
@@ -648,7 +648,7 @@
     "FI": "Olet pelannut luomasi etäraidin. Saako raidi-ilmoituksen poistaa?"
   },
   "remote_raid_marked_ended": {
-    "NL": "TRANSLATE",
+    "NL": "Bedankt! Remote raid is geëindigd",
     "DE": "TRANSLATE",
     "EN": "Thank you! Remote raid marked as ended!",
     "IT": "TRANSLATE",
@@ -972,7 +972,7 @@
     "FI": "Chatteja ei löytynyt! Et voi jakaa viestiä tietojen näyttämiseen ja muuttamiseen!"
   },
   "trainername": {
-    "NL": "TRANSLATE",
+    "NL": "Trainernaam",
     "DE": "TRANSLATE",
     "EN": "Trainername",
     "IT": "TRANSLATE",
@@ -984,7 +984,7 @@
     "FI": "Pelinimi"
   },
   "trainername_add": {
-    "NL": "TRANSLATE",
+    "NL": "Trainernaam toevoegen",
     "DE": "TRANSLATE",
     "EN": "Add trainername",
     "IT": "TRANSLATE",
@@ -996,7 +996,7 @@
     "FI": "Lisää pelinimi"
   },
   "trainername_edit": {
-    "NL": "TRANSLATE",
+    "NL": "Trainernaam aanpassen",
     "DE": "TRANSLATE",
     "EN": "Edit trainername",
     "IT": "TRANSLATE",
@@ -1008,7 +1008,7 @@
     "FI": "Muokkaa pelinimeä"
   },
   "trainername_select": {
-    "NL": "TRANSLATE",
+    "NL": "Typ je trainernaam",
     "DE": "Schreibe deinen Trainernamen",
     "EN": "Write your trainername",
     "IT": "TRANSLATE",
@@ -1020,7 +1020,7 @@
     "FI": "Kirjoita pelinimesi:"
   },
   "trainername_success": {
-    "NL": "TRANSLATE",
+    "NL": "Bedankt. Je naam is nu:",
     "DE": "Danke. Ich nenne dich ab sofort:",
     "EN": "Thanks. Your name is now:",
     "IT": "TRANSLATE",
@@ -1032,7 +1032,7 @@
     "FI": "Kiitos. Pelinimesi on nyt:"
   },
   "trainername_fail": {
-    "NL": "TRANSLATE",
+    "NL": "Alleen alphabetische tekens en nummers. Probeer opnieuw",
     "DE": "Deine Eingabe war kein gültiger Trainername. Bitte probiere es nochmal und benutze nur Buchstaben und Zahlen",
     "EN": "Please enter only alphabetic character and numbers. Try again",
     "IT": "TRANSLATE",
@@ -1044,7 +1044,7 @@
     "FI": "Pelinimessä voi olla pelkästään numeroita ja kirjaimia. Yritä uudelleen."
   },
   "switch_display_name": {
-    "NL": "TRANSLATE",
+    "NL": "Wissel display naam",
     "DE": "TRANSLATE",
     "EN": "Switch display name",
     "IT": "TRANSLATE",
@@ -1056,7 +1056,7 @@
     "FI": "Vaihda näyttönimeä"
   },
   "trainercode": {
-    "NL": "TRANSLATE",
+    "NL": "Trainercode",
     "DE": "Trainercode",
     "EN": "Trainercode",
     "IT": "TRANSLATE",
@@ -1068,7 +1068,7 @@
     "FI": "Kaverikoodi"
   },
   "not_set": {
-    "NL": "TRANSLATE",
+    "NL": "niet ingesteld",
     "DE": "nicht festgelegt",
     "EN": "not set",
     "IT": "TRANSLATE",
@@ -1080,7 +1080,7 @@
     "FI": "Ei asetettu"
   },
   "trainercode_select": {
-    "NL": "TRANSLATE",
+    "NL": "Geef je trainercode",
     "DE": "Schreibe deinen Trainercode",
     "EN": "Enter your trainercode",
     "IT": "TRANSLATE",
@@ -1092,7 +1092,7 @@
     "FI": "Kirjoita kaverikoodisi:"
   },
   "trainercode_success": {
-    "NL": "TRANSLATE",
+    "NL": "Bedankt, Je code is nu:",
     "DE": "Danke. Folgender Code wurde gespeichert:",
     "EN": "Thanks. Your code is now:",
     "IT": "TRANSLATE",
@@ -1104,7 +1104,7 @@
     "FI": "Kiitos. Kaverikoodisi on nyt:"
   },
   "trainercode_fail": {
-    "NL": "TRANSLATE",
+    "NL": "Je trainercode is geen 12 nummers. Probeer het opnieuw",
     "DE": "Dein Trainercode ist nicht 12 Zahlen lang. Bitte probiere es nochmal",
     "EN": "The entered trainercode does not contain 12 numbers. Please try again",
     "IT": "TRANSLATE",
@@ -1116,7 +1116,7 @@
     "FI": "Annetussa kaverikoodissa ei ole 12 numeroa. Yritä uudelleen."
   },
   "trainer_not_found": {
-    "NL": "TRANSLATE",
+    "NL": "Trainer niet gevonden!",
     "DE": "TRANSLATE",
     "EN": "Trainer not found!",
     "IT": "TRANSLATE",
@@ -1128,7 +1128,7 @@
     "FI": "Kouluttajaa ei löytynyt!"
   },
   "bot_lang": {
-    "NL": "TRANSLATE",
+    "NL": "Bot taal",
     "DE": "TRANSLATE",
     "EN": "Bot language",
     "IT": "TRANSLATE",
@@ -1140,7 +1140,7 @@
     "FI": "Botin kieli"
   },
   "change_lang": {
-    "NL": "TRANSLATE",
+    "NL": "Verander de bot taal",
     "DE": "TRANSLATE",
     "EN": "Change the bot's language",
     "IT": "TRANSLATE",
@@ -1152,7 +1152,7 @@
     "FI": "Vaihda botin kieli"
   },
   "new_lang_saved": {
-    "NL": "TRANSLATE",
+    "NL": "Nieuwe taal opgeslagen!",
     "DE": "TRANSLATE",
     "EN": "New language saved!",
     "IT": "TRANSLATE",
@@ -1164,7 +1164,7 @@
     "FI": "Kieli vaihdettu!"
   },
   "display_name_explanation": {
-    "NL": "TRANSLATE",
+    "NL": "De pijl (->) geeft aan welke naam er in de raid poll wordt gebruikt. Je kan dit aanpassen in de instellingen.",
     "DE": "TRANSLATE",
     "EN": "The arrow (->) marks the name displayed in raid polls. You can change your displayname from name settings.",
     "IT": "TRANSLATE",
@@ -2940,7 +2940,7 @@
     "FI": "Uusi osallistuja!"
   },
   "alert_add_alien_trainer": {
-    "NL": "TRANSLATE",
+    "NL": "Een gebruiker is uitgenodigd buiten deze groep!",
     "DE": "TRANSLATE",
     "EN": "User is inviting a player from outside the group!",
     "IT": "TRANSLATE",
@@ -3156,7 +3156,7 @@
     "FI": "Ei enää toivo kutsua."
   },
   "alert_can_invite": {
-    "NL": "TRANSLATE",
+    "NL": "Doet niet mee, maar kan wel invites versturen.",
     "DE": "TRANSLATE",
     "EN": "Is not attending but can send invites.",
     "IT": "TRANSLATE",
@@ -3168,7 +3168,7 @@
     "FI": "Ei osallistu raidiin, mutta voi lähettää kutsuja."
   },
   "alert_no_can_invite": {
-    "NL": "TRANSLATE",
+    "NL": "Kan niet langer andere uitnodigingen versturen.",
     "DE": "TRANSLATE",
     "EN": "Is no longer able to invite others.",
     "IT": "TRANSLATE",
@@ -3180,7 +3180,7 @@
     "FI": "Ei enää pysty kutsumaan muita."
   },
   "event": {
-    "NL": "TRANSLATE",
+    "NL": "Event",
     "DE": "Event",
     "EN": "Event",
     "IT": "TRANSLATE",
@@ -3192,7 +3192,7 @@
     "FI": "Tapahtuma"
   },
   "event_note": {
-    "NL": "TRANSLATE",
+    "NL": "Event info",
     "DE": "Event Notiz",
     "EN": "Event note",
     "IT": "TRANSLATE",
@@ -3204,7 +3204,7 @@
     "FI": "Tapahtuman lisätiedot"
   },
   "event_note_add": {
-    "NL": "TRANSLATE",
+    "NL": "Voeg event infot toe",
     "DE": "Event Notiz hinzufügen",
     "EN": "Add event note",
     "IT": "TRANSLATE",
@@ -3216,7 +3216,7 @@
     "FI": "Lisää raiditapahtumaan lisätietoja"
   },
   "event_note_edit": {
-    "NL": "TRANSLATE",
+    "NL": "Wijzig de event info",
     "DE": "Event Notiz ändern",
     "EN": "Edit event note",
     "IT": "TRANSLATE",
@@ -3228,7 +3228,7 @@
     "FI": "Muokkaa raiditapahtuman lisätietoja"
   },
   "event_add_note_description": {
-    "NL": "TRANSLATE",
+    "NL": "Voeg meer informatie voor deze specifice poll toe m.b.t. het event (bijv. Route)",
     "DE": "Füge genauere Informationen zu dieser Abstimmung hinzu. (z.B. Route)",
     "EN": "Add more info for this specific poll regarding the event. (e.g. route)",
     "IT": "TRANSLATE",
@@ -3240,7 +3240,7 @@
     "FI": "Lisää ilmoituskohtaisia lisätietoja tapahtumaan liittyen. (esim. reitti)"
   },
   "Participate": {
-    "NL": "TRANSLATE",
+    "NL": "Deelnemer",
     "DE": "Teilnehmen",
     "EN": "Participate",
     "IT": "TRANSLATE",
@@ -3252,7 +3252,7 @@
     "FI": "Osallistu"
   },
   "participating": {
-    "NL": "TRANSLATE",
+    "NL": "Doet mee",
     "DE": "Teilnehmer",
     "EN": "Participating",
     "IT": "TRANSLATE",
@@ -3264,7 +3264,7 @@
     "FI": "Osallistuu"
   },
   "tutorial_no_user_info_set": {
-    "NL": "TRANSLATE",
+    "NL": "Je hebt je trainer informatie niet opgeslagen. Wil je dit nu doen?",
     "DE": "Du hast deine Trainerinfo noch nicht gespeichert. Möchstest du sie jetzt hinzufügen?",
     "EN": "You have not yet saved your trainer info. Would you like to do it now?",
     "IT": "TRANSLATE",
@@ -3276,7 +3276,7 @@
     "FI": "Et ole vielä tallentanut tietoja pelihahmostasi. Haluaisitko tehdä sen nyt?"
   },
   "history_title": {
-    "NL": "TRANSLATE",
+    "NL": "Zie raid poll geschiedenis",
     "DE": "TRANSLATE",
     "EN": "View raid poll history.",
     "IT": "TRANSLATE",
@@ -3288,7 +3288,7 @@
     "FI": "Katsele vanhoja raidi-ilmoituksia."
   },
   "history_displaying_month": {
-    "NL": "TRANSLATE",
+    "NL": "Momenteel worden er raids weergegeven voor",
     "DE": "TRANSLATE",
     "EN": "Currently displaying raids for",
     "IT": "TRANSLATE",
@@ -3300,7 +3300,7 @@
     "FI": "Tällä hetkellä näytetään"
   },
   "history_select_raid": {
-    "NL": "TRANSLATE",
+    "NL": "Selecteer raid",
     "DE": "TRANSLATE",
     "EN": "Select raid",
     "IT": "TRANSLATE",
@@ -3312,7 +3312,7 @@
     "FI": "Valitse raidi"
   },
   "history_no_raids_found": {
-    "NL": "TRANSLATE",
+    "NL": "Geen raids met spelers gevonden!",
     "DE": "TRANSLATE",
     "EN": "No raids with attendees found!",
     "IT": "TRANSLATE",
@@ -3324,7 +3324,7 @@
     "FI": "Yhtään raidia ei löytynyt jossa olisi osallistujia!"
   },
   "date": {
-    "NL": "TRANSLATE",
+    "NL": "Datum",
     "DE": "TRANSLATE",
     "EN": "Date",
     "IT": "TRANSLATE",
