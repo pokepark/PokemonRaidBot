@@ -42,10 +42,12 @@ These are very old screenshots, they'll be replaced with prettier modern ones so
    :alt: Example raid poll
 
 
-Installation and configuration
-==============================
+Basic installation
+==================
 
 We recommend Docker for novice admins since it's the most controlled environment but it also still has many pitfalls associated. The `full documentation <https://pokemonraidbot.readthedocs.io>`_ has more installation options including fully manual into any LAMP webhosting solution.
+
+After installation, continue on with Configuration with the `full documentation <https://pokemonraidbot.readthedocs.io>`_.
 
 Docker
 ------
