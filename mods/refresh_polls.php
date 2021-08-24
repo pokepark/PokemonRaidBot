@@ -3,6 +3,7 @@
 // Refresh polls
 if($config->AUTO_REFRESH_POLLS) {
     if(strlen($data['id']) > 5) $where_chat = 'chat_id = '.$data['id']; else $where_chat = 'chat_id != 0';
+    if(!empty($config->RAID_POLL_HIDE_BUTTONS_RAID_LEVEL)) $level_exclude = 'AND raids.level NOT IN ('.$config->RAID_POLL_HIDE_BUTTONS_RAID_LEVEL.')'; else $level_exclude = '';
     $query_messages = my_query("
                     SELECT      cleanup.*
                     FROM        cleanup
@@ -13,7 +14,7 @@ if($config->AUTO_REFRESH_POLLS) {
                     AND     raids.start_time <= UTC_TIMESTAMP()
                     AND     raids.end_time > DATE_SUB(UTC_TIMESTAMP(), INTERVAL 1 MINUTE)
                     AND     message_id != 0
-                    AND     raids.level NOT IN ({$config->RAID_POLL_HIDE_BUTTONS_RAID_LEVEL})
+                    {$level_exclude}
                     ");
     debug_log("REFRESH POLLS:");
     debug_log("Num rows: ".$query_messages->rowCount());

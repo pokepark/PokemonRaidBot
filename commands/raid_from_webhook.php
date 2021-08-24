@@ -266,8 +266,8 @@ foreach ($update as $raid) {
 
         // Get chats
         $webhook_chats = [];
-        if(!empty($config->WEBHOOK_CHATS)) {
-           $webhook_chats = explode(',', $config->WEBHOOK_CHATS);
+        if(!empty($config->WEBHOOK_CHATS_ALL_LEVELS)) {
+           $webhook_chats = explode(',', $config->WEBHOOK_CHATS_ALL_LEVELS);
         }
         $chats = array_merge($chats_geofence, $chats_raidlevel, $webhook_chats);
 
