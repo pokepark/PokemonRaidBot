@@ -1,1 +1,0 @@
-ALTER TABLE `cleanup` ADD COLUMN IF NOT EXISTS `type` VARCHAR(20) NULL AFTER `message_id`;

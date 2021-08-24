@@ -1,5 +1,0 @@
-ALTER TABLE `attendance` 
-DROP COLUMN IF EXISTS `extra_instinct`,
-ADD COLUMN IF NOT EXISTS `can_invite` TINYINT UNSIGNED NULL DEFAULT '0' AFTER `want_invite`,
-CHANGE COLUMN IF EXISTS `extra_mystic` `extra_in_person` TINYINT UNSIGNED NULL DEFAULT '0' ,
-CHANGE COLUMN IF EXISTS `extra_valor` `extra_alien` TINYINT UNSIGNED NULL DEFAULT '0' ;
