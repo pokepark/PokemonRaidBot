@@ -5,7 +5,7 @@
  * @return bool
  */
 function run_sql_file($file) {
-  global $dbh;
+  global $dbh, $config;
   if (!$dbh) {
     error_log('No DB handle!');
     return false;
@@ -17,7 +17,8 @@ function run_sql_file($file) {
   }
   catch (PDOException $exception) {
     info_log('DB upgrade failed: ' . $exception->getMessage());
-    error_log($exception->getMessage());
+    error_log('PokemonRaidBot ' . $config->BOT_ID . ' DB upgrade failed: ' . $exception->getMessage());
+    if(!empty($config->MAINTAINER_ID)) sendMessageEcho($config->MAINTAINER_ID, 'DB upgrade failed: ' . CR . '<code>' . $exception->getMessage() . '</code>');
     $dbh = null;
     return false;
   }

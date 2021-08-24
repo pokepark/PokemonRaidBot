@@ -14,10 +14,9 @@ function upgrade_config_version($version)
  * Bot upgrade check
  * @param $current
  * @param $latest
- * @param $dbh
  * @return bool: if an upgrade is needed
 */
-function bot_upgrade_check($current, $latest, $dbh)
+function bot_upgrade_check($current, $latest)
 {
   global $config;
     // Get upgrade sql files.
@@ -52,6 +51,7 @@ function bot_upgrade_check($current, $latest, $dbh)
                     } else {
                       $require_upgrade = true;
                       info_log('AUTO UPGRADE FAILED:' . UPGRADE_PATH . '/' . $ufile, '!');
+                      break;
                     }
                   }
                 }
@@ -61,11 +61,14 @@ function bot_upgrade_check($current, $latest, $dbh)
             debug_log('NO SQL UPGRADE FILES FOUND', '!');
             return false;
         }
-        if (run_sql_file(ROOT_PATH . '/sql/game-master-raid-boss-pokedex.sql')) {
-          upgrade_config_version($latest);
-        } else {
-          $require_upgrade = true;
-          info_log('AUTO UPGRADE FAILED: ' . ROOT_PATH . '/sql/game-master-raid-boss-pokedex.sql!');
+        // If previous sql upgrades were successfull, update also pokemon table
+        if(!$require_upgrade) {
+          if (run_sql_file(ROOT_PATH . '/sql/game-master-raid-boss-pokedex.sql')) {
+            upgrade_config_version($latest);
+          } else {
+            $require_upgrade = true;
+            info_log('AUTO UPGRADE FAILED: ' . ROOT_PATH . '/sql/game-master-raid-boss-pokedex.sql!');
+          }
         }
         // Upgrade required.
         return $require_upgrade;
