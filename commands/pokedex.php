@@ -77,6 +77,12 @@ if(count($keys) == 0 ) {
                 'text'          => getTranslation('import') . SP . '(ccev pogoinfo)',
                 'callback_data' => '0:pogoinfo:0'
             ]
+        ],
+        [
+            [
+                'text'          => 'Update Pokemon table',
+                'callback_data' => '0:getdb:0'
+            ]
         ]
     ];
     // Set message.

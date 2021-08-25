@@ -61,12 +61,7 @@ function bot_upgrade_check($current, $latest)
         }
         // If previous sql upgrades were successfull, update also pokemon table
         if(!$require_upgrade) {
-          if (run_sql_file(ROOT_PATH . '/sql/game-master-raid-boss-pokedex.sql')) {
-            upgrade_config_version($latest);
-          } else {
-            $require_upgrade = true;
-            info_log('AUTO UPGRADE FAILED: ' . ROOT_PATH . '/sql/game-master-raid-boss-pokedex.sql!');
-          }
+          require_once(ROOT_PATH . '/mods/getdb.php');
         }
         // Signal whether manual action is required or not.
         return $require_upgrade;
