@@ -40,12 +40,11 @@ function run_cleanup ($telegram = 2, $database = 2) {
                 WHERE     raids.end_time < DATE_SUB(UTC_TIMESTAMP(), INTERVAL '.$config->CLEANUP_TIME_TG.' MINUTE)
                 ');
             $cleanup_ids = [];
-            $tg_json = [];
             cleanup_log('Telegram cleanup starting. Found ' . $rs->rowCount() . ' entries for cleanup.');
             if($rs->rowCount() > 0) {
                 while($row = $rs->fetch()) {
                     if($row['skip_del_message'] == 0) {
-                        $tg_json[] = delete_message($row['chat_id'], $row['message_id'], true);
+                        delete_message($row['chat_id'], $row['message_id']);
                         cleanup_log('Deleting raid: '.$row['raid_id'].' from chat '.$row['chat_id'].' (message_id: '.$row['message_id'].')');
                     } else {
                         cleanup_log('Chat message for raid '.$row['raid_id'].' in chat '.$row['chat_id'].' is over 48 hours old. It can\'t be deleted by the bot. Skipping deletion and removing database entry.');
@@ -53,7 +52,6 @@ function run_cleanup ($telegram = 2, $database = 2) {
                     $cleanup_ids[] = $row['id'];
                 }
                 my_query('DELETE FROM cleanup WHERE id IN (' . implode(',', $cleanup_ids) . ')');
-                curl_json_multi_request($tg_json);
             }
         }
         if($database == 1) {
