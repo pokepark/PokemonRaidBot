@@ -78,13 +78,7 @@ Command DB structure:
 
    mysql -u USERNAME -p DATABASENAME < sql/pokemon-raid-bot.sql
 
-To get raid bosses:
-
-.. code-block::
-
-   mysql -u USERNAME -p DATABASENAME < sql/game-master-raid-boss-pokedex.sql
-
-Important: The raid level is NOT set when importing the raid bosses from the sql file! Set them via the /pokedex command, explained below in this readme.
+Important: To fill the pokemon table with all pokemon currently available in the game and to set their raid level you need to run /pokedex command, explained below in this readme.
 
 Docker
 ------
@@ -1353,9 +1347,9 @@ Local updates
 
 To keep local data, such as ``pokemon`` table and Pokemon icons directory, up to date, you can schedule some scripts to be run:
 
-``php getDB.php; mysql -u USERNAME -p DATABASE < sql/game-master-raid-boss-pokedex.sql``
+``curl -k -d '{"callback_query":{"data":"0:getdb:0"}}' https://localhost/botdir/index.php?apikey=111111111:AABBccddEEFFggHHiijjKKLLmmnnOOPPqq``
 
-``php getPokemonIcons.php pokeminers``
+``php getPokemonIcons.php``
 
 Config reference
 ================
@@ -1646,20 +1640,10 @@ the schema version is final and immutable and any schema changes need to happen 
 * The ``config/config.json`` file is expected to have a config item ``VERSION`` that records the latest schema that the DB has been upgraded to.
 
 
-Pokedex updates
----------------
-
-The following command is used to create the `game-master-raid-boss-pokedex.sql` file. Normally this file is kept up to date by developers
-but if no one has updated it yet, you can generate an updated version (and optionally also create a Pull Request.)
-
-.. code-block::
-
-   php getDB.php
-
 Translations
 ------------
 
-Translations are mainly stored in ``lang/language.json``. Any string marked as ``TRANSLATE`` hasn't been translated yet. These can be changed by hand but if you want to add a new language or do large scale translation, using translate.py is recommended.
+Translations are stored in ``lang/language.json`` and ``core/lang/language.json``. Any string marked as ``TRANSLATE`` hasn't been translated yet. These can be changed by hand but if you want to add a new language or do large scale translation, using translate.py is recommended.
 
 translate.py
 ^^^^^^^^^^^^

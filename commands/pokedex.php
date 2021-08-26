@@ -40,51 +40,52 @@ if(!empty($pokemon)) {
 }
 
 if(count($keys) == 0 ) {
-    // Create keys array.
-    $keys = [
-        [
+    $query = my_query("SELECT * FROM pokemon WHERE pokedex_id='9995'"); // A simple check to see if pokemon table has all the necessary data in it
+    if($query->rowCount() > 0) {
+        // Create keys array.
+        $keys = [
             [
-                'text'          => getTranslation('pokedex_raid_pokemon'),
-                'callback_data' => '0:pokedex_list_raids:0'
+                [
+                    'text'          => getTranslation('pokedex_raid_pokemon'),
+                    'callback_data' => '0:pokedex_list_raids:0'
+                ]
+            ],
+            [
+                [
+                    'text'          => getTranslation('edit_pokemon'),
+                    'callback_data' => '0:pokedex:0'
+                ]
+            ],
+            [
+                [
+                    'text'          => getTranslation('disable_raid_level'),
+                    'callback_data' => '0:pokedex_disable_raids:0'
+                ]
+            ],
+            [
+                [
+                    'text'          => getTranslation('import') . SP . '(Pokebattler)',
+                    'callback_data' => '0:pokebattler:0'
+                ]
+            ],
+            [
+                [
+                    'text'          => getTranslation('import') . SP . 'shiny (Pokebattler)',
+                    'callback_data' => '0:import_shinyinfo:0'
+                ]
+            ],
+            [
+                [
+                    'text'          => getTranslation('import') . SP . '(ccev pogoinfo)',
+                    'callback_data' => '0:pogoinfo:0'
+                ]
             ]
-        ],
-        [
-            [
-                'text'          => getTranslation('edit_pokemon'),
-                'callback_data' => '0:pokedex:0'
-            ]
-        ],
-        [
-            [
-                'text'          => getTranslation('disable_raid_level'),
-                'callback_data' => '0:pokedex_disable_raids:0'
-            ]
-        ],
-        [
-            [
-                'text'          => getTranslation('import') . SP . '(Pokebattler)',
-                'callback_data' => '0:pokebattler:0'
-            ]
-        ],
-        [
-            [
-                'text'          => getTranslation('import') . SP . 'shiny (Pokebattler)',
-                'callback_data' => '0:import_shinyinfo:0'
-            ]
-        ],
-        [
-            [
-                'text'          => getTranslation('import') . SP . '(ccev pogoinfo)',
-                'callback_data' => '0:pogoinfo:0'
-            ]
-        ],
-        [
-            [
+        ];
+    }
+    $keys[][] = [
                 'text'          => 'Update Pokemon table',
                 'callback_data' => '0:getdb:0'
-            ]
-        ]
-    ];
+            ];
     // Set message.
     $msg = '<b>' . getTranslation('pokedex_start') . ':</b>';
 }

@@ -97,7 +97,7 @@ if(isset($update['callback_query']['id'])) {
     $tg_json[] = answerCallbackQuery($update['callback_query']['id'], $callback_msg, true);
 
     // Edit the message.
-    $tg_json[] = edit_message($update, $msg, [], false, true);
+    $tg_json[] = editMessageText($update['callback_query']['message']['message_id'], $msg, [], $update['callback_query']['message']['chat']['id'], false, true);
 
     // Telegram multicurl request.
     curl_json_multi_request($tg_json);
