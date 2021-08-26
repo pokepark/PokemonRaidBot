@@ -86,6 +86,17 @@ if($form_ids = get_protos()) {
 if(!$error) { 
     $msg = 'Updated successfully!' . CR;
     $msg.= $prep->rowCount() . ' rows updated!';
+    // Sometimes Nia can push form id's a bit later than other stats, so the script may insert incomplete rows
+    // This hopefully clears those faulty rows out when the complete data is received without effecting any actual data
+    my_query('
+        DELETE t1 FROM pokemon t1 
+        INNER JOIN pokemon t2
+        WHERE
+        t1.pokedex_id = t2.pokedex_id 
+        AND t1.pokemon_form_name = t2.pokemon_form_name
+        AND t1.pokemon_form_name <> \'normal\'
+        AND t1.pokemon_form_id = 0
+    ');
     $callback_msg = 'OK!';
 }else {
     $msg = $error;
