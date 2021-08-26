@@ -53,3 +53,9 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+      - name: Telegram Message Notify
+        uses: appleboy/telegram-action@v0.1.1
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          args: New Docker image has been built for ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}, tags: ${{ steps.meta.outputs.tags }}
