@@ -16,7 +16,7 @@ function get_chat_title_username($chat_id){
 
     // Get info about chat for title.
     debug_log('Getting chat object for chat_id: ' . $chat_id);
-    $chat_title = '<unknown chat>';
+    $chat_title = 'Unknown chat';
 
     // Set title.
     if ($chat_obj['ok'] == 'true' && !empty($chat_obj['result']['title'])) {
