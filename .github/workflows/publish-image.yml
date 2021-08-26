@@ -58,4 +58,4 @@ jobs:
         with:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
-          args: New Docker image has been built for ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}, tags: ${{ steps.meta.outputs.tags }}
+          args: "New Docker image has been built for ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}, tags: ${{ steps.meta.outputs.tags }}"
