@@ -1568,8 +1568,6 @@ Config reference
      - List of Telegram chat IDs available for sharing Ex-Raids
    * - SHARE_CHATS
      - List of Telegram chat IDs available for sharing any raids
-   * - SHOW_GYM_NAME_IN_ADDRESS
-     - Good for Raid-Picture - Will show the Gym Name infront of the Gym-Address. In Message-Preview you'll know which gym the raid is and you don't have to load the image to know which gym it will be.
    * - MYSQL_SORT_COLLATE
      - Charset added to SQL query for sorting gym names
    * - LIST_BY_LOCATION
