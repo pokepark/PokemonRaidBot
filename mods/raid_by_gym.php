@@ -15,7 +15,7 @@ $first = $args[0];
 $gymarea_id = (count($args) > 1) ? $args[1] : false;
 
 // Back key id, action and arg
-$back_id = $data['id'];
+$back_id = $gymarea_id;
 $back_action = 'raid_by_gym_letter';
 $back_arg = 0;
 
