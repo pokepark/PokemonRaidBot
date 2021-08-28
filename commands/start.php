@@ -50,7 +50,7 @@ if($config->TUTORIAL_MODE && $new_user && (!$access or $access == 'BOT_ADMINS'))
 
     // Get the keys if nothing was returned. 
     if(!$keys) {
-        $keys_and_gymarea = raid_edit_gyms_first_letter_keys();
+        $keys_and_gymarea = raid_edit_gyms_first_letter_keys('raid_by_gym', false, false, 'raid_by_gym_letter');
         $keys = $keys_and_gymarea['keys'];
     }
 
