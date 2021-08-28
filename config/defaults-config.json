@@ -30,6 +30,8 @@
   "OSM_LOOKUP": false,
   "AUTO_REFRESH_POLLS":false,
   "CUSTOM_TRAINERNAME": true,
+  "ENABLE_GYM_AREAS": false,
+  "DEFAULT_GYM_AREA": false,
   "RAID_VIA_LOCATION": true,
   "RAID_VIA_LOCATION_REMOTE_RAID": false,
   "RAID_EGG_DURATION":"60",

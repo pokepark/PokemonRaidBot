@@ -1394,14 +1394,14 @@
   "change_extended_gym_details": {
     "NL": "Verander de extra gym informatie?",
     "DE": "Erweiterte Arena Details ändern?",
-    "EN": "Change extended gym details?",
+    "EN": "Save extended gym details?",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "Muuta salin lisätietoja?"
+    "FI": "Tallenna salin lisätiedot?"
   },
   "new_extended_gym_detail": {
     "NL": "Nieuwe extra gym informatie:",
@@ -3346,5 +3346,17 @@
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
     "FI": "Päivämäärä"
+  },
+  "current_gymarea": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Current gymarea",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Salit alueelta"
   }
 }

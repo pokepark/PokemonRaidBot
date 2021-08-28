@@ -28,7 +28,8 @@ if($arg == 'gym_delete') {
 }
 
 // Set keys.
-$keys = raid_edit_gyms_first_letter_keys($arg, true);
+$keys_and_gymarea = raid_edit_gyms_first_letter_keys($arg, true);
+$keys = $keys_and_gymarea['keys'];
 
 // Set message.
 if(!$keys) {
