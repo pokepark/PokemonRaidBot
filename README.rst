@@ -14,31 +14,19 @@ This README only contains very limited information. For detailed configuration a
 Example screenshots
 -------------------
 
-These are very old screenshots, they'll be replaced with prettier modern ones soon!
-
-*With the ex-raid notice:*
+*Default text poll:*
 
 
-.. image:: /screens/raid-poll-example-with-ex-raid-message.png?raw=true
-   :target: /screens/raid-poll-example-with-ex-raid-message.png?raw=true
+.. image:: /screens/raid-poll-example-text.png?raw=true
+   :target: /screens/raid-poll-example-text.png?raw=true
    :alt: Example raid poll
 
 
-*Showing the users teams & levels (if they've set it), status (late, cancel and done), attend times and preferred pokemons (if raid boss is still a raid egg) the users voted for:*
+*With raid picture:*
 
 
-.. image:: /screens/raid-poll-example-with-late.png?raw=true
-   :target: /screens/raid-poll-example-with-late.png?raw=true
-   :alt: Example raid poll
-
-
-.. image:: /screens/raid-poll-example-with-cancel.png?raw=true
-   :target: /screens/raid-poll-example-with-cancel.png?raw=true
-   :alt: Example raid poll
-
-
-.. image:: /screens/raid-poll-example-with-done.png?raw=true
-   :target: /screens/raid-poll-example-with-done.png?raw=true
+.. image:: /screens/raid-poll-example-photo.png?raw=true
+   :target: /screens/raid-poll-example-photo.png?raw=true
    :alt: Example raid poll
 
 
