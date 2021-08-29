@@ -30,7 +30,6 @@ function raid_edit_gym_keys($first, $warn = true, $action = 'edit_raidlevel', $d
             $not .= SP . "AND UPPER(LEFT(gym_name, " . $length . ")) != UPPER('" . $letter . "')" . SP;
         }
     }
-
     // Show hidden gyms?
     if($hidden == true) {
         $show_gym = 0;
