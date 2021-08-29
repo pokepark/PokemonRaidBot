@@ -9,13 +9,11 @@ debug_log('GYM');
 // Check access.
 bot_access_check($update, 'gym-details');
 
-// Set keys.
-$keys_and_gymarea = raid_edit_gyms_first_letter_keys('gym_details', false, false, 'gym_letter');
-$keys = $keys_and_gymarea['keys'];
-
 // Set message.
-$msg = '<b>' . getTranslation('show_gym_details') . CR . CR . getTranslation('select_gym_first_letter') . '</b>';
-$msg.= (($keys_and_gymarea['gymarea_name'] != '') ? CR . CR . getTranslation('current_gymarea') . ': ' . $keys_and_gymarea['gymarea_name'] : '');
+$msg = '<b>' . getTranslation('show_gym_details') . SP . '—' . SP . getTranslation('select_gym_first_letter') . '</b>';
+
+// Set keys.
+$keys = raid_edit_gyms_first_letter_keys('gym_details');
 
 // Add key for hidden gyms.
 $h_keys = [];

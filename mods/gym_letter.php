@@ -9,18 +9,13 @@ debug_log('gym_letter()');
 // Get the arg.
 $arg = $data['arg'];
 
-// Set keys.
-$keys_and_gymarea = raid_edit_gyms_first_letter_keys($arg, false, $data['id'], 'gym_letter');
-$keys = $keys_and_gymarea['keys'];
-
 // Check access, show message and set keys based on arg.
 if($arg == 'gym_delete') {
     // Check access.
     bot_access_check($update, 'gym-delete');
 
     // Set message.
-    $msg = '<b>' . getTranslation('gym_delete') . CR . getTranslation('select_gym_first_letter') . '</b>';
-    $msg.= (($keys_and_gymarea['gymarea_name'] != '') ? CR . CR . getTranslation('current_gymarea') . ': ' . $keys_and_gymarea['gymarea_name'] : '');
+    $msg = '<b>' . getTranslation('gym_delete') . SP . '—' . SP . getTranslation('select_gym_first_letter') . '</b>';
 } else {
     // Force set arg.
     $arg = 'gym_details';
@@ -29,9 +24,11 @@ if($arg == 'gym_delete') {
     bot_access_check($update, 'gym-details');
 
     // Set message.
-    $msg = '<b>' . getTranslation('show_gym_details') . CR . getTranslation('select_gym_first_letter') . '</b>';
-    $msg.= (($keys_and_gymarea['gymarea_name'] != '') ? CR . CR . getTranslation('current_gymarea') . ': ' . $keys_and_gymarea['gymarea_name'] : '');
+    $msg = '<b>' . getTranslation('show_gym_details') . SP . '—' . SP . getTranslation('select_gym_first_letter') . '</b>';
 }
+
+// Set keys.
+$keys = raid_edit_gyms_first_letter_keys($arg);
 
 // Add key for hidden gyms.
 $h_keys = [];

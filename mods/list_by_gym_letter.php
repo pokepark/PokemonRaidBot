@@ -10,8 +10,7 @@ debug_log('list_by_gym_letter()');
 bot_access_check($update, 'list');
 
 // Get the keys.
-$keys_and_gymarea = raid_edit_gyms_first_letter_keys('list_by_gym', false, false, 'raid_by_gym');
-$keys = $keys_and_gymarea['keys'];
+$keys = raid_edit_gyms_first_letter_keys('list_by_gym');
 
 // No keys found.
 if (!$keys) {
@@ -38,7 +37,6 @@ $tg_json[] = answerCallbackQuery($update['callback_query']['id'], $callback_resp
 // Edit the message.
 $msg = '<b>' . getTranslation('list_all_active_raids') . '</b>' . CR;
 $msg .= '<b>' . getTranslation('select_gym_first_letter') . '</b>' . CR;
-$msg.= (($keys_and_gymarea['gymarea_name'] != '') ? CR . CR . getTranslation('current_gymarea') . ': ' . $keys_and_gymarea['gymarea_name'] : '');
 $tg_json[] = edit_message($update, $msg, $keys, false, true);
 
 // Telegram multicurl request.

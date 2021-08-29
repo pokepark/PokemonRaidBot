@@ -10,9 +10,7 @@ debug_log('gym_delete()');
 bot_access_check($update, 'gym-delete');
 
 // Get the arg.
-$args = explode(',',$data['arg'],2);
-$arg = $args[0];
-$gymarea_id = (count($args) > 1) ? $args[1] : false;
+$arg = $data['arg'];
 
 // Delete?
 if(substr_count($arg, '-') == 1) {
@@ -45,7 +43,7 @@ if($new_arg == 0 && $delete == false && $confirm == false) {
     }
 
     // Get the keys.
-    $keys = raid_edit_gym_keys($new_arg, $gymarea_id, 'gym_delete', true, $hidden);
+    $keys = raid_edit_gym_keys($new_arg, false, 'gym_delete', true, $hidden);
 
     // Set keys.
     $msg = '<b>' . getTranslation('gym_delete') . SP . '—' . SP . getTranslation('select_gym_name') . '</b>';

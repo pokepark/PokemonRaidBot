@@ -10,9 +10,7 @@ debug_log('list_by_gym()');
 bot_access_check($update, 'list');
 
 // Get the first letter
-$args = explode(',',$data['arg'],2);
-$first = $args[0];
-$gymarea_id = (count($args) > 1) ? $args[1] : false;
+$first = $data['arg'];
 
 // Back key id, action and arg
 $back_id = $data['id'];
@@ -20,7 +18,7 @@ $back_action = 'list_by_gym_letter';
 $back_arg = 0;
 
 // Get the keys.
-$keys = raid_edit_gym_keys($first, $gymarea_id, 'list_raid');
+$keys = raid_edit_gym_keys($first, false, 'list_raid');
 
 // No keys found.
 if (!$keys) {

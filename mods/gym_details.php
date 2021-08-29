@@ -10,9 +10,7 @@ debug_log('gym_details()');
 bot_access_check($update, 'gym-details');
 
 // Get the arg.
-$args = explode(',',$data['arg'],2);
-$arg = $args[0];
-$gymarea_id = (count($args) > 1) ? $args[1] : false;
+$arg = $data['arg'];
 
 // Get the id.
 $id = $data['id'];
@@ -27,10 +25,10 @@ if($arg == 0 || $id == '0' || $id == '1') {
     }
 
     // Get the keys.
-    $keys = raid_edit_gym_keys($arg, $gymarea_id, 'gym_details', false, $hidden);
+    $keys = raid_edit_gym_keys($arg, false, 'gym_details', false, $hidden);
 
     // Set keys.
-    $msg = '<b>' . getTranslation('show_gym_details') . CR . CR . getTranslation('select_gym_name') . '</b>';
+    $msg = '<b>' . getTranslation('show_gym_details') . SP . '—' . SP . getTranslation('select_gym_name') . '</b>';
 
     // No keys found.
     if (!$keys) {
