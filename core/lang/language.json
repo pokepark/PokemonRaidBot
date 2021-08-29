@@ -261,7 +261,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Reittiohje"
   },
   "pokemon": {
     "NL": "Pokemon",
@@ -669,7 +669,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "ei mitään"
   },
   "other": {
     "NL": "Anders",
