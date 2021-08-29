@@ -92,7 +92,7 @@ function raid_edit_gyms_first_letter_keys($action = 'raid_by_gym', $hidden = fal
         // Add first letter to keys array
             $keys[] = array(
                 'text'          => $gym['first_letter'],
-                'callback_data' => $show_gym . ':' . $action . ':' . $gym['first_letter'] . (($gymarea_id) ? ',' .$gymarea_id : '')
+                'callback_data' => $show_gym . ':' . $action . ':' . $gym['first_letter'] . (($gymarea_id) ? ',' .$gymarea_id : 'false')
             );
         }
 

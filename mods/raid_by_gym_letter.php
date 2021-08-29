@@ -10,7 +10,7 @@ debug_log('raid_by_gym_letter()');
 bot_access_check($update, 'create');
 
 // Get the keys.
-$keys_and_gymarea = raid_edit_gyms_first_letter_keys('raid_by_gym', false, (empty($data['id']) ? '' : $data['id']), 'raid_by_gym_letter');
+$keys_and_gymarea = raid_edit_gyms_first_letter_keys('raid_by_gym', false, (empty($data['id']) ? '' : $data['id']));
 $keys = $keys_and_gymarea['keys'];
 
 // No keys found.
