@@ -32,7 +32,7 @@ function raid_edit_gym_keys($first, $gymarea_id = false, $action = 'edit_raidlev
     }
     $gymarea_query = '';
     if($gymarea_id != false) {
-        $json = json_decode(file_get_contents(CONFIG_PATH . '/geoconfig.json'),1);
+        $json = json_decode(file_get_contents(CONFIG_PATH . '/geoconfig_gym_areas.json'),1);
         $points = [];
         foreach($json as $area) {
             if($gymarea_id == $area['id']) {

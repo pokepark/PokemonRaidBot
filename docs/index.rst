@@ -1443,7 +1443,7 @@ Config reference
    * - CUSTOM_TRAINERNAME
      - Book, allow users to add custom trainernames via ``/trainer`` command
    * - ENABLE_GYM_AREAS
-     - To divide gyms into areas when making selections through ``/start``, ``/listall`` etc. set this to true. Areas are defined in geoconfig.json.
+     - To divide gyms into areas when making selections through ``/start``, ``/listall`` etc. set this to true. Areas are defined in geoconfig_gym_areas.json.
    * - DEFAULT_GYM_AREA": false,
      - ID of default gymarea. Can also be set to false to only display areas.
    * - PORTAL_IMPORT

@@ -13,7 +13,7 @@ function raid_edit_gyms_first_letter_keys($action = 'raid_by_gym', $hidden = fal
     $gymarea_keys = [];
     $skip_letter_keys = true;
     if($config->ENABLE_GYM_AREAS) {
-        $json = json_decode(file_get_contents(CONFIG_PATH . '/geoconfig.json'),1);
+        $json = json_decode(file_get_contents(CONFIG_PATH . '/geoconfig_gym_areas.json'),1);
         $points = [];
         foreach($json as $area) {
             if($config->DEFAULT_GYM_AREA != false or $gymarea_id != false) {
