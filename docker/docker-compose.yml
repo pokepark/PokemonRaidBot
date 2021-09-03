@@ -8,10 +8,10 @@ services:
       - raidbot-db
     restart: always
     volumes:
+      # These are just example paths, change them to where you have stored the data!
       - ./PokemonRaidBot/config/:/var/www/html/config/
       - ./PokemonRaidBot/access/:/var/www/html/access/
       - ./PokemonRaidBot/images/pokemon_PokeMiners/:/var/www/html/images/pokemon_PokeMiners
-      - ./PokemonRaidBot/images/pokemon_ZeChrales:/var/www/html/images/pokemon_ZeChrales
       - ./tg-logs/:/var/log/tg-bots/
     environment:
       TEMPLATE_PHP_INI: production
@@ -20,25 +20,27 @@ services:
       TZ: Europe/Vienna
     image: ghcr.io/pokepark/pokemonraidbot:latest
     labels:
+      # You'll need to customize your domain & API key here!
       ofelia.enabled: "true"
       ofelia.job-exec.raidbot-cleanup.schedule: "@every 20s"
-      ofelia.job-exec.raidbot-cleanup.command: /usr/bin/curl -s -k -d '{"cleanup":{"secret":"changeme","telegram":"1","database":"1"}}' https://raidbot.changeme.de/index.php?apikey=changeme
+      ofelia.job-exec.raidbot-cleanup.command: /usr/bin/curl -s -k -d '{"cleanup":{"secret":"changeme","telegram":"1","database":"1"}}' https://raidbot.example.com/index.php?apikey=changeme
       ofelia.job-exec.raidbot-overview.schedule: "@every 1m"
-      ofelia.job-exec.raidbot-overview.command: /usr/bin/curl -s -k -d '{"callback_query":{"data":"0:overview_refresh:0"}}' https://raidbot.changeme.de/index.php?apikey=changeme
+      ofelia.job-exec.raidbot-overview.command: /usr/bin/curl -s -k -d '{"callback_query":{"data":"0:overview_refresh:0"}}' https://raidbot.example.com/index.php?apikey=changeme
 
   raidbot-db:
     image: mariadb:10.3
     restart: always
     command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
     volumes:
+      # These are just example paths, change them to where you have stored the data and want the DB stored!
       - ./raidbot-db/:/var/lib/mysql/
       - ./sql/:/docker-entrypoint-initdb.d/
-      - ./PokemonRaidBot/sql/upgrade/:/upgrade/
     environment:
       MYSQL_RANDOM_ROOT_PASSWORD: 1
-      MYSQL_DATABASE: changeme
-      MYSQL_USER: changeme
-      MYSQL_PASSWORD: changeme
+      # Set these to match your config!
+      MYSQL_DATABASE:
+      MYSQL_USER:
+      MYSQL_PASSWORD:
 
   ofelia:
     image: mcuadros/ofelia:latest
