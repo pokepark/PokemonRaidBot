@@ -36,6 +36,7 @@ foreach($overviews as $overview_row) {
 						IF((SELECT  count(*)
 							FROM    raid_bosses
 							WHERE   raid_level = raids.level
+                            AND     date_end != \'2038-01-19 03:14:07\'
 							AND     convert_tz(raids.spawn,"+00:00","'.$tz_diff.'") BETWEEN date_start AND date_end) = 1,
 							(SELECT  pokedex_id
 							FROM    raid_bosses
@@ -48,6 +49,7 @@ foreach($overviews as $overview_row) {
 						IF((SELECT  count(*) as count
 							FROM    raid_bosses
 							WHERE   raid_level = raids.level
+                            AND     date_end != \'2038-01-19 03:14:07\'
 							AND     convert_tz(raids.spawn,"+00:00","'.$tz_diff.'") BETWEEN date_start AND date_end) = 1,
 							(SELECT  pokemon_form_id
 							FROM    raid_bosses
