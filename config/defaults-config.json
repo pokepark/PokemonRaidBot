@@ -67,7 +67,7 @@
   "RAID_PICTURE_FONT_GYM":"NotoSans-Bold.ttf",
   "RAID_PICTURE_FONT_EX_GYM":"NotoSans-Regular.ttf",
   "RAID_PICTURE_FONT_TEXT":"NotoSans-Regular.ttf",
-  "RAID_PICTURE_POKEMON_ICONS":"pokemon,PokeMiners,ZeChrales",
+  "RAID_PICTURE_POKEMON_ICONS":"pokemon,PokeMiners",
   "RAID_PICTURE_POKEMON_FALLBACK":"images/shadow_pika.png",
   "RAID_PICTURE_POKEMON_TYPES": true,
   "RAID_POLL_UI_TEMPLATE":[["alone","extra","extra_alien","can_inv","remote","inv_plz","ex_inv"],["teamlvl"],["time"],["pokemon"],["refresh","alarm","here","late","done","cancel"]],
