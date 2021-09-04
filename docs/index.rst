@@ -5,16 +5,14 @@ Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome 
 
 *Default text poll:*
 
-.. image:: docs/screens/raid-poll-example-text.png?raw=true
-   :target: docs/screens/raid-poll-example-text.png?raw=true
-   :alt: Example raid poll
+.. image:: screens/raid-poll-example-text.png
+   :alt: Example raid poll with text mode
 
 
 *With raid picture:*
 
-.. image:: docs/screens/raid-poll-example-photo.png?raw=true
-   :target: docs/screens/raid-poll-example-photo.png?raw=true
-   :alt: Example raid poll
+.. image:: screens/raid-poll-example-photo.png
+   :alt: Example raid poll with picture mode
 
 
 Installation
@@ -64,7 +62,7 @@ You can submit translations to expand our list of lanuages! For more information
 * PL (Polish)
 
 .. toctree::
-   :maxdepth: 1
+  :maxdepth: 2
   :caption: Contents:
 
   usage
