@@ -136,7 +136,7 @@ if($id == 0) {
     foreach($pb_data['tiers'] as $tier) {
         $rl = str_replace('RAID_LEVEL_','', $tier['tier']);
         if($rl == "MEGA") $raid_level_id = 6; else $raid_level_id = $rl;
-        // Process raid level?
+        // Skip this raid level if the boss data was already collected from breaking news or raid level doesn't interest us
         if(!in_array($tier['tier'], $raidlevels) or isset($levels_processed[$raid_level_id])) {
             continue;
         }
@@ -151,7 +151,7 @@ if($id == 0) {
             $bosses[$raid_level_id][] = ['id' => $dex_id_form, 'shiny' => $raid['shiny']];
         }
     }
-    info_log(print_r($bosses,true));
+
     $count = count($get_levels)-1;
     for($i=$count;$i>=0;$i--) {
         $raid_level_id = $get_levels[$i];
