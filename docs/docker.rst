@@ -45,7 +45,7 @@ Basic operation with the Docker image
      -it ghcr.io/pokepark/PokemonRaidBot:latest
    docker ps -a # find the id of your raidbot docker container
    docker exec -it [id] chmod 666 /var/www/html/config/config.json # run chmod in your docker container to be actually able ot access the config file.
-   docker exec -it [id] bin/bash # this time use the id for the mariadb
+   docker exec -it [id] /bin/bash # this time use the id for the mariadb
    mysql -u[yourusername] -p[yourpassword] [databasename] < docker-entrypoint-initdb.d/pokemon-raid-bot.sql
    mysql -u[yourusername] -p[yourpassword] [databasename] < docker-entrypoint-initdb.d/game-master-raid-boss-pokedex.sql
    exit
