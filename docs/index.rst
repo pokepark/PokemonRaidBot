@@ -3,26 +3,28 @@ PokemonRaidBot
 
 Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome to join https://t.me/PokemonBotSupport and the repository can be found at https://github.com/pokepark/PokemonRaidBot
 
-.. toctree::
-   :maxdepth: 1
-  :caption: Contents:
+*Default text poll:*
 
-  usage
-  docker
-  manual_install
-  config
-  maintenance
-  development
+.. image:: docs/screens/raid-poll-example-text.png?raw=true
+   :target: docs/screens/raid-poll-example-text.png?raw=true
+   :alt: Example raid poll
 
 
+*With raid picture:*
+
+.. image:: docs/screens/raid-poll-example-photo.png?raw=true
+   :target: docs/screens/raid-poll-example-photo.png?raw=true
+   :alt: Example raid poll
 
 
 Installation
 ============
 
-  1. First follow either the :doc:`docker` instructions or the :doc:`manual_install` instructions. For some bits the Docker documentation isn't 100% and you'll want to refer to the manal install for example for DB setup.
-  3. Next, proceed to :doc:`config`
-  2. Finally, connect the bot to Telegram with the instructions below.
+There is no central bot so every community runs their own! While this is a bit more difficult it provides much better customization and control!
+
+  #. First follow either the :doc:`docker` instructions or the :doc:`manual_install` instructions. For some bits the Docker documentation isn't 100% and you'll want to refer to the manal install for example for DB setup.
+  #. Next, proceed to :doc:`config`
+  #. Finally, connect the bot to Telegram with the instructions below.
 
 Telegram Setup
 --------------
@@ -60,3 +62,15 @@ You can submit translations to expand our list of lanuages! For more information
 * PT-BR (Brazilian Portugese)
 * RU (Russian)
 * PL (Polish)
+
+.. toctree::
+   :maxdepth: 1
+  :caption: Contents:
+
+  usage
+  docker
+  manual_install
+  config
+  maintenance
+  development
+
