@@ -3,7 +3,7 @@ Maintenance
 Most things have either been automated or we've provided ways in which you can automate them in a way that best suits your community.
 
 Updates
-=======
+-------
 
 The bot has a version system and checks for updates to the database automatically. If automatic db upgrades are disabled, the bot will send a message to the MAINTAINER_ID when an upgrade is required. In case the MAINTAINER_ID is not specified an error message is written to the error log of your webserver.
 

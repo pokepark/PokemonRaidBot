@@ -21,8 +21,11 @@ In case the portal is already in your gym list / database, it will get updated w
 
 Example: ``@PortalMapBot Brandenburger Tor``
 
+Command reference
+-----------------
+
 Command: /start
----------------
+^^^^^^^^^^^^^^^
 
 The bot will guide you through the creation of the raid poll by asking you for the gym, raid level, the pokemon raid boss, the time until the raid starts and the time left for the raid. Afterwards you can set the gym team by using the /team command.
 
@@ -89,19 +92,19 @@ Raid poll is created. Delete or share it:
 
 
 Command: /help
---------------
+^^^^^^^^^^^^^^
 
 The bot will give a personal help based on the permissions you have to access and use it.
 
 Command: /pokemon
------------------
+^^^^^^^^^^^^^^^^^
 
 Update pokemon of an existing raid poll. With this command you can change the pokemon raid boss from e.g. "Level 5 Egg" to "Lugia" once the egg has hatched.
 
 Based on your access to the bot, you may can only change the pokemon raid boss of raid polls you created yourself and cannot modify the pokemon of raid polls from other bot users.
 
 Command: /pokedex
------------------
+^^^^^^^^^^^^^^^^^
 
 Show and update any pokemon raid boss. You can change the raid level (select raid level 0 to disable a raid boss), pokemon CP values and weather information of any pokemon raid boss.
 
@@ -195,7 +198,7 @@ Edit the weather:
 
 
 Command: /list
---------------
+^^^^^^^^^^^^^^
 
 The bot will allow you to get a list of the last 12 active raids and re-share or delete them.
 
@@ -216,12 +219,12 @@ List existing raid polls with the ``/list`` command:
 
 
 Command: /listall
------------------
+^^^^^^^^^^^^^^^^^
 
 The bot will allow you to get all active raids and re-share or delete them. The raids are grouped by gyms and their first letter or custom letters.
 
 Command: /overview
-------------------
+^^^^^^^^^^^^^^^^^^
 
 Share and delete the raid overview message.
 
@@ -242,7 +245,7 @@ Delete the shared overview message:
 
 
 Command: /delete
-----------------
+^^^^^^^^^^^^^^^^
 
 Delete an existing raid poll. With this command you can delete a raid poll from Telegram and the database. Use with care!
 
@@ -262,33 +265,33 @@ Delete an existing raid poll with the ``/delete`` command:
 
 
 Command: /team
---------------
+^^^^^^^^^^^^^^
 
 The bot will set the team to Mystic/Valor/Instinct for the last created raid based on your input.
 
 Example input: ``/team Mystic``
 
 Command: /trainer
------------------
+^^^^^^^^^^^^^^^^^
 
 The bot will give you a list of chats to share the trainer message which allows users to set team and level+/- data. You can also delete the shared trainer messages via the ``/trainer`` command.
 
 Command: /gym
--------------
+^^^^^^^^^^^^^
 
 The bot will show the details of each gym. Additionally you can change the extended gym details to hide/show gyms under ``/start`` as well as mark/un-mark them as ex-raid gym.
 
 Example input: ``/gym``
 
 Command: /addgym
-----------------
+^^^^^^^^^^^^^^^^
 
 The bot will add a gym under the coordinates you're submitting. First latitude, then longitude. The gym is added under the name '#YourTelegramID' (e.g. '#111555777') and you need to change the name afterwards using the ``/gymname`` command. You cannot submit a second gym unless you changed the name of the first gym. In case you submit a second gym without changing the name of the previously submitted gym, the first gym coordinates will be overwritten!
 
 Example input: ``/addgym 52.5145434,13.3501189``
 
 Command: /gymname
------------------
+^^^^^^^^^^^^^^^^^
 
 The bot will set the name of gym to your input. If you submitted a gym via location sharing you can use it without an id. Otherwise the id of the gym is required.
 
@@ -297,7 +300,7 @@ Example input: ``/gymname Siegessäule``
 Example input with gym id: ``/gymname 34, Siegessäule``
 
 Command: /gymaddress
---------------------
+^^^^^^^^^^^^^^^^^^^^
 
 The bot will set the address of gym to your input. The id of the gym is required. You can delete the gym address using the keyword 'reset'.
 
@@ -306,14 +309,14 @@ Example input: ``/gymaddress 34, Großer Stern, 10557 Berlin``
 Example input to delete the gym address: ``/gymaddress 34, reset``
 
 Command: /gymgps
-----------------
+^^^^^^^^^^^^^^^^
 
 The bot will set the gps coordinates of gym to your input. The id of the gym is required.
 
 Example input: ``/gymgps 34, 52.5145434,13.3501189``
 
 Command: /gymnote
------------------
+^^^^^^^^^^^^^^^^^
 
 The bot will set the note for gym to your input. The id of the gym is required. You can delete the gym note using the keyword 'reset'.
 
@@ -322,7 +325,7 @@ Example input: ``/gymnote 34, Meeting point: Behind the building``
 Example input to delete the gym note: ``/gymnote 34, reset``
 
 Command: /deletegym
--------------------
+^^^^^^^^^^^^^^^^^^^
 
 The bot will show all gyms. Select a gym and confirm the deletion to remove it from the database.
 

@@ -96,7 +96,7 @@ How to make a Supergroup
 * Be aware that the group ID will change completely when the group gets converted so you'll need to find it again!
 
 Database connection
-^^^^^^^^^^^^^^^^^^^
+-------------------
 
 Enter the details for the database connection to the config.json file via ``DB_HOST``\ , ``DB_NAME``\ , ``DB_USER`` and ``DB_PASSWORD``.
 
@@ -795,12 +795,12 @@ To enable this feature:
 * ``force-tutorial`` in access config file(s) to force users to go through the tutorial before they're able to use the bot.
 
 Customization
-=============
+-------------
 
 The bot allows you to customize things and therefore has a folder 'custom' for your customizations.
 
 Custom icons
-------------
+^^^^^^^^^^^^
 
 In case you do not like some of the predefined icons and might like to change them to other/own icons:
 
@@ -818,7 +818,7 @@ defined('EMOJI_WARN')           or define('EMOJI_WARN',    iconv('UCS-4LE', 'UTF
 * To get the codes (here: 0x2757) of the icons/emojis, take a look at one of the large emoji databases in the web. They ususally have them mentioned and also show how the icons look like on different systems.
 
 Custom translation
-------------------
+^^^^^^^^^^^^^^^^^^
 
 To change translations you can do the following:
 
@@ -841,7 +841,7 @@ To change translations you can do the following:
 * To verify your custom language.json you can use several apps, programs and web services.
 
 Config reference
-================
+----------------
 
 * For default values, see ``config/defaults-config.json``.
 * Most values are strings.
