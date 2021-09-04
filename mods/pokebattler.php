@@ -126,7 +126,7 @@ if($id == 0) {
             if(in_array($news['tier'], $raidlevels) && $starttime->getTimestamp() < $now->getTimestamp() && $endtime->getTimestamp() > $now->getTimestamp()) {
                 $levels_processed[$raid_level_id] = $news['tier'];
                 $dex_id_form = resolve_boss_name_to_ids($news['pokemon']);
-                $bosses[$raid_level_id][] = $dex_id_form;
+                $bosses[$raid_level_id][] = ['id' => $dex_id_form, 'shiny' => $news['shiny']];
             }
         }
     }
@@ -148,7 +148,7 @@ if($id == 0) {
                 continue;
             }
             $dex_id_form = resolve_boss_name_to_ids($raid['pokemon']);
-            $bosses[$raid_level_id][] = $dex_id_form;
+            $bosses[$raid_level_id][] = ['id' => $dex_id_form, 'shiny' => $raid['shiny']];
         }
     }
     info_log(print_r($bosses,true));
@@ -158,8 +158,8 @@ if($id == 0) {
         if($raid_level_id == 6) $rl = "MEGA"; else $rl = $raid_level_id;
         $msg .= '<b>' . getTranslation('pokedex_raid_level') . SP . $rl . ':</b>' . CR;
         foreach($bosses[$raid_level_id] as $dex_id_form) {
-            $dex_id = explode('-', $dex_id_form, 2)[0];
-            $dex_form = explode('-', $dex_id_form, 2)[1];
+            $dex_id = explode('-', $dex_id_form['id'], 2)[0];
+            $dex_form = explode('-', $dex_id_form['id'], 2)[1];
             $pokemon_arg = $dex_id . (($dex_form != 'normal') ? ('-' . $dex_form) : '-0');
             $local_pokemon = get_local_pokemon_name($dex_id, $dex_form);
             debug_log('Got this pokemon dex id: ' . $dex_id);
@@ -197,7 +197,7 @@ if($id == 0) {
 
                 // Shiny?
                 $shiny = 0;
-                if($raid['shiny'] == 'true') {
+                if($dex_id_form['shiny'] == 'true') {
                     $shiny = 1;
                 }
 
