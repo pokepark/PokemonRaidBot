@@ -27,10 +27,12 @@ Basic operation with the Docker image
 
    mkdir /srv/raidbot/pokemon_PokeMiners # set your own path where you want these stored
    mkdir /srv/raidbot/access # same here, build your access files under here
+   mkdir /srv/tg-logs # same here, this is where your log files go
    cp config/config.json.example /srv/raidbot/config.json # The sample config is a good starting point
    nano /srv/raidbot/config.json # You'll need to customize the config though!
    chmod 600 /srv/raidbot/config.json # make the config safer since it contains your DB credentials and API key
    chown -R www-data:www-data /srv/raidbot # change ownership to www-data so the image can access them
+   chown -R www-data:www-data /srv/tg-logs # change ownership to www-data so the image can write logs
    docker run \
      -e TAIL_LOGS         = "info" \
      -e TZ                = "Europe/Helsinki" \
@@ -41,6 +43,12 @@ Basic operation with the Docker image
      -v /srv/raidbot/pokemon_PokeMiners:/var/www/html/images/pokemon_PokeMiners \
      -p 8088:80
      -it ghcr.io/pokepark/PokemonRaidBot:latest
+   docker ps -a # find the id of your raidbot docker container
+   docker exec -it [id] chmod 666 /var/www/html/config/config.json # run chmod in your docker container to be actually able ot access the config file.
+   docker exec -it [id] bin/bash # this time use the id for the mariadb
+   mysql -u[yourusername] -p[yourpassword] [databasename] < sql/pokemon-raid-bot.sql
+   mysql -u[yourusername] -p[yourpassword] [databasename] < sql/game-master-raid-boss-pokedex.sql
+   exit
 
 SSL with Docker
 ^^^^^^^^^^^^^^^
