@@ -71,6 +71,7 @@ if (!empty($answer)) {
             "
             );
             if($status == 'raid_done' or $status == 'cancel') {
+                if($status == 'cancel') $tg_json = alarm($data['id'],$update['callback_query']['from']['id'],'status',$status, $tg_json);
                 // If the gym is a temporary remote raid gym and raid creator voted for done, send message asking for raid deletion
                 if($answer['is_remote_gym'] == '1' && $answer['user_is_creator']) {
                     $keys = [[
@@ -84,15 +85,15 @@ if (!empty($answer)) {
                                 ],
                              ]];
                     if($status == 'raid_done') $msg = getTranslation("delete_remote_raid_done");
-                    else if($status == 'cancel')  $msg = getTranslation("delete_remote_raid_cancel");
-                    send_message($update['callback_query']['from']['id'], $msg, $keys);
+                    else if($status == 'cancel') $msg = getTranslation("delete_remote_raid_cancel");
+                    $tg_json[] = send_message($update['callback_query']['from']['id'], $msg, $keys, false, true);
                 }
             }elseif($status != 'arrived') {
                 $tg_json = alarm($data['id'],$update['callback_query']['from']['id'],'status',$status, $tg_json);
             }
         }
 
-       // Send vote response.
+        // Send vote response.
         require_once(LOGIC_PATH . '/update_raid_poll.php');
 
         $tg_json = update_raid_poll($data['id'], false, $update, $tg_json);
