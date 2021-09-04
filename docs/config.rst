@@ -8,7 +8,7 @@ Don't forget to change the file permissions of your config file to 0600 (e.g. ``
 Some values are missing as the bot has default values. If you like to change those, you need to add and define them in your config.json file, e.g. ``"DDOS_MAXIMUM":"10"``.
 
 Referring to groups, channels and users
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+---------------------------------------
 
 The most reliable and secure way to refer to individuals, channels, groups and supergroups private or public is with a numeric ID.
 While in some contexts public groups, channels and supergroups could use their public id (e.g. @PublicGroup) this wouldn't work for every call.
@@ -36,7 +36,7 @@ While in some contexts public groups, channels and supergroups could use their p
 
 
 Finding public IDs
-~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^
 
 Counterintuitively getting the ID of a public user, group, channel or supergroup is more difficult since most ways will replace the @name where a numeric ID would be visible. These methods will also work for private versions but will cause spam to the chat. The easiest way is via @RawDataBot:
 
@@ -86,8 +86,8 @@ Forward a message to @RawDataBot which will get you a data package:
            },
    *snip*
 
-Which group type should I use? / How do I make a group a Supergroup
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+How to make a Supergroup
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 
 * Some features will only work with Supergroups (and Channels) since they enable more features needed for example for automatic cleanup. If in doubt use Supergroups.
@@ -101,7 +101,7 @@ Database connection
 Enter the details for the database connection to the config.json file via ``DB_HOST``\ , ``DB_NAME``\ , ``DB_USER`` and ``DB_PASSWORD``.
 
 General config and log files
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+----------------------------
 
 Set ``DEBUG`` to true, to enable the debug logfile.
 

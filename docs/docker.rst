@@ -30,7 +30,7 @@ Basic operation with the Docker image
    cp config/config.json.example /srv/raidbot/config.json # The sample config is a good starting point
    nano /srv/raidbot/config.json # You'll need to customize the config though!
    chmod 600 /srv/raidbot/config.json # make the config safer since it contains your DB credentials and API key
-   chown -R www-data:www-data /path/to/raidbot # change ownership to www-data so the image can access them
+   chown -R www-data:www-data /srv/raidbot # change ownership to www-data so the image can access them
    docker run \
      -e TAIL_LOGS         = "info" \
      -e TZ                = "Europe/Helsinki" \

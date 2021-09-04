@@ -32,6 +32,7 @@ To help in adding a new translation or improving an existing one the ``lang/`` f
 It will add placeholders for a new language and allow you to incrementally and interatively translate strings. All changes are saved as you go.
 
 By default:
+
 * Translations are read from and saved directly into language.json but any other file(s) can be specified with ``--input`` and ``--output``
 * The current English translation is shown as context. The language can be chosen with ``--from_language``
 * Only missing translations are prompted (incremental mode), use ``--noincremental`` or ``--incremental=False`` to prompt every string.
