@@ -32,11 +32,11 @@ if (!empty($answer)) {
         // Reset team extra people.
         my_query(
             "
-            UPDATE    attendance
-            SET       extra_in_person = 0,
+            UPDATE  attendance
+            SET     extra_in_person = 0,
                     extra_alien = 0
             WHERE   raid_id = {$data['id']}
-            AND   user_id = {$update['callback_query']['from']['id']}
+            AND     user_id = {$update['callback_query']['from']['id']}
             "
         );
         $tg_json = alarm($data['id'],$update['callback_query']['from']['id'],'extra_alone',$data['arg'], $tg_json);
@@ -64,11 +64,10 @@ if (!empty($answer)) {
             // Increase team extra people.
             my_query(
                 "
-                UPDATE    attendance
-                SET       {$team} = {$team}+1
+                UPDATE  attendance
+                SET     {$team} = {$team}+1
                 WHERE   raid_id = {$data['id']}
-                    AND   user_id = {$update['callback_query']['from']['id']}
-                    AND   {$team} < 5
+                AND     user_id = {$update['callback_query']['from']['id']}
                 "
             );
             $tg_json = alarm($data['id'],$update['callback_query']['from']['id'],'extra',$data['arg'], $tg_json);
