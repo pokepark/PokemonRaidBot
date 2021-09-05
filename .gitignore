@@ -1,6 +1,4 @@
-# Ignore .idea and temporary README.md files
 /.idea
-README.md.*
 
 # Ignore content of directories with user specific data, keep directories itself
 /access/**
