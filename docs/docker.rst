@@ -34,8 +34,6 @@ Basic operation with the Docker image
    docker run \
      -e TAIL_LOGS         = "info" \
      -e TZ                = "Europe/Helsinki" \
-     -e TEMPLATE_PHP_INI  = "production" \
-     -e PHP_INI_EXTENSION = "gd" \
      -v /srv/raidbot/config.json:/var/www/html/config/config.json \
      -v /srv/raidbot/access:/var/www/html/access \
      -v /srv/raidbot/pokemon_PokeMiners:/var/www/html/images/pokemon_PokeMiners \

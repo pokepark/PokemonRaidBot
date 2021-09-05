@@ -14,8 +14,6 @@ services:
       - ./PokemonRaidBot/images/pokemon_PokeMiners/:/var/www/html/images/pokemon_PokeMiners
       - ./tg-logs/:/var/log/tg-bots/
     environment:
-      TEMPLATE_PHP_INI: production
-      PHP_INI_EXTENSION: gd
       TAIL_LOGS: info
       TZ: Europe/Vienna
     image: ghcr.io/pokepark/pokemonraidbot:latest

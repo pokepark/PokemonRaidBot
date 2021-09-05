@@ -13,5 +13,8 @@ COPY . /var/www/html/
 COPY docker/entrypoint.sh /root/entrypoint.sh
 RUN mkdir /var/log/tg-bots/ && \
     chown -R www-data:www-data /var/www/html/ /var/log/tg-bots
+
+ENV TEMPLATE_PHP_INI="production" \
+    PHP_INI_EXTENSION="gd"
 ENTRYPOINT [ "/root/entrypoint.sh" ]
 CMD apache2-foreground

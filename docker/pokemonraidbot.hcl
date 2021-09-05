@@ -58,8 +58,6 @@ job "pokemonraidbot" {
       env {
         TZ                = "UTC" # Change this to your timezone, for example Europe/Vienna
         TAIL_LOGS         = "info"
-        TEMPLATE_PHP_INI  = "production"
-        PHP_INI_EXTENSION = "gd"
       }
       config {
         image = "ghcr.io/pokepark/pokemonraidbot:latest"
