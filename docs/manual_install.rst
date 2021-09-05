@@ -40,26 +40,19 @@ Bot Settings:
 Database
 --------
 
-Create a new mysql database and user for your bot.
+Create a new mysql database and user for your bot, granting full priviledges for the db. For example:
 
-Command to access the terminal as root user: ``mysql -u root -p``
+.. code-block:: shell
+    mysql -u root -p
+    MariaDB [(none)]> CREATE USER 'username'@'localhost' IDENTIFIED BY 'PASSWORD';
+    MariaDB [(none)]> CREATE DATABASE databasename;
+    MariaDB [(none)]> GRANT ALL PRIVILEGES ON databasename.* TO 'username'@'localhost';
+    MariaDB [(none)]> FLUSH PRIVILEGES;
+    MariaDB [(none)]> exit
 
-Command to create a user with localhost access (Only allow localhost access!): ``CREATE USER 'USERNAME'@'localhost' IDENTIFIED BY 'PASSWORD';``
+The DB structure is imported the first time the bot is used. If it fails for any reason you can also run it manually:
 
-Command to create a database: ``CREATE DATABASE DATABASENAME;``
-
-Command to create privileges for new user to database: ``GRANT ALL PRIVILEGES ON DATABASENAME.* TO 'USERNAME'@'localhost';``
-
-Flush privileges: ``FLUSH PRIVILEGES;``
-
-Just use exit to logout from database.
-
-Import ``pokemon-raid-bot.sql`` as default DB structure and ``game-master-raid-boss-pokedex.sql`` for the latest data of Pokemon in the game. You can find these files in the sql folder.
-
-Command DB structure: 
-
-.. code-block::
-
-   mysql -u USERNAME -p DATABASENAME < sql/pokemon-raid-bot.sql
+.. code-block:: shell
+    mysql -u username -p databasename < sql/pokemon-raid-bot.sql
 
 Important: To fill the pokemon table with all pokemon currently available in the game and to set their raid level you need to run /pokedex command.

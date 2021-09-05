@@ -17,8 +17,8 @@ function run_sql_file($file) {
   }
   catch (PDOException $exception) {
     info_log('DB upgrade failed: ' . $exception->getMessage());
-    error_log('PokemonRaidBot ' . $config->BOT_ID . ' DB upgrade failed: ' . $exception->getMessage());
-    if(!empty($config->MAINTAINER_ID)) sendMessageEcho($config->MAINTAINER_ID, 'DB upgrade failed: ' . CR . '<code>' . $exception->getMessage() . '</code>');
+    error_log('PokemonRaidBot ' . $config->BOT_ID . ' DB schema change failed: ' . $exception->getMessage());
+    if(!empty($config->MAINTAINER_ID)) sendMessageEcho($config->MAINTAINER_ID, 'DB schema change failed: ' . CR . '<code>' . $exception->getMessage() . '</code>');
     $dbh = null;
     return false;
   }
