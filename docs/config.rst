@@ -856,7 +856,7 @@ Config reference
    * - Option
      - Description
    * - APIKEY_HASH
-     - Telegram API key hashed in sha256
+     - Telegram API key hashed in sha512
    * - BOT_ADMINS
      - List of admin identifiers (comma separated Telegram ids)
    * - BOT_ID
