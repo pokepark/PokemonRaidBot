@@ -9,6 +9,18 @@ Installation with Docker
   * Task scheduler (such as Ofelia or plain old cron) for overview updates & cleanup.
 * We also provide orchestration examples for Docker Compose and Hashicorp Nomad. These can be a good base to build a more "production grade" installation.
 
+Configuring the bot with Docker
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+There are two main options for providing the configuration:
+
+#. Create and volume mount a ``config.json`` file inside the container to ``/var/www/html/config/config.json``.
+#. Set configuration parameters as environment variables that will become an autocreated ``config.json``. Any env variable starting with ``POKEMONRAIDBOT_`` is read, for example to set the config option ``DB_USER`` you would have a variable ``POKEMONRAIDBOT_DB_USER=raidbot``
+
+.. warning::
+    If a single variable starting with ``POKEMONRAIDBOT_`` is set, the config will be overriden!
+    If you also have it volume mounted at the same time, you will have a bad time and lose any settings not set as environment variables.
+
 Basic operation with the Docker image
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 

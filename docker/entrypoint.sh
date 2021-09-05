@@ -1,13 +1,6 @@
 #!/bin/bash
 
-if [[ ! -a /var/www/html/config/config.json ]]; then
-  2>&1 echo "/var/www/html/config/config.json is missing, nothing will work without it. You probably want to bind mount it in or otherwise ensure it is injected in place."
-  exit 1
-fi
 
-# Launch image update in the background
-# Highly recommended to mount volumes to /var/www/html/images/pokemon_* to avoid a full download every time!
-php getPokemonIcons.php &
 
 # "Tail" logs if requested to get them to Docker stderr
 logs=()
@@ -34,6 +27,25 @@ if [[ ! -z "${logs}" ]]; then
     ln -sfT "$logpipe" "$log" && echo "done" || echo "failed!"
   done
 fi
+
+# Parse any qualifying ENV into a config.json. If there isn't any, it's assumed one has been volume mounted in or otherwise made available.
+env | egrep -q '^POKEMONRAIDBOT_' && \
+  (jq -n 'env |with_entries(select(.key | startswith("POKEMONRAIDBOT"))) |  with_entries( if .key | startswith("POKEMONRAIDBOT_") then .key |= sub("POKEMONRAIDBOT_";"") else . end)' \
+  | tee -a config/config.json)
+
+# Do some permission setting for any data that might've been volume mounted in, otherwise stuff will fail in weird ways.
+chown -R www-data:www-data config/config.json access/ custom/ images/pokemon*
+
+# Ensure we now have a valid config
+if [[ ! -a /var/www/html/config/config.json ]]; then
+  2>&1 echo "/var/www/html/config/config.json is missing, nothing will work without it. You probably want to bind mount it in or otherwise ensure it is injected in place, or set config values with POKEMONRAIDBOT_* env variables."
+  exit 1
+fi
+
+
+# Launch image update in the background
+# Highly recommended to mount volumes to /var/www/html/images/pokemon_* to avoid a full download every time!
+php getPokemonIcons.php &
 
 echo "Setup underway, launching upstream entrypoint."
 

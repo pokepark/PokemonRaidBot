@@ -8,6 +8,11 @@ ENV APACHE_RUN_USER=www-data \
 
 USER root
 
+# install jq since we need it for config.json generation in the entrypoint
+RUN apt update && apt install -y \
+    jq \
+ && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /var/www/html/
 COPY . /var/www/html/
 COPY docker/entrypoint.sh /root/entrypoint.sh
