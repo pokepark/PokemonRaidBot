@@ -15,7 +15,7 @@ Configuring the bot with Docker
 There are two main options for providing the configuration:
 
 #. Create and volume mount a ``config.json`` file inside the container to ``/var/www/html/config/config.json``.
-#. Set configuration parameters as environment variables that will become an autocreated ``config.json``. Any env variable starting with ``POKEMONRAIDBOT_`` is read, for example to set the config option ``DB_USER`` you would have a variable ``POKEMONRAIDBOT_DB_USER=raidbot``
+#. Set configuration parameters as environment variables that will become an autocreated ``config.json``. Any env variable starting with ``POKEMONRAIDBOT_`` is read, for example to set the config option ``DB_USER`` you would have a variable ``POKEMONRAIDBOT_DB_USER=raidbot``. For a complete example, see the later discussed ``docker/pokemonraidbot.hcl`` Nomad example.
 
 .. warning::
     If a single variable starting with ``POKEMONRAIDBOT_`` is set, the config will be overriden!

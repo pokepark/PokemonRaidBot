@@ -6,7 +6,7 @@ job "pokemonraidbot" {
   meta {
     HOST            = "raidbot.example.com"
     APIKEY          = "123456789:AABBCCDDEEFFGGHHIIJJKKLLMMNN"
-    CLEANUP_SECRET  = "super-strong-cleanup-password"
+    CLEANUP_SECRET  = "super-strong-cleanup-password" # change this!
   }
 
   group "raidbot" {
@@ -58,6 +58,21 @@ job "pokemonraidbot" {
       env {
         TZ                = "UTC" # Change this to your timezone, for example Europe/Vienna
         TAIL_LOGS         = "info"
+        POKEMONRAIDBOT_VERSION="3"
+        # All values below are samples and you'll need to change them to suit you and add any new ones you want to override.
+        POKEMONRAIDBOT_DB_HOST="mariadb.service.consul."
+        POKEMONRAIDBOT_DB_NAME="raidbot"
+        POKEMONRAIDBOT_DB_USER="raidbot"
+        POKEMONRAIDBOT_DB_PASSWORD="changeme"
+        POKEMONRAIDBOT_APIKEY_HASH="api-key-sha512-sum-goes-here"
+        POKEMONRAIDBOT_MAINTAINER="@YourTGUsername"
+        POKEMONRAIDBOT_MAINTAINER_ID="your_tg_id"
+        POKEMONRAIDBOT_BOT_NAME="@NameOfYourBot"
+        POKEMONRAIDBOT_BOT_ADMINS="tg_id_of_admins"
+        POKEMONRAIDBOT_TIMEZONE="UTC"
+        POKEMONRAIDBOT_SHARE_CHATS="-id_of_your_supergroup"
+        POKEMONRAIDBOT_CLEANUP=true
+        POKEMONRAIDBOT_CLEANUP_SECRET="${NOMAD_META_CLEANUP_SECRET}"
       }
       config {
         image = "ghcr.io/pokepark/pokemonraidbot:latest"
@@ -76,8 +91,6 @@ job "pokemonraidbot" {
         volumes = [
           # Customize this to where you want to store the images, < 100MB, they will be autodownloaded
           "/srv/raidbot/pokemon_PokeMiners:/var/www/html/images/pokemon_PokeMiners",
-          # Customize this to where you have your config, you must create it yourself first based on the example
-          "/srv/raidbot/config.json:/var/www/html/config/config.json",
           # Customize this to here you have your access definitions, read the documentation for that.
           "/srv/raidbot/access:/var/www/html/access",
         ]
