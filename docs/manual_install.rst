@@ -6,11 +6,11 @@ If you wish to install manually (or can't run Docker containers anywhere) we als
 Webserver requirements
 ----------------------
 
-Preferrably:
+Preferably:
 
 * Apache2
 * PHP7
-* MySQL5 or MariaDB10
+* MySQL5 or MariaDB10. MariaDB is preferred, MySQL8 will cause some warnings.
 * Curl
 * SSL Certificate ( https://www.letsencrypt.org )
 
@@ -37,29 +37,15 @@ Bot Settings:
 * Allow Groups
   * Group Privacy off
 
-Database
---------
+Database initialization
+-----------------------
 
-Create a new mysql database and user for your bot.
+There's nothing special here really, all we need is an empty database and a user with full priviledges to it.
+If you don't want the automatic table creation you can also run it manually as instructed below.
 
-Command to access the terminal as root user: ``mysql -u root -p``
+.. code-block:: shell
 
-Command to create a user with localhost access (Only allow localhost access!): ``CREATE USER 'USERNAME'@'localhost' IDENTIFIED BY 'PASSWORD';``
+    mysql -u username -p databasename < sql/pokemon-raid-bot.sql
 
-Command to create a database: ``CREATE DATABASE DATABASENAME;``
-
-Command to create privileges for new user to database: ``GRANT ALL PRIVILEGES ON DATABASENAME.* TO 'USERNAME'@'localhost';``
-
-Flush privileges: ``FLUSH PRIVILEGES;``
-
-Just use exit to logout from database.
-
-Import ``pokemon-raid-bot.sql`` as default DB structure and ``game-master-raid-boss-pokedex.sql`` for the latest data of Pokemon in the game. You can find these files in the sql folder.
-
-Command DB structure: 
-
-.. code-block::
-
-   mysql -u USERNAME -p DATABASENAME < sql/pokemon-raid-bot.sql
-
-Important: To fill the pokemon table with all pokemon currently available in the game and to set their raid level you need to run /pokedex command.
+.. note::
+    To fill the database with all pokemon currently available in the game and to set their raid level you need to run /pokedex command and import from a source of your choosing. For more information, see :doc:`usage`

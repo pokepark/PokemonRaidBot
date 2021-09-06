@@ -9,6 +9,14 @@ Installation with Docker
   * Task scheduler (such as Ofelia or plain old cron) for overview updates & cleanup.
 * We also provide orchestration examples for Docker Compose and Hashicorp Nomad. These can be a good base to build a more "production grade" installation.
 
+DB Setup with Docker
+^^^^^^^^^^^^^^^^^^^^
+
+The bot will on first use initialize all database tables, assuming the DB provided in configuration exists and the user provided has access to create the tables.
+This also allows for easily running the DB on a Docker instance of it's own, meaning no manual action is required to bootstrap a new database.
+
+If you don't wish to use the automation, initialize the tables yourself before running the bot. See :doc:`manual_install` for details on manual DB initialization.
+
 Configuring the bot with Docker
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
