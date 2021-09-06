@@ -1,7 +1,7 @@
 PokemonRaidBot
 ==============
 
-Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome to join https://t.me/PokemonBotSupport and the repository can be found at https://github.com/pokepark/PokemonRaidBot
+Telegram webhook bot for organizing raids in Pokemon Go. Developers are welcome to join https://t.me/PokeParkSupport and the repository can be found at https://github.com/pokepark/PokemonRaidBot
 
 *Default text poll:*
 
