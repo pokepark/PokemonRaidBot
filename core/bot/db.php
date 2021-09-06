@@ -1,7 +1,5 @@
 <?php
 
-require_once('logic/sql_utils.php');
-
 // Check defines
 if($config->DB_HOST && $config->DB_NAME && $config->DB_USER && $config->DB_PASSWORD) {
   // Establish PDO connection
