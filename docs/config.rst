@@ -271,6 +271,25 @@ Set ``RAID_EX_GYM_MARKER`` to set the marker for ex-raid gyms. You can use a pre
 
 Set ``RAID_CREATION_EX_GYM_MARKER`` to true to show the marker for ex-raid gyms during raid creation.
 
+Automatically refreshing raid polls
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+To remove the need for pressing the refresh button on polls, you can set the config value ``AUTO_REFRESH_POLLS`` to true and then update all relevant polls via curl post.
+Please note that Telegram has a limit how many queries you can send them per a certain timeperiod, so you might want to limit this feature to most important chats only.
+
+For all chats:
+
+.. code-block::
+
+   curl -k -d '{"callback_query":{"data":"0:refresh_polls:0"}}' https://localhost/botdir/index.php?apikey=111111111:AABBccddEEFFggHHiijjKKLLmmnnOOPPqq
+
+For a specific chat:
+
+.. code-block::
+
+   curl -k -d '{"callback_query":{"data":"[CHAT_ID]:refresh_polls:0"}}' https://localhost/botdir/index.php?apikey=111111111:AABBccddEEFFggHHiijjKKLLmmnnOOPPqq
+
+
 Raid Picture mode
 ^^^^^^^^^^^^^^^^^
 
@@ -921,6 +940,8 @@ Config reference
      - Telegram ID of main maintainer
    * - MAINTAINER
      - Name of main maintainer
+   * - AUTO_REFRESH_POLLS
+     - Bool, enable the auto refresh feature and hides the refresh button from polls. Requires a curl job for refreshing. 
    * - MAPS_API_KEY
      - Google Maps API key for ``MAPS_LOOKUP``
    * - MAPS_LOOKUP
