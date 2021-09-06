@@ -12,11 +12,23 @@ bot_access_check($update, 'create');
 // Set the id.
 $gym_id_plus_letter = $data['id'];
 
-// Set the raid level.
-$raid_level = $data['arg'];
+$arg_data = explode(",", $data['arg']);
+
+// Set the raid level and event.
+$event_id = $arg_data[0];
+$raid_level = $arg_data[1];
+
+// Check if we are creating an event
+if($event_id != "N") {
+    // If yes, go to date selection
+    $action = "edit_time";
+}else {
+    // If not, select start time
+    $action = "edit_starttime";
+}
 
 // Get the keys.
-$keys = pokemon_keys($gym_id_plus_letter, $raid_level, "edit_starttime");
+$keys = pokemon_keys($gym_id_plus_letter, $raid_level, "edit_starttime", $event_id);
 
 // No keys found.
 if (!$keys) {
@@ -29,11 +41,16 @@ if (!$keys) {
         ]
     ];
 } else {
-    // Back key id, action and arg
-    $back_id_arg = explode(',', $gym_id_plus_letter);
-    $back_id = $back_id_arg[1];
-    $back_action = 'edit_raidlevel';
-    $back_arg = $back_id_arg[0];
+    if($event_id == "N") {
+        $back_id_arg = explode(',', $gym_id_plus_letter);
+        $back_id = $back_id_arg[1];
+        $back_action = 'edit_raidlevel';
+        $back_arg = $back_id_arg[0];
+    }else {
+        $back_id = $gym_id_plus_letter;
+        $back_action = 'edit_event_raidlevel';
+        $back_arg = $event_id;
+    }
 
     // Add navigation keys.
     $nav_keys = [];

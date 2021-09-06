@@ -12,10 +12,12 @@ bot_access_check($update, 'pokedex');
 // Get all pokemon with raid levels from database.
 $rs = my_query(
         "
-        SELECT    pokedex_id, pokemon_form_id, raid_level
-        FROM      pokemon
-        WHERE     raid_level != '0'
-        ORDER BY  raid_level, pokedex_id, pokemon_form_name != 'normal', pokemon_form_name
+            SELECT    raid_bosses.pokedex_id, raid_bosses.pokemon_form_id, raid_bosses.raid_level, raid_bosses.date_start, raid_bosses.date_end
+            FROM      raid_bosses
+            LEFT JOIN pokemon
+            ON        raid_bosses.pokedex_id = pokemon.pokedex_id
+            AND       raid_bosses.pokemon_form_id = pokemon.pokemon_form_id
+            ORDER BY  raid_bosses.date_start, raid_bosses.date_end, raid_bosses.raid_level, raid_bosses.pokedex_id, pokemon.pokemon_form_name != 'normal', pokemon.pokemon_form_name, raid_bosses.pokemon_form_id
         "
     );
 
@@ -24,17 +26,29 @@ $keys = [];
 
 // Init message and previous.
 $msg = '';
-$previous = 'FIRST_RUN';
-
+$previous_level = 'FIRST_RUN';
+$previous_date_start = 'FIRST_RUN';
+$previous_date_end = '';
 // Build the message
 while ($pokemon = $rs->fetch()) {
     // Set current level
-    $current = $pokemon['raid_level'];
+    $current_level = $pokemon['raid_level'];
+    $current_date_start = $pokemon['date_start'];
+    $current_date_end = $pokemon['date_end'];
 
-    // Add header for each raid level
-    if($previous != $current || $previous == 'FIRST_RUN') {
+    if($previous_date_start != $current_date_start || $previous_date_end != $current_date_end || $previous_date_start == 'FIRST_RUN') {
         // Formatting.
-        if($previous != 'FIRST_RUN') {
+        if($previous_date_start != 'FIRST_RUN') {
+            $msg .= CR;
+        }
+        // Add header.
+        $msg .= '<b>' . $pokemon['date_start'] . ' - ' . $pokemon['date_end'] . ':</b>' . CR ;
+        $previous_level = 'FIRST_RUN';
+    }
+    // Add header for each raid level
+    if($previous_level != $current_level || $previous_level == 'FIRST_RUN') {
+        // Formatting.
+        if($previous_level != 'FIRST_RUN') {
             $msg .= CR;
         }
         // Add header.
@@ -45,13 +59,17 @@ while ($pokemon = $rs->fetch()) {
     $msg .= $poke_name . ' (#' . $pokemon['pokedex_id'] . ')' . CR;
 
     // Add button to edit pokemon.
-    $keys[] = array(
-        'text'          => '[' . $pokemon['raid_level'] . ']' . SP . $poke_name,
-        'callback_data' => $pokemon['pokedex_id'] . '-' . $pokemon['pokemon_form_id'] . ':pokedex_edit_pokemon:0'
-    );
+    if($pokemon['date_start'] == '1970-01-01 00:00:01' && $pokemon['date_end'] == '2038-01-19 03:14:07') {
+        $keys[] = array(
+            'text'          => '[' . $pokemon['raid_level'] . ']' . SP . $poke_name,
+            'callback_data' => $pokemon['pokedex_id'] . '-' . $pokemon['pokemon_form_id'] . ':pokedex_edit_pokemon:0'
+        );
+    }
 
     // Prepare next run.
-    $previous = $current;
+    $previous_level = $current_level;
+    $previous_date_start = $current_date_start;
+    $previous_date_end = $current_date_end;
 }
 
 if(!empty($msg)) {

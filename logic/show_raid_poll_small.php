@@ -34,13 +34,9 @@ function show_raid_poll_small($raid, $override_language = false)
     $rs = my_query(
         "
         SELECT          count(attend_time)          AS count,
-                        sum(team = 'mystic')        AS count_mystic,
-                        sum(team = 'valor')         AS count_valor,
-                        sum(team = 'instinct')      AS count_instinct,
-                        sum(team IS NULL)           AS count_no_team,
-                        sum(extra_mystic)           AS extra_mystic,
-                        sum(extra_valor)            AS extra_valor,
-                        sum(extra_instinct)         AS extra_instinct
+                        sum(remote = 0)             AS count_in_person,
+                        sum(remote = 1)             AS count_remote,
+                        sum(extra_alien)           AS extra_alien
         FROM            attendance
         LEFT JOIN       users
           ON            attendance.user_id = users.user_id
@@ -56,16 +52,15 @@ function show_raid_poll_small($raid, $override_language = false)
     // Add to message.
     if ($row['count'] > 0) {
         // Count by team.
-        $count_mystic = $row['count_mystic'] + $row['extra_mystic'];
-        $count_valor = $row['count_valor'] + $row['extra_valor'];
-        $count_instinct = $row['count_instinct'] + $row['extra_instinct'];
+        $count_in_person = $row['count_in_person'];
+        $count_remote = $row['count_remote'];
+        $extra_alien = $row['extra_alien'];
 
         // Add to message.
-        $msg .= EMOJI_GROUP . '<b> ' . ($row['count'] + $row['extra_mystic'] + $row['extra_valor'] + $row['extra_instinct']) . '</b> — ';
-        $msg .= (($count_mystic > 0) ? TEAM_B . $count_mystic . '  ' : '');
-        $msg .= (($count_valor > 0) ? TEAM_R . $count_valor . '  ' : '');
-        $msg .= (($count_instinct > 0) ? TEAM_Y . $count_instinct . '  ' : '');
-        $msg .= (($row['count_no_team'] > 0) ? TEAM_UNKNOWN . $row['count_no_team'] : '');
+        $msg .= EMOJI_GROUP . '<b> ' . ($row['count'] + $row['count_in_person'] + $row['count_remote'] + $row['extra_alien']) . '</b> — ';
+        $msg .= (($count_in_person > 0) ? EMOJI_IN_PERSON . $count_in_person . '  ' : '');
+        $msg .= (($count_remote > 0) ? EMOJI_REMOTE . $count_remote . '  ' : '');
+        $msg .= (($extra_alien > 0) ? EMOJI_ALIEN . $extra_alien . '  ' : '');
         $msg .= CR;
     } else {
         $msg .= getTranslation('no_participants') . CR;

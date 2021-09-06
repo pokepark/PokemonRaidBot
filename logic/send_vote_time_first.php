@@ -6,7 +6,7 @@
 function send_vote_time_first($update)
 {
     // Set the message.
-    $msg = getPublicTranslation('vote_time_first');
+    $msg = getTranslation('vote_time_first');
 
     // Answer the callback.
     answerCallbackQuery($update['callback_query']['id'], $msg);

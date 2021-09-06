@@ -11,6 +11,7 @@ function update_userdb($update)
     $name = '';
     $nick = '';
     $sep = '';
+    $lang = '';
 
     if (isset($update['message']['from'])) {
         $msg = $update['message']['from'];
@@ -46,21 +47,28 @@ function update_userdb($update)
         $nick = $msg['username'];
     }
 
+    if (isset($msg['language_code'])) {
+        $lang = $msg['language_code'];
+    }
+
     // Create or update the user.
     $stmt = $dbh->prepare(
         "
         INSERT INTO users
         SET         user_id = :id,
                     nick    = :nick,
-                    name    = :name
+                    name    = :name,
+                    lang    = :lang
         ON DUPLICATE KEY
         UPDATE      nick    = :nick,
-                    name    = :name
+                    name    = :name,
+                    lang    = IF(lang_manual = 1, lang, :lang)
         "
     );
     $stmt->bindParam(':id', $id);
     $stmt->bindParam(':nick', $nick);
     $stmt->bindParam(':name', $name);
+    $stmt->bindParam(':lang', $lang);
     $stmt->execute();
 
     return 'Updated user ' . $nick;

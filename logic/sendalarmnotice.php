@@ -3,30 +3,25 @@
 /**
  * Sends notification to user if Alarm is on or off
  * @param int $raid_id
- * @param array $update
+ * @param array $user_id
  * @param boolean $alarm 
- * @param string $gymname
- * @param string $raidtimes 
+ * @param array $raid Raid array from get_raid()
  */
-function sendAlertOnOffNotice($data, $update, $alarm = null, $gymname = null, $raidtimes = null){
-    
-    if(empty($gymname)){
-        // request gym name
-        $request = my_query("SELECT * FROM raids as r left join gyms as g on r.gym_id = g.id WHERE r.id = {$data['id']}");
-        $answer = $request->fetch();
-        $gymname = '<b>' . $answer['gym_name'] . '</b>';
-        if(empty($raidtimes)){
-            // parse raidtimes
-            $raidtimes = str_replace(CR, '', str_replace(' ', '', get_raid_times($answer, false, true)));
-        }
+function sendAlertOnOffNotice($raid_id, $user_id, $alarm = null, $raid = null){
+    if(empty($raid)){
+        // Request limited raid info
+        $request = my_query("
+                    SELECT      g.gym_name, r.start_time, r.end_time
+                    FROM        raids as r
+                    LEFT JOIN   gyms as g
+                    ON          r.gym_id = g.id
+                    WHERE       r.id = {$raid_id}
+                    ");
+        $raid = $request->fetch();
     }
-
-    if(empty($raidtimes)){
-        //request raidtimes
-        $request = my_query("SELECT * FROM raids as r left join gyms as g on r.gym_id = g.id WHERE r.id = {$data['id']}");
-        $answer = $request->fetch();
-        $raidtimes = str_replace(CR, '', str_replace(' ', '', get_raid_times($answer, false, true)));
-    }
+    $gymname = '<b>' . $raid['gym_name'] . '</b>';
+    // parse raidtimes
+    $raidtimes = str_replace(CR, '', str_replace(' ', '', get_raid_times($raid, false, true)));
 
     if(empty($alarm)){
         // Get the new value
@@ -34,8 +29,8 @@ function sendAlertOnOffNotice($data, $update, $alarm = null, $gymname = null, $r
             "
             SELECT    alarm
             FROM      attendance
-            WHERE     raid_id = {$data['id']}
-            AND   user_id = {$update['callback_query']['from']['id']}
+            WHERE     raid_id = {$raid_id}
+            AND   user_id = {$user_id}
             "
             );
         $answer = $rs->fetch();
@@ -50,7 +45,7 @@ function sendAlertOnOffNotice($data, $update, $alarm = null, $gymname = null, $r
         $msg_text = EMOJI_NO_ALARM . SP . '<b>' . getTranslation('alert_no_updates') . '</b>' . CR;
 	}
     $msg_text .= EMOJI_HERE . SP . $gymname . SP . '(' . $raidtimes . ')';
-    sendmessage($update['callback_query']['from']['id'], $msg_text);
+    send_message($user_id, $msg_text);
 }
 
 ?>

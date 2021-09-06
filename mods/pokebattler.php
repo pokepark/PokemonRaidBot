@@ -62,7 +62,7 @@ if($id == 0) {
 
     // All raid levels?
     if($id == RAID_LEVEL_ALL) {
-      $get_levels = $levels;
+        $get_levels = $levels;
         $clear = "'6','5','3','1'";
     } else {
         $get_levels = Array($id);
@@ -109,98 +109,57 @@ if($id == 0) {
         $raidlevels[] = 'RAID_LEVEL_' . $level;
     }
     debug_log($raidlevels);
+    $levels_processed = [];
+    $bosses = [];
+    // Process breaking news section
+    $now = new DateTime('now', new DateTimeZone($config->TIMEZONE));
+    $ph = new dateTimeZone('America/Phoenix');
+    foreach($pb_data['breakingNews'] as $news) {
+        if($news['type'] == 'RAID_TYPE_RAID') {
+            $rl = str_replace('RAID_LEVEL_','', $news['tier']);
+            if($rl == "MEGA") $raid_level_id = 6; else $raid_level_id = $rl;
+            $starttime = new DateTime("@".substr($news['startDate'],0,10));
+            $endtime = new DateTime("@".substr($news['endDate'],0,10));
+            $starttime->setTimezone($ph);
+            $endtime->setTimezone($ph);
+
+            if(in_array($news['tier'], $raidlevels) && $starttime->getTimestamp() < $now->getTimestamp() && $endtime->getTimestamp() > $now->getTimestamp()) {
+                $levels_processed[$raid_level_id] = $news['tier'];
+                $dex_id_form = resolve_boss_name_to_ids($news['pokemon']);
+                $bosses[$raid_level_id][] = ['id' => $dex_id_form, 'shiny' => $news['shiny']];
+            }
+        }
+    }
 
     // Process raid tier(s)
     debug_log('Processing received pokebattler raid bosses for each raid level');
-    // Init index to process the json
-    $index = 0;
     foreach($pb_data['tiers'] as $tier) {
-        // Process raid level?
-        if(!in_array($tier['tier'],$raidlevels)) {
-            // Index + 1
-            $index = $index + 1;
-            continue;
-        }
-        // Raid level and message.
         $rl = str_replace('RAID_LEVEL_','', $tier['tier']);
         if($rl == "MEGA") $raid_level_id = 6; else $raid_level_id = $rl;
-        $msg .= '<b>' . getTranslation('pokedex_raid_level') . SP . $rl . ':</b>' . CR;
-
-        // Count raid bosses and add raid egg later if 2 or more bosses.
-        $bosscount = 0;
-
+        // Skip this raid level if the boss data was already collected from breaking news or raid level doesn't interest us
+        if(!in_array($tier['tier'], $raidlevels) or isset($levels_processed[$raid_level_id])) {
+            continue;
+        }
         // Get raid bosses for each raid level.
-        foreach($pb_data['tiers'][$index]['raids'] as $raid) {
+        foreach($tier['raids'] as $raid) {
+            // Raid level
             if ($raid['id'] == 0) {
                 debug_log("Skipping raid boss {$raid['pokemon']} since it has no id, it's likely in the future!");
                 continue;
             }
-            // Pokemon name ending with "_FORM" ?
-            if(substr_compare($raid['pokemon'], '_FORM', -strlen('_FORM')) === 0) {
-                debug_log('Pokemon with a special form received: ' . $raid['pokemon']);
-                // Remove "_FORM"
-                $pokemon = str_replace('_FORM', '', $raid['pokemon']);
+            $dex_id_form = resolve_boss_name_to_ids($raid['pokemon']);
+            $bosses[$raid_level_id][] = ['id' => $dex_id_form, 'shiny' => $raid['shiny']];
+        }
+    }
 
-                // Get pokemon name and form.
-                $name = explode("_", $pokemon, 2)[0];
-                $form = explode("_", $pokemon, 2)[1];
-
-                // Fix for MEWTWO_A_FORM
-                if($name == 'MEWTWO' && $form == 'A') {
-                    $form = 'ARMORED';
-                }
-
-            // Pokemon name ending with "_MALE" ?
-            } else if(substr_compare($raid['pokemon'], '_MALE', -strlen('_MALE')) === 0) {
-                debug_log('Pokemon with gender MALE received: ' . $raid['pokemon']);
-                // Remove "_MALE"
-                $pokemon = str_replace('_MALE', '', $raid['pokemon']);
-
-                // Get pokemon name and form.
-                $name = explode("_", $pokemon, 2)[0] . '♂';
-                $form = 'normal';
-
-            // Pokemon name ending with "_FEMALE" ?
-            } else if(substr_compare($raid['pokemon'], '_FEMALE', -strlen('_FEMALE')) === 0) {
-                debug_log('Pokemon with gender FEMALE received: ' . $raid['pokemon']);
-                // Remove "_FEMALE"
-                $pokemon = str_replace('_FEMALE', '', $raid['pokemon']);
-
-                // Get pokemon name and form.
-                $name = explode("_", $pokemon, 2)[0] . '♀';
-                $form = 'normal';
-
-            // Mega pokemon ?
-            }else if(substr_compare($raid['pokemon'], '_MEGA', -strlen('_MEGA')) === 0 or substr_compare($raid['pokemon'], '_MEGA_X', -strlen('_MEGA_X')) === 0 or substr_compare($raid['pokemon'], '_MEGA_Y', -strlen('_MEGA_Y')) === 0) {
-                debug_log('Mega Pokemon received: ' . $raid['pokemon']);
-
-                // Get pokemon name and form.
-                $name_form = explode("_", $raid['pokemon'], 2);
-                $name = $name_form[0];
-                $form = $name_form[1];
-
-            // Normal pokemon without form or gender.
-            } else {
-                // Fix pokemon like "HO_OH"...
-                if(substr_count($raid['pokemon'], '_') >= 1) {
-                    $pokemon = str_replace('_', '-', $raid['pokemon']);
-                } else {
-                    $pokemon = $raid['pokemon'];
-                }
-                // Name and form.
-                $name = $pokemon;
-                $form = 'normal';
-
-		// Fix for GIRATINA as the actual GIRATINA_ALTERED_FORM is just GIRATINA
-                if($name == 'GIRATINA' && $form == 'normal') {
-                    $form = 'ALTERED';
-                }
-            }
-            // Get ID and form name used internally.
-            debug_log('Getting dex id and form for pokemon ' . $name . ' with form ' . $form);
-            $dex_id_form = get_pokemon_id_by_name($name . '-' . $form, true);
-            $dex_id = explode('-', $dex_id_form, 2)[0];
-            $dex_form = explode('-', $dex_id_form, 2)[1];
+    $count = count($get_levels)-1;
+    for($i=$count;$i>=0;$i--) {
+        $raid_level_id = $get_levels[$i];
+        if($raid_level_id == 6) $rl = "MEGA"; else $rl = $raid_level_id;
+        $msg .= '<b>' . getTranslation('pokedex_raid_level') . SP . $rl . ':</b>' . CR;
+        foreach($bosses[$raid_level_id] as $dex_id_form) {
+            $dex_id = explode('-', $dex_id_form['id'], 2)[0];
+            $dex_form = explode('-', $dex_id_form['id'], 2)[1];
             $pokemon_arg = $dex_id . (($dex_form != 'normal') ? ('-' . $dex_form) : '-0');
             $local_pokemon = get_local_pokemon_name($dex_id, $dex_form);
             debug_log('Got this pokemon dex id: ' . $dex_id);
@@ -236,25 +195,27 @@ if($id == 0) {
                 // Add pokemon to message.
                 $msg .= $local_pokemon . SP . '(#' . $dex_id . ')' . CR;
 
-                // Counter.
-                $bosscount = $bosscount + 1;
-
                 // Shiny?
                 $shiny = 0;
-                if($raid['shiny'] == 'true') {
+                if($dex_id_form['shiny'] == 'true') {
                     $shiny = 1;
                 }
 
                 // Save to database?
                 if(strpos($arg, 'save#') === 0) {
                     // Update raid level of pokemon
-                    $rs = my_query(
+                    my_query(
                             "
                             UPDATE    pokemon
-                            SET       raid_level = '{$raid_level_id}',
-                                      shiny = {$shiny}
+                            SET       shiny = {$shiny}
                             WHERE     pokedex_id = {$dex_id}
                             AND       pokemon_form_id = '{$dex_form}'
+                            "
+                        );
+                    my_query(
+                            "
+                            INSERT INTO raid_bosses (pokedex_id, pokemon_form_id, raid_level)
+                            VALUES ('{$dex_id}', '{$dex_form}', '{$raid_level_id}')
                             "
                         );
                     continue;
@@ -278,35 +239,8 @@ if($id == 0) {
                     }
                 }
             }
-
-        }
-
-        // Add raid egg?
-        if($config->POKEBATTLER_IMPORT_DISABLE_REDUNDANT_EGGS && $bosscount <= 1) {
-            debug_log('Not creating egg for level ' . $raid_level_id . ' since there are not 2 or more bosses.');
-        } else {
-            // Add pokemon to message.
-            $translated_egg = getTranslation('egg_' . $raid_level_id);
-            $msg .= $translated_egg. SP . '(#999' . $raid_level_id . ')' . CR;
-            $egg_id = '999'  . $raid_level_id;
-            debug_log("Adding raid level {$raid_level_id} egg '{$translated_egg}' with id: . {$egg_id}");
-
-            // Save raid egg.
-            if(strpos($arg, 'save#') === 0) {
-                $re = my_query(
-                        "
-                        UPDATE    pokemon
-                        SET       raid_level = '{$raid_level_id}'
-                        WHERE     pokedex_id = {$egg_id}
-                        AND       pokemon_form_name = 'normal'
-                        "
-                    );
-            }
         }
         $msg .= CR;
-
-        // Increase index
-        $index = $index + 1;
     }
 
     // Get the inline key array.
@@ -317,10 +251,15 @@ if($id == 0) {
         // Get all pokemon with raid levels from database.
         $rs = my_query(
             "
-            SELECT    pokedex_id, pokemon_form_name, pokemon_form_id, raid_level
-            FROM      pokemon
-            WHERE     raid_level IN ({$clear})
-            ORDER BY  raid_level, pokedex_id, pokemon_form_name != 'normal', pokemon_form_name, pokemon_form_id
+            SELECT    raid_bosses.pokedex_id, raid_bosses.pokemon_form_id, raid_bosses.raid_level
+            FROM      raid_bosses
+            LEFT JOIN pokemon
+            ON        raid_bosses.pokedex_id = pokemon.pokedex_id
+            AND       raid_bosses.pokemon_form_id = pokemon.pokemon_form_id
+            WHERE     raid_bosses.raid_level IN ({$clear})
+            AND       raid_bosses.date_start = '1970-01-01 00:00:01'
+            AND       raid_bosses.date_end = '2038-01-19 03:14:07'
+            ORDER BY  raid_bosses.raid_level, raid_bosses.pokedex_id, pokemon.pokemon_form_name != 'normal', pokemon.pokemon_form_name, raid_bosses.pokemon_form_id
             "
         );
 
@@ -445,5 +384,71 @@ $tg_json[] = edit_message($update, $msg, $keys, false, true);
 // Telegram multicurl request.
 curl_json_multi_request($tg_json);
 
+function resolve_boss_name_to_ids($pokemon_name) {
+    // Pokemon name ending with "_FORM" ?
+    if(substr_compare($pokemon_name, '_FORM', -strlen('_FORM')) === 0) {
+        debug_log('Pokemon with a special form received: ' . $pokemon_name);
+        // Remove "_FORM"
+        $pokemon = str_replace('_FORM', '', $pokemon_name);
+
+        // Get pokemon name and form.
+        $name = explode("_", $pokemon, 2)[0];
+        $form = explode("_", $pokemon, 2)[1];
+
+        // Fix for MEWTWO_A_FORM
+        if($name == 'MEWTWO' && $form == 'A') {
+            $form = 'ARMORED';
+        }
+
+    // Pokemon name ending with "_MALE" ?
+    } else if(substr_compare($pokemon_name, '_MALE', -strlen('_MALE')) === 0) {
+        debug_log('Pokemon with gender MALE received: ' . $pokemon_name);
+        // Remove "_MALE"
+        $pokemon = str_replace('_MALE', '', $pokemon_name);
+
+        // Get pokemon name and form.
+        $name = explode("_", $pokemon, 2)[0] . '♂';
+        $form = 'normal';
+
+    // Pokemon name ending with "_FEMALE" ?
+    } else if(substr_compare($pokemon_name, '_FEMALE', -strlen('_FEMALE')) === 0) {
+        debug_log('Pokemon with gender FEMALE received: ' . $pokemon_name);
+        // Remove "_FEMALE"
+        $pokemon = str_replace('_FEMALE', '', $pokemon_name);
+
+        // Get pokemon name and form.
+        $name = explode("_", $pokemon, 2)[0] . '♀';
+        $form = 'normal';
+
+    // Mega pokemon ?
+    }else if(substr_compare($pokemon_name, '_MEGA', -strlen('_MEGA')) === 0 or substr_compare($pokemon_name, '_MEGA_X', -strlen('_MEGA_X')) === 0 or substr_compare($pokemon_name, '_MEGA_Y', -strlen('_MEGA_Y')) === 0) {
+        debug_log('Mega Pokemon received: ' . $pokemon_name);
+
+        // Get pokemon name and form.
+        $name_form = explode("_", $pokemon_name, 2);
+        $name = $name_form[0];
+        $form = $name_form[1];
+
+    // Normal pokemon without form or gender.
+    } else {
+        // Fix pokemon like "HO_OH"...
+        if(substr_count($pokemon_name, '_') >= 1) {
+            $pokemon = str_replace('_', '-', $pokemon_name);
+        } else {
+            $pokemon = $pokemon_name;
+        }
+        // Name and form.
+        $name = $pokemon;
+        $form = 'normal';
+
+        // Fix for GIRATINA as the actual GIRATINA_ALTERED_FORM is just GIRATINA
+        if($name == 'GIRATINA' && $form == 'normal') {
+            $form = 'ALTERED';
+        }
+    }
+    // Get ID and form name used internally.
+    debug_log('Getting dex id and form for pokemon ' . $name . ' with form ' . $form);
+    return get_pokemon_id_by_name($name . '-' . $form, true);
+}
 // Exit.
 exit();

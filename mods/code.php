@@ -16,6 +16,9 @@ $raid_id = $data['id'];
 // Set the arg.
 $arg = $data['arg'];
 
+// Telegram JSON array.
+$tg_json = array();
+
 // Get raid info.
 $raid = get_raid($raid_id);
 $gym_name = $raid['gym_name'];
@@ -39,7 +42,7 @@ if($arg == 'public-unconfirmed' || $arg == 'public-send') {
         $group_code = getTranslation('start_raid_public') . SP . getTranslation('no_group_code');
 
         // Send code via alarm function
-        alarm($raid_id,$update['callback_query']['from']['id'],'group_code_public',$group_code);
+        $tg_json = alarm($raid_id,$update['callback_query']['from']['id'],'group_code_public',$group_code, $tg_json);
 
         // Init empty keys array.
         $keys = [];
@@ -127,7 +130,7 @@ if($arg == 'public-unconfirmed' || $arg == 'public-send') {
         $group_code .= $p3 . CR;
 
         // Send code via alarm function
-        alarm($raid_id,$update['callback_query']['from']['id'],'group_code_private',$group_code);
+        $tg_json = alarm($raid_id,$update['callback_query']['from']['id'],'group_code_private',$group_code, $tg_json);
 
         // Init empty keys array.
         $keys = [];
@@ -141,9 +144,6 @@ if($arg == 'public-unconfirmed' || $arg == 'public-send') {
         $msg .= $group_code;
     }
 }
-
-// Telegram JSON array.
-$tg_json = array();
 
 // Answer callback.
 $tg_json[] = answerCallbackQuery($update['callback_query']['id'], $callback_response, true);

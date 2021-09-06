@@ -26,7 +26,7 @@ if(substr_count($data['id'], ',') == 1) {
 $userid = $update['callback_query']['from']['id'];
 
 // Update only if time is not equal to RAID_DURATION
-if($arg != $config->RAID_DURATION) {
+if($arg != $config->RAID_DURATION && $arg != 0) {
 
     // Build query.
     my_query(
@@ -73,109 +73,104 @@ if(substr_count($data['id'], ',') == 1) {
 // Telegram JSON array.
 $tg_json = array();
 
-// Build msg.
-if ($update['callback_query']['message']['chat']['type'] == 'private') {
-    // Init keys.
-    $keys = [];
+// Init keys.
+$keys = [];
 
-    // Add delete to keys.
-    $keys = [
+// Add delete to keys.
+$keys = [
+    [
+        [
+            'text'          => getTranslation('delete'),
+            'callback_data' => $id . ':raids_delete:0'
+        ]
+    ]
+];
+
+// Check access level prior allowing to change raid time
+$admin_access = bot_access_check($update, 'raid-duration', true);
+if($admin_access) {
+    // Add time change to keys.
+    $keys_time = [
         [
             [
-                'text'          => getTranslation('delete'),
-                'callback_data' => $id . ':raids_delete:0'
+                'text'          => getTranslation('change_raid_duration'),
+                'callback_data' => $id . ':edit_time:0,0,0,0,more,1'
             ]
         ]
     ];
-
-    // Check access level prior allowing to change raid time
-    $admin_access = bot_access_check($update, 'raid-duration', true);
-    if($admin_access) {
-        // Add time change to keys.
-        $keys_time = [
-            [
-                [
-                    'text'          => getTranslation('change_raid_duration'),
-                    'callback_data' => $id . ':edit_time:0,0,more,1'
-                ]
-            ]
-        ];
-        $keys = array_merge($keys, $keys_time);
-    }
-
-    // Get raid times.
-    $raid = get_raid($data['id']);
-    $raid_duration = $raid['t_duration'];
-
-    // Get raid level.
-    $raid_level = get_raid_level($raid['pokemon'], $raid['pokemon_form']);
-    $const = 'SHARE_CHATS_LEVEL_' . $raid_level;
-    $const_chats = $config->{$const};
-
-    // Debug.
-    //debug_log($const,'CONSTANT NAME:');
-    //debug_log(constant($const),'CONSTANT VALUE:');
-
-    // Special sharing keys for raid level?
-    if(!empty($const_chats)) {
-        $chats = $const_chats;
-        debug_log('Special sharing keys detected for raid level ' . $raid_level);
-    } else {
-        $chats = '';
-    }
-
-    // Share keys
-    $pre_text = EMOJI_CLOCK . SP . $raid_duration . getTranslation('minutes_short') . SP . '+' . SP;
-    $keys_share = share_keys($id, 'raid_share', $update, $chats, $pre_text);
-    $keys = array_merge($keys, $keys_share);
-
-    // Build message string.
-    $msg = '';
-    $msg .= getTranslation('raid_saved') . CR;
-    $msg .= show_raid_poll_small($raid, false) . CR;
-
-    // User_id tag.
-    $user_id_tag = '#' . $update['callback_query']['from']['id'];
-
-    // Gym Name
-    if(!empty($raid['gym_name']) && ($raid['gym_name'] != $user_id_tag)) {
-	$msg .= getTranslation('set_gym_team') . CR2;
-    } else {
-        $msg .= getTranslation('set_gym_name_and_team') . CR2;
-        $msg .= getTranslation('set_gym_name_command') . CR;
-    }
-    $msg .= getTranslation('set_gym_team_command');
-
-    // Build callback message string.
-    $callback_response = getTranslation('end_time') . $data['arg'] . ' ' . getTranslation('minutes');
-
-    // Answer callback.
-    $tg_json[] = answerCallbackQuery($update['callback_query']['id'], $callback_response, true);
-
-    // Edit message.
-    $tg_json[] = edit_message($update, $msg, $keys, false, true);
-
-} else {
-    // Get raid times.
-    $raid = get_raid($data['id']);
-
-    // Get text and keys.
-    $text = show_raid_poll($raid);
-    $keys = keys_vote($raid);
-
-    // Build callback message string.
-    $callback_response = getTranslation('end_time') . $data['arg'] . ' ' . getTranslation('minutes');
-
-    // Answer callback.
-    $tg_json[] = answerCallbackQuery($update['callback_query']['id'], $callback_response, true);
-
-    // Edit message.
-    if($config->RAID_PICTURE) {
-       send_response_vote($update, $data,false,false);
-    } else {
-       send_response_vote($update, $data);
-    }
+    $keys = array_merge($keys, $keys_time);
 }
+
+// Get raid times.
+$raid = get_raid($data['id']);
+
+// Get raid level.
+$raid_level = $raid['level'];
+$const = 'SHARE_CHATS_LEVEL_' . $raid_level;
+$const_chats = $config->{$const};
+
+// Debug.
+//debug_log($const,'CONSTANT NAME:');
+//debug_log(constant($const),'CONSTANT VALUE:');
+
+// Special sharing keys for raid level?
+if(!empty($const_chats)) {
+    $chats = $const_chats;
+    debug_log('Special sharing keys detected for raid level ' . $raid_level);
+} else {
+    $chats = '';
+}
+
+if($raid['event']!==NULL) {
+    if($raid['event_note']==NULL) {
+        $event_button_text = getTranslation("event_note_add");
+    }else {
+        $event_button_text = getTranslation("event_note_edit");
+    }
+    $keys_edit_event_note = [
+        [
+            [
+                'text'          => $event_button_text,
+                'callback_data' => $id . ':edit_event_note:0'
+            ]
+        ]
+    ];
+    $keys = array_merge($keys, $keys_edit_event_note);
+}
+
+// Add keys to share.
+$keys_share = share_keys($id, 'raid_share', $update, $chats);
+$keys = array_merge($keys, $keys_share);
+
+// Build message string.
+$msg = '';
+$msg .= getTranslation('raid_saved') . CR;
+$msg .= show_raid_poll_small($raid, false) . CR;
+
+// User_id tag.
+$user_id_tag = '#' . $update['callback_query']['from']['id'];
+
+// Gym Name
+if(!empty($raid['gym_name']) && ($raid['gym_name'] != $user_id_tag)) {
+$msg .= getTranslation('set_gym_team') . CR2;
+} else {
+    $msg .= getTranslation('set_gym_name_and_team') . CR2;
+    $msg .= getTranslation('set_gym_name_command') . CR;
+}
+$msg .= getTranslation('set_gym_team_command');
+
+// Build callback message string.
+if($arg == 0) {
+    $callback_response = 'OK';
+}else {
+    $callback_response = getTranslation('end_time') . ' ' . $data['arg'] . ' ' . getTranslation('minutes');
+}
+
+// Answer callback.
+$tg_json[] = answerCallbackQuery($update['callback_query']['id'], $callback_response, true);
+
+// Edit message.
+$tg_json[] = edit_message($update, $msg, $keys, false, true);
 
 // Telegram multicurl request.
 curl_json_multi_request($tg_json);

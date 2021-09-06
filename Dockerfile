@@ -8,10 +8,18 @@ ENV APACHE_RUN_USER=www-data \
 
 USER root
 
+# install jq since we need it for config.json generation in the entrypoint
+RUN apt update && apt install -y \
+    jq \
+ && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /var/www/html/
 COPY . /var/www/html/
 COPY docker/entrypoint.sh /root/entrypoint.sh
 RUN mkdir /var/log/tg-bots/ && \
     chown -R www-data:www-data /var/www/html/ /var/log/tg-bots
+
+ENV TEMPLATE_PHP_INI="production" \
+    PHP_INI_EXTENSION="gd"
 ENTRYPOINT [ "/root/entrypoint.sh" ]
 CMD apache2-foreground

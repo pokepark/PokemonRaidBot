@@ -48,7 +48,7 @@
     "FI": "/start - Vaihda raidin kestoa"
   },
   "help_list": {
-    "NL": "TRANSLATE",
+    "NL": "/list - laatste 12 active raids",
     "DE": "/list - Letzten 12 aktiven Raids",
     "EN": "/list - Last 12 active raids",
     "IT": "TRANSLATE",

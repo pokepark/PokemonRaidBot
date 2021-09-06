@@ -1,6 +1,4 @@
-# Ignore .idea and temporary README.md files
 /.idea
-README.md.*
 
 # Ignore content of directories with user specific data, keep directories itself
 /access/**
@@ -14,6 +12,7 @@ README.md.*
 /config/**
 !/config/*.json.example
 !/config/defaults-*.json
+!/config/*.php.example
 
 # Ignore several icon directories + their content
 # Ignoring directories itself allows to replace them with symlinks

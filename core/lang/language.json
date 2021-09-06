@@ -1,4 +1,16 @@
 {
+  "lang_name": {
+    "NL": "Nederlands",
+    "DE": "Deutsch",
+    "EN": "English",
+    "IT": "Italiano",
+    "PT-BR": "Português",
+    "RU": "Русский",
+    "NO": "Norsk",
+    "FR": "Français",
+    "PL": "Polski",
+    "FI": "Suomi"
+  },
   "weekday_1": {
     "NL": "Maandag",
     "DE": "Montag",
@@ -249,7 +261,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "Reittiohje"
   },
   "pokemon": {
     "NL": "Pokemon",
@@ -657,7 +669,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "TRANSLATE"
+    "FI": "ei mitään"
   },
   "other": {
     "NL": "Anders",
@@ -670,5 +682,29 @@
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
     "FI": "Muu"
+  },
+  "tutorial_vote_failed": {
+    "NL": "Je kan niet meedoen voordat je de tutorial hebt doorlopen.",
+    "DE": "TRANSLATE",
+    "EN": "You can't vote before going through the tutorial.",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Et voi äänestää ennen kuin olet käynyt ohjeen läpi."
+  },
+  "tutorial_command_failed": {
+    "NL": "Je kan dit commando niet gebruiken voordat je de tutorial hebt doorlopen.",
+    "DE": "TRANSLATE",
+    "EN": "You can't use this command before going through the tutorial.",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Et voi käyttää tätä käskyä ennen kuin olet käynyt ohjeen läpi."
   }
 }

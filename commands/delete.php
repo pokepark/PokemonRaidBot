@@ -11,7 +11,12 @@ bot_access_check($update, 'access-bot');
 
 // Count results.
 $count = 0;
-
+$own_sql = "";
+$own_arr = [];
+if(!bot_access_check($update, 'delete', true) && bot_access_check($update,'delete-own',true)) {
+    $own_sql = "AND users.user_id = :user_id";
+    $own_arr = [":user_id"=>$update['message']['from']['id']];
+}
 // Init text and keys.
 $text = '';
 $keys = [];
@@ -32,12 +37,13 @@ try {
         LEFT JOIN users ON raids.user_id = users.user_id
         WHERE
             raids.end_time > UTC_TIMESTAMP()
+        '.$own_sql.'
         ORDER BY
             raids.end_time ASC
         LIMIT 20
     ';
     $statement = $dbh->prepare( $query );
-    $statement->execute();
+    $statement->execute($own_arr);
     while ($row = $statement->fetch()) {
         // Set text and keys.
         $text .= $row['gym_name'] . CR;

@@ -14,10 +14,9 @@ function upgrade_config_version($version)
  * Bot upgrade check
  * @param $current
  * @param $latest
- * @param $dbh
- * @return bool: if an upgrade is needed
+ * @return bool: if a manual upgrade is needed
 */
-function bot_upgrade_check($current, $latest, $dbh)
+function bot_upgrade_check($current, $latest)
 {
   global $config;
     // Get upgrade sql files.
@@ -25,11 +24,9 @@ function bot_upgrade_check($current, $latest, $dbh)
     $upgrade_files = str_replace(UPGRADE_PATH . '/','', glob(UPGRADE_PATH . '/*.sql'));
 
     // Remove dots from current and latest version for easier comparison.
-    $nodot_current = str_replace('.', '', $current);
-    $nodot_latest = str_replace('.', '', $latest);
 
     // Same version?
-    if($nodot_current == $nodot_latest) {
+    if($current == $latest) {
         // No upgrade needed.
         return false;
     } else {
@@ -39,30 +36,35 @@ function bot_upgrade_check($current, $latest, $dbh)
             // Check each sql filename.
             foreach ($upgrade_files as $ufile)
             {
+                $nodot_ufile = str_replace('.sql', '', $ufile);
                 // Skip every older sql file from array.
-                $nodot_ufile = str_replace('.', '', str_replace('.sql', '', $ufile));
-                if($nodot_ufile <= $nodot_current) {
+                if($nodot_ufile <= $current) {
                     continue;
                 } else {
                   if ($config->UPGRADE_SQL_AUTO){
-                    debug_log('PERFORMING AUTO SQL UPGRADE:' . UPGRADE_PATH . '/' . $ufile, '!');
+                    info_log('PERFORMING AUTO SQL UPGRADE:' . UPGRADE_PATH . '/' . $ufile, '!');
                     require_once('sql_utils.php');
                     if (run_sql_file(UPGRADE_PATH . '/' . $ufile)) {
                       upgrade_config_version(basename($ufile, '.sql'));
                     } else {
                       $require_upgrade = true;
                       info_log('AUTO UPGRADE FAILED:' . UPGRADE_PATH . '/' . $ufile, '!');
+                      break;
                     }
                   }
                 }
             }
-            // Upgrade required.
-            return $require_upgrade;
         } else {
             // No upgrade files found! Return false as versions did not match but no upgrades are required!
             debug_log('NO SQL UPGRADE FILES FOUND', '!');
             return false;
         }
+        // If previous sql upgrades were successfull, update also pokemon table
+        if(!$require_upgrade) {
+          require_once(ROOT_PATH . '/mods/getdb.php');
+        }
+        // Signal whether manual action is required or not.
+        return $require_upgrade;
     }
 }
 

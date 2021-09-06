@@ -3418,5 +3418,17 @@
         "DE": "Daunenreigen",
         "IT": "Danzadipiume",
         "RU": "Танец с Перьями"
+    },
+    "pokemon_move_352": {
+        "PT-BR": "Esfera Climática",
+        "EN": "Weather Ball",
+        "FI": "Weather Ball",
+        "NL": "Weather Ball",
+        "NO": "Weather Ball",
+        "PL": "Weather Ball",
+        "FR": "Ball’Météo",
+        "DE": "Meteorologe",
+        "IT": "Palla Clima",
+        "RU": "Шар Стихии"
     }
 }

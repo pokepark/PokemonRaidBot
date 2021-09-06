@@ -35,6 +35,7 @@ function migrate_config($config, $file){
   $had_to_fix = false;
   foreach($config as $key => $val) {
     // Make "True" and "False" real true and false
+    if(is_array($val)) continue;
     if(strtolower($val) == "true") {
       $had_to_fix = true;
       $config[$key] = true;
@@ -47,7 +48,7 @@ function migrate_config($config, $file){
   if ($had_to_fix) {
     error_log('Config migration found items to fix. Attempting to also fix the source config file ' . $file);
     if(!write_config_array($config, $file)){
-      error_log('Config not writable: ' . $cfile);
+      error_log('Config not writable: ' . $file);
     }
   }
   return $config;
@@ -62,7 +63,7 @@ function build_config() {
   $config = Array();
 
   // Iterate over subconfigs getting defaults and merging in custom overrides
-  foreach ($default_configs as $index => $filename) {
+  foreach ($default_configs as $filename) {
     $dfile = CONFIG_PATH . '/' . $filename; // config defaults, e.g. defaults-config.json
     $cfile = CONFIG_PATH . '/' . str_replace('defaults-', '', $filename); // custom config overrides e.g. config.json
 
@@ -88,4 +89,5 @@ function build_config() {
 
 // Object, access a config option with e.g. $config->VERSION
 $config = build_config();
+
 ?>

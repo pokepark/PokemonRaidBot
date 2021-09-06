@@ -22,20 +22,14 @@ if(is_file(ROOT_PATH . '/constants.php')) {
 // Config
 require_once(CORE_BOT_PATH . '/config.php');
 
-// Debug
-require_once(CORE_BOT_PATH . '/debug.php');
+// Core Logic
+require_once(CORE_BOT_PATH . '/logic.php');
 
 // Telegram Core
 require_once(CORE_TG_PATH . '/functions.php');
 
-// Language
-require_once(CORE_BOT_PATH . '/language.php');
-
 // Timezone
 require_once(CORE_BOT_PATH . '/timezone.php');
-
-// Core Logic
-require_once(CORE_BOT_PATH . '/logic.php');
 
 // Bot Logic
 if(is_file(ROOT_PATH . '/logic.php')) {
@@ -44,6 +38,3 @@ if(is_file(ROOT_PATH . '/logic.php')) {
 
 // Bot version
 require_once(CORE_BOT_PATH . '/version.php');
-
-// Geo API
-require_once(CORE_BOT_PATH . '/geo_api.php');
