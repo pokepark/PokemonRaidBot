@@ -1,0 +1,4 @@
+/* Enable a wider view on decently sized monitors */
+.wy-nav-content {
+  max-width: 1200px !important;
+}
