@@ -122,6 +122,11 @@ foreach ($update as $raid) {
     if ( isset($raid['message']['gender']) ) {
         $gender = $raid['message']['gender'];
     }
+    // Raid pokemon costume
+    $costume = 0;
+    if ( isset($raid['message']['costume']) ) {
+        $costume = $raid['message']['costume'];
+    }
 
     // Raid pokemon moveset
     $move_1 = 0;
@@ -169,7 +174,8 @@ foreach ($update as $raid) {
                     gym_team = :gym_team,
                     move1 = :move1,
                     move2 = :move2,
-                    gender = :gender
+                    gender = :gender,
+                    costume = :costume
                 WHERE
                     id = :id
             ';
@@ -180,6 +186,7 @@ foreach ($update as $raid) {
                 'move1' => $move_1,
                 'move2' => $move_2,
                 'gender' => $gender,
+                'costume' => $costume,
                 'id' => $raid_id
             ];
             $statement = $dbh->prepare( $query );
@@ -202,8 +209,8 @@ foreach ($update as $raid) {
         // Create Raid and send messages
         try {
             $query = '
-                INSERT INTO raids (pokemon, pokemon_form, user_id, spawn, start_time, end_time, gym_team, gym_id, level, move1, move2, gender)
-                VALUES (:pokemon, :pokemon_form, :user_id, :spawn, :start_time, :end_time, :gym_team, :gym_id, :level, :move1, :move2, :gender)
+                INSERT INTO raids (pokemon, pokemon_form, user_id, spawn, start_time, end_time, gym_team, gym_id, level, move1, move2, gender, costume)
+                VALUES (:pokemon, :pokemon_form, :user_id, :spawn, :start_time, :end_time, :gym_team, :gym_id, :level, :move1, :move2, :gender, :costume)
             ';
             $execute_array = [
                 'pokemon' => $pokemon,
@@ -217,7 +224,8 @@ foreach ($update as $raid) {
                 'level' => $level,
                 'move1' => $move_1,
                 'move2' => $move_2,
-                'gender' => $gender
+                'gender' => $gender,
+                'costume' => $costume
             ];
             $statement = $dbh->prepare( $query );
             $statement->execute($execute_array);
