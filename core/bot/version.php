@@ -40,7 +40,6 @@ if($current == $latest) {
     } else {
         // Check for upgrade files.
         debug_log('Bot version: ' . $current . ', Latest: ' . $latest);
-        require_once('db.php');
         $upgrade = bot_upgrade_check($current, $latest);
 
         // Manual upgrade needed?

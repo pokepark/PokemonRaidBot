@@ -5,7 +5,8 @@ $game_master_url = "https://raw.githubusercontent.com/PokeMiners/game_masters/ma
 $error = false;
 
 // Read the form ids from protos
-if($protos = get_protos()) {
+if($protos = get_protos($proto_url)) {
+    global $dbh;
     $form_ids = $protos[0];
     $costume = $protos[1];
 
@@ -13,7 +14,7 @@ if($protos = get_protos()) {
     file_put_contents(ROOT_PATH.'/protos/costume.json', json_encode($costume, JSON_PRETTY_PRINT)) or info_log('Failed to write costume data to protos/costume.json');
 
     // Parse the game master data together with form ids into format we can use
-    $pokemon_array = parse_master_into_pokemon_table($form_ids);
+    $pokemon_array = parse_master_into_pokemon_table($form_ids, $game_master_url);
     if(!$pokemon_array) {
         $error =  "Failed to open game master file.";
     } else {
@@ -118,6 +119,10 @@ if(isset($update['callback_query']['id'])) {
 
     // Telegram multicurl request.
     curl_json_multi_request($tg_json);
+
+    // Exit.
+    $dbh = null;
+    exit();
 }
 
 function calculate_cps($base_stats) {
@@ -130,8 +135,7 @@ function calculate_cps($base_stats) {
     return [$min,$max,$min_weather,$max_weather];
 }
 
-function get_protos() {
-    global $proto_url;
+function get_protos($proto_url) {
     //Parse the form ID's from pogoprotos
     if(!$proto_file = curl_get_contents($proto_url)) return false;
     $proto =  preg_split('/\r\n|\r|\n/', $proto_file);
@@ -165,8 +169,7 @@ function get_protos() {
     return [$form_ids, $costume];
 }
 
-function parse_master_into_pokemon_table($form_ids) {
-    global $game_master_url;
+function parse_master_into_pokemon_table($form_ids, $game_master_url) {
     // Set ID's for mega evolutions
     // Using negative to prevent mixup with actual form ID's
     // Collected from pogoprotos (hoping they won't change, so hard coding them here)
@@ -339,7 +342,5 @@ function parse_master_into_pokemon_table($form_ids) {
     }
     return $pokemon_array;
 }
-// Exit.
-exit();
 
 ?> 
