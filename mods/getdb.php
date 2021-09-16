@@ -5,7 +5,13 @@ $game_master_url = "https://raw.githubusercontent.com/PokeMiners/game_masters/ma
 $error = false;
 
 // Read the form ids from protos
-if($form_ids = get_protos()) {
+if($protos = get_protos()) {
+    $form_ids = $protos[0];
+    $costume = $protos[1];
+
+    // Save costume data to json file
+    file_put_contents(ROOT_PATH.'/protos/costume.json', json_encode($costume, JSON_PRETTY_PRINT)) or info_log('Failed to write costume data to protos/costume.json');
+
     // Parse the game master data together with form ids into format we can use
     $pokemon_array = parse_master_into_pokemon_table($form_ids);
     if(!$pokemon_array) {
@@ -130,24 +136,33 @@ function get_protos() {
     if(!$proto_file = curl_get_contents($proto_url)) return false;
     $proto =  preg_split('/\r\n|\r|\n/', $proto_file);
     $count = count($proto);
-    $form_ids = array();
-    $start=false;
+    $form_ids = $costume = array();
+    $data_array = false;
     for($i=0;$i<$count;$i++) {
-        $data = explode('=',str_replace(';','',$proto[$i]));
-        // Found first pokemon, start collecting data
-        if(count($data) == 2 && trim($data[0]) == 'UNOWN_A') $start = true;
-
-        if($start) {
+        $line = trim($proto[$i]);
+        if($data_array != false) {
+            $data = explode('=',str_replace(';','',$line));
             // End of pokemon data, no need to loop further
             if(trim($data[0]) == '}') {
-                break;
+                $data_array = false;
+                if(count($form_ids) > 0 && count($costume) > 0) {
+                    // We found what we needed so we can stop looping through proto file and exit
+                    break;
+                }
             }else if(count($data) == 2) {
-                $form_ids[trim($data[0])] = trim($data[1]);
+                ${$data_array}[trim($data[0])] = trim($data[1]);
+            }
+        }else {
+            if($line == 'enum Costume {') {
+                $data_array = 'costume';
+            }
+            if($line == 'enum Form {') {
+                $data_array = 'form_ids';
             }
         }
     }
     unset($proto);
-    return $form_ids;
+    return [$form_ids, $costume];
 }
 
 function parse_master_into_pokemon_table($form_ids) {
