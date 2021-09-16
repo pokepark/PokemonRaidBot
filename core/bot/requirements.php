@@ -22,6 +22,9 @@ if(is_file(ROOT_PATH . '/constants.php')) {
 // Config
 require_once(CORE_BOT_PATH . '/config.php');
 
+// Database connection
+require_once(CORE_BOT_PATH . '/db.php');
+
 // Core Logic
 require_once(CORE_BOT_PATH . '/logic.php');
 
