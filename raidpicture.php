@@ -254,7 +254,7 @@ if($time_now < $raid['end_time']) {
             $p_icon .= '_' . str_pad($raid['costume'], 2, '0', STR_PAD_LEFT);
 
             $costume = json_decode(file_get_contents(ROOT_PATH . '/protos/costume.json'), true);
-            $addressable_icon .= '.' . array_search($raid['costume'],$costume);
+            $addressable_icon .= '.c' . array_search($raid['costume'],$costume);
         }
         if($raid['shiny'] == 1 && $config->RAID_PICTURE_SHOW_SHINY) {
             $p_icon = $p_icon . "_shiny";
