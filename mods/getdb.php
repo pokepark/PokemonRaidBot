@@ -1,5 +1,5 @@
 <?php
-$proto_url = "https://raw.githubusercontent.com/Furtif/POGOProtos/master/base/vbase.proto";
+$proto_url = getProtoURL();
 $game_master_url = "https://raw.githubusercontent.com/PokeMiners/game_masters/master/latest/latest.json";
 
 $error = false;
@@ -341,6 +341,34 @@ function parse_master_into_pokemon_table($form_ids, $game_master_url) {
         }
     }
     return $pokemon_array;
+}
+
+// Fetch the latest version of proto files.
+// vbase.proto has only the latest fully deobfuscated protos,
+// but we only need the latest form and costume data which is available in the partially obfuscated protofiles
+function getProtoURL() {
+    $repo_owner = 'Furtif';
+    $repo_name = 'POGOProtos';
+    $content_dir = 'base';
+
+    $repo_content = 'https://api.github.com/repos/' . $repo_owner . '/' . $repo_name . '/contents/' . $content_dir;
+    // Git tree lookup
+    $tree = curl_get_contents($repo_content);
+    $leaf = json_decode($tree, true);
+    // Detect rate-limiting and die gracefully
+    if(is_array($leaf) && in_array('message', $leaf)) {
+        die('Failed to download repo index: ' . $leaf['message']);
+    }
+    $highest = 0;
+    $url = '';
+    foreach($leaf as $l) {
+        $version = trim(preg_replace('/\D/', '', substr($l['name'], 3)));
+        if($version > $highest) {
+            $highest = $version;
+            $url = $l['download_url'];
+        }
+    }
+    return $url;
 }
 
 ?> 
