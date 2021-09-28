@@ -3,7 +3,8 @@ ALTER TABLE `gyms` ADD KEY IF NOT EXISTS `gym_lat_lon` (`lat`, `lon`);
 CREATE UNIQUE INDEX IF NOT EXISTS `idx_pokemon_pokedex_id_pokemon_form_id` ON `pokemon` (pokedex_id, pokemon_form_id);
 
 ALTER TABLE `raids`
-CHANGE COLUMN IF EXISTS `first_seen` `spawn` DATETIME NULL DEFAULT NULL,
+DROP COLUMN IF EXISTS `first_seen`,
+ADD COLUMN IF NOT EXISTS `spawn` DATETIME NULL DEFAULT NULL AFTER `pokemon_form`,
 MODIFY `pokemon` int(4) DEFAULT NULL,
 ADD COLUMN IF NOT EXISTS `pokemon_form` int(4) unsigned NOT NULL DEFAULT 0,
 ADD COLUMN IF NOT EXISTS `level` enum('1','2','3','4','5','6','X') DEFAULT NULL AFTER `gym_id`,
@@ -53,8 +54,10 @@ TRUNCATE TABLE `cleanup`;
 
 ALTER TABLE `attendance`
 DROP COLUMN IF EXISTS `extra_instinct`,
+DROP COLUMN IF EXISTS `extra_mystic`,
+DROP COLUMN IF EXISTS `extra_valor`,
 ADD COLUMN IF NOT EXISTS remote tinyint(1) unsigned DEFAULT '0',
-ADD COLUMN IF NOT EXISTS `can_invite` TINYINT UNSIGNED NULL DEFAULT '0' AFTER `want_invite`,
 ADD COLUMN IF NOT EXISTS `want_invite` tinyint(1) unsigned DEFAULT 0 AFTER `alarm`,
-CHANGE COLUMN IF EXISTS `extra_mystic` `extra_in_person` TINYINT UNSIGNED NULL DEFAULT '0' ,
-CHANGE COLUMN IF EXISTS `extra_valor` `extra_alien` TINYINT UNSIGNED NULL DEFAULT '0';
+ADD COLUMN IF NOT EXISTS `can_invite` TINYINT UNSIGNED NULL DEFAULT '0' AFTER `want_invite`,
+ADD COLUMN IF NOT EXISTS `extra_in_person` TINYINT UNSIGNED NULL DEFAULT '0' AFTER `attend_time`,
+ADD COLUMN IF NOT EXISTS `extra_alien` TINYINT UNSIGNED NULL DEFAULT '0' AFTER `extra_in_person`;
