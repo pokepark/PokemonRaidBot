@@ -1,6 +1,7 @@
 {
   "DEFAULTS_WARNING": "DO NOT MODIFY THIS DEFAULTS FILE, OVERRIDE OPTIONS IN config.json INSTEAD",
   "DB_HOST":"localhost",
+  "DB_PORT":"3306",
   "DB_NAME":"PokemonRaidBot",
   "DB_USER":"PokemonRaidBot",
   "DB_PASSWORD":"",
