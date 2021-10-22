@@ -366,8 +366,12 @@ function getProtoURL() {
     foreach($leaf as $l) {
         $version = trim(preg_replace('/\D/', '', substr($l['name'], 3)));
         if($version > $highest) {
-            $highest = $version;
-            $url = $l['download_url'];
+            $split = explode(".",$l['name']);
+            // Only allow fully or partially deobfuscated iterations of the proto file
+            if($split[2] == 'x' or $split[2] == 'x_p_obf') {
+                $highest = $version;
+                $url = $l['download_url'];
+            }
         }
     }
     return $url;
