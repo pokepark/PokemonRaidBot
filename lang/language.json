@@ -191,6 +191,66 @@
     "PL": "Jajo",
     "FI": "Raid-muna"
   },
+  "upcoming": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "upcoming",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "tulevat"
+  },
+  "upcoming_bosses_not_found": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "No info of upcoming bosses was found!",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Tietoa tulevista bosseista ei löytynyt!"
+  },
+  "current_scheduled_bosses": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Scheduled raid bosses from database",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Tallennetut tulevat raidibossit"
+  },
+  "found_upcoming_bosses": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Found following upcoming bosses",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Löydetyt tulevat raidibossit"
+  },
+  "confirm_raplace_upcoming": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Would you like to replace the current data with what we found?",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Haluatko korvata nykyiset tiedot nyt löydetyillä?"
+  },
   "shiny": {
     "NL": "Shiny",
     "DE": "Schillernd",
