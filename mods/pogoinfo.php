@@ -28,27 +28,35 @@ if($id == 0) {
     $keys = [];
 
     // All raid level keys.
-    $keys[] = array(
+    $keys[][] = array(
         'text'          => getTranslation('pokedex_all_raid_level'),
         'callback_data' => RAID_LEVEL_ALL . ':pogoinfo:ex#0,0,0'
     );
 
     // Add key for each raid level
     foreach($levels as $l) {
-        $keys[] = array(
+        $keys[][] = array(
             'text'          => getTranslation($l . 'stars'),
             'callback_data' => $l . ':pogoinfo:ex#0,0,0'
         );
     }
-
-    // Add abort button
-    $keys[] = array(
-        'text'          => getTranslation('abort'),
-        'callback_data' => '0:exit:0'
+    $keys[][] = array(
+        'text'          => getTranslation('1stars') . ' & ' . getTranslation('3stars'),
+        'callback_data' => '3,1:pogoinfo:ex#0,0,0'
     );
 
-    // Get the inline key array.
-    $keys = inline_key_array($keys, 1);
+    // Add back and abort buttons
+    $keys[] = [
+        [
+            'text'          => getTranslation('back'),
+            'callback_data' => '0:pokedex_import:0'
+        ],
+        [
+            'text'          => getTranslation('abort'),
+            'callback_data' => '0:exit:0'
+        ]
+    ];
+
 } else if($id > 0) {
     // Set message and init message to exclude raid bosses.
     $msg = '<b>' . getTranslation('import') . SP . '(ccev pogoinfo)' . '</b>' . CR . CR;
@@ -65,7 +73,7 @@ if($id == 0) {
         $get_levels = $levels;
         $clear = "'6','5','3','1'";
     } else {
-        $get_levels = Array($id);
+        $get_levels = explode(",", $id);
         $clear = "'" . $id . "'";
     }
 
@@ -263,9 +271,6 @@ if($id == 0) {
             // Prepare next run.
             $previous = $current;
         }
-
-        // Message.
-        $msg .= CR . '<b>' . getTranslation('pokedex_edit_pokemon') . '</b>';
 
         // Inline key array.
         $keys = inline_key_array($keys, 2);
