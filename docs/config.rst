@@ -1036,8 +1036,6 @@ Config reference
      - TRUE: Will show the Route to the Gym while clicking onto gym-address - FALSE: Will open Google Maps and only show the gym as a point in the map.
    * - RAID_POLL_SHOW_NICK_OVER_NAME
      - Show users Telegram @username instead of name
-   * - RAID_WANT_INVITE
-     - Bool, allow participants to indicate that they wish to be invited to the raid
    * - RAID_POLL_SHOW_TRAINERCODE
      - With /trainer everyone can set his trainercode and it will be shown on raidpolls, if the trainer chooses everytime (or renamed to invite me) and inside raidalarm messages
    * - RAID_POLL_SHOW_TRAINERNAME_STRING
@@ -1054,8 +1052,6 @@ Config reference
      - Bool, Hide the ``Raid done`` button in raid polls after the raid has ended
    * - RAID_REMOTEPASS_USERS_LIMIT
      - Integer, How many remote participants to allow into a single raid
-   * - RAID_WANT_INVITE
-     - Bool, allow participants to indicate that they wish to be invited to the raid
    * - RAID_SLOTS
      - Amount of minutes between raid poll voting slots
    * - RAID_VIA_LOCATION
