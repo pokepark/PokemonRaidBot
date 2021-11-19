@@ -325,17 +325,25 @@ function parse_master_into_pokemon_table($form_ids, $game_master_url) {
                         $pokemon_array[$pokemon_id][$form]['type2'] = $type2;
                     }
                 }
-                if(isset($row['data']['pokemonSettings']['evolutionBranch'])) {
-                    foreach($row['data']['pokemonSettings']['evolutionBranch'] as $temp_evolution) {
-                        if(isset($temp_evolution['temporaryEvolution'])) {
-                            $form_name = str_replace('TEMP_EVOLUTION_','',$temp_evolution['temporaryEvolution']);
+                if(isset($row['data']['pokemonSettings']['tempEvoOverrides'])) {
+                    foreach($row['data']['pokemonSettings']['tempEvoOverrides'] as $temp_evolution) {
+                        if(isset($temp_evolution['tempEvoId'])) {
+                            $form_name = str_replace('TEMP_EVOLUTION_','',$temp_evolution['tempEvoId']);
+                            // We only override the types for megas
+                            // weather info is used to display boosts for caught mons, which often are different from mega's typing
+                            $typeOverride = strtolower(str_replace('POKEMON_TYPE_','', $temp_evolution['typeOverride1']));
+                            $typeOverride2 = '';
+
+                            if(isset($temp_evolution['typeOverride2'])) {
+                                $typeOverride2 = strtolower(str_replace('POKEMON_TYPE_','', $temp_evolution['typeOverride2']));
+                            }
                             $pokemon_array[$pokemon_id][$form_name]['min_cp'] = $min_cp;
                             $pokemon_array[$pokemon_id][$form_name]['max_cp'] = $max_cp;
                             $pokemon_array[$pokemon_id][$form_name]['min_weather_cp'] = $min_weather_cp;
                             $pokemon_array[$pokemon_id][$form_name]['max_weather_cp'] = $max_weather_cp;
                             $pokemon_array[$pokemon_id][$form_name]['weather'] = $weather;
-                            $pokemon_array[$pokemon_id][$form_name]['type'] = $type;
-                            $pokemon_array[$pokemon_id][$form_name]['type2'] = $type2;
+                            $pokemon_array[$pokemon_id][$form_name]['type'] = $typeOverride;
+                            $pokemon_array[$pokemon_id][$form_name]['type2'] = $typeOverride2;
                         }
                     }
                 }
