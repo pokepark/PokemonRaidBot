@@ -41,6 +41,9 @@ if (file_exists($id_file) && filesize($id_file) > 0) {
         }else if ($action == 'getdb') {
             $skip_ddos_check = 1;
             debug_log('Skipping DDOS check for database update...','!');
+        }else if ($action == 'update_bosses') {
+            $skip_ddos_check = 1;
+            debug_log('Skipping DDOS check for database update...','!');
         }
     } else if(isset($update['cleanup'])) {
             $skip_ddos_check = 1;
@@ -49,7 +52,7 @@ if (file_exists($id_file) && filesize($id_file) > 0) {
 
     // End script if update_id is older than stored update_id
     if ($update_id < $last_update_id && $skip_ddos_check == 0) {
-        info_log("FATAL ERROR! Received old update_id: {$update_id} vs.{$last_update_id}",'!');
+        info_log("FATAL ERROR! Received old update_id: {$update_id} vs {$last_update_id}",'!');
         exit();
     }
 } else {
@@ -58,7 +61,9 @@ if (file_exists($id_file) && filesize($id_file) > 0) {
 }
 
 // Write update_id to file
-file_put_contents($id_file, $update_id);
+if($skip_ddos_check == 0) {
+    file_put_contents($id_file, $update_id);
+}
 
 // Init DDOS count
 $ddos_count = 0;

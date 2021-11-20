@@ -8,7 +8,7 @@ debug_log('pokebattler()');
 
 // Check access.
 bot_access_check($update, 'pokedex');
-include(LOGIC_PATH . '/resolve_boss_name_to_ids.php');
+require_once(LOGIC_PATH . '/read_upcoming_bosses.php');
 
 $id = $data['id'];
 $arg = $data['arg'];
@@ -19,7 +19,7 @@ if($arg == '1') {
         $sql .= read_upcoming_bosses(true);
         $query = $dbh->prepare($sql);
         $query->execute();
-        $msg = getTranslation('import_done') . '!';
+        $msg = getTranslation('import_done');
     }catch (PDOException $exception) {
         $msg = getTranslation('internal_error') . CR;
         $msg.= $exception->getMessage();
@@ -94,50 +94,6 @@ $tg_json[] = edit_message($update, $msg, $keys, false, true);
 
 // Telegram multicurl request.
 curl_json_multi_request($tg_json);
-
-function read_upcoming_bosses($return_sql = false) {
-    $link = curl_get_contents('https://fight.pokebattler.com/raids');
-    $pb = json_decode($link,true);
-    
-    $ph = new dateTimeZone('America/Phoenix');
-    $count = 0;
-    $sql = $list = $prev_start = $prev_rl = '';
-    foreach($pb['breakingNews'] as $news) {
-        if($news['type'] == 'RAID_TYPE_RAID') {
-            $rl = str_replace('RAID_LEVEL_','', $news['tier']);
-            if($rl == "MEGA") $raid_level_id = 6; else $raid_level_id = $rl;
-            $starttime = new DateTime("@".substr($news['startDate'],0,10));
-            $endtime = new DateTime("@".substr($news['endDate'],0,10));
-            $starttime->setTimezone($ph);
-            $endtime->setTimezone($ph);
-            // Pokebattler sets end time to 11:00, so lets just manually set everything to 10:00
-            $date_start = $starttime->format('Y-m-d').' 10:00:00';
-            $date_end = $endtime->format('Y-m-d').' 10:00:00';
-
-            $dex_id_form = explode('-',resolve_boss_name_to_ids($news['pokemon']),2);
-            if($prev_start != $date_start) {
-                $list.= CR . '<b>' . $date_start . ' - ' . $date_end . ':</b>' . CR;
-            }
-            if($prev_rl != $raid_level_id) {
-                $list.= '<b>' . getTranslation($raid_level_id . 'stars') .':</b>' . CR;
-            }
-            $list.= get_local_pokemon_name($dex_id_form[0], $dex_id_form[1]) . CR;
-            $prev_start = $date_start;
-            $prev_rl = $raid_level_id;
-
-            if($count == 0) {
-                $count++;
-                $sql .= 'INSERT INTO raid_bosses (pokedex_id, pokemon_form_id, date_start, date_end, raid_level) VALUES ';
-                $sql .= '("'.$dex_id_form[0].'","'.$dex_id_form[1].'","'.$date_start.'","'.$date_end.'","'.$raid_level_id.'")';
-            }else {
-                $sql .= ',("'.$dex_id_form[0].'","'.$dex_id_form[1].'","'.$date_start.'","'.$date_end.'","'.$raid_level_id.'")';
-            }
-        }
-    }
-    if($count > 0) $sql.=';';
-    if($return_sql) return $sql;
-    else return $list;
-}
 
 $dbh = null;
 exit();
