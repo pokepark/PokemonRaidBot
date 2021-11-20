@@ -74,7 +74,7 @@ if($id == 0) {
         $clear = "'6','5','3','1'";
     } else {
         $get_levels = explode(",", $id);
-        $clear = "'" . $id . "'";
+        $clear = $id;
     }
 
     // Prefix for exclusion.
