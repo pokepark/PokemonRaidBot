@@ -203,7 +203,9 @@ Raid creation options
 
 There are several options to customize the creation of raid polls:
 
-Set ``RAID_VIA_LOCATION`` to true to allow raid creation from a location shared with the bot.
+Set ``RAID_VIA_LOCATION`` to true to allow raid creation from a location shared with the bot. Use together with ``RAID_VIA_LOCATION_FUNCTION``.
+
+Set ``RAID_VIA_LOCATION_FUNCTION`` to select which action to perform with the shared location. ``create`` (default) to create a permanent gym, which can later be edited, ``list`` to list all active raids nearby the location, ``remote`` to create a temporary remote raid gym.
 
 Set ``RAID_EGG_DURATION`` to the maximum amount of minutes a user can select for the egg hatching phase.
 
@@ -913,7 +915,7 @@ Config reference
    * - DB_USER
      - Username of dedicated RaidBot DB user
    * - DDOS_MAXIMUM
-     - ?
+     - Number of actions per minute an user is allowed to perform before getting locked out for ddosing
    * - DEBUG
      - Output helpful debugging messages to ``DEBUG_LOGFILE``
    * - DEBUG_LOGFILE
@@ -1055,7 +1057,9 @@ Config reference
    * - RAID_SLOTS
      - Amount of minutes between raid poll voting slots
    * - RAID_VIA_LOCATION
-     - Bool, enable creating raids by sharing a location with the bot
+     - Bool, enable creating or sharing raids by sharing a location with the bot. Works together with ``RAID_VIA_LOCATION_FUNCTION``.
+   * - RAID_VIA_LOCATION_FUNCTION
+     - ``create``, ``list`` or ``remote``, which function to perform when user shares a location with the bot. ``create`` to create a permanent gym, which can later be edited, ``list`` to list all active raids nearby the location, ``remote`` to create a temporary remote raid gym.
    * - RAID_VOTE_ICONS
      - Bool, use icons on raid poll buttons
    * - RAID_VOTE_TEXT
@@ -1076,8 +1080,6 @@ Config reference
      - List of Telegram chat IDs available for sharing any raids
    * - MYSQL_SORT_COLLATE
      - Charset added to SQL query for sorting gym names
-   * - LIST_BY_LOCATION
-     - Bool, If true, when sending location to bot, instead of creating a raid, it lists nearby active raids
    * - TIMEZONE
      - Timezone definition to use as per `TZ database names <https://www.wikiwand.com/en/List_of_tz_database_time_zones#/List>`_
    * - TRAINER_MAX_LEVEL

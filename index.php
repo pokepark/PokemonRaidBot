@@ -47,7 +47,7 @@ if (isset($update['callback_query'])) {
 
 // Location received.
 } else if (isset($update['message']['location']) && $update['message']['chat']['type'] == 'private') {
-    if($config->LIST_BY_LOCATION) {
+    if($config->RAID_VIA_LOCATION_FUNCTION == 'list') {
         include_once(ROOT_PATH . '/mods/share_raid_by_location.php');
     }else {
         // Create raid and exit.
