@@ -16,7 +16,7 @@ Local updates
 
 To keep local data, such as ``pokemon`` table and Pokemon icons directory, up to date, you can schedule some scripts to be run.
 
-Updating ``pokemon`` table with data form latest game master file:
+Updating ``pokemon`` table with data from latest game master file:
 
 ``curl -k -d '{"callback_query":{"data":"0:getdb:0"}}' https://localhost/botdir/index.php?apikey=111111111:AABBccddEEFFggHHiijjKKLLmmnnOOPPqq``
 
