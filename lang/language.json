@@ -227,6 +227,30 @@
     "PL": "TRANSLATE",
     "FI": "Tallennetut tulevat raidibossit"
   },
+  "unscheduled_bosses": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Unscheduled bosses",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Ajastamattomat bossit"
+  },
+  "delete_scheduled_confirmation": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Do you want to delete this scheduled entry?",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Haluatko poistaa tämän ajastuksen?"
+  },
   "found_upcoming_bosses": {
     "NL": "TRANSLATE",
     "DE": "TRANSLATE",

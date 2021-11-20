@@ -30,6 +30,7 @@
   "MAPS_API_KEY":"",
   "OSM_LOOKUP": false,
   "AUTO_REFRESH_POLLS":false,
+  "ENABLE_BOSS_AUTO_UPDATE": true,
   "CUSTOM_TRAINERNAME": true,
   "ENABLE_GYM_AREAS": false,
   "DEFAULT_GYM_AREA": false,
