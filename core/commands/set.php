@@ -88,7 +88,7 @@ $msg_error_info = '';
 // Make sure it's allowed to update the value via telegram.
 if(in_array($config_name, $allowed)) {
     // Only bool?
-    if(in_array($config_name, $bool_only)) {
+    if(in_array($config_name, $allowed_bool)) {
         if(strcasecmp($config_value, true) == 0 || strcasecmp($config_value, false) == 0) {
             $config_value = strtolower($config_value);
             $restrict = 'no';
@@ -101,7 +101,7 @@ if(in_array($config_name, $allowed)) {
     
 
     // Only numbers?
-    } else if(in_array($config_name, $numbers_only)) {
+    } else if(in_array($config_name, $allowed_numbers)) {
         if(is_numeric($config_value)) {
             $restrict = 'no';
         } else {
