@@ -2,13 +2,13 @@
 /**
  * Raid edit gym keys with active raids marker.
  * @param $first
- * @param $warn
+ * @param $gymarea_id
  * @param $action
  * @param $delete
  * @param $hidden
  * @return array
  */
-function raid_edit_gym_keys($first, $warn = true, $action = 'edit_raidlevel', $delete = false, $hidden = false)
+function raid_edit_gym_keys($first, $gymarea_id = false, $action = 'edit_raidlevel', $delete = false, $hidden = false)
 {
     global $config;
     // Length of first letter.
@@ -30,7 +30,22 @@ function raid_edit_gym_keys($first, $warn = true, $action = 'edit_raidlevel', $d
             $not .= SP . "AND UPPER(LEFT(gym_name, " . $length . ")) != UPPER('" . $letter . "')" . SP;
         }
     }
-
+    $gymarea_query = '';
+    if($gymarea_id != false) {
+        $json = json_decode(file_get_contents(CONFIG_PATH . '/geoconfig_gym_areas.json'),1);
+        $points = [];
+        foreach($json as $area) {
+            if($gymarea_id == $area['id']) {
+                foreach($area['path'] as $point) {
+                    $points[] = $point[0].' '.$point[1];
+                }
+                if($points[0] != $points[count($points)-1]) $points[] = $points[0];
+                break;
+            }
+        }
+        $polygon_string = implode(',', $points);
+        $gymarea_query = "AND ST_CONTAINS(ST_GEOMFROMTEXT('POLYGON((".$polygon_string."))'), ST_GEOMFROMTEXT(CONCAT('POINT(',lat,' ',lon,')')))";
+   }
     // Show hidden gyms?
     if($hidden == true) {
         $show_gym = 0;
@@ -51,6 +66,7 @@ function raid_edit_gym_keys($first, $warn = true, $action = 'edit_raidlevel', $d
         ON        raids.gym_id = gyms.id
         WHERE     UPPER(LEFT(gym_name, $first_length)) = UPPER('{$first}')
         $not
+        $gymarea_query
         AND       gyms.show_gym = {$show_gym}
         GROUP BY  gym_name, raids.gym_id, gyms.id, gyms.ex_gym
         ORDER BY  gym_name " . $query_collate . "
