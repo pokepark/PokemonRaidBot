@@ -13,7 +13,6 @@ function read_upcoming_bosses($return_sql = false) {
     $now = new dateTimeZone($config->TIMEZONE);
     $transitions = ( $now->getTransitions()[0]['isdst'] ? 0 : 1 );
     $tz_offset = (-7 - $transitions)*60*60;
-    info_log($now->getTransitions()[0]['isdst']);
     $count = 0;
     $sql = $list = $prev_start = $prev_rl = '';
     foreach($pb['breakingNews'] as $news) {
