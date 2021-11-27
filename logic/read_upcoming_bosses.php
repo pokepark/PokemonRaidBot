@@ -6,10 +6,14 @@ require_once(LOGIC_PATH . '/resolve_boss_name_to_ids.php');
  * @return string
  */
 function read_upcoming_bosses($return_sql = false) {
+    global $config;
     $link = curl_get_contents('https://fight.pokebattler.com/raids');
     $pb = json_decode($link,true);
-    
-    $ph = new dateTimeZone('America/Phoenix');
+
+    $now = new dateTimeZone($config->TIMEZONE);
+    $transitions = ( $now->getTransitions()[0]['isdst'] ? 0 : 1 );
+    $tz_offset = (-7 - $transitions)*60*60;
+    info_log($now->getTransitions()[0]['isdst']);
     $count = 0;
     $sql = $list = $prev_start = $prev_rl = '';
     foreach($pb['breakingNews'] as $news) {
@@ -17,13 +21,16 @@ function read_upcoming_bosses($return_sql = false) {
             $rl = str_replace('RAID_LEVEL_','', $news['tier']);
             if($rl == "MEGA") $raid_level_id = 6; else $raid_level_id = $rl;
             if($raid_level_id != '5' and $raid_level_id != '6') break; // Limit scheduling to tier 5 and mega only
-            $starttime = new DateTime("@".substr($news['startDate'],0,10));
-            $endtime = new DateTime("@".substr($news['endDate'],0,10));
-            $starttime->setTimezone($ph);
-            $endtime->setTimezone($ph);
-            // Pokebattler sets end time to 11:00, so lets just manually set everything to 10:00
-            $date_start = $starttime->format('Y-m-d').' 10:00:00';
-            $date_end = $endtime->format('Y-m-d').' 10:00:00';
+            $starttime = new DateTime("@".(substr($news['startDate'],0,10) + $tz_offset), new dateTimeZone('UTC'));
+            $endtime = new DateTime("@".(substr($news['endDate'],0,10) + $tz_offset), new dateTimeZone('UTC'));
+
+            $date_start = $starttime->format('Y-m-d H:i:s');
+            if($endtime->format('H') == '11') {
+                // Usually the switch happens at 10. Pokebattler sets the end time to 11, so we must manually set it to 10
+                $date_end = $endtime->format('Y-m-d').' 10:00:00';
+            }else {
+                $date_end = $endtime->format('Y-m-d H:i:s');
+            }
 
             $dex_id_form = explode('-',resolve_boss_name_to_ids($news['pokemon']),2);
             if($prev_start != $date_start) {
