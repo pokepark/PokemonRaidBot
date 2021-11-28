@@ -23,7 +23,13 @@ function read_upcoming_bosses($return_sql = false) {
             $starttime = new DateTime("@".(substr($news['startDate'],0,10) + $tz_offset), new dateTimeZone('UTC'));
             $endtime = new DateTime("@".(substr($news['endDate'],0,10) + $tz_offset), new dateTimeZone('UTC'));
 
+            // If the boss only appears for an hour, the eggs most likely start to spawn 20 minutes prior to the time.
+            $diff = $starttime->diff($endtime);
+            if($diff->format('%h') == 1) {
+                $starttime->sub(new DateInterval('PT20M'));
+            }
             $date_start = $starttime->format('Y-m-d H:i:s');
+
             if($endtime->format('H') == '11') {
                 // Usually the switch happens at 10. Pokebattler sets the end time to 11, so we must manually set it to 10
                 $date_end = $endtime->format('Y-m-d').' 10:00:00';
