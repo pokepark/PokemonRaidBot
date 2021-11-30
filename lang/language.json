@@ -2337,19 +2337,19 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "Uusi status"
+    "FI": "Uusi arvo"
   },
   "pokedex_current_status": {
     "NL": "Actuele status:",
     "DE": "Aktueller Status:",
     "EN": "Current status:",
-    "IT": "TRANSLATE:",
-    "PT-BR": "TRANSLATE:",
-    "RU": "TRANSLATE:",
-    "NO": "TRANSLATE:",
-    "FR": "TRANSLATE:",
-    "PL": "TRANSLATE:",
-    "FI": "TRANSLATE:"
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Nykyinen arvo:"
   },
   "pokedex_select_action": {
     "NL": "Selecteer een eigenschap om deze aan te passen:",
