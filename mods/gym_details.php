@@ -46,7 +46,7 @@ if($arg == 0 || $id == '0' || $id == '1') {
     } else {
         // Add navigation keys.
         $nav_keys = [];
-        $nav_keys[] = universal_inner_key($nav_keys, '0', 'gym_letter', 'gym_details', getTranslation('back'));
+        $nav_keys[] = universal_inner_key($nav_keys, $gymarea_id, 'gym_letter', 'gym_details', getTranslation('back'));
         $nav_keys[] = universal_inner_key($nav_keys, '0', 'exit', '0', getTranslation('abort'));
         $nav_keys = inline_key_array($nav_keys, 2);
         // Merge keys.

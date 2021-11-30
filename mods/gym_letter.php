@@ -33,13 +33,27 @@ if($arg == 'gym_delete') {
     $msg.= (($keys_and_gymarea['gymarea_name'] != '') ? CR . CR . getTranslation('current_gymarea') . ': ' . $keys_and_gymarea['gymarea_name'] : '');
 }
 
-// Add key for hidden gyms.
-$h_keys = [];
-$h_keys[] = universal_inner_key($h_keys, '0', 'gym_hidden_letter', $arg, getTranslation('hidden_gyms'));
-$h_keys = inline_key_array($h_keys, 1);
+$nav_keys = [];
 
+if($data['id'] != 0) {
+    $nav_keys[] = [
+        'text' => getTranslation('back'),
+        'callback_data' => '0:gym_letter:gym_details'
+    ];
+    // Add key for hidden gyms.
+    $h_keys = [];
+    $h_keys[] = universal_inner_key($h_keys, $data['id'], 'gym_hidden_letter', $arg, getTranslation('hidden_gyms'));
+    $h_keys = inline_key_array($h_keys, 1);
+    // Merge keys.
+    $keys = array_merge($h_keys, $keys);
+}
+$nav_keys[] = [
+        'text' => getTranslation('abort'),
+        'callback_data' => '0:exit:0'
+    ];
+$nav_keys = inline_key_array($nav_keys, 2);
 // Merge keys.
-$keys = array_merge($h_keys, $keys);
+$keys = array_merge($keys, $nav_keys);
 
 // Build callback message string.
 $callback_response = getTranslation('here_we_go');

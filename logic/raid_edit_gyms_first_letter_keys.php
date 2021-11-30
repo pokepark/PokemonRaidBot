@@ -2,7 +2,7 @@
 /**
  * Raid gym first letter selection
  * @param string $action
- * @param bool $hidden
+ * @param bool $hidden Show only hidden gyms?
  * @param int|false $gymarea_id
  * @return array
  */
@@ -103,8 +103,7 @@ function raid_edit_gyms_first_letter_keys($action = 'raid_by_gym', $hidden = fal
     // Add back navigation key.
     if($hidden == false) {
         $nav_keys = [];
-        if(!empty($gymarea_keys)) $keys = array_merge($keys, inline_key_array($gymarea_keys, 2));
-        $nav_keys[] = universal_inner_key($keys, '0', 'exit', '0', getTranslation('abort'));
+        if(!empty($gymarea_keys) && ($config->DEFAULT_GYM_AREA != false || $gymarea_id == false)) $keys = array_merge($keys, inline_key_array($gymarea_keys, 2));
 
         // Get the inline key array.
         $keys[] = $nav_keys;

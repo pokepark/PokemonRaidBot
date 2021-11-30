@@ -65,10 +65,21 @@ if($config->TUTORIAL_MODE && $new_user && (!$access or $access == 'BOT_ADMINS'))
                 ]
             ]
         ];
+    }else {
+        $keys[] = [
+                [
+                    'text'          => getTranslation('abort'),
+                    'callback_data' => '0:exit:0'
+                ]
+            ];
     }
 
     // Set message.
-    $msg = '<b>' . getTranslation('select_gym_first_letter') . '</b>';
+    if($config->DEFAULT_GYM_AREA == false) {
+        $msg = '<b>' . getTranslation('select_gym_area') . '</b>';
+    }else {
+        $msg = '<b>' . getTranslation('select_gym_first_letter') . '</b>';
+    }
     $msg.= (($keys_and_gymarea['gymarea_name'] != '') ? CR . CR . getTranslation('current_gymarea') . ': ' . $keys_and_gymarea['gymarea_name'] : '');
     $msg.= ($config->RAID_VIA_LOCATION ? (CR . CR .  getTranslation('send_location')) : '');
 

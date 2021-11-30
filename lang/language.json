@@ -755,6 +755,18 @@
     "PL": "Wybierz pierwszą litere nazwy Areny",
     "FI": "Valitse salin ensimmäinen kirjain:"
   },
+  "select_gym_area": {
+    "NL": "START",
+    "DE": "STARTEN",
+    "EN": "Select area:",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Valitse alue:"
+  },
   "select_gym": {
     "NL": "Beginletter geselecteerd.",
     "DE": "Anfangsbuchstabe ausgewählt.",
