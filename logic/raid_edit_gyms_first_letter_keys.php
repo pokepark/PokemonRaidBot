@@ -16,20 +16,13 @@ function raid_edit_gyms_first_letter_keys($action = 'raid_by_gym', $hidden = fal
         $json = json_decode(file_get_contents(CONFIG_PATH . '/geoconfig_gym_areas.json'),1);
         $points = [];
         foreach($json as $area) {
-            if($config->DEFAULT_GYM_AREA != false or $gymarea_id != false) {
-                $gymarea_id = ($gymarea_id != false) ? $gymarea_id : $config->DEFAULT_GYM_AREA;
-                if($gymarea_id == $area['id']) {
-                    foreach($area['path'] as $point) {
-                        $points[] = $point[0].' '.$point[1];
-                    }
-                    $gymarea_name = $area['name'];
-                    if($points[0] != $points[count($points)-1]) $points[] = $points[0];
-                } else {
-                    $gymarea_keys[] = [
-                        'text'          => $area['name'],
-                        'callback_data' => $area['id'] . ':' . $gymarea_action . ':' . $action
-                    ];
+            $gymarea_id = ($gymarea_id != false) ? $gymarea_id : $config->DEFAULT_GYM_AREA;
+            if($gymarea_id != false && $gymarea_id == $area['id']) {
+                foreach($area['path'] as $point) {
+                    $points[] = $point[0].' '.$point[1];
                 }
+                $gymarea_name = $area['name'];
+                if($points[0] != $points[count($points)-1]) $points[] = $points[0];
                 $skip_letter_keys = false;
             } else {
                 $gymarea_keys[] = [
