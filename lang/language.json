@@ -263,7 +263,7 @@
     "PL": "TRANSLATE",
     "FI": "Löydetyt tulevat raidibossit"
   },
-  "confirm_raplace_upcoming": {
+  "confirm_replace_upcoming": {
     "NL": "TRANSLATE",
     "DE": "TRANSLATE",
     "EN": "Would you like to replace the current data with what we found?",

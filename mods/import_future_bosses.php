@@ -52,7 +52,7 @@ if($arg == '1') {
         }
         $msg .= CR . CR . '<b><u>' . getTranslation('found_upcoming_bosses') . ':</u></b>';
         $msg .= $list;
-        $msg .= CR . CR . getTranslation('confirm_raplace_upcoming');
+        $msg .= CR . CR . getTranslation('confirm_replace_upcoming');
         $keys = [
             [
                 [
