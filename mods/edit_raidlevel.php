@@ -14,9 +14,15 @@ $gym_id = $data['arg'];
 $gym = get_gym($gym_id);
 
 // Back key id, action and arg
-$back_id = 0;
-$back_action = 'raid_by_gym';
-$back_arg = $data['id'];
+if(substr($data['id'],0,2) == 'gl') {
+    $back_id = substr($data['id'],2);
+    $back_action = 'raid_by_gym_letter';
+    $back_arg = '0';
+}else {
+    $back_id = 0;
+    $back_action = 'raid_by_gym';
+    $back_arg = $data['id'];
+}
 $gym_first_letter = $back_arg;
 
 // Telegram JSON array.

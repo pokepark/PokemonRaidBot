@@ -1,12 +1,14 @@
 <?php
 /**
  * Raid gym first letter selection
- * @param string $action
+ * @param string $action Action that is performed by gym letter keys
  * @param bool $hidden Show only hidden gyms?
  * @param int|false $gymarea_id
+ * @param string|false $gymarea_action Action that is performed by gym area keys
+ * @param string|false $gym_name_action Action that is performed by gym name keys
  * @return array
  */
-function raid_edit_gyms_first_letter_keys($action = 'raid_by_gym', $hidden = false, $gymarea_id = false, $gymarea_action = '')
+function raid_edit_gyms_first_letter_keys($action = 'raid_by_gym', $hidden = false, $gymarea_id = false, $gymarea_action = '', $gym_name_action = 'edit_raidlevel')
 {
     global $config;
     $gymarea_query = $gymarea_name = '';
@@ -80,17 +82,66 @@ function raid_edit_gyms_first_letter_keys($action = 'raid_by_gym', $hidden = fal
                 {$group_order}
                 "
             );
+        // If found over 20 gyms, print letters
+        if($rs->rowCount() > 20) {
+            while ($gym = $rs->fetch()) {
+            // Add first letter to keys array
+                $keys[] = array(
+                    'text'          => $gym['first_letter'],
+                    'callback_data' => $show_gym . ':' . $action . ':' . $gym['first_letter'] . (($gymarea_id) ? ',' .$gymarea_id : '')
+                );
+            }
 
-        while ($gym = $rs->fetch()) {
-        // Add first letter to keys array
-            $keys[] = array(
-                'text'          => $gym['first_letter'],
-                'callback_data' => $show_gym . ':' . $action . ':' . $gym['first_letter'] . (($gymarea_id) ? ',' .$gymarea_id : '')
+            // Get the inline key array.
+            $keys = inline_key_array($keys, 4);
+        }else {
+            // If less than 20 gyms was found, print gym names
+            if($action == 'list_by_gym') {
+                // Select only gyms with active raids
+                $query_condition = '
+                WHERE     end_time > UTC_TIMESTAMP()
+                AND       show_gym = ' . $show_gym;
+            }else {
+                $query_condition = 'WHERE show_gym = ' . $show_gym;
+            }
+            $rs = my_query(
+                "
+                SELECT    gyms.id, gyms.gym_name, gyms.ex_gym,
+                CASE WHEN SUM(raids.end_time > UTC_TIMESTAMP() - INTERVAL 10 MINUTE) THEN 1 ELSE 0 END AS active_raid
+                FROM gyms
+                LEFT JOIN raids
+                ON        raids.gym_id = gyms.id
+                {$query_condition}
+                {$gymarea_query}
+                {$group_order}
+                "
             );
-        }
+            // Init empty keys array.
+            $keys = [];
 
-        // Get the inline key array.
-        $keys = inline_key_array($keys, 4);
+            while ($gym = $rs->fetch()) {
+                $active_raid = active_raid_duplication_check($gym['id']);
+
+                // Show Ex-Gym-Marker?
+                if($config->RAID_CREATION_EX_GYM_MARKER && $gym['ex_gym'] == 1) {
+                    $ex_raid_gym_marker = (strtolower($config->RAID_EX_GYM_MARKER) == 'icon') ? EMOJI_STAR : $config->RAID_EX_GYM_MARKER;
+                    $gym_name = $ex_raid_gym_marker . SP . $gym['gym_name'];
+                } else {
+                    $gym_name = $gym['gym_name'];
+                }
+                // Add warning emoji for active raid
+                if ($active_raid > 0) {
+                    $gym_name = EMOJI_WARN . SP . $gym_name;
+                }
+                $keys[] = array(
+                    'text'          => $gym_name,
+                    'callback_data' => 'gl' . $gymarea_id . ':' . $gym_name_action . ':' . $gym['id']
+                );
+            }
+
+            // Get the inline key array.
+            $keys = inline_key_array($keys, 1);
+        }
     }
 
     // Add back navigation key.

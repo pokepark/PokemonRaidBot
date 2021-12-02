@@ -10,7 +10,7 @@ debug_log('LIST');
 if(!isset($skip_access) or $skip_access != true) bot_access_check($update, 'list');
 
 // Set keys.
-$keys_and_gymarea = raid_edit_gyms_first_letter_keys('list_by_gym', false, false, 'listall');
+$keys_and_gymarea = raid_edit_gyms_first_letter_keys('list_by_gym', false, false, 'listall', 'list_raid');
 $keys = $keys_and_gymarea['keys'];
 
 // Set message.
