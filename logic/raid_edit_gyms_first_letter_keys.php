@@ -109,7 +109,7 @@ function raid_edit_gyms_first_letter_keys($action = 'raid_by_gym', $hidden = fal
             $rs = my_query(
                 "
                 SELECT    gyms.id, gyms.gym_name, gyms.ex_gym,
-                CASE WHEN SUM(raids.end_time > UTC_TIMESTAMP() - INTERVAL 10 MINUTE) THEN 1 ELSE 0 END AS active_raid
+                CASE WHEN raids.end_time > UTC_TIMESTAMP() - INTERVAL 10 MINUTE THEN 1 ELSE 0 END AS active_raid
                 FROM gyms
                 LEFT JOIN raids
                 ON        raids.gym_id = gyms.id
