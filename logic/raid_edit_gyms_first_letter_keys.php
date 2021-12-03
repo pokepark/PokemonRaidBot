@@ -73,6 +73,8 @@ function raid_edit_gyms_first_letter_keys($action = 'raid_by_gym', $hidden = fal
             $query_condition = 'WHERE show_gym = ' . $show_gym;
         }
 
+        $rs_count = my_query("SELECT COUNT(gym_name) as count FROM gyms {$query_condition} {$gymarea_query}");
+        $gym_count = $rs_count->fetch();
         $rs = my_query(
                 "
                 {$select}
@@ -83,7 +85,7 @@ function raid_edit_gyms_first_letter_keys($action = 'raid_by_gym', $hidden = fal
                 "
             );
         // If found over 20 gyms, print letters
-        if($rs->rowCount() > 20) {
+        if($gym_count['count'] > 20) {
             while ($gym = $rs->fetch()) {
             // Add first letter to keys array
                 $keys[] = array(
@@ -120,23 +122,25 @@ function raid_edit_gyms_first_letter_keys($action = 'raid_by_gym', $hidden = fal
             $keys = [];
 
             while ($gym = $rs->fetch()) {
-                $active_raid = active_raid_duplication_check($gym['id']);
+                if($gym['id'] != NULL) {
+                    $active_raid = active_raid_duplication_check($gym['id']);
 
-                // Show Ex-Gym-Marker?
-                if($config->RAID_CREATION_EX_GYM_MARKER && $gym['ex_gym'] == 1) {
-                    $ex_raid_gym_marker = (strtolower($config->RAID_EX_GYM_MARKER) == 'icon') ? EMOJI_STAR : $config->RAID_EX_GYM_MARKER;
-                    $gym_name = $ex_raid_gym_marker . SP . $gym['gym_name'];
-                } else {
-                    $gym_name = $gym['gym_name'];
+                    // Show Ex-Gym-Marker?
+                    if($config->RAID_CREATION_EX_GYM_MARKER && $gym['ex_gym'] == 1) {
+                        $ex_raid_gym_marker = (strtolower($config->RAID_EX_GYM_MARKER) == 'icon') ? EMOJI_STAR : $config->RAID_EX_GYM_MARKER;
+                        $gym_name = $ex_raid_gym_marker . SP . $gym['gym_name'];
+                    } else {
+                        $gym_name = $gym['gym_name'];
+                    }
+                    // Add warning emoji for active raid
+                    if ($active_raid > 0) {
+                        $gym_name = EMOJI_WARN . SP . $gym_name;
+                    }
+                    $keys[] = array(
+                        'text'          => $gym_name,
+                        'callback_data' => 'gl' . $gymarea_id . ':' . $gym_name_action . ':' . $gym['id']
+                    );
                 }
-                // Add warning emoji for active raid
-                if ($active_raid > 0) {
-                    $gym_name = EMOJI_WARN . SP . $gym_name;
-                }
-                $keys[] = array(
-                    'text'          => $gym_name,
-                    'callback_data' => 'gl' . $gymarea_id . ':' . $gym_name_action . ':' . $gym['id']
-                );
             }
 
             // Get the inline key array.
