@@ -10,7 +10,7 @@ debug_log('gym_letter()');
 $arg = $data['arg'];
 
 // Set keys.
-$keys_and_gymarea = raid_edit_gyms_first_letter_keys($arg, false, $data['id'], 'gym_letter');
+$keys_and_gymarea = raid_edit_gyms_first_letter_keys($arg, false, $data['id'], 'gym_letter', 'gym_details');
 $keys = $keys_and_gymarea['keys'];
 
 // Check access, show message and set keys based on arg.
