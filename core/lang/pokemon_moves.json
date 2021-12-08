@@ -3430,5 +3430,41 @@
         "DE": "Meteorologe",
         "IT": "Palla Clima",
         "RU": "Шар Стихии"
+    },
+    "pokemon_move_353": {
+        "PT-BR": "Caninos Psíquicos",
+        "EN": "Psychic Fangs",
+        "FI": "Psychic Fangs",
+        "NL": "Psychic Fangs",
+        "NO": "Psychic Fangs",
+        "PL": "Psychic Fangs",
+        "FR": "Psychic Fangs",
+        "DE": "Psychobeißer",
+        "IT": "Psicozanna",
+        "RU": "Психоклыки"
+    },
+    "pokemon_move_354": {
+        "PT-BR": "Fúria de Hiperespaço",
+        "EN": "Hyperspace Fury",
+        "FI": "Hyperspace Fury",
+        "NL": "Hyperspace Fury",
+        "NO": "Hyperspace Fury",
+        "PL": "Hyperspace Fury",
+        "FR": "Furie Dimension",
+        "DE": "Dimensionswahn",
+        "IT": "Urtodimensionale",
+        "RU": "Гиперпространственная Ярость"
+    },
+    "pokemon_move_355": {
+        "PT-BR": "Fenda de Hiperespaço",
+        "EN": "Hyperspace Hole",
+        "FI": "Hyperspace Hole",
+        "NL": "Hyperspace Hole",
+        "NO": "Hyperspace Hole",
+        "PL": "Hyperspace Hole",
+        "FR": "TrouDimensionnel",
+        "DE": "Dimensionsloch",
+        "IT": "Forodimensionale",
+        "RU": "Гиперпространственная Дыра"
     }
 }
