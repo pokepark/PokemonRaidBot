@@ -18,14 +18,14 @@ $arg = $data['arg'];
 // All raid levels?
 if($id == 'X' . RAID_LEVEL_ALL) {
     // TODO(artanicus): get this from somewhere instead of hardcoded
-    $clear = "'X','6','5','4','3','2','1'";
+    $clear = "'X','6','5','3','1'";
 } else {
     $clear = "'" . $id . "'";
 }
 
 // Specify raid levels.
 // TODO(artanicus): get this from somewhere instead of hardcoded
-$levels = array('X', '6', '5', '4', '3', '2', '1');
+$levels = array('X', '6', '5', '3', '1');
 
 // Raid level selection
 if($arg == 0) {
@@ -63,9 +63,14 @@ if($arg == 0) {
     // Get all pokemon with raid levels from database.
     $rs = my_query(
         "
-        SELECT    pokedex_id, pokemon_form_name, pokemon_form_id, raid_level
-        FROM      pokemon
-        WHERE     raid_level IN ({$clear})
+        SELECT    pokemon.pokedex_id, pokemon.pokemon_form_name, pokemon.pokemon_form_id, raid_bosses.raid_level
+        FROM      raid_bosses
+        LEFT JOIN pokemon
+        ON        pokemon.pokedex_id = raid_bosses.pokedex_id
+        AND       pokemon.pokemon_form_id = raid_bosses.pokemon_form_id
+        WHERE     raid_bosses.raid_level IN ({$clear})
+        AND       raid_bosses.date_start = '1970-01-01 00:00:01'
+        AND       raid_bosses.date_end = '2038-01-19 03:14:07'
         ORDER BY  raid_level, pokedex_id, pokemon_form_name != 'normal', pokemon_form_name
         "
     );
