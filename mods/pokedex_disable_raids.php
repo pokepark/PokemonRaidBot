@@ -126,8 +126,8 @@ if($arg == 0) {
 
     // All levels
     if($id == 'X' . RAID_LEVEL_ALL) {
-        foreach($levels as $l) {
-            $msg .= getTranslation($lv . 'stars');
+        foreach($levels as $lv) {
+            $msg .= getTranslation($lv . 'stars') . CR;
         }
 
      // Specific level
