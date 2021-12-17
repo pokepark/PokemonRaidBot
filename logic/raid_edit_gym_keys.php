@@ -65,8 +65,13 @@ function raid_edit_gym_keys($first, $gymarea_id = false, $action = 'edit_raidlev
         LEFT JOIN raids
         ON        raids.gym_id = gyms.id
         WHERE     UPPER(LEFT(gym_name, $first_length)) = UPPER('{$first}')
+<<<<<<< HEAD
 	$not
 	$gymarea_query
+=======
+        $not
+        $gymarea_query
+>>>>>>> 974937cda6355f2a888cf0c1ac394214e6980f17
         AND       gyms.show_gym = {$show_gym}
         GROUP BY  gym_name, raids.gym_id, gyms.id, gyms.ex_gym
         ORDER BY  gym_name " . $query_collate . "

@@ -98,4 +98,8 @@ curl_json_multi_request($tg_json);
 $dbh = null;
 exit();
 
+<<<<<<< HEAD
 ?>
+=======
+?>
+>>>>>>> 974937cda6355f2a888cf0c1ac394214e6980f17

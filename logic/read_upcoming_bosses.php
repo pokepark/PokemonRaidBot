@@ -28,7 +28,11 @@ function read_upcoming_bosses($return_sql = false) {
             if($diff->format('%h') == 1) {
                 $starttime->sub(new DateInterval('PT20M'));
             }
+<<<<<<< HEAD
 	    $date_start = $starttime->format('Y-m-d H:i:s');
+=======
+            $date_start = $starttime->format('Y-m-d H:i:s');
+>>>>>>> 974937cda6355f2a888cf0c1ac394214e6980f17
 
             if($endtime->format('H') == '11') {
                 // Usually the switch happens at 10. Pokebattler sets the end time to 11, so we must manually set it to 10
@@ -61,4 +65,8 @@ function read_upcoming_bosses($return_sql = false) {
     if($return_sql) return $sql;
     else return $list;
 }
+<<<<<<< HEAD
 ?>
+=======
+?>
+>>>>>>> 974937cda6355f2a888cf0c1ac394214e6980f17

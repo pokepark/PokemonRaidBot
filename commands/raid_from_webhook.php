@@ -174,7 +174,11 @@ foreach ($update as $raid) {
                     gym_team = :gym_team,
                     move1 = :move1,
                     move2 = :move2,
+<<<<<<< HEAD
 		    gender = :gender,
+=======
+                    gender = :gender,
+>>>>>>> 974937cda6355f2a888cf0c1ac394214e6980f17
                     costume = :costume
                 WHERE
                     id = :id
@@ -185,8 +189,13 @@ foreach ($update as $raid) {
                 'gym_team' => $team,
                 'move1' => $move_1,
                 'move2' => $move_2,
+<<<<<<< HEAD
 		'gender' => $gender,
 		'costume' => $costume,
+=======
+                'gender' => $gender,
+                'costume' => $costume,
+>>>>>>> 974937cda6355f2a888cf0c1ac394214e6980f17
                 'id' => $raid_id
             ];
             $statement = $dbh->prepare( $query );
@@ -224,8 +233,13 @@ foreach ($update as $raid) {
                 'level' => $level,
                 'move1' => $move_1,
                 'move2' => $move_2,
+<<<<<<< HEAD
 		'gender' => $gender,
 		'costume' => $costume
+=======
+                'gender' => $gender,
+                'costume' => $costume
+>>>>>>> 974937cda6355f2a888cf0c1ac394214e6980f17
             ];
             $statement = $dbh->prepare( $query );
             $statement->execute($execute_array);

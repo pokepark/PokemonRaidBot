@@ -28,9 +28,15 @@ To automatically keep the raid boss data somewhat up to date, you can schedule t
 
 ``curl -k -d '{"callback_query":{"data":"LEVELS:update_bosses:SOURCE"}}' https://localhost/botdir/index.php?apikey=111111111:AABBccddEEFFggHHiijjKKLLmmnnOOPPqq``
 
+<<<<<<< HEAD
 Currently supported arguments for LEVELS are raid levels `1, 3, 5, 6` in comma separated string, and `scheduled` to execute import of scheduled info for tier 5 and 6 raids.
 
 Currently supported arguments for SOURCE are `pogoinfo`, which is only used when importing specific levels.
+=======
+Currently supported arguments for LEVELS are raid levels ``1, 3, 5, 6`` in comma separated string, and ``scheduled`` to execute import of scheduled info for tier 5 and 6 raids.
+
+Currently supported arguments for SOURCE are ``pogoinfo``, which is only used when importing specific levels.
+>>>>>>> 974937cda6355f2a888cf0c1ac394214e6980f17
 
 For the best results you can use these two commands together:
 ``curl -k -d '{"callback_query":{"data":"1,3:update_bosses:pogoinfo"}}' https://localhost/botdir/index.php?apikey=111111111:AABBccddEEFFggHHiijjKKLLmmnnOOPPqq

@@ -13,14 +13,18 @@ include_once(CORE_BOT_PATH . '/apikey.php');
 
 // We maybe receive a webhook so far...
 foreach ($update as $raid) {
+<<<<<<< HEAD
     if (isset($raid['type']) && $raid['type'] == 'raid') {    
+=======
+    if (isset($raid['type']) && $raid['type'] == 'raid') {
+>>>>>>> 974937cda6355f2a888cf0c1ac394214e6980f17
         // Create raid(s) and exit.
         include_once(ROOT_PATH . '/commands/raid_from_webhook.php');
         $dbh = null;
         exit();
     }
 }
-    
+
 // DDOS protection
 include_once(CORE_BOT_PATH . '/ddos.php');
 
@@ -84,7 +88,7 @@ if (isset($update['callback_query'])) {
                 debug_log("Response handeled successfully!");
                 // Delete the entry if the call was handled without errors
                 my_query("DELETE FROM user_input WHERE id='{$res['id']}'");
-                
+
                 $dbh = null;
                 exit();
             }

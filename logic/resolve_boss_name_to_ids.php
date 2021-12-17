@@ -67,4 +67,8 @@ function resolve_boss_name_to_ids($pokemon_name) {
     return get_pokemon_id_by_name($name . '-' . $form, true);
 }
 
+<<<<<<< HEAD
 ?> 
+=======
+?>
+>>>>>>> 974937cda6355f2a888cf0c1ac394214e6980f17

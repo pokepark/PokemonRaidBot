@@ -22,7 +22,11 @@ function raid_edit_gyms_first_letter_keys($action = 'raid_by_gym', $hidden = fal
             if($gymarea_id != false && $gymarea_id == $area['id']) {
                 foreach($area['path'] as $point) {
                     $points[] = $point[0].' '.$point[1];
+<<<<<<< HEAD
 		}
+=======
+                }
+>>>>>>> 974937cda6355f2a888cf0c1ac394214e6980f17
                 $gymarea_name = $area['name'];
                 if($points[0] != $points[count($points)-1]) $points[] = $points[0];
                 $skip_letter_keys = false;
@@ -32,7 +36,11 @@ function raid_edit_gyms_first_letter_keys($action = 'raid_by_gym', $hidden = fal
                     'callback_data' => $area['id'] . ':' . $gymarea_action . ':' . $action
                 ];
             }
+<<<<<<< HEAD
 	}
+=======
+        }
+>>>>>>> 974937cda6355f2a888cf0c1ac394214e6980f17
         $polygon_string = implode(',', $points);
         $gymarea_query = "AND ST_CONTAINS(ST_GEOMFROMTEXT('POLYGON((".$polygon_string."))'), ST_GEOMFROMTEXT(CONCAT('POINT(',lat,' ',lon,')')))";
     }
@@ -92,7 +100,11 @@ function raid_edit_gyms_first_letter_keys($action = 'raid_by_gym', $hidden = fal
                     'text'          => $gym['first_letter'],
                     'callback_data' => $show_gym . ':' . $action . ':' . $gym['first_letter'] . (($gymarea_id) ? ',' .$gymarea_id : '')
                 );
+<<<<<<< HEAD
 	    }
+=======
+            }
+>>>>>>> 974937cda6355f2a888cf0c1ac394214e6980f17
 
             // Get the inline key array.
             $keys = inline_key_array($keys, 4);
@@ -114,7 +126,11 @@ function raid_edit_gyms_first_letter_keys($action = 'raid_by_gym', $hidden = fal
                 LEFT JOIN raids
                 ON        raids.gym_id = gyms.id
                 {$query_condition}
+<<<<<<< HEAD
 	        {$gymarea_query}
+=======
+                {$gymarea_query}
+>>>>>>> 974937cda6355f2a888cf0c1ac394214e6980f17
                 GROUP BY  gym_name, raids.gym_id, gyms.id, gyms.ex_gym
                 {$group_order}
                 "
@@ -151,8 +167,13 @@ function raid_edit_gyms_first_letter_keys($action = 'raid_by_gym', $hidden = fal
 
     // Add back navigation key.
     if($hidden == false) {
+<<<<<<< HEAD
 	$nav_keys = [];
 	if(!empty($gymarea_keys) && ($config->DEFAULT_GYM_AREA != false || $gymarea_id == false)) $keys = array_merge($keys, inline_key_array($gymarea_keys, 2));
+=======
+        $nav_keys = [];
+        if(!empty($gymarea_keys) && ($config->DEFAULT_GYM_AREA != false || $gymarea_id == false)) $keys = array_merge($keys, inline_key_array($gymarea_keys, 2));
+>>>>>>> 974937cda6355f2a888cf0c1ac394214e6980f17
 
         // Get the inline key array.
         $keys[] = $nav_keys;

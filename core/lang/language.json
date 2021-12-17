@@ -480,6 +480,18 @@
     "FI": "Korvaa",
     "ES": "Reemplazar"
   },
+  "replace": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Replace",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Korvaa"
+  },
   "delete": {
     "NL": "Verwijder",
     "DE": "Löschen",
