@@ -162,12 +162,12 @@ Timezone, Google maps API and OpenStreetMap API
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Timezone
-~~~~~~~~
+~~~~~~~
 
 Set ``TIMEZONE`` to the timezone you wish to use for the bot. Predefined value from the example config is "Europe/Berlin".
 
 Google maps API
-~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~
 
 Optionally you can you use Google maps API to lookup addresses of gyms based on latitude and longitude. Therefore get a Google maps API key.
 
@@ -190,7 +190,7 @@ Finally check the dashboard again and make sure Google Maps Geocoding API and Go
 Set ``MAPS_LOOKUP`` to true and put the API key in ``MAPS_API_KEY`` in your config.
 
 OpenStreetMap API
-~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~
 
 To use OpenStreetMap's Nominatim API to lookup addresses of gyms, set ``OSM_LOOKUP`` to ``true`` and  ``MAPS_LOOKUP`` to ``false``.
 
@@ -203,7 +203,9 @@ Raid creation options
 
 There are several options to customize the creation of raid polls:
 
-Set ``RAID_VIA_LOCATION`` to true to allow raid creation from a location shared with the bot.
+Set ``RAID_VIA_LOCATION`` to true to allow raid creation from a location shared with the bot. Use together with ``RAID_VIA_LOCATION_FUNCTION``.
+
+Set ``RAID_VIA_LOCATION_FUNCTION`` to select which action to perform with the shared location. ``create`` (default) to create a permanent gym, which can later be edited, ``list`` to list all active raids nearby the location, ``remote`` to create a temporary remote raid gym.
 
 Set ``RAID_EGG_DURATION`` to the maximum amount of minutes a user can select for the egg hatching phase.
 
@@ -319,7 +321,7 @@ Example to replace the with a symbolic link:
    ln -sf /var/www/html/pokemon_sprites pokemon
 
 Font support
-~~~~~~~~~~~~
+~~~~~~~~~~~
 
 If we included support for every unicode glyph under the sun the fonts alone would be over 1GB, thus we only ship the base Noto Sans fonts. If you need support for example for CJK glyphs, download a better suited font from `google.com/get/noto <https://www.google.com/get/noto/>`_\ , place the ``Regular`` & ``Bold`` font files in ``fonts/`` and override them in ``config/config.json``\ , for example:
 
@@ -370,14 +372,14 @@ For the ID of a chat either forward a message from the chat to a bot like @RawDa
 Examples:
 
 Sharing all raids to two chats
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Predefine sharing all raids to the chats -100111222333 and -100444555666
 
 ``"SHARE_CHATS":"-100111222333,-100444555666"``
 
 Sharing split to channels by level
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Predefine sharing all raids to the chats -100111222333 and -100444555666, except level 5 raids which will be shared to the chat -100999666333
 
@@ -385,7 +387,7 @@ Predefine sharing all raids to the chats -100111222333 and -100444555666, except
 ``"SHARE_CHATS_LEVEL_5":"-100444555666"``
 
 Raids from Webhook
-~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~
 
 You can receive Raids from a mapping system such as MAD via Webhook.
 For that you need to setup ``WEBHOOK_CREATOR``\ , and to automatically share raids to chats, 
@@ -394,7 +396,7 @@ or by Raidlevel ``"WEBHOOK_CHATS_LEVEL_5":"-100444555666"``
 All incoming raids will be published in these chats.
 
 Filter Raids from Webhook / geoconfig.json
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you have multiple Chats for different Areas you can setup them in
 ``"WEBHOOK_CHATS_LEVEL_5_0":"-100444555666"`` matching with your configuration in the geoconfig.json.
@@ -403,7 +405,7 @@ When you are finished, click on 'exp' and save the coordinates to your geoconfig
 The raids will only be posted into the defined chats.
 
 Extended Raid-Sharing
-~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~
 
 If you are using multiple Channel, you can setup one Channel as Main-Channel "SHARE_CHATS_AFTER_ATTENDANCE":"-100444555666" and on votes in different Channel, the Raid will be shared to your Main-Channel. Activate this function with "SHARE_AFTER_ATTENDANCE":true
 This is important for Raids from Webhooks. All Raids were posted to one Channel, which can be muted to the users. But if someone votes for a raid, this raid will be posted to a unmuted channel, where all others get a notification.
@@ -768,7 +770,7 @@ A few examples for access files can be found below the permission overview table
 
 
 Examples
-~~~~~~~~
+~~~~~~~
 
 *Allow the user 111555999 to create raid polls and share them to the predefined chat list*
 
@@ -913,7 +915,7 @@ Config reference
    * - DB_USER
      - Username of dedicated RaidBot DB user
    * - DDOS_MAXIMUM
-     - ?
+     - Number of actions per minute an user is allowed to perform before getting locked out for ddosing
    * - DEBUG
      - Output helpful debugging messages to ``DEBUG_LOGFILE``
    * - DEBUG_LOGFILE
@@ -952,6 +954,10 @@ Config reference
      - URL to your map. This is displayed under every raid poll.
    * - CUSTOM_TRAINERNAME
      - Book, allow users to add custom trainernames via ``/trainer`` command
+   * - ENABLE_GYM_AREAS
+     - To divide gyms into areas when making selections through ``/start``, ``/listall`` etc. set this to true. Areas are defined in geoconfig_gym_areas.json.
+   * - DEFAULT_GYM_AREA": false,
+     - ID of default gymarea. Can also be set to false to only display areas.
    * - PORTAL_IMPORT
      - Bool, allow importing gyms via portal import Telegram bots
    * - RAID_ANYTIME
@@ -1036,8 +1042,6 @@ Config reference
      - TRUE: Will show the Route to the Gym while clicking onto gym-address - FALSE: Will open Google Maps and only show the gym as a point in the map.
    * - RAID_POLL_SHOW_NICK_OVER_NAME
      - Show users Telegram @username instead of name
-   * - RAID_WANT_INVITE
-     - Bool, allow participants to indicate that they wish to be invited to the raid
    * - RAID_POLL_SHOW_TRAINERCODE
      - With /trainer everyone can set his trainercode and it will be shown on raidpolls, if the trainer chooses everytime (or renamed to invite me) and inside raidalarm messages
    * - RAID_POLL_SHOW_TRAINERNAME_STRING
@@ -1054,12 +1058,12 @@ Config reference
      - Bool, Hide the ``Raid done`` button in raid polls after the raid has ended
    * - RAID_REMOTEPASS_USERS_LIMIT
      - Integer, How many remote participants to allow into a single raid
-   * - RAID_WANT_INVITE
-     - Bool, allow participants to indicate that they wish to be invited to the raid
    * - RAID_SLOTS
      - Amount of minutes between raid poll voting slots
    * - RAID_VIA_LOCATION
-     - Bool, enable creating raids by sharing a location with the bot
+     - Bool, enable creating or sharing raids by sharing a location with the bot. Works together with ``RAID_VIA_LOCATION_FUNCTION``.
+   * - RAID_VIA_LOCATION_FUNCTION
+     - ``create``, ``list`` or ``remote``, which function to perform when user shares a location with the bot. ``create`` to create a permanent gym, which can later be edited, ``list`` to list all active raids nearby the location, ``remote`` to create a temporary remote raid gym.
    * - RAID_VOTE_ICONS
      - Bool, use icons on raid poll buttons
    * - RAID_VOTE_TEXT
@@ -1080,8 +1084,6 @@ Config reference
      - List of Telegram chat IDs available for sharing any raids
    * - MYSQL_SORT_COLLATE
      - Charset added to SQL query for sorting gym names
-   * - LIST_BY_LOCATION
-     - Bool, If true, when sending location to bot, instead of creating a raid, it lists nearby active raids
    * - TIMEZONE
      - Timezone definition to use as per `TZ database names <https://www.wikiwand.com/en/List_of_tz_database_time_zones#/List>`_
    * - TRAINER_MAX_LEVEL

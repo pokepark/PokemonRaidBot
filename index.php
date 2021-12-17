@@ -11,13 +11,9 @@ debug_log("RAID-BOT '" . $config->BOT_ID . "'");
 // Check API Key and get input from telegram / webhook
 include_once(CORE_BOT_PATH . '/apikey.php');
 
-// Database connection
-include_once(CORE_BOT_PATH . '/db.php');
-
 // We maybe receive a webhook so far...
 foreach ($update as $raid) {
-    if (isset($raid['type']) && $raid['type'] == 'raid') {
-    
+    if (isset($raid['type']) && $raid['type'] == 'raid') {    
         // Create raid(s) and exit.
         include_once(ROOT_PATH . '/commands/raid_from_webhook.php');
         $dbh = null;
@@ -51,7 +47,7 @@ if (isset($update['callback_query'])) {
 
 // Location received.
 } else if (isset($update['message']['location']) && $update['message']['chat']['type'] == 'private') {
-    if($config->LIST_BY_LOCATION) {
+    if($config->RAID_VIA_LOCATION_FUNCTION == 'list') {
         include_once(ROOT_PATH . '/mods/share_raid_by_location.php');
     }else {
         // Create raid and exit.

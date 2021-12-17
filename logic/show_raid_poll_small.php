@@ -35,8 +35,9 @@ function show_raid_poll_small($raid, $override_language = false)
         "
         SELECT          count(attend_time)          AS count,
                         sum(remote = 0)             AS count_in_person,
-                        sum(remote = 1)             AS count_remote,
-                        sum(extra_alien)           AS extra_alien
+                        sum(remote = 1) + sum(case when remote = 1 then extra_in_person else 0 end)             AS count_remote,
+                        sum(case when remote = 0 then extra_in_person else 0 end)        AS extra_in_person,
+                        sum(extra_alien)            AS extra_alien
         FROM            attendance
         LEFT JOIN       users
           ON            attendance.user_id = users.user_id
@@ -54,11 +55,12 @@ function show_raid_poll_small($raid, $override_language = false)
         // Count by team.
         $count_in_person = $row['count_in_person'];
         $count_remote = $row['count_remote'];
+        $extra_in_person = $row['extra_in_person'];
         $extra_alien = $row['extra_alien'];
 
         // Add to message.
-        $msg .= EMOJI_GROUP . '<b> ' . ($row['count'] + $row['count_in_person'] + $row['count_remote'] + $row['extra_alien']) . '</b> — ';
-        $msg .= (($count_in_person > 0) ? EMOJI_IN_PERSON . $count_in_person . '  ' : '');
+        $msg .= EMOJI_GROUP . '<b> ' . ($count_in_person + $count_remote + $extra_in_person + $extra_alien) . '</b> — ';
+        $msg .= (($count_in_person > 0) ? EMOJI_IN_PERSON . ($count_in_person + $extra_in_person) . '  ' : '');
         $msg .= (($count_remote > 0) ? EMOJI_REMOTE . $count_remote . '  ' : '');
         $msg .= (($extra_alien > 0) ? EMOJI_ALIEN . $extra_alien . '  ' : '');
         $msg .= CR;

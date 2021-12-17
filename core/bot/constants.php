@@ -18,7 +18,8 @@ $languages = array(
     'pt' => 'PT-BR',
     'ru' => 'RU',
     'fr' => 'FR',
-    'fi' => 'FI'
+    'fi' => 'FI',
+    'es' => 'ES'
 );
 
 // Icons.

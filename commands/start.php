@@ -50,7 +50,8 @@ if($config->TUTORIAL_MODE && $new_user && (!$access or $access == 'BOT_ADMINS'))
 
     // Get the keys if nothing was returned. 
     if(!$keys) {
-        $keys = raid_edit_gyms_first_letter_keys();
+        $keys_and_gymarea = raid_edit_gyms_first_letter_keys('raid_by_gym', false, false, 'raid_by_gym_letter');
+        $keys = $keys_and_gymarea['keys'];
     }
 
     // No keys found.
@@ -64,10 +65,23 @@ if($config->TUTORIAL_MODE && $new_user && (!$access or $access == 'BOT_ADMINS'))
                 ]
             ]
         ];
+    }else {
+        $keys[] = [
+                [
+                    'text'          => getTranslation('abort'),
+                    'callback_data' => '0:exit:0'
+                ]
+            ];
     }
 
     // Set message.
-    $msg = '<b>' . getTranslation('select_gym_first_letter') . '</b>' . ($config->RAID_VIA_LOCATION ? (CR2 . CR .  getTranslation('send_location')) : '');
+    if($config->DEFAULT_GYM_AREA == false) {
+        $msg = '<b>' . getTranslation('select_gym_area') . '</b>';
+    }else {
+        $msg = '<b>' . getTranslation('select_gym_first_letter') . '</b>';
+    }
+    $msg.= (($keys_and_gymarea['gymarea_name'] != '') ? CR . CR . getTranslation('current_gymarea') . ': ' . $keys_and_gymarea['gymarea_name'] : '');
+    $msg.= ($config->RAID_VIA_LOCATION ? (CR . CR .  getTranslation('send_location')) : '');
 
     // Send message.
     send_message($update['message']['chat']['id'], $msg, $keys, ['reply_markup' => ['selective' => true, 'one_time_keyboard' => true]]);

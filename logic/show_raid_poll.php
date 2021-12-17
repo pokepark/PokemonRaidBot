@@ -50,7 +50,8 @@ function show_raid_poll($raid, $inline = false)
 
     // Add maps link to message.
     if (!empty($raid['address'])) {
-        $msg = raid_poll_message($msg, ($config->RAID_PICTURE ? $raid['gym_name'].': ' : ''). mapslink($raid) . CR);
+
+        $msg = raid_poll_message($msg, getPublicTranslation('address') . ': ' . mapslink($raid) . CR);
     } else {
         // Get the address.
         $addr = get_address($raid['lat'], $raid['lon']);
@@ -66,10 +67,10 @@ function show_raid_poll($raid, $inline = false)
                 "
             );
             //Use new address
-            $msg = raid_poll_message($msg, ($config->RAID_PICTURE ? $raid['gym_name'].': ' : ''). mapslink($raid,$address) . CR);
+            $msg = raid_poll_message($msg, getPublicTranslation('address') . ': ' . mapslink($raid,$address) . CR);
         } else {
             //If no address is found show maps link
-            $msg = raid_poll_message($msg, ($config->RAID_PICTURE ? $raid['gym_name'].': ' : ''). mapslink($raid,'1') . CR);
+            $msg = raid_poll_message($msg, getPublicTranslation('address') . ': ' . mapslink($raid,'1') . CR);
         }
     }
 
@@ -270,10 +271,10 @@ function show_raid_poll($raid, $inline = false)
     if($time_now > $raid['start_time']) {
         // Add raid is done message.
         if($time_now > $raid['end_time']) {
-            $msg = raid_poll_message($msg, '<b>' . getPublicTranslation('raid_done') . '</b>' . CR);
-        // Add time left message.
+	    $msg = raid_poll_message($msg,  getPublicTranslation('raid') . ': <b>' . getPublicTranslation('raid_done') . '</b>' . CR);
+	// Add time left message.
         } else {
-            $msg = raid_poll_message($msg, getPublicTranslation('raid') . ' — <b>' . getPublicTranslation('still') . ' ' . $time_left . 'h</b>' . CR);
+            $msg = raid_poll_message($msg, getPublicTranslation('raid') . ': <b>' . getPublicTranslation('still') . ' ' . $time_left . ' ' . getPublicTranslation('minutes') . ' </b>' . CR);
         }
         if($cnt_all > 0 || $buttons_hidden) {
             // Display raid boss CP values.

@@ -4,6 +4,7 @@
 /access/**
 /custom/**
 /ddos/**
+/cron/**
 !/access/.gitkeep
 !/custom/.gitkeep
 !/ddos/.gitkeep

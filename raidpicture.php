@@ -250,7 +250,13 @@ if($time_now < $raid['end_time']) {
 
         // Getting the actual icon filename
         $p_icon = "pokemon_icon_" . $icon_suffix;
-        if($raid['shiny'] == 1 && $config->RAID_PICTURE_SHOW_SHINY) {
+        if($raid['costume'] != 0) {
+            $p_icon .= '_' . str_pad($raid['costume'], 2, '0', STR_PAD_LEFT);
+
+            $costume = json_decode(file_get_contents(ROOT_PATH . '/protos/costume.json'), true);
+            $addressable_icon .= '.c' . array_search($raid['costume'],$costume);
+        }
+	if($raid['shiny'] == 1 && $config->RAID_PICTURE_SHOW_SHINY) {
             $p_icon = $p_icon . "_shiny";
             $addressable_icon .= '.s';
             $shiny_icon = grab_img(IMAGES_PATH . "/shinystars.png");

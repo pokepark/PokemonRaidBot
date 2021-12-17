@@ -9,7 +9,8 @@
     "NO": "Norsk",
     "FR": "Français",
     "PL": "Polski",
-    "FI": "Suomi"
+    "FI": "Suomi",
+    "ES": "Inglés"
   },
   "weekday_1": {
     "NL": "Maandag",
@@ -21,7 +22,8 @@
     "NO": "Mandag",
     "FR": "Lundi",
     "PL": "Poniedziałek",
-    "FI": "Maanantai"
+    "FI": "Maanantai",
+    "ES": "Lunes"
   },
   "weekday_2": {
     "NL": "Dinsdag",
@@ -33,7 +35,8 @@
     "NO": "Tirsdag",
     "FR": "Mardi",
     "PL": "Wtorek",
-    "FI": "Tiistai"
+    "FI": "Tiistai",
+    "ES": "Martes"
   },
   "weekday_3": {
     "NL": "Woensdag",
@@ -45,7 +48,8 @@
     "NO": "Onsdag",
     "FR": "Mercredi",
     "PL": "Środa",
-    "FI": "Keskiviikko"
+    "FI": "Keskiviikko",
+    "ES": "Miércoles"
   },
   "weekday_4": {
     "NL": "Donderdag",
@@ -57,7 +61,8 @@
     "NO": "Torsdag",
     "FR": "Jeudi",
     "PL": "Czwartek",
-    "FI": "Torstai"
+    "FI": "Torstai",
+    "ES": "Jueves"
   },
   "weekday_5": {
     "NL": "Vrijdag",
@@ -69,7 +74,8 @@
     "NO": "Fredag",
     "FR": "Vendredi",
     "PL": "Piątek",
-    "FI": "Perjantai"
+    "FI": "Perjantai",
+    "ES": "Viernes"
   },
   "weekday_6": {
     "NL": "Zaterdag",
@@ -81,7 +87,8 @@
     "NO": "Lørdag",
     "FR": "Samedi",
     "PL": "Sobota",
-    "FI": "Lauantai"
+    "FI": "Lauantai",
+    "ES": "Sábado"
   },
   "weekday_7": {
     "NL": "Zondag",
@@ -93,7 +100,8 @@
     "NO": "Søndag",
     "FR": "Dimanche",
     "PL": "Niedziela",
-    "FI": "Sunnuntai"
+    "FI": "Sunnuntai",
+    "ES": "Domingo"
   },
   "month_01": {
     "NL": "Januari",
@@ -105,7 +113,8 @@
     "NO": "Januar",
     "FR": "Janvier",
     "PL": "Styczeń",
-    "FI": "Tammikuu"
+    "FI": "Tammikuu",
+    "ES": "Enero"
   },
   "month_02": {
     "NL": "Februari",
@@ -117,7 +126,8 @@
     "NO": "Februar",
     "FR": "Février",
     "PL": "Luty",
-    "FI": "Helmikuu"
+    "FI": "Helmikuu",
+    "ES": "Febrero"
   },
   "month_03": {
     "NL": "Maart",
@@ -129,7 +139,8 @@
     "NO": "Mars",
     "FR": "Mars",
     "PL": "Marzec",
-    "FI": "Maaliskuu"
+    "FI": "Maaliskuu",
+    "ES": "Marzo"
   },
   "month_04": {
     "NL": "April",
@@ -141,7 +152,8 @@
     "NO": "April",
     "FR": "Avril",
     "PL": "Kwiecień",
-    "FI": "Huhtikuu"
+    "FI": "Huhtikuu",
+    "ES": "Abril"
   },
   "month_05": {
     "NL": "Mei",
@@ -153,7 +165,8 @@
     "NO": "Mai",
     "FR": "Mai",
     "PL": "Maj",
-    "FI": "Toukokuu"
+    "FI": "Toukokuu",
+    "ES": "Mayo"
   },
   "month_06": {
     "NL": "Juni",
@@ -165,7 +178,8 @@
     "NO": "Juni",
     "FR": "Juin",
     "PL": "Czerwiec",
-    "FI": "Kesäkuu"
+    "FI": "Kesäkuu",
+    "ES": "Junio"
   },
   "month_07": {
     "NL": "Juli",
@@ -177,7 +191,8 @@
     "NO": "Juli",
     "FR": "Juillet",
     "PL": "Lipiec",
-    "FI": "Heinäkuu"
+    "FI": "Heinäkuu",
+    "ES": "Julio"
   },
   "month_08": {
     "NL": "Augustus",
@@ -189,7 +204,8 @@
     "NO": "August",
     "FR": "Août",
     "PL": "Sierpień",
-    "FI": "Elokuu"
+    "FI": "Elokuu",
+    "ES": "Agosto"
   },
   "month_09": {
     "NL": "September",
@@ -201,7 +217,8 @@
     "NO": "September",
     "FR": "Septembre",
     "PL": "Wrzesień",
-    "FI": "Syyskuu"
+    "FI": "Syyskuu",
+    "ES": "Septiembre"
   },
   "month_10": {
     "NL": "Oktober",
@@ -213,7 +230,8 @@
     "NO": "Oktober",
     "FR": "Octobre",
     "PL": "Październik",
-    "FI": "Lokakuu"
+    "FI": "Lokakuu",
+    "ES": "Octubre"
   },
   "month_11": {
     "NL": "November",
@@ -225,7 +243,8 @@
     "NO": "November",
     "FR": "Novembre",
     "PL": "Listopad",
-    "FI": "Marraskuu"
+    "FI": "Marraskuu",
+    "ES": "Noviembre"
   },
   "month_12": {
     "NL": "December",
@@ -237,7 +256,8 @@
     "NO": "Desember",
     "FR": "Décembre",
     "PL": "Grudzień",
-    "FI": "Joulukuu"
+    "FI": "Joulukuu",
+    "ES": "Diciembre"
   },
   "bot_access_denied": {
     "NL": "Je hebt geen toegang tot deze functie of bot!",
@@ -249,19 +269,34 @@
     "NO": "Du har ikke tillatelse til å bruke denne kommandoen eller boten!",
     "FR": "Tu n'es pas autorisé à utiliser cette commande !",
     "PL": "Nie masz uprawnień do korzystania z tej komendy lub bota!",
-    "FI": "Sinulla ei ole oikeutta tähän komentoon tai bottiin!"
+    "FI": "Sinulla ei ole oikeutta tähän komentoon tai bottiin!",
+    "ES": "¡No está autorizado a utilizar este comando o bot!"
   },
+  "address": {
+    "NL": "Adres",
+    "DE": "Adresse",
+    "EN": "Address",
+    "IT": "Indirizzo",
+    "PT-BR": "Endereço",
+    "RU": "Адрес",
+    "NO": "Adresse",
+    "FR": "Adresse",
+    "PL": "Adres",
+    "FI": "Osoite",
+    "ES": "Dirección"
+},
   "forest": {
-    "NL": "Routebeschrijving",
-    "DE": "Wegbeschreibung",
-    "EN": "Directions",
+    "NL": "Kaart openen",
+    "DE": "Karte öffnen",
+    "EN": "Open map",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "Reittiohje"
+    "FI": "Avaa kartta",
+    "ES": "Abrir mapa"
   },
   "pokemon": {
     "NL": "Pokemon",
@@ -273,7 +308,8 @@
     "NO": "Pokemon",
     "FR": "Pokemon",
     "PL": "Pokemon",
-    "FI": "Pokemon"
+    "FI": "Pokemon",
+    "ES": "Pokémon"
   },
   "pokemon_types": {
     "NL": "Pokemon Types",
@@ -285,7 +321,8 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "Pokemon Tyypit"
+    "FI": "Pokemon Tyypit",
+    "ES": "Tipos de Pokémon"
   },
   "yes": {
     "NL": "Ja",
@@ -297,7 +334,8 @@
     "NO": "Ja",
     "FR": "Oui",
     "PL": "Tak",
-    "FI": "Kyllä"
+    "FI": "Kyllä",
+    "ES": "Si"
   },
   "no": {
     "NL": "Nee",
@@ -309,7 +347,8 @@
     "NO": "Nei",
     "FR": "Non",
     "PL": "Nie",
-    "FI": "Ei"
+    "FI": "Ei",
+    "ES": "No"
   },
   "or": {
     "NL": "of",
@@ -321,7 +360,8 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "tai"
+    "FI": "tai",
+    "ES": "o"
   },
   "not_supported": {
     "NL": "Niet ondersteund",
@@ -333,7 +373,8 @@
     "NO": "Ikke støttet",
     "FR": "Non compatible",
     "PL": "Nieobsługiwane",
-    "FI": "Ei tuettu"
+    "FI": "Ei tuettu",
+    "ES": "No soportado"
   },
   "abort": {
     "NL": "Afbreken",
@@ -345,7 +386,8 @@
     "NO": "Avbryt",
     "FR": "Abandonner",
     "PL": "Anuluj",
-    "FI": "Peruuta"
+    "FI": "Peruuta",
+    "ES": "Cancelar"
   },
   "action_aborted": {
     "NL": "Het proces is afgebroken!",
@@ -357,7 +399,8 @@
     "NO": "Handlingen ble avbrutt!",
     "FR": "Le processus à échoué !",
     "PL": "Zadanie zostało anulowane",
-    "FI": "Prosessi peruutettiin!"
+    "FI": "Prosessi peruutettiin!",
+    "ES": "¡El proceso fue cancelado!"
   },
   "select_action": {
     "NL": "Selecteer actie:",
@@ -369,7 +412,8 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "Valitse toiminto:"
+    "FI": "Valitse toiminto:",
+    "ES": "Selecciona la acción:"
   },
   "back": {
     "NL": "Terug",
@@ -381,7 +425,8 @@
     "NO": "Tilbake",
     "FR": "Retour",
     "PL": "Wstecz",
-    "FI": "Takaisin"
+    "FI": "Takaisin",
+    "ES": "Volver"
   },
   "next": {
     "NL": "Volgende",
@@ -393,7 +438,8 @@
     "NO": "Neste",
     "FR": "Suivant",
     "PL": "Dalej",
-    "FI": "Seuraava"
+    "FI": "Seuraava",
+    "ES": "Siguiente"
   },
   "done": {
     "NL": "Klaar",
@@ -405,7 +451,8 @@
     "NO": "Ferdig",
     "FR": "Terminé",
     "PL": "Zrobione",
-    "FI": "Valmis"
+    "FI": "Valmis",
+    "ES": "Hecho"
   },
   "add": {
     "NL": "Toevoegen",
@@ -417,7 +464,21 @@
     "NO": "Legg til",
     "FR": "Ajouter",
     "PL": "Dodaj",
-    "FI": "Lisää"
+    "FI": "Lisää",
+    "ES": "Añadir"
+  },
+    "replace": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Replace",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Korvaa",
+    "ES": "Reemplazar"
   },
   "delete": {
     "NL": "Verwijder",
@@ -429,7 +490,8 @@
     "NO": "Slett",
     "FR": "Supprimer",
     "PL": "Usuń",
-    "FI": "Poista"
+    "FI": "Poista",
+    "ES": "Borrar"
   },
   "edit": {
     "NL": "Bewerken",
@@ -441,7 +503,8 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "Muokkaa"
+    "FI": "Muokkaa",
+    "ES": "Editar"
   },
   "list": {
     "NL": "Lijst",
@@ -453,7 +516,8 @@
     "NO": "List",
     "FR": "Liste",
     "PL": "Pokaż",
-    "FI": "Listaa"
+    "FI": "Listaa",
+    "ES": "Lista"
   },
   "reset": {
     "NL": "Reset",
@@ -465,7 +529,8 @@
     "NO": "Reset",
     "FR": "Remise à zéro",
     "PL": "Resetuj",
-    "FI": "Resetoi"
+    "FI": "Resetoi",
+    "ES": "Reiniciar"
   },
   "created_by": {
     "NL": "Aangemaakt door",
@@ -477,7 +542,8 @@
     "NO": "Postet av",
     "FR": "Créé par",
     "PL": "Stworzone przez",
-    "FI": "Luonut"
+    "FI": "Luonut",
+    "ES": "Creado por"
   },
   "updated": {
     "NL": "Bijgewerkt",
@@ -489,7 +555,8 @@
     "NO": "Oppdatert",
     "FR": "Mis à jour",
     "PL": "Zaktualizowano",
-    "FI": "Päivitetty"
+    "FI": "Päivitetty",
+    "ES": "Actualizado"
   },
   "share": {
     "NL": "Delen",
@@ -501,7 +568,8 @@
     "NO": "Del",
     "FR": "Partager",
     "PL": "Udostępnij",
-    "FI": "Jaa"
+    "FI": "Jaa",
+    "ES": "Compartir"
   },
   "share_with": {
     "NL": "Delen met",
@@ -513,7 +581,8 @@
     "NO": "Del med",
     "FR": "Partager avec",
     "PL": "Przekaż dalej",
-    "FI": "Jaa ryhmään"
+    "FI": "Jaa ryhmään",
+    "ES": "Compartir con"
   },
   "successfully_shared": {
     "NL": "Succesvol gedeeld!",
@@ -525,7 +594,8 @@
     "NO": "Deling velykket!",
     "FR": "Partagé avec succès !",
     "PL": "Pomyślnie udostępniono",
-    "FI": "Jaettu onnistuneesti!"
+    "FI": "Jaettu onnistuneesti!",
+    "ES": "¡Compartido con éxito!"
   },
   "config": {
     "NL": "Configuratie",
@@ -537,7 +607,8 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "Asetukset"
+    "FI": "Asetukset",
+    "ES": "Configuración"
   },
   "config_updated": {
     "NL": "Configuratie ge-update",
@@ -549,7 +620,8 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "Asetukset päivitetty"
+    "FI": "Asetukset päivitetty",
+    "ES": "Configuración actualizada"
   },
   "resetted": {
     "NL": "Gereset",
@@ -561,7 +633,8 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "Resetoitu"
+    "FI": "Resetoitu",
+    "ES": "Reiniciado"
   },
   "option_value": {
     "NL": "Configuratie optie waarde",
@@ -573,7 +646,8 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "Asetuksen arvo"
+    "FI": "Asetuksen arvo",
+    "ES": "Valor de la opción de configuración"
   },
   "no_value": {
     "NL": "Geen waarde",
@@ -585,7 +659,8 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "Ei arvoa"
+    "FI": "Ei arvoa",
+    "ES": "Sin valor"
   },
   "new_value": {
     "NL": "Nieuwe waarde:",
@@ -597,7 +672,8 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "Uusi arvo:"
+    "FI": "Uusi arvo:",
+    "ES": "Nuevo valor:"
   },
   "old_value": {
     "NL": "Oude waarde:",
@@ -609,7 +685,8 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "Vanha arvo:"
+    "FI": "Vanha arvo:",
+    "ES": "Antiguo valor:"
   },
   "personal_help": {
     "NL": "Alle commando's voor de bot:",
@@ -621,7 +698,8 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "Henkilökohtainen bottiapu:"
+    "FI": "Henkilökohtainen bottiapu:",
+    "ES": "Tu bot personal ayuda:"
   },
   "invalid_input": {
     "NL": "Ongeldige input!",
@@ -633,7 +711,8 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "Epäkelpo arvo!"
+    "FI": "Epäkelpo arvo!",
+    "ES": "¡Entrada inválida!"
   },
   "internal_error": {
     "NL": "Internal error!",
@@ -645,7 +724,8 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "Sisäinen virhe!"
+    "FI": "Sisäinen virhe!",
+    "ES": "¡Error interno!"
   },
   "expand": {
     "NL": "Uitklappen",
@@ -657,7 +737,8 @@
     "NO": "Flere valg",
     "FR": "Agrandir",
     "PL": "Rozwiń",
-    "FI": "Laajenna"
+    "FI": "Laajenna",
+    "ES": "Expandir"
   },
   "none": {
     "NL": "Geen",
@@ -669,7 +750,8 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "ei mitään"
+    "FI": "ei mitään",
+    "ES": "Nada"
   },
   "other": {
     "NL": "Anders",
@@ -681,7 +763,8 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "Muu"
+    "FI": "Muu",
+    "ES": "Otro"
   },
   "tutorial_vote_failed": {
     "NL": "Je kan niet meedoen voordat je de tutorial hebt doorlopen.",
@@ -693,7 +776,8 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "Et voi äänestää ennen kuin olet käynyt ohjeen läpi."
+    "FI": "Et voi äänestää ennen kuin olet käynyt ohjeen läpi.",
+    "ES": "No puedes votar antes de seguir el tutorial."
   },
   "tutorial_command_failed": {
     "NL": "Je kan dit commando niet gebruiken voordat je de tutorial hebt doorlopen.",
@@ -705,6 +789,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "Et voi käyttää tätä käskyä ennen kuin olet käynyt ohjeen läpi."
+    "FI": "Et voi käyttää tätä käskyä ennen kuin olet käynyt ohjeen läpi.",
+    "ES": "No puede usar este comando antes de seguir el tutorial."
   }
 }

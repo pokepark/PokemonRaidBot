@@ -198,17 +198,17 @@ function alarm($raid_id_array, $user_id, $action, $info = '', $tg_json = [])
             debug_log('Alarm for group code: ' . $info);
             $msg_text = '<b>' . getTranslation('alert_raid_starts_now', true, $recipient_language) . CR . getTranslation('alert_raid_get_in', true, $recipient_language) . '</b>' . CR . CR;
             $msg_text .= '<b>' . getTranslation('alert_public_group', true, $recipient_language) . '</b>' . CR;
-            $msg_text .= EMOJI_HERE . SP . $gymname . SP . '(' . $raidtimes . ')' . CR;
-            $msg_text .= EMOJI_SINGLE . SP . $username . CR;
-            $msg_text .= EMOJI_REMOTE . SP . $info;
+            $msg_text .= EMOJI_LOCATION . SP . $gymname . SP . '(' . $raidtimes . ')' . CR;
+            $msg_text .= EMOJI_TRAINER . SP . $username . CR;
+            $msg_text .= EMOJI_CODEINFO . SP . $info;
 
         // Group code private
         } else if($action == "group_code_private") {
             debug_log('Alarm for group code: ' . $info);
             $msg_text = '<b>' . getTranslation('alert_raid_starts_now', true, $recipient_language) . CR . getTranslation('alert_raid_get_in', true, $recipient_language) . '</b>' . CR . CR;
             $msg_text .= '<b>' . getTranslation('alert_private_group', true, $recipient_language) . '</b>' . CR;
-            $msg_text .= EMOJI_HERE . SP . $gymname . SP . '(' . $raidtimes . ')' . CR;
-            $msg_text .= EMOJI_SINGLE . SP . $username . CR;
+            $msg_text .= EMOJI_LOCATION . SP . $gymname . SP . '(' . $raidtimes . ')' . CR;
+            $msg_text .= EMOJI_TRAINER . SP . $username . CR;
 
             // Send code to remote raiders
             if($answer['remote'] == 1) {
@@ -217,7 +217,7 @@ function alarm($raid_id_array, $user_id, $action, $info = '', $tg_json = [])
 
             // Send message to local raiders
             if($answer['remote'] == 0) {
-                $msg_text .= EMOJI_REMOTE . SP . '<b>' . getTranslation('group_code_only_for_remote_raiders', true, $recipient_language) . '</b>';
+                $msg_text .= EMOJI_CODEINFO . SP . '<b>' . getTranslation('group_code_only_for_remote_raiders', true, $recipient_language) . '</b>';
             }
         // Attendance from remote
         } else if($action == "want_invite") {

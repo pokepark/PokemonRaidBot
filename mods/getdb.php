@@ -1,91 +1,100 @@
 <?php
-$proto_url = "https://raw.githubusercontent.com/Furtif/POGOProtos/master/base/vbase.proto";
+$proto_url = getProtoURL();
 $game_master_url = "https://raw.githubusercontent.com/PokeMiners/game_masters/master/latest/latest.json";
 
 $error = false;
 
 // Read the form ids from protos
-if($form_ids = get_protos()) {
-    // Parse the game master data together with form ids into format we can use
-    $pokemon_array = parse_master_into_pokemon_table($form_ids);
-    if(!$pokemon_array) {
-        $error =  "Failed to open game master file.";
-    } else {
-        $PRE = 'INSERT INTO `pokemon`' . PHP_EOL;
-        $PRE .= '(pokedex_id, pokemon_name, pokemon_form_name, pokemon_form_id, asset_suffix, min_cp, max_cp, min_weather_cp, max_weather_cp, type, type2, weather) VALUES';
-        for($e = 1; $e <= 6; $e++) {
-            $pokemon_id = '999'.$e;
-            $form_name = 'normal';
-            $pokemon_name = 'Level '. $e .' Egg';
-            $pokemon_array[$pokemon_id][$form_name] = [ 'pokemon_name'=>$pokemon_name,
-                                                        'pokemon_form_name'=>$form_name,
-                                                        'pokemon_form_id'=>0,
-                                                        'asset_suffix'=>0,
-                                                        'shiny'=>0,
-                                                        'min_cp'=>0,
-                                                        'max_cp'=>0,
-                                                        'min_weather_cp'=>0,
-                                                        'max_weather_cp'=>0,
-                                                        'type' => '',
-                                                        'type2' => '',
-                                                        'shiny'=>0,
-                                                        'weather'=>0
-                                                        ];
-        }
-        $i = 0;
-        $SQL = '';
-        foreach($pokemon_array as $id => $forms) {
-            $pokemon_id = $id;
-            foreach($forms as $form=>$data) {
-                // Check that data is set, if not the mon is probably not in the game yet and there's no point in having them in a broken state
-                if(isset($data['weather']) && isset($data['min_cp']) && isset($data['max_cp']) && isset($data['min_weather_cp']) && isset($data['max_weather_cp'])) {
-                    $poke_form = $form;
-        
-                    $poke_name = $data['pokemon_name'];
-                    $form_id = $data['pokemon_form_id'];
-                    $form_asset_suffix = $data['asset_suffix'];
-                    $poke_min_cp = $data['min_cp'];
-                    $poke_max_cp = $data['max_cp'];
-                    $poke_min_weather_cp = $data['min_weather_cp'];
-                    $poke_max_weather_cp = $data['max_weather_cp'];
-                    $poke_type = $data['type'];
-                    $poke_type2 = $data['type2'];
-                    $poke_weather  = $data['weather'];
-        
-                    if($pokemon_id == 150 && $data['pokemon_form_name']=="a") {
-                        // Because logic and consistency
-                        $poke_form = 'armored';
-                    }else {
-                        $poke_form = strtolower($data['pokemon_form_name']);
+if($protos = get_protos($proto_url)) {
+    global $dbh;
+    $form_ids = $protos[0];
+    $costume = $protos[1];
+
+    // Save costume data to json file
+    if(file_put_contents(ROOT_PATH.'/protos/costume.json', json_encode($costume, JSON_PRETTY_PRINT))) {
+        // Parse the game master data together with form ids into format we can use
+        $pokemon_array = parse_master_into_pokemon_table($form_ids, $game_master_url);
+        if(!$pokemon_array) {
+            $error =  "Failed to open game master file.";
+        } else {
+            $PRE = 'INSERT INTO `pokemon`' . PHP_EOL;
+            $PRE .= '(pokedex_id, pokemon_name, pokemon_form_name, pokemon_form_id, asset_suffix, min_cp, max_cp, min_weather_cp, max_weather_cp, type, type2, weather) VALUES';
+            for($e = 1; $e <= 6; $e++) {
+                $pokemon_id = '999'.$e;
+                $form_name = 'normal';
+                $pokemon_name = 'Level '. $e .' Egg';
+                $pokemon_array[$pokemon_id][$form_name] = [ 'pokemon_name'=>$pokemon_name,
+                                                            'pokemon_form_name'=>$form_name,
+                                                            'pokemon_form_id'=>0,
+                                                            'asset_suffix'=>0,
+                                                            'shiny'=>0,
+                                                            'min_cp'=>0,
+                                                            'max_cp'=>0,
+                                                            'min_weather_cp'=>0,
+                                                            'max_weather_cp'=>0,
+                                                            'type' => '',
+                                                            'type2' => '',
+                                                            'shiny'=>0,
+                                                            'weather'=>0
+                                                            ];
+            }
+            $i = 0;
+            $SQL = '';
+            foreach($pokemon_array as $id => $forms) {
+                $pokemon_id = $id;
+                foreach($forms as $form=>$data) {
+                    // Check that data is set, if not the mon is probably not in the game yet and there's no point in having them in a broken state
+                    if(isset($data['weather']) && isset($data['min_cp']) && isset($data['max_cp']) && isset($data['min_weather_cp']) && isset($data['max_weather_cp'])) {
+                        $poke_form = $form;
+
+                        $poke_name = $data['pokemon_name'];
+                        $form_id = $data['pokemon_form_id'];
+                        $form_asset_suffix = $data['asset_suffix'];
+                        $poke_min_cp = $data['min_cp'];
+                        $poke_max_cp = $data['max_cp'];
+                        $poke_min_weather_cp = $data['min_weather_cp'];
+                        $poke_max_weather_cp = $data['max_weather_cp'];
+                        $poke_type = $data['type'];
+                        $poke_type2 = $data['type2'];
+                        $poke_weather  = $data['weather'];
+
+                        if($pokemon_id == 150 && $data['pokemon_form_name']=="a") {
+                            // Because logic and consistency
+                            $poke_form = 'armored';
+                        }else {
+                            $poke_form = strtolower($data['pokemon_form_name']);
+                        }
+                        if($i==0) $i=1; else $SQL .= ",";
+                        $SQL .= PHP_EOL . "(\"${pokemon_id}\", \"${poke_name}\", \"${poke_form}\", \"${form_id}\", \"${form_asset_suffix}\", \"${poke_min_cp}\", \"${poke_max_cp}\", \"${poke_min_weather_cp}\", \"${poke_max_weather_cp}\", \"${poke_type}\", \"${poke_type2}\", \"${poke_weather}\")";
                     }
-                    if($i==0) $i=1; else $SQL .= ",";
-                    $SQL .= PHP_EOL . "(\"${pokemon_id}\", \"${poke_name}\", \"${poke_form}\", \"${form_id}\", \"${form_asset_suffix}\", \"${poke_min_cp}\", \"${poke_max_cp}\", \"${poke_min_weather_cp}\", \"${poke_max_weather_cp}\", \"${poke_type}\", \"${poke_type2}\", \"${poke_weather}\")";
                 }
+	    }
+            ## MySQL 8 compatible
+            #$SQL = $PRE . $SQL . ' as new' . PHP_EOL;
+            #$SQL .= 'ON DUPLICATE KEY UPDATE pokedex_id = new.pokedex_id, pokemon_name = new.pokemon_name, pokemon_form_name = new.pokemon_form_name,' . PHP_EOL;
+            #$SQL .= 'pokemon_form_id = new.pokemon_form_id, asset_suffix = new.asset_suffix, min_cp = new.min_cp, max_cp = new.max_cp,' . PHP_EOL;
+            #$SQL .= 'min_weather_cp = new.min_weather_cp, max_weather_cp = new.max_weather_cp, type = new.type, type2 = new.type2, weather = new.weather;';
+            $SQL = $PRE . $SQL . PHP_EOL;
+            $SQL .= 'ON DUPLICATE KEY UPDATE pokedex_id = VALUES(pokedex_id), pokemon_name = VALUES(pokemon_name), pokemon_form_name = VALUES(pokemon_form_name),' . PHP_EOL;
+            $SQL .= 'pokemon_form_id = VALUES(pokemon_form_id), asset_suffix = VALUES(asset_suffix), min_cp = VALUES(min_cp),' . PHP_EOL;
+            $SQL .= 'max_cp = VALUES(max_cp), min_weather_cp = VALUES(min_weather_cp), max_weather_cp = VALUES(max_weather_cp),' . PHP_EOL;
+            $SQL .= 'type = VALUES(type), type2 = VALUES(type2), weather = VALUES(weather);' . PHP_EOL;
+            try {
+                $prep = $dbh->prepare($SQL);
+                $prep->execute();
+            } catch (Exception $e) {
+                if(isset($update['message']['from']['id'])) $error = $e;
             }
         }
-        ## MySQL 8 compatible
-        #$SQL = $PRE . $SQL . ' as new' . PHP_EOL;
-        #$SQL .= 'ON DUPLICATE KEY UPDATE pokedex_id = new.pokedex_id, pokemon_name = new.pokemon_name, pokemon_form_name = new.pokemon_form_name,' . PHP_EOL;
-        #$SQL .= 'pokemon_form_id = new.pokemon_form_id, asset_suffix = new.asset_suffix, min_cp = new.min_cp, max_cp = new.max_cp,' . PHP_EOL;
-        #$SQL .= 'min_weather_cp = new.min_weather_cp, max_weather_cp = new.max_weather_cp, type = new.type, type2 = new.type2, weather = new.weather;';
-        $SQL = $PRE . $SQL . PHP_EOL;
-        $SQL .= 'ON DUPLICATE KEY UPDATE pokedex_id = VALUES(pokedex_id), pokemon_name = VALUES(pokemon_name), pokemon_form_name = VALUES(pokemon_form_name),' . PHP_EOL;
-        $SQL .= 'pokemon_form_id = VALUES(pokemon_form_id), asset_suffix = VALUES(asset_suffix), min_cp = VALUES(min_cp),' . PHP_EOL;
-        $SQL .= 'max_cp = VALUES(max_cp), min_weather_cp = VALUES(min_weather_cp), max_weather_cp = VALUES(max_weather_cp),' . PHP_EOL;
-        $SQL .= 'type = VALUES(type), type2 = VALUES(type2), weather = VALUES(weather);' . PHP_EOL;
-        try {
-            $prep = $dbh->prepare($SQL);
-            $prep->execute();
-        } catch (Exception $e) {
-            if(isset($update['message']['from']['id'])) $error = $e;
-        }
+    }else {
+        $error = 'Failed to write costume data to protos/costume.json';
     }
 } else {
     $error = 'Failed to get protos.';
 }
 if(!$error) { 
     $msg = 'Updated successfully!' . CR;
-    $msg.= $prep->rowCount() . ' rows updated!';
+    $msg.= $prep->rowCount() . ' rows required updating!';
     // Sometimes Nia can push form id's a bit later than other stats, so the script may insert incomplete rows
     // This hopefully clears those faulty rows out when the complete data is received without effecting any actual data
     my_query('
@@ -112,6 +121,10 @@ if(isset($update['callback_query']['id'])) {
 
     // Telegram multicurl request.
     curl_json_multi_request($tg_json);
+
+    // Exit.
+    $dbh = null;
+    exit();
 }
 
 function calculate_cps($base_stats) {
@@ -124,34 +137,41 @@ function calculate_cps($base_stats) {
     return [$min,$max,$min_weather,$max_weather];
 }
 
-function get_protos() {
-    global $proto_url;
+function get_protos($proto_url) {
     //Parse the form ID's from pogoprotos
     if(!$proto_file = curl_get_contents($proto_url)) return false;
     $proto =  preg_split('/\r\n|\r|\n/', $proto_file);
     $count = count($proto);
-    $form_ids = array();
-    $start=false;
+    $form_ids = $costume = array();
+    $data_array = false;
     for($i=0;$i<$count;$i++) {
-        $data = explode('=',str_replace(';','',$proto[$i]));
-        // Found first pokemon, start collecting data
-        if(count($data) == 2 && trim($data[0]) == 'UNOWN_A') $start = true;
-
-        if($start) {
+        $line = trim($proto[$i]);
+        if($data_array != false) {
+            $data = explode('=',str_replace(';','',$line));
             // End of pokemon data, no need to loop further
             if(trim($data[0]) == '}') {
-                break;
+                $data_array = false;
+                if(count($form_ids) > 0 && count($costume) > 0) {
+                    // We found what we needed so we can stop looping through proto file and exit
+                    break;
+                }
             }else if(count($data) == 2) {
-                $form_ids[trim($data[0])] = trim($data[1]);
+                ${$data_array}[trim($data[0])] = trim($data[1]);
+            }
+        }else {
+            if($line == 'enum Costume {') {
+                $data_array = 'costume';
+            }
+            if($line == 'enum Form {') {
+                $data_array = 'form_ids';
             }
         }
     }
     unset($proto);
-    return $form_ids;
+    return [$form_ids, $costume];
 }
 
-function parse_master_into_pokemon_table($form_ids) {
-    global $game_master_url;
+function parse_master_into_pokemon_table($form_ids, $game_master_url) {
     // Set ID's for mega evolutions
     // Using negative to prevent mixup with actual form ID's
     // Collected from pogoprotos (hoping they won't change, so hard coding them here)
@@ -184,7 +204,7 @@ function parse_master_into_pokemon_table($form_ids) {
         $form_data = [];
         $pokemon_id = '';
         if(count($part)<2) continue;
-        if($part[0] == 'FORMS') {
+        if($part[0] == 'FORMS' && $part[2] == 'POKEMON') {
             // Found Pokemon form data
 
             // Get pokemon ID
@@ -305,17 +325,25 @@ function parse_master_into_pokemon_table($form_ids) {
                         $pokemon_array[$pokemon_id][$form]['type2'] = $type2;
                     }
                 }
-                if(isset($row['data']['pokemonSettings']['evolutionBranch'])) {
-                    foreach($row['data']['pokemonSettings']['evolutionBranch'] as $temp_evolution) {
-                        if(isset($temp_evolution['temporaryEvolution'])) {
-                            $form_name = str_replace('TEMP_EVOLUTION_','',$temp_evolution['temporaryEvolution']);
+                if(isset($row['data']['pokemonSettings']['tempEvoOverrides'])) {
+                    foreach($row['data']['pokemonSettings']['tempEvoOverrides'] as $temp_evolution) {
+                        if(isset($temp_evolution['tempEvoId'])) {
+                            $form_name = str_replace('TEMP_EVOLUTION_','',$temp_evolution['tempEvoId']);
+                            // We only override the types for megas
+                            // weather info is used to display boosts for caught mons, which often are different from mega's typing
+                            $typeOverride = strtolower(str_replace('POKEMON_TYPE_','', $temp_evolution['typeOverride1']));
+                            $typeOverride2 = '';
+
+                            if(isset($temp_evolution['typeOverride2'])) {
+                                $typeOverride2 = strtolower(str_replace('POKEMON_TYPE_','', $temp_evolution['typeOverride2']));
+                            }
                             $pokemon_array[$pokemon_id][$form_name]['min_cp'] = $min_cp;
                             $pokemon_array[$pokemon_id][$form_name]['max_cp'] = $max_cp;
                             $pokemon_array[$pokemon_id][$form_name]['min_weather_cp'] = $min_weather_cp;
                             $pokemon_array[$pokemon_id][$form_name]['max_weather_cp'] = $max_weather_cp;
                             $pokemon_array[$pokemon_id][$form_name]['weather'] = $weather;
-                            $pokemon_array[$pokemon_id][$form_name]['type'] = $type;
-                            $pokemon_array[$pokemon_id][$form_name]['type2'] = $type2;
+                            $pokemon_array[$pokemon_id][$form_name]['type'] = $typeOverride;
+                            $pokemon_array[$pokemon_id][$form_name]['type2'] = $typeOverride2;
                         }
                     }
                 }
@@ -324,7 +352,37 @@ function parse_master_into_pokemon_table($form_ids) {
     }
     return $pokemon_array;
 }
-// Exit.
-exit();
+
+// Fetch the latest version of proto files.
+// vbase.proto has only the latest fully deobfuscated protos,
+// but we only need the latest form and costume data which is available in the partially obfuscated protofiles
+function getProtoURL() {
+    $repo_owner = 'Furtif';
+    $repo_name = 'POGOProtos';
+    $content_dir = 'base';
+
+    $repo_content = 'https://api.github.com/repos/' . $repo_owner . '/' . $repo_name . '/contents/' . $content_dir;
+    // Git tree lookup
+    $tree = curl_get_contents($repo_content);
+    $leaf = json_decode($tree, true);
+    // Detect rate-limiting and die gracefully
+    if(is_array($leaf) && in_array('message', $leaf)) {
+        die('Failed to download repo index: ' . $leaf['message']);
+    }
+    $highest = 0;
+    $url = '';
+    foreach($leaf as $l) {
+        $version = trim(preg_replace('/\D/', '', substr($l['name'], 3)));
+        if($version > $highest) {
+            $split = explode(".",$l['name']);
+            // Only allow fully or partially deobfuscated iterations of the proto file
+            if($split[2] == 'x' or $split[2] == 'x_p_obf') {
+                $highest = $version;
+                $url = $l['download_url'];
+            }
+        }
+    }
+    return $url;
+}
 
 ?> 

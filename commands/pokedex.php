@@ -64,26 +64,14 @@ if(count($keys) == 0 ) {
             ],
             [
                 [
-                    'text'          => getTranslation('import') . SP . '(Pokebattler)',
-                    'callback_data' => '0:pokebattler:0'
+                    'text'          => getTranslation('import'),
+                    'callback_data' => '0:pokedex_import:0'
                 ]
-            ],
-            [
-                [
-                    'text'          => getTranslation('import') . SP . 'shiny (Pokebattler)',
-                    'callback_data' => '0:import_shinyinfo:0'
                 ]
-            ],
-            [
-                [
-                    'text'          => getTranslation('import') . SP . '(ccev pogoinfo)',
-                    'callback_data' => '0:pogoinfo:0'
-                ]
-            ]
         ];
     }
     $keys[][] = [
-                'text'          => 'Update Pokemon table',
+                'text'          => getTranslation('update_pokemon_table'),
                 'callback_data' => '0:getdb:0'
             ];
     // Set message.

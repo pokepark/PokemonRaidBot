@@ -11,7 +11,7 @@ $remote_string = getPublicTranslation('remote_raid');
 $rs = my_query(
     "
     SELECT    attendance.want_invite, attendance.alarm,
-              IF(SUBSTR(gyms.gym_name, 1, LENGTH('".$remote_string."')-1) = '".$remote_string."', 1, 0)     as is_remote_gym,
+              IF(SUBSTR(gyms.gym_name, 1, CHAR_LENGTH('".$remote_string."')) = '".$remote_string."', 1, 0)  as is_remote_gym,
               IF(raids.user_id = {$update['callback_query']['from']['id']}, 1, 0)                           as user_is_creator
     FROM      attendance
     LEFT JOIN raids

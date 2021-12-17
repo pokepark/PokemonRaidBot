@@ -44,7 +44,7 @@ function sendAlertOnOffNotice($raid_id, $user_id, $alarm = null, $raid = null){
     } else {// Disable alerts message.
         $msg_text = EMOJI_NO_ALARM . SP . '<b>' . getTranslation('alert_no_updates') . '</b>' . CR;
 	}
-    $msg_text .= EMOJI_HERE . SP . $gymname . SP . '(' . $raidtimes . ')';
+    $msg_text .= EMOJI_LOCATION . SP . $gymname . SP . '(' . $raidtimes . ')';
     send_message($user_id, $msg_text);
 }
 

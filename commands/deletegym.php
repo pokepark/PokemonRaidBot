@@ -9,16 +9,21 @@ debug_log('DELETEGYM()');
 // Check access.
 bot_access_check($update, 'gym-delete');
 
+// Set keys.
+$keys_and_gymarea = raid_edit_gyms_first_letter_keys('gym_delete', false, false, 'gym_letter');
+$keys = $keys_and_gymarea['keys'];
+
 // Set message.
 $msg = '<b>' . getTranslation('gym_delete') . SP . '—' . SP . getTranslation('select_gym_first_letter') . '</b>';
-
-// Set keys.
-$keys = raid_edit_gyms_first_letter_keys('gym_delete');
+$msg.= (($keys_and_gymarea['gymarea_name'] != '') ? CR . CR . getTranslation('current_gymarea') . ': ' . $keys_and_gymarea['gymarea_name'] : '');
 
 // Add key for hidden gyms.
 $h_keys = [];
-$h_keys[] = universal_inner_key($h_keys, '0', 'gym_hidden_letter', 'gym_delete', getTranslation('hidden_gyms'));
-$h_keys = inline_key_array($h_keys, 1);
+if($config->ENABLE_GYM_AREAS == false or ($config->ENABLE_GYM_AREAS == true && $config->DEFAULT_GYM_AREA != false)) {
+    // Add key for hidden gyms.
+    $h_keys[] = universal_inner_key($h_keys, '0', 'gym_hidden_letter', 'gym_details', getTranslation('hidden_gyms'));
+    $h_keys = inline_key_array($h_keys, 1);
+}
 
 // Merge keys.
 $keys = array_merge($h_keys, $keys);

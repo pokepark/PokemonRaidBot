@@ -9,7 +9,8 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "Jaa sijainti - Luo raidi"
+    "FI": "Jaa sijainti - Luo raidi",
+    "ES": "Compartir ubicación - Crear incursión"
   },
   "help_create": {
     "NL": "/start - Raid aanmaken",
@@ -21,7 +22,8 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "/start - Luo raidi"
+    "FI": "/start - Luo raidi",
+    "ES": "/start - Crear incursión"
   },
   "help_ex-raids": {
     "NL": "/start - Ex-Raid aanmaken",
@@ -33,7 +35,8 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "/start - Luo ex-raidi"
+    "FI": "/start - Luo ex-raidi",
+    "ES": "/start - Crear incursión EX"
   },
   "help_raid-duration": {
     "NL": "/start - verander de raid tijdsduur",
@@ -45,7 +48,8 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "/start - Vaihda raidin kestoa"
+    "FI": "/start - Vaihda raidin kestoa",
+    "ES": "/start - Cambiar duración de la incursión"
   },
   "help_list": {
     "NL": "/list - laatste 12 active raids",
@@ -57,7 +61,8 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "/list - Edelliset 12 aktiivista raidia"
+    "FI": "/list - Edelliset 12 aktiivista raidia",
+    "ES": "/list - Últimas 12 incursiones activas"
   },
   "help_listall": {
     "NL": "/listall - alle actieve Raids",
@@ -69,7 +74,8 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "/listall - Kaikki aktiiviset raidit"
+    "FI": "/listall - Kaikki aktiiviset raidit",
+    "ES": "/listall - Todas las incursiones activas"
   },
   "help_overview": {
     "NL": "/overview - Beheer raid overzicht",
@@ -81,7 +87,8 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "/overview - Hallinnoi raidiyhteenvetoa"
+    "FI": "/overview - Hallinnoi raidiyhteenvetoa",
+    "ES": "/overview - Administrar descripción general de la incursión"
   },
   "help_delete-own": {
     "NL": "/delete - Verwijderen eigen Raids",
@@ -93,7 +100,8 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "/delete - Poista omia raidejasi"
+    "FI": "/delete - Poista omia raidejasi",
+    "ES": "/delete - Eliminar incursiones propias"
   },
   "help_delete-all": {
     "NL": "/delete - Verwijder alle raids",
@@ -105,7 +113,8 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "/delete - Poista kaikki raidit"
+    "FI": "/delete - Poista kaikki raidit",
+    "ES": "/delete - eliminar incursiones"
   },
   "help_pokemon-own": {
     "NL": "/pokemon - Update pokemon (eigen raids)",
@@ -117,7 +126,8 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "/pokemon - Muuta pokemonia (omat raidisi)"
+    "FI": "/pokemon - Muuta pokemonia (omat raidisi)",
+    "ES": "/pokemon - Actualizar Pokémon (incursiones propias)"
   },
   "help_pokemon-all": {
     "NL": "/pokemon - Update pokemon (alle raids)",
@@ -129,7 +139,8 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "/pokemon - Muuta pokemonia (kaikki raidit)"
+    "FI": "/pokemon - Muuta pokemonia (kaikki raidit)",
+    "ES": "/pokemon - Actualizar Pokémon (todas incursiones)"
   },
   "help_trainer": {
     "NL": "/trainer - Verander trainer data",
@@ -141,7 +152,8 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "/trainer - Muuta kouluttajatietojasi"
+    "FI": "/trainer - Muuta kouluttajatietojasi",
+    "ES": "/trainer - Editar datos del entrenador"
   },
   "help_gym-details": {
     "NL": "/gym - Laat gym info zien",
@@ -153,7 +165,8 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "/gym - Näytä salin tiedot"
+    "FI": "/gym - Näytä salin tiedot",
+    "ES": "/gym - Ver detalles del gimnasio"
   },
   "help_gym-edit": {
     "NL": "/gym - Verander alle gym informatie",
@@ -165,7 +178,8 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "/gym - Muuta salin lisätietoja"
+    "FI": "/gym - Muuta salin lisätietoja",
+    "ES": "/gym - Editar detalles extendidos del gimnasio"
   },
   "help_gym-name": {
     "NL": "/gymname - Verander de gym naam",
@@ -177,7 +191,8 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "/gymname - Muuta salin nimeä"
+    "FI": "/gymname - Muuta salin nimeä",
+    "ES": "/gymname - Editar nombre del gimnasio"
   },
   "help_gym-address": {
     "NL": "/gymaddress - Verander gym adres",
@@ -189,7 +204,8 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "/gymaddress - Muuta salin osoitetta"
+    "FI": "/gymaddress - Muuta salin osoitetta",
+    "ES": "/gymaddress - Editar dirección del gimnasio"
   },
   "help_gym-gps": {
     "NL": "/gymgps - Verander gym coordinaten",
@@ -201,7 +217,8 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "/gymgps - Muuta salin koordinaatteja"
+    "FI": "/gymgps - Muuta salin koordinaatteja",
+    "ES": "/gymgps - Editar coordenadas del gimnasio"
   },
   "help_gym-note": {
     "NL": "/gymnote - Verander extra gym informatie",
@@ -213,7 +230,8 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "/gymnote - Muuta salin muistiinpanoja"
+    "FI": "/gymnote - Muuta salin muistiinpanoja",
+    "ES": "/gymnote - Editar nota del gimnasio"
   },
   "help_gym-add": {
     "NL": "/addgym - Gym toevoegen",
@@ -225,7 +243,8 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "/addgym - Lisää sali"
+    "FI": "/addgym - Lisää sali",
+    "ES": "/addgym - Añadir gimnasio"
   },
   "help_gym-delete": {
     "NL": "/deletegym - Verwijder een gym",
@@ -237,19 +256,21 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "/deletegym - Poista sali"
+    "FI": "/deletegym - Poista sali",
+    "ES": "/deletegym - Eliminar gimnasio"
   },
   "help_portal-import": {
-    "NL": "@PortalMapBot of @Ingressportalbot - Importeer gym",
-    "DE": "@PortalMapBot oder @Ingressportalbot - Arena importieren",
-    "EN": "@PortalMapBot or @Ingressportalbot - Import gym",
+    "NL": "@Ingressportalbot - Importeer gym",
+    "DE": "@Ingressportalbot - Arena importieren",
+    "EN": "@Ingressportalbot - Import gym",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "@PortalMapBot tai @Ingressportalbot - Tuo sali"
+    "FI": "@Ingressportalbot - Tuo sali",
+    "ES": "@Ingressportalbot - Importar gimnasio"
   },
   "help_pokedex": {
     "NL": "/pokedex - Verander raid bazen",
@@ -261,7 +282,8 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "/pokedex - Hallinnoi raidibosseja"
+    "FI": "/pokedex - Hallinnoi raidibosseja",
+    "ES": "/pokedex - Gestionar jefes de incursión"
   },
   "help_config-get": {
     "NL": "/get - Laat de bot configuratie zien",
@@ -273,7 +295,8 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "/get - Näytä botin asetukset"
+    "FI": "/get - Näytä botin asetukset",
+    "ES": "/get - Ver configuración del bot"
   },
   "help_config-set": {
     "NL": "/set - Verander de bot configuratie",
@@ -285,7 +308,8 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "/set - Muuta botin asetuksia"
+    "FI": "/set - Muuta botin asetuksia",
+    "ES": "/set - Editar configuración del bot"
   },
   "help_help": {
     "NL": "/help - laat help zien",
@@ -297,6 +321,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "/help - Näytä ohjeet"
+    "FI": "/help - Näytä ohjeet",
+    "ES": "/help - Ver ayuda"
   }
 }
