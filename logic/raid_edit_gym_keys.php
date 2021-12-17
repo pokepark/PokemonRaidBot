@@ -71,6 +71,9 @@ function raid_edit_gym_keys($first, $gymarea_id = false, $action = 'edit_raidlev
 =======
         $not
         $gymarea_query
+<<<<<<< HEAD
+>>>>>>> 974937cda6355f2a888cf0c1ac394214e6980f17
+=======
 >>>>>>> 974937cda6355f2a888cf0c1ac394214e6980f17
         AND       gyms.show_gym = {$show_gym}
         GROUP BY  gym_name, raids.gym_id, gyms.id, gyms.ex_gym

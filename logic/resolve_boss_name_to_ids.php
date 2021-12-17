@@ -68,7 +68,11 @@ function resolve_boss_name_to_ids($pokemon_name) {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 ?> 
+=======
+?>
+>>>>>>> 974937cda6355f2a888cf0c1ac394214e6980f17
 =======
 ?>
 >>>>>>> 974937cda6355f2a888cf0c1ac394214e6980f17

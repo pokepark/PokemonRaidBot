@@ -257,8 +257,11 @@ if($time_now < $raid['end_time']) {
             $addressable_icon .= '.c' . array_search($raid['costume'],$costume);
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if($raid['shiny'] == 1 && $config->RAID_PICTURE_SHOW_SHINY) {
 =======
+=======
+>>>>>>> 974937cda6355f2a888cf0c1ac394214e6980f17
         if($raid['shiny'] == 1 && $config->RAID_PICTURE_SHOW_SHINY) {
 >>>>>>> 974937cda6355f2a888cf0c1ac394214e6980f17
             $p_icon = $p_icon . "_shiny";

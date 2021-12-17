@@ -175,7 +175,11 @@ foreach ($update as $raid) {
                     move1 = :move1,
                     move2 = :move2,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		    gender = :gender,
+=======
+                    gender = :gender,
+>>>>>>> 974937cda6355f2a888cf0c1ac394214e6980f17
 =======
                     gender = :gender,
 >>>>>>> 974937cda6355f2a888cf0c1ac394214e6980f17
@@ -195,6 +199,9 @@ foreach ($update as $raid) {
 =======
                 'gender' => $gender,
                 'costume' => $costume,
+<<<<<<< HEAD
+>>>>>>> 974937cda6355f2a888cf0c1ac394214e6980f17
+=======
 >>>>>>> 974937cda6355f2a888cf0c1ac394214e6980f17
                 'id' => $raid_id
             ];
@@ -234,8 +241,13 @@ foreach ($update as $raid) {
                 'move1' => $move_1,
                 'move2' => $move_2,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		'gender' => $gender,
 		'costume' => $costume
+=======
+                'gender' => $gender,
+                'costume' => $costume
+>>>>>>> 974937cda6355f2a888cf0c1ac394214e6980f17
 =======
                 'gender' => $gender,
                 'costume' => $costume

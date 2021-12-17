@@ -382,6 +382,90 @@
     "PL": "TRANSLATE",
     "FI": "Haluatko korvata nykyiset tiedot nyt löydetyillä?"
   },
+  "upcoming": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "upcoming",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "tulevat"
+  },
+  "upcoming_bosses_not_found": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "No info of upcoming bosses was found!",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Tietoa tulevista bosseista ei löytynyt!"
+  },
+  "current_scheduled_bosses": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Scheduled raid bosses from database",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Tallennetut tulevat raidibossit"
+  },
+  "unscheduled_bosses": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Unscheduled bosses",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Ajastamattomat bossit"
+  },
+  "delete_scheduled_confirmation": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Do you want to delete this scheduled entry?",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Haluatko poistaa tämän ajastuksen?"
+  },
+  "found_upcoming_bosses": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Found following upcoming bosses",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Löydetyt tulevat raidibossit"
+  },
+  "confirm_replace_upcoming": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Would you like to replace the current data with what we found?",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Haluatko korvata nykyiset tiedot nyt löydetyillä?"
+  },
   "shiny": {
     "NL": "Shiny",
     "DE": "Schillernd",
@@ -1018,6 +1102,18 @@
     "PL": "TRANSLATE",
     "FI": "TRANSLATE",
     "ES": "Por favor, selecciona la zona del gimnasio:"
+  },
+  "select_gym_area": {
+    "NL": "START",
+    "DE": "STARTEN",
+    "EN": "Select area:",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Valitse alue:"
   },
   "select_gym_area": {
     "NL": "START",
@@ -1731,8 +1827,12 @@
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
 <<<<<<< HEAD
+<<<<<<< HEAD
     "FI": "Tallenna salin lisätiedot?",
     "ES": "¿Guardar detalles ampliados del gimnasio?"
+=======
+    "FI": "Tallenna salin lisätiedot?"
+>>>>>>> 974937cda6355f2a888cf0c1ac394214e6980f17
 =======
     "FI": "Tallenna salin lisätiedot?"
 >>>>>>> 974937cda6355f2a888cf0c1ac394214e6980f17
@@ -2736,8 +2836,12 @@
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
 <<<<<<< HEAD
+<<<<<<< HEAD
     "FI": "Uusi arvo",
     "ES": "Nuevo estado"
+=======
+    "FI": "Uusi arvo"
+>>>>>>> 974937cda6355f2a888cf0c1ac394214e6980f17
 =======
     "FI": "Uusi arvo"
 >>>>>>> 974937cda6355f2a888cf0c1ac394214e6980f17
@@ -2753,8 +2857,12 @@
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
 <<<<<<< HEAD
+<<<<<<< HEAD
     "FI": "Nykyinen arvo:",
     "ES": "Estado actual:"
+=======
+    "FI": "Nykyinen arvo:"
+>>>>>>> 974937cda6355f2a888cf0c1ac394214e6980f17
 =======
     "FI": "Nykyinen arvo:"
 >>>>>>> 974937cda6355f2a888cf0c1ac394214e6980f17
@@ -3853,6 +3961,9 @@
     "ES": "Fecha"
 =======
     "FI": "Päivämäärä"
+<<<<<<< HEAD
+>>>>>>> 974937cda6355f2a888cf0c1ac394214e6980f17
+=======
 >>>>>>> 974937cda6355f2a888cf0c1ac394214e6980f17
   },
   "current_gymarea": {
@@ -3866,8 +3977,12 @@
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
 <<<<<<< HEAD
+<<<<<<< HEAD
     "FI": "Salit alueelta",
     "ES": "Zona de gimnasio actual"
+=======
+    "FI": "Salit alueelta"
+>>>>>>> 974937cda6355f2a888cf0c1ac394214e6980f17
 =======
     "FI": "Salit alueelta"
 >>>>>>> 974937cda6355f2a888cf0c1ac394214e6980f17

@@ -29,7 +29,11 @@ function read_upcoming_bosses($return_sql = false) {
                 $starttime->sub(new DateInterval('PT20M'));
             }
 <<<<<<< HEAD
+<<<<<<< HEAD
 	    $date_start = $starttime->format('Y-m-d H:i:s');
+=======
+            $date_start = $starttime->format('Y-m-d H:i:s');
+>>>>>>> 974937cda6355f2a888cf0c1ac394214e6980f17
 =======
             $date_start = $starttime->format('Y-m-d H:i:s');
 >>>>>>> 974937cda6355f2a888cf0c1ac394214e6980f17
@@ -66,7 +70,11 @@ function read_upcoming_bosses($return_sql = false) {
     else return $list;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 ?>
+=======
+?>
+>>>>>>> 974937cda6355f2a888cf0c1ac394214e6980f17
 =======
 ?>
 >>>>>>> 974937cda6355f2a888cf0c1ac394214e6980f17

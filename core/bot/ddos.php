@@ -47,6 +47,9 @@ if (file_exists($id_file) && filesize($id_file) > 0) {
         }else if ($action == 'update_bosses') {
             $skip_ddos_check = 1;
             debug_log('Skipping DDOS check for database update...','!');
+        }else if ($action == 'update_bosses') {
+            $skip_ddos_check = 1;
+            debug_log('Skipping DDOS check for database update...','!');
         }
     } else if(isset($update['cleanup'])) {
             $skip_ddos_check = 1;

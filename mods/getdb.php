@@ -47,7 +47,11 @@ if($protos = get_protos($proto_url)) {
                     if(isset($data['weather']) && isset($data['min_cp']) && isset($data['max_cp']) && isset($data['min_weather_cp']) && isset($data['max_weather_cp'])) {
                         $poke_form = $form;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+            
+>>>>>>> 974937cda6355f2a888cf0c1ac394214e6980f17
 =======
             
 >>>>>>> 974937cda6355f2a888cf0c1ac394214e6980f17
@@ -62,7 +66,11 @@ if($protos = get_protos($proto_url)) {
                         $poke_type2 = $data['type2'];
                         $poke_weather  = $data['weather'];
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+            
+>>>>>>> 974937cda6355f2a888cf0c1ac394214e6980f17
 =======
             
 >>>>>>> 974937cda6355f2a888cf0c1ac394214e6980f17
@@ -77,6 +85,22 @@ if($protos = get_protos($proto_url)) {
                     }
                 }
 	    }
+            ## MySQL 8 compatible
+            #$SQL = $PRE . $SQL . ' as new' . PHP_EOL;
+            #$SQL .= 'ON DUPLICATE KEY UPDATE pokedex_id = new.pokedex_id, pokemon_name = new.pokemon_name, pokemon_form_name = new.pokemon_form_name,' . PHP_EOL;
+            #$SQL .= 'pokemon_form_id = new.pokemon_form_id, asset_suffix = new.asset_suffix, min_cp = new.min_cp, max_cp = new.max_cp,' . PHP_EOL;
+            #$SQL .= 'min_weather_cp = new.min_weather_cp, max_weather_cp = new.max_weather_cp, type = new.type, type2 = new.type2, weather = new.weather;';
+            $SQL = $PRE . $SQL . PHP_EOL;
+            $SQL .= 'ON DUPLICATE KEY UPDATE pokedex_id = VALUES(pokedex_id), pokemon_name = VALUES(pokemon_name), pokemon_form_name = VALUES(pokemon_form_name),' . PHP_EOL;
+            $SQL .= 'pokemon_form_id = VALUES(pokemon_form_id), asset_suffix = VALUES(asset_suffix), min_cp = VALUES(min_cp),' . PHP_EOL;
+            $SQL .= 'max_cp = VALUES(max_cp), min_weather_cp = VALUES(min_weather_cp), max_weather_cp = VALUES(max_weather_cp),' . PHP_EOL;
+            $SQL .= 'type = VALUES(type), type2 = VALUES(type2), weather = VALUES(weather);' . PHP_EOL;
+            try {
+                $prep = $dbh->prepare($SQL);
+                $prep->execute();
+            } catch (Exception $e) {
+                if(isset($update['message']['from']['id'])) $error = $e;
+            }
             ## MySQL 8 compatible
             #$SQL = $PRE . $SQL . ' as new' . PHP_EOL;
             #$SQL .= 'ON DUPLICATE KEY UPDATE pokedex_id = new.pokedex_id, pokemon_name = new.pokemon_name, pokemon_form_name = new.pokemon_form_name,' . PHP_EOL;

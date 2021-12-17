@@ -17,6 +17,9 @@ foreach ($update as $raid) {
     if (isset($raid['type']) && $raid['type'] == 'raid') {    
 =======
     if (isset($raid['type']) && $raid['type'] == 'raid') {
+<<<<<<< HEAD
+>>>>>>> 974937cda6355f2a888cf0c1ac394214e6980f17
+=======
 >>>>>>> 974937cda6355f2a888cf0c1ac394214e6980f17
         // Create raid(s) and exit.
         include_once(ROOT_PATH . '/commands/raid_from_webhook.php');
