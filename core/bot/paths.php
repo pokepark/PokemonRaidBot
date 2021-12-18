@@ -1,16 +1,6 @@
 <?php
-// Core symlinked?
-if(is_link($parent . '/core')) {
-    $corepath = readlink($parent . '/core');
-    $corepath = rtrim($corepath, '/');
-    define('ROOT_PATH', $parent);
-    define('CORE_PATH', $corepath);
-
-// Core inside bot dir
-} else {
-    define('ROOT_PATH', dirname(__DIR__,2));
-    define('CORE_PATH', ROOT_PATH . '/core');
-}
+  define('ROOT_PATH', dirname(__DIR__,2));
+  define('CORE_PATH', ROOT_PATH . '/core');
 
 // Core Paths
 define('CORE_TG_PATH', CORE_PATH . '/telegram');

@@ -1,8 +1,4 @@
 <?php
-// Parent dir.
-$parent = __DIR__;
-
-
 
 // Include requirements and perfom initial steps
 include_once(__DIR__ . '/core/bot/requirements.php');
