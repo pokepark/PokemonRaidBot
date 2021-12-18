@@ -2,14 +2,20 @@
 // Parent dir.
 $parent = __DIR__;
 
-// Optionally load Composer autoloads. It's not yet a strict requirement for the majority of the project
-if (file_exists(__DIR__ . '/vendor/autoload.php')) {
-  require_once __DIR__ . '/vendor/autoload.php';
-}
 
 
 // Include requirements and perfom initial steps
 include_once(__DIR__ . '/core/bot/requirements.php');
+
+// Optionally load Composer autoloads. It's not yet a strict requirement for the majority of the project
+if (file_exists(__DIR__ . '/vendor/autoload.php')) {
+  require_once __DIR__ . '/vendor/autoload.php';
+
+  // init metrics registry
+  $registry = new \Prometheus\CollectorRegistry(new Prometheus\Storage\APC());
+  $counter = $registry->registerCounter('test', 'some_counter', 'it increases', ['type']);
+  $counter->incBy(1, ['blue']);
+}
 
 // Start logging.
 debug_log("RAID-BOT '" . $config->BOT_ID . "'");

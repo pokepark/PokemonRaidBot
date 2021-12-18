@@ -8,5 +8,8 @@
             "Pokepark\\Pokemonraidbot\\": "src/"
         }
     },
-    "require": {}
+    "require": {
+        "promphp/prometheus_client_php": "^2.4",
+        "symfony/polyfill-apcu": "^1.23"
+    }
 }
