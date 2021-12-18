@@ -4,13 +4,16 @@
 include_once(__DIR__ . '/core/bot/requirements.php');
 
 // Optionally load Composer autoloads. It's not yet a strict requirement for the majority of the project
+$metrics = NULL;
+$prefix = NULL;
 if (file_exists(__DIR__ . '/vendor/autoload.php')) {
   require_once __DIR__ . '/vendor/autoload.php';
 
   // init metrics registry
-  $registry = new \Prometheus\CollectorRegistry(new Prometheus\Storage\APC());
-  $counter = $registry->registerCounter('test', 'some_counter', 'it increases', ['type']);
-  $counter->incBy(1, ['blue']);
+  $metrics = new \Prometheus\CollectorRegistry(new Prometheus\Storage\APC());
+  $prefix = 'pokemonraidbot';
+  $request_counter = $metrics->registerCounter($prefix, 'request_counter', 'total requests served');
+  $request_counter->incBy(1);
 }
 
 // Start logging.
