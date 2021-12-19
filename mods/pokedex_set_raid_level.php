@@ -65,8 +65,7 @@ if($data['arg'] == "setlevel") {
                 DELETE FROM raid_bosses
                 WHERE     pokedex_id = '{$dex_id}'
                 AND       pokemon_form_id = '{$dex_form}'
-                AND       date_start = '1970-01-01 00:00:01'
-                AND       date_end = '2038-01-19 03:14:07'
+                AND       scheduled = 0
                 "
             );
     }else {

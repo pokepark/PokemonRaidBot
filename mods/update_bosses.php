@@ -39,15 +39,16 @@ if($levels != 'scheduled') {
                                 'pokedex_id' => $dex_id,
                                 'pokemon_form_id' => $dex_form,
                                 'raid_level' => $tier,
-                                'date_start' => '1970-01-01 00:00:01',
-                                'date_end' => '2038-01-19 03:14:07',
                             ];
             }
         }
+    }else {
+        info_log("Invalid argumens supplied to update_bosses!");
+        exit();
     }
 }elseif($levels == 'scheduled') {
     require_once(LOGIC_PATH . '/read_upcoming_bosses.php');
-    $sql = 'DELETE FROM raid_bosses WHERE date_start != "1970-01-01 00:00:01" AND date_end != "2038-01-19 03:14:07";';
+    $sql = 'DELETE FROM raid_bosses WHERE scheduled = 1;';
     $sql .= read_upcoming_bosses(true);
 }else {
     info_log("Invalid argumens supplied to update_bosses!");

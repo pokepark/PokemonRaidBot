@@ -12,7 +12,7 @@ bot_access_check($update, 'pokedex');
 // Get all pokemon with raid levels from database.
 $rs = my_query(
         "
-            SELECT    raid_bosses.id, raid_bosses.pokedex_id, raid_bosses.pokemon_form_id, raid_bosses.raid_level, raid_bosses.date_start, raid_bosses.date_end
+            SELECT    raid_bosses.id, raid_bosses.pokedex_id, raid_bosses.pokemon_form_id, raid_bosses.raid_level, raid_bosses.date_start, raid_bosses.date_end, raid_bosses.scheduled
             FROM      raid_bosses
             LEFT JOIN pokemon
             ON        raid_bosses.pokedex_id = pokemon.pokedex_id
@@ -35,14 +35,13 @@ while ($pokemon = $rs->fetch()) {
     $current_level = $pokemon['raid_level'];
     $current_date_start = $pokemon['date_start'];
     $current_date_end = $pokemon['date_end'];
-    if($pokemon['date_start'] == '1970-01-01 00:00:01' && $pokemon['date_end'] == '2038-01-19 03:14:07') { $scheduled_boss = false; } else { $scheduled_boss = true; }
     if($previous_date_start != $current_date_start || $previous_date_end != $current_date_end || $previous_date_start == 'FIRST_RUN') {
         // Formatting.
         if($previous_date_start != 'FIRST_RUN') {
             $msg .= CR;
         }
         // Add header.
-        if(!$scheduled_boss) {
+        if($pokemon['scheduled'] == 0) {
             $msg .= '<b>' . getTranslation('unscheduled_bosses') . ':</b>' . CR;
         }else {
             $msg .= EMOJI_CLOCK . ' <b>' . $pokemon['date_start'] . ' - ' . $pokemon['date_end'] . ':</b>' . CR ;
@@ -63,7 +62,7 @@ while ($pokemon = $rs->fetch()) {
     $msg .= $poke_name . ' (#' . $pokemon['pokedex_id'] . ')' . CR;
 
     // Add button to edit pokemon.
-    if($scheduled_boss) {
+    if($pokemon['scheduled'] == 1) {
         $keys[] = array(
             'text'          => EMOJI_CLOCK . ' [' . $pokemon['raid_level'] . ']' . SP . $poke_name,
             'callback_data' => $pokemon['id'] . ':delete_scheduled_entry:0'
