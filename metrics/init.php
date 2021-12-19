@@ -2,7 +2,7 @@
 $metrics = NULL;
 $prefix = NULL;
 
-if ($config->METRICS && $config->METRICS_BEARER_TOKEN) {
+if ($config->METRICS) {
   if ($config->METRICS_BEARER_TOKEN) {
     if(extension_loaded('apcu') && apcu_enabled()){
       $prefix = 'pokemonraidbot';
