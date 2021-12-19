@@ -1,6 +1,12 @@
 <?php
 // Write to log
 debug_log('DDOS Check');
+if ($metrics){
+    $ddos_old_update_counter = $metrics->registerCounter($prefix, 'ddos_old_update_counter', 'Total old updates received');
+    $ddos_last_update_gauge = $metrics->registerGauge($prefix, 'ddos_last_update_gauge', 'Last known update_id');
+    $ddos_gauge = $metrics->registerGauge($prefix, 'ddos_gauge', 'current DDoS values', ['user_id']);
+    $ddos_fail_counter = $metrics->registerCounter($prefix, 'ddos_fail_counter', 'Total DDoS failures', ['user_id']);
+}
 
 // Update_ID file.
 $id_file = DDOS_PATH . '/update_id';
@@ -13,6 +19,9 @@ if (file_exists($id_file) && filesize($id_file) > 0) {
     // Get update_ids from Telegram and locally stored in the file
     $update_id = isset($update['update_id']) ? $update['update_id'] : 0;
     $last_update_id = is_file($id_file) ? file_get_contents($id_file) : 0;
+    if ($metrics){
+        $ddos_last_update_gauge->set($last_update_id);
+    }
     if (isset($update['callback_query'])) {
         // Split callback data to check for overview_refresh
         $splitData = explode(':', $update['callback_query']['data']);
@@ -53,6 +62,9 @@ if (file_exists($id_file) && filesize($id_file) > 0) {
     // End script if update_id is older than stored update_id
     if ($update_id < $last_update_id && $skip_ddos_check == 0) {
         info_log("FATAL ERROR! Received old update_id: {$update_id} vs {$last_update_id}",'!');
+        if ($metrics){
+            $ddos_old_update_counter->incBy(1);
+        }
         exit();
     }
 } else {
@@ -93,12 +105,21 @@ if (isset($update['callback_query'])) {
                     // Get DDOS count from file
                     $ddos_count = file_get_contents($ddos_file);
                     $ddos_count = $ddos_count + 1;
+                  if ($metrics){
+                      $ddos_gauge->set($ddos_count, [$ddos_id]);
+                  }
                 // Reset DDOS count to 1
                 } else {
                     $ddos_count = 1;
+                    if ($metrics){
+                        $ddos_gauge->set(1, [$ddos_id]);
+                    }
                 }
                 // Exit if DDOS of user_id count is exceeded.
                 if ($ddos_count > $config->DDOS_MAXIMUM) {
+                    if ($metrics){
+                        $ddos_fail_counter->inc([$ddos_id]);
+                    }
                     exit();
                 // Update DDOS count in file
                 } else {
@@ -108,6 +129,9 @@ if (isset($update['callback_query'])) {
             } else {
                 $ddos_count = 1;
                 file_put_contents($ddos_file, $ddos_count);
+                if ($metrics){
+                    $ddos_gauge->set($ddos_count, [$ddos_id]);
+                }
             }
         }
     }
