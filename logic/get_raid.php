@@ -16,28 +16,30 @@ function get_raid($raid_id)
     $rs = my_query(
         '
         SELECT     IF (raids.pokemon = 0,
-						IF((SELECT  count(*)
-							FROM    raid_bosses
-							WHERE   raid_level = raids.level
+                        IF((SELECT  count(*)
+                            FROM    raid_bosses
+                            WHERE   raid_level = raids.level
                             AND     date_end != \'2038-01-19 03:14:07\'
-							AND     convert_tz(raids.spawn,"+00:00","'.$tz_diff.'")  BETWEEN date_start AND date_end) = 1,
-							(SELECT  pokedex_id
-							FROM    raid_bosses
-							WHERE   raid_level = raids.level
-							AND     convert_tz(raids.spawn,"+00:00","'.$tz_diff.'") BETWEEN date_start AND date_end),
+                            AND     convert_tz(raids.spawn,"+00:00","'.$tz_diff.'") BETWEEN date_start AND date_end) = 1,
+                            (SELECT  pokedex_id
+                            FROM    raid_bosses
+                            WHERE   raid_level = raids.level
+                            AND     convert_tz(raids.spawn,"+00:00","'.$tz_diff.'") BETWEEN date_start AND date_end
+                            LIMIT   1),
                             (select concat(\'999\', raids.level) as pokemon)
                             )
                    ,pokemon) as pokemon,
                    IF (raids.pokemon = 0,
-						IF((SELECT  count(*) as count
-							FROM    raid_bosses
-							WHERE   raid_level = raids.level
+                        IF((SELECT  count(*) as count
+                            FROM    raid_bosses
+                            WHERE   raid_level = raids.level
                             AND     date_end != \'2038-01-19 03:14:07\'
-							AND     convert_tz(raids.spawn,"+00:00","'.$tz_diff.'") BETWEEN date_start AND date_end) = 1,
-							(SELECT  pokemon_form_id
-							FROM    raid_bosses
-							WHERE   raid_level = raids.level
-							AND     convert_tz(raids.spawn,"+00:00","'.$tz_diff.'") BETWEEN date_start AND date_end),
+                            AND     convert_tz(raids.spawn,"+00:00","'.$tz_diff.'") BETWEEN date_start AND date_end) = 1,
+                            (SELECT  pokemon_form_id
+                            FROM    raid_bosses
+                            WHERE   raid_level = raids.level
+                            AND     convert_tz(raids.spawn,"+00:00","'.$tz_diff.'") BETWEEN date_start AND date_end
+                            LIMIT   1),
                             \'0\'
                             ),
                         IF(raids.pokemon_form = 0,

@@ -69,8 +69,7 @@ if($arg == 0) {
         ON        pokemon.pokedex_id = raid_bosses.pokedex_id
         AND       pokemon.pokemon_form_id = raid_bosses.pokemon_form_id
         WHERE     raid_bosses.raid_level IN ({$clear})
-        AND       raid_bosses.date_start = '1970-01-01 00:00:01'
-        AND       raid_bosses.date_end = '2038-01-19 03:14:07'
+        AND       raid_bosses.scheduled = 0
         ORDER BY  raid_level, pokedex_id, pokemon_form_name != 'normal', pokemon_form_name
         "
     );

@@ -15,7 +15,7 @@ $arg = $data['arg'];
 
 if($arg == '1') {
     try {
-        $sql = 'DELETE FROM raid_bosses WHERE date_start != "1970-01-01 00:00:01" AND date_end != "2038-01-19 03:14:07";';
+        $sql = 'DELETE FROM raid_bosses WHERE scheduled = 1;';
         $sql .= read_upcoming_bosses(true);
         $query = $dbh->prepare($sql);
         $query->execute();
@@ -34,7 +34,7 @@ if($arg == '1') {
         $query = my_query("
                 SELECT * FROM raid_bosses
                 WHERE       date_end > '" . $now->format('Y-m-d H:i:s') . "'
-                AND         date_end <> '2038-01-19 03:14:07'
+                AND         scheduled = 1
                 ORDER BY    date_start, raid_level, pokedex_id, pokemon_form_id
                 ");
         $prev_start = $prev_rl = '';
