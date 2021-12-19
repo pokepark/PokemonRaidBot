@@ -1,3 +1,5 @@
 images/gyms/**
 images/pokemon_*
 vendor
+.git
+docs
