@@ -8,12 +8,10 @@ $metrics = NULL;
 $prefix = NULL;
 if (file_exists(__DIR__ . '/vendor/autoload.php')) {
   require_once __DIR__ . '/vendor/autoload.php';
-
-  // init metrics registry
-  $metrics = new \Prometheus\CollectorRegistry(new Prometheus\Storage\APC());
-  $prefix = 'pokemonraidbot';
-  $request_counter = $metrics->registerCounter($prefix, 'request_counter', 'total requests served');
-  $request_counter->incBy(1);
+  // Load features that require Composer loaded classes
+  require_once __dir__ . '/metrics/init.php';
+} else {
+  info_log('Composer has not been run, some newer functionality will not be enabled!');
 }
 
 // Start logging.
