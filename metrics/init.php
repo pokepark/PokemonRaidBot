@@ -1,6 +1,7 @@
 <?php
 $metrics = NULL;
 $prefix = NULL;
+$request_counter = NULL;
 
 if ($config->METRICS) {
   if ($config->METRICS_BEARER_TOKEN) {
@@ -14,8 +15,7 @@ if ($config->METRICS) {
         apcu_store($prefix, True);
       }
 
-      $request_counter = $metrics->registerCounter($prefix, 'request_counter', 'total requests served');
-      $request_counter->inc();
+      $request_counter = $metrics->registerCounter($prefix, 'request_counter', 'total requests served', ['endpoint']);
     } else {
       error_log('Metrics are enabled and secured but your PHP installation does not have the APCu extension enabled which is required!');
     }

@@ -4,14 +4,16 @@
 include_once(__DIR__ . '/core/bot/requirements.php');
 
 // Optionally load Composer autoloads. It's not yet a strict requirement for the majority of the project
-$metrics = NULL;
-$prefix = NULL;
 if (file_exists(__DIR__ . '/vendor/autoload.php')) {
   require_once __DIR__ . '/vendor/autoload.php';
   // Load features that require Composer loaded classes
   require_once __dir__ . '/metrics/init.php';
 } else {
   info_log('Composer has not been run, some newer functionality will not be enabled!');
+}
+
+if ($metrics){
+  $request_counter->inc(['/']);
 }
 
 // Start logging.
