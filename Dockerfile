@@ -13,9 +13,14 @@ RUN apt update && apt install -y \
     jq \
  && rm -rf /var/lib/apt/lists/*
 
+# init composer before copying sources to make repeated dev builds faster
+COPY --from=composer /usr/bin/composer /usr/bin/composer
+
 WORKDIR /var/www/html/
 COPY . /var/www/html/
 COPY docker/entrypoint.sh /root/entrypoint.sh
+RUN composer install --no-dev --no-progress --apcu-autoloader --no-ansi --no-interaction --no-cache
+
 RUN mkdir /var/log/tg-bots/ && \
     chown -R www-data:www-data /var/www/html/ /var/log/tg-bots
 
