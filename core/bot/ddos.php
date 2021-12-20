@@ -76,7 +76,7 @@ if (isset($update['callback_query'])) {
     if ($update['callback_query']['data']) {
         // Split callback data and assign to data array.
         $splitData = explode(':', $update['callback_query']['data']);
-        $splitAction = explode('_', $splitData[2]);
+        $splitAction = explode('_', $splitData[1]);
         $action = $splitAction[0];
         // Check the action
         if ($action == 'vote') {
