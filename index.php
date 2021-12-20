@@ -20,6 +20,35 @@ foreach ($update as $raid) {
         exit();
     }
 }
+// Init empty data array.
+$data = [];
+
+// Callback data found.
+if (isset($update['callback_query']['data'])) {
+    // Bridge mode?
+    if($config->BRIDGE_MODE) {
+        // Split bot folder name away from actual data.
+        $botnameData = explode(':', $update['callback_query']['data'], 2);
+        $botname = $botnameData[0];
+        $thedata = $botnameData[1];
+        // Write to log
+        debug_log('Bot Name: ' . $botname);
+        debug_log('The Data: ' . $thedata);
+        $botname_length = count(str_split($botname));
+        if($botname_length > 8) {
+            info_log("ERROR! Botname '" . $botname . "' is too long, max: 8","!");
+            exit();
+        }
+    } else {
+        // Data is just the data.
+        $thedata = $update['callback_query']['data'];
+    }
+    // Split callback data and assign to data array.
+    $splitData = explode(':', $thedata);
+    $data['id']     = $splitData[0];
+    $data['action'] = $splitData[1];
+    $data['arg']    = $splitData[2];
+}
 
 // DDOS protection
 include_once(CORE_BOT_PATH . '/ddos.php');

@@ -14,21 +14,7 @@ if (file_exists($id_file) && filesize($id_file) > 0) {
     $update_id = isset($update['update_id']) ? $update['update_id'] : 0;
     $last_update_id = is_file($id_file) ? file_get_contents($id_file) : 0;
     if (isset($update['callback_query'])) {
-        // Split callback data to check for overview_refresh
-        $splitData = explode(':', $update['callback_query']['data']);
-        // Bridge mode?
-        if($config->BRIDGE_MODE) {
-            $botname = $splitData[0];
-            $action = $splitData[2];
-            $botname_length = count(str_split($botname));
-            if($botname_length > 8) {
-                info_log("ERROR! Botname '" . $botname . "' is too long, max: 8","!");
-                exit();
-            }
-        } else {
-            $action = $splitData[1];
-        }
-
+        $action = $data['action'];
         if ($action == 'overview_refresh') {
             $skip_ddos_check = 1;
             debug_log('Skipping DDOS check for overview refresh...','!');
@@ -43,7 +29,7 @@ if (file_exists($id_file) && filesize($id_file) > 0) {
             debug_log('Skipping DDOS check for database update...','!');
         }else if ($action == 'update_bosses') {
             $skip_ddos_check = 1;
-            debug_log('Skipping DDOS check for database update...','!');
+            debug_log('Skipping DDOS check for boss data update...','!');
         }
     } else if(isset($update['cleanup'])) {
             $skip_ddos_check = 1;
@@ -70,16 +56,12 @@ $ddos_count = 0;
 
 // DDOS protection
 if (isset($update['callback_query'])) {
-    // Init empty data array.
-    $data = [];
     // Get callback query data
     if ($update['callback_query']['data']) {
         // Split callback data and assign to data array.
-        $splitData = explode(':', $update['callback_query']['data']);
-        $splitAction = explode('_', $splitData[1]);
-        $action = $splitAction[0];
+        $splitAction = explode('_', $data['action']);
         // Check the action
-        if ($action == 'vote') {
+        if ($splitAction[0] == 'vote') {
             // Get the user_id and set the related ddos file
             $ddos_id = $update['callback_query']['from']['id'];
             $ddos_file = (DDOS_PATH . '/' . $ddos_id);
