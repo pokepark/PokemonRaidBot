@@ -5,7 +5,7 @@ include_once(__DIR__ . '/core/bot/requirements.php');
 include_once(CORE_BOT_PATH . '/db.php');
 
 if ($metrics){
-  $request_counter->inc(['raidpicture']);
+  $requests_total->inc(['raidpicture']);
 }
 // Create GD image object from given URI regardless of file type
 function grab_img($uri){

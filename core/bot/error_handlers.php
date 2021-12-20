@@ -11,8 +11,8 @@ function exception_handler($e) {
   error_log("Uncaught exception at {$filename}:{$lineno}: " . $e->getMessage());
   error_log($e->getTraceAsString());
   if ($metrics){
-    $uncaught_exception_counter = $metrics->getOrRegisterCounter($prefix, 'uncaught_exception_counter', 'total uncaught exceptions', ['filename', 'lineno']);
-    $uncaught_exception_counter->inc([$filename, $lineno]);
+    $uncaught_exceptions_total = $metrics->getOrRegisterCounter($prefix, 'uncaught_exception_counter', 'total uncaught exceptions', ['filename', 'lineno']);
+    $uncaught_exceptions_total->inc([$filename, $lineno]);
   }
 }
 

@@ -4,7 +4,7 @@
 include_once(__DIR__ . '/core/bot/requirements.php');
 
 if ($metrics){
-  $request_counter->inc(['/']);
+  $requests_total->inc(['/']);
 }
 
 // Start logging.
