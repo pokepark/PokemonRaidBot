@@ -8,21 +8,16 @@ function exception_handler($e) {
   global $metrics, $prefix;
   $filename = simple_filename($e->getFile());
   $lineno = $e->getLine();
-  error_log("Uncaught exception at {$filename}:L{$lineno}: " . $e->getMessage());
+  error_log("Uncaught exception at {$filename}:{$lineno}: " . $e->getMessage());
+  error_log($e->getTraceAsString());
   if ($metrics){
-    $uncaught_exception_counter = $metrics->registerCounter($prefix, 'uncaught_exception_counter', 'total uncaught exceptions', ['filename', 'lineno']);
+    $uncaught_exception_counter = $metrics->getOrRegisterCounter($prefix, 'uncaught_exception_counter', 'total uncaught exceptions', ['filename', 'lineno']);
     $uncaught_exception_counter->inc([$filename, $lineno]);
   }
 }
 
-
+// Route Errors into Exceptions so we catch those as well in the same framework
 function error_handler($severity, $message, $filename, $lineno) {
-  global $metrics, $prefix;
-  $filename = simple_filename($filename);
-  if ($metrics){
-    $php_error_counter = $metrics->registerCounter($prefix, 'php_error_counter', 'total uncaught exceptions', ['filename', 'lineno']);
-    $php_error_counter->inc([$filename, $lineno]);
-  }
   throw new ErrorException($message, 0, $severity, $filename, $lineno);
 }
 
