@@ -29,16 +29,8 @@ if (hash('sha512', $apiKey) == strtolower($config->APIKEY_HASH)) {
     // Set constants.
     define('API_KEY', $apiKey);
 
-// Api key is wrong!
 } else {
-    if(!empty($config->MAINTAINER_ID)) {
-        // Echo data.
-        sendMessageEcho($config->MAINTAINER_ID, 'ERROR! WRONG APIKEY!' . CR . 'Server: ' . $_SERVER['SERVER_ADDR'] . CR . 'User: ' . $_SERVER['REMOTE_ADDR'] . ' ' . isset($_SERVER['HTTP_X_FORWARDED_FOR']) . CR . 'APIKEY: ' . $apiKey);
-    } else {
-        // Write to standard error log.
-        error_log('ERROR! The config option MAINTAINER_ID is not defined!');
-    }
-    // And exit script.
+    http_response_code(403);
     exit();
 }
 
