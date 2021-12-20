@@ -44,8 +44,8 @@ function getBearerToken() {
 
 $bearer_token = getBearerToken();
 
-if (file_exists(__DIR__ . '/../vendor/autoload.php') && $config->METRICS && $config->METRICS_BEARER_TOKEN && $bearer_token == $config->METRICS_BEARER_TOKEN) {
-  require_once __DIR__ . '/../vendor/autoload.php';
+if (file_exists(ROOT_PATH . '/vendor/autoload.php') && $config->METRICS && $config->METRICS_BEARER_TOKEN && $bearer_token == $config->METRICS_BEARER_TOKEN) {
+  require_once(ROOT_PATH . '/vendor/autoload.php');
   $registry = new CollectorRegistry(new APC());
   $renderer = new RenderTextFormat();
   $result = $renderer->render($registry->getMetricFamilySamples());
