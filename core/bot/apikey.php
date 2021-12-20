@@ -30,6 +30,9 @@ if (hash('sha512', $apiKey) == strtolower($config->APIKEY_HASH)) {
     define('API_KEY', $apiKey);
 
 } else {
+    if (isset($_GET['api_key'])){
+        error_log('Incorrect api_key provided! This is most likely a misconfiguration you should fix.');
+    }
     http_response_code(403);
     exit();
 }
