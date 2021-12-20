@@ -58,10 +58,22 @@ $tg_json = array();
 $tg_json[] = answerCallbackQuery($update['callback_query']['id'], $callback_response, true);
 
 // Edit the message.
-if($config->DEFAULT_GYM_AREA == false && $data['id'] == 0) {
-    $msg = '<b>' . getTranslation('select_gym_area') . '</b>';
+if($config->ENABLE_GYM_AREAS) {
+    if($keys_and_gymarea['gymarea_name'] == '') {
+        $msg .= '<b>' . getTranslation('select_gym_area') . '</b>' . CR;
+    }elseif(($config->DEFAULT_GYM_AREA == false && $data['id'] == 0) or $config->DEFAULT_GYM_AREA != false) {
+        if($keys_and_gymarea['letters']) {
+            $msg .= '<b>' . getTranslation('select_gym_first_letter_or_gym_area') . '</b>' . CR;
+        }else {
+            $msg .= '<b>' . getTranslation('select_gym_name_or_gym_area') . '</b>' . CR;
+        }
+    }elseif($keys_and_gymarea['letters']) {
+        $msg .= '<b>' . getTranslation('select_gym_first_letter') . '</b>' . CR;
+    }else {
+        $msg .= '<b>' . getTranslation('select_gym_name') . '</b>' . CR;
+    }
 }else {
-    $msg = '<b>' . getTranslation('select_gym_first_letter') . '</b>';
+    $msg .= '<b>' . getTranslation('select_gym_first_letter') . '</b>' . CR;
 }
 $msg.= (($keys_and_gymarea['gymarea_name'] != '') ? CR . CR . getTranslation('current_gymarea') . ': ' . $keys_and_gymarea['gymarea_name'] : '');
 $tg_json[] = edit_message($update, $msg, $keys, false, true);

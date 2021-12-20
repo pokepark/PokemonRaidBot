@@ -96,6 +96,7 @@ function raid_edit_gyms_first_letter_keys($action = 'raid_by_gym', $hidden = fal
 
             // Get the inline key array.
             $keys = inline_key_array($keys, 4);
+            $letters = true;
         }else {
             // If less than 20 gyms was found, print gym names
             if($action == 'list_by_gym') {
@@ -146,6 +147,7 @@ function raid_edit_gyms_first_letter_keys($action = 'raid_by_gym', $hidden = fal
 
             // Get the inline key array.
             $keys = inline_key_array($keys, 1);
+            $letters = false;
         }
     }
 
@@ -158,7 +160,7 @@ function raid_edit_gyms_first_letter_keys($action = 'raid_by_gym', $hidden = fal
         $keys[] = $nav_keys;
     }
 
-    return ['keys' => $keys, 'gymarea_name' => $gymarea_name];
+    return ['keys' => $keys, 'gymarea_name' => $gymarea_name, 'letters' => $letters];
 }
 
 ?>

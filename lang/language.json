@@ -839,9 +839,33 @@
     "PL": "Wybierz pierwszą litere nazwy Areny",
     "FI": "Valitse salin ensimmäinen kirjain:"
   },
+  "select_gym_first_letter_or_gym_area": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Please select the first letter of the gym or gym area:",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Valitse salin ensimmäinen kirjain tai alue:"
+  },
+  "select_gym_name_or_gym_area": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Please select gym or gym area:",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Valitse sali tai alue:"
+  },
   "select_gym_area": {
-    "NL": "START",
-    "DE": "STARTEN",
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
     "EN": "Select area:",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
