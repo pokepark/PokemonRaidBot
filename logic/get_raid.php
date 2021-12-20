@@ -68,6 +68,10 @@ function get_raid($raid_id)
     // Get the row.
     $raid = $rs->fetch();
 
+    if (!$raid){
+      throw new Exception("Attempted to fetch unknown raid: {$raid_id}");
+    }
+
     // Check trainername
     $raid = check_trainername($raid);
 
