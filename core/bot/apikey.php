@@ -17,8 +17,9 @@ if(isset($_GET['apikey'])) {
 } elseif(!empty($argv[1])) {
     $apiKey = $argv[1];
 } else {
-    $apiKey = 'MISSING!';
-    debug_log('Called without apikey, nothing will likely work.');
+    debug_log('Called without apikey, returning empty content.');
+    http_response_code(204); // HTTP 204: No Content
+    exit();
 }
 
 // Check if hashed api key is matching config.
@@ -28,12 +29,9 @@ if (hash('sha512', $apiKey) == strtolower($config->APIKEY_HASH)) {
 
     // Set constants.
     define('API_KEY', $apiKey);
-
 } else {
-    if (isset($_GET['api_key'])){
-        error_log('Incorrect api_key provided! This is most likely a misconfiguration you should fix.');
-    }
-    http_response_code(403);
+    error_log('Incorrect apikey provided! This is most likely a misconfiguration you should fix.');
+    http_response_code(403); // HTTP 403: Forbidden
     exit();
 }
 
