@@ -18,6 +18,7 @@ function exception_handler($e) {
 
 // Route Errors into Exceptions so we catch those as well in the same framework
 function error_handler($severity, $message, $filename, $lineno) {
+  debug_log(debug_backtrace());
   throw new ErrorException($message, 0, $severity, $filename, $lineno);
 }
 
