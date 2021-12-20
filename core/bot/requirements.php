@@ -6,6 +6,9 @@
 // Core Paths Constants
 require_once(__DIR__ . '/paths.php');
 
+// Exception & error handling
+require_once(CORE_BOT_PATH . '/error_handlers.php');
+
 // Custom Bot Constants
 if(is_file(CUSTOM_PATH . '/constants.php')) {
     require_once(CUSTOM_PATH . '/constants.php');
@@ -47,3 +50,11 @@ if(is_file(ROOT_PATH . '/logic.php')) {
 
 // Bot version
 require_once(CORE_BOT_PATH . '/version.php');
+
+// Optionally load Composer autoloads. It's not yet a strict requirement for the majority of the project
+if (is_file(ROOT_PATH . '/vendor/autoload.php')) {
+  require_once(ROOT_PATH . '/vendor/autoload.php');
+
+  // Init features that require Composer loaded classes
+  require_once(CORE_BOT_PATH . '/metrics.php');
+}
