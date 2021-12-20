@@ -51,7 +51,9 @@ if (isset($update['callback_query']['data'])) {
 }
 
 // DDOS protection
-include_once(CORE_BOT_PATH . '/ddos.php');
+if($config->ENABLE_DDOS_PROTECTION) {
+    include_once(CORE_BOT_PATH . '/ddos.php');
+}
 
 // Update the user
 update_user($update);
