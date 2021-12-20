@@ -19,7 +19,7 @@ if ($config->METRICS) {
 
       $requests_total = $metrics->registerCounter($prefix, 'requests_total', 'total requests served', ['endpoint']);
       $uptime_seconds = $metrics->registerGauge($prefix, 'uptime_seconds', 'Seconds since metrics collection started');
-      $uptime_seconds->incBy(time() - apcu_fetch($prefix));
+      $uptime_seconds->set(time() - apcu_fetch($prefix));
     } else {
       error_log('Metrics are enabled and secured but your PHP installation does not have the APCu extension enabled which is required!');
     }
