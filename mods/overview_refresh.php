@@ -33,28 +33,28 @@ $tz_diff = tz_diff();
 foreach($overviews as $overview_row) {
     $request_raids = my_query('
             SELECT IF (raids.pokemon = 0,
-						IF((SELECT  count(*)
-							FROM    raid_bosses
-							WHERE   raid_level = raids.level
-                            AND     date_end != \'2038-01-19 03:14:07\'
-							AND     convert_tz(raids.spawn,"+00:00","'.$tz_diff.'") BETWEEN date_start AND date_end) = 1,
-							(SELECT  pokedex_id
-							FROM    raid_bosses
-							WHERE   raid_level = raids.level
-							AND     convert_tz(raids.spawn,"+00:00","'.$tz_diff.'") BETWEEN date_start AND date_end),
+                        IF((SELECT  count(*)
+                            FROM    raid_bosses
+                            WHERE   raid_level = raids.level
+                            AND     scheduled = 1
+                            AND     convert_tz(raids.spawn,"+00:00","'.$tz_diff.'") BETWEEN date_start AND date_end) = 1,
+                            (SELECT  pokedex_id
+                            FROM    raid_bosses
+                            WHERE   raid_level = raids.level
+                            AND     convert_tz(raids.spawn,"+00:00","'.$tz_diff.'") BETWEEN date_start AND date_end),
                             (select concat(\'999\', raids.level) as pokemon)
                             )
                    ,pokemon) as pokemon,
                    IF (raids.pokemon = 0,
-						IF((SELECT  count(*) as count
-							FROM    raid_bosses
-							WHERE   raid_level = raids.level
-                            AND     date_end != \'2038-01-19 03:14:07\'
-							AND     convert_tz(raids.spawn,"+00:00","'.$tz_diff.'") BETWEEN date_start AND date_end) = 1,
-							(SELECT  pokemon_form_id
-							FROM    raid_bosses
-							WHERE   raid_level = raids.level
-							AND     convert_tz(raids.spawn,"+00:00","'.$tz_diff.'") BETWEEN date_start AND date_end),
+                        IF((SELECT  count(*) as count
+                            FROM    raid_bosses
+                            WHERE   raid_level = raids.level
+                            AND     scheduled = 1
+                            AND     convert_tz(raids.spawn,"+00:00","'.$tz_diff.'") BETWEEN date_start AND date_end) = 1,
+                            (SELECT  pokemon_form_id
+                            FROM    raid_bosses
+                            WHERE   raid_level = raids.level
+                            AND     convert_tz(raids.spawn,"+00:00","'.$tz_diff.'") BETWEEN date_start AND date_end),
                             \'0\'
                             ),
                         IF(raids.pokemon_form = 0,
@@ -76,7 +76,7 @@ foreach($overviews as $overview_row) {
             ON        raids.gym_id = gyms.id
             LEFT JOIN  events
             ON         events.id = raids.event 
-	        WHERE     cleanup.chat_id = \'' . $overview_row['chat_id'] . '\'
+            WHERE     cleanup.chat_id = \'' . $overview_row['chat_id'] . '\'
             AND       raids.end_time>UTC_TIMESTAMP()
             GROUP BY  raids.id, raids.pokemon, raids.pokemon_form, raids.start_time, raids.end_time, raids.gym_id, gyms.lat, gyms.lon, gyms.address, gyms.gym_name, gyms.ex_gym, events.name
             ORDER BY  raids.end_time ASC, gyms.gym_name
