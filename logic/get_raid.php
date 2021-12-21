@@ -19,7 +19,7 @@ function get_raid($raid_id)
                         IF((SELECT  count(*)
                             FROM    raid_bosses
                             WHERE   raid_level = raids.level
-                            AND     date_end != \'2038-01-19 03:14:07\'
+                            AND     scheduled = 1
                             AND     convert_tz(raids.spawn,"+00:00","'.$tz_diff.'") BETWEEN date_start AND date_end) = 1,
                             (SELECT  pokedex_id
                             FROM    raid_bosses
@@ -33,7 +33,7 @@ function get_raid($raid_id)
                         IF((SELECT  count(*) as count
                             FROM    raid_bosses
                             WHERE   raid_level = raids.level
-                            AND     date_end != \'2038-01-19 03:14:07\'
+                            AND     scheduled = 1
                             AND     convert_tz(raids.spawn,"+00:00","'.$tz_diff.'") BETWEEN date_start AND date_end) = 1,
                             (SELECT  pokemon_form_id
                             FROM    raid_bosses
@@ -61,7 +61,7 @@ function get_raid($raid_id)
         ON         raids.user_id = users.user_id
         LEFT JOIN  events
         ON         events.id = raids.event 
-        WHERE      raids.id = '.$raid_id.'
+        WHERE      raids.id = '.$raidid.'
         LIMIT 1
         '
     );

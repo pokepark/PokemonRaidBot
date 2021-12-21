@@ -34,8 +34,24 @@ $tg_json[] = answerCallbackQuery($update['callback_query']['id'], $callback_resp
 
 // Edit the message.
 $msg = '<b>' . getTranslation('list_all_active_raids') . '</b>' . CR;
-$msg .= '<b>' . getTranslation('select_gym_first_letter') . '</b>' . CR;
-$msg.= (($keys_and_gymarea['gymarea_name'] != '') ? CR . CR . getTranslation('current_gymarea') . ': ' . $keys_and_gymarea['gymarea_name'] : '');
+if($config->ENABLE_GYM_AREAS) {
+    if($keys_and_gymarea['gymarea_name'] == '') {
+        $msg .= '<b>' . getTranslation('select_gym_area') . '</b>' . CR;
+    }elseif(($config->DEFAULT_GYM_AREA == false && $data['id'] == 0) or $config->DEFAULT_GYM_AREA != false) {
+        if($keys_and_gymarea['letters']) {
+            $msg .= '<b>' . getTranslation('select_gym_first_letter_or_gym_area') . '</b>' . CR;
+        }else {
+            $msg .= '<b>' . getTranslation('select_gym_name_or_gym_area') . '</b>' . CR;
+        }
+    }elseif($keys_and_gymarea['letters']) {
+        $msg .= '<b>' . getTranslation('select_gym_first_letter') . '</b>' . CR;
+    }else {
+        $msg .= '<b>' . getTranslation('select_gym_name') . '</b>' . CR;
+    }
+}else {
+    $msg .= '<b>' . getTranslation('select_gym_first_letter') . '</b>' . CR;
+}
+$msg.= (($keys_and_gymarea['gymarea_name'] != '') ? CR . getTranslation('current_gymarea') . ': ' . $keys_and_gymarea['gymarea_name'] : '');
 $tg_json[] = edit_message($update, $msg, $keys, false, true);
 
 // Telegram multicurl request.

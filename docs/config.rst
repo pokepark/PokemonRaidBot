@@ -914,6 +914,8 @@ Config reference
      - Password of dedicated RaidBot DB user
    * - DB_USER
      - Username of dedicated RaidBot DB user
+   * - ENABLE_DDOS_PROTECTION
+     - Bool, enables ddos protection. True by default
    * - DDOS_MAXIMUM
      - Number of actions per minute an user is allowed to perform before getting locked out for ddosing
    * - DEBUG
