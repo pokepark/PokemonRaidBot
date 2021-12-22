@@ -27,3 +27,4 @@
 !/images/gyms/.gitkeep
 
 /vendor/
+/protos/*.json
