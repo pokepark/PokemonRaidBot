@@ -286,7 +286,8 @@ foreach ($update as $raid) {
             gyms.lat, gyms.lon, gyms.address, gyms.gym_name, gyms.ex_gym, gyms.gym_note,
             users.*,
             TIME_FORMAT(TIMEDIFF(:raid_end_time, UTC_TIMESTAMP()) + INTERVAL 1 MINUTE, \'%k:%i\') AS t_left
-            FROM       gyms, (SELECT users.name, users.trainername, users.nick FROM users WHERE users.user_id = :user_id) as users
+            FROM       gyms
+            LEFT JOIN  (SELECT users.name, users.trainername, users.nick FROM users WHERE users.user_id = :user_id) as users on 1
             WHERE      gyms.id = :gym_internal_id
             LIMIT 1
         ';
