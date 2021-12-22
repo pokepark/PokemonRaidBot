@@ -323,10 +323,3 @@ The bot will set the note for gym to your input. The id of the gym is required. 
 Example input: ``/gymnote 34, Meeting point: Behind the building``
 
 Example input to delete the gym note: ``/gymnote 34, reset``
-
-Command: /deletegym
-^^^^^^^^^^^^^^^^^^^
-
-The bot will show all gyms. Select a gym and confirm the deletion to remove it from the database.
-
-Example input: ``/deletegym``

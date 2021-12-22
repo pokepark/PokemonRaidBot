@@ -726,9 +726,6 @@ A few examples for access files can be found below the permission overview table
      - Add a gym ``/addgym``
      - ``gym-add``
    * - 
-     - Delete a gym ``/deletegym``
-     - ``gym-delete``
-   * - 
      - 
      - 
    * - Trainer

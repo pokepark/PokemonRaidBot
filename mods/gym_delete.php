@@ -10,9 +10,7 @@ debug_log('gym_delete()');
 bot_access_check($update, 'gym-delete');
 
 // Get the arg.
-$args = explode(',',$data['arg'],2);
-$arg = $args[0];
-$gymarea_id = (count($args) > 1) ? $args[1] : false;
+$arg = $data['arg'];
 
 // Delete?
 if(substr_count($arg, '-') == 1) {
@@ -26,53 +24,11 @@ if(substr_count($arg, '-') == 1) {
     $delete = true;
     $confirm = true;
 } else {
-    $new_arg = $arg;
-    $delete = false;
-    $confirm = false;
+    $msg = 'ERROR!';
+    $keys = [];
 }
 
-
-// Get the id.
-$id = $data['id'];
-
-// ID = 0 ?
-if($new_arg == 0 && $delete == false && $confirm == false) {
-    // Get hidden gyms?
-    if($id == 0) {
-        $hidden = true;
-    } else {
-        $hidden = false;
-    }
-
-    // Get the keys.
-    $keys = raid_edit_gym_keys($new_arg, $gymarea_id, 'gym_delete', true, $hidden);
-
-    // Set keys.
-    $msg = '<b>' . getTranslation('gym_delete') . SP . '—' . SP . getTranslation('select_gym_name') . '</b>';
-
-    // No keys found.
-    if (!$keys) {
-        // Create the keys.
-        $keys = [
-            [
-                [
-                    'text'          => getTranslation('abort'),
-                    'callback_data' => '0:exit:0'
-                ]
-            ]
-        ];
-    } else {
-        // Add navigation keys.
-        $nav_keys = [];
-        $nav_keys[] = universal_inner_key($nav_keys, '0', 'gym_letter', 'gym_delete', getTranslation('back'));
-        $nav_keys[] = universal_inner_key($nav_keys, '0', 'exit', '0', getTranslation('abort'));
-        $nav_keys = inline_key_array($nav_keys, 2);
-        // Merge keys.
-        $keys = array_merge($keys, $nav_keys);
-    }
-
-// Get gym info and ask to delete gym.
-} else if ($new_arg > 0 && $delete == true && $confirm == false) {
+if ($new_arg > 0 && $delete == true && $confirm == false) {
     $gym = get_gym($new_arg);
     
     // Set message
@@ -84,7 +40,7 @@ if($new_arg == 0 && $delete == false && $confirm == false) {
         [
             [
                 'text'          => getTranslation('yes'),
-                'callback_data' => $id . ':gym_delete:' . $new_arg . '-delete-yes'
+                'callback_data' => '0:gym_delete:' . $new_arg . '-delete-yes'
             ]
         ],
         [
@@ -104,10 +60,15 @@ if($new_arg == 0 && $delete == false && $confirm == false) {
     // Set message
     $msg = '<b>' . getTranslation('deleted_this_gym') . '</b>' . CR;
     $msg .= get_gym_details($gym);
+    $keys = [];
 
     // Delete gym.
-    delete_gym($new_arg);
-    
+    my_query(
+        "
+        DELETE FROM gyms
+        WHERE     id = {$new_arg}
+        "
+    );
 }
 
 // Build callback message string.

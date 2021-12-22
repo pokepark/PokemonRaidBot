@@ -227,18 +227,6 @@
     "PL": "TRANSLATE",
     "FI": "/addgym - Lisää sali"
   },
-  "help_gym-delete": {
-    "NL": "/deletegym - Verwijder een gym",
-    "DE": "/deletegym - Arena löschen",
-    "EN": "/deletegym - Delete a gym",
-    "IT": "TRANSLATE",
-    "PT-BR": "TRANSLATE",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "TRANSLATE",
-    "FI": "/deletegym - Poista sali"
-  },
   "help_portal-import": {
     "NL": "@PortalMapBot of @Ingressportalbot - Importeer gym",
     "DE": "@PortalMapBot oder @Ingressportalbot - Arena importieren",

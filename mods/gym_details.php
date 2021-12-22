@@ -91,6 +91,12 @@ if($arg == 0 || $id == '0' || $id == '1') {
         'text'          => $text_ex_button,
         'callback_data' => $arg . ':gym_edit_details:ex-' . $arg_ex
     );
+    if(bot_access_check($update, 'gym-delete', true)) {
+        $keys[] = array(
+            'text'          => getTranslation("gym_delete"),
+            'callback_data' => '0:gym_delete:'.$arg.'-delete'
+        );
+    }
     $keys[] = array(
         'text'          => getTranslation('done'),
         'callback_data' => '0:exit:1'
