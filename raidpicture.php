@@ -1,11 +1,12 @@
 <?php
 
-$parent = __DIR__;
-
 // Include requirements and perfom initial steps
 include_once(__DIR__ . '/core/bot/requirements.php');
 include_once(CORE_BOT_PATH . '/db.php');
 
+if ($metrics){
+  $requests_total->inc(['raidpicture']);
+}
 // Create GD image object from given URI regardless of file type
 function grab_img($uri){
   $img = imagecreatefromstring(file_get_contents($uri));

@@ -2,6 +2,12 @@
 // Write to log.
 debug_log('RAID_FROM_WEBHOOK()');
 
+if ($metrics){
+    $webhook_raids_received_total = $metrics->registerCounter($prefix, 'webhook_raids_received_total', 'Total raids received via webhook');
+    $webhook_raids_accepted_total = $metrics->registerCounter($prefix, 'webhook_raids_accepted_total', 'Total raids received & accepted via webhook');
+    $webhook_raids_posted_total = $metrics->registerCounter($prefix, 'webhook_raids_posted_total', 'Total raids posted automatically');
+}
+
 function isPointInsidePolygon($point, $vertices) {
     $i = 0;
     $j = 0;
@@ -30,6 +36,9 @@ if (file_exists(CONFIG_PATH . '/geoconfig.json')) {
 // Telegram JSON array.
 $tg_json = [];
 debug_log(count($update),"Received raids:");
+if ($metrics){
+    $webhook_raids_received_total->incBy(count($update));
+}
 foreach ($update as $raid) {
     $level = $raid['message']['level'];
     $pokemon = $raid['message']['pokemon_id'];
@@ -237,6 +246,9 @@ foreach ($update as $raid) {
             $dbh = null;
             exit;
         }
+        if ($metrics){
+            $webhook_raids_accepted_total->inc();
+        }
 
         // Skip posting if create only -mode is set or raid time is greater than value set in config
         if ($config->WEBHOOK_CREATE_ONLY or ($raid['message']['end']-$raid['message']['start']) > ($config->WEBHOOK_EXCLUDE_AUTOSHARE_DURATION * 60) ) {
@@ -370,6 +382,9 @@ foreach ($update as $raid) {
         $chats = array_merge($chats_geofence, $chats_raidlevel, $webhook_chats);
 
         require_once(LOGIC_PATH .'/send_raid_poll.php');
+        if ($metrics){
+            $webhook_raids_posted_total->inc();
+        }
         $tg_json = send_raid_poll($raid_id, $raid, $chats, $tg_json);
     }
 }

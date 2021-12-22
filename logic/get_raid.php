@@ -68,6 +68,12 @@ function get_raid($raid_id)
     // Get the row.
     $raid = $rs->fetch();
 
+    if (!$raid){
+      $rs = my_query("SELECT * FROM raids WHERE raids.id = {$raid_id}");
+      $row = json_encode($rs->fetch());
+      throw new Exception("Failed to fetch raid id {$raid_id}, data we do have on it: {$row}");
+    }
+
     // Check trainername
     $raid = check_trainername($raid);
 
