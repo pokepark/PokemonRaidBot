@@ -16,9 +16,12 @@ Requirements & Installation
 
 * The official Docker image takes care of all prerequisites, all you need to do is specify a token for protecting them and enable the feature.
 * If installing manually:
+
   * You need to enable the PHP ``APCu`` extension. This is used for persisting metrics between individual calls.
   * You will need PHP Composer installed and run ``composer install`` to generate the ``vendor/`` folder that contains further dependencies.
+
 * With any installation method you need to enable two config options:
+
   * ``METRICS=true``
   * ``METRICS_BEARER_TOKEN=your_super_secret_token_goes_here``
 

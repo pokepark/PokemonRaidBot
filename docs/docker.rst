@@ -3,10 +3,12 @@ Installation with Docker
 
 * Official images are provided as GitHub Packages: https://github.com/orgs/pokepark/packages
 * The official image contains apache2, php7 and all required PHP dependencies. It's up to you to also provide:
+
   * a MariaDB server (any image will work fine)
   * ~ 100MB of persistent storage for your config, access files and raid boss icons.
   * an SSL encryption reverse proxy (For example Traefik with Lets Encrypt or a traditional reverse proxy)
   * Task scheduler (such as Ofelia or plain old cron) for overview updates & cleanup.
+
 * We also provide orchestration examples for Docker Compose and Hashicorp Nomad. These can be a good base to build a more "production grade" installation.
 * The Docker image is also ready to go for utilizing Prometheus for bot metrics,  see :doc:`metrics` for how to enable it. You will need a Prometheus instance running as well to fully utilize the data.
 
