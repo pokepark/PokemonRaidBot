@@ -33,10 +33,40 @@ Pulling metrics data manually
 
 Getting the data manually only gives you a snapshot of the data right now and is mostly useful for curiosity or checking on current state.
 
+* Any web client capable of adding a custom header can be used. For example, **curl** which is available in most Linux & MacOS installations.
+* The bearer token header is formatted as ``Authorization: Bearer your_token_here``
+* The endpoint is available on the same port and path as your Bot's normal API. So if you've submitted the webhook with ``https://bot.example.com/`` then the metrics endpoint would be ``https://bot.example.com/metrics/``
+* If you're accessing the metrics from the same machine where the bot is running, you don't need to use the domain and can for example just use ``http://localhost``.
+
 .. code-block:: shell
 
-   curl -L --header 'Authorization: Bearer the_token_from_above_goes_here' http://127.0.0.1:8088/metrics/
+   curl -L --header 'Authorization: Bearer the_token_from_above_goes_here' https://bot.example.com/metrics/
 
+    # HELP php_info Information about the PHP environment.
+    # TYPE php_info gauge
+    php_info{version="7.4.26"} 1
+    # HELP pokemonraidbot_ddos_last_update Last known update_id
+    # TYPE pokemonraidbot_ddos_last_update gauge
+    pokemonraidbot_ddos_last_update 159748283
+    # HELP pokemonraidbot_ddos_state current DDoS values
+    # TYPE pokemonraidbot_ddos_state gauge
+    pokemonraidbot_ddos_state{user_id="123456789"} 1
+    # HELP pokemonraidbot_requests_total total requests served
+    # TYPE pokemonraidbot_requests_total counter
+    pokemonraidbot_requests_total{endpoint="/"} 1314
+    pokemonraidbot_requests_total{endpoint="raidpicture"} 29
+    # HELP pokemonraidbot_uptime_seconds Seconds since metrics collection started
+    # TYPE pokemonraidbot_uptime_seconds gauge
+    pokemonraidbot_uptime_seconds 7441
+    # HELP pokemonraidbot_webhook_raids_accepted_total Total raids received & accepted via webhook
+    # TYPE pokemonraidbot_webhook_raids_accepted_total counter
+    pokemonraidbot_webhook_raids_accepted_total 73
+    # HELP pokemonraidbot_webhook_raids_posted_total Total raids posted automatically
+    # TYPE pokemonraidbot_webhook_raids_posted_total counter
+    pokemonraidbot_webhook_raids_posted_total 14
+    # HELP pokemonraidbot_webhook_raids_received_total Total raids received via webhook
+    # TYPE pokemonraidbot_webhook_raids_received_total counter
+    pokemonraidbot_webhook_raids_received_total 4304
 
 .. note::
     If you don't receive any data, check your bot's info log (By default ``/var/logs/tg-bots/raid-bot.log``). For security reasons the endpoint doesn't provide any errors to the user but they are logged for the admin to help debug.
