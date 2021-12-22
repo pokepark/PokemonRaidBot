@@ -14,6 +14,8 @@ if($config->DB_HOST && $config->DB_PORT && $config->DB_NAME && $config->DB_USER 
   );
   $dbh->setAttribute(PDO::ATTR_ORACLE_NULLS, PDO::NULL_EMPTY_STRING);
   $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+  // Route SQL errors to Exceptions so we can handle them centrally
+  $dbh->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
   // Verify connection works and the DB schema has been loaded
   $query = $dbh->prepare('SHOW TABLES LIKE "attendance";');
