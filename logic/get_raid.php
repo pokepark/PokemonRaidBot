@@ -69,7 +69,9 @@ function get_raid($raid_id)
     $raid = $rs->fetch();
 
     if (!$raid){
-      throw new Exception("Attempted to fetch unknown raid: {$raid_id}");
+      $rs = my_query("SELECT * FROM raids WHERE raids.id = {$raid_id}");
+      $row = json_encode($rs->fetch());
+      throw new Exception("Failed to fetch raid id {$raid_id}, data we do have on it: {$row}");
     }
 
     // Check trainername
