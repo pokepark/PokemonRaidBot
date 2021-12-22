@@ -9,6 +9,14 @@ Adding new config values
 * You can access the new config item in code with ``$config->CONFIG_ITEM_NAME`` but if inside a function, remember to specify ``global $config;``
 * Don't break backwards compatibility if you can.
 
+Adding new metrics
+------------------
+
+* Adding new metrics is relatively simple, see `core/bot/ddos.php` for many examples of different metrics gathering.
+* The ``$metrics`` and ``$prefix`` objects are available in the global scope, so within a function you will need to first call ``global $metrics, $prefix;``
+* Metrics should be named per the `Prometheus best practices<https://prometheus.io/docs/practices/naming/>`_
+* Only base metrics should be recorded, anything that can be derived from a base metric should not be.
+
 Schema changes
 --------------
 
@@ -18,6 +26,7 @@ the schema version is final and immutable and any schema changes need to happen 
 * If the schema version has been raised, a matching sql upgrade file must exist, for example ``sql/upgrade/3.sql``
 * The ``VERSION`` file contains the schema version required by the code it's checked in with.
 * The ``config/config.json`` file is expected to have a config item ``VERSION`` that records the latest schema that the DB has been upgraded to.
+* Schema upgrades should be **idempotent** i.e. can be run multiple times with no adverse effects. During development setting your config version to less than the current schema should always work to get you to the latest schema.
 
 
 Translations
