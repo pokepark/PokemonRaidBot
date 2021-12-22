@@ -20,6 +20,15 @@ Checking logs
        * This logging is extremely verbose and can be hard to read.
        * One trick is to give it the same log path with ``DEBUG_INCOMING_LOGFILE`` as you have for other logs, thus combining all outout into one superlog. It will go very fast, but you have maximum context for everything in one log.
 
+Checking metrics
+----------------
+
+Some issues only surface over time or may be difficult to catch just by looking at logs. We provide optional Prometheus compatible metrics to aid with this.
+
+* For example, they count any exceptions happening during execution and where they were encountered.
+* They may also aid in troubleshooting behaviour you did not intend, but that isn't strictly a bug. For example, if you feel that not all raids are ingested correctly by the webhook, watching for the `pokemonraidbot_webhook_raids_*` metrics may provide you with further ideas for tweaking your configuration.
+* For instructions how to enable metrics gathering, see :doc:`metrics`.
+
 Asking for help
 ---------------
 
