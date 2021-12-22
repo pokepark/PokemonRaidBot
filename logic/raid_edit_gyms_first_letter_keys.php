@@ -108,6 +108,9 @@ function raid_edit_gyms_first_letter_keys($action = 'raid_by_gym', $hidden = fal
             }else {
                 $query_condition = 'WHERE show_gym = ' . $show_gym;
             }
+            if($config->MYSQL_SORT_COLLATE != "") {
+                $query_collate = "COLLATE " . $config->MYSQL_SORT_COLLATE;
+            }
             $rs = my_query(
                 "
                 SELECT    gyms.id, gyms.gym_name, gyms.ex_gym,
@@ -118,7 +121,7 @@ function raid_edit_gyms_first_letter_keys($action = 'raid_by_gym', $hidden = fal
                 {$query_condition}
                 {$gymarea_query}
                 GROUP BY  gym_name, raids.gym_id, gyms.id, gyms.ex_gym
-                {$group_order}
+                ORDER BY  gym_name " . $query_collate . "
                 "
             );
             // Init empty keys array.
