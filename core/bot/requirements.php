@@ -57,4 +57,7 @@ if (is_file(ROOT_PATH . '/vendor/autoload.php')) {
 
   // Init features that require Composer loaded classes
   require_once(CORE_BOT_PATH . '/metrics.php');
+} else {
+  // Any feature object that can't be used due to missing autoloads should be declared here as a falsy value.
+  $metrics = NULL;
 }
