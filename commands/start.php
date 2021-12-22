@@ -73,7 +73,7 @@ if($config->TUTORIAL_MODE && $new_user && (!$access or $access == 'BOT_ADMINS'))
                 ]
             ];
     }
-
+    $msg = '';
     // Set message.
     if($config->ENABLE_GYM_AREAS) {
         if($keys_and_gymarea['gymarea_name'] == '') {

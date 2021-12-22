@@ -57,6 +57,7 @@ $tg_json = array();
 // Answer callback.
 $tg_json[] = answerCallbackQuery($update['callback_query']['id'], $callback_response, true);
 
+$msg = '';
 // Edit the message.
 if($config->ENABLE_GYM_AREAS) {
     if($keys_and_gymarea['gymarea_name'] == '') {
