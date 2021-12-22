@@ -14,6 +14,7 @@ function raid_edit_gyms_first_letter_keys($action = 'raid_by_gym', $hidden = fal
     $gymarea_query = $gymarea_name = '';
     $gymarea_keys = [];
     $skip_letter_keys = true;
+    $letters = false;
     if($config->ENABLE_GYM_AREAS) {
         $json = json_decode(file_get_contents(CONFIG_PATH . '/geoconfig_gym_areas.json'),1);
         $points = [];
@@ -45,7 +46,7 @@ function raid_edit_gyms_first_letter_keys($action = 'raid_by_gym', $hidden = fal
             // Explode special letters.
             $special_keys = explode(',', $config->RAID_CUSTOM_GYM_LETTERS);
             $select = 'SELECT CASE ';
-            foreach($special_keys as $id => $letter)
+            foreach($special_keys as $letter)
             {
                 $letter = trim($letter);
                 debug_log($letter, 'Special gym letter:');
@@ -147,12 +148,21 @@ function raid_edit_gyms_first_letter_keys($action = 'raid_by_gym', $hidden = fal
 
             // Get the inline key array.
             $keys = inline_key_array($keys, 1);
-            $letters = false;
         }
     }
 
     // Add back navigation key.
     if($hidden == false) {
+        if($config->RAID_VIA_LOCATION_FUNCTION == 'remote') {
+            $remote_string = getPublicTranslation('remote_raid');
+            $query_remote = my_query('SELECT count(*) as count FROM raids LEFT JOIN gyms on raids.gym_id = gyms.id WHERE raids.end_time > (UTC_TIMESTAMP() - INTERVAL 10 MINUTE) AND SUBSTR(gyms.gym_name, 1, "'.strlen($remote_string).'") = "'.$remote_string.'"');
+            if($query_remote->fetch()['count'] > 0) {
+                $keys[][] = array(
+                    'text'          => getTranslation('remote_raids'),
+                    'callback_data' => '0:list_remote_gyms:0'
+                );
+            }
+        }
         $nav_keys = [];
         if(!empty($gymarea_keys) && ($config->DEFAULT_GYM_AREA != false || $gymarea_id == false)) $keys = array_merge($keys, inline_key_array($gymarea_keys, 2));
 
