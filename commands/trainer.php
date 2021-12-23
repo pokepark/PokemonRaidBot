@@ -47,7 +47,7 @@ if ($config->RAID_AUTOMATIC_ALARM == false) {
     $alarm_status = $q_user->fetch()['auto_alarm'];
     $keys[] = [
         [
-            'text'          => ($alarm_status == 1 ? getTranslation('switch_alarm_off') : getTranslation('switch_alarm_on')),
+            'text'          => ($alarm_status == 1 ? getTranslation('switch_alarm_off') . ' ' . EMOJI_NO_ALARM : getTranslation('switch_alarm_on') . ' ' . EMOJI_ALARM),
             'callback_data' => '0:trainer:a'
         ]
     ];
