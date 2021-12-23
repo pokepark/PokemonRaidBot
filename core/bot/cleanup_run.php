@@ -18,16 +18,21 @@ function cleanup_auth_and_run($update){
 }
 
 function _perform_cleanup(){
-  global $config, $metrics, $prefix;
+  global $config, $metrics, $namespace;
   // Run nothing is cleanup is not enabled.
   if (!$config->CLEANUP) {
     return;
   }
 
+  if ($metrics){
+    $cleanup_total = $metrics->registerCounter($namespace, 'cleanup_total', 'Total items cleaned up', ['type']);
+  }
+
   // Check configuration, cleanup of telegram needs to happen before database cleanup!
   if ($config->CLEANUP_TIME_TG > $config->CLEANUP_TIME_DB) {
-    info_log('Configuration issue! Cleanup time for telegram messages needs to be lower or equal to database cleanup time!');
-    exit;
+    $error = 'Configuration issue! Cleanup time for telegram messages needs to be lower or equal to database cleanup time!';
+    info_log($error);
+    throw new Exception($error);
   }
   // Start cleanup when at least one parameter is set to trigger cleanup
   if ($config->CLEANUP_TELEGRAM || $config->CLEANUP_DATABASE) {
@@ -49,6 +54,9 @@ function _perform_cleanup(){
                     if($row['skip_del_message'] == 0) {
                         delete_message($row['chat_id'], $row['message_id']);
                         cleanup_log('Deleting raid: '.$row['raid_id'].' from chat '.$row['chat_id'].' (message_id: '.$row['message_id'].')');
+                        if ($metrics){
+                          $cleanup_total->inc(['telegram']);
+                        }
                     } else {
                         cleanup_log('Chat message for raid '.$row['raid_id'].' in chat '.$row['chat_id'].' is over 48 hours old. It can\'t be deleted by the bot. Skipping deletion and removing database entry.');
                     }
@@ -82,6 +90,10 @@ function _perform_cleanup(){
             $q_r = my_query('DELETE FROM raids WHERE end_time < DATE_SUB(UTC_TIMESTAMP(), INTERVAL '.$config->CLEANUP_TIME_DB.' MINUTE)');
             cleanup_log('Cleaned ' . $q_a->rowCount() . ' rows from attendance table');
             cleanup_log('Cleaned ' . $q_r->rowCount() . ' rows from raids table');
+            if ($metrics){
+              $cleanup_total->incBy($q_a->rowCount(), ['db_attendance']);
+              $cleanup_total->incBy($q_r->rowCount(), ['db_raids']);
+            }
         }
         // Write to log.
         cleanup_log('Finished with cleanup process!');
@@ -89,4 +101,3 @@ function _perform_cleanup(){
         cleanup_log('Cleanup was called, but nothing was done. Check your config and cleanup request for which actions you would like to perform (Telegram and/or database cleanup)');
     }
 }
-
