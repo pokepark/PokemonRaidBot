@@ -962,7 +962,7 @@ Config reference
    * - RAID_ANYTIME
      - Bool, enable a final timeslot for attending at any given time.
    * - RAID_AUTOMATIC_ALARM
-     - Bool, sign up every attendee to the raid alarm automatically. They will get private messages of new participants as if they had enabled it themselves on the poll.
+     - Bool, if true, force every attendee to sign up for the raid alarm automatically. If false, users can choose to set automatic alarms on via ``/trainer``.
    * - RAID_CODE_POKEMON
      - List of Pokemon dex IDs in use for private group codes
    * - RAID_CREATION_EX_GYM_MARKER

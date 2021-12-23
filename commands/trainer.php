@@ -42,6 +42,16 @@ $keys[] = [
             'callback_data' => '0:trainer_level:0'
         ]
 ];
+if ($config->RAID_AUTOMATIC_ALARM == false) {
+    $q_user = my_query("SELECT auto_alarm FROM users WHERE user_id = '{$user_id}' LIMIT 1");
+    $alarm_status = $q_user->fetch()['auto_alarm'];
+    $keys[] = [
+        [
+            'text'          => ($alarm_status == 1 ? getTranslation('switch_alarm_off') : getTranslation('switch_alarm_on')),
+            'callback_data' => '0:trainer:a'
+        ]
+    ];
+}
 if ($config->LANGUAGE_PRIVATE == '') {
     $keys[] = [
         [

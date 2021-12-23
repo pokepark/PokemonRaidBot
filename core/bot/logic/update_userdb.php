@@ -6,7 +6,7 @@
  */
 function update_userdb($update)
 {
-    global $dbh;
+    global $dbh, $config;
 
     $name = '';
     $nick = '';
@@ -58,17 +58,21 @@ function update_userdb($update)
         SET         user_id = :id,
                     nick    = :nick,
                     name    = :name,
-                    lang    = :lang
+                    lang    = :lang,
+                    auto_alarm = :auto_alarm
         ON DUPLICATE KEY
         UPDATE      nick    = :nick,
                     name    = :name,
-                    lang    = IF(lang_manual = 1, lang, :lang)
+                    lang    = IF(lang_manual = 1, lang, :lang),
+                    auto_alarm = IF(:auto_alarm = 1, 1, auto_alarm)
         "
     );
+    $alarm_setting = ($config->RAID_AUTOMATIC_ALARM ? 1 : 0);
     $stmt->bindParam(':id', $id);
     $stmt->bindParam(':nick', $nick);
     $stmt->bindParam(':name', $name);
     $stmt->bindParam(':lang', $lang);
+    $stmt->bindParam(':auto_alarm', $alarm_setting);
     $stmt->execute();
 
     return 'Updated user ' . $nick;

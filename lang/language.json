@@ -3071,6 +3071,30 @@
     "PL": "TRANSLATE",
     "FI": "Raidihäly käytössä!"
   },
+  "switch_alarm_on": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Enable automatic raid alerts",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Automaattinen raidihäly päälle"
+  },
+  "switch_alarm_off": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Disable automatic raid alerts",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Automaattinen raidihäly pois päältä"
+  },
   "alert_add_trainer": {
     "NL": "Extra spelers!",
     "DE": "Zusätzlicher Trainer!",

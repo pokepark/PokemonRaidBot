@@ -108,6 +108,13 @@ if($now <= $attend_time || $vote_time == 0) {
 
         // User has not voted before.
         } else {
+            $q_user = my_query("SELECT auto_alarm FROM users WHERE user_id ='" . $update['callback_query']['from']['id'] . "' LIMIT 1");
+            $user_alarm = $q_user->fetch()['auto_alarm'];
+            if($config->RAID_AUTOMATIC_ALARM) {
+                $set_alarm = true;
+            }else {
+                $set_alarm = ($user_alarm == 1 ? true : false);
+            }
             // Create attendance.
             // Save attandence to DB + Set Auto-Alarm on/off according to config
             $insert_sql="INSERT INTO attendance SET
@@ -119,13 +126,13 @@ if($now <= $attend_time || $vote_time == 0) {
               'raid_id' => $data['id'],
               'user_id' => $update['callback_query']['from']['id'],
               'attend_time' => $attend_time,
-              'alarm' => ($config->RAID_AUTOMATIC_ALARM ? 1 : 0)
+              'alarm' => ($set_alarm ? 1 : 0)
             ]);
             // Send Alarm.
             $tg_json = alarm($data['id'],$update['callback_query']['from']['id'],'new_att', $attend_time, $tg_json);
 
             // Enable alerts message. -> only if alert is on
-            if($config->RAID_AUTOMATIC_ALARM) {
+            if($set_alarm) {
                 // Inform User about active alert
                 sendAlertOnOffNotice($data['id'], $update['callback_query']['from']['id'], 1, $raid);
             }
