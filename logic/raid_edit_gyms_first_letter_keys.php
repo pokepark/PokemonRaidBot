@@ -108,6 +108,7 @@ function raid_edit_gyms_first_letter_keys($action = 'raid_by_gym', $hidden = fal
             }else {
                 $query_condition = 'WHERE show_gym = ' . $show_gym;
             }
+            $query_collate = '';
             if($config->MYSQL_SORT_COLLATE != "") {
                 $query_collate = "COLLATE " . $config->MYSQL_SORT_COLLATE;
             }
