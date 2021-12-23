@@ -51,7 +51,6 @@ include('logic/raid_get_gyms_list_keys.php');
 include('logic/raid_level.php');
 include('logic/raid_list.php');
 include('logic/raid_poll_message.php');
-include('logic/run_cleanup.php');
 include('logic/sendalarmnotice.php');
 include('logic/send_trainerinfo.php');
 include('logic/send_vote_remote_users_limit_reached.php');

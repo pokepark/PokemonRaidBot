@@ -64,7 +64,10 @@ update_user($update);
 include_once(CORE_BOT_PATH . '/userlanguage.php');
 
 // Run cleanup if requested
-include_once(CORE_BOT_PATH . '/cleanup_run.php');
+if (isset($update['cleanup'])) {
+  include_once(CORE_BOT_PATH . '/cleanup_run.php');
+  cleanup_auth_and_run($update);
+}
 
 // Callback query received.
 if (isset($update['callback_query'])) {

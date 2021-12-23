@@ -1,44 +1,92 @@
 <?php
-// Cleanup request received.
-if (isset($update['cleanup']) && $config->CLEANUP) {
-    cleanup_log('Cleanup request received...');
-    // Check access to cleanup of bot
+
+// Authenticate based on the POST $update and trigger cleanup.
+// Used for curl based cleanup triggering.
+function cleanup_auth_and_run($update){
+  global $config;
+  cleanup_log('Cleanup request received.');
     if ($update['cleanup']['secret'] == $config->CLEANUP_SECRET) {
-        // Get telegram cleanup value if specified.
-        if (isset($update['cleanup']['telegram'])) {
-            $telegram = $update['cleanup']['telegram'];
-        } else {
-            $telegram = 2;
-        }
-        // Get database cleanup value if specified.
-        if (isset($update['cleanup']['database'])) {
-            $database = $update['cleanup']['database'];
-        } else {
-            $database = 2;
-        }
-        if (function_exists('run_cleanup')) {
-            // Write cleanup info to database.
-            cleanup_log('Running cleanup now!');
-            // Run cleanup
-            run_cleanup($telegram, $database);
-        } else {
-            error_log('No function found to run cleanup!');
-            cleanup_log('Add a function named "run_cleanup" to run cleanup for telegram messages and database entries!', 'ERROR:');
-            cleanup_log('Arguments of that function need to be values to run/not run the cleanup for telegram $telegram and the database $database.', 'ERROR:');
-            cleanup_log('For example: function run_cleanup($telegram, $database)', 'ERROR:');
-            http_response_code(404);
-        }
+      cleanup_log('Cleanup is authenticated.');
+      _perform_cleanup();
     } else {
         $error = 'Cleanup authentication failed.';
         http_response_code(403);
         error_log($error);
         die($error);
     }
-    // Exit after cleanup
     exit();
-} else if (isset($update['cleanup'])) {
-    $error = 'Valid cleanup request received but cleanup is not enabled and will not be done!';
-    error_log($error);
-    http_response_code(409);
-    die($error);
 }
+
+function _perform_cleanup(){
+  global $config, $metrics, $prefix;
+  // Run nothing is cleanup is not enabled.
+  if (!$config->CLEANUP) {
+    return;
+  }
+
+  // Check configuration, cleanup of telegram needs to happen before database cleanup!
+  if ($config->CLEANUP_TIME_TG > $config->CLEANUP_TIME_DB) {
+    info_log('Configuration issue! Cleanup time for telegram messages needs to be lower or equal to database cleanup time!');
+    exit;
+  }
+  // Start cleanup when at least one parameter is set to trigger cleanup
+  if ($config->CLEANUP_TELEGRAM || $config->CLEANUP_DATABASE) {
+    // Query for telegram cleanup without database cleanup
+    if ($config->CLEANUP_TELEGRAM) {
+      // Get cleanup info for telegram cleanup.
+      $rs = my_query('
+                SELECT    cleanup.id, cleanup.raid_id, cleanup.chat_id, cleanup.message_id, raids.gym_id,
+                  IF(date_of_posting < DATE_SUB(UTC_TIMESTAMP(), INTERVAL 48 HOUR), 1, 0) as skip_del_message
+                FROM      cleanup
+                    LEFT JOIN   raids
+                    ON          cleanup.raid_id = raids.id
+                WHERE     raids.end_time < DATE_SUB(UTC_TIMESTAMP(), INTERVAL '.$config->CLEANUP_TIME_TG.' MINUTE)
+                ');
+            $cleanup_ids = [];
+            cleanup_log('Telegram cleanup starting. Found ' . $rs->rowCount() . ' entries for cleanup.');
+            if($rs->rowCount() > 0) {
+                while($row = $rs->fetch()) {
+                    if($row['skip_del_message'] == 0) {
+                        delete_message($row['chat_id'], $row['message_id']);
+                        cleanup_log('Deleting raid: '.$row['raid_id'].' from chat '.$row['chat_id'].' (message_id: '.$row['message_id'].')');
+                    } else {
+                        cleanup_log('Chat message for raid '.$row['raid_id'].' in chat '.$row['chat_id'].' is over 48 hours old. It can\'t be deleted by the bot. Skipping deletion and removing database entry.');
+                    }
+                    $cleanup_ids[] = $row['id'];
+                }
+                my_query('DELETE FROM cleanup WHERE id IN (' . implode(',', $cleanup_ids) . ')');
+            }
+        }
+        if($config->CLEANUP_DATABASE) {
+            cleanup_log('Database cleanup called.');
+            $rs_temp_gyms = my_query('
+                SELECT      raids.gym_id, gyms.gym_name
+                FROM        gyms
+                LEFT JOIN   raids
+                ON          raids.gym_id = gyms.id
+                WHERE       (raids.end_time < DATE_SUB(UTC_TIMESTAMP(), INTERVAL '.$config->CLEANUP_TIME_DB.' MINUTE)
+                OR          raids.end_time IS NULL)
+                AND         temporary_gym = 1
+                ');
+            if($rs_temp_gyms->rowCount() > 0) {
+                $cleanup_gyms = [];
+                while($row = $rs_temp_gyms->fetch()) {
+                    $cleanup_gyms[] = $row['gym_id'];
+                    cleanup_log('Deleting temporary gym ' . $row['gym_id'] . ' from database.');
+                }
+                if(count($cleanup_gyms) > 0) {
+                    my_query('DELETE FROM gyms WHERE id IN (' . implode(',', $cleanup_gyms) . ')');
+                }
+            }
+            $q_a = my_query('DELETE FROM attendance WHERE raid_id IN (SELECT id FROM raids WHERE raids.end_time < DATE_SUB(UTC_TIMESTAMP(), INTERVAL '.$config->CLEANUP_TIME_DB.' MINUTE))');
+            $q_r = my_query('DELETE FROM raids WHERE end_time < DATE_SUB(UTC_TIMESTAMP(), INTERVAL '.$config->CLEANUP_TIME_DB.' MINUTE)');
+            cleanup_log('Cleaned ' . $q_a->rowCount() . ' rows from attendance table');
+            cleanup_log('Cleaned ' . $q_r->rowCount() . ' rows from raids table');
+        }
+        // Write to log.
+        cleanup_log('Finished with cleanup process!');
+    }else {
+        cleanup_log('Cleanup was called, but nothing was done. Check your config and cleanup request for which actions you would like to perform (Telegram and/or database cleanup)');
+    }
+}
+
