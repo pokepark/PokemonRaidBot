@@ -2,10 +2,10 @@
 // Write to log
 debug_log('DDOS Check');
 if ($metrics){
-    $ddos_old_updates_total = $metrics->registerCounter($prefix, 'ddos_old_updates_total', 'Total old updates received');
-    $ddos_last_update = $metrics->registerGauge($prefix, 'ddos_last_update', 'Last known update_id');
-    $ddos_state = $metrics->registerGauge($prefix, 'ddos_state', 'current DDoS values', ['user_id']);
-    $ddos_fails_total = $metrics->registerCounter($prefix, 'ddos_fails_total', 'Total DDoS failures', ['user_id']);
+    $ddos_old_updates_total = $metrics->registerCounter($namespace, 'ddos_old_updates_total', 'Total old updates received');
+    $ddos_last_update = $metrics->registerGauge($namespace, 'ddos_last_update', 'Last known update_id');
+    $ddos_state = $metrics->registerGauge($namespace, 'ddos_state', 'current DDoS values', ['user_id']);
+    $ddos_fails_total = $metrics->registerCounter($namespace, 'ddos_fails_total', 'Total DDoS failures', ['user_id']);
 }
 
 // Update_ID file.

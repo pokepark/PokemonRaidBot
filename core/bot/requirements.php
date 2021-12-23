@@ -3,6 +3,9 @@
  * Require all function files once
  */
 
+// Namespace used for prefixing exports
+$namespace = 'pokemonraidbot';
+
 // Core Paths Constants
 require_once(__DIR__ . '/paths.php');
 

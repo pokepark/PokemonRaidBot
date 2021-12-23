@@ -13,7 +13,7 @@ Adding new metrics
 ------------------
 
 * Adding new metrics is relatively simple, see ``core/bot/ddos.php`` for many examples of different metrics gathering.
-* The ``$metrics`` and ``$prefix`` objects are available in the global scope, so within a function you will need to first call ``global $metrics, $prefix;``
+* The ``$metrics`` and ``$namespace`` objects are available in the global scope, so within a function you will need to first call ``global $metrics, $namespace;``
 * Metrics should be named per the `Prometheus best practices <https://prometheus.io/docs/practices/naming/>`_
 * Only base metrics should be recorded, anything that can be derived from a base metric should not be.
 

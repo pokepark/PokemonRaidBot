@@ -3,9 +3,9 @@
 debug_log('RAID_FROM_WEBHOOK()');
 
 if ($metrics){
-    $webhook_raids_received_total = $metrics->registerCounter($prefix, 'webhook_raids_received_total', 'Total raids received via webhook');
-    $webhook_raids_accepted_total = $metrics->registerCounter($prefix, 'webhook_raids_accepted_total', 'Total raids received & accepted via webhook');
-    $webhook_raids_posted_total = $metrics->registerCounter($prefix, 'webhook_raids_posted_total', 'Total raids posted automatically');
+    $webhook_raids_received_total = $metrics->registerCounter($namespace, 'webhook_raids_received_total', 'Total raids received via webhook');
+    $webhook_raids_accepted_total = $metrics->registerCounter($namespace, 'webhook_raids_accepted_total', 'Total raids received & accepted via webhook');
+    $webhook_raids_posted_total = $metrics->registerCounter($namespace, 'webhook_raids_posted_total', 'Total raids posted automatically');
 }
 
 function isPointInsidePolygon($point, $vertices) {

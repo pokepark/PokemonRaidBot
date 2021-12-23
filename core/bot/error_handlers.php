@@ -5,13 +5,13 @@ function simple_filename($f){
 }
 
 function exception_handler($e) {
-  global $metrics, $prefix;
+  global $metrics, $namespace;
   $filename = simple_filename($e->getFile());
   $lineno = $e->getLine();
   error_log("Uncaught exception at {$filename}:{$lineno}: " . $e->getMessage());
   error_log($e->getTraceAsString());
   if ($metrics){
-    $uncaught_exceptions_total = $metrics->getOrRegisterCounter($prefix, 'uncaught_exceptions_total', 'total uncaught exceptions', ['filename', 'lineno']);
+    $uncaught_exceptions_total = $metrics->getOrRegisterCounter($namespace, 'uncaught_exceptions_total', 'total uncaught exceptions', ['filename', 'lineno']);
     $uncaught_exceptions_total->inc([$filename, $lineno]);
   }
 }
