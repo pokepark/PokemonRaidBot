@@ -78,19 +78,17 @@ if($config->TUTORIAL_MODE && $new_user && (!$access or $access == 'BOT_ADMINS'))
     if($config->ENABLE_GYM_AREAS) {
         if($keys_and_gymarea['gymarea_name'] == '') {
             $msg .= '<b>' . getTranslation('select_gym_area') . '</b>' . CR;
-        }elseif(($config->DEFAULT_GYM_AREA == false && $data['id'] == 0) or $config->DEFAULT_GYM_AREA != false) {
+        }else {
             if($keys_and_gymarea['letters']) {
                 $msg .= '<b>' . getTranslation('select_gym_first_letter_or_gym_area') . '</b>' . CR;
             }else {
                 $msg .= '<b>' . getTranslation('select_gym_name_or_gym_area') . '</b>' . CR;
             }
-        }elseif($keys_and_gymarea['letters']) {
-            $msg .= '<b>' . getTranslation('select_gym_first_letter') . '</b>' . CR;
-        }else {
-            $msg .= '<b>' . getTranslation('select_gym_name') . '</b>' . CR;
         }
-    }else {
+    }elseif($keys_and_gymarea['letters']) {
         $msg .= '<b>' . getTranslation('select_gym_first_letter') . '</b>' . CR;
+    }else {
+        $msg .= '<b>' . getTranslation('select_gym_name') . '</b>' . CR;
     }
     $msg.= (($keys_and_gymarea['gymarea_name'] != '') ? CR . CR . getTranslation('current_gymarea') . ': ' . $keys_and_gymarea['gymarea_name'] : '');
     $msg.= ($config->RAID_VIA_LOCATION ? (CR . CR .  getTranslation('send_location')) : '');

@@ -10,7 +10,7 @@ debug_log('gym_letter()');
 $arg = $data['arg'];
 
 // Set keys.
-$keys_and_gymarea = raid_edit_gyms_first_letter_keys($arg, false, $data['id'], 'gym_letter', 'gym_details');
+$keys_and_gymarea = raid_edit_gyms_first_letter_keys($arg, false, ($data['id'] == 'n' ? false : $data['id']), 'gym_letter', 'gym_details');
 $keys = $keys_and_gymarea['keys'];
 
 // Check access, show message and set keys based on arg.
@@ -35,10 +35,10 @@ if($arg == 'gym_delete') {
 
 $nav_keys = [];
 
-if($data['id'] != 0) {
+if($data['id'] != 'n' or $config->ENABLE_GYM_AREAS === false) {
     $nav_keys[] = [
         'text' => getTranslation('back'),
-        'callback_data' => '0:gym_letter:gym_details'
+        'callback_data' => 'n:gym_letter:gym_details'
     ];
     // Add key for hidden gyms.
     $h_keys = [];
