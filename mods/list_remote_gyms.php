@@ -14,8 +14,7 @@ $back_arg = 0;
 $user_id = $update['callback_query']['from']['id'];
 
 // Get the keys.
-$remote_string = getPublicTranslation('remote_raid');
-$query_remote = my_query('SELECT raids.id, gyms.gym_name, raids.start_time, raids.end_time FROM gyms LEFT JOIN raids on raids.gym_id = gyms.id WHERE raids.end_time > (UTC_TIMESTAMP() - INTERVAL 10 MINUTE) AND SUBSTR(gyms.gym_name, 1, "'.strlen($remote_string).'") = "'.$remote_string.'"');
+$query_remote = my_query('SELECT raids.id, gyms.gym_name, raids.start_time, raids.end_time FROM gyms LEFT JOIN raids on raids.gym_id = gyms.id WHERE raids.end_time > (UTC_TIMESTAMP() - INTERVAL 10 MINUTE) AND temporary_gym = 1');
 while($gym = $query_remote->fetch()) {
     $keys[][] = [
         'text'          => $gym['gym_name'],

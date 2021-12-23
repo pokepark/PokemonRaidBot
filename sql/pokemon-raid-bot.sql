@@ -49,6 +49,7 @@ CREATE TABLE `gyms` (
   `gym_note` varchar(255) DEFAULT NULL,
   `gym_id` varchar(40) DEFAULT NULL,
   `img_url` varchar(255) DEFAULT NULL,
+  `temporary_gym` tinyint(1) unsigned DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_gym_id` (`gym_id`),
   KEY `gym_lat_lon` (`lat`, `lon`)

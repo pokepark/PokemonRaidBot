@@ -110,8 +110,8 @@ try {
         debug_log('Gym not found in database gym list! Inserting gym "' . $gym_name . '" now.');
         $parameters['img_url'] = 'file://' . IMAGES_PATH . '/gym_default.png';
         $query = '
-        INSERT INTO gyms (gym_name, lat, lon, address, show_gym, img_url)
-        VALUES (:gym_name, :lat, :lon, :address, 0, :img_url)
+        INSERT INTO gyms (gym_name, lat, lon, address, show_gym, img_url, temporary_gym)
+        VALUES (:gym_name, :lat, :lon, :address, 0, :img_url, 1)
     ';  
     } else {
         // Update gyms table to reflect gym changes.

@@ -56,7 +56,6 @@ function run_cleanup ($telegram = 2, $database = 2) {
         }
         if($database == 1) {
             cleanup_log('Database cleanup called.');
-            $remote_string = getPublicTranslation('remote_raid');
             $rs_temp_gyms = my_query('
                 SELECT      raids.gym_id, gyms.gym_name
                 FROM        gyms
@@ -64,7 +63,7 @@ function run_cleanup ($telegram = 2, $database = 2) {
                 ON          raids.gym_id = gyms.id
                 WHERE       (raids.end_time < DATE_SUB(UTC_TIMESTAMP(), INTERVAL '.$config->CLEANUP_TIME_DB.' MINUTE)
                 OR          raids.end_time IS NULL)
-                AND         SUBSTR(gyms.gym_name, 1, "'.strlen($remote_string).'") = "'.$remote_string.'"
+                AND         temporary_gym = 1
                 ');
             if($rs_temp_gyms->rowCount() > 0) {
                 $cleanup_gyms = [];

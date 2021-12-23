@@ -157,8 +157,7 @@ function raid_edit_gyms_first_letter_keys($action = 'raid_by_gym', $hidden = fal
     // Add back navigation key.
     if($hidden == false) {
         if($config->RAID_VIA_LOCATION_FUNCTION == 'remote') {
-            $remote_string = getPublicTranslation('remote_raid');
-            $query_remote = my_query('SELECT count(*) as count FROM raids LEFT JOIN gyms on raids.gym_id = gyms.id WHERE raids.end_time > (UTC_TIMESTAMP() - INTERVAL 10 MINUTE) AND SUBSTR(gyms.gym_name, 1, "'.strlen($remote_string).'") = "'.$remote_string.'"');
+            $query_remote = my_query('SELECT count(*) as count FROM raids LEFT JOIN gyms on raids.gym_id = gyms.id WHERE raids.end_time > (UTC_TIMESTAMP() - INTERVAL 10 MINUTE) AND temporary_gym = 1');
             if($query_remote->fetch()['count'] > 0) {
                 $keys[][] = array(
                     'text'          => getTranslation('remote_raids'),
