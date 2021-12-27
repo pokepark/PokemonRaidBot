@@ -26,12 +26,12 @@ function run_sql_file($file) {
 }
 
 /**
- * Naive DB query without proper param handling.
- * You should prefer doing your own prepare, bindParam & execute!
+ * DB query wrapper that supports binds.
  * @param $query
+ * @param binds
  * @return PDOStatement
  */
-function my_query($query)
+function my_query($query, $binds=null)
 {
     global $dbh;
     global $config;
@@ -40,12 +40,10 @@ function my_query($query)
         debug_log($query, '?');
     }
     $stmt = $dbh->prepare($query);
-    if ($stmt && $stmt->execute()) {
+    // If the query fails we let it burn to the ground and get logged by the global exception handler.
+    if ($stmt && $stmt->execute($binds)) {
         debug_log_sql('Query success', '$');
-    } else {
-        info_log($dbh->errorInfo(), '!');
     }
 
     return $stmt;
 }
-?>
