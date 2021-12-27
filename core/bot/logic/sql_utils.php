@@ -36,14 +36,30 @@ function my_query($query, $binds=null)
     global $dbh;
     global $config;
 
-    if($config->DEBUG_SQL) {
-        debug_log($query, '?');
+    try {
+      $stmt = $dbh->prepare($query);
+      $stmt->execute($binds);
+    } catch (PDOException $exception) {
+      // The message will be output in the global handler, we just need to extract the failing query
+      error_log('The following query failed:');
+      log_query($stmt, $binds, 'error_log');
+      throw $exception;
+    } finally {
+      debug_log_sql('Query success', '$');
+      if($config->DEBUG_SQL) {
+        log_query($stmt, $binds, 'debug_log_sql');
+      }
     }
-    $stmt = $dbh->prepare($query);
-    // If the query fails we let it burn to the ground and get logged by the global exception handler.
-    if ($stmt && $stmt->execute($binds)) {
-        debug_log_sql('Query success', '$');
-    }
-
     return $stmt;
+}
+
+// Debug log the full statement with parameters
+function log_query($stmt, $binds, $logger='debug_log_sql'){
+    ob_start();
+    $stmt->debugDumpParams();
+    $debug = ob_get_contents();
+    ob_end_clean();
+    $logger($debug);
+    $logger('The parameters bound were:');
+    $logger($binds);
 }
