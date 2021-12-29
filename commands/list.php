@@ -1,6 +1,7 @@
 <?php
 // Write to log.
 debug_log('LIST()');
+require_once(LOGIC_PATH . '/resolve_raid_boss.php');
 
 // For debug.
 //debug_log($update);
@@ -15,44 +16,10 @@ $keys = [];
 
 $event_permissions = bot_access_check($update, 'event',true);
 
-$tz_diff = tz_diff();
-
 // Get last 12 active raids data.
 $rs = my_query(
     '
-    SELECT     IF (raids.pokemon = 0,
-                    IF((SELECT  count(*)
-                        FROM    raid_bosses
-                        WHERE   raid_level = raids.level
-                        AND     scheduled = 1
-                        AND     convert_tz(raids.spawn,"+00:00","'.$tz_diff.'") BETWEEN date_start AND date_end) = 1,
-                        (SELECT  pokedex_id
-                        FROM    raid_bosses
-                        WHERE   raid_level = raids.level
-                        AND     convert_tz(raids.spawn,"+00:00","'.$tz_diff.'") BETWEEN date_start AND date_end),
-                        (select concat(\'999\', raids.level) as pokemon)
-                        )
-               ,pokemon) as pokemon,
-               IF (raids.pokemon = 0,
-                    IF((SELECT  count(*) as count
-                        FROM    raid_bosses
-                        WHERE   raid_level = raids.level
-                        AND     scheduled = 1
-                        AND     convert_tz(raids.spawn,"+00:00","'.$tz_diff.'") BETWEEN date_start AND date_end) = 1,
-                        (SELECT  pokemon_form_id
-                        FROM    raid_bosses
-                        WHERE   raid_level = raids.level
-                        AND     convert_tz(raids.spawn,"+00:00","'.$tz_diff.'") BETWEEN date_start AND date_end),
-                        \'0\'
-                        ),
-                    IF(raids.pokemon_form = 0,
-                        (SELECT pokemon_form_id FROM pokemon
-                        WHERE
-                            pokedex_id = raids.pokemon AND
-                            pokemon_form_name = \'normal\'
-                        LIMIT 1), raids.pokemon_form)
-                       ) as pokemon_form,
-               raids.id, raids.user_id, raids.start_time, raids.end_time, raids.gym_team, raids.gym_id, raids.level, raids.move1, raids.move2, raids.gender, raids.event, raids.event_note,
+    SELECT     raids.pokemon, raids.pokemon_form, raids.id, raids.user_id, raids.spawn, raids.start_time, raids.end_time, raids.gym_team, raids.gym_id, raids.level, raids.move1, raids.move2, raids.gender, raids.event, raids.event_note,
                gyms.lat, gyms.lon, gyms.address, gyms.gym_name, gyms.ex_gym, gyms.gym_note,
                start_time, end_time,
                TIME_FORMAT(TIMEDIFF(end_time, UTC_TIMESTAMP()) + INTERVAL 1 MINUTE, \'%k:%i\') AS t_left,
@@ -93,6 +60,7 @@ if(isset($raids[0]['r_active'])) {
             if(empty($gym_name)) {
                 $gym_name = '';
             }
+            $resolved_boss = resolve_raid_boss($raid['pokemon'], $raid['pokemon_form'], $raid['spawn'], $raid['level']);
 
             $text .= $gym_name . CR;
             $raid_day = dt2date($raid['start_time']);
@@ -100,14 +68,11 @@ if(isset($raids[0]['r_active'])) {
             $today = dt2date($now);
             $start = dt2time($raid['start_time']);
             $end = dt2time($raid['end_time']);
-            $text .= get_local_pokemon_name($raid['pokemon'], $raid['pokemon_form']) . SP . '-' . SP . (($raid_day == $today) ? '' : ($raid_day . ', ')) . $start . SP . getTranslation('to') . SP . $end . CR . CR;
-
-            // Split pokemon and form to get the pokedex id.
-            $pokedex_id = explode('-', $raid['pokemon'])[0];
+            $text .= get_local_pokemon_name($resolved_boss['pokedex_id'], $resolved_boss['pokemon_form_id']) . SP . '-' . SP . (($raid_day == $today) ? '' : ($raid_day . ', ')) . $start . SP . getTranslation('to') . SP . $end . CR . CR;
 
             // Pokemon is an egg?
             $eggs = $GLOBALS['eggs'];
-            if(in_array($pokedex_id, $eggs)) {
+            if(in_array($resolved_boss['pokedex_id'], $eggs)) {
                 $keys_text = EMOJI_EGG . SP . $gym_name;
             } else {
                 $keys_text = $gym_name;

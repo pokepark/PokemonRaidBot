@@ -1,6 +1,7 @@
 <?php
 // Write to log.
 debug_log('overview_refresh()');
+require_once(LOGIC_PATH . '/resolve_raid_boss.php');
 
 // For debug.
 //debug_log($update);
@@ -29,42 +30,9 @@ $overviews = $request_overviews->fetchAll();
 // Get active raids for every overview
 $active_raids = [];
 $tg_json = [];
-$tz_diff = tz_diff();
 foreach($overviews as $overview_row) {
     $request_raids = my_query('
-            SELECT IF (raids.pokemon = 0,
-                        IF((SELECT  count(*)
-                            FROM    raid_bosses
-                            WHERE   raid_level = raids.level
-                            AND     scheduled = 1
-                            AND     convert_tz(raids.spawn,"+00:00","'.$tz_diff.'") BETWEEN date_start AND date_end) = 1,
-                            (SELECT  pokedex_id
-                            FROM    raid_bosses
-                            WHERE   raid_level = raids.level
-                            AND     convert_tz(raids.spawn,"+00:00","'.$tz_diff.'") BETWEEN date_start AND date_end),
-                            (select concat(\'999\', raids.level) as pokemon)
-                            )
-                   ,pokemon) as pokemon,
-                   IF (raids.pokemon = 0,
-                        IF((SELECT  count(*) as count
-                            FROM    raid_bosses
-                            WHERE   raid_level = raids.level
-                            AND     scheduled = 1
-                            AND     convert_tz(raids.spawn,"+00:00","'.$tz_diff.'") BETWEEN date_start AND date_end) = 1,
-                            (SELECT  pokemon_form_id
-                            FROM    raid_bosses
-                            WHERE   raid_level = raids.level
-                            AND     convert_tz(raids.spawn,"+00:00","'.$tz_diff.'") BETWEEN date_start AND date_end),
-                            \'0\'
-                            ),
-                        IF(raids.pokemon_form = 0,
-                            (SELECT pokemon_form_id FROM pokemon
-                            WHERE
-                                pokedex_id = raids.pokemon AND
-                                pokemon_form_name = \'normal\'
-                            LIMIT 1), raids.pokemon_form)
-                           ) as pokemon_form,
-              raids.id, raids.start_time, raids.end_time, raids.gym_id,
+            SELECT raids.pokemon, raids.pokemon_form, raids.spawn, raids.level, raids.id, raids.start_time, raids.end_time, raids.gym_id,
               MAX(cleanup.message_id) as message_id,
               events.name as event_name,
               gyms.lat, gyms.lon, gyms.address, gyms.gym_name, gyms.ex_gym,
