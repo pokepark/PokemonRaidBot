@@ -8,16 +8,19 @@ $requests_total = NULL;
 if ($config->METRICS) {
   if ($config->METRICS_BEARER_TOKEN) {
     if(extension_loaded('apcu') && apcu_enabled()){
-      $namespace = 'pokemonraidbot';
       $metrics = new \Prometheus\CollectorRegistry(new Prometheus\Storage\APC());
 
       // One-time init tasks
       if (!apcu_exists($namespace)){
         info_log('Metrics endpoint enabled at /metrics and protected by a bearer token');
+        // We store the init time
         apcu_store($namespace, time());
       }
 
+      /* Metrics in the global scope */
+      // This should be updated by any unique php endpoint called directly, except /metrics/
       $requests_total = $metrics->registerCounter($namespace, 'requests_total', 'total requests served', ['endpoint']);
+      // "uptime" is the lifetime of this instance. It and all the metrics will be reset if the PHP runtime restarts for any reason.
       $uptime_seconds = $metrics->registerGauge($namespace, 'uptime_seconds', 'Seconds since metrics collection started');
       $uptime_seconds->set(time() - apcu_fetch($namespace));
     } else {

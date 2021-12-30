@@ -11,8 +11,7 @@ if(is_file($lfile) && filesize($lfile)) {
 } else {
   $error = 'VERSION file missing, cannot continue without it since we would not know the required DB schema version.';
   info_log($error);
-  error_log($error);
-  exit();
+  throw new Exception($error);
 }
 
 // Compare versions.
