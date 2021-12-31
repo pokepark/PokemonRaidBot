@@ -30,7 +30,7 @@ if (hash('sha512', $apiKey) == strtolower($config->APIKEY_HASH)) {
     // Set constants.
     define('API_KEY', $apiKey);
 } else {
-    error_log('Incorrect apikey provided! This is most likely a misconfiguration you should fix.');
+    info_log('Incorrect apikey provided! This is most likely a misconfiguration you should fix.');
     http_response_code(403); // HTTP 403: Forbidden
     exit();
 }

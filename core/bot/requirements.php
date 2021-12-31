@@ -34,6 +34,18 @@ require_once(CORE_BOT_PATH . '/logic/debug.php');
 // SQL Utils
 require_once(CORE_BOT_PATH . '/logic/sql_utils.php');
 
+// Optionally load Composer autoloads. It's not yet a strict requirement for the majority of the project
+// We load these as soon as possible so that anything after them can benefit, but we need config, logging and so on to be functional.
+if (is_file(ROOT_PATH . '/vendor/autoload.php')) {
+  require_once(ROOT_PATH . '/vendor/autoload.php');
+
+  // Init features that require Composer loaded classes
+  require_once(CORE_BOT_PATH . '/metrics.php');
+} else {
+  // Any feature object that can't be used due to missing autoloads should be declared here as a falsy value.
+  $metrics = NULL;
+}
+
 // Database connection
 require_once(CORE_BOT_PATH . '/db.php');
 
@@ -54,13 +66,3 @@ if(is_file(ROOT_PATH . '/logic.php')) {
 // Bot version
 require_once(CORE_BOT_PATH . '/version.php');
 
-// Optionally load Composer autoloads. It's not yet a strict requirement for the majority of the project
-if (is_file(ROOT_PATH . '/vendor/autoload.php')) {
-  require_once(ROOT_PATH . '/vendor/autoload.php');
-
-  // Init features that require Composer loaded classes
-  require_once(CORE_BOT_PATH . '/metrics.php');
-} else {
-  // Any feature object that can't be used due to missing autoloads should be declared here as a falsy value.
-  $metrics = NULL;
-}
