@@ -482,50 +482,11 @@ To activate cleanup you need to `make sure your groups are Supergroups or Channe
    * Times are in minutes in ``CLEANUP_TIME_TG`` for Telegram cleanup and ``CLEANUP_TIME_DB`` for database cleanup.
    * The value for the minutes of the database cleanup ``CLEANUP_TIME_DB`` must be greater than then one for Telegram cleanup ``CLEANUP_TIME_TG``. Otherwise cleanup will do nothing and exit due to misconfiguration!
 
-#. Finally set up a cronjob to trigger the cleanup. You can also trigger Telegram / database cleanup per cronjob: For no cleanup use 0, for cleanup use 1 and to use your config file use 2 or leave "Telegram" and "database" out of the request data array.
-
-   * See the examples below for curl based calls. Any HTTP client capable of a POST request will work.
-
-Examples
-^^^^^^^^
-
-Make sure to replace the URL with yours!
-
-
-* 
-  Cronjob using cleanup values from config.json:
+#. Finally set up a cronjob to trigger the cleanup. For example with curl:
 
   .. code-block::
 
      curl -k -d '{"cleanup":{"secret":"your-cleanup-secret/passphrase"}}' https://localhost/index.php?apikey=111111111:AABBCCDDEEFFGGHHIIJJKKLLMMNNOOPP123`
-
-* 
-  Explicitly use config values:
-
-  .. code-block::
-
-     curl -k -d '{"cleanup":{"secret":"your-cleanup-secret/passphrase","telegram":"2","database":"2"}}' https://localhost/index.php?apikey=111111111:AABBCCDDEEFFGGHHIIJJKKLLMMNNOOPP123
-
-* 
-  Clean up Telegram raid poll messages only: Telegram = 1 and database = 0
-
-  .. code-block::
-
-     curl -k -d '{"cleanup":{"secret":"your-cleanup-secret/passphrase","telegram":"1","database":"0"}}' https://localhost/index.php?apikey=111111111:AABBCCDDEEFFGGHHIIJJKKLLMMNNOOPP123
-
-* 
-  Clean up Telegram raid poll messages and database: Telegram = 1 and database = 1
-
-  .. code-block::
-
-     curl -k -d '{"cleanup":{"secret":"your-cleanup-secret/passphrase","telegram":"1","database":"1"}}' https://localhost/index.php?apikey=111111111:AABBCCDDEEFFGGHHIIJJKKLLMMNNOOPP123
-
-* 
-  Clean up database and maybe Telegram raid poll messages (when specified in config): Telegram = 2 and database = 1
-
-  .. code-block::
-
-     curl -k -d '{"cleanup":{"secret":"your-cleanup-secret/passphrase","telegram":"2","database":"1"}}' https://localhost/index.php?apikey=111111111:AABBCCDDEEFFGGHHIIJJKKLLMMNNOOPP123
 
 Access permissions
 ------------------
