@@ -12,15 +12,18 @@ debug_log("RAID-BOT '" . $config->BOT_ID . "'");
 
 // Check API Key and get input from telegram / webhook
 include_once(CORE_BOT_PATH . '/apikey.php');
+$update = get_verified_update(); // This also sets API_KEY
 
 // We maybe receive a webhook so far...
-foreach ($update as $raid) {
+if ($update){
+  foreach ($update as $raid) {
     if (isset($raid['type']) && $raid['type'] == 'raid') {
-        // Create raid(s) and exit.
-        include_once(ROOT_PATH . '/commands/raid_from_webhook.php');
-        $dbh = null;
-        exit();
+      // Create raid(s) and exit.
+      include_once(ROOT_PATH . '/commands/raid_from_webhook.php');
+      $dbh = null;
+      exit();
     }
+  }
 }
 // Init empty data array.
 $data = [];
