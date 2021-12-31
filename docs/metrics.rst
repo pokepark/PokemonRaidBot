@@ -58,6 +58,9 @@ Getting the data manually only gives you a snapshot of the data right now and is
     # HELP pokemonraidbot_uptime_seconds Seconds since metrics collection started
     # TYPE pokemonraidbot_uptime_seconds gauge
     pokemonraidbot_uptime_seconds 7441
+    # HELP pokemonraidbot_version_info Schema and revision information
+    # TYPE pokemonraidbot_version_info gauge
+    pokemonraidbot_version_info{current_schema="4",required_schema="4",rev="7a2b86",upgraded_timestamp="1640976352",upgraded_from="3"} 1
     # HELP pokemonraidbot_webhook_raids_accepted_total Total raids received & accepted via webhook
     # TYPE pokemonraidbot_webhook_raids_accepted_total counter
     pokemonraidbot_webhook_raids_accepted_total 73
