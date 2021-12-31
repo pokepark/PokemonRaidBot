@@ -7,7 +7,7 @@ function cleanup_auth_and_run($update){
   cleanup_log('Cleanup request received.');
     if ($update['cleanup']['secret'] == $config->CLEANUP_SECRET) {
       cleanup_log('Cleanup is authenticated.');
-      _perform_cleanup();
+      perform_cleanup();
     } else {
         $error = 'Cleanup authentication failed.';
         http_response_code(403);
@@ -17,16 +17,20 @@ function cleanup_auth_and_run($update){
     exit();
 }
 
-function _perform_cleanup(){
+// Do the actual cleanup. Authentication or authorization is not considered but config is checked
+function perform_cleanup(){
   global $config, $metrics, $namespace;
   // Run nothing is cleanup is not enabled.
   if (!$config->CLEANUP) {
+    debug_log('Not running cleanup, not enabled.');
     return;
   }
 
   if ($metrics){
     $cleanup_total = $metrics->registerCounter($namespace, 'cleanup_total', 'Total items cleaned up', ['type']);
   }
+
+  debug_log('Running cleanup tasks, for more debug enable & see the separate cleanup debug logging.');
 
   // Check configuration, cleanup of telegram needs to happen before database cleanup!
   if ($config->CLEANUP_TIME_TG > $config->CLEANUP_TIME_DB) {
