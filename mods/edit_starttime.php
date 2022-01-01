@@ -59,7 +59,7 @@ if($event_id != 'N') {
     $keys = inline_key_array($keys, 2);
 
 // Not creating an event
-} else if (true || $arg == "min" || $arg == "clock") {
+} else {
     if ($arg != "min" && $arg != "clock") {
         // Get default raid duration style from config
         if ($config->RAID_DURATION_CLOCK_STYLE) {
@@ -141,9 +141,6 @@ if($event_id != 'N') {
     // Write to log.
     debug_log($keys);
 
-} else {
-    // Edit pokemon.
-    $keys = raid_edit_raidlevel_keys($gym_id_plus_letter);
 }
 
 // No keys found.
