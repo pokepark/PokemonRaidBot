@@ -105,6 +105,7 @@ CREATE TABLE `raids` (
   `move1` varchar(255) DEFAULT NULL,
   `move2` varchar(255) DEFAULT NULL,
   `gender` varchar(255) DEFAULT NULL,
+  `costume` SMALLINT UNSIGNED NULL DEFAULT 0,
   `event` int(3) unsigned DEFAULT NULL,
   `event_note` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
