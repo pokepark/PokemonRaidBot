@@ -22,6 +22,7 @@ RUN mkdir /var/log/tg-bots/ && \
 ENV APACHE_RUN_USER=www-data \
     APACHE_RUN_GROUP=www-data \
     TEMPLATE_PHP_INI="production" \
+    PHP_INI_EXTENSION="gd" \
     TAIL_LOGS="info" \
     DISABLE_DOUBLE_LOGGING="true"
 
