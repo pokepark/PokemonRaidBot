@@ -47,6 +47,7 @@ function get_rev()
 function bot_upgrade_check($current, $latest)
 {
   global $config, $metrics, $namespace;
+  $orig = $current; // we may have to do multiple upgrades
   if ($metrics){
     // This is the one place where we have full knowledge of version information & upgrades
     debug_log('init upgrade metrics');
@@ -62,6 +63,10 @@ function bot_upgrade_check($current, $latest)
     $manual_upgrade_verdict = false;
   } else {
     $upgrade_verdict = true;
+    if ($metrics && IS_INIT){
+      // record initial version even if we don't do upgrades.
+      $version_info->set(1, [$current, $latest, get_rev(), null, null]);
+    }
     // Check if upgrade files exist.
     $upgrade_files = array();
     $upgrade_files = str_replace(UPGRADE_PATH . '/','', glob(UPGRADE_PATH . '/*.sql'));
@@ -69,9 +74,9 @@ function bot_upgrade_check($current, $latest)
       // Check each sql filename.
       foreach ($upgrade_files as $ufile)
       {
-        $nodot_ufile = str_replace('.sql', '', $ufile);
+        $target = str_replace('.sql', '', $ufile);
         // Skip every older sql file from array.
-        if($nodot_ufile <= $current) {
+        if($target <= $current) {
           continue;
         } else {
           if ($config->UPGRADE_SQL_AUTO){
@@ -79,13 +84,11 @@ function bot_upgrade_check($current, $latest)
             require_once('sql_utils.php');
             if (run_sql_file(UPGRADE_PATH . '/' . $ufile)) {
               $manual_upgrade_verdict = false;
-              upgrade_config_version(basename($ufile, '.sql'));
+              upgrade_config_version($target);
               if ($metrics){
-                // Persist the schema we were upgraded from and when
-                apcu_store($namespace . '_schema_upgraded_from', $current);
-                apcu_store($namespace . '_schema_upgraded_timestamp', time());
+                $version_info->set(1, [$target, $latest, get_rev(), time(), $current]);
               }
-              $current = $nodot_ufile;
+              $current = $target;
             } else {
               $manual_upgrade_verdict = true;
               $error = 'AUTO UPGRADE FAILED: ' . UPGRADE_PATH . '/' . $ufile;
@@ -93,7 +96,7 @@ function bot_upgrade_check($current, $latest)
             }
           } else {
             $manual_upgrade_verdict = true;
-            debug_log("There's a schema upgrade to {$nodot_ufile} we could have run, but auto-upgrades have been disabled!");
+            debug_log("There's a schema upgrade to {$target} we could have run, but auto-upgrades have been disabled!");
           }
         }
       }
@@ -109,12 +112,6 @@ function bot_upgrade_check($current, $latest)
     require_once(ROOT_PATH . '/mods/getdb.php');
   }
 
-  if ($metrics){
-    debug_log('Recording upgrade metrics');
-    $schema_upgraded_from = apcu_fetch($namespace . '_schema_upgraded_from');
-    $schema_upgraded_timestamp = apcu_fetch($namespace . '_schema_upgraded_timestamp');
-    $version_info->set(1, [$current, $latest, get_rev(), $schema_upgraded_timestamp, $schema_upgraded_from]);
-  }
   // Signal whether manual action is required or not.
   if ($manual_upgrade_verdict === true){
     $error = "The bot has pending schema upgrades ({$current} -> {$latest}) but you've disabled automatic upgrades. Nothing will work until you go do the upgrade(s) manually. You'll find them in the dir sql/upgrade/";

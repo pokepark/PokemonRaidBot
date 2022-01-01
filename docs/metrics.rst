@@ -60,7 +60,9 @@ Getting the data manually only gives you a snapshot of the data right now and is
     pokemonraidbot_uptime_seconds 7441
     # HELP pokemonraidbot_version_info Schema and revision information
     # TYPE pokemonraidbot_version_info gauge
-    pokemonraidbot_version_info{current_schema="4",required_schema="4",rev="7a2b86",upgraded_timestamp="1640976352",upgraded_from="3"} 1
+    pokemonraidbot_version_info{current_schema="2",required_schema="4",rev="444776",upgraded_timestamp="",upgraded_from=""} 1
+    pokemonraidbot_version_info{current_schema="3",required_schema="4",rev="444776",upgraded_timestamp="1641056075",upgraded_from="2"} 1
+    pokemonraidbot_version_info{current_schema="4",required_schema="4",rev="444776",upgraded_timestamp="1641056075",upgraded_from="3"} 1
     # HELP pokemonraidbot_webhook_raids_accepted_total Total raids received & accepted via webhook
     # TYPE pokemonraidbot_webhook_raids_accepted_total counter
     pokemonraidbot_webhook_raids_accepted_total 73
