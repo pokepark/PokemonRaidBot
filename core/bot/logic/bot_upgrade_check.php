@@ -80,10 +80,12 @@ function bot_upgrade_check($current, $latest)
             if (run_sql_file(UPGRADE_PATH . '/' . $ufile)) {
               $manual_upgrade_verdict = false;
               upgrade_config_version(basename($ufile, '.sql'));
-              // Persist the schema we were upgraded from and when
-              apcu_store($namespace . '_schema_upgraded_from', $current);
-              apcu_store($namespace . '_schema_upgraded_timestamp', time());
-              $current = $latest;
+              if ($metrics){
+                // Persist the schema we were upgraded from and when
+                apcu_store($namespace . '_schema_upgraded_from', $current);
+                apcu_store($namespace . '_schema_upgraded_timestamp', time());
+              }
+              $current = $nodot_ufile;
             } else {
               $manual_upgrade_verdict = true;
               $error = 'AUTO UPGRADE FAILED: ' . UPGRADE_PATH . '/' . $ufile;
