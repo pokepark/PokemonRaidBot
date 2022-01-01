@@ -11,10 +11,8 @@ if ($config->METRICS) {
       $metrics = new \Prometheus\CollectorRegistry(new Prometheus\Storage\APC());
 
       // One-time init tasks
-      if (!apcu_exists($namespace)){
+      if (IS_INIT){
         info_log('Metrics endpoint enabled at /metrics and protected by a bearer token');
-        // We store the init time
-        apcu_store($namespace, time());
       }
 
       /* Metrics in the global scope */

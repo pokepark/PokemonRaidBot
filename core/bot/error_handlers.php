@@ -25,8 +25,14 @@ function exception_handler($e) {
 
 // Route Errors into Exceptions so we catch those as well in the same framework
 function error_handler($severity, $message, $filename, $lineno) {
-  debug_log('Crash incoming, have a detailed backtrace:', '!');
-  debug_log(debug_backtrace(), '!');
+  // We may be crashing before debug logging is available, so fall back to error_log so at least something gets logged
+  if(function_exists('debug_log')){
+    $logger = 'debug_log';
+  } else {
+    $logger = 'error_log';
+  }
+  $logger('Crash incoming, have a detailed backtrace:');
+  $logger(debug_backtrace());
   throw new ErrorException($message, 0, $severity, $filename, $lineno);
 }
 

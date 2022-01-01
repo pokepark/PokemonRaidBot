@@ -12,6 +12,9 @@ require_once(__DIR__ . '/paths.php');
 // Exception & error handling
 require_once(CORE_BOT_PATH . '/error_handlers.php');
 
+// Detect init runs and provide IS_INIT
+require_once(CORE_BOT_PATH . '/is_init.php');
+
 // Custom Bot Constants
 if(is_file(CUSTOM_PATH . '/constants.php')) {
     require_once(CUSTOM_PATH . '/constants.php');
