@@ -258,56 +258,18 @@ foreach ($update as $raid) {
     }
 
     // Query missing data needed to construct the raid poll
-    $tz_diff = tz_diff();
     try {
         $query_missing = '
-            SELECT      IF (:raid_pokemon = 0,
-                            IF((SELECT  count(*)
-                                FROM    raid_bosses
-                                WHERE   raid_level = :raid_level
-                                AND     scheduled = 1
-                                AND     convert_tz(:raid_spawn,"+00:00","'.$tz_diff.'") BETWEEN date_start AND date_end) = 1,
-                                (SELECT  pokedex_id
-                                FROM    raid_bosses
-                                WHERE   raid_level = :raid_level
-                                AND     convert_tz(:raid_spawn,"+00:00","'.$tz_diff.'") BETWEEN date_start AND date_end
-                                LIMIT   1),
-                                (select concat(\'999\', :raid_level) as pokemon)
-                                )
-                        ,:raid_pokemon) as pokemon,
-                        IF (:raid_pokemon = 0,
-                            IF((SELECT  count(*) as count
-                                FROM    raid_bosses
-                                WHERE   raid_level = :raid_level
-                                AND     scheduled = 1
-                                AND     convert_tz(:raid_spawn,"+00:00","'.$tz_diff.'") BETWEEN date_start AND date_end) = 1,
-                                (SELECT  pokemon_form_id
-                                FROM    raid_bosses
-                                WHERE   raid_level = :raid_level
-                                AND     convert_tz(:raid_spawn,"+00:00","'.$tz_diff.'") BETWEEN date_start AND date_end
-                                LIMIT   1),
-                                \'0\'
-                                ),
-                            IF(:raid_pokemon_form = 0,
-                                (SELECT pokemon_form_id FROM pokemon
-                                WHERE
-                                    pokedex_id = :raid_pokemon AND
-                                    pokemon_form_name = \'normal\'
-                                LIMIT 1), :raid_pokemon_form)
-                            ) as pokemon_form,
-            gyms.lat, gyms.lon, gyms.address, gyms.gym_name, gyms.ex_gym, gyms.gym_note,
-            users.*,
-            TIME_FORMAT(TIMEDIFF(:raid_end_time, UTC_TIMESTAMP()) + INTERVAL 1 MINUTE, \'%k:%i\') AS t_left
+            SELECT
+                gyms.lat, gyms.lon, gyms.address, gyms.gym_name, gyms.ex_gym, gyms.gym_note,
+                users.*,
+                TIME_FORMAT(TIMEDIFF(:raid_end_time, UTC_TIMESTAMP()) + INTERVAL 1 MINUTE, \'%k:%i\') AS t_left
             FROM       gyms
             LEFT JOIN  (SELECT users.name, users.trainername, users.nick FROM users WHERE users.user_id = :user_id) as users on 1
             WHERE      gyms.id = :gym_internal_id
             LIMIT 1
         ';
         $execute_array_missing = [
-            'raid_pokemon' => $pokemon,
-            'raid_pokemon_form' => $form,
-            'raid_level' => $level,
-            'raid_spawn' => $spawn,
             'raid_end_time' => $end,
             'user_id' => $config->WEBHOOK_CREATOR,
             'gym_internal_id' => $gym_internal_id,
@@ -317,11 +279,15 @@ foreach ($update as $raid) {
         $statement_missing->execute($execute_array_missing);
         $missing_raid_data = $statement_missing->fetch();
 
+        $resolved_boss = resolve_raid_boss($pokemon, $form, $spawn, $level);
+
         // Combine resulting data with stuff received from webhook to create a complete raid array
         $raid = array_merge($missing_raid_data, [
                                                     'id' => $raid_id,
                                                     'user_id' => $config->WEBHOOK_CREATOR,
                                                     'spawn' => $spawn,
+                                                    'pokemon' => $resolved_boss['pokedex_id'],
+                                                    'pokemon_form' => $resolved_boss['pokemon_form_id'],
                                                     'start_time' => $start,
                                                     'end_time' => $end,
                                                     'gym_team' => $team,
