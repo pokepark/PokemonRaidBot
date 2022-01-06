@@ -96,7 +96,7 @@ if($event_id != 'N') {
     } else {
         // Set switch view.
         $switch_text = getTranslation('raid_starts_when_minutes_view');
-        $switch_view = "minutes";
+        $switch_view = "min";
         // Small screen fix
         $key_count = 4;
 
