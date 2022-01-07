@@ -47,22 +47,31 @@ if($config->PORTAL_IMPORT) {
 		
 		$gym_name_no_spec = escape($portal); // Convert special characters in gym name
         // Build query to check if gym is already in database or not
-        // TODO: Use PDO here
-        $rs = my_query("
-        SELECT    id
-        FROM      gyms
-        WHERE   gym_name = '{$gym_name_no_spec}'
-        ");
-
-        $row = $rs->fetch();
+        // First check if gym is found by portal id
+        $gym_query = 'SELECT id FROM gyms WHERE gym_id = :gym_id LIMIT 1';
+        $gym_statement = $dbh->prepare($gym_query);
+        $gym_statement->execute(['gym_id' => $portal_id]);
+        if($gym_statement->rowCount() == 1) {
+            $row = $gym_statement->fetch();
+            $update_where_condition = 'gym_id = :gym_id';
+            $update_values = '';
+        }else {
+            // If portal id wasn't found, check by gym name
+            $gym_query_by_name = 'SELECT id FROM gyms WHERE gym_name = :gym_name LIMIT 1';
+            $gym_statement_by_name = $dbh->prepare($gym_query_by_name);
+            $gym_statement_by_name->execute(['gym_name' => $gym_name_no_spec]);
+            $row = $gym_statement_by_name->fetch();
+            $update_where_condition = 'gym_name = :gym_name';
+            $update_values = 'gym_id = :gym_id, ';
+        }
 
         // Gym already in database or new
         if (empty($row['id'])) {
             // insert gym in table.
             debug_log('Gym not found in database gym list! Inserting gym "' . $gym_name . '" now.');
             $query = '
-            INSERT INTO gyms (gym_name, lat, lon, address, show_gym, img_url)
-            VALUES (:gym_name, :lat, :lon, :address, 0, :gym_image)
+            INSERT INTO gyms (gym_name, lat, lon, address, show_gym, img_url, gym_id)
+            VALUES (:gym_name, :lat, :lon, :address, 0, :gym_image, :gym_id)
             ';
             $msg = getTranslation('gym_added');
 
@@ -74,12 +83,12 @@ if($config->PORTAL_IMPORT) {
                 SET           lat = :lat,
                               lon = :lon,
                               address = :address,
+                              ' . $update_values . '
                               img_url = :gym_image
-                WHERE      gym_name = :gym_name
+                WHERE         ' . $update_where_condition . '
                 ';
             $msg = getTranslation('gym_updated');
-            $gym_id = get_gym_by_telegram_id(escape($gym_name));
-            $gym_id = $gym_id['id'];
+            $gym_id = $row['id'];
         }
 
         // Insert / Update.
@@ -89,7 +98,8 @@ if($config->PORTAL_IMPORT) {
           'lat' => $lat,
           'lon' => $lon,
           'address' => $address,
-          'gym_image' => $gym_image
+          'gym_image' => $gym_image,
+          'gym_id' => $portal_id
         ]);
     } catch (PDOException $exception) {
         error_log($exception->getMessage());
