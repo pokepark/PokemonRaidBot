@@ -71,7 +71,7 @@ if(count($keys) == 0 ) {
         ];
     }
     $keys[][] = [
-                'text'          => 'Update Pokemon table',
+                'text'          => getTranslation('update_pokemon_table'),
                 'callback_data' => '0:getdb:0'
             ];
     // Set message.

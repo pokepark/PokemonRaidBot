@@ -584,6 +584,19 @@
     "FI": "Tuo",
     "ES": "Importar"
   },
+  "update_pokemon_table": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Update Pokemon table",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Päivitä Pokemon-taulu",
+    "ES": "Actualizar tabla Pokémon"
+  },
   "finished": {
     "NL": "Klaar",
     "DE": "Fertig",
