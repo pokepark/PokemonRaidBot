@@ -9,7 +9,8 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "/get - Näytä botin asetukset"
+    "FI": "/get - Näytä botin asetukset",
+    "ES": "/get - Ver configuración del bot"
   },
   "help_config-set": {
     "NL": "/set - Verander bot configuratie",
@@ -21,7 +22,8 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "/set - Muokkaa botin asetuksia"
+    "FI": "/set - Muokkaa botin asetuksia",
+    "ES": "/set - Editar configuración del bot"
   },
   "help_only_bool": {
     "NL": "Alleen true/false of 0/1",
@@ -33,7 +35,8 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "vain true/false tai 0/1"
+    "FI": "vain true/false tai 0/1",
+    "ES": "solo true/false o 0/1"
   },
   "help_only_numbers": {
     "NL": "Alleen nummers",
@@ -45,7 +48,8 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "vain numeroita"
+    "FI": "vain numeroita",
+    "ES": "solo números"
   },
   "help_bool_expected": {
     "NL": "Toegestaande waarde: true/false of 0/1",
@@ -57,7 +61,8 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "Sallitut arvot: true/false tai 0/1"
+    "FI": "Sallitut arvot: true/false tai 0/1",
+    "ES": "Valores validos: true/false o 0/1"
   },
   "help_number_expected": {
     "NL": "Toegestaande waarde: Nummers groter dan 0",
@@ -69,6 +74,7 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "Sallittu arvo: 0 suuremmat luvut"
+    "FI": "Sallittu arvo: 0 suuremmat luvut",
+    "ES": "Valores validos: Números mayores que 0"
   }
 }
