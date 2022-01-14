@@ -12,19 +12,6 @@
     "FI": "Alolan",
     "ES": "Alola"
   },
-  "pokemon_form_alolan": {
-    "NL": "Alolan",
-    "DE": "Alola",
-    "EN": "Alolan",
-    "IT": "TRANSLATE",
-    "PT-BR": "de Alola",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "Alolan",
-    "FI": "Alolan",
-    "ES": "Alola"
-  },
   "pokemon_form_galarian": {
     "NL": "Galarian",
     "DE": "Galar",
@@ -184,7 +171,31 @@
     "PL": "Sunny",
     "ES": "Soleada"
   },
-  "pokemon_form_east": {
+  "pokemon_form_rainy": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Rainy",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "ES": "TRANSLATE"
+  },
+  "pokemon_form_snowy": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Snowy",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "ES": "TRANSLATE"
+  },
+  "pokemon_form_east_sea": {
     "NL": "East",
     "DE": "Ostform",
     "EN": "East",
@@ -196,7 +207,7 @@
     "PL": "East",
     "ES": "Este"
   },
-  "pokemon_form_west": {
+  "pokemon_form_west_sea": {
     "NL": "West",
     "DE": "Westform",
     "EN": "West",
@@ -388,6 +399,18 @@
     "PL": "Flying",
     "ES": "Volador"
   },
+  "pokemon_form_fighting": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Fighting",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "ES": "TRANSLATE"
+  },
   "pokemon_form_fire": {
     "NL": "Fire",
     "DE": "Feuer-Form",
@@ -555,5 +578,239 @@
     "FR": "TRANSLATE",
     "PL": "Resolute",
     "ES": "Brío"
+  },
+  "pokemon_form_burn": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Burn",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "ES": "TRANSLATE"
+  },
+  "pokemon_form_chill": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Chill",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "ES": "TRANSLATE"
+  },
+  "pokemon_form_douse": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Douse",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "ES": "TRANSLATE"
+  },
+  "pokemon_form_shock": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Shock",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "ES": "TRANSLATE"
+  },
+  "pokemon_form_black": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Black",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "ES": "TRANSLATE"
+  },
+  "pokemon_form_white": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "White",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "ES": "TRANSLATE"
+  },
+  "pokemon_form_hero": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Hero",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "ES": "TRANSLATE"
+  },
+  "pokemon_form_crowned_sword": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Crowned Sword",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "ES": "TRANSLATE"
+  },
+  "pokemon_form_crowned_shield": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Crowned Shield",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "ES": "TRANSLATE"
+  },
+  "pokemon_form_zen": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Zen",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "ES": "TRANSLATE"
+  },
+  "pokemon_form_galarian_zen": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Galarian Zen",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "ES": "TRANSLATE"
+  },
+  "pokemon_form_male": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Male",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "ES": "TRANSLATE"
+  },
+  "pokemon_form_female": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Female",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "ES": "TRANSLATE"
+  },
+  "pokemon_form_blue_striped": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Blue Striped",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "ES": "TRANSLATE"
+  },
+  "pokemon_form_red_striped": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Red Striped",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "ES": "TRANSLATE"
+  },
+  "pokemon_form_autumn": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Autumn",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "ES": "TRANSLATE"
+  },
+  "pokemon_form_spring": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Spring",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "ES": "TRANSLATE"
+  },
+  "pokemon_form_summer": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Summer",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "ES": "TRANSLATE"
+  },
+  "pokemon_form_winter": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Winter",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "ES": "TRANSLATE"
+  },
+  "pokemon_form_exclamation_point": {
+    "EN": "!"
+  },
+  "pokemon_form_question_mark": {
+    "EN": "?"
   }
 }
