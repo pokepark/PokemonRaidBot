@@ -612,10 +612,4 @@ if($config->RAID_PICTURE_FILE_FORMAT == 'png') {
     imagegif($canvas);
 }
 
-
-
-// Clear memory
-imagedestroy($img_gym);
-imagedestroy($img_pokemon);
-imagedestroy($canvas);
 ?>
