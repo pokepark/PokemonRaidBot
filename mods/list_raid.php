@@ -14,8 +14,13 @@ $gym_id = $data['arg'];
 $raid_id = $data['id'];
 
 // Get raid details.
-if($raid_id != 0) $sql_condition = 'AND raids.id = ' . $raid_id . ' LIMIT 1';
-else $sql_condition = 'AND  gyms.id = ' . $gym_id;
+if($raid_id != 0) {
+    $sql_condition = 'AND raids.id = ? LIMIT 1';
+    $binds = [$raid_id];
+}else {
+    $sql_condition = 'AND gyms.id = ?';
+    $binds = [$gym_id];
+}
 $rs = my_query(
     "
     SELECT     raids.id
@@ -24,7 +29,8 @@ $rs = my_query(
     ON         raids.gym_id = gyms.id
     WHERE      end_time > UTC_TIMESTAMP() - INTERVAL 10 MINUTE
     {$sql_condition}
-    "
+    ",
+    $binds
 );
 if($rs->rowcount() == 1) {
     // Get the row.
