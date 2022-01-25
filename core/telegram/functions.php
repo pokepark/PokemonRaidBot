@@ -835,9 +835,6 @@ function curl_json_multi_request($json)
         curl_multi_remove_handle($mh, $content);
     }
 
-    // Close connection.
-    curl_multi_close($mh);
-
     // Process response from telegram api.
     foreach($response as $id => $json_response) {
         $response[$id] = curl_json_response($response[$id], $json[$id]['json'], $json[$id]['identifier']);
