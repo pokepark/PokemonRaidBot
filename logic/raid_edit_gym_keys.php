@@ -89,7 +89,7 @@ function raid_edit_gym_keys($first, $gymarea_id = false, $action = 'edit_raidlev
             if ($gym['active_raid'] == 1) {
                 $keys[] = array(
                     'text'          => $gym['gym_name'],
-                    'callback_data' => $first . ':' . $action . ':' . $arg
+                    'callback_data' => '0:' . $action . ':' . $arg
                 );
             }
             // Continue always in case of list action

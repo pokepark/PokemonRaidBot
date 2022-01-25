@@ -61,5 +61,6 @@ function log_query($stmt, $binds, $logger='debug_log_sql'){
     ob_end_clean();
     $logger($debug);
     $logger('The parameters bound were:');
+    if($binds === null) $binds = 'null';
     $logger($binds);
 }
