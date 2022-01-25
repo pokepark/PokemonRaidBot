@@ -402,7 +402,7 @@ if(count($gym_name_words) > 1 && $gym_name_total_chars >= 18 && $gym_name_total_
 }
 
 // Wrap gym name to multiple lines if too long
-$gym_name_lines = explode(PHP_EOL,wordwrap(trim($gym_name),($gym_name_total_chars+$gym_name_word_largest)/$gym_name_rows,PHP_EOL));
+$gym_name_lines = explode(PHP_EOL,wordwrap(trim($gym_name),floor(($gym_name_total_chars+$gym_name_word_largest)/$gym_name_rows),PHP_EOL));
 
 debug_log($gym_name_total_chars, 'Gym name length:');
 debug_log($gym_name_lines, 'Gym name lines:');
@@ -449,7 +449,7 @@ for($y=0;$y<count($gym_name_lines);$y++){
     $textwidth = ($max_x - $min_x);
     $textheight = floor($fontsize_gym*1.1);
     // Calculate distance from left and top for positioning the gym name text.
-    $gym_name_top = (($y+1)*($textheight))+($y*$spacing_gym);
+    $gym_name_top = floor((($y+1)*($textheight))+($y*$spacing_gym));
     $gym_name_left = floor(imagesx($mask) + (((imagesx($canvas) - imagesx($mask) - $spacing_right) - $textwidth)/2));
     imagettftext($canvas, $fontsize_gym, $angle, $gym_name_left, $gym_name_top, $font_color, $font_gym, $gym_name_lines[$y]);
 }
