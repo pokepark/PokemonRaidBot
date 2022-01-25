@@ -447,10 +447,10 @@ for($y=0;$y<count($gym_name_lines);$y++){
     $max_y = max(array($box[1], $box[3], $box[5], $box[7]));
     // Get text width and height
     $textwidth = ($max_x - $min_x);
-    $textheight = $fontsize_gym*1.1;
+    $textheight = floor($fontsize_gym*1.1);
     // Calculate distance from left and top for positioning the gym name text.
     $gym_name_top = (($y+1)*($textheight))+($y*$spacing_gym);
-    $gym_name_left = imagesx($mask) + (((imagesx($canvas) - imagesx($mask) - $spacing_right) - $textwidth)/2);
+    $gym_name_left = floor(imagesx($mask) + (((imagesx($canvas) - imagesx($mask) - $spacing_right) - $textwidth)/2));
     imagettftext($canvas, $fontsize_gym, $angle, $gym_name_left, $gym_name_top, $font_color, $font_gym, $gym_name_lines[$y]);
 }
 
