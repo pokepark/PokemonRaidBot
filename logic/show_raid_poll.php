@@ -61,9 +61,10 @@ function show_raid_poll($raid, $inline = false)
             my_query(
                 "
                 UPDATE    gyms
-                SET     address = '{$address}'
+                SET     address = ?
                 WHERE   id = '{$raid['gym_id']}'
-                "
+                ",
+                [$address]
             );
             //Use new address
             $msg = raid_poll_message($msg, ($config->RAID_PICTURE ? $raid['gym_name'].': ' : ''). mapslink($raid,$address) . CR);
