@@ -34,7 +34,6 @@ include('logic/get_user.php');
 include('logic/get_weather_icons.php');
 include('logic/group_code_keys.php');
 include('logic/insert_cleanup.php');
-include('logic/insert_gym.php');
 include('logic/insert_overview.php');
 include('logic/insert_trainerinfo.php');
 include('logic/keys_event.php');
