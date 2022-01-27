@@ -152,7 +152,7 @@ if($now <= $attend_time || $vote_time == 0) {
             if ($rs_chann->rowCount() == 0) {
                 // Send the message.
                 require_once(LOGIC_PATH . '/send_raid_poll.php');
-                $tg_json = send_raid_poll($data['id'], $raid, $config->SHARE_CHATS_AFTER_ATTENDANCE, $tg_json);
+                $tg_json = send_raid_poll($data['id'], $config->SHARE_CHATS_AFTER_ATTENDANCE, $raid, $tg_json);
             }
         }
     } else {

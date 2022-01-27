@@ -351,7 +351,7 @@ foreach ($update as $raid) {
         if ($metrics){
             $webhook_raids_posted_total->inc();
         }
-        $tg_json = send_raid_poll($raid_id, $raid, $chats, $tg_json);
+        $tg_json = send_raid_poll($raid_id, $chats, $raid, $tg_json);
     }
 }
 
