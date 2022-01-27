@@ -92,7 +92,7 @@ function update_raid_poll($raid_id, $raid = false, $update = false, $tg_json = f
             } else {
                 // Edit the picture and caption
                 if(!$skip_picture_update) {
-                    $tg_json[] = editMessageMedia($message, $text['short'], $keys, $chat, ['disable_web_page_preview' => 'true'], true, $picture_url);
+                    $tg_json[] = editMessageMedia($message, $text['short'], $picture_url, $keys, $chat, ['disable_web_page_preview' => 'true'], true);
                 }else {
                     // Edit the caption.
                     $tg_json[] = editMessageCaption($message, $text['short'], $keys, $chat, ['disable_web_page_preview' => 'true'], true);
@@ -111,7 +111,7 @@ function update_raid_poll($raid_id, $raid = false, $update = false, $tg_json = f
             }
         }else if ($type == 'photo' && !$skip_picture_update) {
             $picture_url = raid_picture_url($raid, 1);
-            $tg_json[] = editMessageMedia($message, '', '', $chat, [], true, $picture_url);
+            $tg_json[] = editMessageMedia($message, '', $picture_url, '', $chat, [], true);
         }
     }
     return $tg_json;
