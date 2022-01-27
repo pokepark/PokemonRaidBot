@@ -125,12 +125,12 @@ $gym_h = imagesy($img_gym);
 // Crop gym image
 if($gym_w > $gym_h) {
     $size = $gym_h;
-    $crop_x = (($gym_w/2)-($gym_h/2));
+    $crop_x = floor((($gym_w/2)-($gym_h/2)));
     $crop_y = 0;
 } else {
     $size = $gym_w;
     $crop_x = 0;
-    $crop_y = (($gym_h/2)-($gym_w/2));
+    $crop_y = floor((($gym_h/2)-($gym_w/2)));
 }
 
 // Create mask
@@ -319,7 +319,7 @@ if($time_now < $raid['end_time']) {
     $src_w = 444;
     $src_h = 512;
     $dst_w = 160;
-    $dst_h = $dst_w/$src_w*$src_h;
+    $dst_h = floor($dst_w/$src_w*$src_h);
 }
 
 // Create pokemon image.
@@ -502,7 +502,7 @@ for($ya=0;$ya<$num_text_lines;$ya++){
     $min_x = min(array($box[0], $box[2], $box[4], $box[6]));
     $max_x = max(array($box[0], $box[2], $box[4], $box[6]));
     $textwidth = ($max_x - $min_x);
-    $time_left = $left_after_poke + (((imagesx($canvas) - $left_after_poke - $spacing_right) - $textwidth)/2);
+    $time_left = $left_after_poke + floor((((imagesx($canvas) - $left_after_poke - $spacing_right) - $textwidth)/2));
     imagettftext($canvas,$time_text_size,$angle,$time_left,$time_text_top,$font_color,$font_text,$time_text_lines[$ya]);
 }
 
