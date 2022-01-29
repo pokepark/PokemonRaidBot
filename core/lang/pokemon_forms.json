@@ -25,6 +25,19 @@
     "FI": "Galarian",
     "ES": "Galar"
   },
+  "pokemon_form_hisuian": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Hisuian",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Hisuian",
+    "ES": "TRANSLATE"
+  },
   "pokemon_form_mega": {
     "NL": "TRANSLATE",
     "DE": "TRANSLATE",
