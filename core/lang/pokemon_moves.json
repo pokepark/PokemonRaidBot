@@ -3757,30 +3757,30 @@
         "ES": "Paso Dimensional"
     },
     "pokemon_move_357": {
-        "PT-BR": "Magical Leaf",
+        "PT-BR": "Folha Mágica",
         "EN": "Magical Leaf",
         "FI": "Magical Leaf",
         "NL": "Magical Leaf",
         "NO": "Magical Leaf",
         "PL": "Magical Leaf",
-        "FR": "Magical Leaf",
-        "DE": "Magical Leaf",
-        "IT": "Magical Leaf",
+        "FR": "Feuille Magik",
+        "DE": "Zauberblatt",
+        "IT": "Fogliamagica",
         "RU": "Волшебный Лист",
-        "ES": "Magical Leaf"
+        "ES": "Hoja Mágica"
     },
     "pokemon_move_358": {
-        "PT-BR": "Sacred Fire",
+        "PT-BR": "Fogo Sagrado",
         "EN": "Sacred Fire",
         "FI": "Sacred Fire",
         "NL": "Sacred Fire",
         "NO": "Sacred Fire",
         "PL": "Sacred Fire",
-        "FR": "Sacred Fire",
-        "DE": "Sacred Fire",
-        "IT": "Sacred Fire",
+        "FR": "Feu Sacré",
+        "DE": "Läuterfeuer",
+        "IT": "Magifuoco",
         "RU": "Священный Огонь",
-        "ES": "Sacred Fire"
+        "ES": "Fuego Sagrado"
     },
     "pokemon_move_359": {
         "PT-BR": "Lança Congelada",
@@ -3789,7 +3789,7 @@
         "NL": "Icicle Spear",
         "NO": "Icicle Spear",
         "PL": "Icicle Spear",
-        "FR": "Stalagtite",
+        "FR": "Stalactite",
         "DE": "Eisspeer",
         "IT": "Gelolancia",
         "RU": "Ледяная Пика",
@@ -3809,42 +3809,55 @@
         "ES": "Aerochorro+"
     },
     "pokemon_move_361": {
-        "PT-BR": "Aeroblast++",
+        "PT-BR": "Explosão Aérea++",
         "EN": "Aeroblast++",
         "FI": "Aeroblast++",
         "NL": "Aeroblast++",
         "NO": "Aeroblast++",
         "PL": "Aeroblast++",
-        "FR": "Aeroblast++",
-        "DE": "Aeroblast++",
-        "IT": "Aeroblast++",
-        "RU": "Aeroblast++",
-        "ES": "Aeroblast++"
+        "FR": "Aéroblast++",
+        "DE": "Luftstoß++",
+        "IT": "Aerocolpo++",
+        "RU": "Аэровзрыв++",
+        "ES": "Aerochorro++"
     },
     "pokemon_move_362": {
-        "PT-BR": "Sacred Fire+",
+        "PT-BR": "Fogo Sagrado+",
         "EN": "Sacred Fire+",
         "FI": "Sacred Fire+",
         "NL": "Sacred Fire+",
         "NO": "Sacred Fire+",
         "PL": "Sacred Fire+",
-        "FR": "Sacred Fire+",
-        "DE": "Sacred Fire+",
-        "IT": "Sacred Fire+",
+        "FR": "Feu Sacré+",
+        "DE": "Läuterfeuer+",
+        "IT": "Magifuoco+",
         "RU": "Священный Огонь+",
-        "ES": "Sacred Fire+"
+        "ES": "Fuego Sagrado+"
     },
     "pokemon_move_363": {
-        "PT-BR": "Sacred Fire++",
+        "PT-BR": "Fogo Sagrado++",
         "EN": "Sacred Fire++",
         "FI": "Sacred Fire++",
         "NL": "Sacred Fire++",
         "NO": "Sacred Fire++",
         "PL": "Sacred Fire++",
-        "FR": "Sacred Fire++",
-        "DE": "Sacred Fire++",
-        "IT": "Sacred Fire++",
-        "RU": "Sacred Fire++",
-        "ES": "Sacred Fire++"
+        "FR": "Feu Sacré++",
+        "DE": "Läuterfeuer++",
+        "IT": "Magifuoco++",
+        "RU": "Священный Огонь++",
+        "ES": "Fuego Sagrado++"
+    },
+    "pokemon_move_364": {
+        "PT-BR": "Acrobatics",
+        "EN": "Acrobatics",
+        "FI": "Acrobatics",
+        "NL": "Acrobatics",
+        "NO": "Acrobatics",
+        "PL": "Acrobatics",
+        "FR": "Acrobatics",
+        "DE": "Acrobatics",
+        "IT": "Acrobatics",
+        "RU": "Акробатика",
+        "ES": "Acrobatics"
     }
 }
