@@ -133,8 +133,14 @@ if($id == 0) {
             }elseif(isset($raid_id_form['form'])) {
                 $dex_form = $raid_id_form['form'];
             }else {
-                $query_form_id = my_query("SELECT pokemon_form_id FROM pokemon WHERE pokedex_id='".$dex_id."' and pokemon_form_name='normal' LIMIT 1")->fetch();
-                $dex_form = $query_form_id['pokemon_form_id'];
+                // If no form id is provided, let's check our db for normal form
+                $query_form_id = my_query("SELECT pokemon_form_id FROM pokemon WHERE pokedex_id='".$dex_id."' and pokemon_form_name='normal' LIMIT 1");
+                if($query_form_id->rowCount() == 0) {
+                    // If normal form doesn't exist in our db, use the smallest form id as a fallback
+                    $query_form_id = my_query("SELECT min(pokemon_form_id) as pokemon_form_id FROM pokemon WHERE pokedex_id='".$dex_id."' LIMIT 1");
+                }
+                $result = $query_form_id->fetch();
+                $dex_form = $result['pokemon_form_id'];
             }
 
             $pokemon_arg = $dex_id . $dex_form;
