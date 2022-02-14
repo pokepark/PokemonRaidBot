@@ -50,7 +50,7 @@ $vote_time = $data['arg'];
 // Raid anytime?
 if($vote_time == 0) {
     // Raid anytime.
-    $attend_time_save = ANYTIME;
+    $attend_time_save = $attend_time_compare = ANYTIME;
 } else {
     // Normal raid time - convert data arg to UTC time.
     $dt = new DateTime();
