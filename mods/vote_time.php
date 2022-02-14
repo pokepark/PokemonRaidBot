@@ -50,20 +50,21 @@ $vote_time = $data['arg'];
 // Raid anytime?
 if($vote_time == 0) {
     // Raid anytime.
-    $attend_time = ANYTIME;
+    $attend_time_save = ANYTIME;
 } else {
     // Normal raid time - convert data arg to UTC time.
     $dt = new DateTime();
     $dt_attend = $dt->createFromFormat('YmdHis', $vote_time, new DateTimeZone('UTC'));
-    $attend_time = $dt_attend->format('Y-m-d H:i:s');
+    $attend_time_compare = $dt_attend->format('Y-m-d H:i:s');
+    $attend_time_save = $dt_attend->format('Y-m-d H:i') . ':00';
+
+    // Get current time.
+    $now = new DateTime('now', new DateTimeZone('UTC'));
+    $now = $now->format('Y-m-d H:i') . ':00';
 }
 
-// Get current time.
-$now = new DateTime('now', new DateTimeZone('UTC'));
-$now = $now->format('Y-m-d H:i') . ':00';
-
 // Vote time in the future or Raid anytime?
-if($now <= $attend_time || $vote_time == 0) {
+if($now <= $attend_time_compare || $vote_time == 0) {
   // If user is attending remotely, get the number of remote users already attending
     if (!is_array($answer) or !in_array('remote', $answer) or $answer['remote'] == 0){
       $remote_users = 0;
@@ -94,7 +95,7 @@ if($now <= $attend_time || $vote_time == 0) {
             my_query(
                 "
                 UPDATE    attendance
-                SET       attend_time = '{$attend_time}',
+                SET       attend_time = '{$attend_time_save}',
                           cancel = 0,
                           arrived = 0,
                           raid_done = 0,
@@ -104,7 +105,7 @@ if($now <= $attend_time || $vote_time == 0) {
                     AND   user_id = {$update['callback_query']['from']['id']}
                 "
             );
-            $tg_json = alarm($data['id'],$update['callback_query']['from']['id'],'change_time', $attend_time, $tg_json);
+            $tg_json = alarm($data['id'],$update['callback_query']['from']['id'],'change_time', $attend_time_save, $tg_json);
 
         // User has not voted before.
         } else {
@@ -125,11 +126,11 @@ if($now <= $attend_time || $vote_time == 0) {
             $dbh->prepare($insert_sql)->execute([
               'raid_id' => $data['id'],
               'user_id' => $update['callback_query']['from']['id'],
-              'attend_time' => $attend_time,
+              'attend_time' => $attend_time_save,
               'alarm' => ($set_alarm ? 1 : 0)
             ]);
             // Send Alarm.
-            $tg_json = alarm($data['id'],$update['callback_query']['from']['id'],'new_att', $attend_time, $tg_json);
+            $tg_json = alarm($data['id'],$update['callback_query']['from']['id'],'new_att', $attend_time_save, $tg_json);
 
             // Enable alerts message. -> only if alert is on
             if($set_alarm) {
