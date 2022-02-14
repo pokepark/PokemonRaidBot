@@ -72,7 +72,7 @@ function perform_cleanup(){
         if($config->CLEANUP_DATABASE) {
             cleanup_log('Database cleanup called.');
             $rs_temp_gyms = my_query('
-                SELECT      raids.gym_id, gyms.gym_name
+                SELECT      gyms.id, gyms.gym_name
                 FROM        gyms
                 LEFT JOIN   raids
                 ON          raids.gym_id = gyms.id
@@ -83,8 +83,8 @@ function perform_cleanup(){
             if($rs_temp_gyms->rowCount() > 0) {
                 $cleanup_gyms = [];
                 while($row = $rs_temp_gyms->fetch()) {
-                    $cleanup_gyms[] = $row['gym_id'];
-                    cleanup_log('Deleting temporary gym ' . $row['gym_id'] . ' from database.');
+                    $cleanup_gyms[] = $row['id'];
+                    cleanup_log('Deleting temporary gym ' . $row['id'] . ' from database.');
                 }
                 if(count($cleanup_gyms) > 0) {
                     my_query('DELETE FROM gyms WHERE id IN (' . implode(',', $cleanup_gyms) . ')');
