@@ -22,23 +22,42 @@ $debug = false;
 if(isset($_GET['debug']) && $_GET['debug'] == 1) {
     $debug = true;
 }
-
+$required_parameters = ['pokemon', 'pokemon_form', 'start_time', 'end_time', 'gym_id', 'ex_raid'];
+$optional_parameters = ['costume'];
+$failed = [];
 // Raid info
-if(array_key_exists('raid', $_GET) && $_GET['raid']!="") {
-    $raid_id = preg_replace("/\D/","",$_GET['raid']);
-    $raid = get_raid($raid_id);
-    $q_pokemon_info = my_query("
-                    SELECT
-                        pokemon_form_name, min_cp, max_cp, min_weather_cp, max_weather_cp, weather, shiny, asset_suffix, type, type2,
-                        (SELECT img_url FROM gyms WHERE id='".$raid['gym_id']."' LIMIT 1) as img_url
-                    FROM pokemon
-                    WHERE pokedex_id = '".$raid['pokemon']."'
-                    AND pokemon_form_id = '".$raid['pokemon_form']."' LIMIT 1")->fetch();
-    $raid = array_merge($raid, $q_pokemon_info);
-} else {
-  info_log('Called without a raid id, things will fail');
-  $raid = null;
+foreach($required_parameters as $required) {
+    if(!array_key_exists($required, $_GET)) {
+        $failed[] = $required;
+    }
 }
+if(count($failed) > 0) {
+    info_log('Raidpicture called without '.join(', ',$failed).', ending execution');
+    exit();
+}
+$raid = [];
+$raid['pokemon'] = preg_replace("/\D/","",$_GET['pokemon']);
+$raid['start_time'] = date("Y-M-d H:i:s",preg_replace("/\D/","",$_GET['start_time']));
+$raid['end_time'] = date("Y-M-d H:i:s",preg_replace("/\D/","",$_GET['end_time']));
+$raid['gym_id'] = preg_replace("/\D/","",$_GET['gym_id']);
+$raid['raid_costume'] = false;
+if(in_array($_GET['pokemon_form'], ['-1','-2','-3'])) {
+    $raid['pokemon_form'] = $_GET['pokemon_form'];
+}else {
+    $raid['pokemon_form'] = preg_replace("/\D/","",$_GET['pokemon_form']);
+}
+$raid['costume'] = 0;
+if(array_key_exists('costume', $_GET) && $_GET['costume'] != '') {
+    $raid['costume'] = preg_replace("/\D/","",$_GET['costume']);
+}
+$q_pokemon_info = my_query("
+                SELECT
+                    pokemon_form_name, min_cp, max_cp, min_weather_cp, max_weather_cp, weather, shiny, asset_suffix, type, type2
+                FROM pokemon
+                WHERE pokedex_id = '".$raid['pokemon']."'
+                AND pokemon_form_id = '".$raid['pokemon_form']."' LIMIT 1")->fetch();
+$q_gym_info = my_query("SELECT img_url, gym_name, ex_gym FROM gyms WHERE id='".$raid['gym_id']."'")->fetch();
+$raid = array_merge($raid, $q_pokemon_info, $q_gym_info);
 
 // Fonts
 $font_gym = FONTS_PATH . '/' . $config->RAID_PICTURE_FONT_GYM;
@@ -356,7 +375,7 @@ if(isset($shiny_icon)) {
 }
 
 // Ex-Raid?
-if($raid['event'] == EVENT_ID_EX) {
+if($_GET['ex_raid'] == '1') {
     $img_expass = grab_img(IMAGES_PATH . "/expass.png");
     imagesavealpha($img_expass,true);
 
