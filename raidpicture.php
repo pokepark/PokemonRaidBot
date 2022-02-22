@@ -23,7 +23,6 @@ if(isset($_GET['debug']) && $_GET['debug'] == 1) {
     $debug = true;
 }
 $required_parameters = ['pokemon', 'pokemon_form', 'start_time', 'end_time', 'gym_id', 'ex_raid'];
-$optional_parameters = ['costume'];
 $failed = [];
 // Raid info
 foreach($required_parameters as $required) {
@@ -37,10 +36,15 @@ if(count($failed) > 0) {
 }
 $raid = [];
 $raid['pokemon'] = preg_replace("/\D/","",$_GET['pokemon']);
-$raid['start_time'] = date("Y-M-d H:i:s",preg_replace("/\D/","",$_GET['start_time']));
-$raid['end_time'] = date("Y-M-d H:i:s",preg_replace("/\D/","",$_GET['end_time']));
 $raid['gym_id'] = preg_replace("/\D/","",$_GET['gym_id']);
 $raid['raid_costume'] = false;
+if($_GET['start_time'] == 0) {
+    $raid_ongoing = false;
+}else {
+    $raid_ongoing = true;
+    $raid['start_time'] = date("Y-M-d H:i:s",preg_replace("/\D/","",$_GET['start_time']));
+    $raid['end_time'] = date("Y-M-d H:i:s",preg_replace("/\D/","",$_GET['end_time']));
+}
 if(in_array($_GET['pokemon_form'], ['-1','-2','-3'])) {
     $raid['pokemon_form'] = $_GET['pokemon_form'];
 }else {
@@ -229,13 +233,9 @@ if($raid['ex_gym'] == 1) {
 }
 
 
-
-// Get current time.
-$time_now = utcnow();
-
 $show_boss_pokemon_types = false;
 // Raid running
-if($time_now < $raid['end_time']) {
+if($raid_ongoing) {
     if(strlen($raid['asset_suffix']) > 2) {
         $icon_suffix = $raid['asset_suffix'];
     }else {
@@ -476,7 +476,7 @@ for($y=0;$y<count($gym_name_lines);$y++){
 
 
 // Raid times
-if($time_now < $raid['end_time']) {
+if($raid_ongoing) {
     $time_text = get_raid_times($raid, true, true);
 } else {
     $time_text = getPublicTranslation('raid_done');

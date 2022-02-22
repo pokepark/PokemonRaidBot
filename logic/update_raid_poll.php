@@ -68,10 +68,6 @@ function update_raid_poll($raid_id, $raid = false, $update = false, $tg_json = f
     // Telegram JSON array.
     if($tg_json == false) $tg_json = [];
     if($config->RAID_PICTURE) {
-        $time_now = utcnow();
-        if($time_now > $raid['end_time'] ) {
-            $raid['pokemon'] = 'ended';
-        }
         require_once(LOGIC_PATH . '/raid_picture.php');
     }
 

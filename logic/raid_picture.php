@@ -18,8 +18,14 @@ function raid_picture_url($raid, $standalone = false)
     }
   }
 
-  $start_time = strtotime($raid['start_time']);
-  $end_time = strtotime($raid['end_time']);
+  if(utcnow() > $raid['end_time']) {
+    // We'll set raid start and end times to 0 to get a new image for when the raid has ended.
+    // Setting thetimes to 0 also makes it so TG can cache the raid ended -images and reuse them
+    $start_time = $end_time = 0;
+  }else {
+    $start_time = strtotime($raid['start_time']);
+    $end_time = strtotime($raid['end_time']);
+  }
   if($raid['event'] == EVENT_ID_EX) $ex_raid = '1'; else $ex_raid = '0';
   $picture_url = "{$config->RAID_PICTURE_URL}?pokemon={$raid['pokemon']}&pokemon_form={$raid['pokemon_form']}&gym_id={$raid['gym_id']}&start_time={$start_time}&end_time={$end_time}&ex_raid={$ex_raid}";
   if($standalone) $picture_url .= '&sa=1';
