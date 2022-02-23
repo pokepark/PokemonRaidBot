@@ -9,9 +9,11 @@ if ($metrics){
 }
 // Create GD image object from given URI regardless of file type
 function grab_img($uri){
-  $img = imagecreatefromstring(file_get_contents($uri));
-  if ($img === false) {
+  try {
+    $img = imagecreatefromstring(file_get_contents($uri));
+  } catch (Exception $e) {
     info_log($uri, 'Failed to get image:');
+    info_log($e->getMessage(), 'Reason: ');
     return false;
   }
   return $img;
@@ -124,15 +126,15 @@ if($config->RAID_PICTURE_STORE_GYM_IMAGES_LOCALLY && !empty($gym_url)) {
             }
         }
     }
-    $img_gym = grab_img($gym_image_path);
 }else {
     $img_gym = false;
     if (!empty($gym_url)) {
-        $img_gym = grab_img($gym_url);
+        $gym_image_path = $gym_url;
     }
 }
+$img_gym = grab_img($gym_image_path);
 if($img_gym == false) {
-    info_log($img_gym, 'Loading the gym image failed, using default gym image');
+    info_log($gym_image_path, 'Loading the gym image failed, using default gym image');
     if(is_file($config->RAID_DEFAULT_PICTURE)) {
         $img_gym = grab_img($config->RAID_DEFAULT_PICTURE);
     } else {
