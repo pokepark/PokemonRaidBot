@@ -218,8 +218,10 @@ function parse_master_into_pokemon_table($form_ids, $game_master_url) {
             // Get pokemon forms
             if(!isset($row['data']['formSettings']['forms'])) {
                 $form_data[] = array('form'=>$pokemon_name.'_NORMAL');
-            }else {
+            }elseif(!empty($row['data']['formSettings']['forms'][0])) {
                 $form_data = $row['data']['formSettings']['forms'];
+            }else {
+                continue;
             }
             foreach($form_data as $form) {
                 $form_name = strtolower(str_replace($pokemon_name.'_','',$form['form']));
