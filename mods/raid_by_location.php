@@ -15,12 +15,13 @@ if(!$config->RAID_VIA_LOCATION) {
     send_message($update['message']['chat']['id'], '<b>' . getTranslation('bot_access_denied') . '</b>');
     exit();
 }
+$reg_exp_coordinates = '^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$^';
 
 // Get latitude / longitude values from Telegram
-if(isset($update['message']['location'])) {
+if(isset($update['message']['location']) && preg_match($reg_exp_coordinates, $update['message']['location']['latitude'] . ',' . $update['message']['location']['longitude'])) {
     $lat = $update['message']['location']['latitude'];
     $lon = $update['message']['location']['longitude'];
-} else if(isset($update['callback_query'])) {
+} else if(isset($update['callback_query']) && preg_match($reg_exp_coordinates, $data['id'] . ',' . $data['arg'])) {
     $lat = $data['id'];
     $lon = $data['arg'];
 } else {
