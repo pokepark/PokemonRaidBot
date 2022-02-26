@@ -42,7 +42,7 @@ function update_raid_poll($raid_id, $raid = false, $update = false, $tg_json = f
             }
         }else {
             if(is_array($tg_json)) return $tg_json;
-            else return false;
+            else return [];
         }
     }
     // Get the raid data by id.
