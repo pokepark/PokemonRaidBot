@@ -76,8 +76,7 @@ function perform_cleanup(){
                 FROM        gyms
                 LEFT JOIN   raids
                 ON          raids.gym_id = gyms.id
-                WHERE       (raids.end_time < DATE_SUB(UTC_TIMESTAMP(), INTERVAL '.$config->CLEANUP_TIME_DB.' MINUTE)
-                OR          raids.end_time IS NULL)
+                WHERE       (raids.end_time < DATE_SUB(UTC_TIMESTAMP(), INTERVAL '.$config->CLEANUP_TIME_DB.' MINUTE))
                 AND         temporary_gym = 1
                 ');
             if($rs_temp_gyms->rowCount() > 0) {
