@@ -3848,16 +3848,16 @@
         "ES": "Fuego Sagrado++"
     },
     "pokemon_move_364": {
-        "PT-BR": "Acrobatics",
+        "PT-BR": "Acrobático",
         "EN": "Acrobatics",
         "FI": "Acrobatics",
         "NL": "Acrobatics",
         "NO": "Acrobatics",
         "PL": "Acrobatics",
-        "FR": "Acrobatics",
-        "DE": "Acrobatics",
-        "IT": "Acrobatics",
+        "FR": "Acrobatie",
+        "DE": "Akrobatik",
+        "IT": "Acrobazia",
         "RU": "Акробатика",
-        "ES": "Acrobatics"
+        "ES": "Acróbata"
     }
 }
