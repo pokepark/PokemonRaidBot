@@ -28,7 +28,9 @@ if($arg == 'gym_delete') {
 }
 
 // Set keys.
-$keys = raid_edit_gyms_first_letter_keys($arg, true);
+
+$keys_and_gymarea = raid_edit_gyms_first_letter_keys($arg, true, $data['id'], 'gym_letter', 'gym_details');
+$keys = $keys_and_gymarea['keys'];
 
 // Set message.
 if(!$keys) {
@@ -37,7 +39,7 @@ if(!$keys) {
 
 // Add navigation keys.
 $nav_keys = [];
-$nav_keys[] = universal_inner_key($nav_keys, '0', 'gym_letter', $arg, getTranslation('back'));
+$nav_keys[] = universal_inner_key($nav_keys, $data['id'], 'gym_letter', $arg, getTranslation('back'));
 $nav_keys[] = universal_inner_key($nav_keys, '0', 'exit', '0', getTranslation('abort'));
 $nav_keys = inline_key_array($nav_keys, 2);
 

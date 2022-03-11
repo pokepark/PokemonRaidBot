@@ -203,7 +203,9 @@ Raid creation options
 
 There are several options to customize the creation of raid polls:
 
-Set ``RAID_VIA_LOCATION`` to true to allow raid creation from a location shared with the bot.
+Set ``RAID_VIA_LOCATION`` to true to allow raid creation from a location shared with the bot. Use together with ``RAID_VIA_LOCATION_FUNCTION``.
+
+Set ``RAID_VIA_LOCATION_FUNCTION`` to select which action to perform with the shared location. ``create`` (default) to create a permanent gym, which can later be edited, ``list`` to list all active raids nearby the location, ``remote`` to create a temporary remote raid gym.
 
 Set ``RAID_EGG_DURATION`` to the maximum amount of minutes a user can select for the egg hatching phase.
 
@@ -480,50 +482,11 @@ To activate cleanup you need to `make sure your groups are Supergroups or Channe
    * Times are in minutes in ``CLEANUP_TIME_TG`` for Telegram cleanup and ``CLEANUP_TIME_DB`` for database cleanup.
    * The value for the minutes of the database cleanup ``CLEANUP_TIME_DB`` must be greater than then one for Telegram cleanup ``CLEANUP_TIME_TG``. Otherwise cleanup will do nothing and exit due to misconfiguration!
 
-#. Finally set up a cronjob to trigger the cleanup. You can also trigger Telegram / database cleanup per cronjob: For no cleanup use 0, for cleanup use 1 and to use your config file use 2 or leave "Telegram" and "database" out of the request data array.
-
-   * See the examples below for curl based calls. Any HTTP client capable of a POST request will work.
-
-Examples
-^^^^^^^^
-
-Make sure to replace the URL with yours!
-
-
-* 
-  Cronjob using cleanup values from config.json:
+#. Finally set up a cronjob to trigger the cleanup. For example with curl:
 
   .. code-block::
 
      curl -k -d '{"cleanup":{"secret":"your-cleanup-secret/passphrase"}}' https://localhost/index.php?apikey=111111111:AABBCCDDEEFFGGHHIIJJKKLLMMNNOOPP123`
-
-* 
-  Explicitly use config values:
-
-  .. code-block::
-
-     curl -k -d '{"cleanup":{"secret":"your-cleanup-secret/passphrase","telegram":"2","database":"2"}}' https://localhost/index.php?apikey=111111111:AABBCCDDEEFFGGHHIIJJKKLLMMNNOOPP123
-
-* 
-  Clean up Telegram raid poll messages only: Telegram = 1 and database = 0
-
-  .. code-block::
-
-     curl -k -d '{"cleanup":{"secret":"your-cleanup-secret/passphrase","telegram":"1","database":"0"}}' https://localhost/index.php?apikey=111111111:AABBCCDDEEFFGGHHIIJJKKLLMMNNOOPP123
-
-* 
-  Clean up Telegram raid poll messages and database: Telegram = 1 and database = 1
-
-  .. code-block::
-
-     curl -k -d '{"cleanup":{"secret":"your-cleanup-secret/passphrase","telegram":"1","database":"1"}}' https://localhost/index.php?apikey=111111111:AABBCCDDEEFFGGHHIIJJKKLLMMNNOOPP123
-
-* 
-  Clean up database and maybe Telegram raid poll messages (when specified in config): Telegram = 2 and database = 1
-
-  .. code-block::
-
-     curl -k -d '{"cleanup":{"secret":"your-cleanup-secret/passphrase","telegram":"2","database":"1"}}' https://localhost/index.php?apikey=111111111:AABBCCDDEEFFGGHHIIJJKKLLMMNNOOPP123
 
 Access permissions
 ------------------
@@ -724,9 +687,6 @@ A few examples for access files can be found below the permission overview table
      - Add a gym ``/addgym``
      - ``gym-add``
    * - 
-     - Delete a gym ``/deletegym``
-     - ``gym-delete``
-   * - 
      - 
      - 
    * - Trainer
@@ -912,8 +872,10 @@ Config reference
      - Password of dedicated RaidBot DB user
    * - DB_USER
      - Username of dedicated RaidBot DB user
+   * - ENABLE_DDOS_PROTECTION
+     - Bool, enables ddos protection. True by default
    * - DDOS_MAXIMUM
-     - ?
+     - Number of actions per minute an user is allowed to perform before getting locked out for ddosing
    * - DEBUG
      - Output helpful debugging messages to ``DEBUG_LOGFILE``
    * - DEBUG_LOGFILE
@@ -952,12 +914,16 @@ Config reference
      - URL to your map. This is displayed under every raid poll.
    * - CUSTOM_TRAINERNAME
      - Book, allow users to add custom trainernames via ``/trainer`` command
+   * - ENABLE_GYM_AREAS
+     - To divide gyms into areas when making selections through ``/start``, ``/listall`` etc. set this to true. Areas are defined in geoconfig_gym_areas.json.
+   * - DEFAULT_GYM_AREA": false,
+     - ID of default gymarea. Can also be set to false to only display areas.
    * - PORTAL_IMPORT
      - Bool, allow importing gyms via portal import Telegram bots
    * - RAID_ANYTIME
      - Bool, enable a final timeslot for attending at any given time.
    * - RAID_AUTOMATIC_ALARM
-     - Bool, sign up every attendee to the raid alarm automatically. They will get private messages of new participants as if they had enabled it themselves on the poll.
+     - Bool, if true, force every attendee to sign up for the raid alarm automatically. If false, users can choose to set automatic alarms on via ``/trainer``.
    * - RAID_CODE_POKEMON
      - List of Pokemon dex IDs in use for private group codes
    * - RAID_CREATION_EX_GYM_MARKER
@@ -1055,7 +1021,9 @@ Config reference
    * - RAID_SLOTS
      - Amount of minutes between raid poll voting slots
    * - RAID_VIA_LOCATION
-     - Bool, enable creating raids by sharing a location with the bot
+     - Bool, enable creating or sharing raids by sharing a location with the bot. Works together with ``RAID_VIA_LOCATION_FUNCTION``.
+   * - RAID_VIA_LOCATION_FUNCTION
+     - ``create``, ``list`` or ``remote``, which function to perform when user shares a location with the bot. ``create`` to create a permanent gym, which can later be edited, ``list`` to list all active raids nearby the location, ``remote`` to create a temporary remote raid gym.
    * - RAID_VOTE_ICONS
      - Bool, use icons on raid poll buttons
    * - RAID_VOTE_TEXT
@@ -1076,8 +1044,6 @@ Config reference
      - List of Telegram chat IDs available for sharing any raids
    * - MYSQL_SORT_COLLATE
      - Charset added to SQL query for sorting gym names
-   * - LIST_BY_LOCATION
-     - Bool, If true, when sending location to bot, instead of creating a raid, it lists nearby active raids
    * - TIMEZONE
      - Timezone definition to use as per `TZ database names <https://www.wikiwand.com/en/List_of_tz_database_time_zones#/List>`_
    * - TRAINER_MAX_LEVEL

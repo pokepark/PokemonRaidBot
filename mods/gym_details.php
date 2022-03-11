@@ -10,7 +10,9 @@ debug_log('gym_details()');
 bot_access_check($update, 'gym-details');
 
 // Get the arg.
-$arg = $data['arg'];
+$args = explode(',',$data['arg'],2);
+$arg = $args[0];
+$gymarea_id = (count($args) > 1) ? $args[1] : false;
 
 // Get the id.
 $id = $data['id'];
@@ -25,10 +27,10 @@ if($arg == 0 || $id == '0' || $id == '1') {
     }
 
     // Get the keys.
-    $keys = raid_edit_gym_keys($arg, false, 'gym_details', false, $hidden);
+    $keys = raid_edit_gym_keys($arg, $gymarea_id, 'gym_details', false, $hidden);
 
     // Set keys.
-    $msg = '<b>' . getTranslation('show_gym_details') . SP . '—' . SP . getTranslation('select_gym_name') . '</b>';
+    $msg = '<b>' . getTranslation('show_gym_details') . CR . CR . getTranslation('select_gym_name') . '</b>';
 
     // No keys found.
     if (!$keys) {
@@ -44,7 +46,7 @@ if($arg == 0 || $id == '0' || $id == '1') {
     } else {
         // Add navigation keys.
         $nav_keys = [];
-        $nav_keys[] = universal_inner_key($nav_keys, '0', 'gym_letter', 'gym_details', getTranslation('back'));
+        $nav_keys[] = universal_inner_key($nav_keys, $gymarea_id, 'gym_letter', 'gym_details', getTranslation('back'));
         $nav_keys[] = universal_inner_key($nav_keys, '0', 'exit', '0', getTranslation('abort'));
         $nav_keys = inline_key_array($nav_keys, 2);
         // Merge keys.
@@ -89,6 +91,12 @@ if($arg == 0 || $id == '0' || $id == '1') {
         'text'          => $text_ex_button,
         'callback_data' => $arg . ':gym_edit_details:ex-' . $arg_ex
     );
+    if(bot_access_check($update, 'gym-delete', true)) {
+        $keys[] = array(
+            'text'          => getTranslation("gym_delete"),
+            'callback_data' => '0:gym_delete:'.$arg.'-delete'
+        );
+    }
     $keys[] = array(
         'text'          => getTranslation('done'),
         'callback_data' => '0:exit:1'

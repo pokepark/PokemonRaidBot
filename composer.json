@@ -1,0 +1,15 @@
+{
+    "name": "pokepark/pokemonraidbot",
+    "description": "Telegram Bot for organizing Pokemon Go Raids",
+    "type": "project",
+    "license": "AGPL-3.0-or-later",
+    "autoload": {
+        "psr-4": {
+            "Pokepark\\Pokemonraidbot\\": "src/"
+        }
+    },
+    "require": {
+        "promphp/prometheus_client_php": "^2.4",
+        "symfony/polyfill-apcu": "^1.23"
+    }
+}

@@ -109,7 +109,6 @@
     },
     "pokemon_id_19": {
         "EN": "Rattata",
-        "FR": "Rattata",
         "DE": "Rattfratz",
         "RU": "Раттата"
     },
@@ -139,20 +138,14 @@
     },
     "pokemon_id_24": {
         "EN": "Arbok",
-        "FR": "Arbok",
-        "DE": "Arbok",
         "RU": "Арбок"
     },
     "pokemon_id_25": {
         "EN": "Pikachu",
-        "FR": "Pikachu",
-        "DE": "Pikachu",
         "RU": "Пикачу"
     },
     "pokemon_id_26": {
         "EN": "Raichu",
-        "FR": "Raichu",
-        "DE": "Raichu",
         "RU": "Райчу"
     },
     "pokemon_id_27": {
@@ -169,38 +162,26 @@
     },
     "pokemon_id_29": {
         "EN": "Nidoran♀",
-        "FR": "Nidoran♀",
-        "DE": "Nidoran♀",
         "RU": "Нидоран♀"
     },
     "pokemon_id_30": {
         "EN": "Nidorina",
-        "FR": "Nidorina",
-        "DE": "Nidorina",
         "RU": "Нидорина"
     },
     "pokemon_id_31": {
         "EN": "Nidoqueen",
-        "FR": "Nidoqueen",
-        "DE": "Nidoqueen",
         "RU": "Нидоквин"
     },
     "pokemon_id_32": {
         "EN": "Nidoran♂",
-        "FR": "Nidoran♂",
-        "DE": "Nidoran♂",
         "RU": "Нидоран♂"
     },
     "pokemon_id_33": {
         "EN": "Nidorino",
-        "FR": "Nidorino",
-        "DE": "Nidorino",
         "RU": "Нидорино"
     },
     "pokemon_id_34": {
         "EN": "Nidoking",
-        "FR": "Nidoking",
-        "DE": "Nidoking",
         "RU": "Нидокинг"
     },
     "pokemon_id_35": {
@@ -218,7 +199,6 @@
     "pokemon_id_37": {
         "EN": "Vulpix",
         "FR": "Goupix",
-        "DE": "Vulpix",
         "RU": "Валпикс"
     },
     "pokemon_id_38": {
@@ -242,13 +222,11 @@
     "pokemon_id_41": {
         "EN": "Zubat",
         "FR": "Nosferapti",
-        "DE": "Zubat",
         "RU": "Зубат"
     },
     "pokemon_id_42": {
         "EN": "Golbat",
         "FR": "Nosferalto",
-        "DE": "Golbat",
         "RU": "Голбат"
     },
     "pokemon_id_43": {
@@ -271,13 +249,10 @@
     },
     "pokemon_id_46": {
         "EN": "Paras",
-        "FR": "Paras",
-        "DE": "Paras",
         "RU": "Парас"
     },
     "pokemon_id_47": {
         "EN": "Parasect",
-        "FR": "Parasect",
         "DE": "Parasek",
         "RU": "Парасект"
     },
@@ -313,7 +288,6 @@
     },
     "pokemon_id_53": {
         "EN": "Persian",
-        "FR": "Persian",
         "DE": "Snobilikat",
         "RU": "Персиан"
     },
@@ -373,19 +347,14 @@
     },
     "pokemon_id_63": {
         "EN": "Abra",
-        "FR": "Abra",
-        "DE": "Abra",
         "RU": "Абра"
     },
     "pokemon_id_64": {
         "EN": "Kadabra",
-        "FR": "Kadabra",
-        "DE": "Kadabra",
         "RU": "Кадабра"
     },
     "pokemon_id_65": {
         "EN": "Alakazam",
-        "FR": "Alakazam",
         "DE": "Simsala",
         "RU": "Алаказам"
     },
@@ -427,13 +396,11 @@
     },
     "pokemon_id_72": {
         "EN": "Tentacool",
-        "FR": "Tentacool",
         "DE": "Tentacha",
         "RU": "Тентакул"
     },
     "pokemon_id_73": {
         "EN": "Tentacruel",
-        "FR": "Tentacruel",
         "DE": "Tentoxa",
         "RU": "Тентакрул"
     },
@@ -457,7 +424,6 @@
     },
     "pokemon_id_77": {
         "EN": "Ponyta",
-        "FR": "Ponyta",
         "DE": "Ponita",
         "RU": "Понита"
     },
@@ -488,24 +454,22 @@
     "pokemon_id_82": {
         "EN": "Magneton",
         "FR": "Magnéton",
-        "DE": "Magneton",
         "RU": "Магнетон"
     },
     "pokemon_id_83": {
         "EN": "Farfetch'd",
         "FR": "Canarticho",
         "DE": "Porenta",
+        "IT": "Farfetch’d",
         "RU": "Фарфетчд"
     },
     "pokemon_id_84": {
         "EN": "Doduo",
-        "FR": "Doduo",
         "DE": "Dodu",
         "RU": "Додуо"
     },
     "pokemon_id_85": {
         "EN": "Dodrio",
-        "FR": "Dodrio",
         "DE": "Dodri",
         "RU": "Додрио"
     },
@@ -560,13 +524,10 @@
     "pokemon_id_94": {
         "EN": "Gengar",
         "FR": "Ectoplasma",
-        "DE": "Gengar",
         "RU": "Генгар"
     },
     "pokemon_id_95": {
         "EN": "Onix",
-        "FR": "Onix",
-        "DE": "Onix",
         "RU": "Оникс"
     },
     "pokemon_id_96": {
@@ -578,19 +539,15 @@
     "pokemon_id_97": {
         "EN": "Hypno",
         "FR": "Hypnomade",
-        "DE": "Hypno",
         "RU": "Гипно"
     },
     "pokemon_id_98": {
         "EN": "Krabby",
-        "FR": "Krabby",
-        "DE": "Krabby",
         "RU": "Крабби"
     },
     "pokemon_id_99": {
         "EN": "Kingler",
         "FR": "Krabboss",
-        "DE": "Kingler",
         "RU": "Кинглер"
     },
     "pokemon_id_100": {
@@ -680,7 +637,6 @@
     "pokemon_id_114": {
         "EN": "Tangela",
         "FR": "Saquedeneu",
-        "DE": "Tangela",
         "RU": "Тангела"
     },
     "pokemon_id_115": {
@@ -722,7 +678,6 @@
     "pokemon_id_121": {
         "EN": "Starmie",
         "FR": "Staross",
-        "DE": "Starmie",
         "RU": "Старми"
     },
     "pokemon_id_122": {
@@ -751,20 +706,15 @@
     },
     "pokemon_id_126": {
         "EN": "Magmar",
-        "FR": "Magmar",
-        "DE": "Magmar",
         "RU": "Магмар"
     },
     "pokemon_id_127": {
         "EN": "Pinsir",
         "FR": "Scarabrute",
-        "DE": "Pinsir",
         "RU": "Пинсир"
     },
     "pokemon_id_128": {
         "EN": "Tauros",
-        "FR": "Tauros",
-        "DE": "Tauros",
         "RU": "Таурос"
     },
     "pokemon_id_129": {
@@ -782,13 +732,11 @@
     "pokemon_id_131": {
         "EN": "Lapras",
         "FR": "Lokhlass",
-        "DE": "Lapras",
         "RU": "Лапрас"
     },
     "pokemon_id_132": {
         "EN": "Ditto",
         "FR": "Métamorph",
-        "DE": "Ditto",
         "RU": "Дитто"
     },
     "pokemon_id_133": {
@@ -817,8 +765,6 @@
     },
     "pokemon_id_137": {
         "EN": "Porygon",
-        "FR": "Porygon",
-        "DE": "Porygon",
         "RU": "Поригон"
     },
     "pokemon_id_138": {
@@ -835,20 +781,15 @@
     },
     "pokemon_id_140": {
         "EN": "Kabuto",
-        "FR": "Kabuto",
-        "DE": "Kabuto",
         "RU": "Кабуто"
     },
     "pokemon_id_141": {
         "EN": "Kabutops",
-        "FR": "Kabutops",
-        "DE": "Kabutops",
         "RU": "Кабутопс"
     },
     "pokemon_id_142": {
         "EN": "Aerodactyl",
         "FR": "Ptéra",
-        "DE": "Aerodactyl",
         "RU": "Аэродактиль"
     },
     "pokemon_id_143": {
@@ -866,7 +807,6 @@
     "pokemon_id_145": {
         "EN": "Zapdos",
         "FR": "Électhor",
-        "DE": "Zapdos",
         "RU": "Запдос"
     },
     "pokemon_id_146": {
@@ -878,7 +818,6 @@
     "pokemon_id_147": {
         "EN": "Dratini",
         "FR": "Minidraco",
-        "DE": "Dratini",
         "RU": "Дратини"
     },
     "pokemon_id_148": {
@@ -895,14 +834,11 @@
     },
     "pokemon_id_150": {
         "EN": "Mewtwo",
-        "FR": "Mewtwo",
         "DE": "Mewtu",
         "RU": "Мьюту"
     },
     "pokemon_id_151": {
         "EN": "Mew",
-        "FR": "Mew",
-        "DE": "Mew",
         "RU": "Мью"
     },
     "pokemon_id_152": {
@@ -937,7 +873,6 @@
     },
     "pokemon_id_157": {
         "EN": "Typhlosion",
-        "FR": "Typhlosion",
         "DE": "Tornupto",
         "RU": "Тайфложн"
     },
@@ -973,8 +908,6 @@
     },
     "pokemon_id_163": {
         "EN": "Hoothoot",
-        "FR": "Hoothoot",
-        "DE": "Hoothoot",
         "RU": "Хутхут"
     },
     "pokemon_id_164": {
@@ -986,13 +919,11 @@
     "pokemon_id_165": {
         "EN": "Ledyba",
         "FR": "Coxy",
-        "DE": "Ledyba",
         "RU": "Ледиба"
     },
     "pokemon_id_166": {
         "EN": "Ledian",
         "FR": "Coxyclaque",
-        "DE": "Ledian",
         "RU": "Ледиан"
     },
     "pokemon_id_167": {
@@ -1004,7 +935,6 @@
     "pokemon_id_168": {
         "EN": "Ariados",
         "FR": "Migalos",
-        "DE": "Ariados",
         "RU": "Ариадос"
     },
     "pokemon_id_169": {
@@ -1021,14 +951,10 @@
     },
     "pokemon_id_171": {
         "EN": "Lanturn",
-        "FR": "Lanturn",
-        "DE": "Lanturn",
         "RU": "Лантурн"
     },
     "pokemon_id_172": {
         "EN": "Pichu",
-        "FR": "Pichu",
-        "DE": "Pichu",
         "RU": "Пичу"
     },
     "pokemon_id_173": {
@@ -1045,26 +971,18 @@
     },
     "pokemon_id_175": {
         "EN": "Togepi",
-        "FR": "Togepi",
-        "DE": "Togepi",
         "RU": "Тогэпи"
     },
     "pokemon_id_176": {
         "EN": "Togetic",
-        "FR": "Togetic",
-        "DE": "Togetic",
         "RU": "Тогэтик"
     },
     "pokemon_id_177": {
         "EN": "Natu",
-        "FR": "Natu",
-        "DE": "Natu",
         "RU": "Нату"
     },
     "pokemon_id_178": {
         "EN": "Xatu",
-        "FR": "Xatu",
-        "DE": "Xatu",
         "RU": "Ксату"
     },
     "pokemon_id_179": {
@@ -1082,7 +1000,6 @@
     "pokemon_id_181": {
         "EN": "Ampharos",
         "FR": "Pharamp",
-        "DE": "Ampharos",
         "RU": "Амфарос"
     },
     "pokemon_id_182": {
@@ -1093,14 +1010,10 @@
     },
     "pokemon_id_183": {
         "EN": "Marill",
-        "FR": "Marill",
-        "DE": "Marill",
         "RU": "Мэрилл"
     },
     "pokemon_id_184": {
         "EN": "Azumarill",
-        "FR": "Azumarill",
-        "DE": "Azumarill",
         "RU": "Азумарилл"
     },
     "pokemon_id_185": {
@@ -1153,8 +1066,6 @@
     },
     "pokemon_id_193": {
         "EN": "Yanma",
-        "FR": "Yanma",
-        "DE": "Yanma",
         "RU": "Янма"
     },
     "pokemon_id_194": {
@@ -1213,8 +1124,6 @@
     },
     "pokemon_id_203": {
         "EN": "Girafarig",
-        "FR": "Girafarig",
-        "DE": "Girafarig",
         "RU": "Жирафариг"
     },
     "pokemon_id_204": {
@@ -1243,25 +1152,19 @@
     },
     "pokemon_id_208": {
         "EN": "Steelix",
-        "FR": "Steelix",
         "DE": "Stahlos",
         "RU": "Стиликс"
     },
     "pokemon_id_209": {
         "EN": "Snubbull",
-        "FR": "Snubbull",
-        "DE": "Snubbull",
         "RU": "Снаббулл"
     },
     "pokemon_id_210": {
         "EN": "Granbull",
-        "FR": "Granbull",
-        "DE": "Granbull",
         "RU": "Грэнбулл"
     },
     "pokemon_id_211": {
         "EN": "Qwilfish",
-        "FR": "Qwilfish",
         "DE": "Baldorfish",
         "RU": "Квилфиш"
     },
@@ -1291,14 +1194,10 @@
     },
     "pokemon_id_216": {
         "EN": "Teddiursa",
-        "FR": "Teddiursa",
-        "DE": "Teddiursa",
         "RU": "Теддиурса"
     },
     "pokemon_id_217": {
         "EN": "Ursaring",
-        "FR": "Ursaring",
-        "DE": "Ursaring",
         "RU": "Урсаринг"
     },
     "pokemon_id_218": {
@@ -1310,7 +1209,6 @@
     "pokemon_id_219": {
         "EN": "Magcargo",
         "FR": "Volcaropod",
-        "DE": "Magcargo",
         "RU": "Магкарго"
     },
     "pokemon_id_220": {
@@ -1334,13 +1232,10 @@
     "pokemon_id_223": {
         "EN": "Remoraid",
         "FR": "Rémoraid",
-        "DE": "Remoraid",
         "RU": "Реморэйд"
     },
     "pokemon_id_224": {
         "EN": "Octillery",
-        "FR": "Octillery",
-        "DE": "Octillery",
         "RU": "Октиллери"
     },
     "pokemon_id_225": {
@@ -1381,20 +1276,14 @@
     },
     "pokemon_id_231": {
         "EN": "Phanpy",
-        "FR": "Phanpy",
-        "DE": "Phanpy",
         "RU": "Фэнпи"
     },
     "pokemon_id_232": {
         "EN": "Donphan",
-        "FR": "Donphan",
-        "DE": "Donphan",
         "RU": "Донфэн"
     },
     "pokemon_id_233": {
         "EN": "Porygon2",
-        "FR": "Porygon2",
-        "DE": "Porygon2",
         "RU": "Поригон-2"
     },
     "pokemon_id_234": {
@@ -1430,19 +1319,15 @@
     "pokemon_id_239": {
         "EN": "Elekid",
         "FR": "Élekid",
-        "DE": "Elekid",
         "RU": "Элекид"
     },
     "pokemon_id_240": {
         "EN": "Magby",
-        "FR": "Magby",
-        "DE": "Magby",
         "RU": "Магби"
     },
     "pokemon_id_241": {
         "EN": "Miltank",
         "FR": "Écrémeuh",
-        "DE": "Miltank",
         "RU": "Милтанк"
     },
     "pokemon_id_242": {
@@ -1453,32 +1338,24 @@
     },
     "pokemon_id_243": {
         "EN": "Raikou",
-        "FR": "Raikou",
-        "DE": "Raikou",
         "RU": "Райку"
     },
     "pokemon_id_244": {
         "EN": "Entei",
-        "FR": "Entei",
-        "DE": "Entei",
         "RU": "Энтей"
     },
     "pokemon_id_245": {
         "EN": "Suicune",
-        "FR": "Suicune",
-        "DE": "Suicune",
         "RU": "Суикун"
     },
     "pokemon_id_246": {
         "EN": "Larvitar",
         "FR": "Embrylex",
-        "DE": "Larvitar",
         "RU": "Ларвитар"
     },
     "pokemon_id_247": {
         "EN": "Pupitar",
         "FR": "Ymphect",
-        "DE": "Pupitar",
         "RU": "Пьюпитар"
     },
     "pokemon_id_248": {
@@ -1489,20 +1366,14 @@
     },
     "pokemon_id_249": {
         "EN": "Lugia",
-        "FR": "Lugia",
-        "DE": "Lugia",
         "RU": "Лугиа"
     },
     "pokemon_id_250": {
         "EN": "Ho-Oh",
-        "FR": "Ho-Oh",
-        "DE": "Ho-Oh",
         "RU": "Хо-Oх"
     },
     "pokemon_id_251": {
         "EN": "Celebi",
-        "FR": "Celebi",
-        "DE": "Celebi",
         "RU": "Селеби"
     },
     "pokemon_id_252": {
@@ -1621,13 +1492,11 @@
     },
     "pokemon_id_271": {
         "EN": "Lombre",
-        "FR": "Lombre",
         "DE": "Lombrero",
         "RU": "Ломбрэ"
     },
     "pokemon_id_272": {
         "EN": "Ludicolo",
-        "FR": "Ludicolo",
         "DE": "Kappalores",
         "RU": "Лудиколо"
     },
@@ -1664,13 +1533,11 @@
     "pokemon_id_278": {
         "EN": "Wingull",
         "FR": "Goélise",
-        "DE": "Wingull",
         "RU": "Вингалл"
     },
     "pokemon_id_279": {
         "EN": "Pelipper",
         "FR": "Bekipan",
-        "DE": "Pelipper",
         "RU": "Пелиппер"
     },
     "pokemon_id_280": {
@@ -1681,13 +1548,10 @@
     },
     "pokemon_id_281": {
         "EN": "Kirlia",
-        "FR": "Kirlia",
-        "DE": "Kirlia",
         "RU": "Кирлия"
     },
     "pokemon_id_282": {
         "EN": "Gardevoir",
-        "FR": "Gardevoir",
         "DE": "Guardevoir",
         "RU": "Гардевойр"
     },
@@ -1723,7 +1587,6 @@
     },
     "pokemon_id_288": {
         "EN": "Vigoroth",
-        "FR": "Vigoroth",
         "DE": "Muntier",
         "RU": "Вигорот"
     },
@@ -1736,13 +1599,10 @@
     "pokemon_id_290": {
         "EN": "Nincada",
         "FR": "Ningale",
-        "DE": "Nincada",
         "RU": "Нинкада"
     },
     "pokemon_id_291": {
         "EN": "Ninjask",
-        "FR": "Ninjask",
-        "DE": "Ninjask",
         "RU": "Нинджаск"
     },
     "pokemon_id_292": {
@@ -1771,20 +1631,14 @@
     },
     "pokemon_id_296": {
         "EN": "Makuhita",
-        "FR": "Makuhita",
-        "DE": "Makuhita",
         "RU": "Макухита"
     },
     "pokemon_id_297": {
         "EN": "Hariyama",
-        "FR": "Hariyama",
-        "DE": "Hariyama",
         "RU": "Харияма"
     },
     "pokemon_id_298": {
         "EN": "Azurill",
-        "FR": "Azurill",
-        "DE": "Azurill",
         "RU": "Азурилл"
     },
     "pokemon_id_299": {
@@ -1795,13 +1649,11 @@
     },
     "pokemon_id_300": {
         "EN": "Skitty",
-        "FR": "Skitty",
         "DE": "Eneco",
         "RU": "Скитти"
     },
     "pokemon_id_301": {
         "EN": "Delcatty",
-        "FR": "Delcatty",
         "DE": "Enekoro",
         "RU": "Делкатти"
     },
@@ -1862,31 +1714,26 @@
     "pokemon_id_311": {
         "EN": "Plusle",
         "FR": "Posipi",
-        "DE": "Plusle",
         "RU": "Пласл"
     },
     "pokemon_id_312": {
         "EN": "Minun",
         "FR": "Négapi",
-        "DE": "Minun",
         "RU": "Майнун"
     },
     "pokemon_id_313": {
         "EN": "Volbeat",
         "FR": "Muciole",
-        "DE": "Volbeat",
         "RU": "Волбит"
     },
     "pokemon_id_314": {
         "EN": "Illumise",
         "FR": "Lumivole",
-        "DE": "Illumise",
         "RU": "Иллюмайз"
     },
     "pokemon_id_315": {
         "EN": "Roselia",
         "FR": "Rosélia",
-        "DE": "Roselia",
         "RU": "Розелия"
     },
     "pokemon_id_316": {
@@ -1903,26 +1750,20 @@
     },
     "pokemon_id_318": {
         "EN": "Carvanha",
-        "FR": "Carvanha",
         "DE": "Kanivanha",
         "RU": "Карванья"
     },
     "pokemon_id_319": {
         "EN": "Sharpedo",
-        "FR": "Sharpedo",
         "DE": "Tohaido",
         "RU": "Шарпедо"
     },
     "pokemon_id_320": {
         "EN": "Wailmer",
-        "FR": "Wailmer",
-        "DE": "Wailmer",
         "RU": "Вэйлмер"
     },
     "pokemon_id_321": {
         "EN": "Wailord",
-        "FR": "Wailord",
-        "DE": "Wailord",
         "RU": "Вэйлорд"
     },
     "pokemon_id_322": {
@@ -1934,7 +1775,6 @@
     "pokemon_id_323": {
         "EN": "Camerupt",
         "FR": "Camérupt",
-        "DE": "Camerupt",
         "RU": "Камерапт"
     },
     "pokemon_id_324": {
@@ -1945,8 +1785,6 @@
     },
     "pokemon_id_325": {
         "EN": "Spoink",
-        "FR": "Spoink",
-        "DE": "Spoink",
         "RU": "Споинк"
     },
     "pokemon_id_326": {
@@ -1957,7 +1795,6 @@
     },
     "pokemon_id_327": {
         "EN": "Spinda",
-        "FR": "Spinda",
         "DE": "Pandir",
         "RU": "Спинда"
     },
@@ -1970,7 +1807,6 @@
     "pokemon_id_329": {
         "EN": "Vibrava",
         "FR": "Vibraninf",
-        "DE": "Vibrava",
         "RU": "Вибрава"
     },
     "pokemon_id_330": {
@@ -1981,13 +1817,11 @@
     },
     "pokemon_id_331": {
         "EN": "Cacnea",
-        "FR": "Cacnea",
         "DE": "Tuska",
         "RU": "Какнея"
     },
     "pokemon_id_332": {
         "EN": "Cacturne",
-        "FR": "Cacturne",
         "DE": "Noktuska",
         "RU": "Кактурн"
     },
@@ -1999,8 +1833,6 @@
     },
     "pokemon_id_334": {
         "EN": "Altaria",
-        "FR": "Altaria",
-        "DE": "Altaria",
         "RU": "Алтария"
     },
     "pokemon_id_335": {
@@ -2077,14 +1909,10 @@
     },
     "pokemon_id_347": {
         "EN": "Anorith",
-        "FR": "Anorith",
-        "DE": "Anorith",
         "RU": "Анорит"
     },
     "pokemon_id_348": {
         "EN": "Armaldo",
-        "FR": "Armaldo",
-        "DE": "Armaldo",
         "RU": "Армальдо"
     },
     "pokemon_id_349": {
@@ -2096,7 +1924,6 @@
     "pokemon_id_350": {
         "EN": "Milotic",
         "FR": "Milobellus",
-        "DE": "Milotic",
         "RU": "Майлотик"
     },
     "pokemon_id_351": {
@@ -2107,20 +1934,16 @@
     },
     "pokemon_id_352": {
         "EN": "Kecleon",
-        "FR": "Kecleon",
-        "DE": "Kecleon",
         "RU": "Кеклеон"
     },
     "pokemon_id_353": {
         "EN": "Shuppet",
         "FR": "Polichombr",
-        "DE": "Shuppet",
         "RU": "Шаппет"
     },
     "pokemon_id_354": {
         "EN": "Banette",
         "FR": "Branette",
-        "DE": "Banette",
         "RU": "Банетт"
     },
     "pokemon_id_355": {
@@ -2137,8 +1960,6 @@
     },
     "pokemon_id_357": {
         "EN": "Tropius",
-        "FR": "Tropius",
-        "DE": "Tropius",
         "RU": "Тропиус"
     },
     "pokemon_id_358": {
@@ -2149,8 +1970,6 @@
     },
     "pokemon_id_359": {
         "EN": "Absol",
-        "FR": "Absol",
-        "DE": "Absol",
         "RU": "Абсол"
     },
     "pokemon_id_360": {
@@ -2209,8 +2028,6 @@
     },
     "pokemon_id_369": {
         "EN": "Relicanth",
-        "FR": "Relicanth",
-        "DE": "Relicanth",
         "RU": "Реликант"
     },
     "pokemon_id_370": {
@@ -2246,73 +2063,51 @@
     "pokemon_id_375": {
         "EN": "Metang",
         "FR": "Métang",
-        "DE": "Metang",
         "RU": "Метанг"
     },
     "pokemon_id_376": {
         "EN": "Metagross",
         "FR": "Métalosse",
-        "DE": "Metagross",
         "RU": "Метагросс"
     },
     "pokemon_id_377": {
         "EN": "Regirock",
-        "FR": "Regirock",
-        "DE": "Regirock",
         "RU": "Реджирок"
     },
     "pokemon_id_378": {
         "EN": "Regice",
-        "FR": "Regice",
-        "DE": "Regice",
         "RU": "Реджайс"
     },
     "pokemon_id_379": {
         "EN": "Registeel",
-        "FR": "Registeel",
-        "DE": "Registeel",
         "RU": "Реджистил"
     },
     "pokemon_id_380": {
         "EN": "Latias",
-        "FR": "Latias",
-        "DE": "Latias",
         "RU": "Латиас"
     },
     "pokemon_id_381": {
         "EN": "Latios",
-        "FR": "Latios",
-        "DE": "Latios",
         "RU": "Латиос"
     },
     "pokemon_id_382": {
         "EN": "Kyogre",
-        "FR": "Kyogre",
-        "DE": "Kyogre",
         "RU": "Кайогр"
     },
     "pokemon_id_383": {
         "EN": "Groudon",
-        "FR": "Groudon",
-        "DE": "Groudon",
         "RU": "Граудон"
     },
     "pokemon_id_384": {
         "EN": "Rayquaza",
-        "FR": "Rayquaza",
-        "DE": "Rayquaza",
         "RU": "Райкваза"
     },
     "pokemon_id_385": {
         "EN": "Jirachi",
-        "FR": "Jirachi",
-        "DE": "Jirachi",
         "RU": "Джирачи"
     },
     "pokemon_id_386": {
         "EN": "Deoxys",
-        "FR": "Deoxys",
-        "DE": "Deoxys",
         "RU": "Деоксис"
     },
     "pokemon_id_387": {
@@ -2329,7 +2124,6 @@
     },
     "pokemon_id_389": {
         "EN": "Torterra",
-        "FR": "Torterra",
         "DE": "Chelterrar",
         "RU": "Тортерра"
     },
@@ -2378,13 +2172,11 @@
     "pokemon_id_397": {
         "EN": "Staravia",
         "FR": "Étourvol",
-        "DE": "Staravia",
         "RU": "Старавия"
     },
     "pokemon_id_398": {
         "EN": "Staraptor",
         "FR": "Étouraptor",
-        "DE": "Staraptor",
         "RU": "Стараптор"
     },
     "pokemon_id_399": {
@@ -2419,13 +2211,10 @@
     },
     "pokemon_id_404": {
         "EN": "Luxio",
-        "FR": "Luxio",
-        "DE": "Luxio",
         "RU": "Лаксио"
     },
     "pokemon_id_405": {
         "EN": "Luxray",
-        "FR": "Luxray",
         "DE": "Luxtra",
         "RU": "Лаксрэй"
     },
@@ -2437,8 +2226,6 @@
     },
     "pokemon_id_407": {
         "EN": "Roserade",
-        "FR": "Roserade",
-        "DE": "Roserade",
         "RU": "Розрейд"
     },
     "pokemon_id_408": {
@@ -2461,14 +2248,12 @@
     },
     "pokemon_id_411": {
         "EN": "Bastiodon",
-        "FR": "Bastiodon",
         "DE": "Bollterus",
         "RU": "Бастиодон"
     },
     "pokemon_id_412": {
         "EN": "Burmy",
         "FR": "Cheniti",
-        "DE": "Burmy",
         "RU": "Бурми"
     },
     "pokemon_id_413": {
@@ -2497,8 +2282,6 @@
     },
     "pokemon_id_417": {
         "EN": "Pachirisu",
-        "FR": "Pachirisu",
-        "DE": "Pachirisu",
         "RU": "Пачирису"
     },
     "pokemon_id_418": {
@@ -2534,7 +2317,6 @@
     "pokemon_id_423": {
         "EN": "Gastrodon",
         "FR": "Tritosor",
-        "DE": "Gastrodon",
         "RU": "Гастродон"
     },
     "pokemon_id_424": {
@@ -2606,7 +2388,6 @@
     "pokemon_id_435": {
         "EN": "Skuntank",
         "FR": "Moufflair",
-        "DE": "Skuntank",
         "RU": "Скантанк"
     },
     "pokemon_id_436": {
@@ -2618,7 +2399,6 @@
     "pokemon_id_437": {
         "EN": "Bronzong",
         "FR": "Archéodong",
-        "DE": "Bronzong",
         "RU": "Бронзонг"
     },
     "pokemon_id_438": {
@@ -2629,7 +2409,6 @@
     },
     "pokemon_id_439": {
         "EN": "Mime Jr.",
-        "FR": "Mime Jr.",
         "DE": "Pantimimi",
         "RU": "Майм-Джуниор"
     },
@@ -2647,7 +2426,6 @@
     },
     "pokemon_id_442": {
         "EN": "Spiritomb",
-        "FR": "Spiritomb",
         "DE": "Kryppuk",
         "RU": "Спиритум"
     },
@@ -2677,20 +2455,14 @@
     },
     "pokemon_id_447": {
         "EN": "Riolu",
-        "FR": "Riolu",
-        "DE": "Riolu",
         "RU": "Риолу"
     },
     "pokemon_id_448": {
         "EN": "Lucario",
-        "FR": "Lucario",
-        "DE": "Lucario",
         "RU": "Лукарио"
     },
     "pokemon_id_449": {
         "EN": "Hippopotas",
-        "FR": "Hippopotas",
-        "DE": "Hippopotas",
         "RU": "Гиппопотас"
     },
     "pokemon_id_450": {
@@ -2732,13 +2504,11 @@
     "pokemon_id_456": {
         "EN": "Finneon",
         "FR": "Écayon",
-        "DE": "Finneon",
         "RU": "Финнеон"
     },
     "pokemon_id_457": {
         "EN": "Lumineon",
         "FR": "Luminéon",
-        "DE": "Lumineon",
         "RU": "Люминеон"
     },
     "pokemon_id_458": {
@@ -2768,7 +2538,6 @@
     "pokemon_id_462": {
         "EN": "Magnezone",
         "FR": "Magnézone",
-        "DE": "Magnezone",
         "RU": "Магнезон"
     },
     "pokemon_id_463": {
@@ -2803,14 +2572,10 @@
     },
     "pokemon_id_468": {
         "EN": "Togekiss",
-        "FR": "Togekiss",
-        "DE": "Togekiss",
         "RU": "Тогекисс"
     },
     "pokemon_id_469": {
         "EN": "Yanmega",
-        "FR": "Yanmega",
-        "DE": "Yanmega",
         "RU": "Янмега"
     },
     "pokemon_id_470": {
@@ -2839,8 +2604,6 @@
     },
     "pokemon_id_474": {
         "EN": "Porygon-Z",
-        "FR": "Porygon-Z",
-        "DE": "Porygon-Z",
         "RU": "Поригон-Z"
     },
     "pokemon_id_475": {
@@ -2870,7 +2633,6 @@
     "pokemon_id_479": {
         "EN": "Rotom",
         "FR": "Motisma",
-        "DE": "Rotom",
         "RU": "Ротом"
     },
     "pokemon_id_480": {
@@ -2893,74 +2655,50 @@
     },
     "pokemon_id_483": {
         "EN": "Dialga",
-        "FR": "Dialga",
-        "DE": "Dialga",
         "RU": "Диалга"
     },
     "pokemon_id_484": {
         "EN": "Palkia",
-        "FR": "Palkia",
-        "DE": "Palkia",
         "RU": "Палкия"
     },
     "pokemon_id_485": {
         "EN": "Heatran",
-        "FR": "Heatran",
-        "DE": "Heatran",
         "RU": "Хитран"
     },
     "pokemon_id_486": {
         "EN": "Regigigas",
-        "FR": "Regigigas",
-        "DE": "Regigigas",
         "RU": "Реджигигас"
     },
     "pokemon_id_487": {
         "EN": "Giratina",
-        "FR": "Giratina",
-        "DE": "Giratina",
         "RU": "Гиратина"
     },
     "pokemon_id_488": {
         "EN": "Cresselia",
-        "FR": "Cresselia",
-        "DE": "Cresselia",
         "RU": "Кресселия"
     },
     "pokemon_id_489": {
         "EN": "Phione",
-        "FR": "Phione",
-        "DE": "Phione",
         "RU": "Фиона"
     },
     "pokemon_id_490": {
         "EN": "Manaphy",
-        "FR": "Manaphy",
-        "DE": "Manaphy",
         "RU": "Манафи"
     },
     "pokemon_id_491": {
         "EN": "Darkrai",
-        "FR": "Darkrai",
-        "DE": "Darkrai",
         "RU": "Даркрай"
     },
     "pokemon_id_492": {
         "EN": "Shaymin",
-        "FR": "Shaymin",
-        "DE": "Shaymin",
         "RU": "Шеймин"
     },
     "pokemon_id_493": {
         "EN": "Arceus",
-        "FR": "Arceus",
-        "DE": "Arceus",
         "RU": "Аркеус"
     },
     "pokemon_id_494": {
         "EN": "Victini",
-        "FR": "Victini",
-        "DE": "Victini",
         "RU": "Виктини"
     },
     "pokemon_id_495": {
@@ -3097,7 +2835,6 @@
     },
     "pokemon_id_517": {
         "EN": "Munna",
-        "FR": "Munna",
         "DE": "Somniam",
         "RU": "Мунна"
     },
@@ -3201,7 +2938,7 @@
         "EN": "Conkeldurr",
         "FR": "Bétochef",
         "DE": "Meistagrif",
-        "RU": "Конклдурр"
+        "RU": "Конкельдар"
     },
     "pokemon_id_535": {
         "EN": "Tympole",
@@ -3415,14 +3152,10 @@
     },
     "pokemon_id_570": {
         "EN": "Zorua",
-        "FR": "Zorua",
-        "DE": "Zorua",
         "RU": "Зоруа"
     },
     "pokemon_id_571": {
         "EN": "Zoroark",
-        "FR": "Zoroark",
-        "DE": "Zoroark",
         "RU": "Зороарк"
     },
     "pokemon_id_572": {
@@ -3517,8 +3250,6 @@
     },
     "pokemon_id_587": {
         "EN": "Emolga",
-        "FR": "Emolga",
-        "DE": "Emolga",
         "RU": "Эмолга"
     },
     "pokemon_id_588": {
@@ -3853,14 +3584,10 @@
     },
     "pokemon_id_643": {
         "EN": "Reshiram",
-        "FR": "Reshiram",
-        "DE": "Reshiram",
         "RU": "Реширам"
     },
     "pokemon_id_644": {
         "EN": "Zekrom",
-        "FR": "Zekrom",
-        "DE": "Zekrom",
         "RU": "Зекром"
     },
     "pokemon_id_645": {
@@ -3871,26 +3598,18 @@
     },
     "pokemon_id_646": {
         "EN": "Kyurem",
-        "FR": "Kyurem",
-        "DE": "Kyurem",
         "RU": "Курем"
     },
     "pokemon_id_647": {
         "EN": "Keldeo",
-        "FR": "Keldeo",
-        "DE": "Keldeo",
         "RU": "Кельдио"
     },
     "pokemon_id_648": {
         "EN": "Meloetta",
-        "FR": "Meloetta",
-        "DE": "Meloetta",
         "RU": "Мелоэтта"
     },
     "pokemon_id_649": {
         "EN": "Genesect",
-        "FR": "Genesect",
-        "DE": "Genesect",
         "RU": "Дженесект"
     },
     "pokemon_id_650": {
@@ -3992,7 +3711,6 @@
     "pokemon_id_666": {
         "EN": "Vivillon",
         "FR": "Prismillon",
-        "DE": "Vivillon",
         "RU": "Вивийон"
     },
     "pokemon_id_667": {
@@ -4009,20 +3727,14 @@
     },
     "pokemon_id_669": {
         "EN": "Flabébé",
-        "FR": "Flabébé",
-        "DE": "Flabébé",
         "RU": "Флабебе"
     },
     "pokemon_id_670": {
         "EN": "Floette",
-        "FR": "Floette",
-        "DE": "Floette",
         "RU": "Флоэтт"
     },
     "pokemon_id_671": {
         "EN": "Florges",
-        "FR": "Florges",
-        "DE": "Florges",
         "RU": "Флоржес"
     },
     "pokemon_id_672": {
@@ -4207,8 +3919,6 @@
     },
     "pokemon_id_702": {
         "EN": "Dedenne",
-        "FR": "Dedenne",
-        "DE": "Dedenne",
         "RU": "Деденне"
     },
     "pokemon_id_703": {
@@ -4291,38 +4001,26 @@
     },
     "pokemon_id_716": {
         "EN": "Xerneas",
-        "FR": "Xerneas",
-        "DE": "Xerneas",
         "RU": "Зирнис"
     },
     "pokemon_id_717": {
         "EN": "Yveltal",
-        "FR": "Yveltal",
-        "DE": "Yveltal",
         "RU": "Ивелтал"
     },
     "pokemon_id_718": {
         "EN": "Zygarde",
-        "FR": "Zygarde",
-        "DE": "Zygarde",
         "RU": "Зайгард"
     },
     "pokemon_id_719": {
         "EN": "Diancie",
-        "FR": "Diancie",
-        "DE": "Diancie",
         "RU": "Дианси"
     },
     "pokemon_id_720": {
         "EN": "Hoopa",
-        "FR": "Hoopa",
-        "DE": "Hoopa",
         "RU": "Хуппа"
     },
     "pokemon_id_721": {
         "EN": "Volcanion",
-        "FR": "Volcanion",
-        "DE": "Volcanion",
         "RU": "Вулканион"
     },
     "pokemon_id_722": {
@@ -4434,18 +4132,21 @@
         "RU": "Крабролер"
     },
     "pokemon_id_740": {
+        "PT-BR": "Crabominável",
         "EN": "Crabominable",
-        "FR": "Crabominable",
         "DE": "Krawell",
+        "IT": "Crabominabile",
         "RU": "Крабаминабл"
     },
     "pokemon_id_741": {
+        "PT-BR": "Oricório",
         "EN": "Oricorio",
         "FR": "Plumeline",
         "DE": "Choreogel",
         "RU": "Орикорио"
     },
     "pokemon_id_742": {
+        "PT-BR": "Fofinho",
         "EN": "Cutiefly",
         "FR": "Bombydou",
         "DE": "Wommel",
@@ -4626,10 +4327,13 @@
         "RU": "Пьюкумуку"
     },
     "pokemon_id_772": {
+        "PT-BR": "Tipo Nulo",
         "EN": "Type: Null",
         "FR": "Type:0",
         "DE": "Typ:Null",
-        "RU": "Тип: Ноль"
+        "IT": "Tipo Zero",
+        "RU": "Тип: Ноль",
+        "ES": "Código Cero"
     },
     "pokemon_id_773": {
         "EN": "Silvally",
@@ -4657,8 +4361,6 @@
     },
     "pokemon_id_777": {
         "EN": "Togedemaru",
-        "FR": "Togedemaru",
-        "DE": "Togedemaru",
         "RU": "Тогедемару"
     },
     "pokemon_id_778": {
@@ -4729,8 +4431,6 @@
     },
     "pokemon_id_789": {
         "EN": "Cosmog",
-        "FR": "Cosmog",
-        "DE": "Cosmog",
         "RU": "Космог"
     },
     "pokemon_id_790": {
@@ -4741,14 +4441,10 @@
     },
     "pokemon_id_791": {
         "EN": "Solgaleo",
-        "FR": "Solgaleo",
-        "DE": "Solgaleo",
         "RU": "Солгалео"
     },
     "pokemon_id_792": {
         "EN": "Lunala",
-        "FR": "Lunala",
-        "DE": "Lunala",
         "RU": "Лунала"
     },
     "pokemon_id_793": {
@@ -4795,20 +4491,14 @@
     },
     "pokemon_id_800": {
         "EN": "Necrozma",
-        "FR": "Necrozma",
-        "DE": "Necrozma",
         "RU": "Некрозма"
     },
     "pokemon_id_801": {
         "EN": "Magearna",
-        "FR": "Magearna",
-        "DE": "Magearna",
         "RU": "Магирна"
     },
     "pokemon_id_802": {
         "EN": "Marshadow",
-        "FR": "Marshadow",
-        "DE": "Marshadow",
         "RU": "Маршадоу"
     },
     "pokemon_id_803": {
@@ -4837,20 +4527,14 @@
     },
     "pokemon_id_807": {
         "EN": "Zeraora",
-        "FR": "Zeraora",
-        "DE": "Zeraora",
         "RU": "Зераора"
     },
     "pokemon_id_808": {
         "EN": "Meltan",
-        "FR": "Meltan",
-        "DE": "Meltan",
         "RU": "Мелтан"
     },
     "pokemon_id_809": {
         "EN": "Melmetal",
-        "FR": "Melmetal",
-        "DE": "Melmetal",
         "RU": "Мелметал"
     },
     "pokemon_id_810": {
@@ -5084,7 +4768,6 @@
     "pokemon_id_848": {
         "EN": "Toxel",
         "FR": "Toxizap",
-        "DE": "Toxel",
         "RU": "Токсел"
     },
     "pokemon_id_849": {
@@ -5184,10 +4867,13 @@
         "RU": "Курсола"
     },
     "pokemon_id_865": {
+        "PT-BR": "Sirfetch’d",
         "EN": "Sirfetch'd",
         "FR": "Palarticho",
         "DE": "Lauchzelot",
-        "RU": "Сирфетчд"
+        "IT": "Sirfetch’d",
+        "RU": "Сирфетчд",
+        "ES": "Sirfetch’d"
     },
     "pokemon_id_866": {
         "EN": "Mr. Rime",
@@ -5257,8 +4943,6 @@
     },
     "pokemon_id_877": {
         "EN": "Morpeko",
-        "FR": "Morpeko",
-        "DE": "Morpeko",
         "RU": "Морпеко"
     },
     "pokemon_id_878": {
@@ -5300,7 +4984,6 @@
     "pokemon_id_884": {
         "EN": "Duraludon",
         "FR": "Duralugon",
-        "DE": "Duraludon",
         "RU": "Дюралюдон"
     },
     "pokemon_id_885": {
@@ -5323,14 +5006,10 @@
     },
     "pokemon_id_888": {
         "EN": "Zacian",
-        "FR": "Zacian",
-        "DE": "Zacian",
         "RU": "Зэйшиан"
     },
     "pokemon_id_889": {
         "EN": "Zamazenta",
-        "FR": "Zamazenta",
-        "DE": "Zamazenta",
         "RU": "Земазента"
     },
     "pokemon_id_890": {
@@ -5353,20 +5032,14 @@
     },
     "pokemon_id_893": {
         "EN": "Zarude",
-        "FR": "Zarude",
-        "DE": "Zarude",
         "RU": "Заруд"
     },
     "pokemon_id_894": {
         "EN": "Regieleki",
-        "FR": "Regieleki",
-        "DE": "Regieleki",
         "RU": "Реджилеки"
     },
     "pokemon_id_895": {
         "EN": "Regidrago",
-        "FR": "Regidrago",
-        "DE": "Regidrago",
         "RU": "Реджидраго"
     },
     "pokemon_id_896": {

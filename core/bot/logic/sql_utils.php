@@ -26,26 +26,41 @@ function run_sql_file($file) {
 }
 
 /**
- * Naive DB query without proper param handling.
- * You should prefer doing your own prepare, bindParam & execute!
+ * DB query wrapper that supports binds.
  * @param $query
+ * @param binds
  * @return PDOStatement
  */
-function my_query($query)
+function my_query($query, $binds=null)
 {
     global $dbh;
     global $config;
 
-    if($config->DEBUG_SQL) {
-        debug_log($query, '?');
+    try {
+      $stmt = $dbh->prepare($query);
+      $stmt->execute($binds);
+    } catch (PDOException $exception) {
+      // The message will be output in the global handler, we just need to extract the failing query
+      error_log('The following query failed:');
+      log_query($stmt, $binds, 'error_log');
+      throw $exception;
+    } finally {
+      debug_log_sql('Query success', '$');
+      if($config->DEBUG_SQL) {
+        log_query($stmt, $binds, 'debug_log_sql');
+      }
     }
-    $stmt = $dbh->prepare($query);
-    if ($stmt && $stmt->execute()) {
-        debug_log_sql('Query success', '$');
-    } else {
-        info_log($dbh->errorInfo(), '!');
-    }
-
     return $stmt;
 }
-?>
+
+// Debug log the full statement with parameters
+function log_query($stmt, $binds, $logger='debug_log_sql'){
+    ob_start();
+    $stmt->debugDumpParams();
+    $debug = ob_get_contents();
+    ob_end_clean();
+    $logger($debug);
+    $logger('The parameters bound were:');
+    if($binds === null) $binds = 'null';
+    $logger($binds);
+}

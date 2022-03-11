@@ -2,13 +2,13 @@
 /**
  * Post a raid poll to all relevant chats
  * @param int $raid_id ID of the raid
- * @param array|false $raid Array received from get_raid() (optional).
  * @param int|array $chats chat ID or array of IDs
+ * @param array|false $raid Array received from get_raid() (optional).
  * @param array|false $tg_json multicurl array
  * @return array multicurl array
  */
 
-function send_raid_poll($raid_id, $raid = false, $chats, $tg_json = false) {
+function send_raid_poll($raid_id, $chats, $raid = false, $tg_json = false) {
     global $config;
 
     // Get raid data.

@@ -28,27 +28,35 @@ if($id == 0) {
     $keys = [];
 
     // All raid level keys.
-    $keys[] = array(
+    $keys[][] = array(
         'text'          => getTranslation('pokedex_all_raid_level'),
         'callback_data' => RAID_LEVEL_ALL . ':pogoinfo:ex#0,0,0'
     );
 
     // Add key for each raid level
     foreach($levels as $l) {
-        $keys[] = array(
+        $keys[][] = array(
             'text'          => getTranslation($l . 'stars'),
             'callback_data' => $l . ':pogoinfo:ex#0,0,0'
         );
     }
-
-    // Add abort button
-    $keys[] = array(
-        'text'          => getTranslation('abort'),
-        'callback_data' => '0:exit:0'
+    $keys[][] = array(
+        'text'          => getTranslation('1stars') . ' & ' . getTranslation('3stars'),
+        'callback_data' => '3,1:pogoinfo:ex#0,0,0'
     );
 
-    // Get the inline key array.
-    $keys = inline_key_array($keys, 1);
+    // Add back and abort buttons
+    $keys[] = [
+        [
+            'text'          => getTranslation('back'),
+            'callback_data' => '0:pokedex_import:0'
+        ],
+        [
+            'text'          => getTranslation('abort'),
+            'callback_data' => '0:exit:0'
+        ]
+    ];
+
 } else if($id > 0) {
     // Set message and init message to exclude raid bosses.
     $msg = '<b>' . getTranslation('import') . SP . '(ccev pogoinfo)' . '</b>' . CR . CR;
@@ -65,8 +73,8 @@ if($id == 0) {
         $get_levels = $levels;
         $clear = "'6','5','3','1'";
     } else {
-        $get_levels = Array($id);
-        $clear = "'" . $id . "'";
+        $get_levels = explode(",", $id);
+        $clear = $id;
     }
 
     // Prefix for exclusion.
@@ -125,8 +133,14 @@ if($id == 0) {
             }elseif(isset($raid_id_form['form'])) {
                 $dex_form = $raid_id_form['form'];
             }else {
-                $query_form_id = my_query("SELECT pokemon_form_id FROM pokemon WHERE pokedex_id='".$dex_id."' and pokemon_form_name='normal' LIMIT 1")->fetch();
-                $dex_form = $query_form_id['pokemon_form_id'];
+                // If no form id is provided, let's check our db for normal form
+                $query_form_id = my_query("SELECT pokemon_form_id FROM pokemon WHERE pokedex_id='".$dex_id."' and pokemon_form_name='normal' LIMIT 1");
+                if($query_form_id->rowCount() == 0) {
+                    // If normal form doesn't exist in our db, use the smallest form id as a fallback
+                    $query_form_id = my_query("SELECT min(pokemon_form_id) as pokemon_form_id FROM pokemon WHERE pokedex_id='".$dex_id."' LIMIT 1");
+                }
+                $result = $query_form_id->fetch();
+                $dex_form = $result['pokemon_form_id'];
             }
 
             $pokemon_arg = $dex_id . $dex_form;
@@ -218,8 +232,7 @@ if($id == 0) {
             ON        raid_bosses.pokedex_id = pokemon.pokedex_id
             AND       raid_bosses.pokemon_form_id = pokemon.pokemon_form_id
             WHERE     raid_bosses.raid_level IN ({$clear})
-            AND       raid_bosses.date_start = '1970-01-01 00:00:01'
-            AND       raid_bosses.date_end = '2038-01-19 03:14:07'
+            AND       raid_bosses.scheduled = 0
             ORDER BY  raid_bosses.raid_level, raid_bosses.pokedex_id, pokemon.pokemon_form_name != 'normal', pokemon.pokemon_form_name, raid_bosses.pokemon_form_id
             "
         );
@@ -263,9 +276,6 @@ if($id == 0) {
             // Prepare next run.
             $previous = $current;
         }
-
-        // Message.
-        $msg .= CR . '<b>' . getTranslation('pokedex_edit_pokemon') . '</b>';
 
         // Inline key array.
         $keys = inline_key_array($keys, 2);

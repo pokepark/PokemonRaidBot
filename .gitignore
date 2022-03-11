@@ -1,4 +1,5 @@
 /.idea
+.env*
 
 # Ignore content of directories with user specific data, keep directories itself
 /access/**
@@ -24,3 +25,6 @@
 /images/pokemon_ZeChrales
 /images/pokemon_ZeChrales/**
 !/images/gyms/.gitkeep
+
+/vendor/
+/protos/*.json

@@ -71,14 +71,6 @@ function getTranslation($text, $override = false, $override_language = '')
         $str = file_get_contents($tfile);
         $json = json_decode($str, true);
 
-    // Pokemon type?
-    } else if(strpos($text, 'pokemon_type_') === 0) {
-        // Translation filename
-        $tfile = CORE_LANG_PATH . '/pokemon_types.json';
-
-        $str = file_get_contents($tfile);
-        $json = json_decode($str, true);
-        
     // Pokemon moves?
     } else if(strpos($text, 'pokemon_move_') === 0) {
         // Translation filename

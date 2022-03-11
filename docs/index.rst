@@ -69,6 +69,7 @@ You can submit translations to expand our list of lanuages! For more information
   docker
   manual_install
   config
+  metrics
   debug
   maintenance
   development

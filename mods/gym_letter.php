@@ -9,13 +9,18 @@ debug_log('gym_letter()');
 // Get the arg.
 $arg = $data['arg'];
 
+// Set keys.
+$keys_and_gymarea = raid_edit_gyms_first_letter_keys($arg, false, ($data['id'] == 'n' ? false : $data['id']), 'gym_letter', 'gym_details');
+$keys = $keys_and_gymarea['keys'];
+
 // Check access, show message and set keys based on arg.
 if($arg == 'gym_delete') {
     // Check access.
     bot_access_check($update, 'gym-delete');
 
     // Set message.
-    $msg = '<b>' . getTranslation('gym_delete') . SP . '—' . SP . getTranslation('select_gym_first_letter') . '</b>';
+    $msg = '<b>' . getTranslation('gym_delete') . CR . getTranslation('select_gym_first_letter') . '</b>';
+    $msg.= (($keys_and_gymarea['gymarea_name'] != '') ? CR . CR . getTranslation('current_gymarea') . ': ' . $keys_and_gymarea['gymarea_name'] : '');
 } else {
     // Force set arg.
     $arg = 'gym_details';
@@ -24,19 +29,31 @@ if($arg == 'gym_delete') {
     bot_access_check($update, 'gym-details');
 
     // Set message.
-    $msg = '<b>' . getTranslation('show_gym_details') . SP . '—' . SP . getTranslation('select_gym_first_letter') . '</b>';
+    $msg = '<b>' . getTranslation('show_gym_details') . CR . getTranslation('select_gym_first_letter') . '</b>';
+    $msg.= (($keys_and_gymarea['gymarea_name'] != '') ? CR . CR . getTranslation('current_gymarea') . ': ' . $keys_and_gymarea['gymarea_name'] : '');
 }
 
-// Set keys.
-$keys = raid_edit_gyms_first_letter_keys($arg);
+$nav_keys = [];
 
-// Add key for hidden gyms.
-$h_keys = [];
-$h_keys[] = universal_inner_key($h_keys, '0', 'gym_hidden_letter', $arg, getTranslation('hidden_gyms'));
-$h_keys = inline_key_array($h_keys, 1);
-
+if($data['id'] != 'n' or $config->ENABLE_GYM_AREAS === false) {
+    $nav_keys[] = [
+        'text' => getTranslation('back'),
+        'callback_data' => 'n:gym_letter:gym_details'
+    ];
+    // Add key for hidden gyms.
+    $h_keys = [];
+    $h_keys[] = universal_inner_key($h_keys, $data['id'], 'gym_hidden_letter', $arg, getTranslation('hidden_gyms'));
+    $h_keys = inline_key_array($h_keys, 1);
+    // Merge keys.
+    $keys = array_merge($h_keys, $keys);
+}
+$nav_keys[] = [
+        'text' => getTranslation('abort'),
+        'callback_data' => '0:exit:0'
+    ];
+$nav_keys = inline_key_array($nav_keys, 2);
 // Merge keys.
-$keys = array_merge($h_keys, $keys);
+$keys = array_merge($keys, $nav_keys);
 
 // Build callback message string.
 $callback_response = getTranslation('here_we_go');

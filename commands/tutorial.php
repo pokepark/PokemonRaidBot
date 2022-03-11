@@ -14,7 +14,6 @@ if(is_file(ROOT_PATH . '/config/tutorial.php')) {
     require_once(ROOT_PATH . '/config/tutorial.php');
 }
 $new_user = new_user($update['message']['from']['id']);
-$access = bot_access_check($update, 'create', true, false, $new_user);
 if($new_user) {
 	$msg = $tutorial[0]['msg_new'];
 }else {

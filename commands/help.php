@@ -25,7 +25,6 @@ if($access && (is_file(ROOT_PATH . '/access/' . $access) || $access == 'BOT_ADMI
         $permissions[] = 'gym-gps';
         $permissions[] = 'gym-note';
         $permissions[] = 'gym-add';
-        $permissions[] = 'gym-delete';
         $permissions[] = 'portal-import';
         $permissions[] = 'config-get';
         $permissions[] = 'config-set';
@@ -51,7 +50,9 @@ if($access && (is_file(ROOT_PATH . '/access/' . $access) || $access == 'BOT_ADMI
     // Show help.
     foreach($permissions as $id => $p) {
         if($p == 'access-bot' || strpos($p, 'share-') === 0 || strpos($p, 'ignore-') === 0) continue;
-        $msg .= getTranslation('help_' . $p) . CR . CR;
+        if(getTranslation('help_' . $p)) {
+            $msg .= getTranslation('help_' . $p) . CR . CR;
+        }
     }
 } elseif($config->TUTORIAL_MODE) {
     if(new_user($update['message']['from']['id'])) {

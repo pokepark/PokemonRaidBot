@@ -7,19 +7,23 @@ $lang_directory_url = [ 'https://raw.githubusercontent.com/PokeMiners/pogo_asset
 $translations_available = ['BrazilianPortuguese','ChineseTraditional','English','French','German','Italian','Japanese','Korean','Russian','Spanish','Thai'];
 
 // Map wanted translations to raidbot language codes
-$pokemon_translations_to_fetch = [  
+$pokemon_translations_to_fetch = [
+                                    "BrazilianPortuguese"   => ["PT-BR"],
                                     "English"   => ["EN"],
                                     "French"    => ["FR"],
                                     "German"    => ["DE"],
-                                    "Russian"   => ["RU"]
+                                    "Italian"   => ["IT"],
+                                    "Russian"   => ["RU"],
+                                    "Spanish"   => ["ES"],
                                   ];
-$move_translations_to_fetch = [     
+$move_translations_to_fetch = [
                                     "BrazilianPortuguese"   => ["PT-BR"],
                                     "English"               => ["EN", "FI", "NL", "NO", "PL"],
                                     "French"                => ["FR"],
                                     "German"                => ["DE"],
                                     "Italian"               => ["IT"],
-                                    "Russian"               => ["RU"]
+                                    "Russian"               => ["RU"],
+                                    "Spanish"               => ["ES"],
                               ];
 
 // Initialize array
@@ -71,6 +75,9 @@ foreach($translations_available as $language) {
         }
     }
 }
+// Bot defaults to using english translations, so no need to add duplicates for every language
+$pokemon_array = remove_duplicate_translations($pokemon_array);
+
 // Build the path to move translation file
 $moves_translation_file = $core_lang_dir . 'pokemon_moves.json';
 
@@ -91,5 +98,15 @@ function curl_open_file($input) {
     $data = curl_exec($ch);
     curl_close ($ch);
     return $data;
+}
+function remove_duplicate_translations($array) {
+    $new_array = [];
+    foreach($array as $translation_id => $translations) {
+        foreach($translations as $lang => $translation) {
+            if($lang == 'EN' or $translation != $array[$translation_id]['EN']) 
+                $new_array[$translation_id][$lang] = $translation;
+        }
+    }
+    return $new_array;
 }
 ?>

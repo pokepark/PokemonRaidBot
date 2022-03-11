@@ -20,12 +20,14 @@ function get_overview( $active_raids, $chat_title, $chat_username )
         foreach($active_raids as $row) {
             // Set variables for easier message building.
             $raid_id = $row['id'];
+            $resolved_boss = resolve_raid_boss($row['pokemon'], $row['pokemon_form'], $row['spawn'], $row['level']);
+            $row['pokemon'] = $resolved_boss['pokedex_id'];
+            $row['pokemon_form'] = $resolved_boss['pokemon_form_id'];
             $pokemon = get_local_pokemon_name($row['pokemon'], $row['pokemon_form'], true);
             $gym = $row['gym_name'];
             $ex_gym = $row['ex_gym'];
             $ex_raid_gym_marker = (strtolower($config->RAID_EX_GYM_MARKER) == 'icon') ? EMOJI_STAR : '<b>' . $config->RAID_EX_GYM_MARKER . '</b>';
             $start_time = $row['start_time'];
-            $end_time = $row['end_time'];
             $time_left = $row['t_left'];
 
             debug_log($pokemon . '@' . $gym . ' found for overview.');

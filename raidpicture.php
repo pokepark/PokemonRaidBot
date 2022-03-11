@@ -1,16 +1,19 @@
 <?php
 
-$parent = __DIR__;
-
 // Include requirements and perfom initial steps
 include_once(__DIR__ . '/core/bot/requirements.php');
 include_once(CORE_BOT_PATH . '/db.php');
 
+if ($metrics){
+  $requests_total->inc(['raidpicture']);
+}
 // Create GD image object from given URI regardless of file type
 function grab_img($uri){
-  $img = imagecreatefromstring(file_get_contents($uri));
-  if ($img === false) {
+  try {
+    $img = imagecreatefromstring(file_get_contents($uri));
+  } catch (Exception $e) {
     info_log($uri, 'Failed to get image:');
+    info_log($e->getMessage(), 'Reason: ');
     return false;
   }
   return $img;
@@ -21,23 +24,46 @@ $debug = false;
 if(isset($_GET['debug']) && $_GET['debug'] == 1) {
     $debug = true;
 }
-
+$required_parameters = ['pokemon', 'pokemon_form', 'start_time', 'end_time', 'gym_id', 'ex_raid'];
+$failed = [];
 // Raid info
-if(array_key_exists('raid', $_GET) && $_GET['raid']!="") {
-    $raid_id = preg_replace("/\D/","",$_GET['raid']);
-    $raid = get_raid($raid_id);
-    $q_pokemon_info = my_query("
-                    SELECT
-                        pokemon_form_name, min_cp, max_cp, min_weather_cp, max_weather_cp, weather, shiny, asset_suffix, type, type2,
-                        (SELECT img_url FROM gyms WHERE id='".$raid['gym_id']."' LIMIT 1) as img_url
-                    FROM pokemon
-                    WHERE pokedex_id = '".$raid['pokemon']."'
-                    AND pokemon_form_id = '".$raid['pokemon_form']."' LIMIT 1")->fetch();
-    $raid = array_merge($raid, $q_pokemon_info);
-} else {
-  info_log('Called without a raid id, things will fail');
-  $raid = null;
+foreach($required_parameters as $required) {
+    if(!array_key_exists($required, $_GET)) {
+        $failed[] = $required;
+    }
 }
+if(count($failed) > 0) {
+    info_log('Raidpicture called without '.join(', ',$failed).', ending execution');
+    exit();
+}
+$raid = [];
+$raid['pokemon'] = preg_replace("/\D/","",$_GET['pokemon']);
+$raid['gym_id'] = preg_replace("/\D/","",$_GET['gym_id']);
+$raid['raid_costume'] = false;
+if($_GET['start_time'] == 0) {
+    $raid_ongoing = false;
+}else {
+    $raid_ongoing = true;
+    $raid['start_time'] = date("Y-M-d H:i:s",preg_replace("/\D/","",$_GET['start_time']));
+    $raid['end_time'] = date("Y-M-d H:i:s",preg_replace("/\D/","",$_GET['end_time']));
+}
+if(in_array($_GET['pokemon_form'], ['-1','-2','-3'])) {
+    $raid['pokemon_form'] = $_GET['pokemon_form'];
+}else {
+    $raid['pokemon_form'] = preg_replace("/\D/","",$_GET['pokemon_form']);
+}
+$raid['costume'] = 0;
+if(array_key_exists('costume', $_GET) && $_GET['costume'] != '') {
+    $raid['costume'] = preg_replace("/\D/","",$_GET['costume']);
+}
+$q_pokemon_info = my_query("
+                SELECT
+                    pokemon_form_name, min_cp, max_cp, min_weather_cp, max_weather_cp, weather, shiny, asset_suffix, type, type2
+                FROM pokemon
+                WHERE pokedex_id = '".$raid['pokemon']."'
+                AND pokemon_form_id = '".$raid['pokemon_form']."' LIMIT 1")->fetch();
+$q_gym_info = my_query("SELECT img_url, gym_name, ex_gym FROM gyms WHERE id='".$raid['gym_id']."'")->fetch();
+$raid = array_merge($raid, $q_pokemon_info, $q_gym_info);
 
 // Fonts
 $font_gym = FONTS_PATH . '/' . $config->RAID_PICTURE_FONT_GYM;
@@ -100,15 +126,15 @@ if($config->RAID_PICTURE_STORE_GYM_IMAGES_LOCALLY && !empty($gym_url)) {
             }
         }
     }
-    $img_gym = grab_img($gym_image_path);
 }else {
     $img_gym = false;
     if (!empty($gym_url)) {
-        $img_gym = grab_img($gym_url);
+        $gym_image_path = $gym_url;
     }
 }
+$img_gym = grab_img($gym_image_path);
 if($img_gym == false) {
-    info_log($img_gym, 'Loading the gym image failed, using default gym image');
+    info_log($gym_image_path, 'Loading the gym image failed, using default gym image');
     if(is_file($config->RAID_DEFAULT_PICTURE)) {
         $img_gym = grab_img($config->RAID_DEFAULT_PICTURE);
     } else {
@@ -124,12 +150,12 @@ $gym_h = imagesy($img_gym);
 // Crop gym image
 if($gym_w > $gym_h) {
     $size = $gym_h;
-    $crop_x = (($gym_w/2)-($gym_h/2));
+    $crop_x = floor((($gym_w/2)-($gym_h/2)));
     $crop_y = 0;
 } else {
     $size = $gym_w;
     $crop_x = 0;
-    $crop_y = (($gym_h/2)-($gym_w/2));
+    $crop_y = floor((($gym_h/2)-($gym_w/2)));
 }
 
 // Create mask
@@ -209,13 +235,9 @@ if($raid['ex_gym'] == 1) {
 }
 
 
-
-// Get current time.
-$time_now = utcnow();
-
 $show_boss_pokemon_types = false;
 // Raid running
-if($time_now < $raid['end_time']) {
+if($raid_ongoing) {
     if(strlen($raid['asset_suffix']) > 2) {
         $icon_suffix = $raid['asset_suffix'];
     }else {
@@ -250,6 +272,12 @@ if($time_now < $raid['end_time']) {
 
         // Getting the actual icon filename
         $p_icon = "pokemon_icon_" . $icon_suffix;
+        if($raid['costume'] != 0) {
+            $p_icon .= '_' . str_pad($raid['costume'], 2, '0', STR_PAD_LEFT);
+
+            $costume = json_decode(file_get_contents(ROOT_PATH . '/protos/costume.json'), true);
+            $addressable_icon .= '.c' . array_search($raid['costume'],$costume);
+        }
         if($raid['shiny'] == 1 && $config->RAID_PICTURE_SHOW_SHINY) {
             $p_icon = $p_icon . "_shiny";
             $addressable_icon .= '.s';
@@ -312,7 +340,7 @@ if($time_now < $raid['end_time']) {
     $src_w = 444;
     $src_h = 512;
     $dst_w = 160;
-    $dst_h = $dst_w/$src_w*$src_h;
+    $dst_h = floor($dst_w/$src_w*$src_h);
 }
 
 // Create pokemon image.
@@ -349,7 +377,7 @@ if(isset($shiny_icon)) {
 }
 
 // Ex-Raid?
-if($raid['event'] == EVENT_ID_EX) {
+if($_GET['ex_raid'] == '1') {
     $img_expass = grab_img(IMAGES_PATH . "/expass.png");
     imagesavealpha($img_expass,true);
 
@@ -395,7 +423,7 @@ if(count($gym_name_words) > 1 && $gym_name_total_chars >= 18 && $gym_name_total_
 }
 
 // Wrap gym name to multiple lines if too long
-$gym_name_lines = explode(PHP_EOL,wordwrap(trim($gym_name),($gym_name_total_chars+$gym_name_word_largest)/$gym_name_rows,PHP_EOL));
+$gym_name_lines = explode(PHP_EOL,wordwrap(trim($gym_name),floor(($gym_name_total_chars+$gym_name_word_largest)/$gym_name_rows),PHP_EOL));
 
 debug_log($gym_name_total_chars, 'Gym name length:');
 debug_log($gym_name_lines, 'Gym name lines:');
@@ -440,17 +468,17 @@ for($y=0;$y<count($gym_name_lines);$y++){
     $max_y = max(array($box[1], $box[3], $box[5], $box[7]));
     // Get text width and height
     $textwidth = ($max_x - $min_x);
-    $textheight = $fontsize_gym*1.1;
+    $textheight = floor($fontsize_gym*1.1);
     // Calculate distance from left and top for positioning the gym name text.
-    $gym_name_top = (($y+1)*($textheight))+($y*$spacing_gym);
-    $gym_name_left = imagesx($mask) + (((imagesx($canvas) - imagesx($mask) - $spacing_right) - $textwidth)/2);
+    $gym_name_top = floor((($y+1)*($textheight))+($y*$spacing_gym));
+    $gym_name_left = floor(imagesx($mask) + (((imagesx($canvas) - imagesx($mask) - $spacing_right) - $textwidth)/2));
     imagettftext($canvas, $fontsize_gym, $angle, $gym_name_left, $gym_name_top, $font_color, $font_gym, $gym_name_lines[$y]);
 }
 
 
 
 // Raid times
-if($time_now < $raid['end_time']) {
+if($raid_ongoing) {
     $time_text = get_raid_times($raid, true, true);
 } else {
     $time_text = getPublicTranslation('raid_done');
@@ -495,7 +523,7 @@ for($ya=0;$ya<$num_text_lines;$ya++){
     $min_x = min(array($box[0], $box[2], $box[4], $box[6]));
     $max_x = max(array($box[0], $box[2], $box[4], $box[6]));
     $textwidth = ($max_x - $min_x);
-    $time_left = $left_after_poke + (((imagesx($canvas) - $left_after_poke - $spacing_right) - $textwidth)/2);
+    $time_left = $left_after_poke + floor((((imagesx($canvas) - $left_after_poke - $spacing_right) - $textwidth)/2));
     imagettftext($canvas,$time_text_size,$angle,$time_left,$time_text_top,$font_color,$font_text,$time_text_lines[$ya]);
 }
 
@@ -605,10 +633,4 @@ if($config->RAID_PICTURE_FILE_FORMAT == 'png') {
     imagegif($canvas);
 }
 
-
-
-// Clear memory
-imagedestroy($img_gym);
-imagedestroy($img_pokemon);
-imagedestroy($canvas);
 ?>

@@ -33,5 +33,7 @@ if($config->AUTO_REFRESH_POLLS) {
         $tg_json = update_raid_poll($res_messages['raid_id'], false, $data_poll, $tg_json, false);
     }
     curl_json_multi_request($tg_json);
+}else {
+    info_log("Automatic refresh of raid polls failed, AUTO_REFRESH_POLLS is set to false in config.");
 }
 exit();

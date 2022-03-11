@@ -8,6 +8,7 @@ debug_log('pokebattler()');
 
 // Check access.
 bot_access_check($update, 'pokedex');
+include(LOGIC_PATH . '/resolve_boss_name_to_ids.php');
 
 // Levels available for import at PokeBattler
 $levels = array('6', '5', '3', '1');
@@ -28,27 +29,35 @@ if($id == 0) {
     $keys = [];
 
     // All raid level keys.
-    $keys[] = array(
+    $keys[][] = array(
         'text'          => getTranslation('pokedex_all_raid_level'),
         'callback_data' => RAID_LEVEL_ALL . ':pokebattler:ex#0,0,0'
     );
 
     // Add key for each raid level
     foreach($levels as $l) {
-        $keys[] = array(
+        $keys[][] = array(
             'text'          => getTranslation($l . 'stars'),
             'callback_data' => $l . ':pokebattler:ex#0,0,0'
         );
     }
-
-    // Add abort button
-    $keys[] = array(
-        'text'          => getTranslation('abort'),
-        'callback_data' => '0:exit:0'
+    $keys[][] = array(
+        'text'          => getTranslation('1stars') . ' & ' . getTranslation('3stars'),
+        'callback_data' => '3,1:pokebattler:ex#0,0,0'
     );
 
-    // Get the inline key array.
-    $keys = inline_key_array($keys, 1);
+    // Add back and abort buttons
+    $keys[] = [
+        [
+            'text'          => getTranslation('back'),
+            'callback_data' => '0:pokedex_import:0'
+        ],
+        [
+            'text'          => getTranslation('abort'),
+            'callback_data' => '0:exit:0'
+        ]
+    ];
+
 } else if($id > 0) {
     // Set message and init message to exclude raid bosses.
     $msg = '<b>' . getTranslation('import') . SP . '(Pokebattler)' . '</b>' . CR . CR;
@@ -65,8 +74,8 @@ if($id == 0) {
         $get_levels = $levels;
         $clear = "'6','5','3','1'";
     } else {
-        $get_levels = Array($id);
-        $clear = "'" . $id . "'";
+        $get_levels = explode(",", $id);
+        $clear = $id;
     }
 
     // Prefix for exclusion.
@@ -257,8 +266,7 @@ if($id == 0) {
             ON        raid_bosses.pokedex_id = pokemon.pokedex_id
             AND       raid_bosses.pokemon_form_id = pokemon.pokemon_form_id
             WHERE     raid_bosses.raid_level IN ({$clear})
-            AND       raid_bosses.date_start = '1970-01-01 00:00:01'
-            AND       raid_bosses.date_end = '2038-01-19 03:14:07'
+            AND       raid_bosses.scheduled = 0
             ORDER BY  raid_bosses.raid_level, raid_bosses.pokedex_id, pokemon.pokemon_form_name != 'normal', pokemon.pokemon_form_name, raid_bosses.pokemon_form_id
             "
         );
@@ -384,71 +392,5 @@ $tg_json[] = edit_message($update, $msg, $keys, false, true);
 // Telegram multicurl request.
 curl_json_multi_request($tg_json);
 
-function resolve_boss_name_to_ids($pokemon_name) {
-    // Pokemon name ending with "_FORM" ?
-    if(substr_compare($pokemon_name, '_FORM', -strlen('_FORM')) === 0) {
-        debug_log('Pokemon with a special form received: ' . $pokemon_name);
-        // Remove "_FORM"
-        $pokemon = str_replace('_FORM', '', $pokemon_name);
-
-        // Get pokemon name and form.
-        $name = explode("_", $pokemon, 2)[0];
-        $form = explode("_", $pokemon, 2)[1];
-
-        // Fix for MEWTWO_A_FORM
-        if($name == 'MEWTWO' && $form == 'A') {
-            $form = 'ARMORED';
-        }
-
-    // Pokemon name ending with "_MALE" ?
-    } else if(substr_compare($pokemon_name, '_MALE', -strlen('_MALE')) === 0) {
-        debug_log('Pokemon with gender MALE received: ' . $pokemon_name);
-        // Remove "_MALE"
-        $pokemon = str_replace('_MALE', '', $pokemon_name);
-
-        // Get pokemon name and form.
-        $name = explode("_", $pokemon, 2)[0] . '♂';
-        $form = 'normal';
-
-    // Pokemon name ending with "_FEMALE" ?
-    } else if(substr_compare($pokemon_name, '_FEMALE', -strlen('_FEMALE')) === 0) {
-        debug_log('Pokemon with gender FEMALE received: ' . $pokemon_name);
-        // Remove "_FEMALE"
-        $pokemon = str_replace('_FEMALE', '', $pokemon_name);
-
-        // Get pokemon name and form.
-        $name = explode("_", $pokemon, 2)[0] . '♀';
-        $form = 'normal';
-
-    // Mega pokemon ?
-    }else if(substr_compare($pokemon_name, '_MEGA', -strlen('_MEGA')) === 0 or substr_compare($pokemon_name, '_MEGA_X', -strlen('_MEGA_X')) === 0 or substr_compare($pokemon_name, '_MEGA_Y', -strlen('_MEGA_Y')) === 0) {
-        debug_log('Mega Pokemon received: ' . $pokemon_name);
-
-        // Get pokemon name and form.
-        $name_form = explode("_", $pokemon_name, 2);
-        $name = $name_form[0];
-        $form = $name_form[1];
-
-    // Normal pokemon without form or gender.
-    } else {
-        // Fix pokemon like "HO_OH"...
-        if(substr_count($pokemon_name, '_') >= 1) {
-            $pokemon = str_replace('_', '-', $pokemon_name);
-        } else {
-            $pokemon = $pokemon_name;
-        }
-        // Name and form.
-        $name = $pokemon;
-        $form = 'normal';
-
-        // Fix for GIRATINA as the actual GIRATINA_ALTERED_FORM is just GIRATINA
-        if($name == 'GIRATINA' && $form == 'normal') {
-            $form = 'ALTERED';
-        }
-    }
-    // Get ID and form name used internally.
-    debug_log('Getting dex id and form for pokemon ' . $name . ' with form ' . $form);
-    return get_pokemon_id_by_name($name . '-' . $form, true);
-}
 // Exit.
 exit();

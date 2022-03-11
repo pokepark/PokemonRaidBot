@@ -2,6 +2,12 @@
 // Write to log.
 debug_log('RAID_FROM_WEBHOOK()');
 
+if ($metrics){
+    $webhook_raids_received_total = $metrics->registerCounter($namespace, 'webhook_raids_received_total', 'Total raids received via webhook');
+    $webhook_raids_accepted_total = $metrics->registerCounter($namespace, 'webhook_raids_accepted_total', 'Total raids received & accepted via webhook');
+    $webhook_raids_posted_total = $metrics->registerCounter($namespace, 'webhook_raids_posted_total', 'Total raids posted automatically');
+}
+
 function isPointInsidePolygon($point, $vertices) {
     $i = 0;
     $j = 0;
@@ -30,6 +36,9 @@ if (file_exists(CONFIG_PATH . '/geoconfig.json')) {
 // Telegram JSON array.
 $tg_json = [];
 debug_log(count($update),"Received raids:");
+if ($metrics){
+    $webhook_raids_received_total->incBy(count($update));
+}
 foreach ($update as $raid) {
     $level = $raid['message']['level'];
     $pokemon = $raid['message']['pokemon_id'];
@@ -122,6 +131,11 @@ foreach ($update as $raid) {
     if ( isset($raid['message']['gender']) ) {
         $gender = $raid['message']['gender'];
     }
+    // Raid pokemon costume
+    $costume = 0;
+    if ( isset($raid['message']['costume']) ) {
+        $costume = $raid['message']['costume'];
+    }
 
     // Raid pokemon moveset
     $move_1 = 0;
@@ -169,7 +183,8 @@ foreach ($update as $raid) {
                     gym_team = :gym_team,
                     move1 = :move1,
                     move2 = :move2,
-                    gender = :gender
+                    gender = :gender,
+                    costume = :costume
                 WHERE
                     id = :id
             ';
@@ -180,6 +195,7 @@ foreach ($update as $raid) {
                 'move1' => $move_1,
                 'move2' => $move_2,
                 'gender' => $gender,
+                'costume' => $costume,
                 'id' => $raid_id
             ];
             $statement = $dbh->prepare( $query );
@@ -202,8 +218,8 @@ foreach ($update as $raid) {
         // Create Raid and send messages
         try {
             $query = '
-                INSERT INTO raids (pokemon, pokemon_form, user_id, spawn, start_time, end_time, gym_team, gym_id, level, move1, move2, gender)
-                VALUES (:pokemon, :pokemon_form, :user_id, :spawn, :start_time, :end_time, :gym_team, :gym_id, :level, :move1, :move2, :gender)
+                INSERT INTO raids (pokemon, pokemon_form, user_id, spawn, start_time, end_time, gym_team, gym_id, level, move1, move2, gender, costume)
+                VALUES (:pokemon, :pokemon_form, :user_id, :spawn, :start_time, :end_time, :gym_team, :gym_id, :level, :move1, :move2, :gender, :costume)
             ';
             $execute_array = [
                 'pokemon' => $pokemon,
@@ -217,7 +233,8 @@ foreach ($update as $raid) {
                 'level' => $level,
                 'move1' => $move_1,
                 'move2' => $move_2,
-                'gender' => $gender
+                'gender' => $gender,
+                'costume' => $costume
             ];
             $statement = $dbh->prepare( $query );
             $statement->execute($execute_array);
@@ -229,6 +246,9 @@ foreach ($update as $raid) {
             $dbh = null;
             exit;
         }
+        if ($metrics){
+            $webhook_raids_accepted_total->inc();
+        }
 
         // Skip posting if create only -mode is set or raid time is greater than value set in config
         if ($config->WEBHOOK_CREATE_ONLY or ($raid['message']['end']-$raid['message']['start']) > ($config->WEBHOOK_EXCLUDE_AUTOSHARE_DURATION * 60) ) {
@@ -237,9 +257,65 @@ foreach ($update as $raid) {
         }
     }
 
+    // Query missing data needed to construct the raid poll
+    try {
+        $query_missing = '
+            SELECT
+                gyms.lat, gyms.lon, gyms.address, gyms.gym_name, gyms.ex_gym, gyms.gym_note,
+                users.*,
+                TIME_FORMAT(TIMEDIFF(:raid_end_time, UTC_TIMESTAMP()) + INTERVAL 1 MINUTE, \'%k:%i\') AS t_left
+            FROM       gyms
+            LEFT JOIN  (SELECT users.name, users.trainername, users.nick FROM users WHERE users.user_id = :user_id) as users on 1
+            WHERE      gyms.id = :gym_internal_id
+            LIMIT 1
+        ';
+        $execute_array_missing = [
+            'raid_end_time' => $end,
+            'user_id' => $config->WEBHOOK_CREATOR,
+            'gym_internal_id' => $gym_internal_id,
+        ];
+
+        $statement_missing = $dbh->prepare($query_missing);
+        $statement_missing->execute($execute_array_missing);
+        $missing_raid_data = $statement_missing->fetch();
+
+        $resolved_boss = resolve_raid_boss($pokemon, $form, $spawn, $level);
+
+        // Combine resulting data with stuff received from webhook to create a complete raid array
+        $raid = array_merge($missing_raid_data, [
+                                                    'id' => $raid_id,
+                                                    'user_id' => $config->WEBHOOK_CREATOR,
+                                                    'spawn' => $spawn,
+                                                    'pokemon' => $resolved_boss['pokedex_id'],
+                                                    'pokemon_form' => $resolved_boss['pokemon_form_id'],
+                                                    'start_time' => $start,
+                                                    'end_time' => $end,
+                                                    'gym_team' => $team,
+                                                    'gym_id' => $gym_internal_id,
+                                                    'level' => $level,
+                                                    'move1' => $move_1,
+                                                    'move2' => $move_2,
+                                                    'gender' => $gender,
+                                                    'costume' => $costume,
+                                                    'event' => NULL,
+                                                    'event_note' => NULL,
+                                                    'event_name' => NULL,
+                                                    'event_description' => NULL,
+                                                    'event_vote_key_mode' => NULL,
+                                                    'event_time_slots' => NULL,
+                                                    'event_raid_duration' => NULL,
+                                                    'event_hide_raid_picture' => NULL,
+                                                    'event_poll_template' => NULL,
+                                                ]);
+    }
+    catch (PDOException $exception) {
+        error_log($exception->getMessage());
+        $dbh = null;
+        exit;
+    }
     if($send_updates == true) {
         require_once(LOGIC_PATH .'/update_raid_poll.php');
-        $update = update_raid_poll($raid_id, false, false, $tg_json, false); // update_raid_poll() will return false if the raid isn't shared to any chat
+        $update = update_raid_poll($raid_id, $raid, false, $tg_json, false); // update_raid_poll() will return false if the raid isn't shared to any chat
         if($update != false) $tg_json = $update;
     }else {
         // Get chats to share to by raid level and geofence id
@@ -272,7 +348,10 @@ foreach ($update as $raid) {
         $chats = array_merge($chats_geofence, $chats_raidlevel, $webhook_chats);
 
         require_once(LOGIC_PATH .'/send_raid_poll.php');
-        $tg_json = send_raid_poll($raid_id, false, $chats, $tg_json);
+        if ($metrics){
+            $webhook_raids_posted_total->inc();
+        }
+        $tg_json = send_raid_poll($raid_id, $chats, $raid, $tg_json);
     }
 }
 

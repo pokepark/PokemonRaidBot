@@ -46,15 +46,6 @@ $tg_json[] = answerCallbackQuery($update['callback_query']['id'], $callback_resp
 // Edit message.
 $tg_json[] = edit_message($update, $msg, $keys, false, true);
 
-// Get raid poll messages to be updated from cleanup.
-$rs = my_query(
-    "
-    SELECT    *
-    FROM      cleanup
-      WHERE   raid_id = {$id}
-    "
-);
-
 // Update the shared raid polls.
 require_once(LOGIC_PATH .'/update_raid_poll.php');
 $tg_json = update_raid_poll($id, $raid, false, $tg_json, false);

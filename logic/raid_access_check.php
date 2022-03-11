@@ -22,7 +22,7 @@ function raid_access_check($update, $data, $permission, $return_result = false)
     $raid = $rs->fetch();
 
     // Check permissions
-    if ($update['callback_query']['from']['id'] != $raid['user_id']) {
+    if ($rs->rowCount() == 0 or $update['callback_query']['from']['id'] != $raid['user_id']) {
         // Check "-all" permission
         debug_log('Checking permission:' . $permission . '-all');
         $permission = $permission . '-all';

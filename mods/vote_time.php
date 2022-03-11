@@ -50,20 +50,21 @@ $vote_time = $data['arg'];
 // Raid anytime?
 if($vote_time == 0) {
     // Raid anytime.
-    $attend_time = ANYTIME;
+    $attend_time_save = $attend_time_compare = ANYTIME;
 } else {
     // Normal raid time - convert data arg to UTC time.
     $dt = new DateTime();
     $dt_attend = $dt->createFromFormat('YmdHis', $vote_time, new DateTimeZone('UTC'));
-    $attend_time = $dt_attend->format('Y-m-d H:i:s');
+    $attend_time_compare = $dt_attend->format('Y-m-d H:i:s');
+    $attend_time_save = $dt_attend->format('Y-m-d H:i') . ':00';
+
+    // Get current time.
+    $now = new DateTime('now', new DateTimeZone('UTC'));
+    $now = $now->format('Y-m-d H:i') . ':00';
 }
 
-// Get current time.
-$now = new DateTime('now', new DateTimeZone('UTC'));
-$now = $now->format('Y-m-d H:i') . ':00';
-
 // Vote time in the future or Raid anytime?
-if($now <= $attend_time || $vote_time == 0) {
+if($now <= $attend_time_compare || $vote_time == 0) {
   // If user is attending remotely, get the number of remote users already attending
     if (!is_array($answer) or !in_array('remote', $answer) or $answer['remote'] == 0){
       $remote_users = 0;
@@ -94,7 +95,7 @@ if($now <= $attend_time || $vote_time == 0) {
             my_query(
                 "
                 UPDATE    attendance
-                SET       attend_time = '{$attend_time}',
+                SET       attend_time = '{$attend_time_save}',
                           cancel = 0,
                           arrived = 0,
                           raid_done = 0,
@@ -104,10 +105,17 @@ if($now <= $attend_time || $vote_time == 0) {
                     AND   user_id = {$update['callback_query']['from']['id']}
                 "
             );
-            $tg_json = alarm($data['id'],$update['callback_query']['from']['id'],'change_time', $attend_time, $tg_json);
+            $tg_json = alarm($data['id'],$update['callback_query']['from']['id'],'change_time', $attend_time_save, $tg_json);
 
         // User has not voted before.
         } else {
+            $q_user = my_query("SELECT auto_alarm FROM users WHERE user_id ='" . $update['callback_query']['from']['id'] . "' LIMIT 1");
+            $user_alarm = $q_user->fetch()['auto_alarm'];
+            if($config->RAID_AUTOMATIC_ALARM) {
+                $set_alarm = true;
+            }else {
+                $set_alarm = ($user_alarm == 1 ? true : false);
+            }
             // Create attendance.
             // Save attandence to DB + Set Auto-Alarm on/off according to config
             $insert_sql="INSERT INTO attendance SET
@@ -118,14 +126,14 @@ if($now <= $attend_time || $vote_time == 0) {
             $dbh->prepare($insert_sql)->execute([
               'raid_id' => $data['id'],
               'user_id' => $update['callback_query']['from']['id'],
-              'attend_time' => $attend_time,
-              'alarm' => ($config->RAID_AUTOMATIC_ALARM ? 1 : 0)
+              'attend_time' => $attend_time_save,
+              'alarm' => ($set_alarm ? 1 : 0)
             ]);
             // Send Alarm.
-            $tg_json = alarm($data['id'],$update['callback_query']['from']['id'],'new_att', $attend_time, $tg_json);
+            $tg_json = alarm($data['id'],$update['callback_query']['from']['id'],'new_att', $attend_time_save, $tg_json);
 
             // Enable alerts message. -> only if alert is on
-            if($config->RAID_AUTOMATIC_ALARM) {
+            if($set_alarm) {
                 // Inform User about active alert
                 sendAlertOnOffNotice($data['id'], $update['callback_query']['from']['id'], 1, $raid);
             }
@@ -145,7 +153,7 @@ if($now <= $attend_time || $vote_time == 0) {
             if ($rs_chann->rowCount() == 0) {
                 // Send the message.
                 require_once(LOGIC_PATH . '/send_raid_poll.php');
-                $tg_json = send_raid_poll($data['id'], $raid, $config->SHARE_CHATS_AFTER_ATTENDANCE, $tg_json);
+                $tg_json = send_raid_poll($data['id'], $config->SHARE_CHATS_AFTER_ATTENDANCE, $raid, $tg_json);
             }
         }
     } else {

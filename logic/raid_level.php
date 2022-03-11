@@ -16,8 +16,7 @@ function get_raid_level($pokedex_id, $pokemon_form_id)
                 FROM      raid_bosses
                 WHERE     pokedex_id = '{$pokedex_id}'
                 AND       pokemon_form_id = '{$pokemon_form_id}'
-                AND       date_start = '1970-01-01 00:00:01'
-                AND       date_end = '2038-01-19 03:14:07'
+                AND       scheduled = 0
                 "
             );
 

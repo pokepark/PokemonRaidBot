@@ -635,16 +635,16 @@ function send_photo($chat_id, $photo_url, $text = array(), $inline_keyboard = fa
 }
 
 /**
- * Edit message text.
+ * Edit message media and text.
  * @param $id_val
  * @param $text_val
+ * @param $url
  * @param $markup_val
  * @param null $chat_id
  * @param mixed $merge_args
  * @param $multicurl
- * @param $url
  */
-function editMessageMedia($id_val, $text_val, $markup_val, $chat_id = NULL, $merge_args = false, $multicurl = false, $url)
+function editMessageMedia($id_val, $text_val, $url, $markup_val, $chat_id = NULL, $merge_args = false, $multicurl = false)
 {
     // Create response array.
     $response = [
@@ -834,9 +834,6 @@ function curl_json_multi_request($json)
         $response[$id] = curl_multi_getcontent($content);
         curl_multi_remove_handle($mh, $content);
     }
-
-    // Close connection.
-    curl_multi_close($mh);
 
     // Process response from telegram api.
     foreach($response as $id => $json_response) {

@@ -49,6 +49,7 @@ CREATE TABLE `gyms` (
   `gym_note` varchar(255) DEFAULT NULL,
   `gym_id` varchar(40) DEFAULT NULL,
   `img_url` varchar(255) DEFAULT NULL,
+  `temporary_gym` tinyint(1) unsigned DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_gym_id` (`gym_id`),
   KEY `gym_lat_lon` (`lat`, `lon`)
@@ -87,6 +88,7 @@ CREATE TABLE `raid_bosses` (
   `date_start` datetime NOT NULL DEFAULT '1970-01-01 00:00:01',
   `date_end` datetime NOT NULL DEFAULT '2038-01-19 03:14:07',
   `raid_level` enum('1','2','3','4','5','6','X') DEFAULT NULL,
+  `scheduled` TINYINT(1) NULL DEFAULT 0,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 CREATE TABLE `raids` (
@@ -103,6 +105,7 @@ CREATE TABLE `raids` (
   `move1` varchar(255) DEFAULT NULL,
   `move2` varchar(255) DEFAULT NULL,
   `gender` varchar(255) DEFAULT NULL,
+  `costume` SMALLINT UNSIGNED NULL DEFAULT 0,
   `event` int(3) unsigned DEFAULT NULL,
   `event_note` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -135,6 +138,7 @@ CREATE TABLE `users` (
   `lang` VARCHAR(10) NULL,
   `lang_manual` TINYINT UNSIGNED NOT NULL DEFAULT 0,
   `tutorial` TINYINT(1) NOT NULL DEFAULT 0,
+  `auto_alarm` TINYINT(1) UNSIGNED NULL DEFAULT 0,
    PRIMARY KEY (`id`),
   UNIQUE KEY `i_userid` (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8mb4;

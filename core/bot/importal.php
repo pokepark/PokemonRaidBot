@@ -5,6 +5,9 @@
     $latlon = explode(',', $coords);
     $lat = $latlon[0];
     $lon = $latlon[1];
+
+    $msg_to_rows = explode(PHP_EOL, $update['message']['text']);
+
     // Ingressportalbot
     if(strpos($update['message']['text'], $icon . 'Portal:') === 0) {
         // Set portal bot name.
@@ -14,8 +17,7 @@
         $portal = trim(str_replace($icon . 'Portal:', '', strtok($update['message']['text'], PHP_EOL)));
 
         // Get portal address.
-        $address = explode(PHP_EOL, $update['message']['text'])[1];
-        $address = trim(explode(':', $address, 2)[1]);
+        $address = trim(explode(':', $msg_to_rows[1], 2)[1]);
 
         // Split address?
         debug_log($address, 'Address:');
@@ -30,6 +32,9 @@
             $pieces = explode(',', $address);
             $address = trim($pieces[2]) . SP . trim($pieces[1]) . ', ' . trim($pieces[7]) . SP . trim($pieces[5]);
         }
+
+        // Portal id
+        $portal_id = trim(substr($msg_to_rows[(count($msg_to_rows)-1)], 6));
 
         // Portal image
         $portal_image = $update['message']['entities']['0']['url'];
@@ -53,11 +58,14 @@
         }
 
         // Get portal address.
-        $address = trim(explode(PHP_EOL, $update['message']['text'])[4]);
+        $address = trim($msg_to_rows[4]);
 
         // Remove country from address, e.g. ", Netherlands"
         $address = explode(',',$address,-1);
         $address = trim(implode(',',$address));
+
+        // Portal id
+        $portal_id = trim($msg_to_rows[(count($msg_to_rows)-1)]);
 
         // Portal image
         $portal_image = $update['message']['entities']['0']['url'];
@@ -84,5 +92,6 @@
     debug_log($lat, 'Latitude:');
     debug_log($lon, 'Longitude:');
     debug_log($address, 'Address:');
+    debug_log($portal_id, 'Portal id:');
 
 ?>

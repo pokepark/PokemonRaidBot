@@ -5,14 +5,13 @@ debug_log('vote_status()');
 // For debug.
 //debug_log($update);
 //debug_log($data);
-$remote_string = getPublicTranslation('remote_raid');
 
 // Check if the user has voted for this raid before.
 $rs = my_query(
     "
     SELECT    attendance.want_invite, attendance.alarm,
-              IF(SUBSTR(gyms.gym_name, 1, LENGTH('".$remote_string."')-1) = '".$remote_string."', 1, 0)     as is_remote_gym,
-              IF(raids.user_id = {$update['callback_query']['from']['id']}, 1, 0)                           as user_is_creator
+              IF(temporary_gym = 1, 1, 0)                                           as is_remote_gym,
+              IF(raids.user_id = {$update['callback_query']['from']['id']}, 1, 0)   as user_is_creator
     FROM      attendance
     LEFT JOIN raids
     ON        raids.id = attendance.raid_id

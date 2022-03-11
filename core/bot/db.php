@@ -1,11 +1,21 @@
 <?php
 
 // Check defines
-if($config->DB_HOST && $config->DB_NAME && $config->DB_USER && $config->DB_PASSWORD) {
+if($config->DB_HOST && $config->DB_PORT && $config->DB_NAME && $config->DB_USER && $config->DB_PASSWORD) {
   // Establish PDO connection
-  $dbh = new PDO("mysql:host=" . $config->DB_HOST . ";dbname=" . $config->DB_NAME . ";charset=utf8mb4", $config->DB_USER, $config->DB_PASSWORD, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+  $dbh = new PDO(
+    "mysql:host=" . $config->DB_HOST
+    . ";port=" . $config->DB_PORT
+    . ";dbname=" . $config->DB_NAME
+    . ";charset=utf8mb4",
+    $config->DB_USER,
+    $config->DB_PASSWORD,
+    array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION)
+  );
   $dbh->setAttribute(PDO::ATTR_ORACLE_NULLS, PDO::NULL_EMPTY_STRING);
   $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+  // Route SQL errors to Exceptions so we can handle them centrally
+  $dbh->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
   // Verify connection works and the DB schema has been loaded
   $query = $dbh->prepare('SHOW TABLES LIKE "attendance";');

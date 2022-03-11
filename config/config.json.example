@@ -13,6 +13,8 @@
   "LANGUAGE_PUBLIC":"EN",
   "TIMEZONE":"Europe/Berlin",
   "CUSTOM_TRAINERNAME": true,
+  "RAID_VIA_LOCATION": true,
+  "RAID_VIA_LOCATION_FUNCTION": "create",
   "SHARE_CHATS":"",
   "RAID_PICTURE": false,
   "RAID_PICTURE_AUTOEXTEND": false,

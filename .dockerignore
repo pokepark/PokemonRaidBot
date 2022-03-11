@@ -1,2 +1,9 @@
+Dockerfile
 images/gyms/**
 images/pokemon_*
+vendor
+docs
+.env*
+.git
+!.git/HEAD
+!.git/refs/*

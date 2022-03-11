@@ -16,7 +16,7 @@ $id = $data['id'];
 // Get chat id.
 $chat = $data['arg'];
 
-$tg_json = send_raid_poll($id, false, $chat);
+$tg_json = send_raid_poll($id, $chat);
 
 // Set callback keys and message
 $callback_msg = getTranslation('successfully_shared');

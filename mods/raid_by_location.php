@@ -15,12 +15,13 @@ if(!$config->RAID_VIA_LOCATION) {
     send_message($update['message']['chat']['id'], '<b>' . getTranslation('bot_access_denied') . '</b>');
     exit();
 }
+$reg_exp_coordinates = '^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$^';
 
 // Get latitude / longitude values from Telegram
-if(isset($update['message']['location'])) {
+if(isset($update['message']['location']) && preg_match($reg_exp_coordinates, $update['message']['location']['latitude'] . ',' . $update['message']['location']['longitude'])) {
     $lat = $update['message']['location']['latitude'];
     $lon = $update['message']['location']['longitude'];
-} else if(isset($update['callback_query'])) {
+} else if(isset($update['callback_query']) && preg_match($reg_exp_coordinates, $data['id'] . ',' . $data['arg'])) {
     $lat = $data['id'];
     $lon = $data['arg'];
 } else {
@@ -37,7 +38,7 @@ $addr = get_address($lat, $lon);
 $address = format_address($addr);
 
 // Temporary gym_name
-if($config->RAID_VIA_LOCATION_REMOTE_RAID) {
+if($config->RAID_VIA_LOCATION_FUNCTION == 'remote') {
     $gym_name = getPublicTranslation('remote_raid') . ': '.$addr['district'];
     $gym = false;
     $gym_letter = substr($gym_name, 0, 1);
@@ -105,13 +106,13 @@ try {
                           'address' => $address, 
                         ];
     // Gym already in database or new
-    if (empty($row['count']) or $config->RAID_VIA_LOCATION_REMOTE_RAID) {
+    if (empty($row['count']) or $config->RAID_VIA_LOCATION_FUNCTION == 'remote') {
         // insert gym in table.
         debug_log('Gym not found in database gym list! Inserting gym "' . $gym_name . '" now.');
         $parameters['img_url'] = 'file://' . IMAGES_PATH . '/gym_default.png';
         $query = '
-        INSERT INTO gyms (gym_name, lat, lon, address, show_gym, img_url)
-        VALUES (:gym_name, :lat, :lon, :address, 0, :img_url)
+        INSERT INTO gyms (gym_name, lat, lon, address, show_gym, img_url, temporary_gym)
+        VALUES (:gym_name, :lat, :lon, :address, 0, :img_url, 1)
     ';  
     } else {
         // Update gyms table to reflect gym changes.

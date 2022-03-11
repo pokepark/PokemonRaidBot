@@ -1,32 +1,64 @@
 <?php
-// Parent dir.
-$parent = __DIR__;
 
 // Include requirements and perfom initial steps
 include_once(__DIR__ . '/core/bot/requirements.php');
+
+if ($metrics){
+  $requests_total->inc(['/']);
+}
 
 // Start logging.
 debug_log("RAID-BOT '" . $config->BOT_ID . "'");
 
 // Check API Key and get input from telegram / webhook
 include_once(CORE_BOT_PATH . '/apikey.php');
-
-// Database connection
-include_once(CORE_BOT_PATH . '/db.php');
+$update = get_verified_update(); // This also sets API_KEY
 
 // We maybe receive a webhook so far...
-foreach ($update as $raid) {
+if ($update){
+  foreach ($update as $raid) {
     if (isset($raid['type']) && $raid['type'] == 'raid') {
-    
-        // Create raid(s) and exit.
-        include_once(ROOT_PATH . '/commands/raid_from_webhook.php');
-        $dbh = null;
-        exit();
+      // Create raid(s) and exit.
+      include_once(ROOT_PATH . '/commands/raid_from_webhook.php');
+      $dbh = null;
+      exit();
     }
+  }
 }
-    
+// Init empty data array.
+$data = [];
+
+// Callback data found.
+if (isset($update['callback_query']['data'])) {
+    // Bridge mode?
+    if($config->BRIDGE_MODE) {
+        // Split bot folder name away from actual data.
+        $botnameData = explode(':', $update['callback_query']['data'], 2);
+        $botname = $botnameData[0];
+        $thedata = $botnameData[1];
+        // Write to log
+        debug_log('Bot Name: ' . $botname);
+        debug_log('The Data: ' . $thedata);
+        $botname_length = count(str_split($botname));
+        if($botname_length > 8) {
+            info_log("ERROR! Botname '" . $botname . "' is too long, max: 8","!");
+            exit();
+        }
+    } else {
+        // Data is just the data.
+        $thedata = $update['callback_query']['data'];
+    }
+    // Split callback data and assign to data array.
+    $splitData = explode(':', $thedata);
+    $data['id']     = $splitData[0];
+    $data['action'] = $splitData[1];
+    $data['arg']    = $splitData[2];
+}
+
 // DDOS protection
-include_once(CORE_BOT_PATH . '/ddos.php');
+if($config->ENABLE_DDOS_PROTECTION) {
+    include_once(CORE_BOT_PATH . '/ddos.php');
+}
 
 // Update the user
 update_user($update);
@@ -35,7 +67,10 @@ update_user($update);
 include_once(CORE_BOT_PATH . '/userlanguage.php');
 
 // Run cleanup if requested
-include_once(CORE_BOT_PATH . '/cleanup_run.php');
+if (isset($update['cleanup'])) {
+  include_once(CORE_BOT_PATH . '/cleanup_run.php');
+  cleanup_auth_and_run($update);
+}
 
 // Callback query received.
 if (isset($update['callback_query'])) {
@@ -51,7 +86,7 @@ if (isset($update['callback_query'])) {
 
 // Location received.
 } else if (isset($update['message']['location']) && $update['message']['chat']['type'] == 'private') {
-    if($config->LIST_BY_LOCATION) {
+    if($config->RAID_VIA_LOCATION_FUNCTION == 'list') {
         include_once(ROOT_PATH . '/mods/share_raid_by_location.php');
     }else {
         // Create raid and exit.
@@ -88,7 +123,7 @@ if (isset($update['callback_query'])) {
                 debug_log("Response handeled successfully!");
                 // Delete the entry if the call was handled without errors
                 my_query("DELETE FROM user_input WHERE id='{$res['id']}'");
-                
+
                 $dbh = null;
                 exit();
             }
