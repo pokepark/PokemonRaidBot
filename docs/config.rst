@@ -47,7 +47,6 @@ it's already prepended to the right length.
 
 .. code-block::
 
-   {
    *snip*
            "chat": {
                "id": -1002233445566,
@@ -394,6 +393,25 @@ For that you need to setup ``WEBHOOK_CREATOR``\ , and to automatically share rai
 ``"WEBHOOK_CHATS_ALL_LEVELS":"-100444555666"``
 or by Raidlevel ``"WEBHOOK_CHATS_LEVEL_5":"-100444555666"``
 All incoming raids will be published in these chats.
+
+If you only want to automatically share a specific Pokemon, you can do that by editing the ``WEBHOOK_CHATS_BY_POKEMON`` json array:
+
+
+.. code-block::
+
+  "WEBHOOK_CHATS_BY_POKEMON" : [
+    {
+        "pokemon_id": 744,
+        "chats":[chat_id_1, chat_id_2]
+    },
+    {
+        "pokemon_id": 25,
+        "form_id": 2678,
+        "chats":[chat_id_3]
+    }
+  ],
+
+``pokemon_id`` and ``chats`` are required objects, ``form_id`` is optional.
 
 Filter Raids from Webhook / geoconfig.json
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1074,6 +1092,8 @@ Config reference
      - List of Telegram chat IDs to autoshare raids of level 5
    * - WEBHOOK_CHATS_ALL_LEVELS
      - List of Telegram chat IDs to autoshare raids of any level
+   * - WEBHOOK_CHATS_BY_POKEMON
+     - Automatically share only specific Pokemon to set chats. See above for further details.
    * - WEBHOOK_CREATE_ONLY
      - Bool, only create raids, don't autoshare them to any chat
    * - WEBHOOK_CREATOR

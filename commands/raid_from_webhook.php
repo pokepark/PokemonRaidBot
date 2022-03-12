@@ -345,7 +345,16 @@ foreach ($update as $raid) {
         if(!empty($config->WEBHOOK_CHATS_ALL_LEVELS)) {
            $webhook_chats = explode(',', $config->WEBHOOK_CHATS_ALL_LEVELS);
         }
-        $chats = array_merge($chats_geofence, $chats_raidlevel, $webhook_chats);
+
+        $chats_by_pokemon = [];
+        foreach($config->WEBHOOK_CHATS_BY_POKEMON as $rule) {
+            info_log(print_r($rule,true));
+            if(isset($rule['pokemon_id']) && $rule['pokemon_id'] == $pokemon && (!isset($rule['form_id']) or (isset($rule['form_id']) && $rule['form_id'] == $form))) {
+                $chats_by_pokemon = $rule['chats'];
+            }
+        }
+
+        $chats = array_merge($chats_geofence, $chats_raidlevel, $webhook_chats, $chats_by_pokemon);
 
         require_once(LOGIC_PATH .'/send_raid_poll.php');
         if ($metrics){
