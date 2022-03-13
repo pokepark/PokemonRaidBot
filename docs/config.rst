@@ -1093,7 +1093,7 @@ Config reference
    * - WEBHOOK_CHATS_ALL_LEVELS
      - List of Telegram chat IDs to autoshare raids of any level
    * - WEBHOOK_CHATS_BY_POKEMON
-     - Automatically share only specific Pokemon to set chats. See above for further details.
+     - Automatically share only specific Pokemon to set chats. See `Raids from Webhook`_ for further details.
    * - WEBHOOK_CREATE_ONLY
      - Bool, only create raids, don't autoshare them to any chat
    * - WEBHOOK_CREATOR
