@@ -52,6 +52,9 @@ if(!empty($config->WEBHOOK_CHATS_BY_POKEMON[0])) {
     }
 }
 
+// Skip posting if create only -mode is set or raid time is greater than value set in config
+$no_auto_posting = ($config->WEBHOOK_CREATE_ONLY or ($raid['message']['end']-$raid['message']['start']) > ($config->WEBHOOK_EXCLUDE_AUTOSHARE_DURATION * 60));
+
 // Telegram JSON array.
 $tg_json = [];
 debug_log(count($update),"Received raids:");
@@ -269,8 +272,7 @@ foreach ($update as $raid) {
             $webhook_raids_accepted_total->inc();
         }
 
-        // Skip posting if create only -mode is set or raid time is greater than value set in config
-        if ($config->WEBHOOK_CREATE_ONLY or ($raid['message']['end']-$raid['message']['start']) > ($config->WEBHOOK_EXCLUDE_AUTOSHARE_DURATION * 60) ) {
+        if ($no_auto_posting) {
             debug_log($gym_name,'Not autoposting raid, WEBHOOK_CREATE_ONLY is set to true or raids duration is over the WEBHOOK_EXCLUDE_AUTOSHARE_DURATION threshold:');
             continue;
         }
@@ -336,6 +338,9 @@ foreach ($update as $raid) {
         require_once(LOGIC_PATH .'/update_raid_poll.php');
         $tg_json = update_raid_poll($raid_id, $raid, false, $tg_json, false);
     }
+
+    if($no_auto_posting) continue;
+
     // Get chats to share to by raid level and geofence id
     $chats_geofence = [];
     if($geofences != false) {
