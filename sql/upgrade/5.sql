@@ -1,0 +1,1 @@
+ALTER TABLE user_input CHANGE COLUMN IF EXISTS `user_id` `user_id` BIGINT(20) DEFAULT NULL AFTER `id`;
