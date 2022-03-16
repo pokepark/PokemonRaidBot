@@ -12,7 +12,7 @@ bot_access_check($update, 'pokedex');
 // Get all pokemon with raid levels from database.
 $rs = my_query(
         "
-            SELECT    raid_bosses.id, raid_bosses.pokedex_id, raid_bosses.pokemon_form_id, raid_bosses.raid_level, raid_bosses.date_start, raid_bosses.date_end, raid_bosses.scheduled
+            SELECT    raid_bosses.id, raid_bosses.pokedex_id, raid_bosses.pokemon_form_id, raid_bosses.raid_level, DATE_FORMAT(date_start, '%e.%c. ".getTranslation('raid_egg_opens_at')." %H:%i') as date_start, DATE_FORMAT(date_end, '%e.%c. ".getTranslation('raid_egg_opens_at')." %H:%i') as date_end, raid_bosses.scheduled
             FROM      raid_bosses
             LEFT JOIN pokemon
             ON        raid_bosses.pokedex_id = pokemon.pokedex_id
@@ -44,7 +44,7 @@ while ($pokemon = $rs->fetch()) {
         if($pokemon['scheduled'] == 0) {
             $msg .= '<b>' . getTranslation('unscheduled_bosses') . ':</b>' . CR;
         }else {
-            $msg .= EMOJI_CLOCK . ' <b>' . $pokemon['date_start'] . ' - ' . $pokemon['date_end'] . ':</b>' . CR ;
+            $msg .= EMOJI_CLOCK . ' <b>' . $pokemon['date_start'] . '  —  ' . $pokemon['date_end'] . ':</b>' . CR ;
         }
         $previous_level = 'FIRST_RUN';
     }

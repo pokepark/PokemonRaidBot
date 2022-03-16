@@ -32,7 +32,7 @@ if($arg == '1') {
     if(!empty($list)) {
         $now = new DateTime('now', new DateTimeZone($config->TIMEZONE));
         $query = my_query("
-                SELECT * FROM raid_bosses
+                SELECT id, pokedex_id, pokemon_form_id, raid_level, scheduled, DATE_FORMAT(date_start, '%e.%c. ".getTranslation('raid_egg_opens_at')." %H:%i') as date_start, DATE_FORMAT(date_end, '%e.%c. ".getTranslation('raid_egg_opens_at')." %H:%i') as date_end FROM raid_bosses
                 WHERE       date_end > '" . $now->format('Y-m-d H:i:s') . "'
                 AND         scheduled = 1
                 ORDER BY    date_start, raid_level, pokedex_id, pokemon_form_id
@@ -41,7 +41,8 @@ if($arg == '1') {
         $msg = '<b><u>' . getTranslation('current_scheduled_bosses') . ':</u></b>';
         foreach($query->fetchAll() as $result) {
             if($prev_start != $result['date_start']) {
-                $msg.= CR . '<b>' . $result['date_start'] . ' - ' . $result['date_end'] . ':</b>' . CR;
+                $msg.= CR . EMOJI_CLOCK . ' <b>' . $result['date_start'] . '  —  ' . $result['date_end'] . ':</b>' . CR;
+                $prev_rl = '';
             }
             if($prev_rl != $result['raid_level']) {
                 $msg.= '<b>' . getTranslation($result['raid_level'] . 'stars') .':</b>' . CR;
