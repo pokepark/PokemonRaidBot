@@ -64,7 +64,7 @@ if($vote_time == 0) {
 }
 
 // Vote time in the future or Raid anytime?
-if($now <= $attend_time_compare || $vote_time == 0) {
+if($vote_time == 0 || $now <= $attend_time_compare) {
   // If user is attending remotely, get the number of remote users already attending
     if (!is_array($answer) or !in_array('remote', $answer) or $answer['remote'] == 0){
       $remote_users = 0;
