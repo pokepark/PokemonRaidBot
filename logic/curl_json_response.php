@@ -1,4 +1,9 @@
 <?php
+
+if ($metrics){
+  $tg_response_code = $metrics->registerCounter($namespace, 'tg_response_count', 'Counters of response codes from Telegram', ['code', 'method', 'description']);
+}
+
 /**
  * Process response from telegram api.
  * @param string $json_response Json response from Telegram
@@ -8,12 +13,24 @@
  */
 function curl_json_response($json_response, $json, $identifier = false)
 {
-    global $config;
+    global $config, $metrics, $tg_response_code;
     // Write to log.
     debug_log_incoming($json_response, '<-');
 
-    // Decode json response.
+    // Decode json objects
+    $request = json_decode($json, true);
     $response = json_decode($json_response, true);
+    if ($metrics){
+      $code = 200;
+      $method = $request['method'];
+      $description = null;
+      if (isset($response['error_code'])) {
+        $code = $response['error_code'];
+        # We have to also include the description because TG overloads error codes
+        $description = $response['description'];
+      }
+      $tg_response_code->inc([$code, $method, $description]);
+    }
     // Validate response.
     if ((isset($response['ok']) && $response['ok'] != true) || isset($response['update_id'])) {
         info_log("{$json} -> {$json_response}", 'ERROR:');
