@@ -334,52 +334,47 @@ foreach ($update as $raid) {
         $dbh = null;
         exit;
     }
+    $chats_geofence = $chats_raidlevel = $webhook_chats = $chats_by_pokemon = [];
     if($send_updates == true) {
         require_once(LOGIC_PATH .'/update_raid_poll.php');
         $tg_json = update_raid_poll($raid_id, $raid, false, $tg_json, false);
-    }
-
-    if($no_auto_posting) continue;
-
-    // Get chats to share to by raid level and geofence id
-    $chats_geofence = [];
-    if($geofences != false) {
-        foreach ($inside_geofences as $geofence_id) {
-            $const_geofence = 'WEBHOOK_CHATS_LEVEL_' . $level . '_' . $geofence_id;
-            $const_geofence_chats = $config->{$const_geofence};
-
-            if(!empty($const_geofence_chats)) {
-                $chats_geofence = explode(',', $const_geofence_chats);
-            }
-        }
-    }
-
-    // Get chats to share to by raid level
-    $const = 'WEBHOOK_CHATS_LEVEL_' . $level;
-    $const_chats = $config->{$const};
-
-    $chats_raidlevel =[];
-    if(!empty($const_chats)) {
-        $chats_raidlevel = explode(',', $const_chats);
-    }
-
-    // Get chats
-    $webhook_chats = [];
-    if(!empty($config->WEBHOOK_CHATS_ALL_LEVELS)) {
-        $webhook_chats = explode(',', $config->WEBHOOK_CHATS_ALL_LEVELS);
-    }
-
-    $chats_by_pokemon = [];
-    if(!empty($config->WEBHOOK_CHATS_BY_POKEMON[0])) {
-        foreach($config->WEBHOOK_CHATS_BY_POKEMON as $rule) {
-            if(isset($rule['pokemon_id']) && $rule['pokemon_id'] == $pokemon && (!isset($rule['form_id']) or (isset($rule['form_id']) && $rule['form_id'] == $form))) {
-                foreach($rule['chats'] as $rule_chat) {
-                    // If the raid isn't already posted to the chats specified in WEBHOOK_CHATS_BY_POKEMON, we add it to the array
-                    if(!isset($cleanup_data[$raid_id]) or !in_array($rule_chat, $cleanup_data[$raid_id])) {
-                        $chats_by_pokemon[] = $rule_chat;
+        if(!empty($config->WEBHOOK_CHATS_BY_POKEMON[0]) && !$no_auto_posting) {
+            foreach($config->WEBHOOK_CHATS_BY_POKEMON as $rule) {
+                if(isset($rule['pokemon_id']) && $rule['pokemon_id'] == $pokemon && (!isset($rule['form_id']) or (isset($rule['form_id']) && $rule['form_id'] == $form))) {
+                    foreach($rule['chats'] as $rule_chat) {
+                        // If the raid isn't already posted to the chats specified in WEBHOOK_CHATS_BY_POKEMON, we add it to the array
+                        if(!isset($cleanup_data[$raid_id]) or !in_array($rule_chat, $cleanup_data[$raid_id])) {
+                            $chats_by_pokemon[] = $rule_chat;
+                        }
                     }
                 }
             }
+        }
+        if(empty($chats_by_pokemon)) continue;
+    }else {
+        // Get chats to share to by raid level and geofence id
+        if($geofences != false) {
+            foreach ($inside_geofences as $geofence_id) {
+                $const_geofence = 'WEBHOOK_CHATS_LEVEL_' . $level . '_' . $geofence_id;
+                $const_geofence_chats = $config->{$const_geofence};
+
+                if(!empty($const_geofence_chats)) {
+                    $chats_geofence = explode(',', $const_geofence_chats);
+                }
+            }
+        }
+
+        // Get chats to share to by raid level
+        $const = 'WEBHOOK_CHATS_LEVEL_' . $level;
+        $const_chats = $config->{$const};
+
+        if(!empty($const_chats)) {
+            $chats_raidlevel = explode(',', $const_chats);
+        }
+
+        // Get chats
+        if(!empty($config->WEBHOOK_CHATS_ALL_LEVELS)) {
+            $webhook_chats = explode(',', $config->WEBHOOK_CHATS_ALL_LEVELS);
         }
     }
 
