@@ -7,22 +7,22 @@ if ($metrics){
 /**
  * Process response from telegram api.
  * @param string $json_response Json response from Telegram
- * @param string $json Json sent to Telegram
+ * @param string $request Request sent to Telegram
  * @param array|int|string $identifier raid array from get_raid, raid id or [overview/trainer]
  * @return mixed
  */
-function curl_json_response($json_response, $json, $identifier = false)
+function curl_json_response($json_response, $request, $identifier = false)
 {
-    global $config, $metrics, $tg_response_code;
+    global $metrics, $tg_response_code;
     // Write to log.
     debug_log_incoming($json_response, '<-');
 
     // Decode json objects
-    $request = json_decode($json, true);
+    $request_array = is_array($request) ? $request : json_decode($request, true);
     $response = json_decode($json_response, true);
     if ($metrics){
       $code = 200;
-      $method = $request['method'];
+      $method = $request_array['method'];
       $description = null;
       if (isset($response['error_code'])) {
         $code = $response['error_code'];
@@ -33,7 +33,7 @@ function curl_json_response($json_response, $json, $identifier = false)
     }
     // Validate response.
     if ((isset($response['ok']) && $response['ok'] != true) || isset($response['update_id'])) {
-        if(is_array($json)) $json = json_encode($json);
+        if(is_array($request)) $json = json_encode($request); else $json = $request;
         info_log("{$json} -> {$json_response}", 'ERROR:');
     } else {
         if($identifier != false) {
