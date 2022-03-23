@@ -25,7 +25,9 @@ CREATE TABLE `cleanup` (
   `message_id` bigint(20) unsigned NOT NULL,
   `type` VARCHAR(20) NULL,
   `date_of_posting` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
+  `media_unique_id` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `unique_chat_msg` (`chat_id`,`message_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 CREATE TABLE `events` (
   `id` int(3) unsigned NOT NULL AUTO_INCREMENT,
@@ -62,6 +64,17 @@ CREATE TABLE `overview` (
   `chat_username` varchar(32) DEFAULT NULL,
   `updated` date DEFAULT NULL,
   PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE TABLE `photo_cache` (
+  `id` varchar(100) NOT NULL,
+  `unique_id` varchar(45) NOT NULL,
+  `pokedex_id` int(10) DEFAULT NULL,
+  `form_id` int(4) DEFAULT NULL,
+  `raid_id` int(10) unsigned DEFAULT NULL,
+  `ended` tinyint(1) DEFAULT NULL,
+  `gym_id` int(10) unsigned DEFAULT NULL,
+  `standalone` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`unique_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 CREATE TABLE `pokemon` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,

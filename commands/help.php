@@ -69,7 +69,7 @@ if($access && (is_file(ROOT_PATH . '/access/' . $access) || $access == 'BOT_ADMI
     ]
     ];
     $photo = $tutorial[0]['photo'];
-    send_photo($update['message']['from']['id'],$photo, $msg, $keys, ['disable_web_page_preview' => 'true']);
+    send_photo($update['message']['from']['id'],$photo, false, $msg, $keys, ['disable_web_page_preview' => 'true']);
     exit();
 
 // No help for the user.

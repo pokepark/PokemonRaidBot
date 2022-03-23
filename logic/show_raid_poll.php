@@ -270,7 +270,7 @@ function show_raid_poll($raid, $inline = false)
     // Raid has started and has participants
     if($time_now > $raid['start_time']) {
         // Add raid is done message.
-        if($time_now > $raid['end_time']) {
+        if($raid['raid_ended']) {
             $msg = raid_poll_message($msg, '<b>' . getPublicTranslation('raid_done') . '</b>' . CR);
         // Add time left message.
         } else {
@@ -469,7 +469,7 @@ function show_raid_poll($raid, $inline = false)
 
     // Add update time and raid id to message.
     $msg = raid_poll_message($msg, CR . '<i>' . getPublicTranslation('updated') . ': ' . dt2time('now', 'H:i:s') . '</i>');
-    if($inline && ($buttons_hidden or ($raid['end_time'] < $time_now && $config->RAID_ENDED_HIDE_KEYS))) {
+    if($inline && ($buttons_hidden or ($raid['raid_ended'] && $config->RAID_ENDED_HIDE_KEYS))) {
         // Only case this is needed anymore is a poll shared via inline that has no vote keys
         $msg = raid_poll_message($msg, SP . SP . substr(strtoupper($config->BOT_ID), 0, 1) . '-ID = ' . $raid['id']);
     }

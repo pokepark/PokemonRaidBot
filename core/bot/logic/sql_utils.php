@@ -42,12 +42,12 @@ function my_query($query, $binds=null)
     } catch (PDOException $exception) {
       // The message will be output in the global handler, we just need to extract the failing query
       error_log('The following query failed:');
-      log_query($stmt, $binds, 'error_log');
+      log_query($stmt, print_r($binds, true), 'error_log');
       throw $exception;
     } finally {
       debug_log_sql('Query success', '$');
       if($config->DEBUG_SQL) {
-        log_query($stmt, $binds, 'debug_log_sql');
+        log_query($stmt, print_r($binds, true), 'debug_log_sql');
       }
     }
     return $stmt;

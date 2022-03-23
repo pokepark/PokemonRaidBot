@@ -112,5 +112,5 @@ if($action == "end") {
     }
 }
 answerCallbackQuery($update['callback_query']['id'], "OK!");
-editMessageMedia($update['callback_query']['message']['message_id'], $msg, $photo, $keys, $update['callback_query']['message']['chat']['id'], ['disable_web_page_preview' => 'true']);
+editMessageMedia($update['callback_query']['message']['message_id'], $msg, $photo, false, $keys, $update['callback_query']['message']['chat']['id'], ['disable_web_page_preview' => 'true']);
 ?>

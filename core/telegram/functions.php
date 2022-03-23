@@ -591,147 +591,139 @@ function get_chatmember($chat_id, $user_id, $multicurl = false)
 /**
  * Send photo.
  * @param $chat_id
- * @param $photo_url
+ * @param string $media_content content of the media file.
+ * @param bool $content_type true = photo file, false = file_id
  * @param array $text
  * @param mixed $inline_keyboard
  * @param array $merge_args
  * @param array $multicurl
  * @param int $identifier
  */
-function send_photo($chat_id, $photo_url, $text = array(), $inline_keyboard = false, $merge_args = [], $multicurl = false, $identifier = false)
+function send_photo($chat_id, $media_content, $content_type, $text = '', $inline_keyboard = false, $merge_args = [], $multicurl = false, $identifier = false)
 {
     // Create response content array.
-    $reply_content = [
-        'method'     => 'sendPhoto',
-        'chat_id'    => $chat_id,
-        'photo'      => $photo_url,
-        'parse_mode' => 'HTML',
-        'caption'    => $text
+    $post_contents = [
+        'method'        => 'sendPhoto',
+        'chat_id'       => $chat_id,
+        'reply_markup'  => json_encode(['inline_keyboard' => $inline_keyboard]),
     ];
+    if($text != '') {
+        $post_contents['caption'] = $text;
+        $post_contents['parse_mode'] = 'HTML';
+    }
     if(!is_valid_target($chat_id, null, false, true)){
       info_log($chat_id, 'ERROR: Cannot send to invalid chat id:');
-      info_log($reply_content, 'ERROR: data would have been:');
+      info_log(print_r($post_contents, true), 'ERROR: data would have been:');
       exit();
     }
 
+    $post_contents['photo'] = ($content_type) ? new CURLStringFile($media_content, 'photo') : $media_content;
+
     debug_log($inline_keyboard, 'KEYS:');
 
-    if (isset($inline_keyboard)) {
-        $reply_content['reply_markup'] = ['inline_keyboard' => $inline_keyboard];
-    }
-
     if (is_array($merge_args) && count($merge_args)) {
-        $reply_content = array_merge_recursive($reply_content, $merge_args);
+        $post_contents = array_merge_recursive($post_contents, $merge_args);
     }
 
-    // Encode data to json.
-    $reply_json = json_encode($reply_content);
-    header('Content-Type: application/json');
-
-    debug_log($reply_json, '>');
+    debug_log(print_r($post_contents, true), '>');
 
     // Send request to telegram api.
-    return curl_request($reply_json, $multicurl, $identifier);
+    return curl_request($post_contents, $multicurl, $identifier);
 }
 
 /**
  * Edit message media and text.
  * @param $id_val
  * @param $text_val
- * @param $url
+ * @param string $media_content content of the media file.
+ * @param bool $content_type true = photo file, false = file_id/url
  * @param $markup_val
  * @param null $chat_id
  * @param mixed $merge_args
  * @param $multicurl
  */
-function editMessageMedia($id_val, $text_val, $url, $markup_val, $chat_id = NULL, $merge_args = false, $multicurl = false)
+function editMessageMedia($id_val, $text_val, $media_content, $content_type, $inline_keyboard = false, $chat_id = NULL, $merge_args = false, $multicurl = false, $identifier = false)
 {
     // Create response array.
-    $response = [
+    $post_contents = [
         'method'        => 'editMessageMedia',
         'media'         => [
           'type'      => 'photo',
-          'media'     => $url,
           'caption'   => $text_val,
           'parse_mode'=> 'HTML'
-        ],
-        'reply_markup'  => [
-          'inline_keyboard' => $markup_val
         ]
     ];
 
-    if ($markup_val == false) {
-        unset($response['reply_markup']);
-        $response['remove_keyboard'] = true;
+    if ($inline_keyboard !== false) {
+        $post_contents['reply_markup'] = json_encode(['inline_keyboard' => $inline_keyboard]);
+    }else {
+        $post_contents['remove_keyboard'] = true;
     }
     if ($chat_id != null) {
-        $response['chat_id']    = $chat_id;
-        $response['message_id'] = $id_val;
+        $post_contents['chat_id']    = $chat_id;
+        $post_contents['message_id'] = $id_val;
     } else {
-        $response['inline_message_id'] = $id_val;
+        $post_contents['inline_message_id'] = $id_val;
     }
     if (is_array($merge_args) && count($merge_args)) {
-        $response = array_merge_recursive($response, $merge_args);
+        $post_contents = array_merge_recursive($post_contents, $merge_args);
     }
     if(!is_valid_target($chat_id, $id_val, true, false)){
       info_log("{$chat_id}/{$id_val}", 'ERROR: Cannot edit media of invalid chat/message id:');
-      info_log($response, 'ERROR: data would have been:');
+      info_log(print_r($post_contents, true), 'ERROR: data would have been:');
       exit();
     }
 
     // Encode response to json format.
-    $json_response = json_encode($response);
-    debug_log($response, '<-');
+    if($content_type) {
+        $post_contents['photo'] = new CURLStringFile($media_content, 'photo');
+        $post_contents['media']['media'] = 'attach://photo';
+    } else {
+        $post_contents['media']['media'] = $media_content;
+    }
+    $post_contents['media'] = json_encode($post_contents['media']);
+    debug_log(print_r($post_contents, true), '->');
 
     // Send request to telegram api.
-    return curl_request($json_response, $multicurl);
+    return curl_request($post_contents, $multicurl, $identifier);
 }
 
 /**
  * Send request to telegram api - single or multi?.
- * @param $json
+ * @param $post_contents
  * @param $multicurl
  * @param $identifier
  * @return mixed
  */
-function curl_request($json, $multicurl = false, $identifier = false)
+function curl_request($post_contents, $multicurl = false, $identifier = false)
 {
 
     // Send request to telegram api.
     if($multicurl == true) {
-        return ['json' => $json, 'identifier' => $identifier];
+        return ['post_contents' => $post_contents, 'identifier' => $identifier];
     } else {
-        return curl_json_request($json, $identifier);
+        return curl_json_request($post_contents, $identifier);
     }
 }
 
 /**
  * Send request to telegram api.
- * @param $json
+ * @param $post_contents
  * @param $identifier
  * @return mixed
  */
-function curl_json_request($json, $identifier)
+function curl_json_request($post_contents, $identifier)
 {
     global $config;
-    // Bridge mode?
-    if($config->BRIDGE_MODE) {
-        // Add bot folder name to callback data
-        debug_log('Adding bot folder name "' . basename(ROOT_PATH) . '" to callback data');
-        $search = '"callback_data":"';
-        $replace = $search . basename(ROOT_PATH) . ':';
-        $json = str_replace($search,$replace,$json);
-    }
 
     // Telegram
     $URL = 'https://api.telegram.org/bot' . API_KEY . '/';
     $curl = curl_init($URL);
 
-    curl_setopt($curl, CURLOPT_HEADER, false);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-type: application/json"));
+    if(!is_array($post_contents)) curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-type: application/json"));
     curl_setopt($curl, CURLOPT_POST, true);
-    curl_setopt($curl, CURLOPT_POSTFIELDS, $json);
+    curl_setopt($curl, CURLOPT_POSTFIELDS, $post_contents);
     curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 5);
     curl_setopt($curl, CURLOPT_TIMEOUT, 10);
 
@@ -741,7 +733,8 @@ function curl_json_request($json, $identifier)
     }
 
     // Write to log.
-    debug_log($json, '->');
+    if(is_array($post_contents)) debug_log(print_r($post_contents,true), '->');
+    else debug_log($post_contents, '->');
 
     // Execute curl request.
     $json_response = curl_exec($curl);
@@ -754,7 +747,7 @@ function curl_json_request($json, $identifier)
     curl_close($curl);
 
     // Process response from telegram api.
-    $response = curl_json_response($json_response, $json, $identifier);
+    $response = curl_json_response($json_response, $post_contents, $identifier);
 
     // Return response.
     return $response;
@@ -788,7 +781,7 @@ function curl_json_multi_request($json)
         // Curl options.
         curl_setopt($curly[$id], CURLOPT_URL, $URL);
         curl_setopt($curly[$id], CURLOPT_HEADER, false);
-        curl_setopt($curly[$id], CURLOPT_HTTPHEADER, array("Content-type: application/json"));
+        if(!is_array($data['post_contents'])) curl_setopt($curly[$id], CURLOPT_HTTPHEADER, array("Content-type: application/json"));
         curl_setopt($curly[$id], CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curly[$id], CURLOPT_CONNECTTIMEOUT, 5);
         curl_setopt($curly[$id], CURLOPT_TIMEOUT, 10);
@@ -798,24 +791,16 @@ function curl_json_multi_request($json)
             curl_setopt($curly[$id], CURLOPT_PROXY, $config->CURL_PROXYSERVER);
         }
 
-        // Bridge mode?
-        if($config->BRIDGE_MODE) {
-            // Add bot folder name to callback data
-            debug_log('Adding bot folder name "' . basename(ROOT_PATH) . '" to callback data');
-            $search = '"callback_data":"';
-            $replace = $search . basename(ROOT_PATH) . ':';
-            array_push($data['json'], str_replace($search,$replace,$data['json']));
-        }
-
         // Curl post.
         curl_setopt($curly[$id], CURLOPT_POST,       true);
-        curl_setopt($curly[$id], CURLOPT_POSTFIELDS, $data['json']);
+        curl_setopt($curly[$id], CURLOPT_POSTFIELDS, $data['post_contents']);
 
         // Add multi handle.
         curl_multi_add_handle($mh, $curly[$id]);
 
         // Write to log.
-        debug_log($data['json'], '->');
+        if(is_array($data['post_contents'])) debug_log(print_r($data['post_contents'],true), '->');
+        else debug_log($data['post_contents'], '->');
     }
 
     // Execute the handles.
@@ -837,7 +822,7 @@ function curl_json_multi_request($json)
 
     // Process response from telegram api.
     foreach($response as $id => $json_response) {
-        $response[$id] = curl_json_response($response[$id], $json[$id]['json'], $json[$id]['identifier']);
+        $response[$id] = curl_json_response($response[$id], $json[$id]['post_contents'], $json[$id]['identifier']);
         debug_log_incoming($json_response, '<-');
     }
 

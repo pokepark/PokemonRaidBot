@@ -37,7 +37,7 @@ function get_raid_level($pokedex_id, $pokemon_form_id)
  * Get active raid bosses at a certain time.
  * @param $time - string, datetime, local time
  * @param $raid_level - ENUM('1', '2', '3', '4', '5', '6', 'X')
- * @return string
+ * @return array
  */
 function get_raid_bosses($time, $raid_level)
 {

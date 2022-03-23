@@ -28,7 +28,7 @@ if($config->TUTORIAL_MODE && $new_user && (!$access or $access == 'BOT_ADMINS'))
 	]
 	];
     $photo = $tutorial[0]['photo'];
-    send_photo($update['message']['from']['id'], $photo, $msg, $keys, ['disable_web_page_preview' => 'true'],false);
+    send_photo($update['message']['from']['id'], $photo, false, $msg, $keys, ['disable_web_page_preview' => 'true'],false);
 }else {
     // Trim away everything before "/start "
     $searchterm = $update['message']['text'];

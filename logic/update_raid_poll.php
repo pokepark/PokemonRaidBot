@@ -6,11 +6,10 @@
  * @param array|false $raid Array received from get_raid() (optional).
  * @param array|false $update
  * @param array|false $tg_json Multicurl array.
- * @param bool $skip_picture_update Bool, Skip updating raid picture on refresh after raid has ended
  * @return array|false tg_json multicurl array
  */
 
-function update_raid_poll($raid_id, $raid = false, $update = false, $tg_json = false, $skip_picture_update = true)
+function update_raid_poll($raid_id, $raid = false, $update = false, $tg_json = false)
 {
     global $config;
     $chat_and_message = [];
@@ -23,22 +22,18 @@ function update_raid_poll($raid_id, $raid = false, $update = false, $tg_json = f
            ];
     // For updating a poll
     }else if(isset($update['push'])) {
-        $chat_and_message[] = [
-           'chat_id'      => $update['push']['chat_id'],
-           'message_id'   => $update['push']['message_id'],
-           'type'         => $update['push']['type'],
-        ];
+        $chat_and_message[] = $update['push'];
     }
     // If neither of the methods above yielded results, or update came from a inline poll, check cleanup table for chat messages to update
     if(empty($chat_and_message) or isset($update['callback_query']['inline_message_id'])) {
         $rs_chann = my_query('
-            SELECT chat_id, message_id, type
+            SELECT chat_id, message_id, type, media_unique_id
             FROM cleanup
               WHERE raid_id = ' . $raid_id
             );
         if ($rs_chann->rowCount() > 0) {
             while($chat = $rs_chann->fetch()) {
-                $chat_and_message[] = ['chat_id' => $chat['chat_id'], 'message_id' => $chat['message_id'], 'type' => $chat['type']];
+                $chat_and_message[] = $chat;
             }
         }else {
             if(is_array($tg_json)) return $tg_json;
@@ -67,35 +62,12 @@ function update_raid_poll($raid_id, $raid = false, $update = false, $tg_json = f
 
     // Telegram JSON array.
     if($tg_json == false) $tg_json = [];
-    if($config->RAID_PICTURE) {
-        require_once(LOGIC_PATH . '/raid_picture.php');
-    }
 
     foreach($chat_and_message as $chat_id_msg_id) {
         $chat = $chat_id_msg_id['chat_id'];
         $message = $chat_id_msg_id['message_id'];
         $type = $chat_id_msg_id['type'];
-        if($type == 'poll_photo') {
-            $picture_url = raid_picture_url($raid);
-            // If the poll message gets too long, we'll replace it with regular text based poll
-            if($post_text == true) {
-                // Delete raid picture and caption.
-                $tg_json[] = delete_message($chat, $message, true);
-                my_query("DELETE FROM cleanup WHERE chat_id = '{$chat}' AND message_id = '{$message}'");
-
-                // Resend raid poll as text message.
-                send_photo($chat, $picture_url, '', [], [], false, $raid_id);
-                send_message($chat, $text['full'], $keys, ['disable_web_page_preview' => 'true'], false, $raid_id);
-            } else {
-                // Edit the picture and caption
-                if(!$skip_picture_update) {
-                    $tg_json[] = editMessageMedia($message, $text['short'], $picture_url, $keys, $chat, ['disable_web_page_preview' => 'true'], true);
-                }else {
-                    // Edit the caption.
-                    $tg_json[] = editMessageCaption($message, $text['short'], $keys, $chat, ['disable_web_page_preview' => 'true'], true);
-                }
-            }
-        }else if ($type == 'poll_text') {
+        if ($type == 'poll_text') {
             $raid_picture_hide_level = explode(",",$config->RAID_PICTURE_HIDE_LEVEL);
             $raid_picture_hide_pokemon = explode(",",$config->RAID_PICTURE_HIDE_POKEMON);
 
@@ -106,9 +78,37 @@ function update_raid_poll($raid_id, $raid = false, $update = false, $tg_json = f
             }else {
                 $tg_json[] = editMessageText($message, $text['full'], $keys, $chat, ['disable_web_page_preview' => 'true'], true);
             }
-        }else if ($type == 'photo' && !$skip_picture_update) {
-            $picture_url = raid_picture_url($raid, 1);
-            $tg_json[] = editMessageMedia($message, '', $picture_url, '', $chat, [], true);
+        }else {
+            require_once(LOGIC_PATH . '/raid_picture.php');
+            if($type == 'poll_photo') {
+                // If the poll message gets too long, we'll replace it with regular text based poll
+                if($post_text == true) {
+                    // Delete raid picture and caption.
+                    $tg_json[] = delete_message($chat, $message, true);
+                    my_query("DELETE FROM cleanup WHERE chat_id = '{$chat}' AND message_id = '{$message}'");
+
+                    $media_content = get_raid_picture($raid, true);
+                    $raid['standalone_photo'] = true; // Inject this into raid array so we can pass it all the way to photo cache
+                    // Resend raid poll as text message.
+                    send_photo($chat, $media_content[1], $media_content[0], '', [], [], false, $raid);
+                    send_message($chat, $text['full'], $keys, ['disable_web_page_preview' => 'true'], false, $raid_id);
+                } else {
+                    $media_content = get_raid_picture($raid);
+                    // Edit the picture and caption
+                    if(!isset($media_content[2]) or $media_content[2] != $chat_id_msg_id['media_unique_id']) {
+                        $tg_json[] = editMessageMedia($message, $text['short'], $media_content[1], $media_content[0], $keys, $chat, ['disable_web_page_preview' => 'true'], true, $raid);
+                    }else {
+                        // Edit the caption.
+                        $tg_json[] = editMessageCaption($message, $text['short'], $keys, $chat, ['disable_web_page_preview' => 'true'], true);
+                    }
+                }
+            }else if ($type == 'photo') {
+                $media_content = get_raid_picture($raid, 1);
+                $raid['standalone_photo'] = true; // Inject this into raid array so we can pass it all the way to photo cache
+                if(!isset($media_content[2]) or $media_content[2] != $chat_id_msg_id['media_unique_id']) {
+                    $tg_json[] = editMessageMedia($message, '', $media_content[1], $media_content[0], false, $chat, false, true, $raid);
+                }
+            }
         }
     }
     return $tg_json;

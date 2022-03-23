@@ -91,8 +91,10 @@ function perform_cleanup(){
             }
             $q_a = my_query('DELETE FROM attendance WHERE raid_id IN (SELECT id FROM raids WHERE raids.end_time < DATE_SUB(UTC_TIMESTAMP(), INTERVAL '.$config->CLEANUP_TIME_DB.' MINUTE))');
             $q_r = my_query('DELETE FROM raids WHERE end_time < DATE_SUB(UTC_TIMESTAMP(), INTERVAL '.$config->CLEANUP_TIME_DB.' MINUTE)');
+            $q_p = my_query('DELETE photo_cache FROM photo_cache LEFT JOIN raids ON photo_cache.raid_id = raids.id WHERE photo_cache.ended = 0 AND raids.id IS NULL');
             cleanup_log('Cleaned ' . $q_a->rowCount() . ' rows from attendance table');
             cleanup_log('Cleaned ' . $q_r->rowCount() . ' rows from raids table');
+            cleanup_log('Cleaned ' . $q_p->rowCount() . ' rows from photo_cache table');
             if ($metrics){
               $cleanup_total->incBy($q_a->rowCount(), ['db_attendance']);
               $cleanup_total->incBy($q_r->rowCount(), ['db_raids']);

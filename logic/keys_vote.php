@@ -21,11 +21,11 @@ function keys_vote($raid)
     debug_log($start_time, 'UTC START:');
 
     // Raid ended already.
-    if ($end_time < $now) {
+    if ($raid['raid_ended']) {
         if($config->RAID_ENDED_HIDE_KEYS) {
-            $keys = [];
+            return [];
         }else {
-            $keys = [
+            return [
                 [
                     [
                         'text'          => getPublicTranslation('raid_done'),
@@ -50,7 +50,7 @@ function keys_vote($raid)
 
         // Show buttons to users?
         if(in_array($raid_level, $hide_buttons_raid_level) || in_array(($raid_pokemon_id . "-" . get_pokemon_form_name($raid_pokemon_id,$raid_pokemon_form_id)), $hide_buttons_pokemon) || in_array($raid_pokemon_id, $hide_buttons_pokemon)) {
-            $keys = [];
+            return [];
         } else {
             // Extra Keys
             $buttons_alone = [
@@ -566,11 +566,11 @@ function keys_vote($raid)
                     if(!empty($keys[$r][0])) $r++;
                 }
             }
+
+            // Return the keys.
+            return $keys;
         }
     }
-
-    // Return the keys.
-    return $keys;
 }
 
 ?>
