@@ -82,6 +82,7 @@ if($config->PORTAL_IMPORT) {
                 UPDATE        gyms
                 SET           lat = :lat,
                               lon = :lon,
+                              gym_name = :gym_name,
                               address = :address,
                               ' . $update_values . '
                               img_url = :gym_image
@@ -94,7 +95,7 @@ if($config->PORTAL_IMPORT) {
         // Insert / Update.
         $statement = $dbh->prepare($query);
         $statement->execute([
-          'gym_name' => $gym_name,
+          'gym_name' => $gym_name_no_spec,
           'lat' => $lat,
           'lon' => $lon,
           'address' => $address,
@@ -119,7 +120,7 @@ if($config->PORTAL_IMPORT) {
     }
 
     // Gym photo.
-    if($gym_image) {
+    if($config->RAID_PICTURE_STORE_GYM_IMAGES_LOCALLY && $gym_image) {
         $msg .= EMOJI_CAMERA . SP . $no_spaces_gym_name;
     }
 

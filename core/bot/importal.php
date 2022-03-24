@@ -8,13 +8,24 @@
 
     $msg_to_rows = explode(PHP_EOL, $update['message']['text']);
 
+    $supported_bots = ['Ingressportalbot', 'PortalMapBot'];
+    if(isset($update['message']['via_bot']) && in_array($update['message']['via_bot']['username'], $supported_bots)) {
+        $parse_bot = $update['message']['via_bot']['username'];
+    }else {
+        // Invalid input or unknown bot - send message and end.
+        $msg = '<b>' . getTranslation('invalid_input') . '</b>';
+        $msg .= CR . CR . getTranslation('not_supported') . SP . getTranslation('or') . SP . getTranslation('internal_error');
+        send_message($update['message']['from']['id'], $msg);
+        exit();
+   }
+
     // Ingressportalbot
-    if(strpos($update['message']['text'], $icon . 'Portal:') === 0) {
+    if($parse_bot == 'Ingressportalbot') {
         // Set portal bot name.
         $botname = '@Ingressportalbot';
 
         // Get portal name.
-        $portal = trim(str_replace($icon . 'Portal:', '', strtok($update['message']['text'], PHP_EOL)));
+        $portal = trim(str_replace($icon . 'Portal:', '', $msg_to_rows[0]));
 
         // Get portal address.
         $address = trim(explode(':', $msg_to_rows[1], 2)[1]);
@@ -40,12 +51,12 @@
         $portal_image = $update['message']['entities']['0']['url'];
 
     // PortalMapBot
-    } else if(substr_compare(strtok($update['message']['text'], PHP_EOL), '(Intel)', -strlen('(Intel)')) === 0) {
+    } else if($parse_bot == 'PortalMapBot') {
         // Set portal bot name.
         $botname = '@PortalMapBot';
 
         // Get portal name.
-        $portal = trim(substr(strtok($update['message']['text'], PHP_EOL), 0, -strlen('(Intel)')));
+        $portal = trim(str_replace('(Intel)','', str_replace('(Scanner)','',$msg_to_rows[0])));
 
         // Check for strange characters at the beginn of the portal name: â<81>£
         // â = 0x00E2
@@ -70,12 +81,6 @@
         // Portal image
         $portal_image = $update['message']['entities']['0']['url'];
 
-   } else {
-        // Invalid input or unknown bot - send message and end.
-        $msg = '<b>' . getTranslation('invalid_input') . '</b>';
-        $msg .= CR . CR . getTranslation('not_supported') . SP . getTranslation('or') . SP . getTranslation('internal_error');
-        send_message($update['message']['from']['id'], $msg);
-        exit();
    }
 
     // Empty address? Try lookup.
