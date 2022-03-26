@@ -143,10 +143,17 @@ function raid_edit_gyms_first_letter_keys($action = 'raid_by_gym', $hidden = fal
                     if ($active_raid > 0) {
                         $gym_name = EMOJI_WARN . SP . $gym_name;
                     }
-                    $keys[] = array(
-                        'text'          => $gym_name,
-                        'callback_data' => 'gl' . $gymarea_id . ':' . $gym_name_action . ':' . $gym['id']
-                    );
+                    if($gym_name_action == 'list_raid') {
+                        $keys[] = array(
+                            'text'          => $gym_name,
+                            'callback_data' => '0:' . $gym_name_action . ':' . $gym['id']
+                        );
+                    }else {
+                        $keys[] = array(
+                            'text'          => $gym_name,
+                            'callback_data' => 'gl' . $gymarea_id . ':' . $gym_name_action . ':' . $gym['id']
+                        );
+                    }
                 }
             }
 
