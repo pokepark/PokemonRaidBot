@@ -88,9 +88,6 @@ function create_raid_picture($raid, $standalone_photo = false, $debug = false) {
     $GLOBALS['requests_total']->inc(['raidpicture']);
   }
 
-  if(utcnow() > $raid['end_time']) $raid_ongoing = false;
-  else $raid_ongoing = true;
-
   // Query missing raid info
   $q_pokemon_info = my_query("
                   SELECT
@@ -277,7 +274,7 @@ function create_raid_picture($raid, $standalone_photo = false, $debug = false) {
 
   $show_boss_pokemon_types = false;
   // Raid running
-  if($raid_ongoing) {
+  if(!$raid['raid_ended']) {
       if(strlen($raid['asset_suffix']) > 2) {
           $icon_suffix = $raid['asset_suffix'];
       }else {
@@ -515,7 +512,7 @@ function create_raid_picture($raid, $standalone_photo = false, $debug = false) {
 
 
   // Raid times
-  if($raid_ongoing) {
+  if(!$raid['raid_ended']) {
       $time_text = get_raid_times($raid, true, true);
   } else {
       $time_text = getPublicTranslation('raid_done');

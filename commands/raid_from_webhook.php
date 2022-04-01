@@ -338,7 +338,7 @@ foreach ($update as $raid) {
     $chats_geofence = $chats_raidlevel = $webhook_chats = $chats_by_pokemon = [];
     if($send_updates == true) {
         require_once(LOGIC_PATH .'/update_raid_poll.php');
-        $tg_json = update_raid_poll($raid_id, $raid, false, $tg_json, false);
+        $tg_json = update_raid_poll($raid_id, $raid, false, $tg_json, true);
         if(!empty($config->WEBHOOK_CHATS_BY_POKEMON[0]) && !$no_auto_posting) {
             foreach($config->WEBHOOK_CHATS_BY_POKEMON as $rule) {
                 if(isset($rule['pokemon_id']) && $rule['pokemon_id'] == $pokemon && (!isset($rule['form_id']) or (isset($rule['form_id']) && $rule['form_id'] == $form))) {

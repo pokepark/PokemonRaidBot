@@ -36,9 +36,9 @@ if(isset($_GET['debug']) && $_GET['debug'] == 1) {
     $raid['raid_costume'] = false;
     $raid['event'] = ($_GET['ex_raid'] == 1) ? EVENT_ID_EX : 0;
     if($_GET['start_time'] == 0) {
-        $raid_ongoing = false;
+        $raid['raid_ended'] = true;
     }else {
-        $raid_ongoing = true;
+        $raid['raid_ended'] = false;
         $raid['start_time'] = date("Y-M-d H:i:s",preg_replace("/\D/","",$_GET['start_time']));
         $raid['end_time'] = date("Y-M-d H:i:s",preg_replace("/\D/","",$_GET['end_time']));
     }

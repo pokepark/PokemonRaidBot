@@ -6,10 +6,11 @@
  * @param array|false $raid Array received from get_raid() (optional).
  * @param array|false $update
  * @param array|false $tg_json Multicurl array.
+ * @param bool $update_photo Update the raid photo.
  * @return array|false tg_json multicurl array
  */
 
-function update_raid_poll($raid_id, $raid = false, $update = false, $tg_json = false)
+function update_raid_poll($raid_id, $raid = false, $update = false, $tg_json = false, $update_photo = false)
 {
     global $config;
     $chat_and_message = [];
@@ -26,10 +27,12 @@ function update_raid_poll($raid_id, $raid = false, $update = false, $tg_json = f
     }
     // If neither of the methods above yielded results, or update came from a inline poll, check cleanup table for chat messages to update
     if(empty($chat_and_message) or isset($update['callback_query']['inline_message_id'])) {
+        if($update_photo) $photo_query = 'AND type = \'photo\''; else $photo_query = '';
         $rs_chann = my_query('
             SELECT chat_id, message_id, type, media_unique_id
             FROM cleanup
-              WHERE raid_id = ' . $raid_id
+              WHERE raid_id = ' . $raid_id . '
+              ' . $photo_query
             );
         if ($rs_chann->rowCount() > 0) {
             while($chat = $rs_chann->fetch()) {
@@ -102,7 +105,7 @@ function update_raid_poll($raid_id, $raid = false, $update = false, $tg_json = f
                         $tg_json[] = editMessageCaption($message, $text['short'], $keys, $chat, ['disable_web_page_preview' => 'true'], true);
                     }
                 }
-            }else if ($type == 'photo') {
+            }else if ($type == 'photo' && $update_photo) {
                 $media_content = get_raid_picture($raid, 1);
                 $raid['standalone_photo'] = true; // Inject this into raid array so we can pass it all the way to photo cache
                 if(!isset($media_content[2]) or $media_content[2] != $chat_id_msg_id['media_unique_id']) {
