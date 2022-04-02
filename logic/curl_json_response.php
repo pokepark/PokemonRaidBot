@@ -71,7 +71,7 @@ function curl_json_response($json_response, $request, $identifier = false)
                                 $unique_id = $photo['file_unique_id'];
                             }
                         }
-                        $standalone_photo = (array_key_exists('standalone_photo', $identifier) && $identifier['standalone_photo'] === true) ? true : false;
+                        $standalone_photo = (array_key_exists('standalone_photo', $identifier) && $identifier['standalone_photo'] === true) ? 1 : 0;
                         my_query("
                                     REPLACE INTO photo_cache
                                     VALUES (:id, :unique_id, :pokedex_id, :form_id, :raid_id, :ended, :gym_id, :standalone)
