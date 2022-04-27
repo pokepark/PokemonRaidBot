@@ -44,7 +44,7 @@ if($protos = get_protos($proto_url)) {
                 $pokemon_id = $id;
                 foreach($forms as $form=>$data) {
                     // Check that data is set, if not the mon is probably not in the game yet and there's no point in having them in a broken state
-                    if(isset($data['weather']) && isset($data['min_cp']) && isset($data['max_cp']) && isset($data['min_weather_cp']) && isset($data['max_weather_cp'])) {
+                    if(isset($data['weather']) && isset($data['min_cp']) && isset($data['max_cp']) && isset($data['min_weather_cp']) && isset($data['max_weather_cp']) && isset($data['pokemon_name'])) {
                         $poke_form = $form;
             
                         $poke_name = $data['pokemon_name'];
