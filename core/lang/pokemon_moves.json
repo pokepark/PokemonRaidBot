@@ -3859,5 +3859,31 @@
         "IT": "Acrobazia",
         "RU": "Акробатика",
         "ES": "Acróbata"
+    },
+    "pokemon_move_365": {
+        "PT-BR": "Purga de Esplendor",
+        "EN": "Luster Purge",
+        "FI": "Luster Purge",
+        "NL": "Luster Purge",
+        "NO": "Luster Purge",
+        "PL": "Luster Purge",
+        "FR": "Lumi-Éclat",
+        "DE": "Scheinwerfer",
+        "IT": "Abbagliante",
+        "RU": "Генеральная Чистка",
+        "ES": "Resplandor"
+    },
+    "pokemon_move_366": {
+        "PT-BR": "Bola de Névoa",
+        "EN": "Mist Ball",
+        "FI": "Mist Ball",
+        "NL": "Mist Ball",
+        "NO": "Mist Ball",
+        "PL": "Mist Ball",
+        "FR": "Ball’Brume",
+        "DE": "Nebelball",
+        "IT": "Foschisfera",
+        "RU": "Шар Тумана",
+        "ES": "Bola Neblina"
     }
 }
