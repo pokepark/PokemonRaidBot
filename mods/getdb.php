@@ -176,6 +176,7 @@ function parse_master_into_pokemon_table($form_ids, $game_master_url) {
     // Using negative to prevent mixup with actual form ID's
     // Collected from pogoprotos (hoping they won't change, so hard coding them here)
     $mega_ids = array('MEGA'=>-1,'MEGA_X'=>-2,'MEGA_Y'=>-3);
+    $mega_asset_suffixes = array('MEGA'=>51,'MEGA_X'=>51,'MEGA_Y'=>52);
 
     $weatherboost_table = array(
                             'POKEMON_TYPE_BUG'      => '3',
@@ -245,34 +246,6 @@ function parse_master_into_pokemon_table($form_ids, $game_master_url) {
                     
                 }
             }
-        }else if($part[0] == 'TEMPORARY' && $part[1] == 'EVOLUTION') {
-            // Found Mega pokemon data
-            // Get pokemon ID
-            $pokemon_id = ltrim(str_replace('V','',$part[2]),'0');
-            unset($part[0]);
-            unset($part[1]);
-            unset($part[2]);
-            unset($part[3]);
-
-            // Pokemon name
-            $pokemon_name = implode("_",$part);
-            $form_data = $row['data']['temporaryEvolutionSettings']['temporaryEvolutions'];
-            foreach($form_data as $form) {
-                // Nidoran
-                $poke_name = ucfirst(strtolower(str_replace(["_FEMALE","_MALE"],["♀","♂"],$pokemon_name)));
-                // Ho-oh
-                $poke_name = str_replace("_","-",$poke_name);
-
-                $form_name = str_replace("TEMP_EVOLUTION_","",$form['temporaryEvolutionId']);
-                $form_asset_suffix = $form['assetBundleValue'];
-                $form_id = $mega_ids[$form_name];
-
-                $pokemon_array[$pokemon_id][$form_name] = [ "pokemon_name"=>$poke_name,
-                                                            "pokemon_form_name"=>$form_name,
-                                                            "pokemon_form_id"=>$form_id,
-                                                            "asset_suffix"=>$form_asset_suffix
-                                                        ];
-            }
         }else if ($part[1] == "POKEMON" && $part[0][0] == "V" && isset($row['data']['pokemonSettings'])) {
             // Found Pokemon data
             $pokemon_id = (int)str_replace("V","",$part[0]);
@@ -328,7 +301,7 @@ function parse_master_into_pokemon_table($form_ids, $game_master_url) {
                 if(isset($row['data']['pokemonSettings']['tempEvoOverrides'])) {
                     foreach($row['data']['pokemonSettings']['tempEvoOverrides'] as $temp_evolution) {
                         if(isset($temp_evolution['tempEvoId'])) {
-                            $form_name = str_replace('TEMP_EVOLUTION_','',$temp_evolution['tempEvoId']);
+                            $mega_evolution_name = str_replace('TEMP_EVOLUTION_','',$temp_evolution['tempEvoId']);
                             // We only override the types for megas
                             // weather info is used to display boosts for caught mons, which often are different from mega's typing
                             $typeOverride = strtolower(str_replace('POKEMON_TYPE_','', $temp_evolution['typeOverride1']));
@@ -337,13 +310,18 @@ function parse_master_into_pokemon_table($form_ids, $game_master_url) {
                             if(isset($temp_evolution['typeOverride2'])) {
                                 $typeOverride2 = strtolower(str_replace('POKEMON_TYPE_','', $temp_evolution['typeOverride2']));
                             }
-                            $pokemon_array[$pokemon_id][$form_name]['min_cp'] = $min_cp;
-                            $pokemon_array[$pokemon_id][$form_name]['max_cp'] = $max_cp;
-                            $pokemon_array[$pokemon_id][$form_name]['min_weather_cp'] = $min_weather_cp;
-                            $pokemon_array[$pokemon_id][$form_name]['max_weather_cp'] = $max_weather_cp;
-                            $pokemon_array[$pokemon_id][$form_name]['weather'] = $weather;
-                            $pokemon_array[$pokemon_id][$form_name]['type'] = $typeOverride;
-                            $pokemon_array[$pokemon_id][$form_name]['type2'] = $typeOverride2;
+                            $pokemon_array[$pokemon_id][$mega_evolution_name] = [   'pokemon_name'      => $pokemon_array[$pokemon_id][$form_name]['pokemon_name'],
+                                                                                    'pokemon_form_name' => $mega_evolution_name,
+                                                                                    'pokemon_form_id'   => $mega_ids[$mega_evolution_name],
+                                                                                    'asset_suffix'      => $mega_asset_suffixes[$mega_evolution_name],
+                                                                                    'min_cp'            => $min_cp,
+                                                                                    'max_cp'            => $max_cp,
+                                                                                    'min_weather_cp'    => $min_weather_cp,
+                                                                                    'max_weather_cp'    => $max_weather_cp,
+                                                                                    'weather'           => $weather,
+                                                                                    'type'              => $typeOverride,
+                                                                                    'type2'             => $typeOverride2,
+                                                                                ];
                         }
                     }
                 }
