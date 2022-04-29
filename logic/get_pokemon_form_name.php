@@ -24,8 +24,12 @@ function get_pokemon_form_name($pokedex_id, $pokemon_form_id)
             );
 
         $level = $rs->fetch();
-        $pokemon_form_name = $level['pokemon_form_name'];
-
+        if($level) {
+            $pokemon_form_name = $level['pokemon_form_name'];
+        } else {
+          $error = "pokemon_form_name unknown for pokedex_id: {$pokedex_id}, pokemon_form_id: {$pokemon_form_id}";
+          throw new Exception($error);
+        }
         debug_log($pokemon_form_name, 'Per db, level is:');
     } else {
         debug_log('Faulty dex_id or form_id, defaulting to normal.');
