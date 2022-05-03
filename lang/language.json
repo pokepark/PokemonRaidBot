@@ -25,6 +25,19 @@
     "FI": "Ex-Raidi",
     "ES": "Incursión EX"
   },
+  "7stars": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Legendary Mega-Raid",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Legendaarinen Mega-Raidi",
+    "ES": "TRANSLATE"
+  },
   "6stars": {
     "NL": "Mega-Raid",
     "DE": "Mega-Raid",
@@ -115,6 +128,19 @@
     "PL": "Nieaktywny",
     "FI": "Pois käytöstä",
     "ES": "Desactivado"
+  },
+  "egg_7": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Legendary Mega-Raid Egg",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Legendaarinen Mega-Raid Muna",
+    "ES": "TRANSLATE"
   },
   "egg_6": {
     "NL": "Mega-Raid Ei",

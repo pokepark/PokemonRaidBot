@@ -15,8 +15,8 @@ function read_upcoming_bosses($return_sql = false) {
     foreach($pb['breakingNews'] as $news) {
         if($news['type'] == 'RAID_TYPE_RAID') {
             $rl = str_replace('RAID_LEVEL_','', $news['tier']);
-            if($rl == "MEGA") $raid_level_id = 6; else $raid_level_id = $rl;
-            if($raid_level_id != '5' and $raid_level_id != '6') break; // Limit scheduling to tier 5 and mega only
+            if($rl == 'MEGA') $raid_level_id = 6; elseif($rl == 'MEGA_5') $raid_level_id = 7; else $raid_level_id = $rl;
+            if($raid_level_id != '5' and $raid_level_id != '6' and $raid_level_id != '7') break; // Limit scheduling to tier 5 and mega only
             $starttime = new DateTime("@".(substr($news['startDate'],0,10)), new dateTimeZone('UTC'));
             $endtime = new DateTime("@".(substr($news['endDate'],0,10)), new dateTimeZone('UTC'));
 

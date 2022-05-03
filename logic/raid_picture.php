@@ -622,7 +622,7 @@ function create_raid_picture($raid, $standalone_photo = false, $debug = false) {
       $textwidth = ($max_x - $min_x);
       $textheight = ($max_y - $min_y);
       // Position from top
-      $poke_text_top = ($poke_text_top+($pa*($fontsize_poke+$spacing)));
+      $poke_text_top = floor($poke_text_top+($pa*($fontsize_poke+$spacing)));
       imagettftext($canvas,$fontsize_poke,$angle,$left_after_poke,$poke_text_top,$font_color,$font_text,$pokemon_text_lines[$pa]);
   }
 
