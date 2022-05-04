@@ -52,9 +52,6 @@ if(!empty($config->WEBHOOK_CHATS_BY_POKEMON[0])) {
     }
 }
 
-// Skip posting if create only -mode is set or raid time is greater than value set in config
-$no_auto_posting = ($config->WEBHOOK_CREATE_ONLY or ($raid['message']['end']-$raid['message']['start']) > ($config->WEBHOOK_EXCLUDE_AUTOSHARE_DURATION * 60));
-
 // Telegram JSON array.
 $tg_json = [];
 debug_log(count($update),"Received raids:");
@@ -62,6 +59,9 @@ if ($metrics){
     $webhook_raids_received_total->incBy(count($update));
 }
 foreach ($update as $raid) {
+    // Skip posting if create only -mode is set or raid time is greater than value set in config
+    $no_auto_posting = ($config->WEBHOOK_CREATE_ONLY or ($raid['message']['end']-$raid['message']['start']) > ($config->WEBHOOK_EXCLUDE_AUTOSHARE_DURATION * 60));
+
     $level = $raid['message']['level'];
     $pokemon = $raid['message']['pokemon_id'];
     $exclude_raid_levels = explode(',', $config->WEBHOOK_EXCLUDE_RAID_LEVEL);
