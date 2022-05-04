@@ -27,7 +27,7 @@ function update_raid_poll($raid_id, $raid = false, $update = false, $tg_json = f
     }
     // If neither of the methods above yielded results, or update came from a inline poll, check cleanup table for chat messages to update
     if(empty($chat_and_message) or isset($update['callback_query']['inline_message_id'])) {
-        if($update_photo) $photo_query = 'AND type = \'photo\''; else $photo_query = '';
+        if($update_photo) $photo_query = 'AND (type = \'photo\' OR type = \'poll_photo\')'; else $photo_query = '';
         $rs_chann = my_query('
             SELECT chat_id, message_id, type, media_unique_id
             FROM cleanup
