@@ -357,7 +357,7 @@ foreach ($update as $raid) {
         if($geofences != false) {
             foreach ($inside_geofences as $geofence_id) {
                 $const_geofence = 'WEBHOOK_CHATS_LEVEL_' . $level . '_' . $geofence_id;
-                $const_geofence_chats = $config->{$const_geofence};
+                $const_geofence_chats = $config->{$const_geofence} ?? [];
 
                 if(!empty($const_geofence_chats)) {
                     $chats_geofence = explode(',', $const_geofence_chats);
@@ -367,7 +367,7 @@ foreach ($update as $raid) {
 
         // Get chats to share to by raid level
         $const = 'WEBHOOK_CHATS_LEVEL_' . $level;
-        $const_chats = $config->{$const};
+        $const_chats = $config->{$const} ?? [];
 
         if(!empty($const_chats)) {
             $chats_raidlevel = explode(',', $const_chats);

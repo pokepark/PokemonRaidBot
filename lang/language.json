@@ -38,6 +38,19 @@
     "FI": "Legendaarinen Mega-Raidi",
     "ES": "TRANSLATE"
   },
+  "7stars_short": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Lege Mega",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Lege Mega",
+    "ES": "TRANSLATE"
+  },
   "6stars": {
     "NL": "Mega-Raid",
     "DE": "Mega-Raid",
@@ -50,6 +63,19 @@
     "PL": "TRANSLATE",
     "FI": "Mega-Raidi",
     "ES": "Mega Incursión"
+  },
+  "6stars_short": {
+    "NL": "Mega",
+    "DE": "Mega",
+    "EN": "Mega",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Mega",
+    "ES": "Mega"
   },
   "5stars": {
     "NL": "5 Sterren",

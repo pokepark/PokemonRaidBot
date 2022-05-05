@@ -22,7 +22,7 @@ $dex_form = $dex_id_form[1];
 
 // Set raid level or show raid levels?
 if($data['arg'] == "setlevel") {
-    $raid_levels = [0,1,3,5,6,7,'X'];
+    $raid_levels = str_split('0' . RAID_LEVEL_ALL);
 
     // Init empty keys array.
     $keys = [];

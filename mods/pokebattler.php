@@ -10,9 +10,6 @@ debug_log('pokebattler()');
 bot_access_check($update, 'pokedex');
 include(LOGIC_PATH . '/resolve_boss_name_to_ids.php');
 
-// Levels available for import at PokeBattler
-$levels = array('7', '6', '5', '3', '1');
-
 // Get raid levels
 $id = $data['id'];
 
@@ -31,11 +28,11 @@ if($id == 0) {
     // All raid level keys.
     $keys[][] = array(
         'text'          => getTranslation('pokedex_all_raid_level'),
-        'callback_data' => RAID_LEVEL_ALL . ':pokebattler:ex#0,0,0'
+        'callback_data' => implode(",", $pokebattler_levels) . ':pokebattler:ex#0,0,0'
     );
 
     // Add key for each raid level
-    foreach($levels as $l) {
+    foreach($pokebattler_levels as $l) {
         $keys[][] = array(
             'text'          => getTranslation($l . 'stars'),
             'callback_data' => $l . ':pokebattler:ex#0,0,0'
@@ -69,14 +66,8 @@ if($id == 0) {
     $pb_data = curl_get_contents($link);
     $pb_data = json_decode($pb_data,true);
 
-    // All raid levels?
-    if($id == RAID_LEVEL_ALL) {
-        $get_levels = $levels;
-        $clear = "'7','6','5','3','1'";
-    } else {
-        $get_levels = explode(",", $id);
-        $clear = $id;
-    }
+    $get_levels = explode(",", $id);
+    $clear = $id;
 
     // Prefix for exclusion.
     $prefix = 'ex#';
@@ -112,13 +103,7 @@ if($id == 0) {
     debug_log('Processing the following raid levels:');
     $raidlevels = array();
     foreach($get_levels as $level) {
-        if($level == 6) {
-          $level = 'MEGA'; // PB uses RAID_LEVEL_MEGA instead of RAID_LEVEL_6
-        }
-        if($level == 7) {
-            $level = 'MEGA_5'; // PB uses RAID_LEVEL_MEGA_5 instead of RAID_LEVEL_7
-        }
-        $raidlevels[] = 'RAID_LEVEL_' . $level;
+        $raidlevels[] = 'RAID_LEVEL_' . $pokebattler_level_map[$level];
     }
     debug_log($raidlevels);
     $levels_processed = [];
@@ -129,7 +114,7 @@ if($id == 0) {
     foreach($pb_data['breakingNews'] as $news) {
         if($news['type'] == 'RAID_TYPE_RAID') {
             $rl = str_replace('RAID_LEVEL_','', $news['tier']);
-            if($rl == "MEGA") $raid_level_id = 6; elseif($rl == 'MEGA_5') $raid_level_id = 7; else $raid_level_id = $rl;
+            $raid_level_id = array_search($rl, $pokebattler_level_map);
             $starttime = new DateTime("@".substr($news['startDate'],0,10));
             $endtime = new DateTime("@".substr($news['endDate'],0,10));
             $starttime->setTimezone($ph);
@@ -142,12 +127,11 @@ if($id == 0) {
             }
         }
     }
-
     // Process raid tier(s)
     debug_log('Processing received pokebattler raid bosses for each raid level');
     foreach($pb_data['tiers'] as $tier) {
         $rl = str_replace('RAID_LEVEL_','', $tier['tier']);
-        if($rl == "MEGA") $raid_level_id = 6; elseif($rl == 'MEGA_5') $raid_level_id = 7; else $raid_level_id = $rl;
+        $raid_level_id = array_search($rl, $pokebattler_level_map);
         // Skip this raid level if the boss data was already collected from breaking news or raid level doesn't interest us
         if(!in_array($tier['tier'], $raidlevels) or isset($levels_processed[$raid_level_id])) {
             continue;
@@ -164,11 +148,10 @@ if($id == 0) {
         }
     }
 
-    $count = count($get_levels)-1;
-    for($i=$count;$i>=0;$i--) {
-        $raid_level_id = $get_levels[$i];
-        if($raid_level_id == 6) $rl = "MEGA"; elseif($raid_level_id == 7) $rl = "Legendary MEGA"; else $rl = $raid_level_id;
-        $msg .= '<b>' . getTranslation('pokedex_raid_level') . SP . $rl . ':</b>' . CR;
+    foreach($get_levels as $raid_level_id) {
+        if($raid_level_id > 5) $raid_level_text = getTranslation($raid_level_id . 'stars_short'); else $raid_level_text = $raid_level_id;
+        if(!isset($bosses[$raid_level_id])) continue;
+        $msg .= '<b>' . getTranslation('pokedex_raid_level') . SP . $raid_level_text . ':</b>' . CR;
         foreach($bosses[$raid_level_id] as $dex_id_form) {
             $dex_id = explode('-', $dex_id_form['id'], 2)[0];
             $dex_form = explode('-', $dex_id_form['id'], 2)[1];
@@ -235,20 +218,16 @@ if($id == 0) {
 
                 // Are 3 raid bosses already selected?
                 if($poke1 == '0' || $poke2 == '0' || $poke3 == '0') {
-                    // Add raid level to pokemon name
-                    if($id == RAID_LEVEL_ALL) {
-                        // Add key to exclude pokemon from import.
-                        $keys[] = array(
-                            'text'          => '[' . ($rl) . ']' . SP . $local_pokemon,
-                            'callback_data' => $id . ':pokebattler:' . $new_arg
-                        );
-                    } else {
-                        // Add key to exclude pokemon from import.
-                        $keys[] = array(
-                            'text'          => $local_pokemon,
-                            'callback_data' => $id . ':pokebattler:' . $new_arg
-                        );
+                    // Add key to exclude pokemon from import.
+                    $button_text_prefix = '';
+                    if($id == implode(",", $pokebattler_levels)) {
+                        // Add raid level to pokemon name
+                        $button_text_prefix = '[' . ($raid_level_text) . ']';
                     }
+                    $keys[] = array(
+                        'text'          => $button_text_prefix . SP . $local_pokemon,
+                        'callback_data' => $id . ':pokebattler:' . $new_arg
+                    );
                 }
             }
         }

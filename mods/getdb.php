@@ -19,10 +19,10 @@ if($protos = get_protos($proto_url)) {
         } else {
             $PRE = 'INSERT INTO `pokemon`' . PHP_EOL;
             $PRE .= '(pokedex_id, pokemon_name, pokemon_form_name, pokemon_form_id, asset_suffix, min_cp, max_cp, min_weather_cp, max_weather_cp, type, type2, weather) VALUES';
-            for($e = 1; $e <= 7; $e++) {
-                $pokemon_id = '999'.$e;
+            foreach($eggs as $egg) {
+                $pokemon_id = $egg;
                 $form_name = 'normal';
-                $pokemon_name = 'Level '. $e .' Egg';
+                $pokemon_name = 'Level '. $egg[3] .' Egg';
                 $pokemon_array[$pokemon_id][$form_name] = [ 'pokemon_name'=>$pokemon_name,
                                                             'pokemon_form_name'=>$form_name,
                                                             'pokemon_form_id'=>0,
