@@ -26,7 +26,7 @@
     "ES": "Incursión EX"
   },
   "7stars": {
-    "NL": "TRANSLATE",
+    "NL": "Legendary Mega-Raid",
     "DE": "TRANSLATE",
     "EN": "Legendary Mega-Raid",
     "IT": "TRANSLATE",
@@ -39,7 +39,7 @@
     "ES": "TRANSLATE"
   },
   "7stars_short": {
-    "NL": "TRANSLATE",
+    "NL": "Lege Mega",
     "DE": "TRANSLATE",
     "EN": "Lege Mega",
     "IT": "TRANSLATE",
@@ -156,7 +156,7 @@
     "ES": "Desactivado"
   },
   "egg_7": {
-    "NL": "TRANSLATE",
+    "NL": "Legendary Mega-Raid Ei",
     "DE": "TRANSLATE",
     "EN": "Legendary Mega-Raid Egg",
     "IT": "TRANSLATE",
@@ -260,7 +260,7 @@
     "ES": "Huevo Incursión"
   },
   "upcoming": {
-    "NL": "TRANSLATE",
+    "NL": "geplande",
     "DE": "TRANSLATE",
     "EN": "upcoming",
     "IT": "TRANSLATE",
@@ -273,7 +273,7 @@
     "ES": "próximo"
   },
   "upcoming_bosses_not_found": {
-    "NL": "TRANSLATE",
+    "NL": "Geen informatie gevonden voor geplande raid bazen!",
     "DE": "TRANSLATE",
     "EN": "No info of upcoming bosses was found!",
     "IT": "TRANSLATE",
@@ -286,7 +286,7 @@
     "ES": "¡No se encontró información de los próximos jefes!"
   },
   "current_scheduled_bosses": {
-    "NL": "TRANSLATE",
+    "NL": "Geplande raid bazen van de database",
     "DE": "TRANSLATE",
     "EN": "Scheduled raid bosses from database",
     "IT": "TRANSLATE",
@@ -299,7 +299,7 @@
     "ES": "Jefes de incursión programados de la base de datos"
   },
   "unscheduled_bosses": {
-    "NL": "TRANSLATE",
+    "NL": "Ongeplande bazen",
     "DE": "TRANSLATE",
     "EN": "Unscheduled bosses",
     "IT": "TRANSLATE",
@@ -312,7 +312,7 @@
     "ES": "Jefes no programados"
   },
   "delete_scheduled_confirmation": {
-    "NL": "TRANSLATE",
+    "NL": "Wil je de geplande baas verwijderen?",
     "DE": "TRANSLATE",
     "EN": "Do you want to delete this scheduled entry?",
     "IT": "TRANSLATE",
@@ -325,7 +325,7 @@
     "ES": "¿Quieres eliminar esta entrada programada?"
   },
   "found_upcoming_bosses": {
-    "NL": "TRANSLATE",
+    "NL": "Volgende geplande raid bazen gevonden",
     "DE": "TRANSLATE",
     "EN": "Found following upcoming bosses",
     "IT": "TRANSLATE",
@@ -338,7 +338,7 @@
     "ES": "Próximos jefes encontrado"
   },
   "confirm_replace_upcoming": {
-    "NL": "TRANSLATE",
+    "NL": "Wil je de data vervangen met wat we gevonden hebben?",
     "DE": "TRANSLATE",
     "EN": "Would you like to replace the current data with what we found?",
     "IT": "TRANSLATE",
@@ -637,7 +637,7 @@
     "ES": "Importar"
   },
   "update_pokemon_table": {
-    "NL": "TRANSLATE",
+    "NL": "Update Pokemon tabel",
     "DE": "TRANSLATE",
     "EN": "Update Pokemon table",
     "IT": "TRANSLATE",
@@ -819,7 +819,7 @@
     "ES": "Incursión remota"
   },
   "remote_raids": {
-    "NL": "TRANSLATE",
+    "NL": "Remote raids",
     "DE": "TRANSLATE",
     "EN": "Remote raids",
     "IT": "TRANSLATE",
@@ -871,7 +871,7 @@
     "ES": "Has participado en la incursión remota que creaste. ¿Quieres eliminar el anuncio de la incursión?"
   },
   "delete_remote_raid_cancel": {
-    "NL": "TRANSLATE",
+    "NL": "Je hebt je aanwezigheid bij de remote raid afgezegd. Kunnen we het raid overzicht verwijderen?",
     "DE": "TRANSLATE",
     "EN": "You have canceled your attendance to the remote raid you created. Can we delete the raid poll?",
     "IT": "TRANSLATE",
@@ -988,7 +988,7 @@
     "ES": "Por favor, selecciona la primera letra del gimnasio:"
   },
   "select_gym_first_letter_or_gym_area": {
-    "NL": "TRANSLATE",
+    "NL": "Selecteer de eerste letter van de gym of gym gebied:",
     "DE": "TRANSLATE",
     "EN": "Please select the first letter of the gym or gym area:",
     "IT": "TRANSLATE",
@@ -1001,7 +1001,7 @@
     "ES": "Seleccione la primera letra del gimnasio o la zona del gimnasio:"
   },
   "select_gym_name_or_gym_area": {
-    "NL": "TRANSLATE",
+    "NL": "Selecteer gym of gym gebied:",
     "DE": "TRANSLATE",
     "EN": "Please select gym or gym area:",
     "IT": "TRANSLATE",
@@ -1014,7 +1014,7 @@
     "ES": "Seleccione gimnasio o zona de gimnasio:"
   },
   "select_gym_area": {
-    "NL": "TRANSLATE",
+    "NL": "Selecteer gym gebied:",
     "DE": "TRANSLATE",
     "EN": "Please select the gymarea:",
     "IT": "TRANSLATE",
@@ -3393,7 +3393,7 @@
     "ES": "¡Alertas de incursión activadas!"
   },
   "switch_alarm_on": {
-    "NL": "TRANSLATE",
+    "NL": "Zet automatische raid alarm aan",
     "DE": "TRANSLATE",
     "EN": "Enable automatic raid alerts",
     "IT": "TRANSLATE",
@@ -3406,7 +3406,7 @@
     "ES": "Activar alertas automáticas de incursiones"
   },
   "switch_alarm_off": {
-    "NL": "TRANSLATE",
+    "NL": "Zet automatisch raid alarm uit",
     "DE": "TRANSLATE",
     "EN": "Disable automatic raid alerts",
     "IT": "TRANSLATE",
@@ -3848,7 +3848,7 @@
     "ES": "¡No se encontraron incursiones con los asistentes!"
   },
   "date": {
-    "NL": "TRANSLATE",
+    "NL": "Datum",
     "DE": "Datum",
     "EN": "Date",
     "IT": "TRANSLATE",
@@ -3861,7 +3861,7 @@
     "ES": "Fecha"
   },
   "current_gymarea": {
-    "NL": "TRANSLATE",
+    "NL": "Gym gebied",
     "DE": "TRANSLATE",
     "EN": "Current gymarea",
     "IT": "TRANSLATE",
