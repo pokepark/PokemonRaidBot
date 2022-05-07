@@ -6,7 +6,7 @@ $error = false;
 
 // Read the form ids from protos
 if($protos = get_protos($proto_url)) {
-    global $dbh;
+    global $dbh, $eggs;
     $form_ids = $protos[0];
     $costume = $protos[1];
 
