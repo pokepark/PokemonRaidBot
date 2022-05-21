@@ -321,24 +321,23 @@ function create_raid_picture($raid, $standalone_photo = false, $debug = false) {
           $p_icon = $p_icon . ".png";
 
           foreach($p_sources as $p_dir) {
-              // Set pokemon icon dir
-              $p_img = IMAGES_PATH . "/pokemon_" . $p_dir . "/" . $p_icon;
-              $p_add_img = IMAGES_PATH . "/pokemon_" . $p_dir . "/Addressable_Assets/" . $addressable_icon;
-
               // Icon dir named 'pokemon'? Then change path to not add '_repo-owner' to icon folder name
-              if($p_dir == 'pokemon') {
-                  $p_img = IMAGES_PATH . "/pokemon/" . $p_icon;
-                  $p_add_img = IMAGES_PATH . "/pokemon/Addressable_Assets" . $addressable_icon;
-              }
+              if($p_dir == 'pokemon') $asset_dir = 'pokemon'; else $asset_dir = 'pokemon_' . $p_dir;
+              // Set pokemon icon dir
+              $p_img_base_path = IMAGES_PATH . "/" . $asset_dir;
+
               // Check if file exists in this collection
               // Prioritize addressable asset file
-              if(file_exists($p_add_img) && filesize($p_add_img) > 0) {
-                  $img_file = $p_add_img;
-                  break;
-              }else if(file_exists($p_img) && filesize($p_img) > 0) {
-                  $img_file = $p_img;
-                  break;
+              if(file_exists($p_img_base_path . "/" . $addressable_icon) && filesize($p_img_base_path . "/" . $addressable_icon) > 0) {
+                $img_file = $p_img_base_path . "/" . $addressable_icon;
+
+              // These elseifs become redundant after PokeMiners move the files from Addressable Assets folder to the parent directory on 1.6.2022
+              }else if(file_exists($p_img_base_path . "/Addressable_Assets/" . $addressable_icon) && filesize($p_img_base_path . "/Addressable_Assets/" . $addressable_icon) > 0) {
+                $img_file = $p_img_base_path . "/Addressable_Assets/" . $addressable_icon;
+              }else if(file_exists($p_img_base_path . "/" . $p_icon) && filesize($p_img_base_path . "/" . $p_icon) > 0) {
+                $img_file = $p_img_base_path . "/" . $p_icon;
               }
+              break;
           }
 
           // If no image was found, substitute with a fallback
