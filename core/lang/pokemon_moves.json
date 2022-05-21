@@ -3885,5 +3885,31 @@
         "IT": "Foschisfera",
         "RU": "Шар Тумана",
         "ES": "Bola Neblina"
+    },
+    "pokemon_move_368": {
+        "PT-BR": "Rolagem",
+        "EN": "Rollout",
+        "FI": "Rollout",
+        "NL": "Rollout",
+        "NO": "Rollout",
+        "PL": "Rollout",
+        "FR": "Roulade",
+        "DE": "Walzer",
+        "IT": "Rotolamento",
+        "RU": "Перекат",
+        "ES": "Desenrollar"
+    },
+    "pokemon_move_369": {
+        "PT-BR": "Semente Ofuscante",
+        "EN": "Seed Flare",
+        "FI": "Seed Flare",
+        "NL": "Seed Flare",
+        "NO": "Seed Flare",
+        "PL": "Seed Flare",
+        "FR": "Fulmigraine",
+        "DE": "Schocksamen",
+        "IT": "Infuriaseme",
+        "RU": "Сияние Семени",
+        "ES": "Fogonazo"
     }
 }
