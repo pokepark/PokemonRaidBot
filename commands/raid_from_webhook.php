@@ -71,7 +71,7 @@ foreach ($update as $raid) {
         continue;
     }
 
-    $gym_name = $raid['message']['name'];
+    $gym_name = isset($raid['message']['name']) ? $raid['message']['name'] : $raid['message']['gym_name'];
     if ($config->WEBHOOK_EXCLUDE_UNKNOWN && $gym_name === 'unknown') {
         debug_log($raid['message']['gym_id'],'Ignoring raid, the gym name is unknown and WEBHOOK_EXCLUDE_UNKNOWN says to ignore. id:');
         continue;
@@ -79,8 +79,8 @@ foreach ($update as $raid) {
     $gym_lat = $raid['message']['latitude'];
     $gym_lon = $raid['message']['longitude'];
     $gym_id = $raid['message']['gym_id'];
-    $gym_img_url = $raid['message']['url'];
-    $gym_is_ex = ( $raid['message']['is_ex_raid_eligible'] ? 1 : 0 );
+    $gym_img_url = isset($raid['message']['url']) ? $raid['message']['url'] : $raid['message']['gym_url'];
+    $gym_is_ex = isset($raid['message']['is_ex_raid_eligible']) ? ( $raid['message']['is_ex_raid_eligible'] ? 1 : 0 ) : ( $raid['message']['ex_raid_eligible'] ? 1 : 0 );
     $gym_internal_id = 0;
 
     // Check geofence, if available, and skip current raid if not inside any fence
