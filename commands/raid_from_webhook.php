@@ -72,7 +72,7 @@ foreach ($update as $raid) {
     }
 
     $gym_name = isset($raid['message']['name']) ? $raid['message']['name'] : $raid['message']['gym_name'];
-    if ($config->WEBHOOK_EXCLUDE_UNKNOWN && $gym_name === 'unknown') {
+    if ($config->WEBHOOK_EXCLUDE_UNKNOWN && ($gym_name === 'unknown' || $gym_name === 'Unknown')) {
         debug_log($raid['message']['gym_id'],'Ignoring raid, the gym name is unknown and WEBHOOK_EXCLUDE_UNKNOWN says to ignore. id:');
         continue;
     }
