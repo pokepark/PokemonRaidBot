@@ -330,14 +330,15 @@ function create_raid_picture($raid, $standalone_photo = false, $debug = false) {
               // Prioritize addressable asset file
               if(file_exists($p_img_base_path . "/" . $addressable_icon) && filesize($p_img_base_path . "/" . $addressable_icon) > 0) {
                 $img_file = $p_img_base_path . "/" . $addressable_icon;
-
+                break;
               // These elseifs become redundant after PokeMiners move the files from Addressable Assets folder to the parent directory on 1.6.2022
               }else if(file_exists($p_img_base_path . "/Addressable_Assets/" . $addressable_icon) && filesize($p_img_base_path . "/Addressable_Assets/" . $addressable_icon) > 0) {
                 $img_file = $p_img_base_path . "/Addressable_Assets/" . $addressable_icon;
+                break;
               }else if(file_exists($p_img_base_path . "/" . $p_icon) && filesize($p_img_base_path . "/" . $p_icon) > 0) {
                 $img_file = $p_img_base_path . "/" . $p_icon;
+                break;
               }
-              break;
           }
 
           // If no image was found, substitute with a fallback
