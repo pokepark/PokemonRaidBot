@@ -5,4 +5,4 @@ ALTER TABLE `cleanup` ADD COLUMN IF NOT EXISTS `media_unique_id` varchar(45) DEF
 CREATE UNIQUE INDEX IF NOT EXISTS `unique_chat_msg` ON `cleanup` (chat_id, message_id);
 
 ALTER TABLE `raids` MODIFY `level` enum('1','2','3','4','5','6','7','X') DEFAULT NULL;
-ALTER TABLE `raid_bosses` MODIFY `raid_level` enum('1','2','3','4','5','6','7','X') DEFAULT NULL;
+ALTER TABLE `raid_bosses` MODIFY `raid_level` enum('1','2','3','4','5','6','7','8','X') DEFAULT NULL;

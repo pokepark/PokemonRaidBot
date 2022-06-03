@@ -25,6 +25,19 @@
     "FI": "Ex-Raidi",
     "ES": "Incursión EX"
   },
+  "8stars": {
+    "NL": "TRANSLATE",
+    "DE": "Ultrapforte",
+    "EN": "Ultra Wormhole",
+    "IT": "Ultravarco",
+    "PT-BR": "Ultrafenda Espacial",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "Ultra-Brèche ",
+    "PL": "Ultratunel",
+    "FI": "Ultramadonreikä",
+    "ES": "Ultraumbral"
+  },
   "7stars": {
     "NL": "Legendary Mega-Raid",
     "DE": "TRANSLATE",
@@ -154,6 +167,19 @@
     "PL": "Nieaktywny",
     "FI": "Pois käytöstä",
     "ES": "Desactivado"
+  },
+  "egg_8": {
+    "NL": "TRANSLATE",
+    "DE": "Ultrapforte",
+    "EN": "Ultra Wormhole",
+    "IT": "Ultravarco",
+    "PT-BR": "Ultrafenda Espacial",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "Ultra-Brèche ",
+    "PL": "Ultratunel",
+    "FI": "Ultramadonreikä",
+    "ES": "Ultraumbral"
   },
   "egg_7": {
     "NL": "Legendary Mega-Raid Ei",

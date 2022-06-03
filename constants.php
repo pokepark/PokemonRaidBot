@@ -3,10 +3,11 @@
 define('PORTAL_IMAGES_PATH', IMAGES_PATH . '/gyms');
 
 // raid levels constant
-define('RAID_LEVEL_ALL', 'X76531');
+define('RAID_LEVEL_ALL', 'X876531');
 
 // Raid eggs.
 $eggs = array(
+    '9998',  // Level 8 / Ultra beast
     '9997',  // Level 7 / Legendary Mega
     '9996',  // Level 6 / Mega
     '9995',  // Level 5
@@ -17,7 +18,7 @@ $eggs = array(
 );
 
 // Levels available for import at PokeBattler
-$pokebattler_levels = array('7', '6', '5', '3', '1');
+$pokebattler_levels = array('8', '7', '6', '5', '3', '1');
 
 // Map our raid levels to tier names PokeBattler uses
 $pokebattler_level_map = [
@@ -26,10 +27,11 @@ $pokebattler_level_map = [
     '5' => 5,
     '6' => 'MEGA',
     '7' => 'MEGA_5',
+    '8' => 'ULTRA_BEAST',
 ];
 
 // Limit the tiers of upcoming raid bosses imported from PokeBattler to legendary and mega
-$pokebattler_import_future_tiers = [5, 6, 7];
+$pokebattler_import_future_tiers = [5, 6, 7, 8];
 
 // Value used for denoting anytime attendance
 define('ANYTIME', '1970-01-01 00:00:00');
