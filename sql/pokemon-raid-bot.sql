@@ -114,7 +114,7 @@ CREATE TABLE `raids` (
   `end_time` datetime DEFAULT NULL,
   `gym_team` enum('mystic','valor','instinct') DEFAULT NULL,
   `gym_id` int(10) unsigned NOT NULL,
-  `level` enum('1','2','3','4','5','6','7','X') DEFAULT NULL,
+  `level` enum('1','2','3','4','5','6','7','8','X') DEFAULT NULL,
   `move1` varchar(255) DEFAULT NULL,
   `move2` varchar(255) DEFAULT NULL,
   `gender` varchar(255) DEFAULT NULL,
