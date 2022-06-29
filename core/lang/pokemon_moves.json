@@ -3886,6 +3886,19 @@
         "RU": "Шар Тумана",
         "ES": "Bola Neblina"
     },
+    "pokemon_move_367": {
+        "PT-BR": "Balanço Violento",
+        "EN": "Brutal Swing",
+        "FI": "Brutal Swing",
+        "NL": "Brutal Swing",
+        "NO": "Brutal Swing",
+        "PL": "Brutal Swing",
+        "FR": "Centrifugifle",
+        "DE": "Wirbler",
+        "IT": "Vorticolpo",
+        "RU": "Резкий Поворот",
+        "ES": "Giro Vil"
+    },
     "pokemon_move_368": {
         "PT-BR": "Rolagem",
         "EN": "Rollout",

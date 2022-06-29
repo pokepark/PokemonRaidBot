@@ -4139,7 +4139,6 @@
         "RU": "Крабаминабл"
     },
     "pokemon_id_741": {
-        "PT-BR": "Oricório",
         "EN": "Oricorio",
         "FR": "Plumeline",
         "DE": "Choreogel",
@@ -5059,5 +5058,26 @@
         "FR": "Sylveroy",
         "DE": "Coronospa",
         "RU": "Калирекс"
+    },
+    "pokemon_id_899": {
+        "EN": "Wyrdeer"
+    },
+    "pokemon_id_900": {
+        "EN": "Kleavor"
+    },
+    "pokemon_id_901": {
+        "EN": "Ursaluna"
+    },
+    "pokemon_id_902": {
+        "EN": "Basculegion"
+    },
+    "pokemon_id_903": {
+        "EN": "Sneasler"
+    },
+    "pokemon_id_904": {
+        "EN": "Overqwil"
+    },
+    "pokemon_id_905": {
+        "EN": "Enamorus"
     }
 }
