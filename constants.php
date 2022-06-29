@@ -3,7 +3,7 @@
 define('PORTAL_IMAGES_PATH', IMAGES_PATH . '/gyms');
 
 // raid levels constant
-define('RAID_LEVEL_ALL', 'X876531');
+define('RAID_LEVEL_ALL', 'X8765431');
 
 // Raid eggs.
 $eggs = array(
@@ -18,12 +18,13 @@ $eggs = array(
 );
 
 // Levels available for import at PokeBattler
-$pokebattler_levels = array('8', '7', '6', '5', '3', '1');
+$pokebattler_levels = array('8', '7', '6', '5', '4', '3', '1');
 
 // Map our raid levels to tier names PokeBattler uses
 $pokebattler_level_map = [
     '1' => 1,
     '3' => 3,
+    '4' => 4,
     '5' => 5,
     '6' => 'MEGA',
     '7' => 'MEGA_5',
