@@ -168,7 +168,7 @@ function keys_vote($raid)
                 $keys_time = [
                                 [
                                     'text'          => getPublicTranslation("Participate"),
-                                    'callback_data' => $raid['id'] . ':vote_time:0'
+                                    'callback_data' => $raid['id'] . ':vote_time:' . utctime($raid['start_time'], 'YmdHis')
                                 ]
                             ];
             }else {
