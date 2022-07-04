@@ -626,7 +626,7 @@
   "option_value": {
     "NL": "Configuratie optie waarde",
     "DE": "Konfigurationsoption Wert",
-    "EN": "Configurationoption value",
+    "EN": "Configuration option value",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
@@ -635,6 +635,19 @@
     "PL": "TRANSLATE",
     "FI": "Asetuksen arvo",
     "ES": "Valor de la opción de configuración"
+  },
+  "config_option": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Configuration option",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Asetuksen nimi",
+    "ES": "TRANSLATE"
   },
   "no_value": {
     "NL": "Geen waarde",

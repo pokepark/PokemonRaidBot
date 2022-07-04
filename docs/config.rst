@@ -272,6 +272,13 @@ Set ``RAID_EX_GYM_MARKER`` to set the marker for ex-raid gyms. You can use a pre
 
 Set ``RAID_CREATION_EX_GYM_MARKER`` to true to show the marker for ex-raid gyms during raid creation.
 
+Manage bot configuration values via Telegram
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+For bot admins to easily manage specific bot settings you can create a config file ``config/telegram.json`` containing the configuration values you want to be able to edit. Example file is located in ``config/defaults-telegram.json``.
+
+Users with the right permissions can then use the commands ``/get`` and ``/set`` to manage those configuration values.
+
 Automatically refreshing raid polls
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -698,6 +705,15 @@ A few examples for access files can be found below the permission overview table
    * - 
      - 
      - 
+   * - Settings
+     - Read the value of a specific setting in bot config ``/get``
+     - ``config-get``
+   * - 
+     - Set the value of a specific setting in bot config ``/set``
+     - ``config-set``
+   * - 
+     - 
+     - 
    * - Trainer
      - Set trainer data ``/trainer``
      - ``trainer``
@@ -717,7 +733,7 @@ A few examples for access files can be found below the permission overview table
      - 
      - 
    * - Pokedex
-     - Manage raid pokemon ``/pokedex``
+     - Manage raid Pokemon ``/pokedex``
      - ``pokedex``
    * - 
      - 

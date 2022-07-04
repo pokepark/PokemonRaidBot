@@ -89,7 +89,7 @@ $msg_error_info = '';
 if(in_array($config_name, $allowed)) {
     // Only bool?
     if(in_array($config_name, $allowed_bool)) {
-        if(strcasecmp($config_value, true) == 0 || strcasecmp($config_value, false) == 0) {
+        if(strcasecmp($config_value, 'true') == 0 || strcasecmp($config_value, 'false') == 0) {
             $config_value = strtolower($config_value);
             $restrict = 'no';
         } else if($config_value == 0 || $config_value == 1) {
@@ -144,7 +144,7 @@ if(in_array($config_name, $allowed) && $restrict == 'no') {
     $msg .= '<b>' . getTranslation('config') . ':</b>' . CR;
     // Any configs allowed?
     if(!empty($config->ALLOWED_TELEGRAM_CONFIG)) {
-        $msg .= '<code>/setconfig' . SP . getTranslation('option_value') . '</code>' . CR;
+        $msg .= '<code>/set [' . getTranslation("config_option") . '] [' . getTranslation('option_value') . ']</code>' . CR;
         foreach($json as $cfg_name => $cfg_value) {
             // Only allowed configs
             if(in_array($cfg_name, $allowed)) {
