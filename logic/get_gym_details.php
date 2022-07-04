@@ -35,23 +35,24 @@ function get_gym_details($gym, $extended = false)
 
     // Add or hide gym note.
     if(!empty($gym['gym_note'])) {
-        $msg .= EMOJI_INFO . SP . $gym['gym_note'];
+        $msg .= EMOJI_INFO . SP . $gym['gym_note'] . CR;
     }
 
     // Get extended gym details?
     if($extended == true) {
         $msg .= CR . '<b>' . getTranslation('extended_gym_details') . '</b>';
-        // Normal gym?
-        if($gym['ex_gym'] == 1) {
-            $msg .= CR . '-' . SP . getTranslation('ex_gym');
-        }
-
         // Hidden gym?
-        if($gym['show_gym'] == 1 && $gym['ex_gym'] == 0) {
-            $msg .= CR . '-' . SP . getTranslation('normal_gym');
-        } else if($gym['show_gym'] == 0) {
+        if($gym['show_gym'] == 0) {
             $msg .= CR . '-' . SP . getTranslation('hidden_gym');
+        }else {
+            // Normal gym?
+            if($gym['ex_gym'] == 1) {
+                $msg .= CR . '-' . SP . getTranslation('ex_gym');
+            }else {
+                $msg .= CR . '-' . SP . getTranslation('normal_gym');
+            }
         }
+        $msg .= CR . '-' . SP . getTranslation('gym_coordinates') . ': <code>' . (float)$gym['lat'] . ',' . (float)$gym['lon'].'</code>';
     }
 
     return $msg;

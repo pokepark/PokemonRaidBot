@@ -51,6 +51,15 @@ if($config->ENABLE_GYM_AREAS == false or ($config->ENABLE_GYM_AREAS == true && $
 // Merge keys.
 $keys = array_merge($h_keys, $keys);
 
+if(bot_access_check($update, 'gym-add')) {
+    $keys[] = [
+        [
+            'text'          => getTranslation('gym_create'),
+            'callback_data' => '0:gym_create:0'
+        ]
+    ];
+}
+
 $keys[] = [
     [
         'text'          => getTranslation('abort'),

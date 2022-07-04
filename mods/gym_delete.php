@@ -46,7 +46,7 @@ if ($new_arg > 0 && $delete == true && $confirm == false) {
         [
             [
                 'text'          => getTranslation('no'),
-                'callback_data' => '0:exit:0'
+                'callback_data' => $new_arg . ':gym_edit_details:'
             ]
         ]
     ];

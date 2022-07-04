@@ -690,19 +690,10 @@ A few examples for access files can be found below the permission overview table
      - Edit extended gym details ``/gym``
      - ``gym-edit``
    * - 
-     - Edit gym name ``/gymname``
-     - ``gym-name``
+     - Delete a gym ``/gym``
+     - ``gym-delete``
    * - 
-     - Edit gym address ``/gymaddress``
-     - ``gym-address``
-   * - 
-     - Edit gym gps coordinates ``/gymgps``
-     - ``gym-gps``
-   * - 
-     - Edit gym note ``/gymnote``
-     - ``gym-note``
-   * - 
-     - Add a gym ``/addgym``
+     - Add a gym ``/gym``
      - ``gym-add``
    * - 
      - 

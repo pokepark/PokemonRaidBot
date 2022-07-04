@@ -57,53 +57,8 @@ if($arg == 0 || $id == '0' || $id == '1') {
 } else {
     $gym = get_gym($arg);
     $msg = get_gym_details($gym, true);
-    $msg .= CR . CR . '<b>' . getTranslation('change_extended_gym_details') . '</b>';
 
-    // Hide gym?
-    if($gym['show_gym'] == 1) {
-        $text_show_button = getTranslation('hide_gym');
-        $arg_show = 0;
-
-    // Show gym?
-    } else {
-        $text_show_button = getTranslation('show_gym');
-        $arg_show = 1;
-    }
-
-    // Normal gym?
-    if($gym['ex_gym'] == 1) {
-        $text_ex_button = getTranslation('normal_gym');
-        $arg_ex = 0;
-
-    // Ex-raid gym?
-    } else {
-        $text_ex_button = getTranslation('ex_gym');
-        $arg_ex = 1;
-    }
-
-    // Add buttons to show/hide the gym and add/remove ex-raid flag
-    $keys = [];
-    $keys[] = array(
-        'text'          => $text_show_button,
-        'callback_data' => $arg . ':gym_edit_details:show-' . $arg_show
-    );
-    $keys[] = array(
-        'text'          => $text_ex_button,
-        'callback_data' => $arg . ':gym_edit_details:ex-' . $arg_ex
-    );
-    if(bot_access_check($update, 'gym-delete', true)) {
-        $keys[] = array(
-            'text'          => getTranslation("gym_delete"),
-            'callback_data' => '0:gym_delete:'.$arg.'-delete'
-        );
-    }
-    $keys[] = array(
-        'text'          => getTranslation('done'),
-        'callback_data' => '0:exit:1'
-    );
-
-    // Get the inline key array.
-    $keys = inline_key_array($keys, 1);
+    $keys = edit_gym_keys($update, $arg, $gym['show_gym'], $gym['ex_gym'], $gym['gym_note'], $gym['address']);
 }
 
 // Build callback message string.
