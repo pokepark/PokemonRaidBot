@@ -145,6 +145,7 @@ function create_raid_picture($raid, $standalone_photo = false, $debug = false) {
 
   // Gym image
   $gym_url = $raid['img_url'];
+  $gym_image_path = '';
   if($config->RAID_PICTURE_STORE_GYM_IMAGES_LOCALLY && !empty($gym_url)) {
       if(substr($gym_url, 0, 7) == 'file://') {
           $gym_image_path = $gym_url;
@@ -169,7 +170,7 @@ function create_raid_picture($raid, $standalone_photo = false, $debug = false) {
           $gym_image_path = $gym_url;
       }
   }
-  $img_gym = grab_img($gym_image_path);
+  $img_gym = $gym_image_path != '' ? grab_img($gym_image_path) : false;
   if($img_gym == false) {
       info_log($gym_image_path, 'Loading the gym image failed, using default gym image');
       if(is_file($config->RAID_DEFAULT_PICTURE)) {
