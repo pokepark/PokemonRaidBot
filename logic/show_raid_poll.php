@@ -26,7 +26,7 @@ function show_raid_poll($raid, $inline = false)
     }
 
     // Get raid times.
-    $msg = raid_poll_message($msg, get_raid_times($raid), true);
+    $msg = raid_poll_message($msg, get_raid_times($raid, false, ($raid['event_pokemon_title'] == 0 ? true : false)), true);
 
     // Get current time and time left.
     $time_now = utcnow();
@@ -74,13 +74,19 @@ function show_raid_poll($raid, $inline = false)
         }
     }
 
-    // Display raid boss name.
-    $msg = raid_poll_message($msg, getPublicTranslation('raid_boss') . ': <b>' . get_local_pokemon_name($raid_pokemon_id, $raid['pokemon_form'], true) . '</b>', true);
+    // Display raid boss name and boss' weather unless hidden for a specific event
+    if($raid['event_pokemon_title'] != 0) {
+        // Display raid boss name.
+        if($raid['event_pokemon_title'] == 1) $title = getPublicTranslation('raid_boss');
+        elseif($raid['event_pokemon_title'] == 2) $title = getPublicTranslation('featured_pokemon');
+        else $title = getPublicTranslation('raid_boss');
+        $msg = raid_poll_message($msg, $title . ': <b>' . get_local_pokemon_name($raid_pokemon_id, $raid['pokemon_form'], true) . '</b>', true);
 
-    // Display raid boss weather.
-    $pokemon_weather = get_pokemon_weather($raid_pokemon_id, $raid_pokemon_form_id);
-    $msg = raid_poll_message($msg, ($pokemon_weather != 0) ? (' ' . get_weather_icons($pokemon_weather)) : '', true);
-    $msg = raid_poll_message($msg, CR, true);
+        // Display raid boss weather.
+        $pokemon_weather = get_pokemon_weather($raid_pokemon_id, $raid_pokemon_form_id);
+        $msg = raid_poll_message($msg, ($pokemon_weather != 0) ? (' ' . get_weather_icons($pokemon_weather)) : '', true);
+        $msg = raid_poll_message($msg, CR, true);
+    }
 
     // Display attacks.
     if ($raid['move1'] > 1 && $raid['move2'] > 2 ) {

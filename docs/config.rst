@@ -448,6 +448,11 @@ With ``time_slots`` you can set event secific time slots for vote keys when ``vo
 
 ``hide_raid_picture`` hides the raid picture from these event polls even if ``RAID_PICTURE`` is set to ``true``.
 
+``pokemon_title`` select how the Pokemon name is displayed for this event.
+``0`` = hide Pokemon name
+``1`` = Raid boss: Kyogre
+``2`` = Featured Pokemon: Kyogre
+
 Trainer settings
 ----------------
 

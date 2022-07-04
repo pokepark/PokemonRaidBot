@@ -2105,6 +2105,19 @@
     "FI": "Raidi tallennettu:",
     "ES": "Incursión guardada:"
   },
+  "featured_pokemon": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Featured Pokemon",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Tapahtuman Pokemon",
+    "ES": "TRANSLATE"
+  },
   "raid_boss": {
     "NL": "Raid baas",
     "DE": "Raid-Boss",

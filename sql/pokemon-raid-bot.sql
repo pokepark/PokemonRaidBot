@@ -37,6 +37,7 @@ CREATE TABLE `events` (
   `time_slots` int(3) DEFAULT NULL,
   `raid_duration` int(3) unsigned NOT NULL DEFAULT 0,
   `hide_raid_picture` tinyint(1) DEFAULT 0,
+  `pokemon_title` tinyint(1) NULL DEFAULT 1,
   `poll_template` VARCHAR(200) NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
