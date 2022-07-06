@@ -303,11 +303,14 @@ function create_raid_picture($raid, $standalone_photo = false, $debug = false) {
           $p_sources = explode(',', $config->RAID_PICTURE_POKEMON_ICONS);
 
           $addressable_icon = 'pm'.$raid['pokemon'];
+
           if($raid['pokemon_form_name'] != 'normal') $addressable_icon .= '.f'.strtoupper($raid['pokemon_form_name']);
 
           // Getting the actual icon filename
           $p_icon = "pokemon_icon_" . $icon_suffix;
-          if($raid['costume'] != 0) {
+
+          // Add costume info for every mon except megas
+          if($raid['costume'] != 0 && $raid['pokemon_form'] >= 0) {
               $p_icon .= '_' . str_pad($raid['costume'], 2, '0', STR_PAD_LEFT);
 
               $costume = json_decode(file_get_contents(ROOT_PATH . '/protos/costume.json'), true);
@@ -344,7 +347,7 @@ function create_raid_picture($raid, $standalone_photo = false, $debug = false) {
 
           // If no image was found, substitute with a fallback
           if($img_file === null) {
-            info_log($p_icon, 'Failed to find an image in any pokemon image collection for:');
+            info_log($p_icon . ' ' . $addressable_icon, 'Failed to find an image in any pokemon image collection for:');
             $img_fallback_file = null;
             // If we know the raid level, fallback to egg image
             if(array_key_exists('level', $raid) && $raid['level'] !== null && $raid['level'] != 0) {
