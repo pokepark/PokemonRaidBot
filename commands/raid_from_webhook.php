@@ -326,6 +326,7 @@ foreach ($update as $raid) {
                                                     'event_time_slots' => NULL,
                                                     'event_raid_duration' => NULL,
                                                     'event_hide_raid_picture' => NULL,
+                                                    'event_pokemon_title' => NULL,
                                                     'event_poll_template' => NULL,
                                                     'raid_ended' => 0,
                                                 ]);
