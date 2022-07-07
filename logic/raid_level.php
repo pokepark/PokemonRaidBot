@@ -44,10 +44,10 @@ function get_raid_bosses($time, $raid_level)
     // Get raid level from database
     $rs = my_query(
             '
-            SELECT    pokedex_id, pokemon_form_id
-            FROM      raid_bosses
-            WHERE     \''.$time.'\' BETWEEN date_start AND date_end
-            AND       raid_level = \''.$raid_level.'\'
+            SELECT DISTINCT pokedex_id, pokemon_form_id
+            FROM            raid_bosses
+            WHERE           \''.$time.'\' BETWEEN date_start AND date_end
+            AND             raid_level = \''.$raid_level.'\'
         ');
     debug_log('Checking active raid bosses for raid level '.$raid_level.' at '.$time.':');
     $raid_bosses = [];
