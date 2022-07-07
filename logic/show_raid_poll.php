@@ -26,7 +26,7 @@ function show_raid_poll($raid, $inline = false)
     }
 
     // Get raid times.
-    $msg = raid_poll_message($msg, get_raid_times($raid, false, ($raid['event_pokemon_title'] == 0 ? true : false)), true);
+    $msg = raid_poll_message($msg, get_raid_times($raid, true, ($raid['event_pokemon_title'] == 0 ? true : false)), true);
 
     // Get current time and time left.
     $time_now = utcnow();
