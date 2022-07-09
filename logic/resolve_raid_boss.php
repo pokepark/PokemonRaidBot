@@ -10,11 +10,11 @@
 function resolve_raid_boss($pokemon, $pokemon_form, $spawn, $raid_level) {
     if($pokemon == 0) {
         $tz_diff = tz_diff();
-        $query = my_query(' SELECT  pokedex_id, pokemon_form_id
-                            FROM    raid_bosses 
-                            WHERE   raid_level = "' . $raid_level . '"
-                            AND     scheduled = 1
-                            AND     convert_tz("' . $spawn . '","+00:00","'.$tz_diff.'") BETWEEN date_start AND date_end');
+        $query = my_query(' SELECT  DISTINCT    pokedex_id, pokemon_form_id
+                            FROM                raid_bosses 
+                            WHERE               raid_level = "' . $raid_level . '"
+                            AND                 scheduled = 1
+                            AND                 convert_tz("' . $spawn . '","+00:00","'.$tz_diff.'") BETWEEN date_start AND date_end');
         if($query->rowCount() == 1) {
             $row = $query->fetch();
             // Return active boss
