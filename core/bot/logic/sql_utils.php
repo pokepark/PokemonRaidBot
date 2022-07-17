@@ -12,8 +12,7 @@ function run_sql_file($file) {
   } 
   try {
     $query = file_get_contents($file);
-    $statement = $dbh->prepare( $query );
-    $statement->execute();
+    $dbh->exec( $query );
   }
   catch (PDOException $exception) {
     info_log('DB upgrade failed: ' . $exception->getMessage());
