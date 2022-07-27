@@ -12,7 +12,7 @@ function read_upcoming_bosses($return_sql = false) {
 
     $pb_timezone = new dateTimeZone('America/Phoenix');
     $count = 0;
-    $sql = $list = $prev_start = $prev_rl = '';
+    $sql = $list = $prev_start = $prev_end = $prev_rl = '';
     if(isset($pb['breakingNews'])) {
         foreach($pb['breakingNews'] as $news) {
             if($news['type'] == 'RAID_TYPE_RAID') {
@@ -35,7 +35,7 @@ function read_upcoming_bosses($return_sql = false) {
                 $date_end = $endtime->format('Y-m-d H:i:s');
 
                 $dex_id_form = explode('-',resolve_boss_name_to_ids($news['pokemon']),2);
-                if($prev_start != $date_start) {
+                if($prev_start != $date_start or $prev_end != $date_end) {
                     $list.= CR . EMOJI_CLOCK . ' <b>' . $starttime->format('j.n. ') . getTranslation('raid_egg_opens_at') . $starttime->format(' H:i') . ' —  ' .  $endtime->format('j.n. ') . getTranslation('raid_egg_opens_at') . $endtime->format(' H:i') . ':</b>' . CR;
                     $prev_rl = '';
                 }
@@ -44,6 +44,7 @@ function read_upcoming_bosses($return_sql = false) {
                 }
                 $list.= get_local_pokemon_name($dex_id_form[0], $dex_id_form[1]) . CR;
                 $prev_start = $date_start;
+                $prev_end = $date_end;
                 $prev_rl = $raid_level_id;
 
                 if($count == 0) {
