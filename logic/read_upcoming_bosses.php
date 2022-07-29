@@ -6,7 +6,7 @@ require_once(LOGIC_PATH . '/resolve_boss_name_to_ids.php');
  * @return string
  */
 function read_upcoming_bosses($return_sql = false) {
-    global $pokebattler_import_future_tiers, $pokebattler_level_map;
+    global $pokebattler_import_future_tiers, $pokebattler_level_map, $pokebattler_pokemon_map;
     $link = curl_get_contents('https://fight.pokebattler.com/raids');
     $pb = json_decode($link,true);
 
@@ -34,7 +34,11 @@ function read_upcoming_bosses($return_sql = false) {
 
                 $date_end = $endtime->format('Y-m-d H:i:s');
 
-                $dex_id_form = explode('-',resolve_boss_name_to_ids($news['pokemon']),2);
+                $boss = $news['pokemon'];
+                if(in_array($news['pokemon'], array_keys($pokebattler_pokemon_map))) {
+                    $boss = $pokebattler_pokemon_map[$news['pokemon']];
+                }
+                $dex_id_form = explode('-',resolve_boss_name_to_ids($boss),2);
                 if($prev_start != $date_start or $prev_end != $date_end) {
                     $list.= CR . EMOJI_CLOCK . ' <b>' . $starttime->format('j.n. ') . getTranslation('raid_egg_opens_at') . $starttime->format(' H:i') . ' —  ' .  $endtime->format('j.n. ') . getTranslation('raid_egg_opens_at') . $endtime->format(' H:i') . ':</b>' . CR;
                     $prev_rl = '';

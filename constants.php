@@ -31,6 +31,11 @@ $pokebattler_level_map = [
     '8' => 'ULTRA_BEAST',
 ];
 
+$pokebattler_pokemon_map = [
+    'ZACIAN' => 'ZACIAN_HERO_FORM',
+    'ZAMAZENTA' => 'ZAMAZENTA_HERO_FORM',
+];
+
 // Limit the tiers of upcoming raid bosses imported from PokeBattler to legendary and mega
 $pokebattler_import_future_tiers = [5, 6, 7, 8];
 
