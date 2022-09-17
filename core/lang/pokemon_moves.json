@@ -3924,5 +3924,57 @@
         "IT": "Infuriaseme",
         "RU": "Сияние Семени",
         "ES": "Fogonazo"
+    },
+    "pokemon_move_350": {
+        "PT-BR": "Vento de Fada",
+        "EN": "Fairy Wind",
+        "FI": "Fairy Wind",
+        "NL": "Fairy Wind",
+        "NO": "Fairy Wind",
+        "PL": "Fairy Wind",
+        "FR": "Vent Féérique",
+        "DE": "Feenbrise",
+        "IT": "Vento di Fata",
+        "RU": "Ветер Феи",
+        "ES": "Viento Feérico"
+    },
+    "pokemon_move_356": {
+        "PT-BR": "Chute Duplo",
+        "EN": "Double Kick",
+        "FI": "Double Kick",
+        "NL": "Double Kick",
+        "NO": "Double Kick",
+        "PL": "Double Kick",
+        "FR": "Double Pied",
+        "DE": "Doppelkick",
+        "IT": "Doppiocalcio",
+        "RU": "Двойной Пинок",
+        "ES": "Doble Patada"
+    },
+    "pokemon_move_370": {
+        "PT-BR": "Obstruir",
+        "EN": "Obstruct",
+        "FI": "Obstruct",
+        "NL": "Obstruct",
+        "NO": "Obstruct",
+        "PL": "Obstruct",
+        "FR": "Blocage",
+        "DE": "Abblocker",
+        "IT": "Sbarramento",
+        "RU": "Преграда",
+        "ES": "Obstrucción"
+    },
+    "pokemon_move_372": {
+        "PT-BR": "Raio Meteórico",
+        "EN": "Meteor Beam",
+        "FI": "Meteor Beam",
+        "NL": "Meteor Beam",
+        "NO": "Meteor Beam",
+        "PL": "Meteor Beam",
+        "FR": "Laser Météore",
+        "DE": "Meteorstrahl",
+        "IT": "Raggiometeora",
+        "RU": "Метеоритный Луч",
+        "ES": "Rayo Meteórico"
     }
 }

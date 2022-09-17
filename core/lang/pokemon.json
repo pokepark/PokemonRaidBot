@@ -5060,24 +5060,44 @@
         "RU": "Калирекс"
     },
     "pokemon_id_899": {
-        "EN": "Wyrdeer"
+        "EN": "Wyrdeer",
+        "FR": "Cerbyllin",
+        "DE": "Damythir",
+        "RU": "Вирдир"
     },
     "pokemon_id_900": {
-        "EN": "Kleavor"
+        "EN": "Kleavor",
+        "FR": "Hachécateur",
+        "DE": "Axantor",
+        "RU": "Кливор"
     },
     "pokemon_id_901": {
-        "EN": "Ursaluna"
+        "EN": "Ursaluna",
+        "FR": "Ursaking",
+        "RU": "Урсалуна"
     },
     "pokemon_id_902": {
-        "EN": "Basculegion"
+        "EN": "Basculegion",
+        "FR": "Paragruel",
+        "DE": "Salmagnis",
+        "RU": "Баскулиджен"
     },
     "pokemon_id_903": {
-        "EN": "Sneasler"
+        "EN": "Sneasler",
+        "FR": "Farfurex",
+        "DE": "Snieboss",
+        "RU": "Снизлер"
     },
     "pokemon_id_904": {
-        "EN": "Overqwil"
+        "EN": "Overqwil",
+        "FR": "Qwilpik",
+        "DE": "Myriador",
+        "RU": "Оверквил"
     },
     "pokemon_id_905": {
-        "EN": "Enamorus"
+        "EN": "Enamorus",
+        "FR": "Amovénus",
+        "DE": "Cupidos",
+        "RU": "Энаморус"
     }
 }
