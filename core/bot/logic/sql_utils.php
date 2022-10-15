@@ -34,6 +34,7 @@ function my_query($query, $binds=null)
 {
     global $dbh;
     global $config;
+    require_once(CORE_BOT_PATH . '/logic/debug.php');
 
     try {
       $stmt = $dbh->prepare($query);

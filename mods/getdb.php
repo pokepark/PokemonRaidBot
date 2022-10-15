@@ -1,4 +1,12 @@
 <?php
+require_once(__DIR__ . '/../core/bot/paths.php');
+require_once(ROOT_PATH . '/constants.php');
+require_once(ROOT_PATH . '/logic/curl_get_contents.php');
+require_once(CORE_BOT_PATH . '/constants.php');
+require_once(CORE_BOT_PATH . '/config.php');
+require_once(CORE_BOT_PATH . '/db.php');
+require_once(CORE_BOT_PATH . '/logic/sql_utils.php');
+require_once(CORE_BOT_PATH . '/logic/debug.php');
 $proto_url = "https://raw.githubusercontent.com/Furtif/POGOProtos-Swift/master/Sources/POGOProtos/POGOProtos.pb.swift";
 $game_master_url = "https://raw.githubusercontent.com/PokeMiners/game_masters/master/latest/latest.json";
 
