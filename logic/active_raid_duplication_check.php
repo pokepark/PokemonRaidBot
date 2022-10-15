@@ -20,9 +20,11 @@ function active_raid_duplication_check($gym_id)
     );
     $active = 0;
     while($raid = $rs->fetch()) {
+        # TODO: Should document why this check happens / the logic
         if($config->RAID_EXCLUDE_EXRAID_DUPLICATION && $raid['event'] == EVENT_ID_EX) {
             continue;
         }
+        # TODO: Should document why this check happens / the logic
         if($config->RAID_EXCLUDE_EVENT_DUPLICATION && $raid['event'] !== NULL && $raid['event'] != EVENT_ID_EX) {
             continue;
         }

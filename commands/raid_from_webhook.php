@@ -195,6 +195,7 @@ foreach ($update as $raid) {
 
     // Raid exists, do updates!
     if ( $raid_id > 0 ) {
+        debug_log($gym_name, 'Raid already in DB for gym:');
         // Update database
         try {
             $query = '
@@ -233,11 +234,12 @@ foreach ($update as $raid) {
             $send_updates = true;
             debug_log($raid_id, 'Raid updated:');
         }else {
-            debug_log($gym_name,'Nothing was updated, moving on:');
+            debug_log($gym_name,'Nothing had changed for raid at gym:');
             continue;
         }
     }else {
         // Create Raid and send messages
+        debug_log($gym_name, 'Raid not in DB yet, creating for gym:');
         try {
             $query = '
                 INSERT INTO raids (pokemon, pokemon_form, user_id, spawn, start_time, end_time, gym_team, gym_id, level, move1, move2, gender, costume)
