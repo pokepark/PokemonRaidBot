@@ -133,6 +133,8 @@ if(isset($update['callback_query']['id'])) {
     // Exit.
     $dbh = null;
     exit();
+} else {
+    info_log($msg);
 }
 
 function calculate_cps($base_stats) {
@@ -377,5 +379,3 @@ function getProtoURL() {
     }
     return $url;
 }
-
-?> 
