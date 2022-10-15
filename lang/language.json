@@ -25,6 +25,32 @@
     "FI": "Ex-Raidi",
     "ES": "Incursión EX"
   },
+  "9stars": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Elite raid",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Elite raid",
+    "ES": "TRANSLATE"
+  },
+  "9stars_short": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Elite",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Elite",
+    "ES": "TRANSLATE"
+  },
   "8stars": {
     "NL": "TRANSLATE",
     "DE": "Ultrapforte",
@@ -180,6 +206,19 @@
     "PL": "Nieaktywny",
     "FI": "Pois käytöstä",
     "ES": "Desactivado"
+  },
+  "egg_9": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Elite raid egg",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Elite raid -muna",
+    "ES": "TRANSLATE"
   },
   "egg_8": {
     "NL": "TRANSLATE",
@@ -648,6 +687,19 @@
     "PL": "Rajdowanie możliwe tylko z zaproszeniem na EX-Rajd",
     "FI": "VOIT OSALLISTUA VAIN EX-RAIDI PASSILLA",
     "ES": "PARTICIPACIÓN SOLO ES POSIBLE CON PASE EX"
+  },
+  "no_remote_parcipants": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "This raid can not be participated using a Remote Raid Pass!",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Tähän raidiin ei voi osallistua etäpassilla!",
+    "ES": "TRANSLATE"
   },
   "no_participants_yet": {
     "NL": "Nog geen deelnemers",

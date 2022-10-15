@@ -3,10 +3,11 @@
 define('PORTAL_IMAGES_PATH', IMAGES_PATH . '/gyms');
 
 // raid levels constant
-define('RAID_LEVEL_ALL', 'X8765431');
+define('RAID_LEVEL_ALL', 'X98765431');
 
 // Raid eggs.
 $eggs = array(
+    '9999',  // Level 9 / Elite raid
     '9998',  // Level 8 / Ultra beast
     '9997',  // Level 7 / Legendary Mega
     '9996',  // Level 6 / Mega
@@ -16,6 +17,9 @@ $eggs = array(
     '9992',  // Level 2
     '9991'   // Level 1
 );
+
+// Raid levels limited to local players only
+define('RAID_LEVEL_LOCAL_ONLY', [4, 9]);
 
 // Levels available for import at PokeBattler
 $pokebattler_levels = array('8', '7', '6', '5', '4', '3', '1');

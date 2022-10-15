@@ -63,17 +63,23 @@ if ($raid_id == 0 && $gym_id != 0) {
     debug_log('Formatting the raid time properly now.');
     $arg_time = str_replace('-', ':', $starttime);
 
-    // Event Raid or normal/EX raid?
-    if($event_id == 'X') {
+    // Ex and elite raids
+    if($event_id == 'X' or $raid_level == 9) {
         debug_log('Ex-Raid time :D ... Setting raid date to ' . $arg_time);
         $start_date_time = $arg_time;
-        $duration = $config->RAID_DURATION;
+        $duration = ($raid_level == 9) ? $config->RAID_DURATION_ELITE : $config->RAID_DURATION;
+        $egg_duration = ($raid_level == 9) ? $config->RAID_EGG_DURATION_ELITE : $config->RAID_EGG_DURATION;
+
+    // Event raids
     }elseif($event_id != 'N') {
         debug_log('Event time :D ... Setting raid date to ' . $arg_time);
         $start_date_time = $arg_time;
         $query = my_query("SELECT raid_duration FROM events WHERE id = '{$event_id}' LIMIT 1");
         $result = $query->fetch();
         $duration = $result['raid_duration'];
+        $egg_duration = $config->RAID_EGG_DURATION;
+
+    // Normal raids
     } else {
         // Current date
         $current_date = date('Y-m-d', strtotime('now'));
@@ -82,6 +88,7 @@ if ($raid_id == 0 && $gym_id != 0) {
         $start_date_time = $current_date . ' ' . $arg_time . ':00';
         debug_log('Received the following time for the raid: ' . $start_date_time);
         $duration = $config->RAID_DURATION;
+        $egg_duration = $config->RAID_EGG_DURATION;
     }
 
     // Check for duplicate raid
@@ -112,7 +119,7 @@ if ($raid_id == 0 && $gym_id != 0) {
                           pokemon = '{$pokemon_id_formid['pokedex_id']}',
                           pokemon_form = '{$pokemon_id_formid['pokemon_form_id']}',
                           start_time = '{$start_date_time}',
-                          spawn = DATE_SUB(start_time, INTERVAL ".$config->RAID_EGG_DURATION." MINUTE),
+                          spawn = DATE_SUB(start_time, INTERVAL ".$egg_duration." MINUTE),
                           end_time = DATE_ADD(start_time, INTERVAL {$duration} MINUTE),
                           gym_id = '{$gym_id}',
                           level = '{$raid_level}',

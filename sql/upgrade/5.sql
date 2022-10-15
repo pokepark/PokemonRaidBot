@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS `photo_cache` (`id` varchar(100) NOT NULL, `unique_id
 ALTER TABLE `cleanup` ADD COLUMN IF NOT EXISTS `media_unique_id` varchar(45) DEFAULT NULL AFTER `date_of_posting`;
 CREATE UNIQUE INDEX IF NOT EXISTS `unique_chat_msg` ON `cleanup` (chat_id, message_id);
 
-ALTER TABLE `raids` MODIFY `level` enum('1','2','3','4','5','6','7','8','X') DEFAULT NULL;
-ALTER TABLE `raid_bosses` MODIFY `raid_level` enum('1','2','3','4','5','6','7','8','X') DEFAULT NULL;
+ALTER TABLE `raids` MODIFY `level` enum('1','2','3','4','5','6','7','8','9','X') DEFAULT NULL;
+ALTER TABLE `raid_bosses` MODIFY `raid_level` enum('1','2','3','4','5','6','7','8','9','X') DEFAULT NULL;
 
 ALTER TABLE `events` ADD COLUMN IF NOT EXISTS `pokemon_title` TINYINT(1) NULL DEFAULT 1 AFTER `hide_raid_picture`;

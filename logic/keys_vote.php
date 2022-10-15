@@ -44,6 +44,9 @@ function keys_vote($raid)
         // Get raid level
         $raid_level = $raid['level'];
 
+        // Are remote players allowed for this raid?
+        $raid_local_only = in_array($raid_level, RAID_LEVEL_LOCAL_ONLY);
+
         // Hide buttons for raid levels and pokemon
         $hide_buttons_raid_level = explode(',', $config->RAID_POLL_HIDE_BUTTONS_RAID_LEVEL);
         $hide_buttons_pokemon = explode(',', $config->RAID_POLL_HIDE_BUTTONS_POKEMON);
@@ -61,28 +64,34 @@ function keys_vote($raid)
                 'text'          => '+ ' . EMOJI_IN_PERSON,
                 'callback_data' => $raid['id'] . ':vote_extra:in_person'
             ];
-            $buttons_extra_alien = [
-                'text'          => '+ ' . EMOJI_ALIEN,
-                'callback_data' => $raid['id'] . ':vote_extra:alien'
-            ];
 
-            // Can invite key
-            $buttons_can_inv = [
-                'text'          => EMOJI_CAN_INVITE,
-                'callback_data' => $raid['id'] . ':vote_can_invite:0'
-            ];
+            // Show buttons regarding remote participation only if raid level allows it
+            if(!$raid_local_only) {
+                $buttons_extra_alien = [
+                    'text'          => '+ ' . EMOJI_ALIEN,
+                    'callback_data' => $raid['id'] . ':vote_extra:alien'
+                ];
 
-            // Remote Raid Pass key
-            $buttons_remote = [
-                'text'          => EMOJI_REMOTE,
-                'callback_data' => $raid['id'] . ':vote_remote:0'
-            ];
+                // Can invite key
+                $buttons_can_inv = [
+                    'text'          => EMOJI_CAN_INVITE,
+                    'callback_data' => $raid['id'] . ':vote_can_invite:0'
+                ];
 
-            // Want invite key
-            $buttons_inv_plz = [
-                'text'          => EMOJI_WANT_INVITE,
-                'callback_data' => $raid['id'] . ':vote_want_invite:0'
-            ];
+                // Remote Raid Pass key
+                $buttons_remote = [
+                    'text'          => EMOJI_REMOTE,
+                    'callback_data' => $raid['id'] . ':vote_remote:0'
+                ];
+
+                // Want invite key
+                $buttons_inv_plz = [
+                    'text'          => EMOJI_WANT_INVITE,
+                    'callback_data' => $raid['id'] . ':vote_want_invite:0'
+                ];
+            }else {
+                $buttons_extra_alien = $buttons_can_inv = $buttons_remote = $buttons_inv_plz = [];
+            }
 
             // Team and level keys.
             $buttons_teamlvl = [

@@ -26,7 +26,7 @@ $gym_id_plus_letter  = $data['id'];
 $gym_id = explode(',', $data['id'])[0];
 
 // Are we creating an event?
-if($event_id != 'N') {
+if($event_id != 'N' or $raid_level == 9) {
     // Init empty keys array.
     $keys = [];
 
@@ -35,8 +35,9 @@ if($event_id != 'N') {
     $tz = $config->TIMEZONE;
     $today = new DateTimeImmutable('now', new DateTimeZone($tz));
 
-    // Next 14 days.
-    for ($d = 0; $d <= 14; $d = $d + 1) {
+    // Create date buttons. Two days for Elite Raids, 15 days for EX raids.
+    $days = ($raid_level == 9) ? 1 : 14;
+    for ($d = 0; $d <= $days; $d++) {
         // Add day to today.
         $today_plus_d = $today->add(new DateInterval("P".$d."D"));
 

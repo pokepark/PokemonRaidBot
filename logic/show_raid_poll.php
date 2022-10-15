@@ -21,6 +21,9 @@ function show_raid_poll($raid, $inline = false)
     // Get raid level
     $raid_level = $raid['level'];
 
+    // Are remote players allowed for this raid?
+    $raid_local_only = in_array($raid_level, RAID_LEVEL_LOCAL_ONLY);
+
     if($raid['event_name'] != NULL && $raid['event_name'] != "") {
         $msg = raid_poll_message($msg, "<b>".$raid['event_name']."</b>".CR, true);
     }
@@ -303,6 +306,10 @@ function show_raid_poll($raid, $inline = false)
         if($raid['event'] == EVENT_ID_EX) {
             $msg = raid_poll_message($msg, CR . EMOJI_WARN . ' <b>' . getPublicTranslation('exraid_pass') . '</b> ' . EMOJI_WARN . CR);
         }
+        // Add hint that remote participation is not possible
+        if($raid_local_only) {
+            $msg = raid_poll_message($msg, CR .  EMOJI_WARN . SP . getPublicTranslation('no_remote_parcipants') . CR);
+        }
 
         // Add event description
         if($raid['event_description'] != NULL && $raid['event_description'] != "") {
@@ -321,12 +328,12 @@ function show_raid_poll($raid, $inline = false)
             $previous_pokemon = 'FIRST_RUN';
 
             // Add hint for remote attendances.
-            if($cnt_remote > 0 || $cnt_want_invite > 0 || $cnt_extra_alien > 0) {
+            if(!$raid_local_only && ($cnt_remote > 0 || $cnt_want_invite > 0 || $cnt_extra_alien > 0)) {
                 $remote_max_msg = str_replace('REMOTE_MAX_USERS', $config->RAID_REMOTEPASS_USERS_LIMIT, getPublicTranslation('remote_participants_max'));
                 $msg = raid_poll_message($msg, CR . ($cnt_remote > 0 ? EMOJI_REMOTE : '') . ($cnt_extra_alien > 0 ? EMOJI_ALIEN : '') . ($cnt_want_invite > 0 ? EMOJI_WANT_INVITE : '') . SP . getPublicTranslation('remote_participants') . SP . '<i>' . $remote_max_msg . '</i>' . CR);
             }
             // Add hint for attendees that only invite.
-            if($cnt_can_invite > 0) {
+            if(!$raid_local_only && $cnt_can_invite > 0) {
                 $msg = raid_poll_message($msg, CR .  EMOJI_CAN_INVITE . SP . getPublicTranslation('alert_can_invite') . CR);
             }
             // Add start raid message
