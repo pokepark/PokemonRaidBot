@@ -78,7 +78,7 @@ function show_raid_poll($raid, $inline = false)
     }
 
     // Display raid boss name and boss' weather unless hidden for a specific event
-    if($raid['event_pokemon_title'] != 0) {
+    if($raid['event_pokemon_title'] != 0 or $raid['event_pokemon_title'] == NULL) {
         // Display raid boss name.
         if($raid['event_pokemon_title'] == 1) $title = getPublicTranslation('raid_boss');
         elseif($raid['event_pokemon_title'] == 2) $title = getPublicTranslation('featured_pokemon');
