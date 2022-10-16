@@ -7,7 +7,7 @@ debug_log('edit_date()');
 //debug_log($data);
 
 // Check access.
-bot_access_check($update, 'ex-raids');
+bot_access_check($update, 'create');
 
 // Set the id.
 $id = $data['id'];
