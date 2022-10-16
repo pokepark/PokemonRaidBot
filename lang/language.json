@@ -26,7 +26,7 @@
     "ES": "Incursión EX"
   },
   "9stars": {
-    "NL": "TRANSLATE",
+    "NL": "Elite raid",
     "DE": "TRANSLATE",
     "EN": "Elite raid",
     "IT": "TRANSLATE",
@@ -39,7 +39,7 @@
     "ES": "TRANSLATE"
   },
   "9stars_short": {
-    "NL": "TRANSLATE",
+    "NL": "Elite",
     "DE": "TRANSLATE",
     "EN": "Elite",
     "IT": "TRANSLATE",
@@ -52,7 +52,7 @@
     "ES": "TRANSLATE"
   },
   "8stars": {
-    "NL": "TRANSLATE",
+    "NL": "Ultra Wormhole",
     "DE": "Ultrapforte",
     "EN": "Ultra Wormhole",
     "IT": "Ultravarco",
@@ -65,7 +65,7 @@
     "ES": "Ultraumbral"
   },
   "8stars_short": {
-    "NL": "TRANSLATE",
+    "NL": "Ultra",
     "DE": "TRANSLATE",
     "EN": "Ultra",
     "IT": "TRANSLATE",
@@ -208,7 +208,7 @@
     "ES": "Desactivado"
   },
   "egg_9": {
-    "NL": "TRANSLATE",
+    "NL": "Elite raid egg",
     "DE": "TRANSLATE",
     "EN": "Elite raid egg",
     "IT": "TRANSLATE",
@@ -221,7 +221,7 @@
     "ES": "TRANSLATE"
   },
   "egg_8": {
-    "NL": "TRANSLATE",
+    "NL": "Ultra Wormhole",
     "DE": "Ultrapforte",
     "EN": "Ultra Wormhole",
     "IT": "Ultravarco",
@@ -689,7 +689,7 @@
     "ES": "PARTICIPACIÓN SOLO ES POSIBLE CON PASE EX"
   },
   "no_remote_parcipants": {
-    "NL": "TRANSLATE",
+    "NL": "Deze raid kan alleen lokaal gespeeld worden!",
     "DE": "TRANSLATE",
     "EN": "This raid can not be participated using a Remote Raid Pass!",
     "IT": "TRANSLATE",
@@ -1846,7 +1846,7 @@
     "ES": "¡Error! ¡Gimnasio no encontrado!"
   },
   "gym_coordinates": {
-    "NL": "TRANSLATE",
+    "NL": "Coordinaten",
     "DE": "TRANSLATE",
     "EN": "Coordinates",
     "IT": "TRANSLATE",
@@ -1859,7 +1859,7 @@
     "ES": "TRANSLATE"
   },
   "gym_edit_coordinates": {
-    "NL": "TRANSLATE",
+    "NL": "Wijzig coordinaten",
     "DE": "TRANSLATE",
     "EN": "Edit coordinates",
     "IT": "TRANSLATE",
@@ -1911,7 +1911,7 @@
     "ES": "¡Error! Envía las coordenadas en el siguiente formato: <code>latitud,longitud</code>"
   },
   "gym_gps_instructions": {
-    "NL": "TRANSLATE",
+    "NL": "Stuur me de gym coordinaten in de volgende format: <code>Latitude,Longitude</code>",
     "DE": "TRANSLATE",
     "EN": "Send me the gym coordinates in the following format: <code>Latitude,Longitude</code>",
     "IT": "TRANSLATE",
@@ -1963,7 +1963,7 @@
     "ES": "¡Se agregó con éxito el gimnasio!"
   },
   "gym_create": {
-    "NL": "TRANSLATE",
+    "NL": "Maak een nieuwe gym",
     "DE": "TRANSLATE",
     "EN": "Create a new gym",
     "IT": "TRANSLATE",
@@ -2054,7 +2054,7 @@
     "ES": "Ver detalles del gimnasio"
   },
   "gym_edit_text_too_long": {
-    "NL": "TRANSLATE",
+    "NL": "Error! niet meer dan 255 tekens!",
     "DE": "TRANSLATE",
     "EN": "Error! The maximum text length is 255 characters!",
     "IT": "TRANSLATE",
@@ -2067,7 +2067,7 @@
     "ES": "TRANSLATE"
   },
   "gym_add_edit_note": {
-    "NL": "TRANSLATE",
+    "NL": "gym note",
     "DE": "TRANSLATE",
     "EN": "gym note",
     "IT": "TRANSLATE",
@@ -2080,7 +2080,7 @@
     "ES": "TRANSLATE"
   },
   "gym_note_instructions": {
-    "NL": "TRANSLATE",
+    "NL": "Stuur me een nieuwe gym notitie (maximaal 255 tekens):",
     "DE": "TRANSLATE",
     "EN": "Send me the new gym note (max 255 characters):",
     "IT": "TRANSLATE",
@@ -2093,7 +2093,7 @@
     "ES": "TRANSLATE"
   },
   "gym_address": {
-    "NL": "TRANSLATE",
+    "NL": "Gym adres",
     "DE": "TRANSLATE",
     "EN": "gym address",
     "IT": "TRANSLATE",
@@ -2106,7 +2106,7 @@
     "ES": "TRANSLATE"
   },
   "gym_address_instructions": {
-    "NL": "TRANSLATE",
+    "NL": "Stuur me het nieuwe gym adres:",
     "DE": "TRANSLATE",
     "EN": "Send me the new gym address:",
     "IT": "TRANSLATE",
@@ -2158,7 +2158,7 @@
     "ES": "Incursión guardada:"
   },
   "featured_pokemon": {
-    "NL": "TRANSLATE",
+    "NL": "Pokemon",
     "DE": "TRANSLATE",
     "EN": "Featured Pokemon",
     "IT": "TRANSLATE",
@@ -3094,7 +3094,7 @@
     "ES": "Para obtener la identificación y más detalles del gimnasio, usa el comando /gym."
   },
   "gym_name_edit": {
-    "NL": "TRANSLATE",
+    "NL": "Gym naam aanpassen",
     "DE": "TRANSLATE",
     "EN": "Edit gym name",
     "IT": "TRANSLATE",
@@ -3107,7 +3107,7 @@
     "ES": "TRANSLATE"
   },
   "gym_name_instructions": {
-    "NL": "TRANSLATE",
+    "NL": "Stuur me de gym naam:",
     "DE": "TRANSLATE",
     "EN": "Send me the gym name:",
     "IT": "TRANSLATE",
