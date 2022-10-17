@@ -58,6 +58,9 @@ function migrate_config($config, $file){
 function build_config() {
   // Get default config files without their full path, e.g. 'defaults-config.json'
   $default_configs = str_replace(CONFIG_PATH . '/', '', glob(CONFIG_PATH . '/defaults-*.json'));
+  if(!$default_configs){
+    error_log('No config defaults found, make sure you have not destroyed config/defaults-config.json. Things will break unless your custom config sets every possible option.');
+  }
 
   // Collection point for individual configfile arrays, will eventually be converted to a json object
   $config = Array();
