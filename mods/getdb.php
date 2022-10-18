@@ -1,5 +1,5 @@
 <?php
-$proto_url = getProtoURL();
+$proto_url = "https://raw.githubusercontent.com/Furtif/POGOProtos-Swift/master/Sources/POGOProtos/POGOProtos.pb.swift";
 $game_master_url = "https://raw.githubusercontent.com/PokeMiners/game_masters/master/latest/latest.json";
 
 $error = false;
@@ -144,26 +144,33 @@ function get_protos($proto_url) {
     $count = count($proto);
     $form_ids = $costume = array();
     $data_array = false;
+    $data_start_line = 0;
     for($i=0;$i<$count;$i++) {
         $line = trim($proto[$i]);
-        if($data_array != false) {
-            $data = explode('=',str_replace(';','',$line));
+        if($data_array != false && $i >= $data_start_line) {
+            $data = explode(':', $line, 2);
             // End of pokemon data, no need to loop further
-            if(trim($data[0]) == '}') {
+            if(trim($data[0]) == ']') {
                 $data_array = false;
+                $data_start_line = 0;
                 if(count($form_ids) > 0 && count($costume) > 0) {
                     // We found what we needed so we can stop looping through proto file and exit
                     break;
                 }
-            }else if(count($data) == 2) {
-                ${$data_array}[trim($data[0])] = trim($data[1]);
+                continue;
+            }
+            $value = explode('"', $data[1]);
+            if(strlen($value[1]) > 0) {
+                ${$data_array}[trim($value[1])] = trim($data[0]);
             }
         }else {
-            if($line == 'enum Costume {') {
+            if($line == 'extension PokemonDisplayProto.Costume: SwiftProtobuf._ProtoNameProviding {') {
                 $data_array = 'costume';
+                $data_start_line = $i+2;
             }
-            if($line == 'enum Form {') {
+            if($line == 'extension PokemonDisplayProto.Form: SwiftProtobuf._ProtoNameProviding {') {
                 $data_array = 'form_ids';
+                $data_start_line = $i+2;
             }
         }
     }
