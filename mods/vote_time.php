@@ -27,7 +27,7 @@ $raid = get_raid($data['id']);
 if($count_att > 0){
     $rs = my_query(
         "
-        SELECT    user_id, remote, (1 + extra_in_person + extra_alien) as user_count
+        SELECT    user_id, remote, attend_time, (1 + extra_in_person + extra_alien) as user_count
         FROM      attendance
           WHERE   raid_id = {$data['id']}
             AND   user_id = {$update['callback_query']['from']['id']}
@@ -61,6 +61,13 @@ if($vote_time == 0) {
     // Get current time.
     $now = new DateTime('now', new DateTimeZone('UTC'));
     $now = $now->format('Y-m-d H:i') . ':00';
+}
+
+// Exit if user is voting for the same time again
+if(is_array($answer) && array_key_exists('attend_time', $answer) && $attend_time_save == $answer['attend_time']) {
+    answerCallbackQuery($update['callback_query']['id'], 'OK');
+    $dbh = null;
+    exit();
 }
 
 // Vote time in the future or Raid anytime?
