@@ -1,4 +1,35 @@
 <?php
+
+require_once(CORE_BOT_PATH . '/is_init.php');
+
+# Ensure logfile directories exist, otherwise logging will fail.
+# If APCu is enabled this will be skipped on subsequent runs.
+if(IS_INIT_OR_WHATEVER){
+  $logfiles = [
+    $config->DEBUG_LOGFILE,
+    $config->LOGGING_INFO_LOGFILE,
+    $config->DEBUG_LOGFILE,
+    $config->DEBUG_INCOMING_LOGFILE,
+    $config->DEBUG_SQL_LOGFILE,
+    $config->CLEANUP_LOGFILE,
+  ];
+
+  # Collect unique paths that house logfiles
+  $paths = [];
+  foreach($logfiles as $logfile){
+    $dirname = pathinfo($logfile, PATHINFO_DIRNAME);
+    if(!in_array($dirname, $paths)){
+      $paths[] = $dirname;
+    }
+  }
+
+  # Create the necessary paths
+  foreach($paths as $path){
+    if (!file_exists($path)) {
+      mkdir($path, 770, true);
+    }
+  }
+}
 /**
  * Write any log level.
  * @param $val
