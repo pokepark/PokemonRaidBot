@@ -7,7 +7,7 @@ debug_log('LIST');
 //debug_log($data);
 
 // Check access.
-if(!isset($skip_access) or $skip_access != true) bot_access_check($update, 'list');
+if(!isset($skip_access) or $skip_access != true) $botUser->accessCheck($update, 'list');
 
 // Set keys.
 $keys_and_gymarea = raid_edit_gyms_first_letter_keys('list_by_gym', false, false, 'listall', 'list_raid');

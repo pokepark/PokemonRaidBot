@@ -7,7 +7,7 @@ debug_log('gym_edit_details()');
 //debug_log($data);
 
 // Check access.
-bot_access_check($update, 'gym-edit');
+$botUser->accessCheck($update, 'gym-edit');
 
 // Get the id.
 $gym_id = $data['id'];

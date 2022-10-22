@@ -7,7 +7,7 @@ debug_log('pokedex_disable_raids()');
 //debug_log($data);
 
 // Check access.
-bot_access_check($update, 'pokedex');
+$botUser->accessCheck($update, 'pokedex');
 
 // Get raid levels.
 $id = $data['id'];

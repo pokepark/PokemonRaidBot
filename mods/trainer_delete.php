@@ -7,7 +7,7 @@ debug_log('TRAINER()');
 //debug_log($data);
 
 // Check access.
-bot_access_check($update, 'trainer-delete');
+$botUser->accessCheck($update, 'trainer-delete');
 
 // Init keys and chat list.
 $keys = [];

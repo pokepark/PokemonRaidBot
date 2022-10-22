@@ -7,7 +7,7 @@ debug_log('LIST');
 //debug_log($data);
 
 // Check access.
-bot_access_check($update, 'list');
+$botUser->accessCheck($update, 'list');
 
 // Get the keys.
 $keys_and_gymarea = raid_edit_gyms_first_letter_keys('list_by_gym', false, ($data['id'] == 'n' ? false : $data['id']), 'listall', 'list_raid');

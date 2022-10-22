@@ -11,6 +11,7 @@
  */
 function edit_gym_keys($update, $gym_id, $show_gym, $ex_gym, $gym_note, $gym_address)
 {
+    global $botUser;
     // Hide gym?
     if($show_gym == 1) {
         $text_show_button = getTranslation('hide_gym');
@@ -45,7 +46,7 @@ function edit_gym_keys($update, $gym_id, $show_gym, $ex_gym, $gym_note, $gym_add
             'callback_data' => $gym_id . ':gym_edit_details:ex-' . $arg_ex
         ]
     ];
-    if(bot_access_check($update, 'gym-name', true)) {
+    if($botUser->accessCheck($update, 'gym-name', true)) {
         $keys[] = [
             [
             'text'          => EMOJI_PENCIL . ' ' . getTranslation("gym_name_edit"),
@@ -53,7 +54,7 @@ function edit_gym_keys($update, $gym_id, $show_gym, $ex_gym, $gym_note, $gym_add
             ]
         ];
     }
-    if(bot_access_check($update, 'gym-note', true)) {
+    if($botUser->accessCheck($update, 'gym-note', true)) {
         $keys[] = [
             [
             'text'          => EMOJI_INFO . ' ' . (!empty($gym_note) ? getTranslation("edit") : getTranslation("add") ) . ' ' . getTranslation("gym_add_edit_note"),
@@ -61,7 +62,7 @@ function edit_gym_keys($update, $gym_id, $show_gym, $ex_gym, $gym_note, $gym_add
             ]
         ];
     }
-    if(bot_access_check($update, 'gym-address', true)) {
+    if($botUser->accessCheck($update, 'gym-address', true)) {
         $keys[] = [
             [
             'text'          => EMOJI_MAP . ' ' . ((!empty($gym_address) && $gym_address != getTranslation("forest")) ? getTranslation("edit") : getTranslation("add") ) . ' ' . getTranslation("gym_address"),
@@ -69,7 +70,7 @@ function edit_gym_keys($update, $gym_id, $show_gym, $ex_gym, $gym_note, $gym_add
             ]
         ];
     }
-    if(bot_access_check($update, 'gym-gps', true)) {
+    if($botUser->accessCheck($update, 'gym-gps', true)) {
         $keys[] = [
             [
             'text'          => EMOJI_HERE . ' ' . getTranslation("gym_edit_coordinates"),
@@ -77,7 +78,7 @@ function edit_gym_keys($update, $gym_id, $show_gym, $ex_gym, $gym_note, $gym_add
             ]
         ];
     }
-    if(bot_access_check($update, 'gym-delete', true)) {
+    if($botUser->accessCheck($update, 'gym-delete', true)) {
         $keys[] = [
             [
             'text'          => EMOJI_DELETE . ' ' . getTranslation("gym_delete"),

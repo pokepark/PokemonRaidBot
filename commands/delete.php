@@ -7,13 +7,13 @@ debug_log('DELETE()');
 //debug_log($data);
 
 // Check access.
-bot_access_check($update, 'access-bot');
+$botUser->accessCheck($update, 'access-bot');
 
 // Count results.
 $count = 0;
 $own_sql = "";
 $own_arr = [];
-if(!bot_access_check($update, 'delete', true) && bot_access_check($update,'delete-own',true)) {
+if(!$botUser->accessCheck($update, 'delete', true) && $botUser->accessCheck($update,'delete-own',true)) {
     $own_sql = "AND users.user_id = :user_id";
     $own_arr = [":user_id"=>$update['message']['from']['id']];
 }

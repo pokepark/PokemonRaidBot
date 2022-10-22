@@ -7,7 +7,7 @@ debug_log('raids_list()');
 //debug_log($data);
 
 // Check access.
-bot_access_check($update, 'list');
+$botUser->accessCheck($update, 'list');
 
 // Get ID.
 $id = $data['id'];

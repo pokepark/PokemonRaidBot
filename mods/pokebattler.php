@@ -7,7 +7,7 @@ debug_log('pokebattler()');
 //debug_log($data);
 
 // Check access.
-bot_access_check($update, 'pokedex');
+$botUser->accessCheck($update, 'pokedex');
 include(LOGIC_PATH . '/resolve_boss_name_to_ids.php');
 
 // Get raid levels

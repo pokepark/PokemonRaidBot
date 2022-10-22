@@ -1,12 +1,10 @@
 <?php
 // Check access.
-$access = bot_access_check($update, 'help', false, true);
+$access = $botUser->accessCheck($update, 'help', true);
 
 // Display help for each permission
-if($access && (is_file(ROOT_PATH . '/access/' . $access) || $access == 'BOT_ADMINS')) {
-    // Get permissions from file.
-
-    if($access == 'BOT_ADMINS') {
+if($access) {
+    if($botUser->userPrivileges['grantedBy'] == 'BOT_ADMINS') {
         $permissions = array();
         $permissions[] = 'access-bot';
         $permissions[] = 'create';
@@ -31,8 +29,8 @@ if($access && (is_file(ROOT_PATH . '/access/' . $access) || $access == 'BOT_ADMI
         $permissions[] = 'pokedex';
         $permissions[] = 'help';
     } else {
-        // Get permissions from file.
-        $permissions = file(ROOT_PATH . '/access/' . $access, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+        // Get permissions.
+        $permissions = $botUser->userPrivileges['privileges'];
     }
 
     // Write to log.

@@ -83,9 +83,9 @@ function universal_key($keys, $id, $action, $arg, $text = '0')
  */
 function share_keys($id, $action, $update, $chats = '', $prefix_text = '', $hide = false, $level = '')
 {
-    global $config;
+    global $config, $botUser;
     // Check access.
-    $share_access = bot_access_check($update, 'share-any-chat', true);
+    $share_access = $botUser->accessCheck($update, 'share-any-chat', true);
 
     // Add share button if not restricted to allow sharing to any chat.
     if ($share_access == true && $hide == false) {

@@ -7,7 +7,7 @@ debug_log('GETCONFIG()');
 // debug_log($data);
 
 // Check access.
-bot_access_check($update, 'config-get');
+$botUser->accessCheck($update, 'config-get');
 
 // Get all allowed configs.
 $allowed = explode(',', $config->ALLOWED_TELEGRAM_CONFIG);

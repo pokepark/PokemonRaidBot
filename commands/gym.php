@@ -7,7 +7,7 @@ debug_log('GYM');
 //debug_log($data);
 
 // Check access.
-bot_access_check($update, 'gym-details');
+$botUser->accessCheck($update, 'gym-details');
 
 // Set keys.
 $keys_and_gymarea = raid_edit_gyms_first_letter_keys('gym_details', false, false, 'gym_letter');
@@ -51,7 +51,7 @@ if($config->ENABLE_GYM_AREAS == false or ($config->ENABLE_GYM_AREAS == true && $
 // Merge keys.
 $keys = array_merge($h_keys, $keys);
 
-if(bot_access_check($update, 'gym-add')) {
+if($botUser->accessCheck($update, 'gym-add')) {
     $keys[] = [
         [
             'text'          => getTranslation('gym_create'),

@@ -8,13 +8,13 @@ require_once(LOGIC_PATH . '/resolve_raid_boss.php');
 //debug_log($data);
 
 // Check access.
-bot_access_check($update, 'list');
+$botUser->accessCheck($update, 'list');
 
 // Init text and keys.
 $text = '';
 $keys = [];
 
-$event_permissions = bot_access_check($update, 'event',true);
+$event_permissions = $botUser->accessCheck($update, 'event',true);
 
 // Get last 12 active raids data.
 $rs = my_query(

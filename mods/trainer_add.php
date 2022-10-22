@@ -7,7 +7,7 @@ debug_log('TRAINER()');
 //debug_log($data);
 
 // Check access.
-bot_access_check($update, 'trainer-share');
+$botUser->accessCheck($update, 'trainer-share');
 
 // Init keys and chat list.
 $keys = [];

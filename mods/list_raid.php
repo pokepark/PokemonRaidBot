@@ -7,7 +7,7 @@ debug_log('list_raid()');
 //debug_log($data);
 
 // Check access.
-bot_access_check($update, 'list');
+$botUser->accessCheck($update, 'list');
 
 // Get gym ID.
 $gym_id = $data['arg'];

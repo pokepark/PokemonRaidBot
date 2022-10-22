@@ -7,7 +7,7 @@ debug_log('SHARE_RAID_BY_LOCATION()');
 //debug_log($data);
 
 // Check access.
-bot_access_check($update, 'share-all');
+$botUser->accessCheck($update, 'share-all');
 
 if(isset($data['arg']) && $data['arg'] == 1) {
     $raid_id = $data['id'];

@@ -7,6 +7,8 @@ if ($metrics){
   $requests_total->inc(['/']);
 }
 
+$botUser = new botUser;
+
 // Start logging.
 debug_log("RAID-BOT '" . $config->BOT_ID . "'");
 
@@ -65,6 +67,8 @@ update_user($update);
 
 // Get language
 include_once(CORE_BOT_PATH . '/userlanguage.php');
+
+$botUser->privilegeCheck($update);
 
 // Run cleanup if requested
 if (isset($update['cleanup'])) {

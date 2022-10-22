@@ -7,7 +7,7 @@ debug_log('list_by_gym()');
 //debug_log($data);
 
 // Check access.
-bot_access_check($update, 'list');
+$botUser->accessCheck($update, 'list');
 
 // Get the first letter
 $args = explode(',',$data['arg'],2);

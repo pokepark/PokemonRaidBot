@@ -7,7 +7,7 @@ debug_log('pokedex_edit_pokemon()');
 //debug_log($data);
 
 // Check access.
-bot_access_check($update, 'pokedex');
+$botUser->accessCheck($update, 'pokedex');
 
 // Set the id.
 $poke_id_form = $data['id'];

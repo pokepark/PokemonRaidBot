@@ -7,7 +7,7 @@ debug_log('pokedex_import()');
 //debug_log($data);
 
 // Check access.
-bot_access_check($update, 'pokedex');
+$botUser->accessCheck($update, 'pokedex');
 
 $id = $data['id'];
 $arg = $data['arg'];

@@ -7,7 +7,7 @@ debug_log('EXREPORT()');
 //debug_log($data);
 
 // Check access.
-bot_access_check($update, 'ex-report');
+$botUser->accessCheck($update, 'ex-report');
 
 // Init empty keys array.
 $keys = [];

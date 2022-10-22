@@ -7,7 +7,7 @@ debug_log('POKEMON()');
 //debug_log($data);
 
 // Check access.
-bot_access_check($update, 'access-bot');
+$botUser->accessCheck($update, 'access-bot');
 
 // Count results.
 $count = 0;

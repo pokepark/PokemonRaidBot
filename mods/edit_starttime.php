@@ -7,7 +7,7 @@ debug_log('edit_starttime()');
 //debug_log($data);
 
 // Check access.
-bot_access_check($update, 'create');
+$botUser->accessCheck($update, 'create');
 
 // Get the argument.
 $arg_data = explode(",", $data['arg']);

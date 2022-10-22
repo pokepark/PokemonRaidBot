@@ -7,13 +7,13 @@ debug_log('START()');
 //debug_log($data);
 
 $new_user = new_user($update['message']['from']['id']);
-$access = bot_access_check($update, 'create', true, true, $new_user);
-if(!$access && bot_access_check($update, 'list', true) && !$new_user){
+$access = $botUser->accessCheck($update, 'create', true, $new_user);
+if(!$access && $botUser->accessCheck($update, 'list', true) && !$new_user){
     debug_log('No access to create, will do a list instead');
     require('list.php');
     exit;
 }
-if($config->TUTORIAL_MODE && $new_user && (!$access or $access == 'BOT_ADMINS')) {
+if($new_user && !$access) {
     // Tutorial
     if(is_file(ROOT_PATH . '/config/tutorial.php')) {
         require_once(ROOT_PATH . '/config/tutorial.php');

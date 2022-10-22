@@ -7,7 +7,7 @@ debug_log('trainer_share()');
 //debug_log($data);
 
 // Access check.
-bot_access_check($update, 'trainer-share');
+$botUser->accessCheck($update, 'trainer-share');
 
 // Get chat id.
 $chat = $data['arg'];

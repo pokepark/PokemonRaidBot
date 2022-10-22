@@ -7,7 +7,7 @@ debug_log('trainer_level()');
 //debug_log($data);
 
 // Access check.
-bot_access_check($update, 'trainer');
+$botUser->accessCheck($update, 'trainer');
 
 // Confirmation and level
 $confirm = $data['id'];

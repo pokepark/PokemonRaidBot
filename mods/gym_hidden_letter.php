@@ -12,7 +12,7 @@ $arg = $data['arg'];
 // Check access, show message and set keys based on arg.
 if($arg == 'gym_delete') {
     // Check access.
-    bot_access_check($update, 'gym-delete');
+    $botUser->accessCheck($update, 'gym-delete');
 
     // Set message.
     $msg = '<b>' . getTranslation('gym_delete') . SP . '—' . SP . getTranslation('select_gym_first_letter') . '</b>';
@@ -21,7 +21,7 @@ if($arg == 'gym_delete') {
     $arg = 'gym_details';
 
     // Check access.
-    bot_access_check($update, 'gym-details');
+    $botUser->accessCheck($update, 'gym-details');
 
     // Set message.
     $msg = '<b>' . getTranslation('show_gym_details') . SP . '—' . SP . getTranslation('select_gym_first_letter') . '</b>';
