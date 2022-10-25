@@ -6,6 +6,7 @@ class botUser
     'privileges' => [],
     'grantedBy' => '',
   ];
+  public $userLanguage = '';
 
   /**
    * Run privilege check for Telegram user and save them for later use.
@@ -95,13 +96,11 @@ class botUser
 
             // Ignore "Restricted"?
             if($chatObj['result']['status'] == 'restricted' && in_array('ignore-restricted', $privilegeList)) {
-              // Reset access file.
               $privilegeList = NULL;
             }
 
             // Ignore "kicked"?
             if($chatObj['result']['status'] == 'kicked' && in_array('ignore-kicked', $privilegeList)) {
-              // Reset access file.
               $privilegeList = NULL;
             }
           }
@@ -174,6 +173,189 @@ class botUser
       }
       exit;
     }
+  }
+
+  /**
+   * Raid access check.
+   * @param $update
+   * @param $data
+   * @return bool
+   */
+  public function raidAccessCheck($update, $raidId, $permission, $return_result = false)
+  {
+    global $botUser;
+    // Default: Deny access to raids
+    $raid_access = false;
+
+    // Build query.
+    $rs = my_query(
+        "
+        SELECT    user_id
+        FROM      raids
+        WHERE     id = {$raidId}
+        "
+    );
+
+    $raid = $rs->fetch();
+
+    // Check permissions
+    if ($rs->rowCount() == 0 or $update['callback_query']['from']['id'] != $raid['user_id']) {
+      // Check "-all" permission
+      debug_log('Checking permission:' . $permission . '-all');
+      $permission = $permission . '-all';
+      $raid_access = $botUser->accessCheck($update, $permission, $return_result);
+    } else {
+      // Check "-own" permission
+      debug_log('Checking permission:' . $permission . '-own');
+      $permission_own = $permission . '-own';
+      $permission_all = $permission . '-all';
+      $raid_access = $botUser->accessCheck($update, $permission_own, true);
+
+      // Check "-all" permission if we get "access denied"
+      // Maybe necessary if user has only "-all" configured, but not "-own"
+      if(!$raid_access) {
+        debug_log('Permission check for ' . $permission_own . ' failed! Maybe the access is just granted via ' . $permission . '-all ?');
+        debug_log('Checking permission:' . $permission_all);
+        $raid_access = $botUser->accessCheck($update, $permission_all, $return_result);
+      } else {
+        $raid_access = $botUser->accessCheck($update, $permission_own, $return_result);
+      }
+    }
+
+    // Return result
+    return $raid_access;
+  }
+
+  /**
+   * Update users info if allowed
+   * @param $update
+   * @return bool|mysqli_result
+  */
+  public function updateUser($update)
+  {
+    global $ddos_count;
+
+    // Check DDOS count
+    if ($ddos_count < 2) {
+      // Update the user.
+      $userUpdate = $this->updateUserdb($update);
+
+      // Write to log.
+      debug_log('Update user: ' . $userUpdate);
+    }
+  }
+
+  /**
+   * Define userlanguage
+   * @param $update
+   * @return bool|mysqli_result
+  */
+  public function defineUserLanguage($update) {
+    global $config;
+    // Write to log.
+    debug_log('Language Check');
+
+    // Get language from user - otherwise use language from config.
+    if ($config->LANGUAGE_PRIVATE == '') {
+      // Message or callback?
+      if(isset($update['message']['from'])) {
+        $from = $update['message']['from'];
+      } else if(isset($update['callback_query']['from'])) {
+        $from = $update['callback_query']['from'];
+      } else if(isset($update['inline_query']['from'])) {
+        $from = $update['inline_query']['from'];
+      }
+      if(isset($from)) {
+        $q = my_query("SELECT lang FROM users WHERE user_id='".$from['id']."' LIMIT 1");
+        $res = $q->fetch();
+        $language_code = $res['lang'];
+      }else {
+        $language_code = '';
+      }
+
+      // Get and define userlanguage.
+      $languages = $GLOBALS['languages'];
+
+      // Get languages from normal translation.
+      if(array_key_exists($language_code, $languages)) {
+        $userlanguage = $languages[$language_code];
+      } else {
+        $userlanguage = DEFAULT_LANGUAGE;
+      }
+
+      debug_log('User language: ' . $userlanguage);
+      $this->userLanguage = $userlanguage;
+    } else {
+      // Set user language to language from config.
+      $this->userLanguage = $config->LANGUAGE_PRIVATE;
+    }
+  }
+
+  /**
+  * Update users info into database.
+  * @param $update
+  * @return bool|mysqli_result
+  */
+  private function updateUserdb($update)
+  {
+    global $dbh, $config;
+
+    if (isset($update['message']['from'])) {
+      $msg = $update['message']['from'];
+    } else if (isset($update['callback_query']['from'])) {
+      $msg = $update['callback_query']['from'];
+    } else if (isset($update['inline_query']['from'])) {
+      $msg = $update['inline_query']['from'];
+    }
+
+    if (empty($msg['id'])) {
+      debug_log('No id', '!');
+      debug_log($update, '!');
+      return false;
+    }
+    $id = $msg['id'];
+
+    $name = '';
+    $sep = '';
+
+    if (isset($msg['first_name'])) {
+      $name = $msg['first_name'];
+      $sep = ' ';
+    }
+
+    if (isset($msg['last_name'])) {
+      $name .= $sep . $msg['last_name'];
+    }
+
+    $nick = (isset($msg['username'])) ? $msg['username'] : '';
+
+    $lang = (isset($msg['language_code'])) ? $msg['language_code'] : '';
+
+    // Create or update the user.
+    $stmt = $dbh->prepare(
+      '
+      INSERT INTO users
+      SET         user_id = :id,
+                  nick    = :nick,
+                  name    = :name,
+                  lang    = :lang,
+                  auto_alarm = :auto_alarm
+      ON DUPLICATE KEY
+      UPDATE      nick    = :nick,
+                  name    = :name,
+                  lang    = IF(lang_manual = 1, lang, :lang),
+                  auto_alarm = IF(:auto_alarm = 1, 1, auto_alarm)
+      '
+    );
+    $alarm_setting = ($config->RAID_AUTOMATIC_ALARM ? 1 : 0);
+    $stmt->bindParam(':id', $id);
+    $stmt->bindParam(':nick', $nick);
+    $stmt->bindParam(':name', $name);
+    $stmt->bindParam(':lang', $lang);
+    $stmt->bindParam(':auto_alarm', $alarm_setting);
+    $stmt->execute();
+
+    return 'Updated user ' . $nick;
   }
 }
 ?>

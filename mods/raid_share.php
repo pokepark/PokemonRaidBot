@@ -7,16 +7,16 @@ require_once(LOGIC_PATH . '/send_raid_poll.php');
 //debug_log($update);
 //debug_log($data);
 
-// Access check.
-raid_access_check($update, $data, 'share');
-
 // Get raid id.
-$id = $data['id'];
+$raidId = $data['id'];
+
+// Access check.
+$botUser->raidAccessCheck($update, $raidId, 'share');
 
 // Get chat id.
 $chat = $data['arg'];
 
-$tg_json = send_raid_poll($id, $chat);
+$tg_json = send_raid_poll($raidId, $chat);
 
 // Set callback keys and message
 $callback_msg = getTranslation('successfully_shared');

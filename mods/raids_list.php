@@ -6,14 +6,14 @@ debug_log('raids_list()');
 //debug_log($update);
 //debug_log($data);
 
+// Get ID.
+$raidId = $data['id'];
+
 // Check access.
 $botUser->accessCheck($update, 'list');
 
-// Get ID.
-$id = $data['id'];
-
 // Get raid details.
-$raid = get_raid($id);
+$raid = get_raid($raidId);
 
 // Create keys array.
 $keys = [
@@ -22,20 +22,24 @@ $keys = [
             'text'          => getTranslation('expand'),
             'callback_data' => $raid['id'] . ':vote_refresh:0',
         ]
-    ],
-    [
-        [
-            'text'          => getTranslation('update_pokemon'),
-            'callback_data' => $raid['id'] . ':raid_edit_poke:' . $raid['level'],
-        ]
-    ],
-    [
-        [
-            'text'          => getTranslation('delete'),
-            'callback_data' => $raid['id'] . ':raids_delete:0'
-        ]
     ]
 ];
+if($botUser->raidAccessCheck($update, $raidId, 'pokemon', true)) {
+    $keys[] = [
+            [
+                'text'          => getTranslation('update_pokemon'),
+                'callback_data' => $raid['id'] . ':raid_edit_poke:' . $raid['level'],
+            ]
+    ];
+}
+if($botUser->raidAccessCheck($update, $raidId, 'delete', true)) {
+    $keys[] = [
+            [
+                'text'          => getTranslation('delete'),
+                'callback_data' => $raid['id'] . ':raids_delete:0'
+            ]
+    ];
+}
 
 // Add keys to share.
 debug_log($raid, 'raw raid data for share: ');

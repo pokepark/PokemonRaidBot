@@ -21,7 +21,7 @@ function getPublicTranslation($text)
  */
 function getTranslation($text, $override = false, $override_language = '')
 {
-    global $config;
+    global $config, $botUser;
     debug_log($text,'T:');
     $translation = '';
     $text = trim($text);
@@ -31,7 +31,7 @@ function getTranslation($text, $override = false, $override_language = '')
     if($override == true && $override_language != '') {
         $language = $override_language;
     } else {
-        $language = USERLANGUAGE;
+        $language = $botUser->userLanguage;
     }
 
     // Pokemon name?

@@ -7,7 +7,7 @@
  */
 function get_pokemon_id_by_name($pokemon_name, $get_from_db = false)
 {
-    global $dbh;
+    global $dbh, $botUser;
     debug_log($pokemon_name,'P:');
 
     // Explode pokemon name in case we have a form too.
@@ -38,7 +38,7 @@ function get_pokemon_id_by_name($pokemon_name, $get_from_db = false)
     $pokemon_form = ($poke_form!="")?$poke_form:"normal";
 
     // Set language
-    $language = USERLANGUAGE;
+    $language = $botUser->userLanguage;
     if($get_from_db) {
         // Fetch Pokemon form ID from database
         $stmt = $dbh->prepare("

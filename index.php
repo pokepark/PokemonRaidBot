@@ -57,24 +57,24 @@ if (isset($update['callback_query']['data'])) {
     $data['arg']    = $splitData[2];
 }
 
+// Run cleanup if requested
+if (isset($update['cleanup'])) {
+  include_once(CORE_BOT_PATH . '/cleanup_run.php');
+  cleanup_auth_and_run($update);
+}
+
 // DDOS protection
 if($config->ENABLE_DDOS_PROTECTION) {
     include_once(CORE_BOT_PATH . '/ddos.php');
 }
 
 // Update the user
-update_user($update);
+$botUser->updateUser($update);
 
 // Get language
-include_once(CORE_BOT_PATH . '/userlanguage.php');
+$botUser->defineUserLanguage($update);
 
 $botUser->privilegeCheck($update);
-
-// Run cleanup if requested
-if (isset($update['cleanup'])) {
-  include_once(CORE_BOT_PATH . '/cleanup_run.php');
-  cleanup_auth_and_run($update);
-}
 
 // Callback query received.
 if (isset($update['callback_query'])) {

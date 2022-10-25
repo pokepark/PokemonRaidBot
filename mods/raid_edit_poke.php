@@ -6,11 +6,11 @@ debug_log('raid_edit_poke()');
 //debug_log($update);
 //debug_log($data);
 
-// Access check.
-raid_access_check($update, $data, 'pokemon');
-
 // Set the id.
 $raid_id = $data['id'];
+
+// Access check.
+$botUser->raidAccessCheck($update, $raid_id, 'pokemon');
 
 // Get raid level
 $raid_level = $data['arg'];

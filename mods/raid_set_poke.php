@@ -6,11 +6,12 @@ debug_log('raid_set_poke()');
 //debug_log($update);
 //debug_log($data);
 
-// Access check.
-raid_access_check($update, $data, 'pokemon');
-
 // Set the id.
-$id = $data['id'];
+$raidId = $data['id'];
+
+// Access check.
+$botUser->raidAccessCheck($update, $raidId, 'pokemon');
+
 $pokemon_id_form = get_pokemon_by_table_id($data['arg']);
 
 // Update pokemon in the raid table.
@@ -19,12 +20,12 @@ my_query(
     UPDATE    raids
     SET       pokemon = '{$pokemon_id_form['pokedex_id']}',
               pokemon_form = '{$pokemon_id_form['pokemon_form_id']}'
-      WHERE   id = {$id}
+      WHERE   id = {$raidId}
     "
 );
 
 // Get raid times.
-$raid = get_raid($data['id']);
+$raid = get_raid($raidId);
 
 // Create the keys.
 $keys = [];

@@ -6,9 +6,6 @@ debug_log('raids_delete()');
 //debug_log($update);
 //debug_log($data);
 
-// Access check.
-raid_access_check($update, $data, 'delete');
-
 // Get the action.
 // 0 -> Confirmation required
 // 1 -> Cancel deletion
@@ -16,12 +13,15 @@ raid_access_check($update, $data, 'delete');
 $action = $data['arg'];
 
 // Get the raid id.
-$id = $data['id'];
+$raidId = $data['id'];
+
+// Access check.
+$botUser->raidAccessCheck($update, $raidId, 'delete');
 
 // Execute the action.
 if ($action == 0) {
     // Get raid.
-    $raid = get_raid($id);
+    $raid = get_raid($raidId);
 
     // Write to log.
     debug_log('Asking for confirmation to delete the following raid:');
@@ -45,14 +45,14 @@ if ($action == 0) {
     $msg = EMOJI_WARN . '<b> ' . getTranslation('delete_this_raid') . ' </b>' . EMOJI_WARN . CR . CR;
     $msg .= show_raid_poll_small($raid);
 } else if ($action == 1) {
-    debug_log('Raid deletion for ' . $id . ' was canceled!');
+    debug_log('Raid deletion for ' . $raidId . ' was canceled!');
     // Set message.
     $msg = '<b>' . getTranslation('raid_deletion_was_canceled') . '</b>';
 
     // Set keys.
     $keys = [];
 } else if ($action == 2) {
-    debug_log('Confirmation to delete raid ' . $id . ' was received!');
+    debug_log('Confirmation to delete raid ' . $raidId . ' was received!');
     // Set message.
     $msg = getTranslation('raid_successfully_deleted');
 
@@ -60,7 +60,7 @@ if ($action == 0) {
     $keys = [];
 
     // Delete raid from database.
-    delete_raid($id);
+    delete_raid($raidId);
 }
     
 // Build callback message string.
