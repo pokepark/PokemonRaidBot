@@ -106,20 +106,6 @@ $raid = get_raid($data['id']);
 
 // Get raid level.
 $raid_level = $raid['level'];
-$const = 'SHARE_CHATS_LEVEL_' . $raid_level;
-$const_chats = $config->{$const};
-
-// Debug.
-//debug_log($const,'CONSTANT NAME:');
-//debug_log(constant($const),'CONSTANT VALUE:');
-
-// Special sharing keys for raid level?
-if(!empty($const_chats)) {
-    $chats = $const_chats;
-    debug_log('Special sharing keys detected for raid level ' . $raid_level);
-} else {
-    $chats = '';
-}
 
 if($raid['event']!==NULL) {
     if($raid['event_note']==NULL) {
@@ -139,7 +125,7 @@ if($raid['event']!==NULL) {
 }
 
 // Add keys to share.
-$keys_share = share_keys($id, 'raid_share', $update, $chats);
+$keys_share = share_keys($id, 'raid_share', $update, $raid_level);
 $keys = array_merge($keys, $keys_share);
 
 // Build message string.

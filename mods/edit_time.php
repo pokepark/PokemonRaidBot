@@ -92,10 +92,7 @@ if ($raid_id == 0 && $gym_id != 0) {
     }
 
     // Check for duplicate raid
-    $duplicate_id = 0;
-    if($raid_id == 0) {
-        $duplicate_id = active_raid_duplication_check($gym_id);
-    }
+    $duplicate_id = active_raid_duplication_check($gym_id);
 
     // Continue with raid creation
     if($duplicate_id == 0) {
@@ -140,25 +137,12 @@ if ($raid_id == 0 && $gym_id != 0) {
         $raid = get_raid($raid_id);
         $msg = EMOJI_WARN . SP . getTranslation('raid_already_exists') . SP . EMOJI_WARN . CR . show_raid_poll_small($raid);
 
-        // Check if the raid was already shared.
-        $rs_share = my_query(
-            "
-            SELECT  COUNT(*) AS raid_count
-            FROM    cleanup
-            WHERE   raid_id = '{$raid_id}'
-            "
-        );
-
-        $shared = $rs_share->fetch();
+        $keys = share_keys($raid_id, 'raid_share', $update, $raid['level']);
 
         // Add keys for sharing the raid.
-        if($shared['raid_count'] == 0) {
-            $keys = share_keys($raid_id, 'raid_share', $update);
-
+        if(!empty($keys)) {
             // Exit key
-            $empty_exit_key = [];
-            $key_exit = universal_key($empty_exit_key, '0', 'exit', '0', getTranslation('abort'));
-            $keys = array_merge($keys, $key_exit);
+            $keys = universal_key($keys, '0', 'exit', '0', getTranslation('abort'));
         }
 
         // Answer callback.
