@@ -15,10 +15,11 @@ $query->execute([':text' => $update['message']['text'], ':id' => $raid_id]);
 edit_message_keyboard($modifiers['old_message_id'], [], $user_id);
 
 // Return message to user
+$raid = get_raid($raid_id);
 $msg = '';
 $msg .= getTranslation('raid_saved') . CR;
 $msg .= CR.getTranslation('event_note').': '.$update['message']['text'].CR2;
-$msg .= show_raid_poll_small(get_raid($raid_id)) . CR;
+$msg .= show_raid_poll_small($raid) . CR;
 debug_log($msg);
 
 $keys = [
@@ -35,7 +36,7 @@ $keys = [
         ]
     ]
 ];
-$keys_share = share_keys($raid_id, 'raid_share', $update, $chats);
+$keys_share = share_keys($raid_id, 'raid_share', $update, $raid['level']);
 $keys = array_merge($keys, $keys_share);
 debug_log($keys);
 

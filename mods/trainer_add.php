@@ -81,7 +81,7 @@ debug_log($chats, 'Chat list without duplicates:');
 
 // Create keys.
 if(!empty($chats)) {
-    $keys = share_keys('0', 'trainer_share', $update, $chats, '', true);
+    $keys = share_keys('0', 'trainer_share', $update, '', $chats, true);
 }
 
 // Add abort key.
