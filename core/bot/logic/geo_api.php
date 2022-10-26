@@ -179,6 +179,10 @@ function get_address($lat, $lon)
                 $location['district'] = $data['address']['village'];
             }elseif(isset($data['address']['county']) && !empty($data['address']['county'])) {
                 $location['district'] = $data['address']['county'];
+            }elseif(isset($data['address']['country']) && !empty($data['address']['country'])) {
+                $location['district'] = $data['address']['country'];
+            }else {
+                $location['district'] = 'Unknown';
             }
         // No valid data received.
         } else {
