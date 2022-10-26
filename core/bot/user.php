@@ -103,6 +103,8 @@ class botUser
             if($chatObj['result']['status'] == 'kicked' && in_array('ignore-kicked', $privilegeList)) {
               $privilegeList = NULL;
             }
+          } else {
+            continue;
           }
 
           // Debug.

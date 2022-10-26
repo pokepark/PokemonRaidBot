@@ -18,10 +18,6 @@ if($access) {
         $permissions[] = 'trainer';
         $permissions[] = 'gym-details';
         $permissions[] = 'gym-edit';
-        $permissions[] = 'gym-name';
-        $permissions[] = 'gym-address';
-        $permissions[] = 'gym-gps';
-        $permissions[] = 'gym-note';
         $permissions[] = 'gym-add';
         $permissions[] = 'portal-import';
         $permissions[] = 'config-get';

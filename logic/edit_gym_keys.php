@@ -54,23 +54,19 @@ function edit_gym_keys($update, $gym_id, $show_gym, $ex_gym, $gym_note, $gym_add
             ]
         ];
     }
-    if($botUser->accessCheck($update, 'gym-note', true)) {
+    if($botUser->accessCheck($update, 'gym-edit', true)) {
         $keys[] = [
             [
             'text'          => EMOJI_INFO . ' ' . (!empty($gym_note) ? getTranslation("edit") : getTranslation("add") ) . ' ' . getTranslation("gym_add_edit_note"),
             'callback_data' => $gym_id . ':gym_edit_details:note'
             ]
         ];
-    }
-    if($botUser->accessCheck($update, 'gym-address', true)) {
         $keys[] = [
             [
             'text'          => EMOJI_MAP . ' ' . ((!empty($gym_address) && $gym_address != getTranslation("forest")) ? getTranslation("edit") : getTranslation("add") ) . ' ' . getTranslation("gym_address"),
             'callback_data' => $gym_id . ':gym_edit_details:addr'
             ]
         ];
-    }
-    if($botUser->accessCheck($update, 'gym-gps', true)) {
         $keys[] = [
             [
             'text'          => EMOJI_HERE . ' ' . getTranslation("gym_edit_coordinates"),
