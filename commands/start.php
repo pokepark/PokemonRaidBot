@@ -8,9 +8,14 @@ debug_log('START()');
 
 $new_user = new_user($update['message']['from']['id']);
 $access = $botUser->accessCheck($update, 'create', true, $new_user);
-if(!$access && $botUser->accessCheck($update, 'list', true) && !$new_user){
-    debug_log('No access to create, will do a list instead');
-    require('list.php');
+if(!$access && !$new_user) {
+    if($botUser->accessCheck($update, 'list', true)){
+        debug_log('No access to create, will do a list instead');
+        require('list.php');
+    }else {
+        $response_msg = '<b>' . getTranslation('bot_access_denied') . '</b>';
+        send_message($update['message']['from']['id'], $response_msg);
+    }
     exit;
 }
 if($new_user && !$access) {

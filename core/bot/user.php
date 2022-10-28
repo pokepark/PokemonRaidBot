@@ -50,7 +50,9 @@ class botUser
       $accessChats = [$user_id => null];
     }else {
       $chatIds = [];
-      foreach($telegramRoles as $roleToCheck) {
+      $rolesToCheck = $telegramRoles;
+      $rolesToCheck[] = 'access';
+      foreach($rolesToCheck as $roleToCheck) {
         $chatFiles = str_replace(ACCESS_PATH . '/' . $roleToCheck, '', glob(ACCESS_PATH . '/' . $roleToCheck . '-*'));
         $chatIds = array_merge($chatIds, $chatFiles);
       }
