@@ -51,7 +51,7 @@ function alarm($raid_id_array, $user_id, $action, $info = '', $tg_json = [])
         $request = my_query("   SELECT DISTINCT attendance.user_id, attendance.remote, users.lang
                                 FROM attendance
                                 LEFT JOIN users
-                                ON users.id = attendance.user_id
+                                ON users.user_id = attendance.user_id
                                 WHERE raid_id = {$raid_id}
                                 AND attend_time = (SELECT attend_time from attendance WHERE raid_id = {$raid_id} AND user_id = {$user_id})
                             ");
@@ -59,7 +59,7 @@ function alarm($raid_id_array, $user_id, $action, $info = '', $tg_json = [])
         $request = my_query("   SELECT DISTINCT attendance.user_id, users.lang
                                 FROM attendance
                                 LEFT JOIN users
-                                ON users.id = attendance.user_id
+                                ON users.user_id = attendance.user_id
                                 WHERE raid_id = {$raid_id}
                                 AND attendance.user_id != {$user_id}
                                 AND cancel = 0
@@ -71,7 +71,7 @@ function alarm($raid_id_array, $user_id, $action, $info = '', $tg_json = [])
     while($answer = $request->fetch())
     {
         if(!isset($answer['lang']) or empty($answer['lang'])) $recipient_language = $config->LANGUAGE_PUBLIC;
-        else $recipient_language = $answer['lang'];
+        else $recipient_language = $GLOBALS['languages'][$answer['lang']];
         // Adding a guest
         if($action == "extra") {
             debug_log('Alarm additional trainer: ' . $info);
