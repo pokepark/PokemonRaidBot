@@ -25,14 +25,14 @@ if($data['arg'] != '0') {
             'user_id' => $update['callback_query']['from']['id']
         ]);
     $new_lang_internal = $languages[$data['arg']];
-    $msg = getTranslation('new_lang_saved', true, $new_lang_internal);
+    $msg = getTranslation('new_lang_saved', $new_lang_internal);
     $keys[] = [
         [
-            'text'          => getTranslation('back', true, $new_lang_internal),
+            'text'          => getTranslation('back', $new_lang_internal),
             'callback_data' => '0:trainer:0'
         ],
         [
-            'text'          => getTranslation('done', true, $new_lang_internal),
+            'text'          => getTranslation('done', $new_lang_internal),
             'callback_data' => '0:exit:1'
         ]
     ];
@@ -40,7 +40,7 @@ if($data['arg'] != '0') {
 } else {
     foreach($languages as $lang_tg => $lang_internal) {
         $keys[][] = [            
-            'text'          => getTranslation('lang_name', true, $lang_internal),
+            'text'          => getTranslation('lang_name', $lang_internal),
             'callback_data' => '0:bot_lang:'.$lang_tg
         ];
     }

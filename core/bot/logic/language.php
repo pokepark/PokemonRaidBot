@@ -92,6 +92,10 @@ function getTranslation($text, $language = USERLANGUAGE)
     $translation = $translations[$text][$language];
   elseif(isset($translations[$text][DEFAULT_LANGUAGE]))
     $translation = $translations[$text][DEFAULT_LANGUAGE];
+
+  // No translation found
+  elseif($tfile == 'botHelp')
+    $translation = false;
   else
     $translation = $text;
   debug_log($translation,'T:');
