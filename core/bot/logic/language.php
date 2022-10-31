@@ -35,10 +35,10 @@ function getTranslationFile($translationTitle) {
     }
   }
 
-  foreach($savedTranslations['custom'] as $title => $translation) {
-    if(key_exists($title, $json)) {
+  foreach($savedTranslations['custom'] as $title => $value) {
+    if(key_exists($title, $translation)) {
       debug_log($title, 'Found custom translation for');
-      $json[$title] = $translation;
+      $translation[$title] = $value;
       unset($savedTranslations['custom'][$title]);
     }
   }
