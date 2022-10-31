@@ -64,7 +64,7 @@ function edit_gym_keys($update, $gym_id, $show_gym, $ex_gym, $gym_note, $gym_add
     if(bot_access_check($update, 'gym-address', true)) {
         $keys[] = [
             [
-            'text'          => EMOJI_MAP . ' ' . ((!empty($gym_address) && $gym_address != getTranslation("forest")) ? getTranslation("edit") : getTranslation("add") ) . ' ' . getTranslation("gym_address"),
+            'text'          => EMOJI_MAP . ' ' . ((!empty($gym_address) && $gym_address != getTranslation("directions")) ? getTranslation("edit") : getTranslation("add") ) . ' ' . getTranslation("gym_address"),
             'callback_data' => $gym_id . ':gym_edit_details:addr'
             ]
         ];
