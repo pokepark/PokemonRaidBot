@@ -38,7 +38,10 @@ function getTranslationFile($translationTitle) {
   foreach($savedTranslations['custom'] as $title => $value) {
     if(key_exists($title, $translation)) {
       debug_log($title, 'Found custom translation for');
-      $translation[$title] = $value;
+      // Only overwrite the translation for languages that are present
+      foreach($value as $lang => $newValue) {
+        $translation[$title][$lang] = $newValue;
+      }
       unset($savedTranslations['custom'][$title]);
     }
   }
