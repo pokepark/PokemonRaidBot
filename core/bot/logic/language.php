@@ -67,8 +67,10 @@ function getPublicTranslation($text)
  * @param string $override_language
  * @return string translation
  */
-function getTranslation($text, $language = USERLANGUAGE)
+function getTranslation($text, $language = false)
 {
+  global $botUser;
+  if($language === false) $language = $botUser->userLanguage;
   debug_log($text,'T:');
   $text = trim($text);
 
