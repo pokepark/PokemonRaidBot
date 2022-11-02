@@ -1,6 +1,5 @@
 <?php
 $lang_dir = __DIR__ . '/lang/';
-$core_lang_dir = __DIR__ . '/core/lang/';
 
 $lang_directory_url = [ 'https://raw.githubusercontent.com/PokeMiners/pogo_assets/master/Texts/Latest%20APK/',
                         'https://raw.githubusercontent.com/PokeMiners/pogo_assets/master/Texts/Latest%20Remote/'];
@@ -79,13 +78,13 @@ foreach($translations_available as $language) {
 $pokemon_array = remove_duplicate_translations($pokemon_array);
 
 // Build the path to move translation file
-$moves_translation_file = $core_lang_dir . 'pokemon_moves.json';
+$moves_translation_file = $lang_dir . 'pokemon_moves.json';
 
 // Save translations to the file
 file_put_contents($moves_translation_file, json_encode($move_array,JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT), LOCK_EX);
 
 // Build the path to translation file
-$pokemon_translation_file = $core_lang_dir . 'pokemon.json';
+$pokemon_translation_file = $lang_dir . 'pokemon.json';
 
 // Save translations to file
 file_put_contents($pokemon_translation_file, json_encode($pokemon_array,JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT), LOCK_EX);

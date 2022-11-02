@@ -1,4 +1,55 @@
 <?php
+
+function getTranslationFile($translationTitle) {
+  static $savedTranslations = [
+    'botLang'       => false,
+    'pokemonNames'  => false,
+    'pokemonMoves'  => false,
+    'pokemonForms'  => false,
+    'botHelp'       => false,
+    'custom'        => false,
+  ];
+  static $fileMap = [
+    'botLang'       => 'language',
+    'pokemonNames'  => 'pokemon',
+    'pokemonMoves'  => 'pokemon_moves',
+    'pokemonForms'  => 'pokemon_forms',
+    'botHelp'       => 'help',
+  ];
+  $translation = $savedTranslations[$translationTitle];
+
+  // Return translation if it's in memory already
+  if($translation !== false) return $translation;
+
+  // Load translations from this file
+  $fileContents = file_get_contents(BOT_LANG_PATH . '/' . $fileMap[$translationTitle] . '.json');
+  $translation = json_decode($fileContents, true);
+
+  // Has custom translation already been processed?
+  if($savedTranslations['custom'] === false) {
+    $savedTranslations['custom'] = [];
+    // Load custom language file if it exists
+    if(is_file(CUSTOM_PATH . '/language.json')) {
+      $customContents = file_get_contents(CUSTOM_PATH . '/language.json');
+      $savedTranslations['custom'] = json_decode($customContents, true);
+    }
+  }
+
+  foreach($savedTranslations['custom'] as $title => $value) {
+    if(key_exists($title, $translation)) {
+      debug_log($title, 'Found custom translation for');
+      // Only overwrite the translation for languages that are present
+      foreach($value as $lang => $newValue) {
+        $translation[$title][$lang] = $newValue;
+      }
+      unset($savedTranslations['custom'][$title]);
+    }
+  }
+  $savedTranslations[$translationTitle] = $translation;
+
+  return $translation;
+}
+
 /**
  * Call the translation function with override parameters.
  * @param string $text
@@ -6,177 +57,50 @@
  */
 function getPublicTranslation($text)
 {
-    global $config;
-    $translation = getTranslation($text, true, $config->LANGUAGE_PUBLIC);
-
-    return $translation;
+  global $config;
+  return getTranslation($text, $config->LANGUAGE_PUBLIC);
 }
 
 /**
  * Gets a table translation out of the json file.
  * @param string $text
- * @param bool $override
  * @param string $override_language
  * @return string translation
  */
-function getTranslation($text, $override = false, $override_language = '')
+function getTranslation($text, $language = USERLANGUAGE)
 {
-    global $config;
-    debug_log($text,'T:');
-    $translation = '';
-    $text = trim($text);
+  debug_log($text,'T:');
+  $text = trim($text);
 
-    $language = '';
-    // Override language?
-    if($override == true && $override_language != '') {
-        $language = $override_language;
-    } else {
-        $language = USERLANGUAGE;
-    }
+  $tfile = 'botLang';
+  // Pokemon name?
+  if(strpos($text, 'pokemon_id_') === 0) $tfile = 'pokemonNames';
 
-    // Pokemon name?
-    if(strpos($text, 'pokemon_id_') === 0) {
-        // Translation filename
-        $tfile = CORE_LANG_PATH . '/pokemon.json';
+  // Pokemon form?
+  if(strpos($text, 'pokemon_form_') === 0) $tfile = 'pokemonForms';
 
-        // Get ID from string - e.g. 150 from pokemon_id_150
-        $pokemon_id = substr($text, strrpos($text, '_') + 1);
+  // Pokemon moves?
+  if(strpos($text, 'pokemon_move_') === 0) $tfile = 'pokemonMoves';
 
-        // Make sure we have a valid id.
-        if(is_numeric($pokemon_id) && $pokemon_id > 0) {
-            $str = file_get_contents($tfile);
+  // Pokemon moves?
+  if(strpos($text, 'help_') === 0) $tfile = 'botHelp';
 
-            $json = json_decode($str, true);
-            if(!isset($json[$text][$language])) {
-                // If translation wasn't found, try to use english as fallback
-                $language = DEFAULT_LANGUAGE;
-            }
-            if(!isset($json[$text][$language])) {
-                $translation = false;
-            }else {
-                $translation = $json[$text][$language];
-            }
+  // Debug log translation file
+  debug_log($tfile,'T:');
 
-        // Return false
-        } else {
-            debug_log($pokemon_id,'T: Received invalid pokemon id for translation:');
-            $translation = false;
-        }
+  $translations = getTranslationFile($tfile);
 
-    // Pokemon form?
-    } else if(strpos($text, 'pokemon_form_') === 0) {
-        // Translation filename
-        $tfile = CORE_LANG_PATH . '/pokemon_forms.json';
+  // Fallback to English when there is no language key or translation is not yet done.
+  if(isset($translations[$text][$language]) && $translations[$text][$language] != 'TRANSLATE')
+    $translation = $translations[$text][$language];
+  elseif(isset($translations[$text][DEFAULT_LANGUAGE]))
+    $translation = $translations[$text][DEFAULT_LANGUAGE];
 
-        $str = file_get_contents($tfile);
-        $json = json_decode($str, true);
-
-    // Pokemon moves?
-    } else if(strpos($text, 'pokemon_move_') === 0) {
-        // Translation filename
-        $tfile = CORE_LANG_PATH . '/pokemon_moves.json';
-
-        $str = file_get_contents($tfile);
-        $json = json_decode($str, true);
-
-    // Custom language file.
-    } else if(is_file(CUSTOM_PATH . '/language.json')) {
-        $tfile = CUSTOM_PATH . '/language.json';
-            
-        $str = file_get_contents($tfile);
-        $json = json_decode($str, true);
-    }
-
-    // Other translation
-    if(!(isset($json[$text]))){
-        // Specific translation file?
-        // E.g. Translation = hello_world_123, then check if hello_world.json exists.
-        if(is_file(BOT_LANG_PATH . '/' . substr($text, 0, strrpos($text, '_')) . '.json')) {
-            // Translation filename
-            $tfile = BOT_LANG_PATH . '/' . substr($text, 0, strrpos($text, '_')) . '.json';
-
-            $str = file_get_contents($tfile);
-            $json = json_decode($str, true);
-
-            // Core language file.
-            if(!(isset($json[$text]))){
-                // Translation filename
-                $tfile = CORE_LANG_PATH . '/language.json';
-
-                // Make sure file exists.
-                if(is_file($tfile)) {
-                    $str = file_get_contents($tfile);
-                    $json = json_decode($str, true);
-                }
-            }
-        }
-
-        // Bot language file. 
-        if(!(isset($json[$text]))){
-            // Translation filename
-            $tfile = BOT_LANG_PATH . '/language.json';
-
-            // Make sure file exists.
-            if(is_file($tfile)) {
-                $str = file_get_contents($tfile);
-                $json = json_decode($str, true);
-            }
-        }
-
-        // Translation not in core or bot language file? - Try other core files.
-        if(!(isset($json[$text]))){
-            // Get all bot specific language files
-            $langfiles = glob(CORE_LANG_PATH . '/*.json');
-
-            // Find translation in the right file
-            foreach($langfiles as $file) {
-                $tfile = $file;
-                $str = file_get_contents($file);
-                $json = json_decode($str, true);
-                // Exit foreach once found
-                if(isset($json[$text])) {
-                    break;
-                }
-            }
-        }
- 
-        // Translation not in core or bot language file? - Try other bot files.
-        if(!(isset($json[$text]))){
-            // Get all bot specific language files
-            $langfiles = glob(BOT_LANG_PATH . '/*.json');
-
-            // Find translation in the right file
-            foreach($langfiles as $file) {
-                $tfile = $file;
-                $str = file_get_contents($file);
-                $json = json_decode($str, true);
-                // Exit foreach once found
-                if(isset($json[$text])) {
-                    break;
-                }
-            }
-        }
-    }
-
-    // Debug log translation file
-    debug_log($tfile,'T:');
-
-    // Return pokemon name or translation
-    if(strpos($text, 'pokemon_id_') === 0) {
-        return $translation;
-    } else {
-        // Fallback to English when there is no language key or translation is not yet done.
-        if(isset($json[$text][$language]) && $json[$text][$language] != 'TRANSLATE'){
-            $translation = $json[$text][$language];
-        } else {
-            $language = DEFAULT_LANGUAGE;
-            if(isset($json[$text][$language])){
-                $translation = $json[$text][$language];
-            }else {
-                $translation = '';
-            }
-        }
-        //debug_log($translation,'T:');
-        return $translation;
-    }
+  // No translation found
+  elseif($tfile == 'botHelp')
+    $translation = false;
+  else
+    $translation = $text;
+  debug_log($translation,'T:');
+  return $translation;
 }
