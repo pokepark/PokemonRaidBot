@@ -7,7 +7,7 @@ debug_log('gym_details()');
 //debug_log($data);
 
 // Check access.
-bot_access_check($update, 'gym-details');
+$botUser->accessCheck($update, 'gym-details');
 
 // Get the arg.
 $args = explode(',',$data['arg'],2);

@@ -7,7 +7,7 @@ debug_log('pokedex()');
 //debug_log($data);
 
 // Check access.
-bot_access_check($update, 'pokedex');
+$botUser->accessCheck($update, 'pokedex');
 
 // Get the limit.
 $limit = $data['id'];

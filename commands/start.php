@@ -7,13 +7,18 @@ debug_log('START()');
 //debug_log($data);
 
 $new_user = new_user($update['message']['from']['id']);
-$access = bot_access_check($update, 'create', true, true, $new_user);
-if(!$access && bot_access_check($update, 'list', true) && !$new_user){
-    debug_log('No access to create, will do a list instead');
-    require('list.php');
+$access = $botUser->accessCheck($update, 'create', true, $new_user);
+if(!$access && !$new_user) {
+    if($botUser->accessCheck($update, 'list', true)){
+        debug_log('No access to create, will do a list instead');
+        require('list.php');
+    }else {
+        $response_msg = '<b>' . getTranslation('bot_access_denied') . '</b>';
+        send_message($update['message']['from']['id'], $response_msg);
+    }
     exit;
 }
-if($config->TUTORIAL_MODE && $new_user && (!$access or $access == 'BOT_ADMINS')) {
+if($new_user && !$access) {
     // Tutorial
     if(is_file(ROOT_PATH . '/config/tutorial.php')) {
         require_once(ROOT_PATH . '/config/tutorial.php');

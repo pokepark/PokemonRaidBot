@@ -7,7 +7,7 @@ debug_log('edit_save()');
 //debug_log($data);
 
 // Check access.
-bot_access_check($update, 'create');
+$botUser->accessCheck($update, 'create');
 
 // Set the id and arg.
 if(substr_count($data['id'], ',') == 1) {
@@ -87,7 +87,7 @@ $keys = [
 ];
 
 // Check access level prior allowing to change raid time
-$admin_access = bot_access_check($update, 'raid-duration', true);
+$admin_access = $botUser->accessCheck($update, 'raid-duration', true);
 if($admin_access) {
     // Add time change to keys.
     $keys_time = [

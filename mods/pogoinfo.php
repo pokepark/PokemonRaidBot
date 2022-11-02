@@ -7,7 +7,7 @@ debug_log('pogoinfo()');
 //debug_log($data);
 
 // Check access.
-bot_access_check($update, 'pokedex');
+$botUser->accessCheck($update, 'pokedex');
 
 // Levels available for import
 $levels = array('6', '5', '3', '1');

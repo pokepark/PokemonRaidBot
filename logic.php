@@ -43,7 +43,6 @@ include('logic/keys_vote.php');
 include('logic/mapslink.php');
 include('logic/new_user.php');
 include('logic/pokemon_keys.php');
-include('logic/raid_access_check.php');
 include('logic/raid_edit_gym_keys.php');
 include('logic/raid_edit_gyms_first_letter_keys.php');
 include('logic/raid_edit_raidlevel_keys.php');

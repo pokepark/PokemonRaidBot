@@ -7,7 +7,7 @@ debug_log('HISTORY');
 //debug_log($data);
 
 // Check access.
-bot_access_check($update, 'history');
+$botUser->accessCheck($update, 'history');
 
 // Expected callback data: [Date, YYYY-MM-DD]/[GYM_LETTER]:history_raid:[GYM_ID]/[RAID_ID]
 

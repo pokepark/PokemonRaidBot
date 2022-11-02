@@ -7,7 +7,7 @@ debug_log('edit_event()');
 //debug_log($data);
 
 // Check access.
-bot_access_check($update, 'event-raids');
+$botUser->accessCheck($update, 'event-raids');
 
 // Set the id.
 $gym_id_plus_letter = $data['id'];

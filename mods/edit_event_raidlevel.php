@@ -7,7 +7,7 @@ debug_log('edit_event_raidlevel()');
 //debug_log($data);
 
 // Check access.
-bot_access_check($update, 'event-raids');
+$botUser->accessCheck($update, 'event-raids');
 
 // Get gym data via ID
 $id_data = explode(",", $data['id']);
@@ -29,7 +29,7 @@ $tg_json = array();
 //Initiate admin rights table [ ex-raid , raid-event ]
 $admin_access = [false,1];
 // Check access - user must be admin for raid_level X
-$admin_access[0] = bot_access_check($update, 'ex-raids', true);
+$admin_access[0] = $botUser->accessCheck($update, 'ex-raids', true);
 
 // Get the keys.
 $keys = raid_edit_raidlevel_keys($gym_id, $gym_first_letter, $admin_access, $event_id);

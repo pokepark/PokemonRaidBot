@@ -7,7 +7,7 @@ debug_log('gym_delete()');
 //debug_log($data);
 
 // Check access.
-bot_access_check($update, 'gym-delete');
+$botUser->accessCheck($update, 'gym-delete');
 
 // Get the arg.
 $arg = $data['arg'];

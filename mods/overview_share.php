@@ -7,7 +7,7 @@ debug_log('overview_share()');
 //debug_log($data);
 
 // Check access.
-bot_access_check($update, 'overview');
+$botUser->accessCheck($update, 'overview');
 
 // Get chat ID from data
 $chat_id = 0;

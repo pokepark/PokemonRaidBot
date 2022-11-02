@@ -7,7 +7,7 @@ debug_log('edit_pokemon()');
 //debug_log($data);
 
 // Check access.
-bot_access_check($update, 'create');
+$botUser->accessCheck($update, 'create');
 
 // Set the id.
 $gym_id_plus_letter = $data['id'];

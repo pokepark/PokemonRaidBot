@@ -7,7 +7,7 @@ debug_log('GYMNAME()');
 //debug_log($data);
 
 // Check access.
-bot_access_check($update, 'gym-name');
+$botUser->accessCheck($update, 'gym-name');
 
 // Get gym by name.
 // Trim away everything before "/gymname "

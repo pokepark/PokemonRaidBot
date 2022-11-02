@@ -7,7 +7,7 @@ debug_log('edit_time()');
 //debug_log($data);
 
 // Check access.
-bot_access_check($update, 'create');
+$botUser->accessCheck($update, 'create');
 
 // Get count of ID and argument.
 $count_id = substr_count($data['id'], ',');

@@ -7,7 +7,7 @@ debug_log('OVERVIEW()');
 //debug_log($data);
 
 // Check access.
-bot_access_check($update, 'overview');
+$botUser->accessCheck($update, 'overview');
 
 // Init empty keys array.
 $keys = [];

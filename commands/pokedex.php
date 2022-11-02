@@ -7,7 +7,7 @@ debug_log('POKEDEX()');
 //debug_log($data);
 
 // Check access.
-bot_access_check($update, 'pokedex');
+$botUser->accessCheck($update, 'pokedex');
 
 // Get pokemon name or dex id.
 $pokemon = trim(substr($update['message']['text'], 8));

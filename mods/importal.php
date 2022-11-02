@@ -7,7 +7,7 @@ debug_log('importal()');
 //debug_log($data);
 
 // Check access.
-bot_access_check($update, 'portal-import');
+$botUser->accessCheck($update, 'portal-import');
 
 function escape($value){
 

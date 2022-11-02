@@ -7,7 +7,7 @@ debug_log('raid_by_gym()');
 //debug_log($data);
 
 // Check access.
-bot_access_check($update, 'create');
+$botUser->accessCheck($update, 'create');
 
 // Get the first letter
 $args = explode(',',$data['arg'],2);

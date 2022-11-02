@@ -55,6 +55,9 @@ require_once(CORE_BOT_PATH . '/db.php');
 // Core Logic
 require_once(CORE_BOT_PATH . '/logic.php');
 
+// User logic
+require_once(CORE_BOT_PATH . '/user.php');
+
 // Telegram Core
 require_once(CORE_TG_PATH . '/functions.php');
 

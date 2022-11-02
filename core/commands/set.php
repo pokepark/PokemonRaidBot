@@ -7,7 +7,7 @@ debug_log('SETCONFIG()');
 // debug_log($data);
 
 // Check access.
-bot_access_check($update, 'config-set');
+$botUser->accessCheck($update, 'config-set');
 
 // Get config name and value.
 $input = trim(substr($update['message']['text'], 4));

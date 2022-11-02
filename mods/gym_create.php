@@ -7,7 +7,7 @@ debug_log('gym_create()');
 //debug_log($data);
 
 // Check access.
-bot_access_check($update, 'gym-edit');
+$botUser->accessCheck($update, 'gym-edit');
 
 function insertUserInput($userId, $stage, $oldMessageId, $gymId = 0) {
     global $dbh;

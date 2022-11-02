@@ -7,7 +7,7 @@ debug_log('raid_by_gym_letter()');
 //debug_log($data);
 
 // Check access.
-bot_access_check($update, 'create');
+$botUser->accessCheck($update, 'create');
 
 // Back key id, action and arg
 $back_id = 'n';

@@ -3,7 +3,7 @@
 debug_log('delete_scheduled_entry()');
 
 // Check access.
-bot_access_check($update, 'pokedex');
+$botUser->accessCheck($update, 'pokedex');
 $arg = $data['arg'];
 $id = $data['id'];
 

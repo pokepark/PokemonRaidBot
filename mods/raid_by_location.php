@@ -7,7 +7,7 @@ debug_log('raid_by_location()');
 //debug_log($data);
 
 // Check access.
-bot_access_check($update, 'create');
+$botUser->accessCheck($update, 'create');
 
 // Enabled?
 if(!$config->RAID_VIA_LOCATION) {

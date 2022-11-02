@@ -7,7 +7,7 @@ debug_log('bot_lang()');
 //debug_log($data);
 
 // Access check.
-bot_access_check($update, 'trainer');
+$botUser->accessCheck($update, 'trainer');
 
 
 $keys = [];

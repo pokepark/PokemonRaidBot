@@ -7,7 +7,7 @@ debug_log('list_raid()');
 //debug_log($data);
 
 // Check access.
-bot_access_check($update, 'list');
+$botUser->accessCheck($update, 'list');
 
 // Get gym ID.
 $gym_id = $data['arg'];
@@ -46,20 +46,24 @@ if($rs->rowcount() == 1) {
                 'text'          => getTranslation('expand'),
                 'callback_data' => $raid['id'] . ':vote_refresh:0',
             ]
-        ],
-        [
-            [
-                'text'          => getTranslation('update_pokemon'),
-                'callback_data' => $raid['id'] . ':raid_edit_poke:' . $raid['level'],
-            ]
-        ],
-        [
-            [
-                'text'          => getTranslation('delete'),
-                'callback_data' => $raid['id'] . ':raids_delete:0'
-            ]
         ]
     ];
+    if($botUser->raidAccessCheck($update, $raid_id, 'pokemon', true)) {
+        $keys[] = [
+                [
+                    'text'          => getTranslation('update_pokemon'),
+                    'callback_data' => $raid['id'] . ':raid_edit_poke:' . $raid['level'],
+                ]
+        ];
+    }
+    if($botUser->raidAccessCheck($update, $raid_id, 'delete', true)) {
+        $keys[] = [
+                [
+                    'text'          => getTranslation('delete'),
+                    'callback_data' => $raid['id'] . ':raids_delete:0'
+                ]
+        ];
+    }
 
     // Add keys to share.
     debug_log($raid, 'raw raid data for share: ');
