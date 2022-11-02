@@ -25,6 +25,7 @@ $raids_res = $raids->fetchAll(PDO::FETCH_COLUMN,0);
 $offset = date('Z');
 $interval = DateInterval::createFromDateString($offset.' seconds');
 $raid_to_create = [];
+$datesToCreate = [];
 $data = json_decode($data,true);
 if($data !== false) {
     $now = new DateTime('18:00');
@@ -68,9 +69,10 @@ if($data !== false) {
                 $pokemon_form = $mon[1];
             }
             $raid_to_create[] = [$pokemon, $pokemon_form,$event_start,$event_end];
+            $datesToCreate[] = $event_start;
         }
     }
-    if($now->format('w') == 3 && !in_array($now->format('Y-m-d H:i:s'),$raids_res)) {
+    if($now->format('w') == 3 && !in_array($now->format('Y-m-d H:i:s'), $raids_res) && !in_array($now->format('Y-m-d H:i:s'), $datesToCreate)) {
         $start_time = gmdate('Y-m-d H:i:s',mktime(18,0,0));
         $end_time = gmdate('Y-m-d H:i:s',mktime(19,0,0));
         $mon = get_current_bosses($start_time);
