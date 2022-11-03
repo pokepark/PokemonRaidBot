@@ -14,6 +14,7 @@ $languages = array(
     'nl' => 'NL',
     'de' => 'DE',
     'en-US' => 'EN',
+    'en' => 'EN',
     'it' => 'IT',
     'pt' => 'PT-BR',
     'ru' => 'RU',
