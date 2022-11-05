@@ -8,7 +8,7 @@
 
 
 if(extension_loaded('apcu') && apcu_enabled()){
-  if (!apcu_exists($namespace)){
+  if (isset($namespace) && !apcu_exists($namespace)){
     apcu_store($namespace, time());
     define('IS_INIT', true);
     define('IS_INIT_OR_WHATEVER', true);
