@@ -8,7 +8,7 @@ include('logic/active_raid_duplication_check.php');
 include('logic/alarm.php');
 include('logic/check_time.php');
 include('logic/cp_keys.php');
-include('logic/curl_json_response.php');
+include('logic/collectCleanup.php');
 include('logic/delete_raid.php');
 include('logic/delete_trainerinfo.php');
 include('logic/disable_raid_level.php');
