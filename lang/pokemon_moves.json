@@ -3964,6 +3964,19 @@
         "RU": "Преграда",
         "ES": "Obstrucción"
     },
+    "pokemon_move_371": {
+        "PT-BR": "Força das Sombras",
+        "EN": "Shadow Force",
+        "FI": "Shadow Force",
+        "NL": "Shadow Force",
+        "NO": "Shadow Force",
+        "PL": "Shadow Force",
+        "FR": "Revenant",
+        "DE": "Schemenkraft",
+        "IT": "Oscurotuffo",
+        "RU": "Сумеречная Сила",
+        "ES": "Golpe Umbrío"
+    },
     "pokemon_move_372": {
         "PT-BR": "Raio Meteórico",
         "EN": "Meteor Beam",
@@ -3977,18 +3990,6 @@
         "RU": "Метеоритный Луч",
         "ES": "Rayo Meteórico"
     },
-    "pokemon_move_371": {
-        "PT-BR": "Força das Sombras",
-        "EN": "Shadow Force",
-        "FI": "Shadow Force",
-        "NL": "Shadow Force",
-        "NO": "Shadow Force",
-        "PL": "Shadow Force",
-        "FR": "Revenant",
-        "DE": "Schemenkraft",
-        "RU": "Сумеречная Сила",
-        "ES": "Golpe Umbrío"
-    },
     "pokemon_move_376": {
         "PT-BR": "Poltergeist",
         "EN": "Poltergeist",
@@ -3998,6 +3999,7 @@
         "PL": "Poltergeist",
         "FR": "Esprit Frappeur",
         "DE": "Poltergeist",
+        "IT": "Poltergeist",
         "RU": "Полтергейст",
         "ES": "Poltergeist"
     }

@@ -99,7 +99,7 @@ function getTranslation($text, $language = false)
     $translation = $translations[$text][DEFAULT_LANGUAGE];
 
   // No translation found
-  elseif($tfile == 'botHelp')
+  elseif($tfile == 'botHelp' or $tfile == 'pokemonForms')
     $translation = false;
   else
     $translation = $text;
