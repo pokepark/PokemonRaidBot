@@ -157,24 +157,9 @@ if ($answer['user_count'] != NULL) {
   // Check if RAID has no participants AND Raid should be shared to another chat at first participant
   // AND target chat was set in config AND Raid was not shared to target chat before
   if($count_att == 0 && $config->SHARE_AFTER_ATTENDANCE && !empty($config->SHARE_CHATS_AFTER_ATTENDANCE)){
-    // Check if Raid has been posted to target chat
-    $rs_chann = my_query(
-      '
-      SELECT *
-      FROM cleanup
-      WHERE raid_id = :raidId
-      AND chat_id = :chatId
-      ',
-      [
-        'raidId' => $raidId,
-        'chatId' => $config->SHARE_CHATS_AFTER_ATTENDANCE,
-      ]);
-    // IF raid was not shared to target chat, we want to share it
-    if ($rs_chann->rowCount() == 0) {
-      // Send the message.
-      require_once(LOGIC_PATH . '/send_raid_poll.php');
-      $tg_json = send_raid_poll($raidId, $config->SHARE_CHATS_AFTER_ATTENDANCE, $raid, $tg_json);
-    }
+    // Send the message.
+    require_once(LOGIC_PATH . '/send_raid_poll.php');
+    $tg_json = send_raid_poll($raidId, $config->SHARE_CHATS_AFTER_ATTENDANCE, $raid, $tg_json);
   }
 }
 

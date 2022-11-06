@@ -2,14 +2,31 @@
 /**
  * Post a raid poll to all relevant chats
  * @param int $raid_id ID of the raid
- * @param int|array $chats chat ID or array of IDs
+ * @param int|array $shareChats chat ID or array of IDs
  * @param array|false $raid Array received from get_raid() (optional).
  * @param array|false $tg_json multicurl array
  * @return array multicurl array
  */
 
-function send_raid_poll($raid_id, $chats, $raid = false, $tg_json = false) {
+function send_raid_poll($raid_id, $shareChats, $raid = false, $tg_json = false) {
     global $config;
+    // Telegram JSON array.
+    if($tg_json == false) $tg_json = [];
+    if(!is_array($shareChats)) $shareChats = [$shareChats];
+    // Check if Raid has been posted to target chat
+    $resultChats = my_query(
+        '
+        SELECT DISTINCT chat_id
+        FROM cleanup
+        WHERE raid_id = :raidId
+        AND chat_id IN ("' . implode('","',$shareChats) . '")
+        ',
+        [
+          'raidId' => $raid_id,
+        ]);
+    $chatsAlreadySharedTo = $resultChats->fetchAll(PDO::FETCH_COLUMN, 0);
+    $chats = array_diff($shareChats, $chatsAlreadySharedTo);
+    if(count($chats) == 0) return $tg_json;
 
     // Get raid data.
     if($raid == false) $raid = get_raid($raid_id);
@@ -32,8 +49,6 @@ function send_raid_poll($raid_id, $chats, $raid = false, $tg_json = false) {
         $post_text = true;
     }
 
-    // Telegram JSON array.
-    if($tg_json == false) $tg_json = [];
 
     // Send the message.
     $raid_picture_hide_level = explode(",",$config->RAID_PICTURE_HIDE_LEVEL);
@@ -45,7 +60,6 @@ function send_raid_poll($raid_id, $chats, $raid = false, $tg_json = false) {
     $raid_pokemon_form_name = get_pokemon_form_name($raid_pokemon_id,$raid['pokemon_form']);
     $raid_pokemon = $raid_pokemon_id . "-" . $raid_pokemon_form_name;
 
-    if(!is_array($chats)) $chats = [$chats];
     foreach($chats as $chat_id) {
         // Send location.
         if ($config->RAID_LOCATION) {
