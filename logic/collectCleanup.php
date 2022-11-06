@@ -2,14 +2,13 @@
 
 /**
  * Process response from telegram api.
- * @param string $json_response Json response from Telegram
+ * @param string $response Decoded json response from Telegram
  * @param string $request Request sent to Telegram
  * @param array|int|string $identifier raid array from get_raid, raid id or [overview/trainer]
  * @return mixed
  */
-function collectCleanup($json_response, $request, $identifier = false)
+function collectCleanup($response, $request, $identifier = false)
 {
-  $response = json_decode($json_response, true);
   if($identifier == false) return $response;
   if(!isset($response['result']['chat']['type']) or !in_array($response['result']['chat']['type'], ['channel','group','supergroup'])) return $response;
 

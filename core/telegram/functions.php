@@ -749,10 +749,11 @@ function curl_json_request($post_contents, $identifier)
     // Process response from telegram api.
     responseHandler($json_response, $post_contents);
 
-    collectCleanup($json_response, $post_contents, $identifier);
+    $responseArray = json_decode($json_response, true);
+    collectCleanup($responseArray, $post_contents, $identifier);
 
     // Return response.
-    return $json_response;
+    return $responseArray;
 }
 
 /**
@@ -850,14 +851,15 @@ function curl_json_multi_request($json)
       }
     }while($retry === true && $retryCount < $maxRetries);
 
+    $responseArrays = [];
     // Process response from telegram api.
     foreach($response as $id => $json_response) {
-        collectCleanup($response[$id], $json[$id]['post_contents'], $json[$id]['identifier']);
-        debug_log_incoming($json_response, '<-');
+        $responseArrays[$id] = json_decode($response[$id], true);
+        collectCleanup($responseArrays[$id], $json[$id]['post_contents'], $json[$id]['identifier']);
     }
 
     // Return response.
-    return $response;
+    return $responseArrays;
 }
 if($metrics) {
   $tg_response_code = $metrics->registerCounter($namespace, 'tg_response_count', 'Counters of response codes from Telegram', ['code', 'method', 'description']);
