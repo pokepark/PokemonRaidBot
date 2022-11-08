@@ -30,6 +30,7 @@
   "MAPS_LOOKUP": false,
   "MAPS_API_KEY":"",
   "OSM_LOOKUP": false,
+  "OSM_CUSTOM_ADDRESS": "",
   "AUTO_REFRESH_POLLS":false,
   "ENABLE_BOSS_AUTO_UPDATE": true,
   "CUSTOM_TRAINERNAME": true,

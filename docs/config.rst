@@ -193,6 +193,8 @@ OpenStreetMap API
 
 To use OpenStreetMap's Nominatim API to lookup addresses of gyms, set ``OSM_LOOKUP`` to ``true`` and  ``MAPS_LOOKUP`` to ``false``.
 
+You can set a custom nominatim server address in ``OSM_CUSTOM_ADDRESS``, e.g. ``http://localhost:8090``.
+
 Quote from `Nominatim documentation <https://nominatim.org/release-docs/latest/api/Reverse/>`_\ :
 
 ``The reverse geocoding API does not exactly compute the address for the coordinate it receives. It works by finding the closest suitable OSM object and returning its address information. This may occasionally lead to unexpected results.``
@@ -940,6 +942,8 @@ Config reference
      - Boolean, resolve missing gym addresses via Google Maps
    * - OSM_LOOKUP
      - Boolean, resolve missing gym addresses via OpenStreetMap
+   * - OSM_CUSTOM_ADDRESS
+     - String, if OSM lookup is enabled, you can set private server address here. e.g. ``http://localhost:8090``
    * - MAP_URL
      - URL to your map. This is displayed under every raid poll.
    * - CUSTOM_TRAINERNAME
