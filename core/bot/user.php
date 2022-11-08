@@ -333,7 +333,7 @@ class botUser
 
     $nick = (isset($msg['username'])) ? $msg['username'] : '';
 
-    $lang = (isset($msg['language_code'])) ? $msg['language_code'] : '';
+    $lang = (isset($msg['language_code']) && array_key_exists($msg['language_code'], $GLOBALS['languages'])) ? $msg['language_code'] : 'en';
 
     // Create or update the user.
     $stmt = $dbh->prepare(
