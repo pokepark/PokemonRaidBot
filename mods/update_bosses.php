@@ -4,7 +4,7 @@
 if(!$config->ENABLE_BOSS_AUTO_UPDATE) { exit; }
 
 $levels = $data['id'];
-$source = $data ['arg'];
+$source = $data['arg'];
 $add_mons = [];
 if($levels != 'scheduled') {
     $get_levels = explode(",",$levels);
@@ -54,8 +54,10 @@ if($levels != 'scheduled') {
     }
 }elseif($levels == 'scheduled') {
     require_once(LOGIC_PATH . '/read_upcoming_bosses.php');
+    $data = read_upcoming_bosses(true);
+    if(empty($data)) exit;
     $sql = 'DELETE FROM raid_bosses WHERE scheduled = 1;';
-    $sql .= read_upcoming_bosses(true);
+    $sql .= $data;
 }else {
     info_log("Invalid argumens supplied to update_bosses!");
     exit();
