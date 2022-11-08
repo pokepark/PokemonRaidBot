@@ -137,8 +137,7 @@ function get_address($lat, $lon)
 
         // Set maps geocode url.
         $language = strtolower($config->LANGUAGE_PUBLIC);
-        $MapsApiKey = $config->MAPS_API_KEY;
-        $url = ((isset($config->OSM_CUSTOM_ADDRESS) && $config->OSM_CUSTOM_ADDRESS != '') ? $config->OSM_CUSTOM_ADDRESS : 'https://nominatim.openstreetmap.org') . '/reverse?lat=' . $lat . '&lon=' . $lon . '&format=json&accept-language=' . $language;
+        $url =  $config->OSM_URL . '/reverse?lat=' . $lat . '&lon=' . $lon . '&format=json&accept-language=' . $language;
 
         // Curl request.
         $curl = curl_init($url);
