@@ -110,18 +110,21 @@ catch (PDOException $exception) {
 $dbh = null;
 function get_current_bosses($spawn) {
     global $dbh;
-    $pk = $dbh->prepare('SELECT pokedex_id,pokemon_form_id FROM raid_bosses WHERE raid_level = \'5\' AND \''.$spawn.'\' BETWEEN date_start AND date_end');
-    $pk->execute();
-    $res = $pk->fetch();
-    if($pk->rowCount()==1) {
-        $pokemon = $res['pokedex_id'];
-        $pokemon_form = $res['pokemon_form_id'];
-    }elseif($pk->rowCount()>1) {
-        $pokemon = 9995;
-        $pokemon_form = 0;
-    }else {
-        return false;
-    }
+    $i = 0;
+    $levels = [5, 8]; // Search potential raid hour bosses from these raid levels
+    do {
+        $pk = $dbh->prepare('SELECT pokedex_id,pokemon_form_id FROM raid_bosses WHERE raid_level = ? AND ? BETWEEN date_start AND date_end');
+        $pk->execute([$levels[$i], $spawn]);
+        $res = $pk->fetch();
+        if($pk->rowCount() == 1) {
+            $pokemon = $res['pokedex_id'];
+            $pokemon_form = $res['pokemon_form_id'];
+        }elseif($pk->rowCount() > 1) {
+            $pokemon = 999 . $levels[$i];
+            $pokemon_form = 0;
+        }
+        $i++;
+    } while($pk->rowcount() > 0 or $i < 1);
     return [$pokemon,$pokemon_form];
 }
 function curl_get_contents($url)
