@@ -677,8 +677,9 @@ function create_raid_picture($raid, $standalone_photo = false, $debug = false) {
  * @return object
  */
 function grab_img($uri) {
-    $img = imagecreatefromstring(file_get_contents($uri));
-    if ($img === false) {
+    try {
+        $img = imagecreatefromstring(file_get_contents($uri));
+    }catch(Exception $e) {
         info_log($uri, 'Failed to get image:');
         return false;
     }
