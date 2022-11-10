@@ -43,7 +43,14 @@ class botUser
       }
     }
 
-    $telegramRoles = ['creator', 'admins', 'members', 'restricted', 'kicked'];
+    // Map telegram roles to access file names
+    $telegramRoles = [
+        'creator'       => 'creator',
+        'administrator' => 'admins',
+        'member'        => 'members',
+        'restricted'    => 'restricted',
+        'kicked'        => 'kicked',
+      ];
 
     // If user specific permissions are found, use them instead of group based
     if (is_file(ACCESS_PATH . '/access' . $user_id)) {
@@ -52,7 +59,7 @@ class botUser
       $chatIds = [];
       $rolesToCheck = $telegramRoles;
       $rolesToCheck[] = 'access';
-      foreach($rolesToCheck as $roleToCheck) {
+      foreach($rolesToCheck as $tgRole => $roleToCheck) {
         $chatFiles = str_replace(ACCESS_PATH . '/' . $roleToCheck, '', glob(ACCESS_PATH . '/' . $roleToCheck . '-*'));
         $chatIds = array_merge($chatIds, $chatFiles);
       }
@@ -87,22 +94,24 @@ class botUser
           // Get access file based on user status/role.
           debug_log('Role of user ' . $chatObj['result']['user']['id'] . ' : ' . $chatObj['result']['status']);
 
-          if(in_array($chatObj['result']['status'], $telegramRoles) && is_file(ACCESS_PATH . '/' . $chatObj['result']['status'] . $chatId)) {
-            $privilegeList = file(ACCESS_PATH . '/' . $chatObj['result']['status'] . $chatId, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-            $accessFile = $chatObj['result']['status'] . $chatId;
+          $userStatus = $chatObj['result']['status'];
+
+          if(array_key_exists($userStatus, $telegramRoles) && is_file(ACCESS_PATH . '/' . $telegramRoles[$userStatus] . $chatId)) {
+            $privilegeList = file(ACCESS_PATH . '/' . $telegramRoles[$userStatus] . $chatId, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+            $accessFile = $userStatus . $chatId;
 
           // Any other user status/role except "left"
-          } else if($chatObj['result']['status'] != 'left' && is_file(ACCESS_PATH . '/access' . $chatId)) {
+          } else if($userStatus != 'left' && is_file(ACCESS_PATH . '/access' . $chatId)) {
             $privilegeList = file(ACCESS_PATH . '/access' . $chatId, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
             $accessFile = 'access' . $chatId;
 
             // Ignore "Restricted"?
-            if($chatObj['result']['status'] == 'restricted' && in_array('ignore-restricted', $privilegeList)) {
+            if($userStatus == 'restricted' && in_array('ignore-restricted', $privilegeList)) {
               $privilegeList = NULL;
             }
 
             // Ignore "kicked"?
-            if($chatObj['result']['status'] == 'kicked' && in_array('ignore-kicked', $privilegeList)) {
+            if($userStatus == 'kicked' && in_array('ignore-kicked', $privilegeList)) {
               $privilegeList = NULL;
             }
           } else {
