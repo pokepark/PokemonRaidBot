@@ -747,10 +747,13 @@ function curl_json_request($post_contents, $identifier)
     curl_close($curl);
 
     // Process response from telegram api.
-    $response = curl_json_response($json_response, $post_contents, $identifier);
+    responseHandler($json_response, $post_contents);
+
+    $responseArray = json_decode($json_response, true);
+    collectCleanup($responseArray, $post_contents, $identifier);
 
     // Return response.
-    return $response;
+    return $responseArray;
 }
 
 /**
@@ -803,30 +806,115 @@ function curl_json_multi_request($json)
         else debug_log($data['post_contents'], '->');
     }
 
-    // Execute the handles.
-    $running = null;
-    do {
-        curl_multi_select($mh);
-        $status = curl_multi_exec($mh, $running);
-    } while($running > 0 && $status === CURLM_OK);
-
-    if ($status != CURLM_OK) {
-        info_log(curl_multi_strerror($status));
-    }
-
     // Get content and remove handles.
-    foreach($curly as $id => $content) {
+    $retry = false;
+    $maxRetries = 3;
+    $retryCount = 0;
+    $sleep = 0;
+    do {
+      // On the second pass and onwards sleep before executing curls
+      if($retry === true) {
+        $retry = false;
+        $sleep = 0;
+        $retryCount++;
+        debug_log('Retrying in '.$sleep.' seconds');
+        sleep($sleep);
+        debug_log('Retry count: '.($retryCount).'...');
+      }
+
+      // Execute the handles.
+      $running = null;
+      do {
+        $status = curl_multi_exec($mh, $running);
+        curl_multi_select($mh);
+      } while($running > 0 && $status === CURLM_OK);
+
+      if ($status != CURLM_OK) {
+        info_log(curl_multi_strerror($status));
+      }
+
+      foreach($curly as $id => $content) {
         $response[$id] = curl_multi_getcontent($content);
         curl_multi_remove_handle($mh, $content);
-    }
+        $responseResults = responseHandler($response[$id], $json[$id]['post_contents']);
+        // Handle errors
+        if(is_array($responseResults) && $responseResults[0] === 'retry') {
+          $retry = true;
+          // Use the highest sleep value returned by TG
+          $sleep = $responseResults[1] > $sleep ? $responseResults[1] : $sleep;
+          // Re-add this handle with the same info
+          curl_multi_add_handle($mh, $curly[$id]);
+          continue;
+        }
 
+        unset($curly[$id]);
+      }
+    }while($retry === true && $retryCount < $maxRetries);
+
+    $responseArrays = [];
     // Process response from telegram api.
     foreach($response as $id => $json_response) {
-        $response[$id] = curl_json_response($response[$id], $json[$id]['post_contents'], $json[$id]['identifier']);
-        debug_log_incoming($json_response, '<-');
+        $responseArrays[$id] = json_decode($response[$id], true);
+        collectCleanup($responseArrays[$id], $json[$id]['post_contents'], $json[$id]['identifier']);
     }
 
     // Return response.
-    return $response;
+    return $responseArrays;
+}
+if($metrics) {
+  $tg_response_code = $metrics->registerCounter($namespace, 'tg_response_count', 'Counters of response codes from Telegram', ['code', 'method', 'description']);
 }
 
+/**
+ * Process response from Telegram.
+ * @param $jsonResponse JSON string returned by Telegram
+ * @param $request The request we sent to Telegram
+ * @return mixed
+ */
+function responseHandler($jsonResponse, $request) {
+  global $metrics, $tg_response_code;
+  // Write to log.
+  debug_log_incoming($jsonResponse, '<-');
+
+  // Decode json objects
+  $request_array = is_array($request) ? $request : json_decode($request, true);
+  $response = json_decode($jsonResponse, true);
+  if ($metrics){
+    $code = 200;
+    $method = $request_array['method'];
+    $description = null;
+    if (isset($response['error_code'])) {
+      $code = $response['error_code'];
+      # We have to also include the description because TG overloads error codes
+      $description = $response['description'];
+    }
+    $tg_response_code->inc([$code, $method, $description]);
+  }
+  // Validate response.
+  if ((isset($response['ok']) && $response['ok'] != true) || isset($response['update_id'])) {
+    if(is_array($request)) $json = json_encode($request); else $json = $request;
+    // Handle some specific errors
+    if($response['description'] == 'Bad Request: message to edit not found' || $response['description'] == 'Bad Request: message to delete not found') {
+      // Loop through tables where we store sent messages
+      $table = ['cleanup', 'overview', 'trainerinfo'];
+      $i = 0;
+      do {
+        $q = my_query('DELETE FROM '.$table[$i].' WHERE chat_id = :chatId AND message_id = :messageId',['chatId' => $request_array['chat_id'], ':messageId' => $request_array['message_id']]);
+        $i++;
+      } while($q->rowCount() == 0 && $i < count($table));
+      info_log($table[$i-1], 'A message was deleted by someone else than us. Deleting info from database table:');
+      info_log($chatId, 'chat_id:');
+      info_log($messageId, 'message_id:');
+      return true;
+    }
+    if(substr($response['description'], 0, 30) == 'Too Many Requests: retry after') {
+      return [  'retry',
+                ($response['parameters']['retry_after'] + 1),
+            ];
+    }
+    info_log("{$json} -> {$jsonResponse}", 'ERROR:');
+    // Log unhandled errors
+    return false;
+  }
+  return true;
+}
