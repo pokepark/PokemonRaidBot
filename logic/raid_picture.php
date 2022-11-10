@@ -1,51 +1,13 @@
 <?php
 
 /**
- * Get full raidpicture.php URL
- * @param array $raid Raid array from get_raid()
- * @param bool $standalone Clear the bottom right corner of the photo from text
- * @return string
- */
-function raid_picture_url($raid, $standalone = false)
-{
-  global $config;
-
-  // If any params go missing from the url the image generated will likely be served from cache
-  // So let's warn people if were generating bogus URLs
-  foreach (array('pokemon', 'pokemon_form', 'start_time', 'end_time', 'gym_id') as $key) {
-    if (!array_key_exists($key, $raid) || $raid[$key] == '' || $raid[$key] == '-') {
-      error_log("raid_picture; Insufficient parameters for raidpicture: '{$key}:{$raid[$key]}'");
-    }
-  }
-
-  if(utcnow() > $raid['end_time']) {
-    // We'll set raid start and end times to 0 to get a new image for when the raid has ended.
-    // Setting thetimes to 0 also makes it so TG can cache the raid ended -images and reuse them
-    $start_time = $end_time = 0;
-    $raid_id = '';
-  }else {
-    $start_time = strtotime($raid['start_time']);
-    $end_time = strtotime($raid['end_time']);
-    $raid_id = 'raid='.$raid['id'].'&';
-  }
-  if($raid['event'] == EVENT_ID_EX) $ex_raid = '1'; else $ex_raid = '0';
-  $picture_url = "{$config->RAID_PICTURE_URL}?{$raid_id}pokemon={$raid['pokemon']}&pokemon_form={$raid['pokemon_form']}&gym_id={$raid['gym_id']}&start_time={$start_time}&end_time={$end_time}&ex_raid={$ex_raid}";
-  if($standalone) $picture_url .= '&sa=1';
-  if($raid['costume'] != 0) $picture_url .= '&costume='.$raid['costume'];
-  debug_log('raid_picture_url: ' . $picture_url);
-  return $picture_url;
-}
-
-/**
- * Returns photo contents to post to Telegram. File_id, url or photo file contents
+ * Returns photo contents to post to Telegram. File_id or photo file contents
  * @param array $raid Raid array from get_raid()
  * @param bool $standalone_photo Clear the bottom right corner of the photo from text
  * @param bool $debug Add debug features to the photo
  * @return array [true/false if returned content is photo file, content, cached unique_id for editMessageMedia]
  */
 function get_raid_picture($raid, $standalone_photo = false) {
-    global $config;
-    // Has raid ended?
     $binds = [
         ':raid_id' => $raid['id'],
         ':gym_id' => $raid['gym_id'],
@@ -54,7 +16,6 @@ function get_raid_picture($raid, $standalone_photo = false) {
         ':standalone' => $standalone_photo,
         ':ended' => $raid['raid_ended'],
     ];
-    if($config->RAID_PICTURE_SEND_METHOD == 'url') return [false, raid_picture_url($raid, $standalone_photo)];
     $query_cache = my_query("
                             SELECT id, unique_id
                             FROM photo_cache
@@ -70,9 +31,8 @@ function get_raid_picture($raid, $standalone_photo = false) {
     if($query_cache->rowCount() > 0) {
         $result = $query_cache->fetch();
         return [false, $result['id'], $result['unique_id']];
-    }else {
-        return [true, create_raid_picture($raid, $standalone_photo)];
     }
+    return [true, create_raid_picture($raid, $standalone_photo)];
 }
 
 /**
