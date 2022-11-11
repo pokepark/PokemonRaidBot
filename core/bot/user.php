@@ -160,7 +160,7 @@ class botUser
   public function accessCheck($update, $permission = 'access-bot', $return_result = false, $new_user = false) {
     if(in_array($permission, $this->userPrivileges['privileges']) or $this->userPrivileges['grantedBy'] === 'BOT_ADMINS' or $this->userPrivileges['grantedBy'] === 'NOT_RESTRICTED') {
       // If a config file matching users status was found, check if tutorial is forced
-      if($new_user && (in_array("force-tutorial", $this->userPrivileges['privileges']) && $this->userPrivileges['grantedBy'] !== 'BOT_ADMINS' && $this->userPrivileges['grantedBy'] !== 'NOT_RESTRICTED')) {
+      if($new_user && (in_array("force-tutorial", $this->userPrivileges['privileges']) || $this->userPrivileges['grantedBy'] === 'BOT_ADMINS' || $this->userPrivileges['grantedBy'] === 'NOT_RESTRICTED')) {
         return false;
       }
       return true;
