@@ -6,14 +6,18 @@ debug_log('edit_event()');
 //debug_log($update);
 //debug_log($data);
 
-// Check access.
-$botUser->accessCheck($update, 'event-raids');
-
 // Set the id.
 $gym_id_plus_letter = $data['id'];
 
+//Initialize admin rights table [ ex-raid , raid-event ]
+$admin_access = [false, false];
+// Check access - user must be admin for raid_level X
+$admin_access[0] = $botUser->accessCheck($update, 'ex-raids', true);
+// Check access - user must be admin for raid event creation
+$admin_access[1] = $botUser->accessCheck($update, 'event-raids', true);
+
 // Get the keys.
-$keys = keys_event($gym_id_plus_letter, "edit_event_raidlevel");
+$keys = keys_event($gym_id_plus_letter, "edit_event_raidlevel", $admin_access);
 
 // No keys found.
 if (!$keys) {

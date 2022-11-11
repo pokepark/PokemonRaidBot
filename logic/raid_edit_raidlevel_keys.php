@@ -19,7 +19,8 @@ function raid_edit_raidlevel_keys($gym_id, $gym_first_letter, $admin_access = [f
         $query_event = 'AND raid_bosses.raid_level != \'X\'';
     }else {
         $event_id = $event;
-        $query_event = '';
+        if($admin_access[0] === true) $query_event = '';
+        else $query_event = 'AND raid_bosses.raid_level != \'X\'';
     }
     $query_counts = '
         SELECT    raid_level, COUNT(*) AS raid_level_count
@@ -74,7 +75,7 @@ function raid_edit_raidlevel_keys($gym_id, $gym_first_letter, $admin_access = [f
         }
     }
     // Add key for raid event if user allowed to create event raids
-    if($admin_access[1] === true && $event === false) {
+    if(($admin_access[1] === true or $admin_access[0] === true) && $event === false) {
         $keys[] = array(
             'text'          => getTranslation('event'),
             'callback_data' => $gym_id . ',' . $gym_first_letter . ':edit_event:0'
