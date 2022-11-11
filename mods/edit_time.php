@@ -63,21 +63,21 @@ if ($raid_id == 0 && $gym_id != 0) {
     debug_log('Formatting the raid time properly now.');
     $arg_time = str_replace('-', ':', $starttime);
 
-    // Ex and elite raids
-    if($event_id == 'X' or $raid_level == 9) {
-        debug_log('Ex-Raid time :D ... Setting raid date to ' . $arg_time);
-        $start_date_time = $arg_time;
-        $duration = ($raid_level == 9) ? $config->RAID_DURATION_ELITE : $config->RAID_DURATION;
-        $egg_duration = ($raid_level == 9) ? $config->RAID_EGG_DURATION_ELITE : $config->RAID_EGG_DURATION;
-
     // Event raids
-    }elseif($event_id != 'N') {
+    if($event_id != 'N') {
         debug_log('Event time :D ... Setting raid date to ' . $arg_time);
         $start_date_time = $arg_time;
         $query = my_query("SELECT raid_duration FROM events WHERE id = '{$event_id}' LIMIT 1");
         $result = $query->fetch();
-        $duration = $result['raid_duration'];
+        $duration = $result['raid_duration'] ?? $config->RAID_DURATION;
         $egg_duration = $config->RAID_EGG_DURATION;
+
+    // Elite raids
+    }elseif($raid_level == 9) {
+        debug_log('Elite Raid time :D ... Setting raid date to ' . $arg_time);
+        $start_date_time = $arg_time;
+        $duration = $config->RAID_DURATION_ELITE;
+        $egg_duration = $config->RAID_EGG_DURATION_ELITE;
 
     // Normal raids
     } else {
