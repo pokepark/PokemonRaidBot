@@ -45,7 +45,7 @@ $raids = $rs->fetchAll();
 debug_log($raids);
 
 // Did we get any raids?
-if($raids[0]['r_active'] == 0) {
+if(count($raids) == 0) {
   $msg = '<b>' . getTranslation('no_active_raids_found') . '</b>';
   send_message($update['message']['chat']['id'], $msg, [], ['reply_markup' => ['selective' => true, 'one_time_keyboard' => true]]);
   exit();
