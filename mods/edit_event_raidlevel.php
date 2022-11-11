@@ -6,9 +6,6 @@ debug_log('edit_event_raidlevel()');
 //debug_log($update);
 //debug_log($data);
 
-// Check access.
-$botUser->accessCheck($update, 'event-raids');
-
 // Get gym data via ID
 $id_data = explode(",", $data['id']);
 $gym_id = $id_data[0];
@@ -26,10 +23,12 @@ $back_arg = $data['arg'];
 // Telegram JSON array.
 $tg_json = array();
 
-//Initiate admin rights table [ ex-raid , raid-event ]
-$admin_access = [false,1];
+//Initialize admin rights table [ ex-raid , raid-event ]
+$admin_access = [false, false];
 // Check access - user must be admin for raid_level X
 $admin_access[0] = $botUser->accessCheck($update, 'ex-raids', true);
+// Check access - user must be admin for raid event creation
+$admin_access[1] = $botUser->accessCheck($update, 'event-raids', true);
 
 // Get the keys.
 $keys = raid_edit_raidlevel_keys($gym_id, $gym_first_letter, $admin_access, $event_id);
