@@ -49,7 +49,7 @@ $tg_json[] = edit_message($update, $msg, $keys, false, true);
 
 // Update the shared raid polls.
 require_once(LOGIC_PATH .'/update_raid_poll.php');
-$tg_json = update_raid_poll($id, $raid, false, $tg_json, true);
+$tg_json = update_raid_poll($raidId, $raid, false, $tg_json, true);
 
 // Alert users.
 $tg_json = alarm($raid, $update['callback_query']['from']['id'], 'new_boss', '', $tg_json);
