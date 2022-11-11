@@ -297,5 +297,18 @@
     "PL": "TRANSLATE",
     "FI": "/help - Näytä ohjeet",
     "ES": "/help - Ver ayuda"
+  },
+  "help_history": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "/history - View history of raids that had attendees",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "/history - Listaa päättyneet raidit joissa oli osallistujia",
+    "ES": "TRANSLATE"
   }
 }
