@@ -158,34 +158,29 @@ class botUser
    * @return bool|string
   */
   public function accessCheck($update, $permission = 'access-bot', $return_result = false, $new_user = false) {
-    if(in_array($permission, $this->userPrivileges['privileges']) or $this->userPrivileges['grantedBy'] === 'BOT_ADMINS' or $this->userPrivileges['grantedBy'] === 'NOT_RESTRICTED') {
-      // If a config file matching users status was found, check if tutorial is forced
-      if($new_user && (in_array("force-tutorial", $this->userPrivileges['privileges']) || $this->userPrivileges['grantedBy'] === 'BOT_ADMINS' || $this->userPrivileges['grantedBy'] === 'NOT_RESTRICTED')) {
-        return false;
-      }
+    if(!$new_user && in_array($permission, $this->userPrivileges['privileges']) or $this->userPrivileges['grantedBy'] === 'BOT_ADMINS' or $this->userPrivileges['grantedBy'] === 'NOT_RESTRICTED') {
       return true;
-    }else {
-      debug_log('Denying access to the bot for user');
-
-      if($return_result)
-        return false;
-
-      $response_msg = '<b>' . getTranslation('bot_access_denied') . '</b>';
-      // Edit message or send new message based on type of received call
-      if (isset($update['callback_query'])) {
-        $keys = [];
-
-        // Telegram JSON array.
-        $tg_json = array();
-        $tg_json[] = edit_message($update, $response_msg, $keys, false, true);
-        $tg_json[] = answerCallbackQuery($update['callback_query']['id'], getTranslation('bot_access_denied'), true);
-
-        curl_json_multi_request($tg_json);
-      } else {
-        send_message($update['message']['from']['id'], $response_msg);
-      }
-      exit;
     }
+    debug_log('Denying access to the bot for user');
+
+    if($return_result)
+      return false;
+
+    $response_msg = '<b>' . getTranslation('bot_access_denied') . '</b>';
+    // Edit message or send new message based on type of received call
+    if (isset($update['callback_query'])) {
+      $keys = [];
+
+      // Telegram JSON array.
+      $tg_json = array();
+      $tg_json[] = edit_message($update, $response_msg, $keys, false, true);
+      $tg_json[] = answerCallbackQuery($update['callback_query']['id'], getTranslation('bot_access_denied'), true);
+
+      curl_json_multi_request($tg_json);
+    } else {
+      send_message($update['message']['from']['id'], $response_msg);
+    }
+    exit;
   }
 
   /**

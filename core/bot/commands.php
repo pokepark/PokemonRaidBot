@@ -14,7 +14,7 @@ if (isset($update['message']['text']) && substr($update['message']['text'], 0, 1
         $altcom = 'start';
     }
 
-    if($config->TUTORIAL_MODE && isset($update['message']['chat']['id']) && new_user($update['message']['chat']['id']) && $com != 'start' && $com != 'tutorial') {
+    if(isset($update['message']['chat']['id']) && new_user($update['message']['chat']['id']) && $com != 'start' && $com != 'tutorial') {
         send_message($update['message']['chat']['id'],  getTranslation("tutorial_command_failed"));
         $dbh = null;
         exit();
