@@ -3080,19 +3080,6 @@
     "FI": "Valinnainen - aseta sali ja joukkue",
     "ES": "Opcional - Poner gimnasio y equipo"
   },
-  "set_gym_team_command": {
-    "NL": "/team <code>Mystic/Valor/Instinct/Blauw/Rood/Geel</code>",
-    "DE": "/team <code>Mystic/Valor/Instinct/Blau/Rot/Gelb</code>",
-    "EN": "/team <code>Mystic/Valor/Instinct/Blue/Red/Yellow</code>",
-    "IT": "/team <code>Saggezza/Valore/Istinto/Blu/Rosso/Giallo</code>",
-    "PT-BR": "/team <code>Mystic/Valor/Instinct/Azul/Vermelho/Amarelo</code>",
-    "RU": "/team <code>Mystic/Valor/Instinct/Синий/Красный/Желтый</code>",
-    "NO": "/team <code>Mystic/Valor/Instinct/Blue/Red/Yellow</code>",
-    "FR": "/team <code>Sagesse/Bravoure/Intuition/Bleu/Rouge/Jaune</code>",
-    "PL": "/team <code>Niebieski/Czerowny/Żółty</code>",
-    "FI": "/team <code>Mystic/Valor/Instinct/Blue/Red/Yellow</code>",
-    "ES": "/team <code>Sabiduría/Valor/Instinto/Azul/Rojo/Amarillo</code>"
-  },
   "mystic": {
     "NL": "Mystic/Blauw",
     "DE": "Weisheit/Blau",
@@ -3885,6 +3872,45 @@
     "PL": "TRANSLATE",
     "FI": "Saataksesi salin id numeron tai muita tietoja, käytä /gym -komentoa.",
     "ES": "Para obtener la identificación y más detalles del gimnasio, usa el comando /gym."
+  },
+  "gym_name_example": {
+    "NL": "Als voorbeeld: <code>/gymname 34, Markt 61, 3131 CR Vlaardingen </code>",
+    "DE": "Zum Beispiel: <code>/gymname 34, Wasserfall im Park</code>",
+    "EN": "For example: <code>/gymname 34, Waterfall in the park</code>!",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Esimerkiksi: <code>/gymname 34, Vapauden Muistomerkki</code>!",
+    "ES": "Por ejemplo: <code>/gymname 34, Waterfall in the park</code>"
+  },
+  "gym_id_name_missing": {
+    "NL": "Error! Gym id of naam mist!",
+    "DE": "Fehler! Arena-ID oder Name fehlt!",
+    "EN": "Error! Gym id or name is missing!",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Virhe! Salin id numero tai nimi puuttuu!",
+    "ES": "¡Error! ¡Faltan gym id o nombre!"
+  },
+  "gym_name_updated": {
+    "NL": "Gym naam aangepast.",
+    "DE": "Der Arena-Name wurde aktualisiert.",
+    "EN": "Gym name updated.",
+    "IT": "Nome della Palestra aggiornato.",
+    "PT-BR": "Nome do ginásio atualizado.",
+    "RU": "Название гима обновлено.",
+    "NO": "Gym navn oppdatert.",
+    "FR": "Nom de l'arène mis à jour",
+    "PL": "Nazwa Areny zaktualizowana",
+    "FI": "Salin nimi päivitetty.",
+    "ES": "Nombre del gimnasio actualizado."
   },
   "gym_name_edit": {
     "NL": "Gym naam aanpassen",

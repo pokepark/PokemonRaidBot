@@ -137,6 +137,7 @@ You can set several languages for the bot. Available languages are (A-Z):
 
 * DE (German)
 * EN (English)
+* ES (Spanish)
 * FI (Finnish)
 * FR (French)
 * IT (Italian)
@@ -501,7 +502,7 @@ Cleanup
 
 The bot features an automatic cleanup of Telegram raid poll messages as well as cleanup of the database (attendance and raids tables).
 
-To activate cleanup you need to `make sure your groups are Supergroups or Channels <#which-group-type-should-i-use--how-do-i-make-a-group-a-supergroup>`_\ , make your bot an admin in this chat, enable cleanup in the config and create a cronjob to trigger the cleanup process.
+To activate cleanup you need to `make sure your groups are Supergroups or Channels <#referring-to-groups-channels-and-users>`_\ , make your bot an admin in this chat, enable cleanup in the config and create a cronjob to trigger the cleanup process.
 
 
 #. Set the ``CLEANUP`` in the config to ``true`` and define a cleanup secret/passphrase under ``CLEANUP_SECRET``.

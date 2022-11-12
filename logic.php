@@ -58,7 +58,6 @@ include('logic/send_vote_time_future.php');
 include('logic/show_raid_poll.php');
 include('logic/show_raid_poll_small.php');
 include('logic/show_trainerinfo.php');
-include('logic/user_tutorial.php');
 include('logic/weather_keys.php');
 include('logic/curl_get_contents.php');
 ?>

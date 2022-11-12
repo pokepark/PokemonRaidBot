@@ -4,11 +4,11 @@ PokemonRaidBot usage
 Send your location to the bot
 -----------------------------
 
-If ``RAID_LOCATION`` is set to ``true`` (default), the bot will guide you through the creation of a raid poll based on the settings in the config file.
+If ``RAID_LOCATION`` is set to ``true`` (default), the bot will guide you through the creation of a raid poll based on the settings in the config file. ``RAID_VIA_LOCATION_FUNCTION`` determines the actions taken after location is received.
 
-In case of a raid poll the bot will ask you for the raid level, the pokemon raid boss, the time until the raids starts and the time left for the raid. Afterwards you can set the gym name and gym team by using the /gym and /team commands.
+By default the bot will ask you for the raid level, the pokemon raid boss, the time until the raids starts and the time left for the raid. Afterwards you can set the gym name by using the /gym or /gymname commands.
 
-If ``LIST_BY_LOCATION`` is set to ``true``\ , the bot will instead list all nearby saved raids.
+For further details please refer to :doc:`config#raid-creation-options`
 
 Using inline search of @PortalMapBot or @Ingressportalbot
 ---------------------------------------------------------
@@ -264,17 +264,17 @@ Delete an existing raid poll with the ``/delete`` command:
    :alt: Command: /delete
 
 
-Command: /team
-^^^^^^^^^^^^^^
-
-The bot will set the team to Mystic/Valor/Instinct for the last created raid based on your input.
-
-Example input: ``/team Mystic``
-
 Command: /trainer
 ^^^^^^^^^^^^^^^^^
 
-The bot will give you a list of chats to share the trainer message which allows users to set team and level+/- data. You can also delete the shared trainer messages via the ``/trainer`` command.
+Users can use this command to set their trainer name, friend code, team, level and if configured, personal bot settings (private language and automatic raid alarms).
+
+For users with proper access rights the bot will also give you a list of chats to share the trainer message which allows users to set team and level+/- data. You can also delete the shared trainer messages via the ``/trainer`` command.
+
+Command: /history
+^^^^^^^^^^^^^^^^^
+
+Tool for admins to view history of raids that had at least one person signed up for it.
 
 Command: /gym
 ^^^^^^^^^^^^^
@@ -282,13 +282,6 @@ Command: /gym
 The bot will show the details of each gym. Additionally you can change the extended gym details to hide/show gyms under ``/start`` as well as mark/un-mark them as ex-raid gym.
 
 Example input: ``/gym``
-
-Command: /addgym
-^^^^^^^^^^^^^^^^
-
-The bot will add a gym under the coordinates you're submitting. First latitude, then longitude. The gym is added under the name '#YourTelegramID' (e.g. '#111555777') and you need to change the name afterwards using the ``/gymname`` command. You cannot submit a second gym unless you changed the name of the first gym. In case you submit a second gym without changing the name of the previously submitted gym, the first gym coordinates will be overwritten!
-
-Example input: ``/addgym 52.5145434,13.3501189``
 
 Command: /gymname
 ^^^^^^^^^^^^^^^^^
@@ -298,28 +291,3 @@ The bot will set the name of gym to your input. If you submitted a gym via locat
 Example input: ``/gymname Siegessäule``
 
 Example input with gym id: ``/gymname 34, Siegessäule``
-
-Command: /gymaddress
-^^^^^^^^^^^^^^^^^^^^
-
-The bot will set the address of gym to your input. The id of the gym is required. You can delete the gym address using the keyword 'reset'.
-
-Example input: ``/gymaddress 34, Großer Stern, 10557 Berlin``
-
-Example input to delete the gym address: ``/gymaddress 34, reset``
-
-Command: /gymgps
-^^^^^^^^^^^^^^^^
-
-The bot will set the gps coordinates of gym to your input. The id of the gym is required.
-
-Example input: ``/gymgps 34, 52.5145434,13.3501189``
-
-Command: /gymnote
-^^^^^^^^^^^^^^^^^
-
-The bot will set the note for gym to your input. The id of the gym is required. You can delete the gym note using the keyword 'reset'.
-
-Example input: ``/gymnote 34, Meeting point: Behind the building``
-
-Example input to delete the gym note: ``/gymnote 34, reset``
