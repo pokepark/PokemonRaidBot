@@ -32,7 +32,7 @@ the schema version is final and immutable and any schema changes need to happen 
 Translations
 ------------
 
-Translations are stored in ``lang/language.json`` and ``core/lang/language.json``. Any string marked as ``TRANSLATE`` hasn't been translated yet. These can be changed by hand but if you want to add a new language or do large scale translation, using translate.py is recommended.
+Translations are stored in ``lang/language.json``. Any string marked as ``TRANSLATE`` hasn't been translated yet. These can be changed by hand but if you want to add a new language or do large scale translation, using translate.py is recommended.
 
 translate.py
 ^^^^^^^^^^^^

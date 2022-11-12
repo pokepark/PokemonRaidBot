@@ -213,18 +213,6 @@ Set ``RAID_EGG_DURATION`` to the maximum amount of minutes a user can select for
 
 Set ``RAID_DURATION`` to the maximum amount of minutes a user can select as raid duration for already running/active raids.
 
-Set ``RAID_HOUR`` to true to enable the raid hour. Enabling the raid hour superseds the normal raid duration. Note that the raid hour takes precedence over the raid day. Make sure to disable the raid hour to get the raid day.
-
-Set ``RAID_HOUR_DURATION`` to the maximum amount of minutes a user can select as raid duration if the ``RAID_HOUR`` is enabled. Per default max. 60 minutes.
-
-Set ``RAID_HOUR_CREATION_LIMIT`` to the maximum amount of raids a user can create if the ``RAID_HOUR`` is enabled. Per default 1 raid.
-
-Set ``RAID_DAY`` to true to enable the raid day. Enabling the raid day superseds the normal raid duration. Note that the raid hour takes precedence over the raid day. Make sure to disable the raid hour to get the raid day.
-
-Set ``RAID_DAY_DURATION`` to the maximum amount of minutes a user can select as raid duration if the ``RAID_DAY`` is enabled. Per default max. 180 minutes.
-
-Set ``RAID_DAY_CREATION_LIMIT`` to the maximum amount of raids a user can create if the ``RAID_DAY`` is enabled. Per default 1 raid.
-
 Set ``RAID_DURATION_CLOCK_STYLE`` to customize the default style for the raid start time selection. Set to true, the bot will show the time in clocktime style, e.g. "18:34" as selection when the raid will start. Set to false the bot will show the time until the raid starts in minutes, e.g. "0:16" (similar to the countdown in the gyms). Users can switch between both style in the raid creation process.
 
 Set ``RAID_CUSTOM_GYM_LETTERS`` to further split gyms by their first letter. For example if you have a lot of gyms starting with 'St' as there are a lot of churches like St. Helen, St. Jospeh, etc. in your area and the gym list under the letter 'S' is too long, you can tell the bot to put the gyms starting with 'St' under 'St' and exclude them from the letter 'S'. There is no limitation in length, so even 'Berlin' would work to split gyms, but the recommendation is to use as less chars as possible to split the gyms. You can add multiple custom gym letters, just separate them by comma. Example: ``"RAID_CUSTOM_GYM_LETTERS":"Ber,Sch,St,Wi"``
@@ -398,7 +386,7 @@ Predefine sharing all raids to the chats -100111222333 and -100444555666, except
 Raids from Webhook
 ~~~~~~~~~~~~~~~~~~
 
-You can receive Raids from a mapping system such as MAD via Webhook.
+You can receive Raids from a mapping systems such as MAD and RDM via Webhook.
 For that you need to setup ``WEBHOOK_CREATOR``\ , and to automatically share raids to chats, 
 ``"WEBHOOK_CHATS_ALL_LEVELS":"-100444555666"``
 or by Raidlevel ``"WEBHOOK_CHATS_LEVEL_5":"-100444555666"``
@@ -443,7 +431,7 @@ Event raids
 
 Users with the proper access rights can choose to create event raids. These can be handy for example on raid hours and raid days. These special raid polls have event specific name, description and poll settings that need to be set in database. Example of a few settings is in ``sql/event-table-example.sql``.
 
-``vote_key_mode`` currently supports 2 modes, 0 and 1. 0 is the standard mode where users vote for a time when they are attending. 1 is a mode with no timeslots, just a button for 'attending'.
+``vote_key_mode`` currently supports two modes, 0 and 1. 0 is the standard mode where users vote for a time when they are attending. 1 is a mode with no timeslots, just a button for 'attending'.
 
 With ``time_slots`` you can set event secific time slots for vote keys when ``vote_key_mode`` 0 is selected.
 
@@ -527,7 +515,7 @@ Access permissions
 Public access
 ^^^^^^^^^^^^^
 
-When no Telegram id, group, supergroup or channel is specified in ``BOT_ADMINS`` the bot will allow everyone to use it (public access).
+When no Telegram id is specified in ``BOT_ADMINS`` the bot will allow everyone to use it (public access).
 
 Example for public access: ``"BOT_ADMINS":""``
 
@@ -536,11 +524,11 @@ Access and permissions
 
 The ``MAINTAINER_ID`` is not able to access the bot nor has any permissions as that id is only contacted in case of errors and issues with the bot configuration.
 
-The ``BOT_ADMINS`` have all permissions and can use any feature of the bot.
+The ``BOT_ADMINS`` have all permissions and can use any feature of the bot. No restrictions specified in access files apply to these users.
 
 Telegram Users can only vote on raid polls, but have no access to other bot functions (unless you configured it).
 
-In order to allow Telegram chats to access the bot and use commands/features, you need to create an access file.
+In order to allow members of Telegram chats to access the bot and use commands/features, you need to create an access file.
 
 It does not matter if a chat is a user, group, supergroup or channel - any kind of chat is supported as every chat has a chat id!
 
@@ -645,7 +633,7 @@ A few examples for access files can be found below the permission overview table
      - Vote on shared raid poll
      - Not required!
    * - 
-     - Create raids ``/start``\ , ``/raid``
+     - Create raids ``/start``
      - ``create``
    * - 
      - Create ex-raids ``/start``
@@ -658,7 +646,7 @@ A few examples for access files can be found below the permission overview table
      - ``raid-duration``
    * - 
      - List all raids ``/list`` and ``/listall``
-     - ``list``
+     - ``list`` and ``listall``
    * - 
      - Manage overview ``/overview``
      - ``overview``
@@ -710,6 +698,9 @@ A few examples for access files can be found below the permission overview table
    * - 
      - Add a gym ``/gym``
      - ``gym-add``
+   * - 
+     - Edit gym name after creating a gym with ``RAID_VIA_LOCATION``
+     - ``gym-name``
    * - 
      - 
      - 
@@ -804,7 +795,7 @@ To enable this feature:
 * Create ``tutorial.php`` in config folder. Use ``tutorial.php.example`` as reference
 * Set ``TUTORIAL_MODE`` to ``true`` in ``config.json``
 * ``tutorial`` in access config file(s)
-* ``force-tutorial`` in access config file(s) to force users to go through the tutorial before they're able to use the bot.
+* ``force-tutorial`` in access config file(s) to force users to go through the tutorial before they're able to use the bot. Does not apply to users specified in ``BOT_ADMINS``.
 
 Customization
 -------------
@@ -836,7 +827,7 @@ To change translations you can do the following:
 
 
 * Create a file named ``language.json`` in the custom folder
-* Find the translation name/id by searching the core and bot language.php files (\ ``core/lang/language.php`` and ``lang/language.php``\ )
+* Find the translation name/id by searching the bot language.json files (\ ``lang/*.json``\ )
 * Set your own translation in your custom language.json
 * For example to change the translation of 'Friday' to a shorter 'Fri' put the following in your ``custom/language.json``\ :
 
