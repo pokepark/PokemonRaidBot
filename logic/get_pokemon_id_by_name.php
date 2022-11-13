@@ -58,7 +58,7 @@ function get_pokemon_id_by_name($pokemon_name, $get_from_db = false)
         }
     }else {
         // Get translation file
-        $str = file_get_contents(CORE_LANG_PATH . '/pokemon.json');
+        $str = file_get_contents(BOT_LANG_PATH . '/pokemon.json');
         $json = json_decode($str, true);
         $search_result = "";
         foreach($json as $title => $translations) {
@@ -88,7 +88,7 @@ function get_pokemon_id_by_name($pokemon_name, $get_from_db = false)
             debug_log('Searching for pokemon form: ' . $poke_form);
 
             // Get forms translation file
-            $str_form = file_get_contents(CORE_LANG_PATH . '/pokemon_forms.json');
+            $str_form = file_get_contents(BOT_LANG_PATH . '/pokemon_forms.json');
             $json_form = json_decode($str_form, true);
 
             // Search pokemon form in json
