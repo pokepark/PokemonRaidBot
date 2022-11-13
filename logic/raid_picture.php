@@ -300,11 +300,16 @@ function create_raid_picture($raid, $standalone_photo = false, $debug = false) {
       } else {
           // Check pokemon icon source and create image
           $img_file = null;
+          $uicons = false;
           $p_sources = explode(',', $config->RAID_PICTURE_POKEMON_ICONS);
 
           $addressable_icon = 'pm'.$raid['pokemon'];
+          $uicons_icon = $raid['pokemon'];
 
-          if($raid['pokemon_form_name'] != 'normal') $addressable_icon .= '.f'.strtoupper($raid['pokemon_form_name']);
+          if($raid['pokemon_form_name'] != 'normal') {
+            $addressable_icon .= '.f'.strtoupper($raid['pokemon_form_name']);
+            $uicons_icon .= '_f'.$raid['pokemon_form'];
+          }
 
           // Getting the actual icon filename
           $p_icon = "pokemon_icon_" . $icon_suffix;
@@ -315,14 +320,18 @@ function create_raid_picture($raid, $standalone_photo = false, $debug = false) {
 
               $costume = json_decode(file_get_contents(ROOT_PATH . '/protos/costume.json'), true);
               $addressable_icon .= '.c' . array_search($raid['costume'],$costume);
+
+              $uicons_icon .= '_c'.$raid['costume'];
           }
           if($raid['shiny'] == 1 && $config->RAID_PICTURE_SHOW_SHINY) {
               $p_icon = $p_icon . "_shiny";
               $addressable_icon .= '.s';
+              $uicons_icon .= '_s';
               $shiny_icon = grab_img(IMAGES_PATH . "/shinystars.png");
           }
           $addressable_icon .= '.icon.png';
           $p_icon = $p_icon . ".png";
+          $uicons_icon .= '.png';
 
           foreach($p_sources as $p_dir) {
               // Icon dir named 'pokemon'? Then change path to not add '_repo-owner' to icon folder name
@@ -341,6 +350,10 @@ function create_raid_picture($raid, $standalone_photo = false, $debug = false) {
                 break;
               }else if(file_exists($p_img_base_path . "/" . $p_icon) && filesize($p_img_base_path . "/" . $p_icon) > 0) {
                 $img_file = $p_img_base_path . "/" . $p_icon;
+                break;
+              }else if(file_exists($p_img_base_path . "/" . $uicons_icon) && filesize($p_img_base_path . "/" . $uicons_icon) > 0) {
+                $img_file = $p_img_base_path . "/" . $uicons_icon;
+                $uicons = true;
                 break;
               }
           }
@@ -363,7 +376,9 @@ function create_raid_picture($raid, $standalone_photo = false, $debug = false) {
 
           // Position and size of the picture
           $dst_x = $dst_y = 100;
-          $dst_w = $dst_h = $src_w = $src_h = 256;
+          $dst_w = $dst_h = 256;
+          $src_w = $src_h = $dst_w;
+          if($uicons === true) $src_w = $src_h = 128;
 
           if($raid['type'] != '') $show_boss_pokemon_types = true;
       }
