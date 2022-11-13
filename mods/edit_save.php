@@ -137,13 +137,10 @@ $msg .= show_raid_poll_small($raid, false) . CR;
 $user_id_tag = '#' . $update['callback_query']['from']['id'];
 
 // Gym Name
-if(!empty($raid['gym_name']) && ($raid['gym_name'] != $user_id_tag)) {
-$msg .= getTranslation('set_gym_team') . CR2;
-} else {
+if(!empty($raid['gym_name']) && ($raid['gym_name'] == $user_id_tag)) {
     $msg .= getTranslation('set_gym_name_and_team') . CR2;
     $msg .= getTranslation('set_gym_name_command') . CR;
 }
-$msg .= getTranslation('set_gym_team_command');
 
 // Build callback message string.
 if($arg == 0) {

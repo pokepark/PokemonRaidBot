@@ -3067,19 +3067,6 @@
     "FI": "/gymname <code>Salin nimi</code>",
     "ES": "/gymname <code>Nombre del gimnasio</code>"
   },
-  "set_gym_team": {
-    "NL": "Optioneel - zet Gym en Team",
-    "DE": "Optional - Arena Team setzen",
-    "EN": "Optional - set Gym and Team",
-    "IT": "Opzionale - imposta Palestra e Team",
-    "PT-BR": "Opcional - escolha o gínasio e time",
-    "RU": "Опционально - указать Гим и Команду",
-    "NO": "Valgfri - Fortell hvilken Gym og Team",
-    "FR": "Optionnel - choisir la couleur de l'arène",
-    "PL": "Opcjonalnie - Wybierz kolor Areny",
-    "FI": "Valinnainen - aseta sali ja joukkue",
-    "ES": "Opcional - Poner gimnasio y equipo"
-  },
   "mystic": {
     "NL": "Mystic/Blauw",
     "DE": "Weisheit/Blau",
