@@ -338,7 +338,9 @@ function create_raid_picture($raid, $standalone_photo = false, $debug = false) {
           $dst_x = $dst_y = 100;
           $dst_w = $dst_h = 256;
           $src_w = $src_h = $dst_w;
-          if($uicons === true) $src_w = $src_h = 128;
+          if($uicons === true) {
+            [$src_w, $src_h] = getimagesize($img_file);
+          }
 
           if($raid['type'] != '') $show_boss_pokemon_types = true;
       }
