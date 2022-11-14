@@ -189,7 +189,7 @@ foreach ($update as $raid) {
     }
 
     // Insert new raid or update existing raid/ex-raid?
-    $raid_id = active_raid_duplication_check($gym_internal_id);
+    $raid_id = active_raid_duplication_check($gym_internal_id, $level);
 
     $send_updates = false;
 
@@ -306,32 +306,32 @@ foreach ($update as $raid) {
 
         // Combine resulting data with stuff received from webhook to create a complete raid array
         $raid = array_merge($missing_raid_data, [
-                                                    'id' => $raid_id,
-                                                    'user_id' => $config->WEBHOOK_CREATOR,
-                                                    'spawn' => $spawn,
-                                                    'pokemon' => $resolved_boss['pokedex_id'],
-                                                    'pokemon_form' => $resolved_boss['pokemon_form_id'],
-                                                    'start_time' => $start,
-                                                    'end_time' => $end,
-                                                    'gym_team' => $team,
-                                                    'gym_id' => $gym_internal_id,
-                                                    'level' => $level,
-                                                    'move1' => $move_1,
-                                                    'move2' => $move_2,
-                                                    'gender' => $gender,
-                                                    'costume' => $costume,
-                                                    'event' => NULL,
-                                                    'event_note' => NULL,
-                                                    'event_name' => NULL,
-                                                    'event_description' => NULL,
-                                                    'event_vote_key_mode' => NULL,
-                                                    'event_time_slots' => NULL,
-                                                    'event_raid_duration' => NULL,
-                                                    'event_hide_raid_picture' => NULL,
-                                                    'event_pokemon_title' => NULL,
-                                                    'event_poll_template' => NULL,
-                                                    'raid_ended' => 0,
-                                                ]);
+            'id' => $raid_id,
+            'user_id' => $config->WEBHOOK_CREATOR,
+            'spawn' => $spawn,
+            'pokemon' => $resolved_boss['pokedex_id'],
+            'pokemon_form' => $resolved_boss['pokemon_form_id'],
+            'start_time' => $start,
+            'end_time' => $end,
+            'gym_team' => $team,
+            'gym_id' => $gym_internal_id,
+            'level' => $level,
+            'move1' => $move_1,
+            'move2' => $move_2,
+            'gender' => $gender,
+            'costume' => $costume,
+            'event' => NULL,
+            'event_note' => NULL,
+            'event_name' => NULL,
+            'event_description' => NULL,
+            'event_vote_key_mode' => NULL,
+            'event_time_slots' => NULL,
+            'event_raid_duration' => NULL,
+            'event_hide_raid_picture' => NULL,
+            'event_pokemon_title' => NULL,
+            'event_poll_template' => NULL,
+            'raid_ended' => 0,
+        ]);
     }
     catch (PDOException $exception) {
         error_log($exception->getMessage());

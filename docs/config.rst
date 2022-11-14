@@ -968,6 +968,10 @@ Config reference
      - In minutes the maximum length of the egg phase a user is allowed to give.
    * - RAID_EXCLUDE_EXRAID_DUPLICATION
      - Bool, true to exclude ex-raids from the duplication check which allows to create an ex-raid and a normal raid at the same gym
+   * - RAID_EXCLUDE_EVENT_DUPLICATION
+     - Bool, true to exclude event raids from the duplication check which allows to create an event and a normal raid at the same gym
+   * - RAID_EXCLUDE_ELITE_DUPLICATION
+     - Bool, true to exclude elite raids from the duplication check which allows to create an elite raid and a normal raid at the same gym
    * - RAID_EX_GYM_MARKER
      - Enum, "icon" (default value, a star icon) or a custom text/icon to indicate an ex-raid gym in the raid polls
    * - RAID_FIRST_START
