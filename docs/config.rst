@@ -296,6 +296,8 @@ To enable raid announcements as images set ``RAID_PICTURE`` to true.
 
 You also need to get the Pokemon sprites from known sources and put them in either images/pokemon/ or the images/pokemon_REPO-OWNER/ folder. The images/pokemon/ directory needs to be created manually, the images/pokemon_REPO-OWNER/ folders will be created automatically when by running the special download script mentioned below.
 
+If you have an UICONS repo stored on your server already you can softlink the ``pokemon`` folder from there to ``images/pokemon/`` in raidbot directory.
+
 Pokemon Icons / Sprites:
 Link: https://github.com/PokeMiners/pogo_assets/tree/master/Images/Pokemon%20-%20256x256
 
