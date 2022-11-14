@@ -303,7 +303,7 @@ For a specific chat:
 Raid Picture mode
 ^^^^^^^^^^^^^^^^^
 
-To enable raid announcements as images set ``RAID_PICTURE`` to true and set the url in ``RAID_PICTURE_URL`` to the location of raidpicture.php.
+To enable raid announcements as images set ``RAID_PICTURE`` to true.
 
 You also need to get the Pokemon sprites from known sources and put them in either images/pokemon/ or the images/pokemon_REPO-OWNER/ folder. The images/pokemon/ directory needs to be created manually, the images/pokemon_REPO-OWNER/ folders will be created automatically when by running the special download script mentioned below.
 
