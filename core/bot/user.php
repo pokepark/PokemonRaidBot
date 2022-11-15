@@ -52,86 +52,66 @@ class botUser
         'kicked'        => 'kicked',
       ];
 
-    // If user specific permissions are found, use them instead of group based
-    if (is_file(ACCESS_PATH . '/access' . $user_id)) {
-      $accessChats = [$user_id => null];
-    }else {
-      $chatIds = [];
-      $rolesToCheck = $telegramRoles;
-      $rolesToCheck[] = 'access';
-      foreach($rolesToCheck as $tgRole => $roleToCheck) {
-        $chatFiles = str_replace(ACCESS_PATH . '/' . $roleToCheck, '', glob(ACCESS_PATH . '/' . $roleToCheck . '-*'));
-        $chatIds = array_merge($chatIds, $chatFiles);
+    $accessFilesList = $tg_json = $chatIds = [];
+    foreach(glob(ACCESS_PATH . '/*') as $filePath) {
+      $filename = str_replace(ACCESS_PATH . '/', '', $filePath);
+      // Get chat object - remove comments from filename
+      // This way some kind of comment like the channel name can be added to the end of the filename, e.g. creator-100123456789-MyPokemonChannel to easily differ between access files :)
+      preg_match('/(access)('.$user_id.')|(access|creator|admins|members|restricted|kicked)(-[0-9]+)/', '-' . $filename, $result);
+      if(empty($result[0])) continue;
+      // User specific access file found?
+      if(!empty($result[1])) {
+        $privilegeList = file($filePath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+        debug_log($filename, 'Positive result on access check in file:');
+        $this->userPrivileges = [
+          'privileges' => $privilegeList,
+          'grantedBy' => $filename,
+        ];
+        return;
       }
-      // Delete duplicates
-      $chatsToCheck = array_unique($chatIds);
-      $tg_json = [];
-      // Check access and permission
-      foreach($chatsToCheck as $chat) {
-        // Get chat object - remove comments from filename
-        // This way some kind of comment like the channel name can be added to the end of the filename, e.g. creator-100123456789-MyPokemonChannel to easily differ between access files :)
-        // Source: php.net/manual/en/function.intval.php#7707
-        preg_match_all('/-?\d+/', $chat, $tg_chat);
-        $tg_chat = $tg_chat[0][0];
-        debug_log("Getting chat object for '$tg_chat'");
-
-        // Group/channel?
-        if($tg_chat[0] == '-') {
-          // Get chat member object and check status
-          debug_log("Getting user from chat '$tg_chat'");
-          $tg_json[$tg_chat] = get_chatmember($tg_chat, $user_id, true);
-        }
-      }
-      $accessChats = curl_json_multi_request($tg_json);
+      // Group/channel?
+      $role = $result[3];
+      $tg_chat = $result[4];
+      $chatIds[] = $tg_chat;
+      // Save the full filename (with possible comments) to an array for later use
+      $accessFilesList[$role.$tg_chat] = $filename;
+      debug_log("Asking Telegram if user is a member of chat '$tg_chat'");
+      if(!isset($tg_json[$tg_chat])) $tg_json[$tg_chat] = get_chatmember($tg_chat, $user_id, true); // Get chat member object and check status
     }
+    $accessChats = curl_json_multi_request($tg_json);
+
     // Loop through different chats
     foreach($accessChats as $chatId => $chatObj) {
+      $userStatus = $chatObj['result']['status'];
+      if(!isset($chatObj['ok']) or $chatObj['ok'] != true or $userStatus == 'left' or !array_key_exists($userStatus, $telegramRoles)){
+        // Deny access
+        debug_log($chatId, 'Negative result on access check for chat:');
+        debug_log('Continuing with next chat...');
+        continue;
+      }
       // Object contains response from Telegram
-      if(isset($chatObj['ok'])) {
-        if($chatObj['ok'] == true) {
-          debug_log('Proper chat object received, continuing with access check.');
+      debug_log('Proper chat object received, continuing with access check.');
+      debug_log('Role of user ' . $chatObj['result']['user']['id'] . ' : ' . $chatObj['result']['status']);
 
-          // Get access file based on user status/role.
-          debug_log('Role of user ' . $chatObj['result']['user']['id'] . ' : ' . $chatObj['result']['status']);
+      // Get access file based on user status/role.
+      $roleAndChat = $telegramRoles[$userStatus] . $chatId;
+      if(array_key_exists($roleAndChat, $accessFilesList)) {
+        $privilegeList = file(ACCESS_PATH . '/' . $accessFilesList[$roleAndChat], FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+        $accessFile = $accessFilesList[$roleAndChat];
 
-          $userStatus = $chatObj['result']['status'];
+      // Any other user status/role except "left"
+      } else if(array_key_exists('access' . $chatId, $accessFilesList)) {
+        $privilegeList = file(ACCESS_PATH . '/' . $accessFilesList['access' . $chatId], FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+        $accessFile = $accessFilesList['access' . $chatId];
 
-          if(array_key_exists($userStatus, $telegramRoles) && is_file(ACCESS_PATH . '/' . $telegramRoles[$userStatus] . $chatId)) {
-            $privilegeList = file(ACCESS_PATH . '/' . $telegramRoles[$userStatus] . $chatId, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-            $accessFile = $userStatus . $chatId;
-
-          // Any other user status/role except "left"
-          } else if($userStatus != 'left' && is_file(ACCESS_PATH . '/access' . $chatId)) {
-            $privilegeList = file(ACCESS_PATH . '/access' . $chatId, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-            $accessFile = 'access' . $chatId;
-
-            // Ignore "Restricted"?
-            if($userStatus == 'restricted' && in_array('ignore-restricted', $privilegeList)) {
-              $privilegeList = NULL;
-            }
-
-            // Ignore "kicked"?
-            if($userStatus == 'kicked' && in_array('ignore-kicked', $privilegeList)) {
-              $privilegeList = NULL;
-            }
-          } else {
-            continue;
-          }
-
-          // Debug.
-          debug_log('Access file:');
-          debug_log($privilegeList);
-        } else {
-          // Invalid chat
-          debug_log('Chat ' . $chatId . ' does not exist! Continuing with next chat...');
-          continue;
+        // Ignore "Restricted" or "kicked"?
+        if( ($userStatus == 'restricted' && in_array('ignore-restricted', $privilegeList))
+         or ($userStatus == 'kicked' && in_array('ignore-kicked', $privilegeList))) {
+          $privilegeList = NULL;
         }
-      // Process user specific access file
-      }else {
-        if(is_file(ACCESS_PATH . '/access' . $chatId)) {
-          $privilegeList = file(ACCESS_PATH . '/access' . $chatId, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-          $accessFile = 'access' . $chatId;
-        }
+        // Debug.
+        debug_log('Access file:');
+        debug_log($privilegeList);
       }
 
       // Save privileges if found
