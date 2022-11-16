@@ -38,11 +38,14 @@ if($data['arg'] != '0') {
     ];
     $callback_msg = $msg;
 } else {
+    $displayedLanguages = [];
     foreach($languages as $lang_tg => $lang_internal) {
+        if(in_array($lang_internal, $displayedLanguages)) continue;
         $keys[][] = [            
             'text'          => getTranslation('lang_name', $lang_internal),
             'callback_data' => '0:bot_lang:'.$lang_tg
         ];
+        $displayedLanguages[] = $lang_internal;
     }
     $keys[] = [
         [
