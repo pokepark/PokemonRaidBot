@@ -20,6 +20,9 @@ $dex_id_form = explode('-',$pokedex_id,2);
 $dex_id = $dex_id_form[0];
 $dex_form = $dex_id_form[1];
 
+require_once(LOGIC_PATH . '/get_pokemon_info.php');
+$pokemon = get_pokemon_info($dex_id, $dex_form);
+
 // Set raid level or show raid levels?
 if($data['arg'] == "setlevel") {
     $raid_levels = str_split('0' . RAID_LEVEL_ALL);
@@ -54,31 +57,24 @@ if($data['arg'] == "setlevel") {
 
     // Set the message.
     $msg = getTranslation('raid_boss') . ': <b>' . get_local_pokemon_name($dex_id, $dex_form) . ' (#' . $dex_id . ')</b>' . CR;
-    $old_raid_level = get_raid_level($dex_id, $dex_form);
-    $msg .= getTranslation('pokedex_current_raid_level') . ' ' . getTranslation($old_raid_level . 'stars') . CR . CR;
+    $msg .= getTranslation('pokedex_current_raid_level') . ' ' . getTranslation($pokemon['raid_level'] . 'stars') . CR . CR;
     $msg .= '<b>' . getTranslation('pokedex_new_raid_level') . ':</b>';
 } else {
     // Update raid level of pokemon.
-    if($arg == 0 && get_raid_level($dex_id, $dex_form) != 0) {
-        $rs = my_query(
-                "
-                DELETE FROM raid_bosses
-                WHERE     pokedex_id = '{$dex_id}'
-                AND       pokemon_form_id = '{$dex_form}'
-                AND       scheduled = 0
-                "
-            );
-    }else {
-        $rs = my_query(
-                "
-                INSERT INTO raid_bosses (pokedex_id, pokemon_form_id, raid_level)
-                VALUES ('{$dex_id}', '{$dex_form}', '{$arg}')
-                "
-            );
+    my_query('
+        DELETE FROM raid_bosses
+        WHERE     pokedex_id = ?
+        AND       pokemon_form_id = ?
+        AND       scheduled = 0
+        ', [$dex_id, $dex_form]
+    );
+    if($arg != 0) {
+        my_query('
+            INSERT INTO raid_bosses (pokedex_id, pokemon_form_id, raid_level)
+            VALUES (?, ?, ?)
+            ',[$dex_id, $dex_form, $arg]
+        );
     }
-
-    // Init empty keys array.
-    $keys = [];
 
     // Back to pokemon and done keys.
     $keys = [

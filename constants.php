@@ -80,6 +80,7 @@ defined('EMOJI_WANT_INVITE')or define('EMOJI_WANT_INVITE',  iconv('UCS-4LE', 'UT
 defined('EMOJI_IN_PERSON')  or define('EMOJI_IN_PERSON',    iconv('UCS-4LE', 'UTF-8', pack('V', 0x1F9E1)));
 defined('EMOJI_ALIEN')      or define('EMOJI_ALIEN',        iconv('UCS-4LE', 'UTF-8', pack('V', 0x1F47D)));
 defined('EMOJI_CAN_INVITE')or define('EMOJI_CAN_INVITE',    iconv('UCS-4LE', 'UTF-8', pack('V', 0x1F695)));
+defined('EMOJI_SHINY') 		or define('EMOJI_SHINY',    iconv('UCS-4LE', 'UTF-8', pack('V', 0x2728)));
 
 // Weather Icons.
 defined('EMOJI_W_SUNNY') 		or define('EMOJI_W_SUNNY',            iconv('UCS-4LE', 'UTF-8', pack('V', 0x2600)));

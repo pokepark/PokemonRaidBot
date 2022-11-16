@@ -27,9 +27,9 @@ function get_raid($raid_id)
         ON         raids.user_id = users.user_id
         LEFT JOIN  events
         ON         events.id = raids.event 
-        WHERE      raids.id = '.$raidid.'
+        WHERE      raids.id = ?
         LIMIT 1
-        '
+        ', [$raidid]
     );
     // Get the row.
     $raid = $rs->fetch();

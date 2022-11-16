@@ -17,6 +17,8 @@ function show_raid_poll($raid, $inline = false)
     $raid_pokemon_form_id = $raid['pokemon_form'];
     $raid_pokemon_form_name = ($raid_pokemon_form_id != 0) ? get_pokemon_form_name($raid_pokemon_id, $raid_pokemon_form_id) : '';
     $raid_pokemon = $raid_pokemon_id . "-" . $raid_pokemon_form_id;
+    require_once(LOGIC_PATH . '/get_pokemon_info.php');
+    $raid_pokemon_info = get_pokemon_info($raid_pokemon_id, $raid_pokemon_form_id);
 
     // Get raid level
     $raid_level = $raid['level'];
@@ -62,12 +64,11 @@ function show_raid_poll($raid, $inline = false)
         //Only store address if not empty
         if(!empty($address)) {
             my_query(
-                "
+                '
                 UPDATE    gyms
                 SET     address = ?
-                WHERE   id = '{$raid['gym_id']}'
-                ",
-                [$address]
+                WHERE   id = ?
+                ', [$address, $raid['gym_id']]
             );
             //Use new address
             $msg = raid_poll_message($msg, ($config->RAID_PICTURE ? $raid['gym_name'].': ' : ''). mapslink($raid,$address) . CR);
@@ -86,8 +87,7 @@ function show_raid_poll($raid, $inline = false)
         $msg = raid_poll_message($msg, $title . ': <b>' . get_local_pokemon_name($raid_pokemon_id, $raid['pokemon_form'], true) . '</b>', true);
 
         // Display raid boss weather.
-        $pokemon_weather = get_pokemon_weather($raid_pokemon_id, $raid_pokemon_form_id);
-        $msg = raid_poll_message($msg, ($pokemon_weather != 0) ? (' ' . get_weather_icons($pokemon_weather)) : '', true);
+        $msg = raid_poll_message($msg, ($raid_pokemon_info['weather'] != 0) ? (' ' . get_weather_icons($raid_pokemon_info['weather'])) : '', true);
         $msg = raid_poll_message($msg, CR, true);
     }
 
@@ -287,7 +287,7 @@ function show_raid_poll($raid, $inline = false)
         }
         if($cnt_all > 0 || $buttons_hidden) {
             // Display raid boss CP values.
-            $pokemon_cp = get_formatted_pokemon_cp($raid_pokemon_id, $raid_pokemon_form_id, true);
+            $pokemon_cp = get_formatted_pokemon_cp($raid_pokemon_info, true);
             $msg = raid_poll_message($msg, (!empty($pokemon_cp)) ? ($pokemon_cp . CR) : '', true);
         }
     }

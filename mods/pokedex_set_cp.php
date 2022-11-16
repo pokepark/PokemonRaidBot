@@ -25,18 +25,15 @@ $cp_level = $data[1];
 $cp_value = $data[3];
 
 // Set boosted string
-if($cp_level == 25) {
-    $boosted = '_weather_cp';
-} else {
-    $boosted = '_cp';
-}
+$boosted = ($cp_level == 25) ? '_weather_cp' : '_cp';
 
 // Action to do: Save or add digits to cp
 $action = $data[2];
 
 // Get current CP values
-$cp_old = get_pokemon_cp($dex_id, $dex_form);
-$current_cp = $cp_old[$cp_type . $boosted];
+require_once(LOGIC_PATH . '/get_pokemon_info.php');
+$pokemon = get_pokemon_info($dex_id, $dex_form);
+$current_cp = $pokemon[$cp_type . $boosted];
 
 // Log
 debug_log('New CP Type: ' . $cp_type);
@@ -75,28 +72,17 @@ if($action == 'add') {
 
 // Save cp to database
 } else if($action == 'save') {
-    // Set IV level for database
-    if($cp_level == 25) {
-        $weather = 'weather_cp';
-    } else {
-        $weather = 'cp';
-    }
-
     // Set column name.
-    $cp_column = $cp_type . '_' . $weather;
+    $cp_column = $cp_type . $boosted;
 
     // Update cp of pokemon.
-    $rs = my_query(
-            "
-            UPDATE    pokemon
-            SET       $cp_column = {$cp_value}
-            WHERE     pokedex_id = {$dex_id}
-            AND       pokemon_form_id = '{$dex_form}'
-            "
-        );
-
-    // Init empty keys array.
-    $keys = [];
+    $rs = my_query('
+        UPDATE    pokemon
+        SET       ' . $cp_column . ' = ?
+        WHERE     pokedex_id = ?
+        AND       pokemon_form_id = ?
+        ', [$cp_value, $dex_id, $dex_form]
+    );
 
     // Back to pokemon and done keys.
     $keys = [
@@ -113,7 +99,7 @@ if($action == 'add') {
     ];
 
     // Build callback message string.
-    $callback_response = getTranslation('pokemon_saved') . ' ' . get_local_pokemon_name($pokedex_id);
+    $callback_response = getTranslation('pokemon_saved') . ' ' . get_local_pokemon_name($dex_id, $dex_form);
 
     // Set the message.
     $msg = getTranslation('pokemon_saved') . CR;

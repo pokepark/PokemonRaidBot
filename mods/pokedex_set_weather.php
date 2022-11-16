@@ -22,7 +22,10 @@ $arg = $data['arg'];
 $data = explode("-", $arg);
 $action = $data[0];
 $new_weather = $data[1];
-$old_weather = get_pokemon_weather($dex_id, $dex_form);
+
+require_once(LOGIC_PATH . '/get_pokemon_info.php');
+$pokemon = get_pokemon_info($dex_id, $dex_form);
+$old_weather = $pokemon['weather'];
 
 // Log
 debug_log('Action: ' . $action);
@@ -61,16 +64,13 @@ if($action == 'add') {
 } else if($action == 'save') {
     // Update weather of pokemon.
     $rs = my_query(
-            "
+            '
             UPDATE    pokemon
-            SET       weather = {$new_weather}
-            WHERE     pokedex_id = {$dex_id}
-            AND       pokemon_form_id = '{$dex_form}'
-            "
+            SET       weather = ?
+            WHERE     pokedex_id = ?
+            AND       pokemon_form_id = ?
+            ', [$new_weather, $dex_id, $dex_form]
         );
-
-    // Init empty keys array.
-    $keys = [];
 
     // Back to pokemon and done keys.
     $keys = [
