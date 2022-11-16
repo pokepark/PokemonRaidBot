@@ -374,7 +374,7 @@ function generateTimeslotKeys($RAID_SLOTS, $raid) {
   // Start with second slot as first slot is already added to keys.
   $dt_end = new DateTimeImmutable($raid['end_time'], new DateTimeZone('UTC'));
   $regular_slots = new DatePeriod($first_slot, new DateInterval('PT'.$RAID_SLOTS.'M'), $dt_end->sub(new DateInterval('PT'.$config->RAID_LAST_START.'M')), DatePeriod::EXCLUDE_START_DATE);
-  info_log($regular_slots);
+
   // Add regular slots.
   foreach($regular_slots as $slot){
     debug_log($slot, 'Regular slot:');
