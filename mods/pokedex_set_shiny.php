@@ -21,44 +21,32 @@ $dex_id = $dex_id_form[0];
 $dex_form = $dex_id_form[1];
 
 // Set shiny or ask to set?
-if($data['arg'] == "setshiny") {
+if($data['arg'] == 'setshiny') {
     // Get current shiny status from database.
-    $shiny = get_pokemon_shiny_status($dex_id, $dex_form);
-
-    // Init empty keys array.
-    $keys = [];
-
-    // Create keys array.
-    if($shiny == 0) {
-        // Enable shiny.
-        $old_shiny_status = getTranslation('not_shiny');
-        $keys[] = [
-            array(
-                'text'          => getTranslation('shiny'),
-                'callback_data' => $pokedex_id . ':pokedex_set_shiny:1'
-            )
-        ];
-
-    } else {
-        // Disable shiny.
-        $old_shiny_status = getTranslation('shiny');
-        $keys[] = [
-            array(
-                'text'          => getTranslation('not_shiny'),
-                'callback_data' => $pokedex_id . ':pokedex_set_shiny:0'
-            )
-        ];
-    }
+    require_once(LOGIC_PATH . '/get_pokemon_info.php');
+    $pokemon = get_pokemon_info($dex_id, $dex_form);
+    
+    $shinyText = ($pokemon['shiny'] == 0) ? 'shiny' : 'not_shiny';
+    $old_shiny_status = ($pokemon['shiny'] == 0) ? getTranslation('not_shiny') :  EMOJI_SHINY . SP . getTranslation('shiny');
+    $newShinyValue = ($pokemon['shiny'] == 0) ? 1 : 0;
 
     // Back and abort.
-    $keys[] = [
+    $keys = [
         [
-            'text'          => getTranslation('back'),
-            'callback_data' => $pokedex_id . ':pokedex_edit_pokemon:0'
+            [
+                'text'          => getTranslation($shinyText),
+                'callback_data' => $pokedex_id . ':pokedex_set_shiny:' . $newShinyValue
+            ]
         ],
         [
-            'text'          => getTranslation('abort'),
-            'callback_data' => '0:exit:0'
+            [
+                'text'          => getTranslation('back'),
+                'callback_data' => $pokedex_id . ':pokedex_edit_pokemon:0'
+            ],
+            [
+                'text'          => getTranslation('abort'),
+                'callback_data' => '0:exit:0'
+            ]
         ]
     ];
 
@@ -71,17 +59,13 @@ if($data['arg'] == "setshiny") {
     $msg .= '<b>' . getTranslation('pokedex_new_status') . ':</b>';
 } else {
     // Update shiny status of pokemon.
-    $rs = my_query(
-            "
-            UPDATE    pokemon
-            SET       shiny = '{$arg}'
-            WHERE     pokedex_id = {$dex_id}
-            AND       pokemon_form_id = '{$dex_form}'
-            "
-        );
-
-    // Init empty keys array.
-    $keys = [];
+    $rs = my_query('
+        UPDATE    pokemon
+        SET       shiny = ?
+        WHERE     pokedex_id = ?
+        AND       pokemon_form_id = ?
+        ', [$arg, $dex_id, $dex_form]
+    );
 
     // Back to pokemon and done keys.
     $keys = [

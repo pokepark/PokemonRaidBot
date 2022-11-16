@@ -8,21 +8,22 @@ debug_log('pokedex_edit_pokemon()');
 
 // Check access.
 $botUser->accessCheck($update, 'pokedex');
-
+require_once(LOGIC_PATH . '/get_pokemon_info.php');
 // Set the id.
 $poke_id_form = $data['id'];
-$dex_id_form = explode('-',$data['id'],2);
-$pokedex_id = $dex_id_form[0];
-$pokemon_form = $dex_id_form[1];
+[$pokedex_id, $pokemon_form_id] = explode('-',$data['id'],2);
 
 // Set the arg.
 $arg = $data['arg'];
 
-// Init empty keys array.
-$keys = [];
-
 // Set the message.
-$msg = get_pokemon_info($pokedex_id, $pokemon_form);
+$pokemon = get_pokemon_info($pokedex_id, $pokemon_form_id);
+$poke_cp = get_formatted_pokemon_cp($pokemon);
+$msg = getTranslation('raid_boss') . ': <b>' . get_local_pokemon_name($pokedex_id, $pokemon_form_id) . ' (#' . $pokedex_id . ')</b>' . CR . CR;
+$msg .= getTranslation('pokedex_raid_level') . ': ' . getTranslation($pokemon['raid_level'] . 'stars') . CR;
+$msg .= (empty($poke_cp)) ? (getTranslation('pokedex_cp') . CR) : $poke_cp . CR;
+$msg .= getTranslation('pokedex_weather') . ': ' . get_weather_icons($pokemon['weather']) . CR;
+$msg .= (($pokemon['shiny'] == 1) ? (EMOJI_SHINY . SP . getTranslation('shiny')) : (getTranslation('not_shiny'))) . CR . CR;
 $msg .= '<b>' . getTranslation('pokedex_select_action') . '</b>';
 
 // Create keys array.
@@ -36,8 +37,7 @@ $keys = [
 ];
 
 // Raid-Egg? Hide specific options!
-$eggs = $GLOBALS['eggs'];
-if(!in_array($pokedex_id, $eggs)) {
+if(!in_array($pokedex_id, $GLOBALS['eggs'])) {
     $keys_cp_weather = [
         [  
             [
@@ -92,28 +92,20 @@ $keys[] = [
     ]
 ];
 
-// Send message.
-if($arg == 'id-or-name') {
-    // Send message.
-    send_message($update['message']['chat']['id'], $msg, $keys, ['reply_markup' => ['selective' => true, 'one_time_keyboard' => true]]);
+// Build callback message string.
+$callback_response = 'OK';
+
+// Telegram JSON array.
+$tg_json = array();
+
+// Answer callback.
+$tg_json[] = answerCallbackQuery($update['callback_query']['id'], $callback_response, true);
 
 // Edit message.
-} else {
-    // Build callback message string.
-    $callback_response = 'OK';
+$tg_json[] = edit_message($update, $msg, $keys, false, true);
 
-    // Telegram JSON array.
-    $tg_json = array();
-
-    // Answer callback.
-    $tg_json[] = answerCallbackQuery($update['callback_query']['id'], $callback_response, true);
-
-    // Edit message.
-    $tg_json[] = edit_message($update, $msg, $keys, false, true);
-
-    // Telegram multicurl request.
-    curl_json_multi_request($tg_json);
-}
+// Telegram multicurl request.
+curl_json_multi_request($tg_json);
 
 // Exit.
 exit();
