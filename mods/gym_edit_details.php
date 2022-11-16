@@ -31,15 +31,9 @@ $gym = get_gym($gym_id);
 // Did we receive a call to edit some gym data that requires a text input
 if(in_array($action, ['name','note','gps','addr'])) {
     if($value == 'd') {
-        my_query("DELETE FROM user_input WHERE id=:delete_id'", ['delete_id' => $delete_id]);
+        my_query("DELETE FROM user_input WHERE id = ?", [$delete_id]);
         if($action == 'note') {
-            $query = 'UPDATE gyms SET gym_note = NULL WHERE id = :id';
-            $binds = [
-                ':id' => $gym_id,
-            ];
-            // Update the event note to raid table
-            $prepare = $dbh->prepare($query);
-            $prepare->execute($binds);
+            my_query('UPDATE gyms SET gym_note = NULL WHERE id = ?', [$gym_id]);
             $gym['gym_note'] = '';
         }
         $msg = get_gym_details($gym, true);
@@ -61,7 +55,7 @@ if(in_array($action, ['name','note','gps','addr'])) {
                 'text' => getTranslation("abort"),
                 'callback_data' => $gym_id.':gym_edit_details:abort-'.$dbh->lastInsertId()
             ];
-        if($action == 'note' && !empty($gym['note'])) {
+        if($action == 'note' && !empty($gym['gym_note'])) {
             $keys[0][] = [
                 'text' => getTranslation("delete"),
                 'callback_data' => $gym_id.':gym_edit_details:note-d-'.$dbh->lastInsertId()
