@@ -31,10 +31,19 @@ $gym = get_gym($gym_id);
 // Did we receive a call to edit some gym data that requires a text input
 if(in_array($action, ['name','note','gps','addr'])) {
     if($value == 'd') {
-        my_query("DELETE FROM user_input WHERE id = ?", [$delete_id]);
+        my_query('DELETE FROM user_input WHERE id = :id', ['id' => $delete_id]);
         if($action == 'note') {
-            my_query('UPDATE gyms SET gym_note = NULL WHERE id = ?', [$gym_id]);
+            my_query('UPDATE gyms SET gym_note = NULL WHERE id = :id', ['id' => $gym_id]);
             $gym['gym_note'] = '';
+        }
+        $msg = get_gym_details($gym, true);
+        $keys = edit_gym_keys($update, $gym_id, $gym['show_gym'], $gym['ex_gym'], $gym['gym_note'], $gym['address']);
+    }elseif($value == 'e') {
+        my_query('DELETE FROM user_input WHERE id = ?', [$delete_id]);
+        if($action == 'addr') {
+            $addr = format_address(get_address($gym['lat'], $gym['lon']));
+            my_query('UPDATE gyms SET address = :addr WHERE id = :id', ['addr' => $addr, 'id' => $gym_id]);
+            $gym['address'] = $addr;
         }
         $msg = get_gym_details($gym, true);
         $keys = edit_gym_keys($update, $gym_id, $gym['show_gym'], $gym['ex_gym'], $gym['gym_note'], $gym['address']);
@@ -44,7 +53,7 @@ if(in_array($action, ['name','note','gps','addr'])) {
         $modifiers = json_encode(array("id" => $gym_id, "value" => $action, "old_message_id" => $update['callback_query']['message']['message_id']));
         $handler = "save_gym_info";
 
-        my_query("INSERT INTO user_input SET user_id = :userid, modifiers = :modifiers, handler = :handler", [':userid' => $userid, ':modifiers' => $modifiers, ':handler' => $handler]);
+        my_query('INSERT INTO user_input SET user_id = :userid, modifiers = :modifiers, handler = :handler', [':userid' => $userid, ':modifiers' => $modifiers, ':handler' => $handler]);
 
         $msg = get_gym_details($gym, true);
         if($action == 'addr') $instructions = 'gym_address_instructions'; else $instructions = 'gym_'.$action.'_instructions';
@@ -52,34 +61,39 @@ if(in_array($action, ['name','note','gps','addr'])) {
         if($action == 'gps') $msg .= CR. getTranslation('gym_gps_example');
 
         $keys[0][] = [
-                'text' => getTranslation("abort"),
-                'callback_data' => $gym_id.':gym_edit_details:abort-'.$dbh->lastInsertId()
-            ];
+            'text' => getTranslation('abort'),
+            'callback_data' => $gym_id.':gym_edit_details:abort-'.$dbh->lastInsertId()
+        ];
         if($action == 'note' && !empty($gym['gym_note'])) {
             $keys[0][] = [
-                'text' => getTranslation("delete"),
+                'text' => getTranslation('delete'),
                 'callback_data' => $gym_id.':gym_edit_details:note-d-'.$dbh->lastInsertId()
-                ];
+            ];
+        }
+        if($action == 'addr') {
+            $keys[0][] = [
+                'text' => getTranslation('gym_save_lookup_result'),
+                'callback_data' => $gym_id.':gym_edit_details:addr-e-'.$dbh->lastInsertId()
+            ];
         }
     }
 }else {
     if($action == 'show') {
-        $gym['show_gym'] = $value;
         $table = 'show_gym';
     }else if($action == 'ex') {
-        $gym['ex_gym'] = $value;
         $table = 'ex_gym';
     }else if($action == 'abort') {
-        my_query("DELETE FROM user_input WHERE id = :value", ['value' => $value]);
+        my_query('DELETE FROM user_input WHERE id = :value', ['value' => $value]);
     }
     if(isset($table)) {
         my_query(
-            "
+            '
             UPDATE    gyms
-            SET       $table = $value
-                WHERE   id = {$gym_id}
-            "
+            SET       ' . $table . ' = :value
+            WHERE     id = :gym_id
+            ', ['value' => $value, 'gym_id' => $gym_id]
         );
+        $gym[$table] = $value;
     }
     $msg = get_gym_details($gym, true);
     $keys = edit_gym_keys($update, $gym_id, $gym['show_gym'], $gym['ex_gym'], $gym['gym_note'], $gym['address']);

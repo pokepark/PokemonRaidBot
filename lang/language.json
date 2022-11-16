@@ -2898,6 +2898,19 @@
     "FI": "salin osoite",
     "ES": "TRANSLATE"
   },
+  "gym_stored_address": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Stored address",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Tallennettu osoite",
+    "ES": "TRANSLATE"
+  },
   "gym_address_instructions": {
     "NL": "Stuur me het nieuwe gym adres:",
     "DE": "TRANSLATE",
@@ -2909,6 +2922,32 @@
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
     "FI": "Lähetä minulle salin uusi osoite:",
+    "ES": "TRANSLATE"
+  },
+  "gym_address_lookup_result": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Address lookup result",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Osoitehaun tulos",
+    "ES": "TRANSLATE"
+  },
+  "gym_save_lookup_result": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Save lookup result",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Tallenna osoitehaun tulos",
     "ES": "TRANSLATE"
   },
   "select_raid_boss": {
