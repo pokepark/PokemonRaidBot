@@ -310,5 +310,19 @@
     "PL": "TRANSLATE",
     "FI": "/history - Listaa päättyneet raidit joissa oli osallistujia",
     "ES": "TRANSLATE"
+  },
+  "help_event-manage": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "/events - Manage raid events",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "/events - Hallitse raiditapahtumia",
+    "ES": "TRANSLATE"
   }
+
 }
