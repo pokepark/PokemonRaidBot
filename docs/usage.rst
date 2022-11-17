@@ -276,6 +276,11 @@ Command: /history
 
 Tool for admins to view history of raids that had at least one person signed up for it.
 
+Command: /events
+^^^^^^^^^^^^^^^^
+
+Tool for admins to edit raid events. The UI is very simple and for some stuff you need to refer to this documentation.
+
 Command: /gym
 ^^^^^^^^^^^^^
 

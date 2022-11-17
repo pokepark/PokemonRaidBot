@@ -745,6 +745,12 @@ A few examples for access files can be found below the permission overview table
    * - 
      - 
      - 
+   * - Events
+     - Show help ``/events``
+     - ``event-manage``
+   * - 
+     - 
+     - 
    * - Tutorial
      - Allow users to access tutorial
      - ``tutorial``

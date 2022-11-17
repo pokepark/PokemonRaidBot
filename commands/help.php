@@ -23,6 +23,8 @@ if($access) {
         $permissions[] = 'config-get';
         $permissions[] = 'config-set';
         $permissions[] = 'pokedex';
+        $permissions[] = 'history';
+        $permissions[] = 'event-manage';
         $permissions[] = 'help';
     } else {
         // Get permissions.
