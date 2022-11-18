@@ -332,11 +332,11 @@ function generateTimeslotKeys($RAID_SLOTS, $raid) {
 
   // Get first regular raidslot
   $first_slot = new DateTimeImmutable($raid['start_time'], new DateTimeZone('UTC'));
-  $minute = $directStartMinutes % $RAID_SLOTS;
+  $first_minute = $directStartMinutes % $RAID_SLOTS;
 
   // Count minutes to next raidslot multiple minutes if necessary
-  if($minute != 0) {
-    $diff = $RAID_SLOTS - $minute;
+  if($first_minute != 0) {
+    $diff = $RAID_SLOTS - $first_minute;
     $first_slot = $first_slot->add(new DateInterval('PT'.$diff.'M'));
   }
 
@@ -346,21 +346,21 @@ function generateTimeslotKeys($RAID_SLOTS, $raid) {
   debug_log($first_slot, 'First regular slot:');
   $keys_time = [];
   // Add button for when raid starts time
-  if($config->RAID_DIRECT_START && $direct_slot >= $dt_now) {
+  if(($config->RAID_DIRECT_START or $first_minute == 0) && $direct_slot >= $dt_now) {
     $keys_time[] = array(
       'text'    => dt2time($direct_slot->format('Y-m-d H:i:s')),
       'callback_data' => $raid['id'] . ':vote_time:' . $direct_slot->format('YmdHis')
     );
   }
   // Add five minutes slot
-  if($five_slot >= $dt_now && (empty($keys_time) || (!empty($keys_time) && $direct_slot != $five_slot))) {
+  if($five_slot >= $dt_now && ($five_slot < $first_slot || $five_slot == $first_slot)) {
     $keys_time[] = array(
       'text'    => dt2time($five_slot->format('Y-m-d H:i:s')),
       'callback_data' => $raid['id'] . ':vote_time:' . $five_slot->format('YmdHis')
     );
   }
   // Add the first normal slot
-  if($first_slot >= $dt_now && $first_slot != $five_slot) {
+  if($first_slot >= $dt_now && $first_slot > $five_slot && $first_slot > $direct_slot) {
     $keys_time[] = array(
       'text'    => dt2time($first_slot->format('Y-m-d H:i:s')),
       'callback_data' => $raid['id'] . ':vote_time:' . $first_slot->format('YmdHis')
