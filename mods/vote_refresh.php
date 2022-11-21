@@ -7,5 +7,4 @@ $tg_json[] = answerCallbackQuery($update['callback_query']['id'], getTranslation
 
 curl_json_multi_request($tg_json);
 
-$dbh = null;
 exit();

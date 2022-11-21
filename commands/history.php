@@ -13,13 +13,11 @@ require_once(LOGIC_PATH .'/history.php');
 
 $msg_keys = create_history_date_msg_keys();
 if($msg_keys === false) {
-    $msg = getTranslation('history_no_raids_found');
-    $keys = [];
+  $msg = getTranslation('history_no_raids_found');
+  $keys = [];
 }else {
-    $msg = $msg_keys[0];
-    $keys = $msg_keys[1];
+  $msg = $msg_keys[0];
+  $keys = $msg_keys[1];
 }
 
 send_message($update['message']['chat']['id'], $msg, $keys, ['reply_markup' => ['selective' => true, 'one_time_keyboard' => true], 'disable_web_page_preview' => 'true']);
-
-?>

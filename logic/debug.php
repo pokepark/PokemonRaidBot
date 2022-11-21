@@ -37,36 +37,36 @@ if(IS_INIT_OR_WHATEVER){
  */
 function generic_log($val, $type, $logfile)
 {
-    $date = @date('Y-m-d H:i:s');
-    $usec = microtime(true);
-    $date = $date . '.' . str_pad(substr($usec, 11, 4), 4, '0', STR_PAD_RIGHT);
+  $date = @date('Y-m-d H:i:s');
+  $usec = microtime(true);
+  $date = $date . '.' . str_pad(substr($usec, 11, 4), 4, '0', STR_PAD_RIGHT);
 
-    $bt = debug_backtrace();
-    $bl = '';
+  $bt = debug_backtrace();
+  $bl = '';
 
-    // How many calls back to print
-    // Increasing this makes it easier to hunt down issues, but increases log line length
-    $layers = 1;
+  // How many calls back to print
+  // Increasing this makes it easier to hunt down issues, but increases log line length
+  $layers = 1;
 
-    while ($btl = array_shift($bt)) {
-      // Ignore generic_log and it's calling function in the call stack
-      // Not sure why it works exactly like that, but it does.
-      if ($btl['function'] == __FUNCTION__){
-        continue;
-      }
-      --$layers;
-      $bl = $bl . '[' . basename($btl['file']) . ':' . $btl['line'] . ']';
-      if($layers <= 0) {
-        $bl = $bl . ' ';
-        break;
-      }
+  while ($btl = array_shift($bt)) {
+    // Ignore generic_log and it's calling function in the call stack
+    // Not sure why it works exactly like that, but it does.
+    if ($btl['function'] == __FUNCTION__){
+      continue;
     }
-
-    if (gettype($val) != 'string') $val = var_export($val, 1);
-    $rows = explode("\n", $val);
-    foreach ($rows as $v) {
-      error_log('[' . $date . '][' . getmypid() . '] ' . $bl . $type . ' ' . $v . "\n", 3, $logfile);
+    --$layers;
+    $bl = $bl . '[' . basename($btl['file']) . ':' . $btl['line'] . ']';
+    if($layers <= 0) {
+      $bl = $bl . ' ';
+      break;
     }
+  }
+
+  if (gettype($val) != 'string') $val = var_export($val, 1);
+  $rows = explode("\n", $val);
+  foreach ($rows as $v) {
+    error_log('[' . $date . '][' . getmypid() . '] ' . $bl . $type . ' ' . $v . "\n", 3, $logfile);
+  }
 }
 
 /**
@@ -76,12 +76,12 @@ function generic_log($val, $type, $logfile)
  */
 function debug_log($message, $type = '*')
 {
-    global $config;
-    // Write to log only if debug is enabled.
-    if ($config->DEBUG === false){
-      return;
-    }
-    generic_log($message, $type, $logfile = $config->DEBUG_LOGFILE);
+  global $config;
+  // Write to log only if debug is enabled.
+  if ($config->DEBUG === false){
+    return;
+  }
+  generic_log($message, $type, $logfile = $config->DEBUG_LOGFILE);
 }
 
 /**
@@ -95,7 +95,7 @@ function cleanup_log($message, $type = '*'){
   if ($config->CLEANUP_LOG === false){
     return;
   }
-    generic_log($message, $type, $logfile = $config->CLEANUP_LOGFILE);
+  generic_log($message, $type, $logfile = $config->CLEANUP_LOGFILE);
 }
 
 /**

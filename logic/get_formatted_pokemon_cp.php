@@ -1,8 +1,8 @@
 <?php
 /**
  * Get formatted pokemon cp values.
- * @param $row Result of get_pokemon_info
- * @param $override_language
+ * @param $row array Result of get_pokemon_info
+ * @param $override_language bool
  * @return string
  */
 function get_formatted_pokemon_cp($row, $override_language = false)
@@ -26,5 +26,3 @@ function get_formatted_pokemon_cp($row, $override_language = false)
 
     return $cp;
 }
-
-?>

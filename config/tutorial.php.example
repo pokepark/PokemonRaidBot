@@ -14,5 +14,3 @@ $tutorial[2]['photo'] = '';// A photo url must be set!
 
 $tutorial_done = 'Message that is left to user after completing the tutorial.';
 $tutorial_grant_level = 1; // The tutorial value set to user in db (int)0-9
-
-?> 

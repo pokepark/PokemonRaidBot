@@ -110,8 +110,6 @@ Set ``APIKEY_HASH`` to the hashed value of your bot token (preferably lowercase)
 
 Set ``DDOS_MAXIMUM`` to the amount of callback queries each user is allowed to do each minute. If the amount is reached any further callback query is rejected by the DDOS check. Default value: 10.
 
-Set ``BRIDGE_MODE`` to true when you're using the PokemonBotBridge. If you're not using the PokemonBotBridge the default value of false is used. PokemonBotBridge: https://github.com/pokepark/PokemonBotBridge
-
 More config options
 -------------------
 
@@ -389,7 +387,7 @@ Raids from Webhook
 ~~~~~~~~~~~~~~~~~~
 
 You can receive Raids from a mapping systems such as MAD and RDM via Webhook.
-For that you need to setup ``WEBHOOK_CREATOR``\ , and to automatically share raids to chats, 
+For that you need to setup ``WEBHOOK_CREATOR``\ , and to automatically share raids to chats,
 ``"WEBHOOK_CHATS_ALL_LEVELS":"-100444555666"``
 or by Raidlevel ``"WEBHOOK_CHATS_LEVEL_5":"-100444555666"``
 All incoming raids will be published in these chats.
@@ -874,8 +872,6 @@ Config reference
      - One letter ID for the bot used in debug logging. Mostly useful if you run multiple.
    * - BOT_NAME
      - Name of the bot.
-   * - BRIDGE_MODE
-     - Bool, whether to enable bridge mode.
    * - CLEANUP_DATABASE
      - Bool, whether to clean up finished raids from DB if cleanup is enabled.
    * - CLEANUP_LOG
@@ -935,7 +931,7 @@ Config reference
    * - MAINTAINER
      - Name of main maintainer
    * - AUTO_REFRESH_POLLS
-     - Bool, enable the auto refresh feature and hides the refresh button from polls. Requires a curl job for refreshing. 
+     - Bool, enable the auto refresh feature and hides the refresh button from polls. Requires a curl job for refreshing.
    * - MAPS_API_KEY
      - Google Maps API key for ``MAPS_LOOKUP``
    * - MAPS_LOOKUP

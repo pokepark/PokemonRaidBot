@@ -16,7 +16,6 @@
   "APIKEY_HASH":"",
   "ENABLE_DDOS_PROTECTION": true,
   "DDOS_MAXIMUM":"10",
-  "BRIDGE_MODE": false,
   "CURL_USEPROXY": false,
   "CURL_PROXYSERVER":"http://example.com:8080",
   "MAINTAINER":"",

@@ -63,6 +63,3 @@ function group_code_keys($raid_id, $action, $arg)
 
     return $keys;
 }
-
-
-?>

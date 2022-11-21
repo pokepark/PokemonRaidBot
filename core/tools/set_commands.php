@@ -48,7 +48,7 @@
                             $request = json_encode([
                                             'method'=>'deleteMyCommands',
                                             'scope'=>$scope,
-                                            
+
                                             ]);
                             $response = curl_json_request($request);
                         }

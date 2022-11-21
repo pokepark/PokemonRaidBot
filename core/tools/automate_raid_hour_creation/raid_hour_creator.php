@@ -104,10 +104,8 @@ try {
 }
 catch (PDOException $exception) {
     echo($exception->getMessage());
-    $dbh = null;
     exit;
 }
-$dbh = null;
 function get_current_bosses($spawn) {
     global $dbh;
     $i = 0;
@@ -146,5 +144,3 @@ function curl_get_contents($url)
     curl_close($ch);
     return $content;
 }
-
-?>

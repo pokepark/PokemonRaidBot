@@ -47,4 +47,3 @@ function create_history_date_msg_keys($current = '(SELECT max(start_time) FROM r
     ];
     return [$msg, $keys];
 }
-?>

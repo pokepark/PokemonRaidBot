@@ -1,6 +1,9 @@
 <?php
 // Write to log.
 debug_log('raid_by_location()');
+require_once(LOGIC_PATH . '/active_raid_duplication_check.php');
+require_once(LOGIC_PATH . '/get_gym_by_telegram_id.php');
+require_once(LOGIC_PATH . '/show_raid_poll_small.php');
 
 // For debug.
 //debug_log($update);
@@ -11,22 +14,22 @@ $botUser->accessCheck($update, 'create');
 
 // Enabled?
 if(!$config->RAID_VIA_LOCATION) {
-    debug_log('Creating raids by sharing a location is not enabled in config! Exiting!');
-    send_message($update['message']['chat']['id'], '<b>' . getTranslation('bot_access_denied') . '</b>');
-    exit();
+  debug_log('Creating raids by sharing a location is not enabled in config! Exiting!');
+  send_message($update['message']['chat']['id'], '<b>' . getTranslation('bot_access_denied') . '</b>');
+  exit();
 }
 $reg_exp_coordinates = '^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$^';
 
 // Get latitude / longitude values from Telegram
 if(isset($update['message']['location']) && preg_match($reg_exp_coordinates, $update['message']['location']['latitude'] . ',' . $update['message']['location']['longitude'])) {
-    $lat = $update['message']['location']['latitude'];
-    $lon = $update['message']['location']['longitude'];
+  $lat = $update['message']['location']['latitude'];
+  $lon = $update['message']['location']['longitude'];
 } else if(isset($update['callback_query']) && preg_match($reg_exp_coordinates, $data['id'] . ',' . $data['arg'])) {
-    $lat = $data['id'];
-    $lon = $data['arg'];
+  $lat = $data['id'];
+  $lon = $data['arg'];
 } else {
-    send_message($update['message']['chat']['id'], '<b>' . getTranslation('invalid_input') . '</b>');
-    exit();
+  send_message($update['message']['chat']['id'], '<b>' . getTranslation('invalid_input') . '</b>');
+  exit();
 }
 
 // Debug
@@ -39,103 +42,95 @@ $address = format_address($addr);
 
 // Temporary gym_name
 if($config->RAID_VIA_LOCATION_FUNCTION == 'remote') {
-    $gym_name = getPublicTranslation('remote_raid') . ': '.$addr['district'];
-    $gym = false;
-    $gym_letter = substr($gym_name, 0, 1);
+  $gym_name = getPublicTranslation('remote_raid') . ': '.$addr['district'];
+  $gym = false;
+  $gym_letter = substr($gym_name, 0, 1);
 }else {
-    $gym_name = '#' . $update['message']['chat']['id'];
-    $gym_letter = substr($gym_name, 0, 1);
-    // Get gym by temporary name.
-    $gym = get_gym_by_telegram_id($gym_name);
+  $gym_name = '#' . $update['message']['chat']['id'];
+  $gym_letter = substr($gym_name, 0, 1);
+  // Get gym by temporary name.
+  $gym = get_gym_by_telegram_id($gym_name);
 }
 
 // If gym is already in the database, make sure no raid is active before continuing!
 if($gym) {
-    debug_log('Gym found in the database! Checking for active raid now!');
-    $gym_id = $gym['id'];
+  debug_log('Gym found in the database! Checking for active raid now!');
+  $gym_id = $gym['id'];
 
-    // Check for duplicate raid
-    $duplicate_id = 0;
-    $duplicate_id = active_raid_duplication_check($gym_id);
+  // Check for duplicate raid
+  $duplicate_id = 0;
+  $duplicate_id = active_raid_duplication_check($gym_id);
 
-    // Continue with raid creation
-    if($duplicate_id > 0) {
-        debug_log('Active raid is in progress!');
-        debug_log('Tell user to update the gymname and exit!');
+  // Continue with raid creation
+  if($duplicate_id > 0) {
+    debug_log('Active raid is in progress!');
+    debug_log('Tell user to update the gymname and exit!');
 
-        // Show message that a raid is active on that gym.
-        $raid_id = $duplicate_id;
-        $raid = get_raid($raid_id);
+    // Show message that a raid is active on that gym.
+    $raid_id = $duplicate_id;
+    $raid = get_raid($raid_id);
 
-        // Build message.
-        $msg = EMOJI_WARN . SP . getTranslation('raid_already_exists') . SP . EMOJI_WARN . CR . show_raid_poll_small($raid);
+    // Build message.
+    $msg = EMOJI_WARN . SP . getTranslation('raid_already_exists') . SP . EMOJI_WARN . CR . show_raid_poll_small($raid);
 
-        // Tell user to update the gymname first to create another raid by location
-        $msg .= getTranslation('gymname_then_location');
-        $keys = [];
+    // Tell user to update the gymname first to create another raid by location
+    $msg .= getTranslation('gymname_then_location');
+    $keys = [];
 
-        // Send message.
-        send_message($update['message']['chat']['id'], $msg, $keys, ['reply_markup' => ['selective' => true, 'one_time_keyboard' => true]]);
+    // Send message.
+    send_message($update['message']['chat']['id'], $msg, $keys, ['reply_markup' => ['selective' => true, 'one_time_keyboard' => true]]);
 
-        exit();
-    } else {
-        debug_log('No active raid found! Continuing now ...');
-    }
+    exit();
+  } else {
+    debug_log('No active raid found! Continuing now ...');
+  }
 } else {
-    // Set gym_id to 0
-    $gym_id = 0;
-    debug_log('No gym found in the database! Continuing now ...');
+  // Set gym_id to 0
+  $gym_id = 0;
+  debug_log('No gym found in the database! Continuing now ...');
 }
 
 // Insert / update gym.
-try {
 
-    global $dbh;
+// Build query to check if gym is already in database or not
+$rs = my_query('
+  SELECT  COUNT(*) AS count
+  FROM    gyms
+  WHERE   gym_name = ?
+  ',[$gym_name]
+);
 
-    // Build query to check if gym is already in database or not
-    $rs = my_query("
-    SELECT    COUNT(*) AS count
-    FROM      gyms
-      WHERE   gym_name = '{$gym_name}'
-     ");
-
-    $row = $rs->fetch();
-    $parameters = [ 'gym_name' => $gym_name,
-                          'lat' => $lat,
-                          'lon' => $lon,
-                          'address' => $address, 
-                        ];
-    // Gym already in database or new
-    if (empty($row['count']) or $config->RAID_VIA_LOCATION_FUNCTION == 'remote') {
-        // insert gym in table.
-        debug_log('Gym not found in database gym list! Inserting gym "' . $gym_name . '" now.');
-        $parameters['img_url'] = 'file://' . IMAGES_PATH . '/gym_default.png';
-        $query = '
-        INSERT INTO gyms (gym_name, lat, lon, address, show_gym, img_url, temporary_gym)
-        VALUES (:gym_name, :lat, :lon, :address, 0, :img_url, 1)
-    ';  
-    } else {
-        // Update gyms table to reflect gym changes.
-        debug_log('Gym found in database gym list! Updating gym "' . $gym_name . '" now.');
-        $query = '
-            UPDATE        gyms
-            SET           lat = :lat,
-                          lon = :lon,
-                          address = :address
-            WHERE      gym_name = :gym_name
-        ';
-    }
-    $statement = $dbh->prepare($query);
-    $statement->execute($parameters);
-    // Get gym id from insert.
-    if($gym_id == 0) {
-        $gym_id = $dbh->lastInsertId();
-    }
-} catch (PDOException $exception) {
-
-    error_log($exception->getMessage());
-    $dbh = null;
-    exit();
+$row = $rs->fetch();
+$parameters = [
+  'gym_name' => $gym_name,
+  'lat' => $lat,
+  'lon' => $lon,
+  'address' => $address,
+];
+// Gym already in database or new
+if (empty($row['count']) or $config->RAID_VIA_LOCATION_FUNCTION == 'remote') {
+  // insert gym in table.
+  debug_log('Gym not found in database gym list! Inserting gym "' . $gym_name . '" now.');
+  $parameters['img_url'] = 'file://' . IMAGES_PATH . '/gym_default.png';
+  $query = '
+  INSERT INTO gyms (gym_name, lat, lon, address, show_gym, img_url, temporary_gym)
+  VALUES (:gym_name, :lat, :lon, :address, 0, :img_url, 1)
+  ';
+} else {
+  // Update gyms table to reflect gym changes.
+  debug_log('Gym found in database gym list! Updating gym "' . $gym_name . '" now.');
+  $query = '
+    UPDATE  gyms
+    SET     lat = :lat,
+            lon = :lon,
+            address = :address
+    WHERE   gym_name = :gym_name
+  ';
+}
+$statement = my_query($query, $parameters);
+// Get gym id from insert.
+if($gym_id == 0) {
+  $gym_id = $dbh->lastInsertId();
 }
 
 // Write to log.
@@ -144,45 +139,42 @@ debug_log('Gym Name: ' . $gym_name);
 
 // Create the keys.
 $keys = [
+  [
     [
-        [
-            'text'          => getTranslation('next'),
-            'callback_data' => $gym_letter . ':edit_raidlevel:' . $gym_id
-        ]
-    ],
-    [
-        [
-            'text'          => getTranslation('abort'),
-            'callback_data' => $gym_id . ':exit:2'
-        ]
+      'text'          => getTranslation('next'),
+      'callback_data' => $gym_letter . ':edit_raidlevel:' . $gym_id
     ]
+  ],
+  [
+    [
+      'text'          => getTranslation('abort'),
+      'callback_data' => $gym_id . ':exit:2'
+    ]
+  ]
 ];
 
 // Answer location message.
 if(isset($update['message']['location'])) {
-    // Build message.
-    $msg = getTranslation('create_raid') . ': <i>' . $address . '</i>';
+  // Build message.
+  $msg = getTranslation('create_raid') . ': <i>' . $address . '</i>';
 
-    // Send message.
-    send_message($update['message']['chat']['id'], $msg, $keys, ['reply_markup' => ['selective' => true, 'one_time_keyboard' => true]]);
+  // Send message.
+  send_message($update['message']['chat']['id'], $msg, $keys, ['reply_markup' => ['selective' => true, 'one_time_keyboard' => true]]);
 
 // Answer forwarded location message from geo_create.
 } else if(isset($update['callback_query'])) {
-    // Build callback message string.
-    $callback_response = getTranslation('here_we_go');
+  // Build callback message string.
+  $callback_response = getTranslation('here_we_go');
 
-    // Telegram JSON array.
-    $tg_json = array();
+  // Telegram JSON array.
+  $tg_json = array();
 
-    // Answer callback.
-    $tg_json[] = answerCallbackQuery($update['callback_query']['id'], $callback_response, true);
+  // Answer callback.
+  $tg_json[] = answerCallbackQuery($update['callback_query']['id'], $callback_response, true);
 
-    // Edit the message.
-    $tg_json[] = edit_message($update, getTranslation('select_gym_name'), $keys, false, true);
+  // Edit the message.
+  $tg_json[] = edit_message($update, getTranslation('select_gym_name'), $keys, false, true);
 
-    // Telegram multicurl request.
-    curl_json_multi_request($tg_json);
+  // Telegram multicurl request.
+  curl_json_multi_request($tg_json);
 }
-
-// Exit.
-exit();

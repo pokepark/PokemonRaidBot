@@ -17,7 +17,6 @@ if(isset($modifiers)) {
   $value = htmlspecialchars(trim($update['message']['text']));
   my_query('INSERT INTO events SET name=?',[$value]);
   $eventId = $dbh->lastInsertId();
-  my_query('DELETE FROM user_input WHERE user_id=?', [$userId]);
   $callback_response = getTranslation('done');
   editMessageText($modifiers['old_message_id'], getTranslation('events_created'), [], $userId);
   $msg = '<b>' . getTranslation('events_created') . '</b>' . CR;
@@ -67,6 +66,3 @@ if(isset($update['callback_query'])) {
 
 // Telegram multicurl request.
 curl_json_multi_request($tg_json);
-
-// Exit.
-exit();

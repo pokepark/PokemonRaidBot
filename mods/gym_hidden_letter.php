@@ -1,6 +1,7 @@
 <?php
 // Write to log.
 debug_log('gym_hidden_letter()');
+require_once(LOGIC_PATH . '/raid_edit_gyms_first_letter_keys.php');
 
 // For debug.
 //debug_log($update);
@@ -11,20 +12,20 @@ $arg = $data['arg'];
 
 // Check access, show message and set keys based on arg.
 if($arg == 'gym_delete') {
-    // Check access.
-    $botUser->accessCheck($update, 'gym-delete');
+  // Check access.
+  $botUser->accessCheck($update, 'gym-delete');
 
-    // Set message.
-    $msg = '<b>' . getTranslation('gym_delete') . SP . '—' . SP . getTranslation('select_gym_first_letter') . '</b>';
+  // Set message.
+  $msg = '<b>' . getTranslation('gym_delete') . SP . '—' . SP . getTranslation('select_gym_first_letter') . '</b>';
 } else {
-    // Force set arg.
-    $arg = 'gym_details';
+  // Force set arg.
+  $arg = 'gym_details';
 
-    // Check access.
-    $botUser->accessCheck($update, 'gym-details');
+  // Check access.
+  $botUser->accessCheck($update, 'gym-details');
 
-    // Set message.
-    $msg = '<b>' . getTranslation('show_gym_details') . SP . '—' . SP . getTranslation('select_gym_first_letter') . '</b>';
+  // Set message.
+  $msg = '<b>' . getTranslation('show_gym_details') . SP . '—' . SP . getTranslation('select_gym_first_letter') . '</b>';
 }
 
 // Set keys.
@@ -34,7 +35,7 @@ $keys = $keys_and_gymarea['keys'];
 
 // Set message.
 if(!$keys) {
-    $msg = CR . '<b>' . getTranslation('no_hidden_gyms') . '</b>';
+  $msg = CR . '<b>' . getTranslation('no_hidden_gyms') . '</b>';
 }
 
 // Add navigation keys.
@@ -60,8 +61,3 @@ $tg_json[] = edit_message($update, $msg, $keys, ['disable_web_page_preview' => '
 
 // Telegram multicurl request.
 curl_json_multi_request($tg_json);
-
-// Exit.
-exit();
-
-?>

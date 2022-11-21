@@ -73,12 +73,12 @@ function universal_key($keys, $id, $action, $arg, $text = '0')
 
 /**
  * Share keys. Has own logic for fetching chat id's if used to generate share keys for raids.
- * @param $id Id to pass to callback query
- * @param $action Action to pass to callback query
- * @param $update Update from Telegram
- * @param $raidLevel Raid level if sharing a raid
- * @param $chats List of chats if using alternative list
- * @param $hideGeneralShare Leave out the general share button
+ * @param int $id Id to pass to callback query
+ * @param string $action Action to pass to callback query
+ * @param array $update Update from Telegram
+ * @param int $raidLevel Raid level if sharing a raid
+ * @param string $chats List of chats if using alternative list
+ * @param bool $hideGeneralShare Leave out the general share button
  * @return array
  */
 function share_keys($id, $action, $update, $raidLevel = '', $chats = '', $hideGeneralShare = false)
@@ -162,4 +162,17 @@ function share_keys($id, $action, $update, $raidLevel = '', $chats = '', $hideGe
     return $keys;
 }
 
-?>
+/**
+ * Format
+ * @param array $array
+ * @return string Formated
+ */
+function formatCallbackData($array)
+{
+  $return = $array['callbackAction'] . '|';
+  unset($array['callbackAction']);
+  foreach($array as $key => $value) {
+    $return .= $key . '=' . $value . '|';
+  }
+  return rtrim('|', $return);
+}

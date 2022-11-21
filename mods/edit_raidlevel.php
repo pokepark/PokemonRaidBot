@@ -1,6 +1,10 @@
 <?php
 // Write to log.
 debug_log('edit_raidlevel()');
+require_once(LOGIC_PATH . '/active_raid_duplication_check.php');
+require_once(LOGIC_PATH . '/get_gym.php');
+require_once(LOGIC_PATH . '/raid_edit_raidlevel_keys.php');
+require_once(LOGIC_PATH . '/show_raid_poll_small.php');
 
 // For debug.
 //debug_log($update);
@@ -15,13 +19,13 @@ $gym = get_gym($gym_id);
 
 // Back key id, action and arg
 if(substr($data['id'],0,2) == 'gl') {
-    $back_id = substr($data['id'],2);
-    $back_action = 'raid_by_gym_letter';
-    $back_arg = '0';
+  $back_id = substr($data['id'],2);
+  $back_action = 'raid_by_gym_letter';
+  $back_arg = '0';
 }else {
-    $back_id = 0;
-    $back_action = 'raid_by_gym';
-    $back_arg = $data['id'];
+  $back_id = 0;
+  $back_action = 'raid_by_gym';
+  $back_arg = $data['id'];
 }
 $gym_first_letter = $back_arg;
 
@@ -31,30 +35,30 @@ $tg_json = array();
 // Active raid?
 $duplicate_id = active_raid_duplication_check($gym_id);
 if ($duplicate_id > 0) {
-    $keys = [];
-    $raid_id = $duplicate_id;
-    $raid = get_raid($raid_id);
-    $msg = EMOJI_WARN . SP . getTranslation('raid_already_exists') . SP . EMOJI_WARN . CR . show_raid_poll_small($raid);
+  $keys = [];
+  $raid_id = $duplicate_id;
+  $raid = get_raid($raid_id);
+  $msg = EMOJI_WARN . SP . getTranslation('raid_already_exists') . SP . EMOJI_WARN . CR . show_raid_poll_small($raid);
 
-    $keys = share_keys($raid_id, 'raid_share', $update, $raid['level']);
+  $keys = share_keys($raid_id, 'raid_share', $update, $raid['level']);
 
-    // Add keys for sharing the raid.
-    if(!empty($keys)) {
-        // Exit key
-        $keys = universal_key($keys, '0', 'exit', '0', getTranslation('abort'));
-    }
+  // Add keys for sharing the raid.
+  if(!empty($keys)) {
+    // Exit key
+    $keys = universal_key($keys, '0', 'exit', '0', getTranslation('abort'));
+  }
 
-    // Answer callback.
-    $tg_json[] = answerCallbackQuery($update['callback_query']['id'], getTranslation('raid_already_exists'), true);
+  // Answer callback.
+  $tg_json[] = answerCallbackQuery($update['callback_query']['id'], getTranslation('raid_already_exists'), true);
 
-    // Edit the message.
-    $tg_json[] = edit_message($update, $msg, $keys, false, true);
+  // Edit the message.
+  $tg_json[] = edit_message($update, $msg, $keys, false, true);
 
-    // Telegram multicurl request.
-    curl_json_multi_request($tg_json);
+  // Telegram multicurl request.
+  curl_json_multi_request($tg_json);
 
-    // Exit.
-    exit();
+  // Exit.
+  exit();
 }
 
 //Initialize admin rights table [ ex-raid , raid-event ]
@@ -69,23 +73,23 @@ $keys = raid_edit_raidlevel_keys($gym_id, $gym_first_letter, $admin_access);
 
 // No keys found.
 if (!$keys) {
-    // Create the keys.
-    $keys = [
-        [
-            [
-                'text'          => getTranslation('abort'),
-                'callback_data' => '0:exit:0'
-            ]
-        ]
-    ];
+  // Create the keys.
+  $keys = [
+    [
+      [
+        'text'          => getTranslation('abort'),
+        'callback_data' => '0:exit:0'
+      ]
+    ]
+  ];
 } else {
-    // Add navigation keys.
-    $nav_keys = [];
-    $nav_keys[] = universal_inner_key($nav_keys, $back_id, $back_action, $back_arg, getTranslation('back'));
-    $nav_keys[] = universal_inner_key($nav_keys, $gym_id, 'exit', '2', getTranslation('abort'));
-    $nav_keys = inline_key_array($nav_keys, 2);
-    // Merge keys.
-    $keys = array_merge($keys, $nav_keys);
+  // Add navigation keys.
+  $nav_keys = [];
+  $nav_keys[] = universal_inner_key($nav_keys, $back_id, $back_action, $back_arg, getTranslation('back'));
+  $nav_keys[] = universal_inner_key($nav_keys, $gym_id, 'exit', '2', getTranslation('abort'));
+  $nav_keys = inline_key_array($nav_keys, 2);
+  // Merge keys.
+  $keys = array_merge($keys, $nav_keys);
 }
 
 // Build message.
@@ -102,7 +106,3 @@ $tg_json[] = edit_message($update, $msg . CR . getTranslation('select_raid_level
 
 // Telegram multicurl request.
 curl_json_multi_request($tg_json);
-
-// Exit.
-exit();
-

@@ -1,6 +1,7 @@
 <?php
 // Write to log.
 debug_log('gym_letter()');
+require_once(LOGIC_PATH . '/raid_edit_gyms_first_letter_keys.php');
 
 // For debug.
 //debug_log($update);
@@ -15,42 +16,42 @@ $keys = $keys_and_gymarea['keys'];
 
 // Check access, show message and set keys based on arg.
 if($arg == 'gym_delete') {
-    // Check access.
-    $botUser->accessCheck($update, 'gym-delete');
+  // Check access.
+  $botUser->accessCheck($update, 'gym-delete');
 
-    // Set message.
-    $msg = '<b>' . getTranslation('gym_delete') . CR . getTranslation('select_gym_first_letter') . '</b>';
-    $msg.= (($keys_and_gymarea['gymarea_name'] != '') ? CR . CR . getTranslation('current_gymarea') . ': ' . $keys_and_gymarea['gymarea_name'] : '');
+  // Set message.
+  $msg = '<b>' . getTranslation('gym_delete') . CR . getTranslation('select_gym_first_letter') . '</b>';
+  $msg.= (($keys_and_gymarea['gymarea_name'] != '') ? CR . CR . getTranslation('current_gymarea') . ': ' . $keys_and_gymarea['gymarea_name'] : '');
 } else {
-    // Force set arg.
-    $arg = 'gym_details';
+  // Force set arg.
+  $arg = 'gym_details';
 
-    // Check access.
-    $botUser->accessCheck($update, 'gym-details');
+  // Check access.
+  $botUser->accessCheck($update, 'gym-details');
 
-    // Set message.
-    $msg = '<b>' . getTranslation('show_gym_details') . CR . getTranslation('select_gym_first_letter') . '</b>';
-    $msg.= (($keys_and_gymarea['gymarea_name'] != '') ? CR . CR . getTranslation('current_gymarea') . ': ' . $keys_and_gymarea['gymarea_name'] : '');
+  // Set message.
+  $msg = '<b>' . getTranslation('show_gym_details') . CR . getTranslation('select_gym_first_letter') . '</b>';
+  $msg.= (($keys_and_gymarea['gymarea_name'] != '') ? CR . CR . getTranslation('current_gymarea') . ': ' . $keys_and_gymarea['gymarea_name'] : '');
 }
 
 $nav_keys = [];
 
 if($data['id'] != 'n' or $config->ENABLE_GYM_AREAS === false) {
-    $nav_keys[] = [
-        'text' => getTranslation('back'),
-        'callback_data' => 'n:gym_letter:gym_details'
-    ];
-    // Add key for hidden gyms.
-    $h_keys = [];
-    $h_keys[] = universal_inner_key($h_keys, $data['id'], 'gym_hidden_letter', $arg, getTranslation('hidden_gyms'));
-    $h_keys = inline_key_array($h_keys, 1);
-    // Merge keys.
-    $keys = array_merge($h_keys, $keys);
+  $nav_keys[] = [
+    'text' => getTranslation('back'),
+    'callback_data' => 'n:gym_letter:gym_details'
+  ];
+  // Add key for hidden gyms.
+  $h_keys = [];
+  $h_keys[] = universal_inner_key($h_keys, $data['id'], 'gym_hidden_letter', $arg, getTranslation('hidden_gyms'));
+  $h_keys = inline_key_array($h_keys, 1);
+  // Merge keys.
+  $keys = array_merge($h_keys, $keys);
 }
 $nav_keys[] = [
-        'text' => getTranslation('abort'),
-        'callback_data' => '0:exit:0'
-    ];
+  'text' => getTranslation('abort'),
+  'callback_data' => '0:exit:0'
+];
 $nav_keys = inline_key_array($nav_keys, 2);
 // Merge keys.
 $keys = array_merge($keys, $nav_keys);
@@ -69,8 +70,3 @@ $tg_json[] = edit_message($update, $msg, $keys, ['disable_web_page_preview' => '
 
 // Telegram multicurl request.
 curl_json_multi_request($tg_json);
-
-// Exit.
-exit();
-
-?>

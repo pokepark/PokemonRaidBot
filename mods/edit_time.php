@@ -1,6 +1,9 @@
 <?php
 // Write to log.
 debug_log('edit_time()');
+require_once(LOGIC_PATH . '/active_raid_duplication_check.php');
+require_once(LOGIC_PATH . '/get_pokemon_by_table_id.php');
+require_once(LOGIC_PATH . '/show_raid_poll_small.php');
 
 // For debug.
 //debug_log($update);
@@ -19,14 +22,14 @@ $raid_id = 0;
 $gym_id = 0;
 $gym_letter = 99;
 if($count_id == 0) {
-    $raid_id = $data['id'];
+  $raid_id = $data['id'];
 } else if($count_id == 1) {
-    $gym_id_letter = explode(',', $data['id']);
-    $gym_id = $gym_id_letter[0];
-    $gym_letter = $gym_id_letter[1];
+  $gym_id_letter = explode(',', $data['id']);
+  $gym_id = $gym_id_letter[0];
+  $gym_letter = $gym_id_letter[1];
 }
 
-// Count 3 means we received pokemon_table_id and starttime 
+// Count 3 means we received pokemon_table_id and starttime
 // Count 4 means we received pokemon_table_id, starttime and an optional argument
 // Count 5 means we received pokemon_table_id, starttime, optional argument and slot switch
 $arg_data = explode(',', $data['arg']);
@@ -36,14 +39,14 @@ $raid_level = $arg_data[1];
 $opt_arg = 'new-raid';
 $slot_switch = 0;
 if($count_arg >= 4) {
-    $pokemon_table_id = $arg_data[2];
-    $starttime = $arg_data[3];
-} 
+  $pokemon_table_id = $arg_data[2];
+  $starttime = $arg_data[3];
+}
 if($count_arg >= 5) {
-    $opt_arg = $arg_data[4];
+  $opt_arg = $arg_data[4];
 }
 if($count_arg >= 6) {
-    $slot_switch = $arg_data[5];
+  $slot_switch = $arg_data[5];
 }
 
 // Write to log.
@@ -59,104 +62,110 @@ $tg_json = array();
 // raid_id is 0, means we did not create it yet
 // gym_id is not 0, means we have a gym_id for creation
 if ($raid_id == 0 && $gym_id != 0) {
-    // Replace "-" with ":" to get proper time format
-    debug_log('Formatting the raid time properly now.');
-    $arg_time = str_replace('-', ':', $starttime);
+  // Replace "-" with ":" to get proper time format
+  debug_log('Formatting the raid time properly now.');
+  $arg_time = str_replace('-', ':', $starttime);
 
-    // Event raids
-    if($event_id != 'N') {
-        debug_log('Event time :D ... Setting raid date to ' . $arg_time);
-        $start_date_time = $arg_time;
-        $query = my_query("SELECT raid_duration FROM events WHERE id = '{$event_id}' LIMIT 1");
-        $result = $query->fetch();
-        $duration = $result['raid_duration'] ?? $config->RAID_DURATION;
-        $egg_duration = $config->RAID_EGG_DURATION;
+  // Event raids
+  if($event_id != 'N') {
+    debug_log('Event time :D ... Setting raid date to ' . $arg_time);
+    $start_date_time = $arg_time;
+    $query = my_query("SELECT raid_duration FROM events WHERE id = '{$event_id}' LIMIT 1");
+    $result = $query->fetch();
+    $duration = $result['raid_duration'] ?? $config->RAID_DURATION;
+    $egg_duration = $config->RAID_EGG_DURATION;
 
-    // Elite raids
-    }elseif($raid_level == 9) {
-        debug_log('Elite Raid time :D ... Setting raid date to ' . $arg_time);
-        $start_date_time = $arg_time;
-        $duration = $config->RAID_DURATION_ELITE;
-        $egg_duration = $config->RAID_EGG_DURATION_ELITE;
+  // Elite raids
+  }elseif($raid_level == 9) {
+    debug_log('Elite Raid time :D ... Setting raid date to ' . $arg_time);
+    $start_date_time = $arg_time;
+    $duration = $config->RAID_DURATION_ELITE;
+    $egg_duration = $config->RAID_EGG_DURATION_ELITE;
 
-    // Normal raids
-    } else {
-        // Current date
-        $current_date = date('Y-m-d', strtotime('now'));
-        debug_log('Today is a raid day! Setting raid date to ' . $current_date);
-        // Raid time
-        $start_date_time = $current_date . ' ' . $arg_time . ':00';
-        debug_log('Received the following time for the raid: ' . $start_date_time);
-        $duration = $config->RAID_DURATION;
-        $egg_duration = $config->RAID_EGG_DURATION;
+  // Normal raids
+  } else {
+    // Current date
+    $current_date = date('Y-m-d', strtotime('now'));
+    debug_log('Today is a raid day! Setting raid date to ' . $current_date);
+    // Raid time
+    $start_date_time = $current_date . ' ' . $arg_time . ':00';
+    debug_log('Received the following time for the raid: ' . $start_date_time);
+    $duration = $config->RAID_DURATION;
+    $egg_duration = $config->RAID_EGG_DURATION;
+  }
+
+  // Check for duplicate raid
+  $duplicate_id = active_raid_duplication_check($gym_id);
+
+  // Continue with raid creation
+  if($duplicate_id == 0) {
+    // Now.
+    $now = utcnow();
+
+    $pokemon_id_formid = get_pokemon_by_table_id($pokemon_table_id);
+
+    // Saving event info to db. N = null
+    $event = (($event_id == "N") ? NULL : (($event_id=="X") ? EVENT_ID_EX : $event_id ));
+    debug_log("Event: ".$event);
+    debug_log("Event-id: ".$event_id);
+    debug_log("Raid level: ".$raid_level);
+    debug_log("Pokemon: ".$pokemon_id_formid['pokedex_id']."-".$pokemon_id_formid['pokemon_form_id']);
+
+    // Create raid in database.
+    $rs = my_query('
+      INSERT INTO   raids
+      SET   user_id = :userId,
+            pokemon = :pokemon,
+            pokemon_form = :pokemonForm,
+            start_time = :startTime,
+            spawn = DATE_SUB(start_time, INTERVAL ' . $egg_duration . ' MINUTE),
+            end_time = DATE_ADD(start_time, INTERVAL ' . $duration . ' MINUTE),
+            gym_id = :gymId,
+            level = :level,
+            event = :event
+    ', [
+      'userId' => $update['callback_query']['from']['id'],
+      'pokemon' => $pokemon_id_formid['pokedex_id'],
+      'pokemonForm' => $pokemon_id_formid['pokemon_form_id'],
+      'startTime' => $start_date_time,
+      'gymId' => $gym_id,
+      'level' => $raid_level,
+      'event' => $event,
+    ]);
+
+    // Get last insert id from db.
+    $raid_id = $dbh->lastInsertId();
+
+    // Write to log.
+    debug_log('ID=' . $raid_id);
+
+  // Tell user the raid already exists and exit!
+  } else {
+    $keys = [];
+    $raid_id = $duplicate_id;
+    $raid = get_raid($raid_id);
+    $msg = EMOJI_WARN . SP . getTranslation('raid_already_exists') . SP . EMOJI_WARN . CR . show_raid_poll_small($raid);
+
+    $keys = share_keys($raid_id, 'raid_share', $update, $raid['level']);
+
+    // Add keys for sharing the raid.
+    if(!empty($keys)) {
+      // Exit key
+      $keys = universal_key($keys, '0', 'exit', '0', getTranslation('abort'));
     }
 
-    // Check for duplicate raid
-    $duplicate_id = active_raid_duplication_check($gym_id);
+    // Answer callback.
+    $tg_json[] = answerCallbackQuery($update['callback_query']['id'], getTranslation('raid_already_exists'), true);
 
-    // Continue with raid creation
-    if($duplicate_id == 0) {
-        // Now.
-        $now = utcnow();
+    // Edit the message.
+    $tg_json[] = edit_message($update, $msg, $keys, false, true);
 
-        $pokemon_id_formid = get_pokemon_by_table_id($pokemon_table_id);
+    // Telegram multicurl request.
+    curl_json_multi_request($tg_json);
 
-        // Saving event info to db. N = null
-        $event = (($event_id == "N") ? "NULL" : (($event_id=="X") ? EVENT_ID_EX : $event_id ));
-        debug_log("Event: ".$event);
-        debug_log("Event-id: ".$event_id);
-        debug_log("Raid level: ".$raid_level);
-        debug_log("Pokemon: ".$pokemon_id_formid['pokedex_id']."-".$pokemon_id_formid['pokemon_form_id']);
-
-        // Create raid in database.
-        $rs = my_query(
-            "
-            INSERT INTO   raids
-            SET           user_id = {$update['callback_query']['from']['id']},
-                          pokemon = '{$pokemon_id_formid['pokedex_id']}',
-                          pokemon_form = '{$pokemon_id_formid['pokemon_form_id']}',
-                          start_time = '{$start_date_time}',
-                          spawn = DATE_SUB(start_time, INTERVAL ".$egg_duration." MINUTE),
-                          end_time = DATE_ADD(start_time, INTERVAL {$duration} MINUTE),
-                          gym_id = '{$gym_id}',
-                          level = '{$raid_level}',
-                          event = {$event}
-            "
-        );
-
-        // Get last insert id from db.
-        $raid_id = $dbh->lastInsertId();
-
-        // Write to log.
-        debug_log('ID=' . $raid_id);
-
-    // Tell user the raid already exists and exit!
-    } else {
-        $keys = [];
-        $raid_id = $duplicate_id;
-        $raid = get_raid($raid_id);
-        $msg = EMOJI_WARN . SP . getTranslation('raid_already_exists') . SP . EMOJI_WARN . CR . show_raid_poll_small($raid);
-
-        $keys = share_keys($raid_id, 'raid_share', $update, $raid['level']);
-
-        // Add keys for sharing the raid.
-        if(!empty($keys)) {
-            // Exit key
-            $keys = universal_key($keys, '0', 'exit', '0', getTranslation('abort'));
-        }
-
-        // Answer callback.
-        $tg_json[] = answerCallbackQuery($update['callback_query']['id'], getTranslation('raid_already_exists'), true);
-
-        // Edit the message.
-        $tg_json[] = edit_message($update, $msg, $keys, false, true);
-
-        // Telegram multicurl request.
-        curl_json_multi_request($tg_json);
-
-        // Exit.
-        exit();
-    }
+    // Exit.
+    exit();
+  }
 }
 
 // Init empty keys array.
@@ -164,67 +173,66 @@ $keys = [];
 
 // Raid pokemon duration short or 1 Minute / 5 minute time slots
 if($opt_arg == 'more') {
-    // 1-minute selection
-    $slotsize = 1;
+  // 1-minute selection
+  $slotsize = 1;
 
-    $slotmax = $config->RAID_DURATION;
+  $slotmax = $config->RAID_DURATION;
 
-    for ($i = $slotmax; $i >= 15; $i = $i - $slotsize) {
-        // Create the keys.
-        $keys[] = array(
-        // Just show the time, no text - not everyone has a phone or tablet with a large screen...
-            'text'          => floor($i / 60) . ':' . str_pad($i % 60, 2, '0', STR_PAD_LEFT),
-            'callback_data' => $raid_id . ':edit_save:' . $i
-        );
-    }
+  for ($i = $slotmax; $i >= 15; $i = $i - $slotsize) {
+    // Create the keys.
+    $keys[] = array(
+    // Just show the time, no text - not everyone has a phone or tablet with a large screen...
+      'text'          => floor($i / 60) . ':' . str_pad($i % 60, 2, '0', STR_PAD_LEFT),
+      'callback_data' => $raid_id . ':edit_save:' . $i
+    );
+  }
 
 } else {
-    debug_log('Comparing slot switch and argument for fast forward');
-    if ($slot_switch == 0) {
-        $raidduration = $config->RAID_DURATION;
+  debug_log('Comparing slot switch and argument for fast forward');
+  if ($slot_switch == 0) {
+    $raidduration = $config->RAID_DURATION;
 
-        // Write to log.
-        debug_log('Doing a fast forward now!');
-        debug_log('Changing data array first...');
+    // Write to log.
+    debug_log('Doing a fast forward now!');
+    debug_log('Changing data array first...');
 
-        // Reset data array
-        $data = [];
-        $data['id'] = $raid_id;
-        $data['action'] = 'edit_save';
-        $data['arg'] = $raidduration;
+    // Reset data array
+    $data = [];
+    $data['id'] = $raid_id;
+    $data['action'] = 'edit_save';
+    $data['arg'] = $raidduration;
 
-        // Write to log.
-        debug_log($data, '* NEW DATA= ');
+    // Write to log.
+    debug_log($data, '* NEW DATA= ');
 
-        // Set module path by sent action name.
-        $module = ROOT_PATH . '/mods/edit_save.php';
+    // Set module path by sent action name.
+    $module = ROOT_PATH . '/mods/edit_save.php';
 
-        // Write module to log.
-        debug_log($module);
+    // Write module to log.
+    debug_log($module);
 
-        // Check if the module file exists.
-        if (file_exists($module)) {
-            // Dynamically include module file and exit.
-            include_once($module);
-            exit();
-        }
-    } else {
+    // Check if the module file exists.
+    if (file_exists($module)) {
+      // Dynamically include module file and exit.
+      include_once($module);
+      exit();
+    }
+  } else {
 
-        // Use raid pokemon duration short.
-        // Use normal raid duration.
-        $keys[] = array(
-            'text'          => '0:' . $config->RAID_DURATION,
-            'callback_data' => $raid_id . ':edit_save:' . $config->RAID_DURATION
-        );
+    // Use raid pokemon duration short.
+    // Use normal raid duration.
+    $keys[] = array(
+      'text'          => '0:' . $config->RAID_DURATION,
+      'callback_data' => $raid_id . ':edit_save:' . $config->RAID_DURATION
+    );
 
-        // Button for more options.
-        $keys[] = array(
-            'text'          => getTranslation('expand'),
-            'callback_data' => $raid_id . ':edit_time:' . $pokemon_id . ',' . $start_time . ',more,' . $slot_switch
-        );
+    // Button for more options.
+    $keys[] = array(
+      'text'          => getTranslation('expand'),
+      'callback_data' => $raid_id . ':edit_time:' . $pokemon_id . ',' . $start_time . ',more,' . $slot_switch
+    );
 
-
-        }
+    }
 }
 
 // Get the inline key array.
@@ -235,9 +243,9 @@ debug_log($keys);
 
 // Build callback message string.
 if ($opt_arg != 'more' && $event_id == 'N') {
-    $callback_response = getTranslation('start_date_time') . ' ' . $arg_time;
+  $callback_response = getTranslation('start_date_time') . ' ' . $arg_time;
 } else {
-    $callback_response = getTranslation('raid_starts_when_view_changed');
+  $callback_response = getTranslation('raid_starts_when_view_changed');
 }
 
 // Answer callback.
@@ -248,6 +256,3 @@ $tg_json[] = edit_message($update, getTranslation('how_long_raid'), $keys, false
 
 // Telegram multicurl request.
 curl_json_multi_request($tg_json);
-
-// Exit.
-exit();

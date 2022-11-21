@@ -1,6 +1,8 @@
 <?php
 // Write to log.
 debug_log('trainer_share()');
+require_once(LOGIC_PATH . '/keys_trainerinfo.php');
+require_once(LOGIC_PATH . '/show_trainerinfo.php');
 
 // For debug.
 //debug_log($update);
@@ -34,6 +36,3 @@ $tg_json[] = edit_message($update, $callback_msg, $callback_keys, false, true);
 
 // Telegram multicurl request.
 curl_json_multi_request($tg_json);
-
-// Exit.
-exit();

@@ -30,7 +30,3 @@ $tg_json[] = edit_message($update, $callback_msg, $callback_keys, false, true);
 
 // Telegram multicurl request.
 curl_json_multi_request($tg_json);
-
-// Exit.
-$dbh = null;
-exit();

@@ -9,6 +9,12 @@ Adding new config values
 * You can access the new config item in code with ``$config->CONFIG_ITEM_NAME`` but if inside a function, remember to specify ``global $config;``
 * Don't break backwards compatibility if you can.
 
+Formatting callback data in inline keyboards
+--------------------------------------------
+
+Old way of sending data over key presses was ``id:action:arg``. These values got stored early on in ``$data`` array. This is still supported for as long as this method is used in the code somewhere, but we'll try to move to the new system overtime.
+New data format adds variable names to passed data. When forming keyboard arrays you should use the function ``formatCallbackData()`` to convert your array to string.
+
 Adding new metrics
 ------------------
 

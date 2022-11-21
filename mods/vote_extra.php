@@ -1,6 +1,10 @@
 <?php
 // Write to log.
 debug_log('vote()');
+require_once(LOGIC_PATH . '/alarm.php');
+require_once(LOGIC_PATH . '/get_remote_users_count.php');
+require_once(LOGIC_PATH . '/send_vote_remote_users_limit_reached.php');
+require_once(LOGIC_PATH . '/send_vote_time_first.php');
 
 // For debug.
 //debug_log($update);
@@ -9,8 +13,7 @@ debug_log('vote()');
 $raidId = $data['id'];
 
 // Check if the user has voted for this raid before and check if they are attending remotely.
-$rs = my_query(
-  '
+$rs = my_query('
   SELECT  user_id, remote, want_invite, can_invite, attend_time, (CASE WHEN remote = 1 THEN 1 + extra_in_person ELSE 0 END + extra_alien) as user_count, CASE WHEN cancel = 1 or raid_done = 1 THEN 1 ELSE 0 END as cancelOrDone
   FROM    attendance
     WHERE   raid_id = :raidId
@@ -41,8 +44,7 @@ if (empty($answer) or $answer['cancelOrDone'] == 1) {
 
 if($data['arg'] == '0') {
   // Reset team extra people.
-  my_query(
-    '
+  my_query('
     UPDATE  attendance
     SET     extra_in_person = 0,
             extra_alien = 0
@@ -82,8 +84,7 @@ if($data['arg'] == '0') {
   }
   $team = 'extra_' . $data['arg'];
   // Increase team extra people.
-  my_query(
-    '
+  my_query('
     UPDATE  attendance
     SET   ' . $team . ' = ' . $team . ' + 1
     WHERE   raid_id = :raidId

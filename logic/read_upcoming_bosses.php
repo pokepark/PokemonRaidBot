@@ -1,5 +1,6 @@
 <?php
 require_once(LOGIC_PATH . '/resolve_boss_name_to_ids.php');
+require_once(LOGIC_PATH . '/curl_get_contents.php');
 /**
  * Read upcoming bosses from Pokebattlers API and return the results as a HTML formatted text list
  * @param bool $return_sql Return results in sql insert query instead of text list
@@ -40,7 +41,7 @@ function read_upcoming_bosses($return_sql = false) {
     if(in_array($news['pokemon'], array_keys($pokebattler_pokemon_map))) {
       $boss = $pokebattler_pokemon_map[$news['pokemon']];
     }
-    $dex_id_form = explode('-',resolve_boss_name_to_ids($boss),2);
+    $dex_id_form = resolve_boss_name_to_ids($boss);
     if($prev_start != $date_start or $prev_end != $date_end) {
       $list.= CR . EMOJI_CLOCK . ' <b>' . $starttime->format('j.n. ') . getTranslation('raid_egg_opens_at') . $starttime->format(' H:i') . ' —  ' .  $endtime->format('j.n. ') . getTranslation('raid_egg_opens_at') . $endtime->format(' H:i') . ':</b>' . CR;
       $prev_rl = '';
@@ -66,4 +67,3 @@ function read_upcoming_bosses($return_sql = false) {
   if($return_sql) return $sql;
   else return $list;
 }
-?>

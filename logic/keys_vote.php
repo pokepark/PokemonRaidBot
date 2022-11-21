@@ -1,4 +1,5 @@
 <?php
+require_once(LOGIC_PATH . '/get_pokemon_form_name.php');
 /**
  * Keys vote.
  * @param $raid
@@ -24,7 +25,7 @@ function keys_vote($raid)
     return [
       [
         [
-          'text'      => getPublicTranslation('raid_done'),
+          'text'          => getPublicTranslation('raid_done'),
           'callback_data' => $raid['id'] . ':vote_refresh:1'
         ]
       ]
@@ -52,11 +53,11 @@ function keys_vote($raid)
   }
   // Extra Keys
   $buttons['alone'] = [
-    'text'      => EMOJI_SINGLE,
+    'text'          => EMOJI_SINGLE,
     'callback_data' => $raid['id'] . ':vote_extra:0'
   ];
   $buttons['extra'] = [
-    'text'      => '+ ' . EMOJI_IN_PERSON,
+    'text'          => '+ ' . EMOJI_IN_PERSON,
     'callback_data' => $raid['id'] . ':vote_extra:in_person'
   ];
 
@@ -64,25 +65,25 @@ function keys_vote($raid)
   $buttons['extra_alien'] = $buttons['can_inv'] = $buttons['remote'] = $buttons['inv_plz'] = [];
   if(!$raid_local_only) {
     $buttons['extra_alien'] = [
-      'text'      => '+ ' . EMOJI_ALIEN,
+      'text'          => '+ ' . EMOJI_ALIEN,
       'callback_data' => $raid['id'] . ':vote_extra:alien'
     ];
 
     // Can invite key
     $buttons['can_inv'] = [
-      'text'      => EMOJI_CAN_INVITE,
+      'text'          => EMOJI_CAN_INVITE,
       'callback_data' => $raid['id'] . ':vote_can_invite:0'
     ];
 
     // Remote Raid Pass key
     $buttons['remote'] = [
-      'text'      => EMOJI_REMOTE,
+      'text'          => EMOJI_REMOTE,
       'callback_data' => $raid['id'] . ':vote_remote:0'
     ];
 
     // Want invite key
     $buttons['inv_plz'] = [
-      'text'      => EMOJI_WANT_INVITE,
+      'text'          => EMOJI_WANT_INVITE,
       'callback_data' => $raid['id'] . ':vote_want_invite:0'
     ];
   }
@@ -91,15 +92,15 @@ function keys_vote($raid)
   $buttons['teamlvl'] = [
     [
       [
-        'text'      => 'Team',
+        'text'          => 'Team',
         'callback_data' => $raid['id'] . ':vote_team:0'
       ],
       [
-        'text'      => 'Lvl +',
+        'text'          => 'Lvl +',
         'callback_data' => $raid['id'] . ':vote_level:up'
       ],
       [
-        'text'      => 'Lvl -',
+        'text'          => 'Lvl -',
         'callback_data' => $raid['id'] . ':vote_level:down'
       ]
     ]
@@ -109,7 +110,7 @@ function keys_vote($raid)
   $buttons['ex_inv'] = [];
   if ($raid['event'] == EVENT_ID_EX) {
     $buttons['ex_inv'] = [
-      'text'      => EMOJI_INVITE,
+      'text'          => EMOJI_INVITE,
       'callback_data' => $raid['id'] . ':vote_invite:0'
     ];
   }
@@ -137,30 +138,30 @@ function keys_vote($raid)
 
   // Status keys.
   $buttons['alarm'] = [
-    'text'      => EMOJI_ALARM,
+    'text'          => EMOJI_ALARM,
     'callback_data' => $raid['id'] . ':vote_status:alarm'
   ];
   $buttons['here'] = [
-    'text'      => $text_here,
+    'text'          => $text_here,
     'callback_data' => $raid['id'] . ':vote_status:arrived'
   ];
   $buttons['late'] = [
-    'text'      => $text_late,
+    'text'          => $text_late,
     'callback_data' => $raid['id'] . ':vote_status:late'
   ];
   $buttons['done'] = [
-    'text'      => $text_done,
+    'text'          => $text_done,
     'callback_data' => $raid['id'] . ':vote_status:raid_done'
   ];
   $buttons['cancel'] = [
-    'text'      => $text_cancel,
+    'text'          => $text_cancel,
     'callback_data' => $raid['id'] . ':vote_status:cancel'
   ];
 
   $buttons['refresh'] = [];
   if(!$config->AUTO_REFRESH_POLLS) {
     $buttons['refresh'] = [
-      'text'      => EMOJI_REFRESH,
+      'text'          => EMOJI_REFRESH,
       'callback_data' => $raid['id'] . ':vote_refresh:0'
     ];
   }
@@ -168,7 +169,7 @@ function keys_vote($raid)
   if($raid['event_vote_key_mode'] == 1) {
     $keys_time = [
       [
-        'text'      => getPublicTranslation("Participate"),
+        'text'          => getPublicTranslation("Participate"),
         'callback_data' => $raid['id'] . ':vote_time:' . utctime($raid['start_time'], 'YmdHis')
       ]
     ];
@@ -190,8 +191,7 @@ function keys_vote($raid)
   }
 
   // Get participants
-  $rs = my_query(
-    '
+  $rs = my_query('
     SELECT  count(attend_time)          AS count,
           sum(pokemon = 0)          AS count_any_pokemon,
           sum(pokemon = ?)  AS count_raid_pokemon
@@ -234,14 +234,14 @@ function keys_vote($raid)
       foreach($raid_bosses as $pokemon) {
         if(in_array($pokemon['pokedex_id'], $GLOBALS['eggs'])) continue;
         $buttons['pokemon'][] = array(
-          'text'      => get_local_pokemon_name($pokemon['pokedex_id'], $pokemon['pokemon_form_id'], true),
+          'text'          => get_local_pokemon_name($pokemon['pokedex_id'], $pokemon['pokemon_form_id'], true),
           'callback_data' => $raid['id'] . ':vote_pokemon:' . $pokemon['pokedex_id'] . '-' . $pokemon['pokemon_form_id']
         );
       }
 
       // Add button if raid boss does not matter
       $buttons['pokemon'][] = array(
-        'text'      => getPublicTranslation('any_pokemon'),
+        'text'          => getPublicTranslation('any_pokemon'),
         'callback_data' => $raid['id'] . ':vote_pokemon:0'
       );
 
@@ -258,7 +258,6 @@ function keys_vote($raid)
   $r = 0;
   foreach($template as $row) {
     foreach($row as $key) {
-      $v_name = 'buttons_'.$key;
       if(!isset($buttons[$key]) or empty($buttons[$key])) continue;
       if($key == 'teamlvl' or $key == 'pokemon' or $key == 'time') {
         // Some button variables are "blocks" of keys, process them here
@@ -281,15 +280,14 @@ function keys_vote($raid)
 
 /**
  * Get active raid bosses at a certain time.
- * @param $time - string, datetime, local time
- * @param $raid_level - ENUM('1', '2', '3', '4', '5', '6', 'X')
+ * @param string $time - string, datetime, local time
+ * @param int|string $raid_level - ENUM('1', '2', '3', '4', '5', '6', 'X')
  * @return array
  */
 function get_raid_bosses($time, $raid_level)
 {
   // Get raid level from database
-  $rs = my_query(
-      '
+  $rs = my_query('
       SELECT DISTINCT pokedex_id, pokemon_form_id
       FROM      raid_bosses
       WHERE       ? BETWEEN date_start AND date_end
@@ -309,8 +307,8 @@ function get_raid_bosses($time, $raid_level)
 
 /**
  * Get active raid bosses at a certain time.
- * @param $RAID_SLOTS - int, length of the timeslot
- * @param $raid
+ * @param int $RAID_SLOTS Length of the timeslot
+ * @param array $raid
  * @return array
  */
 function generateTimeslotKeys($RAID_SLOTS, $raid) {
@@ -381,7 +379,7 @@ function generateTimeslotKeys($RAID_SLOTS, $raid) {
     // Add regular slot.
     if($slot >= $dt_now) {
       $keys_time[] = array(
-        'text'      => dt2time($slot->format('Y-m-d H:i:s')),
+        'text'          => dt2time($slot->format('Y-m-d H:i:s')),
         'callback_data' => $raid['id'] . ':vote_time:' . $slot->format('YmdHis')
       );
     }
@@ -418,5 +416,3 @@ function generateTimeslotKeys($RAID_SLOTS, $raid) {
   }
   return $keys_time;
 }
-
-?>

@@ -1,6 +1,7 @@
 <?php
 // Write to log.
 debug_log('LIST');
+require_once(LOGIC_PATH . '/raid_edit_gyms_first_letter_keys.php');
 
 // For debug.
 //debug_log($update);
@@ -16,7 +17,7 @@ $keys = $keys_and_gymarea['keys'];
 // Add navigation keys.
 $nav_keys = [];
 if($data['id'] != 'n') {
-    $nav_keys[] = universal_inner_key($nav_keys, 'n', 'listall', '', getTranslation('back'));
+  $nav_keys[] = universal_inner_key($nav_keys, 'n', 'listall', '', getTranslation('back'));
 }
 $nav_keys[] = universal_inner_key($nav_keys, '0', 'exit', '0', getTranslation('abort'));
 $nav_keys = inline_key_array($nav_keys, 2);
@@ -35,33 +36,30 @@ $tg_json[] = answerCallbackQuery($update['callback_query']['id'], $callback_resp
 // Edit the message.
 $msg = '<b>' . getTranslation('list_all_active_raids') . '</b>' . CR;
 if($config->ENABLE_GYM_AREAS) {
-    if($keys_and_gymarea['gymarea_name'] == '') {
-        $msg .= '<b>' . getTranslation('select_gym_area') . '</b>' . CR;
-    }elseif($config->DEFAULT_GYM_AREA !== false) {
-        if($keys_and_gymarea['letters']) {
-            $msg .= '<b>' . getTranslation('select_gym_first_letter_or_gym_area') . '</b>' . CR;
-        }else {
-            $msg .= '<b>' . getTranslation('select_gym_name_or_gym_area') . '</b>' . CR;
-        }
-    }else {
-        if($keys_and_gymarea['letters']) {
-            $msg .= '<b>' . getTranslation('select_gym_first_letter') . '</b>' . CR;
-        }else {
-            $msg .= '<b>' . getTranslation('select_gym_name') . '</b>' . CR;
-        }
-    }
-}else {
+  if($keys_and_gymarea['gymarea_name'] == '') {
+    $msg .= '<b>' . getTranslation('select_gym_area') . '</b>' . CR;
+  }elseif($config->DEFAULT_GYM_AREA !== false) {
     if($keys_and_gymarea['letters']) {
-        $msg .= '<b>' . getTranslation('select_gym_first_letter') . '</b>' . CR;
+      $msg .= '<b>' . getTranslation('select_gym_first_letter_or_gym_area') . '</b>' . CR;
     }else {
-        $msg .= '<b>' . getTranslation('select_gym_name') . '</b>' . CR;
+      $msg .= '<b>' . getTranslation('select_gym_name_or_gym_area') . '</b>' . CR;
     }
+  }else {
+    if($keys_and_gymarea['letters']) {
+      $msg .= '<b>' . getTranslation('select_gym_first_letter') . '</b>' . CR;
+    }else {
+      $msg .= '<b>' . getTranslation('select_gym_name') . '</b>' . CR;
+    }
+  }
+}else {
+  if($keys_and_gymarea['letters']) {
+    $msg .= '<b>' . getTranslation('select_gym_first_letter') . '</b>' . CR;
+  }else {
+    $msg .= '<b>' . getTranslation('select_gym_name') . '</b>' . CR;
+  }
 }
 $msg.= (($keys_and_gymarea['gymarea_name'] != '') ? CR . getTranslation('current_gymarea') . ': ' . $keys_and_gymarea['gymarea_name'] : '');
 $tg_json[] = edit_message($update, $msg, $keys, false, true);
 
 // Telegram multicurl request.
 curl_json_multi_request($tg_json);
-
-// Exit.
-exit();

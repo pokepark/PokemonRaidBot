@@ -1,6 +1,7 @@
 <?php
 // Write to log.
 debug_log('HISTORY');
+require_once(LOGIC_PATH . '/show_raid_poll.php');
 
 // For debug.
 //debug_log($update);
@@ -26,14 +27,14 @@ $tg_json = [];
 $tg_json[] = answerCallbackQuery($update['callback_query']['id'], 'OK', true);
 
 $keys[] = [
-        [
-        'text'          => getTranslation('back'),
-        'callback_data' => $data['id'] . ':history_raids:' . $gym_id
-        ],
-        [
-        'text'          => getTranslation('done'),
-        'callback_data' => '0:exit:1'
-        ]
+  [
+    'text'          => getTranslation('back'),
+    'callback_data' => $data['id'] . ':history_raids:' . $gym_id
+  ],
+  [
+    'text'          => getTranslation('done'),
+    'callback_data' => '0:exit:1'
+  ],
 ];
 
 // Edit message.
@@ -41,8 +42,3 @@ $tg_json[] = edit_message($update, $msg, $keys, ['disable_web_page_preview'=>tru
 
 // Telegram multicurl request.
 curl_json_multi_request($tg_json);
-
-// Exit.
-exit();
-
-?>

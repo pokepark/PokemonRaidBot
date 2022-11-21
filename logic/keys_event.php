@@ -9,27 +9,27 @@
 function keys_event($gym_id_plus_letter, $action, $admin_access = [false,false]) {
   $keys = [];
   if($admin_access[1] === true) {
-    $q = my_query("
-            SELECT      id,
-                        name
-            FROM        events
-            WHERE       id != 999
-            ");
+    $q = my_query('
+      SELECT  id,
+              name
+      FROM    events
+      WHERE   id != 999
+    ');
     while($event = $q->fetch()) {
-      if(!empty($event['name'])) {
-        $keys[] = array(
-           'text'          => $event['name'],
-            'callback_data' => $gym_id_plus_letter . ':' . $action . ':' . $event['id']
-        );
-      }else {
+      if(empty($event['name'])) {
         info_log('Invalid event name on event '. $event['id']);
+        continue;
       }
+      $keys[] = array(
+        'text'          => $event['name'],
+        'callback_data' => $gym_id_plus_letter . ':' . $action . ':' . $event['id']
+      );
     }
   }
   if($admin_access[0] === true) {
     $keys[] = array(
-        'text'          => getTranslation("Xstars"),
-        'callback_data' => $gym_id_plus_letter . ':' . $action . ':X'
+      'text'          => getTranslation("Xstars"),
+      'callback_data' => $gym_id_plus_letter . ':' . $action . ':X'
     );
   }
   // Get the inline key array.
@@ -37,4 +37,3 @@ function keys_event($gym_id_plus_letter, $action, $admin_access = [false,false])
 
   return $keys;
 }
-?>

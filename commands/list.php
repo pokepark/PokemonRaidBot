@@ -19,25 +19,23 @@ if($botUser->accessCheck($update, 'ex-raids', true)) {
 }elseif($botUser->accessCheck($update, 'event-raids', true)) {
   $event_sql = 'event != ' . EVENT_ID_EX .' OR event IS NULL';
 }
-
+$event_sql = ($event_sql == '') ? '' : 'AND ('.$event_sql.')';
 // Get last 12 active raids data.
-$rs = my_query(
-    '
+$rs = my_query('
     SELECT     raids.pokemon, raids.pokemon_form, raids.id, raids.spawn, raids.start_time, raids.end_time, raids.level, raids.event,
                gyms.gym_name, gyms.ex_gym,
                events.name as event_name,
-               (SELECT COUNT(*) FROM raids WHERE end_time>UTC_TIMESTAMP() ' . ($event_sql == '' ? '' : 'AND ('.$event_sql.')') . ') as r_active
+               (SELECT COUNT(*) FROM raids WHERE end_time>UTC_TIMESTAMP() ' . $event_sql  . ') as r_active
     FROM       raids
     LEFT JOIN  gyms
     ON         raids.gym_id = gyms.id
     LEFT JOIN  events
     ON         events.id = raids.event
     WHERE      end_time>UTC_TIMESTAMP()
-    ' . ($event_sql == '' ? '' : 'AND ('.$event_sql.')') . '
+    ' . $event_sql . '
     ORDER BY   end_time ASC
     LIMIT      12
-    '
-);
+');
 
 // Get the raids.
 $raids = $rs->fetchAll();
@@ -111,4 +109,3 @@ $msg .= '<b>' . getTranslation('select_gym_name') . '</b>' . CR;
 
 // Send message.
 send_message($update['message']['chat']['id'], $msg, $keys, ['reply_markup' => ['selective' => true, 'one_time_keyboard' => true]]);
-?>

@@ -1,6 +1,9 @@
 <?php
 // Write to log.
 debug_log('pokedex_edit_pokemon()');
+require_once(LOGIC_PATH . '/get_formatted_pokemon_cp.php');
+require_once(LOGIC_PATH . '/get_pokemon_info.php');
+require_once(LOGIC_PATH . '/get_weather_icons.php');
 
 // For debug.
 //debug_log($update);
@@ -8,7 +11,6 @@ debug_log('pokedex_edit_pokemon()');
 
 // Check access.
 $botUser->accessCheck($update, 'pokedex');
-require_once(LOGIC_PATH . '/get_pokemon_info.php');
 // Set the id.
 $poke_id_form = $data['id'];
 [$pokedex_id, $pokemon_form_id] = explode('-',$data['id'],2);
@@ -28,68 +30,68 @@ $msg .= '<b>' . getTranslation('pokedex_select_action') . '</b>';
 
 // Create keys array.
 $keys = [
+  [
     [
-        [
-            'text'          => getTranslation('pokedex_raid_level'),
-            'callback_data' => $poke_id_form . ':pokedex_set_raid_level:setlevel'
-        ]
+      'text'          => getTranslation('pokedex_raid_level'),
+      'callback_data' => $poke_id_form . ':pokedex_set_raid_level:setlevel'
     ]
+  ]
 ];
 
 // Raid-Egg? Hide specific options!
 if(!in_array($pokedex_id, $GLOBALS['eggs'])) {
-    $keys_cp_weather = [
-        [  
-            [
-                'text'          => getTranslation('pokedex_min_cp'),
-                'callback_data' => $poke_id_form . ':pokedex_set_cp:min-20-add-0'
-            ]
-        ],
-        [
-            [
-                'text'          => getTranslation('pokedex_max_cp'),
-                'callback_data' => $poke_id_form . ':pokedex_set_cp:max-20-add-0'
-            ]
-        ],
-        [
-            [
-                'text'          => getTranslation('pokedex_min_weather_cp'),
-                'callback_data' => $poke_id_form . ':pokedex_set_cp:min-25-add-0'
-            ]
-        ],
-        [
-            [
-                'text'          => getTranslation('pokedex_max_weather_cp'),
-                'callback_data' => $poke_id_form . ':pokedex_set_cp:max-25-add-0'
-            ]
-        ],
-        [
-            [
-                'text'          => getTranslation('pokedex_weather'),
-                'callback_data' => $poke_id_form . ':pokedex_set_weather:add-0'
-            ]
-        ],
-        [
-            [
-                'text'          => getTranslation('shiny'),
-                'callback_data' => $poke_id_form . ':pokedex_set_shiny:setshiny'
-            ]
-        ]
-    ];
+  $keys_cp_weather = [
+    [
+      [
+        'text'          => getTranslation('pokedex_min_cp'),
+        'callback_data' => $poke_id_form . ':pokedex_set_cp:min-20-add-0'
+      ]
+    ],
+    [
+      [
+        'text'          => getTranslation('pokedex_max_cp'),
+        'callback_data' => $poke_id_form . ':pokedex_set_cp:max-20-add-0'
+      ]
+    ],
+    [
+      [
+        'text'          => getTranslation('pokedex_min_weather_cp'),
+        'callback_data' => $poke_id_form . ':pokedex_set_cp:min-25-add-0'
+      ]
+    ],
+    [
+      [
+        'text'          => getTranslation('pokedex_max_weather_cp'),
+        'callback_data' => $poke_id_form . ':pokedex_set_cp:max-25-add-0'
+      ]
+    ],
+    [
+      [
+        'text'          => getTranslation('pokedex_weather'),
+        'callback_data' => $poke_id_form . ':pokedex_set_weather:add-0'
+      ]
+    ],
+    [
+      [
+        'text'          => getTranslation('shiny'),
+        'callback_data' => $poke_id_form . ':pokedex_set_shiny:setshiny'
+      ]
+    ]
+  ];
 
-    $keys = array_merge($keys, $keys_cp_weather);
+  $keys = array_merge($keys, $keys_cp_weather);
 }
 
 // Back and abort.
 $keys[] = [
-    [
-        'text'          => getTranslation('back'),
-        'callback_data' => '0:pokedex:0'
-    ],
-    [
-        'text'          => getTranslation('abort'),
-        'callback_data' => '0:exit:0'
-    ]
+  [
+    'text'          => getTranslation('back'),
+    'callback_data' => '0:pokedex:0'
+  ],
+  [
+    'text'          => getTranslation('abort'),
+    'callback_data' => '0:exit:0'
+  ]
 ];
 
 // Build callback message string.
@@ -106,6 +108,3 @@ $tg_json[] = edit_message($update, $msg, $keys, false, true);
 
 // Telegram multicurl request.
 curl_json_multi_request($tg_json);
-
-// Exit.
-exit();

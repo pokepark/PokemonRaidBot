@@ -1,6 +1,8 @@
 <?php
 // Write to log.
 debug_log('vote_want_invite()');
+require_once(LOGIC_PATH . '/alarm.php');
+require_once(LOGIC_PATH . '/send_vote_time_first.php');
 
 // For debug.
 //debug_log($update);

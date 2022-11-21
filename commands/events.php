@@ -20,23 +20,24 @@ foreach($q->fetchAll() as $event) {
   $msg .= $event['description'] . CR . CR;
 }
 
-$keys = [];
-$keys[] = [
+$keys = [
   [
-    'text' => getTranslation('events_manage'),
-    'callback_data' => '0:events:0',
-  ]
-];
-$keys[] = [
+    [
+      'text' => getTranslation('events_manage'),
+      'callback_data' => '0:events:0',
+    ]
+  ],
   [
-    'text' => getTranslation('events_create'),
-    'callback_data' => '0:events_add:0',
-  ]
-];
-$keys[] = [
+    [
+      'text' => getTranslation('events_create'),
+      'callback_data' => '0:events_add:0',
+    ]
+  ],
   [
-    'text' => getTranslation('done'),
-    'callback_data' => '0:exit:1',
+    [
+      'text' => getTranslation('done'),
+      'callback_data' => '0:exit:1',
+    ]
   ]
 ];
 // Send message.

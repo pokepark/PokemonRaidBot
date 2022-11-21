@@ -68,7 +68,6 @@ if(isset($modifiers) && isset($modifiers['action'])) {
   $eventId = $modifiers['eventId'];
   my_query('UPDATE events SET ' . $column . ' = ? WHERE id=?', [$value, $eventId]);
   $callback_response = getTranslation('done');
-  my_query('DELETE FROM user_input WHERE user_id=?', [$userId]);
   editMessageText($modifiers['old_message_id'], getTranslation('updated'), [], $userId);
 }
 
@@ -120,7 +119,7 @@ if($arg == 0 || $arg == 'a') {
 // Edt event raid poll settings
 }else if($arg == 3) {
   my_query('DELETE FROM user_input WHERE user_id=?', [$userId]);
-  $templateArray = ($event['poll_template'] == NULL) ? $config->RAID_POLL_UI_TEMPLATE : json_decode($event['poll_template'], true); 
+  $templateArray = ($event['poll_template'] == NULL) ? $config->RAID_POLL_UI_TEMPLATE : json_decode($event['poll_template'], true);
   $event['poll_template'] = templateJsonToString($templateArray);
   $printColumns = ['vote_key_mode','time_slots','raid_duration','hide_raid_picture','pokemon_title','poll_template'];
 
@@ -159,7 +158,7 @@ if($arg == 0 || $arg == 'a') {
   my_query('INSERT INTO user_input SET user_id=?, handler=\'events_manage\', modifiers=?', [$userId, $modifiers]);
 
   if($valueToEdit == 'poll_template') {
-    $templateArray = ($event['poll_template'] == NULL) ? $config->RAID_POLL_UI_TEMPLATE : json_decode($event['poll_template'], true); 
+    $templateArray = ($event['poll_template'] == NULL) ? $config->RAID_POLL_UI_TEMPLATE : json_decode($event['poll_template'], true);
     $event['poll_template'] = templateJsonToString($templateArray);
   }
 
@@ -196,5 +195,3 @@ function templateJsonToString($templateArray) {
   }
   return $templateString;
 }
-// Exit.
-exit();

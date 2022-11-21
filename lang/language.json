@@ -2677,19 +2677,6 @@
     "FI": "Virhe! Anna koordinaatit muotossa <code>Leveysaste,Pituusaste</code> lisätäksesi uuden salin!",
     "ES": "¡Error! ¡Envía las coordenadas en el formato <code>latitud,longitud</code> para agregar un nuevo gimnasio!"
   },
-  "gym_coordinates_format_example": {
-    "NL": "Als voorbeeld: <code>/addgym 51.516263,4.377755</code>",
-    "DE": "Zum Beispiel: <code>/addgym 52.516263,13.377755</code>",
-    "EN": "For example: <code>/addgym 52.516263,13.377755</code>",
-    "IT": "TRANSLATE",
-    "PT-BR": "TRANSLATE",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "TRANSLATE",
-    "FI": "Esimerkiksi: <code>/addgym 52.516263,13.377755</code>",
-    "ES": "Por ejemplo: <code>/addgym 52.516263,13.377755</code>"
-  },
   "gym_gps_coordinates_format_error": {
     "NL": "Error! Stuur de coordinaten in het volgende formaat: <code>Latitude,Longitude</code>",
     "DE": "Fehler! Bitte übermittle die Koordinaten im folgenden Format: <code>Breitengrad,Längengrad</code>",
@@ -3900,30 +3887,30 @@
     "ES": "Para obtener la identificación y más detalles del gimnasio, usa el comando /gym."
   },
   "gym_name_example": {
-    "NL": "Als voorbeeld: <code>/gymname 34, Markt 61, 3131 CR Vlaardingen </code>",
-    "DE": "Zum Beispiel: <code>/gymname 34, Wasserfall im Park</code>",
-    "EN": "For example: <code>/gymname 34, Waterfall in the park</code>!",
+    "NL": "Als voorbeeld: <code>/gymname Markt 61, 3131 CR Vlaardingen </code>",
+    "DE": "Zum Beispiel: <code>/gymname Wasserfall im Park</code>",
+    "EN": "For example: <code>/gymname Waterfall in the park</code>!",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "Esimerkiksi: <code>/gymname 34, Vapauden Muistomerkki</code>!",
-    "ES": "Por ejemplo: <code>/gymname 34, Waterfall in the park</code>"
+    "FI": "Esimerkiksi: <code>/gymname Vapauden Muistomerkki</code>!",
+    "ES": "Por ejemplo: <code>/gymname Waterfall in the park</code>"
   },
   "gym_id_name_missing": {
-    "NL": "Error! Gym id of naam mist!",
-    "DE": "Fehler! Arena-ID oder Name fehlt!",
-    "EN": "Error! Gym id or name is missing!",
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Error! Gym name is missing!",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "Virhe! Salin id numero tai nimi puuttuu!",
-    "ES": "¡Error! ¡Faltan gym id o nombre!"
+    "FI": "Virhe! Salin nimi puuttuu!",
+    "ES": "TRANSLATE"
   },
   "gym_name_updated": {
     "NL": "Gym naam aangepast.",
