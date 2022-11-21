@@ -1,7 +1,7 @@
 <?php
 // Write to log.
 debug_log('gym_delete()');
-require_once(LOGIC_PATH . '/get_gym_detail.php');
+require_once(LOGIC_PATH . '/get_gym_details.php');
 require_once(LOGIC_PATH . '/get_gym.php');
 
 // For debug.
@@ -69,7 +69,7 @@ if ($new_arg > 0 && $delete == true && $confirm == false) {
   // Delete gym.
   my_query('
     DELETE FROM gyms
-    WHERE   id =
+    WHERE   id = ?
     ', [$new_arg]
   );
 }
