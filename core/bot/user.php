@@ -10,8 +10,21 @@ class botUser
   public $ddosCount = 0;
 
   /**
+   * Read user privileges from db
+   * @param array $update Update array from Telegram
+  */
+  public function initPrivileges($update) {
+    $user_id = $update[$update['type']]['from']['id'];
+
+    $q = my_query('SELECT privileges FROM users WHERE user_id = ? LIMIT 1', [$user_id]);
+    $result = $q->fetch();
+    if($result['privileges'] === NULL) return;
+    $this->userPrivileges = json_decode($result['privileges'], true);
+  }
+
+  /**
    * Run privilege check for Telegram user and save them for later use.
-   * @param $update array Update array from Telegram
+   * @param array $update Update array from Telegram
   */
   public function privilegeCheck($update) {
     global $config;
@@ -109,12 +122,14 @@ class botUser
       }
 
       // Save privileges if found
-      if(is_array($privilegeList)) {
+      if(isset($privilegeList) && is_array($privilegeList)) {
         debug_log($accessFile, 'Positive result on access check in file:');
-        $this->userPrivileges = [
+        $privilegeArray = [
           'privileges' => $privilegeList,
           'grantedBy' => $accessFile,
         ];
+        my_query('UPDATE users SET privileges = ? WHERE user_id = ? LIMIT 1', [json_encode($privilegeArray), $user_id]);
+        $this->userPrivileges = $privilegeArray;
         break;
       }
       // Deny access
@@ -125,10 +140,10 @@ class botUser
 
   /**
    * Check users privileges for a specific action. Exits by default if access is denied.
-   * @param $update array Update array from Telegram
-   * @param $permission string Permission to check
-   * @param $return_result bool Return the result of privilege check
-   * @param $new_user bool Has user completed tutorial or not
+   * @param array $update Update array from Telegram
+   * @param string $permission Permission to check
+   * @param bool $return_result Return the result of privilege check
+   * @param bool $new_user Has user completed tutorial or not
    * @return bool|string
   */
   public function accessCheck($update, $permission = 'access-bot', $return_result = false, $new_user = false) {
@@ -159,8 +174,10 @@ class botUser
 
   /**
    * Raid access check.
-   * @param $update
-   * @param $data
+   * @param array $update
+   * @param int $raidId
+   * @param string $permission
+   * @param bool $return_result
    * @return bool
    */
   public function raidAccessCheck($update, $raidId, $permission, $return_result = false)
@@ -246,10 +263,7 @@ class botUser
     $languages = $GLOBALS['languages'];
 
     // Get languages from normal translation.
-    $userlanguage = DEFAULT_LANGUAGE;
-    if(array_key_exists($language_code, $languages)) {
-      $userlanguage = $languages[$language_code];
-    }
+    $userlanguage = (array_key_exists($language_code, $languages)) ? $languages[$language_code] : DEFAULT_LANGUAGE;
 
     debug_log('User language: ' . $userlanguage);
     $this->userLanguage = $userlanguage;

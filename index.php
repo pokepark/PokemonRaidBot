@@ -81,7 +81,7 @@ if(isset($update[$update['type']]['from'])) {
   // Get language
   $botUser->defineUserLanguage($update);
 
-  $botUser->privilegeCheck($update);
+  $botUser->initPrivileges($update);
 }
 
 // Callback query received.
@@ -113,6 +113,7 @@ if (isset($update['callback_query'])) {
 
 // Message is required to check for commands.
 } else if (isset($update['message']) && $update['message']['chat']['type'] == 'private') {
+  $botUser->privilegeCheck($update);
   // Portal message?
   if(isset($update['message']['entities']['1']['type']) && $update['message']['entities']['1']['type'] == 'text_link' && strpos($update['message']['entities']['1']['url'], 'https://intel.ingress.com/intel?ll=') === 0) {
     // Import portal.
