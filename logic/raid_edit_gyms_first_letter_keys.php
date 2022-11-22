@@ -42,28 +42,10 @@ function raid_edit_gyms_first_letter_keys($action = 'raid_by_gym', $hidden = fal
   $keys = [];
 
   if(!$skip_letter_keys or !$config->ENABLE_GYM_AREAS or $hidden) {
-    // Special/Custom gym letters?
-    if(!empty($config->RAID_CUSTOM_GYM_LETTERS)) {
-      // Explode special letters.
-      $special_keys = explode(',', $config->RAID_CUSTOM_GYM_LETTERS);
-      $select = 'SELECT CASE ';
-      foreach($special_keys as $letter)
-      {
-        $letter = trim($letter);
-        debug_log($letter, 'Special gym letter:');
-        // Fix chinese chars, prior: $length = strlen($letter);
-        $length = strlen(utf8_decode($letter));
-        $select .= SP . 'WHEN UPPER(LEFT(gym_name, ' . $length . ')) = \'' . $letter . '\' THEN UPPER(LEFT(gym_name, ' . $length . '))' . SP;
-      }
-      $select .= 'ELSE UPPER(LEFT(gym_name, 1)) END AS first_letter';
-      $group_order = ' GROUP BY 1 ORDER BY gym_name';
-    }else {
-      $select = 'SELECT DISTINCT UPPER(SUBSTR(gym_name, 1, 1)) AS first_letter';
-      $group_order = ' ORDER BY 1';
-    }
     // Show hidden gyms?
     $show_gym = $hidden ? 0 : 1;
 
+    // Get the number of gyms to display
     if($action == 'list_by_gym') {
       // Select only gyms with active raids
       $query_condition = '
@@ -74,11 +56,29 @@ function raid_edit_gyms_first_letter_keys($action = 'raid_by_gym', $hidden = fal
     }else {
       $query_condition = 'WHERE show_gym = ' . $show_gym . ' ';
     }
-
     $rs_count = my_query('SELECT COUNT(gym_name) as count FROM gyms ' . $query_condition . ' ' . $gymarea_query);
     $gym_count = $rs_count->fetch();
+
     // If found over 20 gyms, print letters
     if($gym_count['count'] > 20) {
+      $select = 'SELECT DISTINCT UPPER(SUBSTR(gym_name, 1, 1)) AS first_letter';
+      $group_order = ' ORDER BY 1';
+      // Special/Custom gym letters?
+      if(!empty($config->RAID_CUSTOM_GYM_LETTERS)) {
+        // Explode special letters.
+        $special_keys = explode(',', $config->RAID_CUSTOM_GYM_LETTERS);
+        $select = 'SELECT CASE ';
+        foreach($special_keys as $letter)
+        {
+          $letter = trim($letter);
+          debug_log($letter, 'Special gym letter:');
+          // Fix chinese chars, prior: $length = strlen($letter);
+          $length = strlen(utf8_decode($letter));
+          $select .= SP . 'WHEN UPPER(LEFT(gym_name, ' . $length . ')) = \'' . $letter . '\' THEN UPPER(LEFT(gym_name, ' . $length . '))' . SP;
+        }
+        $select .= 'ELSE UPPER(LEFT(gym_name, 1)) END AS first_letter';
+        $group_order = ' GROUP BY 1 ORDER BY gym_name';
+      }
       $rs = my_query(
         $select .
         ' FROM gyms ' .
@@ -107,13 +107,9 @@ function raid_edit_gyms_first_letter_keys($action = 'raid_by_gym', $hidden = fal
       }else {
         $query_condition = 'WHERE show_gym = ' . $show_gym;
       }
-      $query_collate = '';
-      if($config->MYSQL_SORT_COLLATE != "") {
-        $query_collate = 'COLLATE ' . $config->MYSQL_SORT_COLLATE;
-      }
+      $query_collate = ($config->MYSQL_SORT_COLLATE != '') ? 'COLLATE ' . $config->MYSQL_SORT_COLLATE : '';
       $rs = my_query('
-        SELECT  gyms.id, gyms.gym_name, gyms.ex_gym,
-        CASE WHEN SUM(raids.end_time > UTC_TIMESTAMP() - INTERVAL 10 MINUTE) THEN 1 ELSE 0 END AS active_raid
+        SELECT  gyms.id, gyms.gym_name, gyms.ex_gym
         FROM gyms
         LEFT JOIN raids
         ON    raids.gym_id = gyms.id
@@ -129,28 +125,21 @@ function raid_edit_gyms_first_letter_keys($action = 'raid_by_gym', $hidden = fal
         if($gym['id'] == NULL) continue;
         $active_raid = active_raid_duplication_check($gym['id']);
 
+        $gym_name = $gym['gym_name'];
         // Show Ex-Gym-Marker?
         if($config->RAID_CREATION_EX_GYM_MARKER && $gym['ex_gym'] == 1) {
           $ex_raid_gym_marker = (strtolower($config->RAID_EX_GYM_MARKER) == 'icon') ? EMOJI_STAR : $config->RAID_EX_GYM_MARKER;
           $gym_name = $ex_raid_gym_marker . SP . $gym['gym_name'];
-        } else {
-          $gym_name = $gym['gym_name'];
         }
         // Add warning emoji for active raid
         if ($active_raid > 0) {
           $gym_name = EMOJI_WARN . SP . $gym_name;
         }
-        if($gym_name_action == 'list_raid') {
-          $keys[] = array(
-            'text'          => $gym_name,
-            'callback_data' => '0:' . $gym_name_action . ':' . $gym['id']
-          );
-        }else {
-          $keys[] = array(
-            'text'          => $gym_name,
-            'callback_data' => 'gl' . $gymarea_id . ':' . $gym_name_action . ':' . $gym['id']
-          );
-        }
+        $buttonId = ($gym_name_action == 'list_raid') ? 0 : 'gl' . $gymarea_id;
+        $keys[] = array(
+          'text'          => $gym_name,
+          'callback_data' => $buttonId . ':' . $gym_name_action . ':' . $gym['id']
+        );
       }
 
       // Get the inline key array.
@@ -159,22 +148,19 @@ function raid_edit_gyms_first_letter_keys($action = 'raid_by_gym', $hidden = fal
   }
 
   // Add back navigation key.
-  if($hidden == false) {
-    if($config->RAID_VIA_LOCATION_FUNCTION == 'remote') {
-      $query_remote = my_query('SELECT count(*) as count FROM raids LEFT JOIN gyms on raids.gym_id = gyms.id WHERE raids.end_time > (UTC_TIMESTAMP() - INTERVAL 10 MINUTE) AND temporary_gym = 1');
-      if($query_remote->fetch()['count'] > 0) {
-        $keys[][] = array(
-          'text'          => getTranslation('remote_raids'),
-          'callback_data' => '0:list_remote_gyms:0'
-        );
-      }
-    }
-    $nav_keys = [];
-    if(!empty($gymarea_keys) && ($config->DEFAULT_GYM_AREA !== false || $gymarea_id === false)) $keys = array_merge($keys, inline_key_array($gymarea_keys, 2));
-
-    // Get the inline key array.
-    $keys[] = $nav_keys;
+  if($hidden == true) {
+    return ['keys' => $keys, 'gymarea_name' => $gymarea_name, 'letters' => $letters];
   }
+  if($config->RAID_VIA_LOCATION_FUNCTION == 'remote') {
+    $query_remote = my_query('SELECT count(*) as count FROM raids LEFT JOIN gyms on raids.gym_id = gyms.id WHERE raids.end_time > (UTC_TIMESTAMP() - INTERVAL 10 MINUTE) AND temporary_gym = 1');
+    if($query_remote->fetch()['count'] > 0) {
+      $keys[][] = array(
+        'text'          => getTranslation('remote_raids'),
+        'callback_data' => '0:list_remote_gyms:0'
+      );
+    }
+  }
+  if(!empty($gymarea_keys) && ($config->DEFAULT_GYM_AREA !== false || $gymarea_id === false)) $keys = array_merge($keys, inline_key_array($gymarea_keys, 2));
 
   return ['keys' => $keys, 'gymarea_name' => $gymarea_name, 'letters' => $letters];
 }
