@@ -153,6 +153,7 @@ CREATE TABLE `users` (
   `lang_manual` TINYINT UNSIGNED NOT NULL DEFAULT 0,
   `tutorial` TINYINT(1) NOT NULL DEFAULT 0,
   `auto_alarm` TINYINT(1) UNSIGNED NULL DEFAULT 0,
+  `gymarea` TINYINT UNSIGNED NULL,
   `privileges` JSON NULL,
    PRIMARY KEY (`id`),
   UNIQUE KEY `i_userid` (`user_id`)

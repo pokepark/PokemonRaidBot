@@ -65,6 +65,14 @@ if($config->LANGUAGE_PRIVATE == '') {
     ]
   ];
 }
+if ($config->ENABLE_GYM_AREAS == true) {
+  $keys[] = [
+    [
+      'text'          => getTranslation('default_gymarea'),
+      'callback_data' => formatCallbackData(['callbackAction' => 'trainerGymarea'])
+    ]
+  ];
+}
 
 // Display sharing options for admins and users with trainer-share permissions
 if($botUser->accessCheck('trainer-share', true)) {
@@ -81,7 +89,7 @@ if($botUser->accessCheck('trainer-share', true)) {
 }
 
 // Get the inline key array.
-$keys = universal_key($keys, '0', 'exit', '0', getTranslation('abort'));
+$keys = universal_key($keys, '0', 'exit', '1', getTranslation('done'));
 
 // Answer callback.
 answerCallbackQuery($update['callback_query']['id'], 'OK');

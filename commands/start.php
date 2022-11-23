@@ -47,7 +47,8 @@ if(!empty($searchterm)) {
 
 // Get the keys if nothing was returned.
 if(!$keys) {
-  $keys_and_gymarea = gymMenu('create', false, 1, false, $config->DEFAULT_GYM_AREA);
+  $gymarea = resolveDefaultGymarea($botUser->userId);
+  $keys_and_gymarea = gymMenu('create', false, 1, false, $gymarea);
   $keys = $keys_and_gymarea['keys'];
   $msg = $keys_and_gymarea['gymareaTitle'];
   $addAbortKey = false;

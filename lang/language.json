@@ -1910,6 +1910,19 @@
     "FI": "Valitse salialue:",
     "ES": "Por favor, selecciona la zona del gimnasio:"
   },
+  "default_gymarea": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Default gymarea",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Oletussalialue:",
+    "ES": "TRANSLATE"
+  },
   "select_gym": {
     "NL": "Beginletter geselecteerd.",
     "DE": "Anfangsbuchstabe ausgewählt.",

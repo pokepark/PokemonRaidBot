@@ -11,7 +11,8 @@ debug_log('LIST');
 if(!isset($skip_access) or $skip_access != true) $botUser->accessCheck('listall');
 
 // Set keys.
-$keys_and_gymarea = gymMenu('list', false, 1, false, $config->DEFAULT_GYM_AREA);
+$gymarea = resolveDefaultGymarea($botUser->userId);
+$keys_and_gymarea = gymMenu('list', false, 1, false, $gymarea);
 $keys = $keys_and_gymarea['keys'];
 
 // Set message.

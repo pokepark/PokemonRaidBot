@@ -1,1 +1,2 @@
-ALTER TABLE `users` ADD COLUMN IF NOT EXISTS `privileges` JSON NULL AFTER `auto_alarm`;
+ALTER TABLE `users` ADD COLUMN IF NOT EXISTS `gymarea` TINYINT UNSIGNED NULL AFTER `auto_alarm`;
+ALTER TABLE `users` ADD COLUMN IF NOT EXISTS `privileges` JSON NULL AFTER `gymarea`;

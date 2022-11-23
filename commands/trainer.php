@@ -59,6 +59,14 @@ if ($config->LANGUAGE_PRIVATE == '') {
     ]
   ];
 }
+if ($config->ENABLE_GYM_AREAS == true) {
+  $keys[] = [
+    [
+      'text'          => getTranslation('default_gymarea'),
+      'callback_data' => formatCallbackData(['callbackAction' => 'trainerGymarea'])
+    ]
+  ];
+}
 
 // Check access.
 $access = $botUser->accessCheck('trainer-share', true);
@@ -79,7 +87,7 @@ if($access) {
 
 // Add abort key.
 $nav_keys = [];
-$nav_keys[] = universal_inner_key($keys, '0', 'exit', '0', getTranslation('abort'));
+$nav_keys[] = universal_inner_key($keys, '0', 'exit', '1', getTranslation('done'));
 
 // Get the inline key array.
 $keys[] = $nav_keys;

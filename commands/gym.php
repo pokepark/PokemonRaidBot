@@ -11,7 +11,8 @@ debug_log('GYM');
 $botUser->accessCheck('gym-details');
 
 // Set keys.
-$keys_and_gymarea = gymMenu('gym', false, 1, false, $config->DEFAULT_GYM_AREA);
+$gymarea = resolveDefaultGymarea($botUser->userId);
+$keys_and_gymarea = gymMenu('gym', false, 1, false, $gymarea);
 $keys = $keys_and_gymarea['keys'];
 
 // Set message.

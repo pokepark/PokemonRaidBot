@@ -6,6 +6,12 @@ $menuActions = [
   'gym' => 'gym_edit_details',
 ];
 
+function resolveDefaultGymarea($userId) {
+  global $config;
+  $q = my_query('SELECT gymarea FROM users WHERE user_id = ? LIMIT 1', [$userId]);
+  $userGymarea = $q->fetch()['gymarea'];
+  return $userGymarea !== NULL ? $userGymarea : $config->DEFAULT_GYM_AREA;
+}
 /**
  * Raid gym first letter selection
  * @param string $buttonAction Action that is performed by gym letter keys
