@@ -1,5 +1,6 @@
 <?php
 require_once(LOGIC_PATH . '/get_raid_times.php');
+require_once(LOGIC_PATH . '/get_user.php');
 /**
  * Send raid alerts to user.
  * @param array $raid_id_array raid id or the result of get_raid()

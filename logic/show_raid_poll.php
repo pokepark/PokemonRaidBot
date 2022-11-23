@@ -3,6 +3,7 @@ require_once(LOGIC_PATH . '/get_formatted_pokemon_cp.php');
 require_once(LOGIC_PATH . '/get_pokemon_form_name.php');
 require_once(LOGIC_PATH . '/get_pokemon_info.php');
 require_once(LOGIC_PATH . '/get_raid_times.php');
+require_once(LOGIC_PATH . '/get_user.php');
 require_once(LOGIC_PATH . '/get_weather_icons.php');
 require_once(LOGIC_PATH . '/mapslink.php');
 require_once(LOGIC_PATH . '/raid_poll_message.php');
@@ -15,8 +16,7 @@ require_once(LOGIC_PATH . '/raid_poll_message.php');
 function show_raid_poll($raid, $inline = false)
 {
   global $config;
-  // Init empty message array.
-  //$msg = '';
+
   $msg = array();
 
   // Get current pokemon
