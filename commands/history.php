@@ -7,7 +7,7 @@ debug_log('HISTORY');
 //debug_log($data);
 
 // Check access.
-$botUser->accessCheck($update, 'history');
+$botUser->accessCheck('history');
 
 require_once(LOGIC_PATH .'/history.php');
 

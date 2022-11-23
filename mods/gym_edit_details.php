@@ -10,19 +10,15 @@ require_once(LOGIC_PATH . '/get_gym_details.php');
 //debug_log($data);
 
 // Check access.
-$botUser->accessCheck($update, 'gym-edit');
+$botUser->accessCheck('gym-edit');
 
 // Get the id.
-$gym_id = $data['id'];
-
-// Get the arg.
-$arg = $data['arg'];
+$gym_id = $data['g'];
 
 // Split the arg.
-$split_arg = explode('-', $arg);
-$action = $split_arg[0];
-$value = $split_arg[1] ?? false;
-$delete_id = $split_arg[2] ?? false;
+$action = $data['a'] ?? '';
+$value = $data['v'] ?? false;
+$delete_id = $data['d'] ?? false;
 
 // Set keys.
 $keys = [];
@@ -65,18 +61,18 @@ if(in_array($action, ['name','note','gps','addr'])) {
 
     $keys[0][] = [
       'text' => getTranslation('abort'),
-      'callback_data' => $gym_id.':gym_edit_details:abort-'.$dbh->lastInsertId()
+      'callback_data' => formatCallbackData(['callbackAction' => 'gym_edit_details', 'g' => $gym_id, 'a' => 'abort', 'd' => $dbh->lastInsertId()])
     ];
     if($action == 'note' && !empty($gym['gym_note'])) {
       $keys[0][] = [
         'text' => getTranslation('delete'),
-        'callback_data' => $gym_id.':gym_edit_details:note-d-'.$dbh->lastInsertId()
+        'callback_data' => formatCallbackData(['callbackAction' => 'gym_edit_details', 'g' => $gym_id, 'a' => 'note', 'd' => $dbh->lastInsertId()])
       ];
     }
     if($action == 'addr') {
       $keys[0][] = [
         'text' => getTranslation('gym_save_lookup_result'),
-        'callback_data' => $gym_id.':gym_edit_details:addr-e-'.$dbh->lastInsertId()
+        'callback_data' => formatCallbackData(['callbackAction' => 'gym_edit_details', 'g' => $gym_id, 'a' => 'addr', 'd' => $dbh->lastInsertId()])
       ];
     }
   }
@@ -86,7 +82,7 @@ if(in_array($action, ['name','note','gps','addr'])) {
   }else if($action == 'ex') {
     $table = 'ex_gym';
   }else if($action == 'abort') {
-    my_query('DELETE FROM user_input WHERE id = :value', ['value' => $value]);
+    my_query('DELETE FROM user_input WHERE id = :delete_id', ['delete_id' => $delete_id]);
   }
   if(isset($table)) {
     my_query('

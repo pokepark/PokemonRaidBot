@@ -10,7 +10,7 @@ require_once(LOGIC_PATH . '/show_raid_poll_small.php');
 //debug_log($data);
 
 // Check access.
-$botUser->accessCheck($update, 'create');
+$botUser->accessCheck('create');
 
 // Enabled?
 if(!$config->RAID_VIA_LOCATION) {

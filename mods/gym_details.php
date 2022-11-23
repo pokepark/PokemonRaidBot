@@ -4,62 +4,26 @@ debug_log('gym_details()');
 require_once(LOGIC_PATH . '/edit_gym_keys.php');
 require_once(LOGIC_PATH . '/get_gym.php');
 require_once(LOGIC_PATH . '/get_gym_details.php');
-require_once(LOGIC_PATH . '/raid_edit_gym_keys.php');
 
 // For debug.
 //debug_log($update);
 //debug_log($data);
 
 // Check access.
-$botUser->accessCheck($update, 'gym-details');
+$botUser->accessCheck('gym-details');
 
 // Get the arg.
-$args = explode(',',$data['arg'],2);
-$arg = $args[0];
-$gymarea_id = (count($args) > 1) ? $args[1] : false;
+$arg = $data['g'];
+$gymarea_id = $data['ga'] ?? false;
 
 // Get the id.
-$id = $data['id'];
-
-// ID or Arg = 0 ?
-if($arg == 0 || $id == '0' || $id == '1') {
-  // Get hidden gyms?
-  $hidden = ($id == 0) ? true : false;
-
-  // Get the keys.
-  $keys = raid_edit_gym_keys($arg, $gymarea_id, 'gym_details', false, $hidden);
-
-  // Set keys.
-  $msg = '<b>' . getTranslation('show_gym_details') . CR . CR . getTranslation('select_gym_name') . '</b>';
-
-  // No keys found.
-  if (!$keys) {
-    // Create the keys.
-    $keys = [
-      [
-        [
-          'text'          => getTranslation('abort'),
-          'callback_data' => '0:exit:0'
-        ]
-      ]
-    ];
-  } else {
-    // Add navigation keys.
-    $nav_keys = [];
-    $nav_keys[] = universal_inner_key($nav_keys, $gymarea_id, 'gym_letter', 'gym_details', getTranslation('back'));
-    $nav_keys[] = universal_inner_key($nav_keys, '0', 'exit', '0', getTranslation('abort'));
-    $nav_keys = inline_key_array($nav_keys, 2);
-    // Merge keys.
-    $keys = array_merge($keys, $nav_keys);
-  }
+$id = $data['g'];
 
 // Get gym info.
-} else {
-  $gym = get_gym($arg);
-  $msg = get_gym_details($gym, true);
+$gym = get_gym($arg);
+$msg = get_gym_details($gym, true);
 
-  $keys = edit_gym_keys($update, $arg, $gym['show_gym'], $gym['ex_gym'], $gym['gym_note'], $gym['address']);
-}
+$keys = edit_gym_keys($update, $arg, $gym['show_gym'], $gym['ex_gym'], $gym['gym_note'], $gym['address']);
 
 // Build callback message string.
 $callback_response = getTranslation('here_we_go');

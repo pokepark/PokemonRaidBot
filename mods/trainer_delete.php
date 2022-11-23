@@ -8,7 +8,7 @@ require_once(LOGIC_PATH . '/get_chat_title_username.php');
 //debug_log($data);
 
 // Check access.
-$botUser->accessCheck($update, 'trainer-delete');
+$botUser->accessCheck('trainer-delete');
 
 // Init keys and chat list.
 $keys = [];

@@ -8,7 +8,7 @@ debug_log('code_start');
 
 // Allow anyone to use /code
 // Check access.
-//$botUser->accessCheck($update, 'list');
+//$botUser->accessCheck('list');
 
 // Get raid
 $raid = get_raid($code_raid_id);

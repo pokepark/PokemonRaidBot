@@ -10,7 +10,7 @@ require_once(LOGIC_PATH . '/weather_keys.php');
 //debug_log($data);
 
 // Check access.
-$botUser->accessCheck($update, 'pokedex');
+$botUser->accessCheck('pokedex');
 
 // Set the id.
 $pokedex_id = $data['id'];

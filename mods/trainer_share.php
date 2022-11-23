@@ -9,7 +9,7 @@ require_once(LOGIC_PATH . '/show_trainerinfo.php');
 //debug_log($data);
 
 // Access check.
-$botUser->accessCheck($update, 'trainer-share');
+$botUser->accessCheck('trainer-share');
 
 // Get chat id.
 $chat = $data['arg'];

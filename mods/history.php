@@ -7,7 +7,7 @@ debug_log('HISTORY');
 //debug_log($data);
 
 // Check access.
-$botUser->accessCheck($update, 'history');
+$botUser->accessCheck('history');
 
 // Expected callback data: [Day number (0-31), DD]:history:[Year and month, YYYY-MM]
 

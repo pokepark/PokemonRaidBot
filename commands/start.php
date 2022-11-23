@@ -1,7 +1,7 @@
 <?php
 // Write to log.
 debug_log('START()');
-require_once(LOGIC_PATH . '/raid_edit_gyms_first_letter_keys.php');
+require_once(LOGIC_PATH . '/gymMenu.php');
 require_once(LOGIC_PATH . '/raid_get_gyms_list_keys.php');
 
 // For debug.
@@ -9,9 +9,9 @@ require_once(LOGIC_PATH . '/raid_get_gyms_list_keys.php');
 //debug_log($data);
 
 $new_user = new_user($update['message']['from']['id']);
-$access = $botUser->accessCheck($update, 'create', true, $new_user);
+$access = $botUser->accessCheck('create', true, $new_user);
 if(!$access && !$new_user) {
-  if($botUser->accessCheck($update, 'list', true)){
+  if($botUser->accessCheck('list', true)){
     debug_log('No access to create, will do a list instead');
     require('list.php');
   }else {
@@ -38,55 +38,30 @@ if(strpos($searchterm , 'c0de-') === 0) {
 }
 
 // Get the keys by gym name search.
+$addAbortKey = true;
 $keys = false;
 if(!empty($searchterm)) {
   $keys = raid_get_gyms_list_keys($searchterm);
+  $msg = getTranslation('select_gym_name');
 }
 
 // Get the keys if nothing was returned.
 if(!$keys) {
-  $keys_and_gymarea = raid_edit_gyms_first_letter_keys('raid_by_gym', false, false, 'raid_by_gym_letter');
+  $keys_and_gymarea = gymMenu('create', false, 1, false, $config->DEFAULT_GYM_AREA);
   $keys = $keys_and_gymarea['keys'];
+  $msg = $keys_and_gymarea['gymareaTitle'];
+  $addAbortKey = false;
 }
 
 // No keys found.
-if (!$keys) {
-  // Create the keys.
-  $keys = [
+if ($addAbortKey) {
+  $keys[] = [
     [
-      [
-        'text'          => getTranslation('not_supported'),
-        'callback_data' => '0:exit:0'
-      ]
+      'text'          => getTranslation('abort'),
+      'callback_data' => '0:exit:0'
     ]
   ];
-}else {
-  $keys[] = [
-      [
-        'text'          => getTranslation('abort'),
-        'callback_data' => '0:exit:0'
-      ]
-    ];
 }
-$msg = '';
-// Set message.
-if($config->ENABLE_GYM_AREAS) {
-  if($keys_and_gymarea['gymarea_name'] == '') {
-    $msg .= '<b>' . getTranslation('select_gym_area') . '</b>' . CR;
-  }else {
-    if($keys_and_gymarea['letters']) {
-      $msg .= '<b>' . getTranslation('select_gym_first_letter_or_gym_area') . '</b>' . CR;
-    }else {
-      $msg .= '<b>' . getTranslation('select_gym_name_or_gym_area') . '</b>' . CR;
-    }
-  }
-}elseif(isset($keys_and_gymarea) && $keys_and_gymarea['letters']) {
-  $msg .= '<b>' . getTranslation('select_gym_first_letter') . '</b>' . CR;
-}else {
-  $msg .= '<b>' . getTranslation('select_gym_name') . '</b>' . CR;
-}
-$msg.= ((isset($keys_and_gymarea) && $keys_and_gymarea['gymarea_name'] != '') ? CR . CR . getTranslation('current_gymarea') . ': ' . $keys_and_gymarea['gymarea_name'] : '');
-$msg.= ($config->RAID_VIA_LOCATION ? (CR . CR .  getTranslation('send_location')) : '');
 
 // Send message.
 send_message($update['message']['chat']['id'], $msg, $keys, ['reply_markup' => ['selective' => true, 'one_time_keyboard' => true]]);

@@ -9,7 +9,7 @@ require_once(LOGIC_PATH . '/show_raid_poll_small.php');
 //debug_log($data);
 
 // Check access.
-$botUser->accessCheck($update, 'share-all');
+$botUser->accessCheck('share-all');
 
 if(isset($data['arg']) && $data['arg'] == 1) {
   $raid_id = $data['id'];

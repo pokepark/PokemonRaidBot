@@ -10,7 +10,7 @@ require_once(LOGIC_PATH . '/get_gym_details.php');
 //debug_log($data);
 
 // Check access.
-$botUser->accessCheck($update, 'portal-import');
+$botUser->accessCheck('portal-import');
 function escape($value){
 
   $search = array("\\",  "\x00", "\n",  "\r",  "'",  '"', "\x1a");

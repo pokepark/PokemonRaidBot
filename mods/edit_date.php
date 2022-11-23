@@ -7,7 +7,7 @@ debug_log('edit_date()');
 //debug_log($data);
 
 // Check access.
-$botUser->accessCheck($update, 'create');
+$botUser->accessCheck('create');
 
 // Set the id.
 $id = $data['id'];

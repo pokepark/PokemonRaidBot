@@ -17,7 +17,7 @@ $action = $data['arg'];
 $raidId = $data['id'];
 
 // Access check.
-$botUser->raidAccessCheck($update, $raidId, 'delete');
+$botUser->raidaccessCheck($raidId, 'delete');
 
 // Execute the action.
 if ($action == 0) {

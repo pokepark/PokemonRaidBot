@@ -9,7 +9,7 @@ require_once(LOGIC_PATH . '/alarm.php');
 
 // Allow anyone to use /code
 // Check access.
-//$botUser->accessCheck($update, 'list');
+//$botUser->accessCheck('list');
 
 // Set the raid id.
 $raid_id = $data['id'];

@@ -8,7 +8,7 @@ require_once(LOGIC_PATH . '/get_user.php');
 //debug_log($data);
 
 // Check access.
-$botUser->accessCheck($update, 'trainer');
+$botUser->accessCheck('trainer');
 
 $user_id = $update['callback_query']['from']['id'];
 if($data['arg'] == 'a') {
@@ -67,7 +67,7 @@ if($config->LANGUAGE_PRIVATE == '') {
 }
 
 // Display sharing options for admins and users with trainer-share permissions
-if($botUser->accessCheck($update, 'trainer-share', true)) {
+if($botUser->accessCheck('trainer-share', true)) {
   // Add sharing keys.
   $share_keys = [];
   $share_keys[] = universal_inner_key($keys, '0', 'trainer_add', '0', getTranslation('trainer_message_share'));

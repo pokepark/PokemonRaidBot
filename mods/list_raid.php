@@ -9,11 +9,11 @@ require_once(LOGIC_PATH . '/show_raid_poll_small.php');
 //debug_log($data);
 
 // Check access.
-$botUser->accessCheck($update, 'list');
+$botUser->accessCheck('list');
 
 // Get gym ID.
-$gym_id = $data['arg'];
-$raid_id = $data['id'];
+$gym_id = $data['g'];
+$raid_id = $data['r'];
 
 // Get raid details.
 if($raid_id != 0) {
@@ -49,7 +49,7 @@ if($rs->rowcount() == 1) {
       ]
     ]
   ];
-  if($botUser->raidAccessCheck($update, $raid_id, 'pokemon', true)) {
+  if($botUser->raidaccessCheck($raid_id, 'pokemon', true)) {
     $keys[] = [
         [
           'text'          => getTranslation('update_pokemon'),
@@ -57,7 +57,7 @@ if($rs->rowcount() == 1) {
         ]
     ];
   }
-  if($botUser->raidAccessCheck($update, $raid_id, 'delete', true)) {
+  if($botUser->raidaccessCheck($raid_id, 'delete', true)) {
     $keys[] = [
         [
           'text'          => getTranslation('delete'),

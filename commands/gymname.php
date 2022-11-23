@@ -10,7 +10,7 @@ require_once(LOGIC_PATH . '/get_gym.php');
 //debug_log($data);
 
 // Check access.
-$botUser->accessCheck($update, 'gym-name');
+$botUser->accessCheck('gym-name');
 
 // Get gym by name.
 // Trim away everything before "/gymname "

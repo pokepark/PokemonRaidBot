@@ -8,7 +8,7 @@ require_once(LOGIC_PATH . '/get_pokemon_id_by_name.php');
 //debug_log($data);
 
 // Check access.
-$botUser->accessCheck($update, 'pokedex');
+$botUser->accessCheck('pokedex');
 
 // Get pokemon name or dex id.
 $pokemon = trim(substr($update['message']['text'], 8));

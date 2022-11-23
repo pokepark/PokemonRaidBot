@@ -28,9 +28,9 @@ $tg_json = array();
 //Initialize admin rights table [ ex-raid , raid-event ]
 $admin_access = [false, false];
 // Check access - user must be admin for raid_level X
-$admin_access[0] = $botUser->accessCheck($update, 'ex-raids', true);
+$admin_access[0] = $botUser->accessCheck('ex-raids', true);
 // Check access - user must be admin for raid event creation
-$admin_access[1] = $botUser->accessCheck($update, 'event-raids', true);
+$admin_access[1] = $botUser->accessCheck('event-raids', true);
 
 // Get the keys.
 $keys = raid_edit_raidlevel_keys($gym_id, $gym_first_letter, $admin_access, $event_id);

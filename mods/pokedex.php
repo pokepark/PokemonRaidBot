@@ -8,7 +8,7 @@ require_once(LOGIC_PATH . '/edit_pokedex_keys.php');
 //debug_log($data);
 
 // Check access.
-$botUser->accessCheck($update, 'pokedex');
+$botUser->accessCheck('pokedex');
 
 // Get the limit.
 $limit = $data['id'];

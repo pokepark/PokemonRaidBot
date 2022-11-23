@@ -7,7 +7,7 @@ debug_log('HISTORY');
 //debug_log($data);
 
 // Check access.
-$botUser->accessCheck($update, 'history');
+$botUser->accessCheck('history');
 
 // Expected callback data: [Date, YYYY-MM-DD]:history_gyms:[GYM_LETTER]
 

@@ -11,7 +11,7 @@ require_once(LOGIC_PATH . '/send_raid_poll.php');
 $raidId = $data['id'];
 
 // Access check.
-$botUser->raidAccessCheck($update, $raidId, 'share');
+$botUser->raidaccessCheck($raidId, 'share');
 
 // Get chat id.
 $chat = $data['arg'];

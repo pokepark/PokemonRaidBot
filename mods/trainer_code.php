@@ -8,7 +8,7 @@ require_once(LOGIC_PATH . '/get_user.php');
 //debug_log($data);
 
 // Access check.
-$botUser->accessCheck($update, 'trainer');
+$botUser->accessCheck('trainer');
 
 // Mode and action
 $mode = $data['id'];

@@ -8,15 +8,15 @@ require_once(LOGIC_PATH . '/resolve_raid_boss.php');
 //debug_log($data);
 
 // Check access.
-$botUser->accessCheck($update, 'list');
+$botUser->accessCheck('list');
 
 $event_sql = 'event IS NULL';
-if($botUser->accessCheck($update, 'ex-raids', true)) {
-  if($botUser->accessCheck($update, 'event-raids', true))
+if($botUser->accessCheck('ex-raids', true)) {
+  if($botUser->accessCheck('event-raids', true))
     $event_sql = '';
   else
     $event_sql .= ' OR event = ' . EVENT_ID_EX;
-}elseif($botUser->accessCheck($update, 'event-raids', true)) {
+}elseif($botUser->accessCheck('event-raids', true)) {
   $event_sql = 'event != ' . EVENT_ID_EX .' OR event IS NULL';
 }
 $event_sql = ($event_sql == '') ? '' : 'AND ('.$event_sql.')';
@@ -51,7 +51,7 @@ if(count($raids) == 0) {
 
 debug_log($raids[0]['r_active'], 'Active raids:');
 // More raids as we like?
-if($raids[0]['r_active'] > 12 && $botUser->accessCheck($update, 'listall', true)) {
+if($raids[0]['r_active'] > 12 && $botUser->accessCheck('listall', true)) {
   // Forward to /listall
   debug_log('Too much raids, forwarding to /listall');
   $skip_access = true;
@@ -93,14 +93,6 @@ foreach($raids as $raid) {
 
 // Get the inline key array.
 $keys = inline_key_array($keys, 1);
-
-// Add exit key.
-$keys[] = [
-  [
-    'text'          => getTranslation('abort'),
-    'callback_data' => '0:exit:0'
-  ]
-];
 
 // Build message.
 $msg = '<b>' . getTranslation('list_all_active_raids') . ':</b>' . CR;

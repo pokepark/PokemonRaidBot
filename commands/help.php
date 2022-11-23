@@ -1,6 +1,6 @@
 <?php
 // Check access.
-$access = $botUser->accessCheck($update, 'help', true);
+$access = $botUser->accessCheck('help', true);
 
 // Display help for each permission
 if($access) {

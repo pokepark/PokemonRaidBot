@@ -8,15 +8,14 @@ class botUser
   ];
   public $userLanguage = '';
   public $ddosCount = 0;
+  public $userId = 0;
 
   /**
    * Read user privileges from db
    * @param array $update Update array from Telegram
   */
-  public function initPrivileges($update) {
-    $user_id = $update[$update['type']]['from']['id'];
-
-    $q = my_query('SELECT privileges FROM users WHERE user_id = ? LIMIT 1', [$user_id]);
+  public function initPrivileges() {
+    $q = my_query('SELECT privileges FROM users WHERE user_id = ? LIMIT 1', [$this->userId]);
     $result = $q->fetch();
     if($result['privileges'] === NULL) return;
     $this->userPrivileges = json_decode($result['privileges'], true);
@@ -26,27 +25,23 @@ class botUser
    * Run privilege check for Telegram user and save them for later use.
    * @param array $update Update array from Telegram
   */
-  public function privilegeCheck($update) {
+  public function privilegeCheck() {
     global $config;
-    // Get Telegram user ID to check access from $update - either message, callback_query or inline_query
-    $user_id = $update[$update['type']]['from']['id'];
-
     // Write to log.
-    debug_log('Telegram message type: ' . $update['type']);
-    debug_log('Checking access for ID: ' . $user_id);
+    debug_log('Checking access for ID: ' . $this->userId);
 
     // Public access?
     if(empty($config->BOT_ADMINS)) {
-      debug_log('Bot access is not restricted! Allowing access for user: ' . CR . $user_id);
+      debug_log('Bot access is not restricted! Allowing access for user: ' . CR . $this->userId);
       $this->userPrivileges['grantedBy'] = 'NOT_RESTRICTED';
       return;
     }
     // Admin?
     $admins = explode(',', $config->BOT_ADMINS);
-    if(in_array($user_id,$admins)) {
+    if(in_array($this->userId, $admins)) {
       debug_log('Positive result on access check for Bot Admins');
       debug_log('Bot Admins: ' . $config->BOT_ADMINS);
-      debug_log('user_id: ' . $user_id);
+      debug_log('user_id: ' . $this->userId);
       $this->userPrivileges['grantedBy'] = 'BOT_ADMINS';
       return;
     }
@@ -65,7 +60,7 @@ class botUser
       $filename = str_replace(ACCESS_PATH . '/', '', $filePath);
       // Get chat object - remove comments from filename
       // This way some kind of comment like the channel name can be added to the end of the filename, e.g. creator-100123456789-MyPokemonChannel to easily differ between access files :)
-      preg_match('/(access)('.$user_id.')|(access|creator|admins|members|restricted|kicked)(-[0-9]+)/', '-' . $filename, $result);
+      preg_match('/(access)('.$this->userId.')|(access|creator|admins|members|restricted|kicked)(-[0-9]+)/', '-' . $filename, $result);
       if(empty($result[0])) continue;
       // User specific access file found?
       if(!empty($result[1])) {
@@ -83,7 +78,7 @@ class botUser
       // Save the full filename (with possible comments) to an array for later use
       $accessFilesList[$role.$tg_chat] = $filename;
       debug_log('Asking Telegram if user is a member of chat \'' . $tg_chat . '\'');
-      if(!isset($tg_json[$tg_chat])) $tg_json[$tg_chat] = get_chatmember($tg_chat, $user_id, true); // Get chat member object and check status
+      if(!isset($tg_json[$tg_chat])) $tg_json[$tg_chat] = get_chatmember($tg_chat, $this->userId, true); // Get chat member object and check status
     }
     $accessChats = curl_json_multi_request($tg_json);
 
@@ -128,7 +123,7 @@ class botUser
           'privileges' => $privilegeList,
           'grantedBy' => $accessFile,
         ];
-        my_query('UPDATE users SET privileges = ? WHERE user_id = ? LIMIT 1', [json_encode($privilegeArray), $user_id]);
+        my_query('UPDATE users SET privileges = ? WHERE user_id = ? LIMIT 1', [json_encode($privilegeArray), $this->userId]);
         $this->userPrivileges = $privilegeArray;
         break;
       }
@@ -140,13 +135,13 @@ class botUser
 
   /**
    * Check users privileges for a specific action. Exits by default if access is denied.
-   * @param array $update Update array from Telegram
    * @param string $permission Permission to check
    * @param bool $return_result Return the result of privilege check
    * @param bool $new_user Has user completed tutorial or not
    * @return bool|string
   */
-  public function accessCheck($update, $permission = 'access-bot', $return_result = false, $new_user = false) {
+  public function accessCheck($permission = 'access-bot', $return_result = false, $new_user = false) {
+    global $update;
     if(!$new_user && in_array($permission, $this->userPrivileges['privileges']) or $this->userPrivileges['grantedBy'] === 'BOT_ADMINS' or $this->userPrivileges['grantedBy'] === 'NOT_RESTRICTED') {
       return true;
     }
@@ -174,15 +169,14 @@ class botUser
 
   /**
    * Raid access check.
-   * @param array $update
    * @param int $raidId
    * @param string $permission
    * @param bool $return_result
    * @return bool
    */
-  public function raidAccessCheck($update, $raidId, $permission, $return_result = false)
+  public function raidaccessCheck($raidId, $permission, $return_result = false)
   {
-    global $botUser;
+    global $update;
     // Default: Deny access to raids
     $raid_access = false;
 
@@ -197,26 +191,26 @@ class botUser
     $raid = $rs->fetch();
 
     // Check permissions
-    if ($rs->rowCount() == 0 or $update['callback_query']['from']['id'] != $raid['user_id']) {
+    if ($rs->rowCount() == 0 or $this->userId != $raid['user_id']) {
       // Check "-all" permission
       debug_log('Checking permission:' . $permission . '-all');
       $permission = $permission . '-all';
-      return $botUser->accessCheck($update, $permission, $return_result);
+      return $this->accessCheck($permission, $return_result);
     }
     // Check "-own" permission
     debug_log('Checking permission:' . $permission . '-own');
     $permission_own = $permission . '-own';
     $permission_all = $permission . '-all';
-    $raid_access = $botUser->accessCheck($update, $permission_own, true);
+    $raid_access = $this->accessCheck($permission_own, true);
 
     if($raid_access) {
-      return $botUser->accessCheck($update, $permission_own, $return_result);
+      return $this->accessCheck($permission_own, $return_result);
     }
     // Check "-all" permission if we get "access denied"
     // Maybe necessary if user has only "-all" configured, but not "-own"
     debug_log('Permission check for ' . $permission_own . ' failed! Maybe the access is just granted via ' . $permission . '-all ?');
     debug_log('Checking permission:' . $permission_all);
-    return $botUser->accessCheck($update, $permission_all, $return_result);
+    return $this->accessCheck($permission_all, $return_result);
   }
 
   /**
@@ -250,14 +244,11 @@ class botUser
       return;
     }
     // Message or callback?
-    $from = $update[$update['type']]['from'];
 
     $language_code = '';
-    if(isset($from)) {
-      $q = my_query('SELECT lang FROM users WHERE user_id = ?  LIMIT 1', [$from['id']]);
-      $res = $q->fetch();
-      $language_code = $res['lang'];
-    }
+    $q = my_query('SELECT lang FROM users WHERE user_id = ?  LIMIT 1', [$this->userId]);
+    $res = $q->fetch();
+    $language_code = $res['lang'];
 
     // Get and define userlanguage.
     $languages = $GLOBALS['languages'];
@@ -284,7 +275,7 @@ class botUser
       debug_log($update, '!');
       return false;
     }
-    $id = $msg['id'];
+    $id = $this->userId = $msg['id'];
 
     $name = '';
     $sep = '';

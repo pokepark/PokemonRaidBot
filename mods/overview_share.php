@@ -9,7 +9,7 @@ require_once(LOGIC_PATH . '/get_overview.php');
 //debug_log($data);
 
 // Check access.
-$botUser->accessCheck($update, 'overview');
+$botUser->accessCheck('overview');
 
 // Get chat ID from data
 $chat_id = 0;

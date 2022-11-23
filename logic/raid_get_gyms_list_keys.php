@@ -30,7 +30,7 @@ function raid_get_gyms_list_keys($searchterm)
     $first = strtoupper(substr($gym['gym_name'], 0, 1));
     $keys[] = array(
       'text'          => $gym['gym_name'],
-      'callback_data' => $first . ':edit_raidlevel:' . $gym['id']
+      'callback_data' => formatCallbackData(['callbackAction' => 'edit_raidlevel', 'g' => $gym['id'], 'fl' => $first])
     );
   }
 

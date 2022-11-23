@@ -7,7 +7,7 @@ debug_log('OVERVIEW()');
 //debug_log($data);
 
 // Check access.
-$botUser->accessCheck($update, 'overview');
+$botUser->accessCheck('overview');
 
 // Create keys array.
 $keys = [

@@ -7,7 +7,7 @@ debug_log('EVENTS()');
 //debug_log($data);
 
 // Check access.
-$botUser->accessCheck($update, 'event-manage');
+$botUser->accessCheck('event-manage');
 
 $id = $data['id'];
 $arg = $data['arg'];

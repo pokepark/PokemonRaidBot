@@ -10,7 +10,7 @@ require_once(LOGIC_PATH . '/show_raid_poll_small.php');
 //debug_log($data);
 
 // Check access.
-$botUser->accessCheck($update, 'create');
+$botUser->accessCheck('create');
 
 // Get count of ID and argument.
 $count_id = substr_count($data['id'], ',');

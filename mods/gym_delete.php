@@ -9,29 +9,14 @@ require_once(LOGIC_PATH . '/get_gym.php');
 //debug_log($data);
 
 // Check access.
-$botUser->accessCheck($update, 'gym-delete');
+$botUser->accessCheck('gym-delete');
 
 // Get the arg.
-$arg = $data['arg'];
+$gymId = $data['g'];
+$confirm = $data['c'] == 1 ? true : false;
 
-// Delete?
-if(substr_count($arg, '-') == 1) {
-  $split_arg = explode('-', $arg);
-  $new_arg = $split_arg[0];
-  $delete = true;
-  $confirm = false;
-} else if(substr_count($arg, '-') == 2) {
-  $split_arg = explode('-', $arg);
-  $new_arg = $split_arg[0];
-  $delete = true;
-  $confirm = true;
-} else {
-  $msg = 'ERROR!';
-  $keys = [];
-}
-
-if ($new_arg > 0 && $delete == true && $confirm == false) {
-  $gym = get_gym($new_arg);
+if ($gymId > 0 && $confirm == false) {
+  $gym = get_gym($gymId);
 
   // Set message
   $msg = EMOJI_WARN . SP . '<b>' . getTranslation('delete_this_gym') . '</b>' . SP . EMOJI_WARN;
@@ -42,24 +27,24 @@ if ($new_arg > 0 && $delete == true && $confirm == false) {
     [
       [
         'text'          => getTranslation('yes'),
-        'callback_data' => '0:gym_delete:' . $new_arg . '-delete-yes'
+        'callback_data' => formatCallbackData(['callbackAction' => 'gym_delete', 'g' => $gymId, 'c' => 1])
       ]
     ],
     [
       [
         'text'          => getTranslation('no'),
-        'callback_data' => $new_arg . ':gym_edit_details:'
+        'callback_data' => formatCallbackData(['callbackAction' => 'gym_edit_details', 'g' => $gymId])
       ]
     ]
   ];
 
 // Delete the gym.
-} else if ($new_arg > 0 && $delete == true && $confirm == true) {
+} else if ($gymId > 0 && $confirm == true) {
   require_once(LOGIC_PATH . '/get_gym_details.php');
   require_once(LOGIC_PATH . '/get_gym.php');
-  debug_log('Deleting gym with ID ' . $new_arg);
+  debug_log('Deleting gym with ID ' . $gymId);
   // Get gym.
-  $gym = get_gym($new_arg);
+  $gym = get_gym($gymId);
 
   // Set message
   $msg = '<b>' . getTranslation('deleted_this_gym') . '</b>' . CR;
@@ -70,7 +55,7 @@ if ($new_arg > 0 && $delete == true && $confirm == false) {
   my_query('
     DELETE FROM gyms
     WHERE   id = ?
-    ', [$new_arg]
+    ', [$gymId]
   );
 }
 

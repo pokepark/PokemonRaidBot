@@ -8,7 +8,7 @@ require_once(LOGIC_PATH . '/curl_get_contents.php');
 //debug_log($data);
 
 // Check access.
-$botUser->accessCheck($update, 'pokedex');
+$botUser->accessCheck('pokedex');
 
 // Levels available for import
 $levels = array('6', '5', '3', '1');

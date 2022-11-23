@@ -8,7 +8,7 @@ require_once(LOGIC_PATH . '/show_raid_poll_small.php');
 //debug_log($data);
 
 // Check access.
-$botUser->accessCheck($update, 'create');
+$botUser->accessCheck('create');
 
 // Set the id and arg.
 if(substr_count($data['id'], ',') == 1) {
@@ -87,7 +87,7 @@ $keys = [
 ];
 
 // Check access level prior allowing to change raid time
-$admin_access = $botUser->accessCheck($update, 'raid-duration', true);
+$admin_access = $botUser->accessCheck('raid-duration', true);
 if($admin_access) {
   // Add time change to keys.
   $keys_time = [

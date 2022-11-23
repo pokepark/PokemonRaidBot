@@ -86,7 +86,7 @@ function share_keys($id, $action, $update, $raidLevel = '', $chats = '', $hideGe
     global $config, $botUser;
     $keys = [];
     // Check access.
-    $share_access = $botUser->accessCheck($update, 'share-any-chat', true);
+    $share_access = $botUser->accessCheck('share-any-chat', true);
 
     // Add share button if not restricted to allow sharing to any chat.
     if ($share_access == true && $hideGeneralShare == false) {
@@ -174,5 +174,5 @@ function formatCallbackData($array)
   foreach($array as $key => $value) {
     $return .= $key . '=' . $value . '|';
   }
-  return rtrim('|', $return);
+  return rtrim($return, '|');
 }

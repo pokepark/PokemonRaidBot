@@ -8,7 +8,7 @@ require_once(LOGIC_PATH . '/show_raid_poll.php');
 //debug_log($data);
 
 // Check access.
-$botUser->accessCheck($update, 'history');
+$botUser->accessCheck('history');
 
 // Expected callback data: [Date, YYYY-MM-DD]/[GYM_LETTER]:history_raid:[GYM_ID]/[RAID_ID]
 

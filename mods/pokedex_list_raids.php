@@ -7,7 +7,7 @@ debug_log('pokedex_list_raids()');
 //debug_log($data);
 
 // Check access.
-$botUser->accessCheck($update, 'pokedex');
+$botUser->accessCheck('pokedex');
 
 // Get all pokemon with raid levels from database.
 $rs = my_query('

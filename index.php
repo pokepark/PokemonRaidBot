@@ -54,7 +54,6 @@ if (isset($update['callback_query']['data'])) {
     $splitData = explode('|', $thedata);
     $data['callbackAction'] = $splitData[0];
     unset($splitData[0]);
-    $data = [];
     foreach($splitData as $dataPiece) {
       [$key, $value] = explode('=', $dataPiece, 2);
       $data[$key] = $value;
@@ -81,7 +80,7 @@ if(isset($update[$update['type']]['from'])) {
   // Get language
   $botUser->defineUserLanguage($update);
 
-  $botUser->initPrivileges($update);
+  $botUser->initPrivileges();
 }
 
 // Callback query received.
@@ -114,7 +113,7 @@ if (isset($update['callback_query'])) {
 // Message is required to check for commands.
 } else if (isset($update['message']) && $update['message']['chat']['type'] == 'private') {
   // Update user's privileges into database
-  $botUser->privilegeCheck($update);
+  $botUser->privilegeCheck();
 
   // Portal message?
   if(isset($update['message']['entities']['1']['type']) && $update['message']['entities']['1']['type'] == 'text_link' && strpos($update['message']['entities']['1']['url'], 'https://intel.ingress.com/intel?ll=') === 0) {

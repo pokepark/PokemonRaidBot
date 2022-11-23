@@ -8,7 +8,7 @@ require_once(LOGIC_PATH . '/get_user.php');
 //debug_log($data);
 
 // Check access.
-$botUser->accessCheck($update, 'trainer');
+$botUser->accessCheck('trainer');
 
 // Set message.
 $msg = '<b>' . getTranslation('trainerinfo_set_yours') . '</b>';
@@ -61,7 +61,7 @@ if ($config->LANGUAGE_PRIVATE == '') {
 }
 
 // Check access.
-$access = $botUser->accessCheck($update, 'trainer-share', true);
+$access = $botUser->accessCheck('trainer-share', true);
 
 // Display sharing options for admins and users with trainer-share permissions
 if($access) {

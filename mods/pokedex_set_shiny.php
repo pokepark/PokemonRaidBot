@@ -8,7 +8,7 @@ require_once(LOGIC_PATH . '/get_pokemon_info.php');
 //debug_log($data);
 
 // Check access.
-$botUser->accessCheck($update, 'pokedex');
+$botUser->accessCheck('pokedex');
 
 // Set the id.
 $pokedex_id = $data['id'];

@@ -7,7 +7,7 @@ debug_log('pokebattler()');
 //debug_log($data);
 
 // Check access.
-$botUser->accessCheck($update, 'pokedex');
+$botUser->accessCheck('pokedex');
 require_once(LOGIC_PATH . '/read_upcoming_bosses.php');
 
 $id = $data['id'];

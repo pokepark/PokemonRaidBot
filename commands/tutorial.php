@@ -7,7 +7,7 @@ debug_log('TUTORIAL()');
 //debug_log($data);
 
 // Check access.
-$botUser->accessCheck($update, 'tutorial');
+$botUser->accessCheck('tutorial');
 
 // Tutorial
 if(is_file(ROOT_PATH . '/config/tutorial.php')) {

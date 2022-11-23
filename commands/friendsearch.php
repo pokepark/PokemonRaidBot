@@ -6,7 +6,7 @@ debug_log('FRIENDSEARCH()');
 //debug_log($update);
 //debug_log($data);
 
-$botUser->accessCheck($update, 'friendsearch');
+$botUser->accessCheck('friendsearch');
 
 // Trim away everything before "/FRIENDSEARCH"
 $searchterm = $update['message']['text'];

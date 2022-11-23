@@ -10,7 +10,7 @@ require_once(LOGIC_PATH . '/get_weather_icons.php');
 //debug_log($data);
 
 // Check access.
-$botUser->accessCheck($update, 'pokedex');
+$botUser->accessCheck('pokedex');
 // Set the id.
 $poke_id_form = $data['id'];
 [$pokedex_id, $pokemon_form_id] = explode('-',$data['id'],2);

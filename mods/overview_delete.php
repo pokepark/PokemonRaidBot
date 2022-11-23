@@ -11,7 +11,7 @@ $chat_id = 0;
 $chat_id = $data['arg'];
 
 // Check access.
-$botUser->accessCheck($update, 'overview');
+$botUser->accessCheck('overview');
 
 // Telegram JSON array.
 $tg_json = array();

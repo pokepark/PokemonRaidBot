@@ -11,7 +11,7 @@ require_once(LOGIC_PATH . '/show_raid_poll_small.php');
 $raidId = $data['id'];
 
 // Check access.
-$botUser->accessCheck($update, 'list');
+$botUser->accessCheck('list');
 
 // Get raid details.
 $raid = get_raid($raidId);
@@ -25,7 +25,7 @@ $keys = [
     ]
   ]
 ];
-if($botUser->raidAccessCheck($update, $raidId, 'pokemon', true)) {
+if($botUser->raidaccessCheck($raidId, 'pokemon', true)) {
   $keys[] = [
       [
         'text'          => getTranslation('update_pokemon'),
@@ -33,7 +33,7 @@ if($botUser->raidAccessCheck($update, $raidId, 'pokemon', true)) {
       ]
   ];
 }
-if($botUser->raidAccessCheck($update, $raidId, 'delete', true)) {
+if($botUser->raidaccessCheck($raidId, 'delete', true)) {
   $keys[] = [
       [
         'text'          => getTranslation('delete'),

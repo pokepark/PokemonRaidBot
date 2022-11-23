@@ -7,7 +7,7 @@ debug_log('EVENTS()');
 //debug_log($data);
 
 // Check access.
-$botUser->accessCheck($update, 'event-manage');
+$botUser->accessCheck('event-manage');
 
 $columnSettings = [
   'vote_key_mode'     => ['allowed' => [0,1],   'default' => 0, 'nullable' => false],
