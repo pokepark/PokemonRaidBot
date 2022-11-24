@@ -130,6 +130,13 @@ function getGymareas($gymareaId, $stage, $buttonAction) {
       ];
     }
   }
+  if(count($gymareaKeys) > 6 && $stage != 0) {
+    // If list of area buttons is getting too large, replace it with a key that opens a submenu
+    $gymareaKeys = [[
+      'text'          => getTranslation('gymareas'),
+      'callback_data' => formatCallbackData(['callbackAction' => 'gymMenu', 'a' => $buttonAction, 'stage' => 0])
+    ]];
+  }
   $polygon_string = implode(',', $points);
   $query = count($points) > 0 ? 'AND ST_CONTAINS(ST_GEOMFROMTEXT(\'POLYGON(('.$polygon_string.'))\'), ST_GEOMFROMTEXT(CONCAT(\'POINT(\',lat,\' \',lon,\')\')))' : '';
   return [$gymareaName, $gymareaKeys, $query];

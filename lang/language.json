@@ -1920,7 +1920,20 @@
     "NO": "TRANSLATE",
     "FR": "TRANSLATE",
     "PL": "TRANSLATE",
-    "FI": "Oletussalialue:",
+    "FI": "Oletussalialue",
+    "ES": "TRANSLATE"
+  },
+  "gymareas": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Gymareas",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Salialueet",
     "ES": "TRANSLATE"
   },
   "select_gym": {
