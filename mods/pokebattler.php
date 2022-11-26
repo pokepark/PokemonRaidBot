@@ -166,13 +166,15 @@ foreach($get_levels as $raid_level_id) {
 
     // Save to database?
     if($action == 's') {
+      // Shiny?
+      $shiny = ($dex_id_form['shiny'] == 'true') ? 1 : 0;
       // Update raid level of pokemon
       my_query('
         UPDATE  pokemon
         SET     shiny = ?
         WHERE   pokedex_id = ?
         AND     pokemon_form_id = ?
-        ', [$dex_id_form['shiny'], $dex_id, $dex_form]
+        ', [$shiny, $dex_id, $dex_form]
       );
       my_query('
         INSERT INTO raid_bosses (pokedex_id, pokemon_form_id, raid_level)
@@ -189,12 +191,6 @@ foreach($get_levels as $raid_level_id) {
     } else {
       // Add pokemon to message.
       $msg .= $local_pokemon . SP . '(#' . $dex_id . ')' . CR;
-
-      // Shiny?
-      $shiny = 0;
-      if($dex_id_form['shiny'] == 'true') {
-        $shiny = 1;
-      }
 
       // Add key to exclude pokemon from import.
       $button_text_prefix = '';
