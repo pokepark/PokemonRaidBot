@@ -28,6 +28,7 @@ if($levels != 'scheduled') {
     if(!in_array($tier,$get_levels)) continue;
 
     foreach($tier_pokemon as $raid_id_form) {
+      if(!isset($raid_id_form['id'])) continue;
       $dex_id = $raid_id_form['id'];
       $dex_form = 0;
       if(isset($raid_id_form['temp_evolution_id'])) {
@@ -46,9 +47,9 @@ if($levels != 'scheduled') {
       }
 
       $add_mons[] = [
-          'pokedex_id' => $dex_id,
-          'pokemon_form_id' => $dex_form,
-          'raid_level' => $tier,
+        'pokedex_id' => $dex_id,
+        'pokemon_form_id' => $dex_form,
+        'raid_level' => $tier,
       ];
     }
   }
@@ -65,13 +66,13 @@ if($levels != 'scheduled') {
 $count = count($add_mons);
 $start = false;
 $sql_values = '';
-if($count > 0) {
-  $sql_cols = implode(", ", array_keys($add_mons[0]));
-  for($i=0;$i<$count;$i++) {
-    if($i > 0) $sql_values .= ',';
-    $sql_values .= '(\'' . implode("', '", array_values($add_mons[$i])) . '\')';
-  }
-  $sql = 'INSERT INTO raid_bosses (' . $sql_cols . ') VALUES ' . $sql_values . ';';
+if($count == 0) exit;
+
+$sql_cols = implode(", ", array_keys($add_mons[0]));
+for($i=0;$i<$count;$i++) {
+  if($i > 0) $sql_values .= ',';
+  $sql_values .= '(\'' . implode("', '", array_values($add_mons[$i])) . '\')';
 }
+$sql = 'INSERT INTO raid_bosses (' . $sql_cols . ') VALUES ' . $sql_values . ';';
 
 my_query($sql);
