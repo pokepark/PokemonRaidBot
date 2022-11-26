@@ -24,6 +24,7 @@ if($levels != 'scheduled') {
                 continue;
             }
             foreach($tier_pokemon as $raid_id_form) {
+                if(!isset($raid_id_form['id'])) continue;
                 $dex_id = $raid_id_form['id'];
                 $dex_form = 0;
                 if(isset($raid_id_form['temp_evolution_id'])) {
