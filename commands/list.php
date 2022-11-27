@@ -90,6 +90,10 @@ foreach($raids as $raid) {
     'callback_data' => $raid['id'] . ':raids_list:0'
   );
 }
+$keys[] = array(
+  'text'          => getTranslation('done'),
+  'callback_data' => '0:exit:1'
+);
 
 // Get the inline key array.
 $keys = inline_key_array($keys, 1);
