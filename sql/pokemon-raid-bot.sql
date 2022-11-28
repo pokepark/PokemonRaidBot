@@ -73,6 +73,8 @@ CREATE TABLE `photo_cache` (
   `form_id` int(4) DEFAULT NULL,
   `raid_id` int(10) unsigned DEFAULT NULL,
   `ended` tinyint(1) DEFAULT NULL,
+  `start_time` datetime DEFAULT NULL,
+  `end_time` datetime DEFAULT NULL,
   `gym_id` int(10) unsigned DEFAULT NULL,
   `standalone` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`unique_id`)

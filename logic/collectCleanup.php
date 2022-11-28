@@ -12,8 +12,11 @@ require_once(LOGIC_PATH . '/insert_trainerinfo.php');
  */
 function collectCleanup($response, $request, $identifier = false)
 {
-  if($identifier == false) return $response;
-  if(!isset($response['result']['chat']['type']) or !in_array($response['result']['chat']['type'], ['channel','group','supergroup'])) return $response;
+  if(
+    $identifier == false or
+    !isset($response['result']['chat']['type']) or
+    !in_array($response['result']['chat']['type'], ['channel','group','supergroup'])
+  ) {return $response;}
 
   // Set chat and message_id
   $chat_id = $response['result']['chat']['id'];
@@ -54,7 +57,7 @@ function collectCleanup($response, $request, $identifier = false)
     $standalone_photo = (array_key_exists('standalone_photo', $identifier) && $identifier['standalone_photo'] === true) ? 1 : 0;
     my_query('
       REPLACE INTO photo_cache
-      VALUES (:id, :unique_id, :pokedex_id, :form_id, :raid_id, :ended, :gym_id, :standalone)
+      VALUES (:id, :unique_id, :pokedex_id, :form_id, :raid_id, :ended, :start_time, :end_time, :gym_id, :standalone)
     ',[
       ':id' => $save_id,
       ':unique_id' => $unique_id,
@@ -62,6 +65,8 @@ function collectCleanup($response, $request, $identifier = false)
       ':form_id' => $identifier['pokemon_form'],
       ':raid_id' => ($identifier['raid_ended'] ? 0 : $identifier['id']),  // No need to save raid id if raid has ended
       ':ended' => $identifier['raid_ended'],
+      ':start_time' => ($identifier['raid_ended'] ? 'NULL' : $identifier['start_time']),
+      ':end_time' => ($identifier['raid_ended'] ? 'NULL' : $identifier['end_time']),
       ':gym_id' => $identifier['gym_id'],
       ':standalone' => $standalone_photo,
       ]

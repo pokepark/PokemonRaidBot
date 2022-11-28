@@ -181,7 +181,11 @@ foreach($update as $raid) {
       SET
         pokemon = :pokemon,
         pokemon_form = :pokemon_form,
+        spawn = :spawn,
+        start_time = :start_time,
+        end_time = :end_time,
         gym_team = :gym_team,
+        level = :level,
         move1 = :move1,
         move2 = :move2,
         gender = :gender,
@@ -191,7 +195,11 @@ foreach($update as $raid) {
     ',[
       'pokemon' => $pokemon,
       'pokemon_form' => $form,
+      'spawn' => $spawn,
+      'start_time' => $start,
+      'end_time' => $end,
       'gym_team' => $team,
+      'level' => $level,
       'move1' => $move_1,
       'move2' => $move_2,
       'gender' => $gender,

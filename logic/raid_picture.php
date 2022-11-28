@@ -17,6 +17,14 @@ function get_raid_picture($raid, $standalone_photo = false) {
     ':standalone' => $standalone_photo,
     ':ended' => $raid['raid_ended'],
   ];
+  $timeQuery = '';
+  if($raid['raid_ended'] == 0) {
+    $timeQuery = '
+      AND start_time = :start_time
+      AND end_time = :end_time';
+    $binds['start_time'] = $raid['start_time'];
+    $binds['end_time'] = $raid['end_time'];
+  }
   $query_cache = my_query('
     SELECT id, unique_id
     FROM photo_cache
@@ -24,6 +32,7 @@ function get_raid_picture($raid, $standalone_photo = false) {
     AND gym_id = :gym_id
     AND pokedex_id = :pokedex_id
     AND form_id = :pokemon_form
+    ' . $timeQuery . '
     AND ended = :ended
     AND standalone = :standalone
     LIMIT 1', $binds
