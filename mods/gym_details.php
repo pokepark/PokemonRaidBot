@@ -14,7 +14,6 @@ $botUser->accessCheck('gym-details');
 
 // Get the arg.
 $arg = $data['g'];
-$gymarea_id = $data['ga'] ?? false;
 
 // Get the id.
 $id = $data['g'];

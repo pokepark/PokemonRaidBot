@@ -4,11 +4,10 @@ debug_log('delete_scheduled_entry()');
 
 // Check access.
 $botUser->accessCheck('pokedex');
-$arg = $data['arg'];
 $id = $data['id'];
 
 if($arg == 1) {
-  my_query("DELETE FROM raid_bosses WHERE id='".$id."'");
+  my_query('DELETE FROM raid_bosses WHERE id = ?', [$id]);
   include(ROOT_PATH . '/mods/pokedex_list_raids.php');
   exit();
 }
