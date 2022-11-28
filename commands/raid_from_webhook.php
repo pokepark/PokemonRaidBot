@@ -2,6 +2,7 @@
 // Write to log.
 debug_log('RAID_FROM_WEBHOOK()');
 require_once(LOGIC_PATH . '/active_raid_duplication_check.php');
+require_once(LOGIC_PATH . '/alarm.php');
 
 if($metrics) {
   $webhook_raids_received_total = $metrics->registerCounter($namespace, 'webhook_raids_received_total', 'Total raids received via webhook');
@@ -168,7 +169,8 @@ foreach($update as $raid) {
   }
 
   // Insert new raid or update existing raid/ex-raid?
-  $raid_id = active_raid_duplication_check($gym_internal_id, $level);
+  $activeRaid = active_raid_duplication_check($gym_internal_id, $level, true);
+  $raid_id = (is_array($activeRaid)) ? $activeRaid['id'] : $activeRaid;
 
   $send_updates = false;
 
@@ -268,6 +270,16 @@ foreach($update as $raid) {
   $missing_raid_data = $query_missing->fetch();
 
   $resolved_boss = resolve_raid_boss($pokemon, $form, $spawn, $level);
+  $wasBossUpdated = false;
+  if(is_array($activeRaid)) {
+    $resolvedOldBoss = resolve_raid_boss($activeRaid['pokemon'], $activeRaid['pokemon_form'], $activeRaid['spawn'], $activeRaid['level']);
+    if(
+      $resolved_boss['pokedex_id'] != $resolvedOldBoss['pokedex_id'] or
+      $resolved_boss['pokemon_form_id'] != $resolvedOldBoss['pokemon_form_id']
+    ) {
+      $wasBossUpdated = true;
+    }
+  }
 
   // Combine resulting data with stuff received from webhook to create a complete raid array
   $raid = array_merge($missing_raid_data, [
@@ -302,6 +314,7 @@ foreach($update as $raid) {
   if($send_updates == true) {
     require_once(LOGIC_PATH .'/update_raid_poll.php');
     $tg_json = update_raid_poll($raid_id, $raid, false, $tg_json, true);
+    if($wasBossUpdated) $tg_json = alarm($raid, false, 'new_boss', '', $tg_json);
     if(!empty($config->WEBHOOK_CHATS_BY_POKEMON[0]) && !$no_auto_posting) {
       foreach($config->WEBHOOK_CHATS_BY_POKEMON as $rule) {
         if(isset($rule['pokemon_id']) && $rule['pokemon_id'] == $pokemon && (!isset($rule['form_id']) or (isset($rule['form_id']) && $rule['form_id'] == $form))) {

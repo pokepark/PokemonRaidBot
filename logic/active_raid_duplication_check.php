@@ -3,9 +3,10 @@
  * Active raid duplication check.
  * @param int $gym_id Internal gym id
  * @param int $level (optional) raid level
- * @return int
+ * @param bool $returnArray Return additional info of the raid
+ * @return int|array
  */
-function active_raid_duplication_check($gym_id, $level = false)
+function active_raid_duplication_check($gym_id, $level = false, $returnArray = false)
 {
   global $config;
   $levelSql = '';
@@ -16,7 +17,7 @@ function active_raid_duplication_check($gym_id, $level = false)
   }
   // Build query.
   $rs = my_query('
-    SELECT id, event, level
+    SELECT id, event, level, pokemon, pokemon_form, spawn
     FROM   raids
     WHERE  end_time > (UTC_TIMESTAMP() - INTERVAL 5 MINUTE)
     AND  gym_id = ?
@@ -32,7 +33,8 @@ function active_raid_duplication_check($gym_id, $level = false)
      or ($config->RAID_EXCLUDE_EVENT_DUPLICATION && $raid['event'] !== NULL && $raid['event'] != EVENT_ID_EX)) {
       continue;
     }
-    return $raid['id'];
+    if($returnArray === true) return $raid;
+    else return $raid['id'];
   }
   return 0;
 }

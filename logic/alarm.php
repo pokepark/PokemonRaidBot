@@ -25,6 +25,9 @@ function alarm($raid_id_array, $user_id, $action, $info = '', $tg_json = [])
     $username = '<a href="tg://user?id=' . $answer_quests['user_id'] . '">' . $answer_quests['name'] . '</a>';
     // Get Trainercode
     $trainercode = $answer_quests['trainercode'];
+  }else {
+    // Set this to 0 so we get every attendee from database
+    $user_id = 0;
   }
 
   // Gym name and raid times
