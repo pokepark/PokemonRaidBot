@@ -10,6 +10,9 @@ function getAuthorizationHeader(){
   if (isset($_SERVER['HTTP_AUTHORIZATION'])) { //Nginx or fast CGI
     return trim($_SERVER["HTTP_AUTHORIZATION"]);
   }
+  if(isset(getallheaders()['Authorization'])) {
+    return getallheaders()['Authorization'];
+  }
   if (function_exists('apache_request_headers')) {
     $requestHeaders = apache_request_headers();
     if (isset($requestHeaders['Authorization'])) {

@@ -9,9 +9,6 @@ debug_log('pokedex_import()');
 // Check access.
 $botUser->accessCheck('pokedex');
 
-$id = $data['id'];
-$arg = $data['arg'];
-
 $msg = 'Import data from community maintained sources:'.CR;
 $msg.= '<a href="https://github.com/ccev/pogoinfo">ccev\'s github repository</a>'.CR;
 $msg.= '<a href="https://www.pokebattler.com">Pokebattler</a>';
