@@ -75,11 +75,12 @@ function send_raid_poll($raid_id, $shareChats, $raid = false, $tg_json = false) 
       continue;
     }
     require_once(LOGIC_PATH . '/raid_picture.php');
-    $media_content = get_raid_picture($raid, $config->RAID_PICTURE_AUTOEXTEND);
-    if((!$config->RAID_PICTURE_AUTOEXTEND || in_array($raid['level'], $raid_poll_hide_buttons_levels)) or !$post_text) {
+    if(!($config->RAID_PICTURE_AUTOEXTEND && !in_array($raid['level'], $raid_poll_hide_buttons_levels)) && $post_text == false) {
+      $media_content = get_raid_picture($raid);
       $tg_json[] = send_photo($chat_id, $media_content[1], $media_content[0], $text['short'], $keys, ['disable_web_page_preview' => 'true'], true, $raid);
       continue;
     }
+    $media_content = get_raid_picture($raid, true);
     $raid['standalone_photo'] = true; // Inject this into raid array so we can pass it all the way to photo cache
     send_photo($chat_id, $media_content[1], $media_content[0], '', [], [], false, $raid);
     send_message($chat_id, $text['short'], $keys, ['disable_web_page_preview' => 'true'], false, $raid_id);
