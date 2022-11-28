@@ -219,6 +219,7 @@ class botUser
   */
   public function updateUser($update)
   {
+    $this->userId = $update[$update['type']]['from']['id'];
     // Check DDOS count
     if ($this->ddosCount >= 2) return;
     // Update the user.
@@ -275,7 +276,7 @@ class botUser
       debug_log($update, '!');
       return false;
     }
-    $id = $this->userId = $msg['id'];
+    $id = $this->userId;
 
     $name = '';
     $sep = '';
