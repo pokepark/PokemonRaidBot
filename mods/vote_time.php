@@ -28,15 +28,15 @@ if($vote_time != 0) {
   $now = $now->format('Y-m-d H:i') . ':00';
 }
 
+// Request Raid and Gym - Infos
+$raid = get_raid($raidId);
+
 // Vote time in the future?
-if($attend_time_compare != ANYTIME && $now >= $attend_time_compare) {
+if($attend_time_compare != ANYTIME && $now >= $attend_time_compare && $raid['event_vote_key_mode'] != 1) {
   // Send vote time first.
   send_vote_time_future($update);
   exit;
 }
-
-// Request Raid and Gym - Infos
-$raid = get_raid($raidId);
 
 // Check if the user has voted for this raid before.
 $rs = my_query('
