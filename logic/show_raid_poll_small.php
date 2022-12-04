@@ -21,6 +21,9 @@ function show_raid_poll_small($raid, $override_language = false)
     $msg .= '<i>' . $raid['address'] . '</i>' . CR2;
   }
 
+  if(isset($raid['event_name']) && !empty($raid['event_name'])) {
+    $msg .= $raid['event_name'] . CR;
+  }
   // Pokemon
   if(!empty($raid['pokemon'])) {
     $msg .= '<b>' . get_local_pokemon_name($raid['pokemon'], $raid['pokemon_form']) . '</b> ' . CR;

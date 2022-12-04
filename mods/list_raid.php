@@ -12,15 +12,25 @@ require_once(LOGIC_PATH . '/show_raid_poll_small.php');
 $botUser->accessCheck('list');
 
 // Get gym ID.
-$gym_id = $data['g'];
-$raid_id = $data['r'];
+$gym_id = $data['g'] ?? 0;
+$raid_id = $data['r'] ?? 0;
 
 // Get raid details.
 if($raid_id != 0) {
   $sql_condition = 'AND raids.id = ? LIMIT 1';
   $binds = [$raid_id];
 }else {
-  $sql_condition = 'AND gyms.id = ?';
+  $eventQuery = 'event IS NULL';
+  if($botUser->accessCheck('ex-raids', true)) {
+    if($botUser->accessCheck('event-raids', true))
+      $eventQuery = '';
+    else
+      $eventQuery .= ' OR event = ' . EVENT_ID_EX;
+  }elseif($botUser->accessCheck('event-raids', true)) {
+    $eventQuery = 'event != ' . EVENT_ID_EX .' OR event IS NULL';
+  }
+  $eventQuery = ($eventQuery == '') ? ' ' : ' AND ('.$eventQuery.') ';
+  $sql_condition = 'AND gyms.id = ? ' . $eventQuery;
   $binds = [$gym_id];
 }
 $rs = my_query('
@@ -28,10 +38,9 @@ $rs = my_query('
   FROM     raids
   LEFT JOIN  gyms
   ON     raids.gym_id = gyms.id
-  WHERE    end_time > UTC_TIMESTAMP() - INTERVAL 10 MINUTE
-  ' . $sql_condition . '
-  ',
-  $binds
+  WHERE    end_time > UTC_TIMESTAMP()
+  ' . $sql_condition
+  ,$binds
 );
 if($rs->rowcount() == 1) {
   // Get the row.
@@ -49,7 +58,7 @@ if($rs->rowcount() == 1) {
       ]
     ]
   ];
-  if($botUser->raidaccessCheck($raid_id, 'pokemon', true)) {
+  if($botUser->raidaccessCheck($raid['id'], 'pokemon', true)) {
     $keys[] = [
         [
           'text'          => getTranslation('update_pokemon'),
@@ -57,7 +66,7 @@ if($rs->rowcount() == 1) {
         ]
     ];
   }
-  if($botUser->raidaccessCheck($raid_id, 'delete', true)) {
+  if($botUser->raidaccessCheck($raid['id'], 'delete', true)) {
     $keys[] = [
         [
           'text'          => getTranslation('delete'),
@@ -93,15 +102,23 @@ if($rs->rowcount() == 1) {
     $keys[] = [
       [
         'text'          => $i . '. ' . $raid_pokemon_name,
-        'callback_data' => $raid['id'] . ':list_raid:0'
+        'callback_data' => formatCallbackData(['callbackAction' => 'list_raid', 'r' => $raid['id']])
       ]
     ];
     $i++;
   }
+  $callback = [
+    'callbackAction' => 'gymMenu',
+    'stage' => 2,
+    'a' => 'list',
+    'fl' => $data['fl'],
+    'ga' => $data['ga'],
+    'h' => $data['h'],
+  ];
   $keys[] = [
     [
       'text'          => getTranslation('back'),
-      'callback_data' => '0:list_by_gym:' . $raid['gym_name'][0]
+      'callback_data' => formatCallbackData($callback)
     ]
   ];
 }

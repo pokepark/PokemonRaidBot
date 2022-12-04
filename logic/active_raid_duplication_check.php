@@ -19,7 +19,7 @@ function active_raid_duplication_check($gym_id, $level = false, $returnArray = f
   $rs = my_query('
     SELECT id, event, level, pokemon, pokemon_form, spawn
     FROM   raids
-    WHERE  end_time > (UTC_TIMESTAMP() - INTERVAL 5 MINUTE)
+    WHERE  end_time > UTC_TIMESTAMP()
     AND  gym_id = ?
     ' . $levelSql . '
     ORDER BY end_time, event IS NOT NULL

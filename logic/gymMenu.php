@@ -151,115 +151,89 @@ function getGymareas($gymareaId, $stage, $buttonAction) {
  * @return array
  */
 function createGymKeys($buttonAction, $showHidden, $gymareaId, $gymareaQuery, $stage) {
-  global $config, $menuActions;
+  global $config, $menuActions, $botUser;
   // Show hidden gyms?
   $show_gym = $showHidden ? 0 : 1;
   $collateQuery = ($config->MYSQL_SORT_COLLATE != '') ? ' COLLATE ' . $config->MYSQL_SORT_COLLATE : '';
 
-  // Get the number of gyms to display
-  if($buttonAction == 'list') {
+  $eventQuery = ' ';
+  if ($buttonAction == 'list') {
     // Select only gyms with active raids
     $queryConditions = '
     LEFT JOIN raids
     ON      raids.gym_id = gyms.id
-    WHERE   end_time > UTC_TIMESTAMP()';
+    WHERE   show_gym = ' . $show_gym;
+    $queryConditions .= ' AND end_time > UTC_TIMESTAMP() ';
+    $eventQuery = 'event IS NULL';
+    if($botUser->accessCheck('ex-raids', true)) {
+      if($botUser->accessCheck('event-raids', true))
+        $eventQuery = ' ';
+      else
+        $eventQuery .= ' OR event = ' . EVENT_ID_EX;
+    }elseif($botUser->accessCheck('event-raids', true)) {
+      $eventQuery = 'event != ' . EVENT_ID_EX .' OR event IS NULL';
+    }
+    $eventQuery = ($eventQuery == '') ? ' ' : ' AND ('.$eventQuery.') ';
   }else {
-    $queryConditions = 'WHERE show_gym = ' . $show_gym . ' ';
+    $queryConditions = ' WHERE   show_gym = ' . $show_gym;
   }
-  $rs_count = my_query('SELECT COUNT(gym_name) as count FROM gyms ' . $queryConditions . ' ' . $gymareaQuery);
+  $rs_count = my_query('SELECT COUNT(gym_name) as count FROM gyms ' . $queryConditions . $eventQuery . $gymareaQuery);
   $gym_count = $rs_count->fetch();
 
-  // If found over 20 gyms, print letters
-  if($gym_count['count'] > 20) {
-    $select = 'SELECT DISTINCT UPPER(SUBSTR(gym_name, 1, 1)) AS first_letter';
-    $group_order = ' ORDER BY 1';
-    // Special/Custom gym letters?
-    if(!empty($config->RAID_CUSTOM_GYM_LETTERS)) {
-      // Explode special letters.
-      $special_keys = explode(',', $config->RAID_CUSTOM_GYM_LETTERS);
-      $select = 'SELECT CASE ';
-      foreach($special_keys as $letter)
-      {
-        $letter = trim($letter);
-        debug_log($letter, 'Special gym letter:');
-        // Fix chinese chars, prior: $length = strlen($letter);
-        $length = strlen(utf8_decode($letter));
-        $select .= SP . 'WHEN UPPER(LEFT(gym_name, ' . $length . ')) = \'' . $letter . '\' THEN UPPER(LEFT(gym_name, ' . $length . '))' . SP;
-      }
-      $select .= 'ELSE UPPER(LEFT(gym_name, 1)) END AS first_letter';
-      $group_order = ' GROUP BY 1 ORDER BY gym_name';
-    }
-    $rs = my_query(
-      $select .
-      ' FROM gyms ' .
-      $queryConditions .
-      $gymareaQuery .
-      $group_order .
-      $collateQuery
-    );
-    while ($gym = $rs->fetch()) {
-      // Add first letter to keys array
-      $keys[] = array(
-        'text'          => $gym['first_letter'],
-        'callback_data' => formatCallbackData(['callbackAction' => 'gymMenu', 'a' => $buttonAction, 'stage' => $stage+1, 'fl' => $gym['first_letter'], 'ga' => $gymareaId])
-      );
-    }
-
-    // Get the inline key array.
-    return [inline_key_array($keys, 4), true];
+  // Found 20 or less gyms, print gym names
+  if($gym_count['count'] <= 20) {
+    $keys = createGymListKeysByFirstLetter('', $showHidden, $gymareaQuery, $buttonAction, $gymareaId);
+    return [$keys[0], false];
   }
 
-  // If less than 20 gyms was found, print gym names
-  $rs = my_query('
-    SELECT  gyms.id, gyms.gym_name, gyms.ex_gym
-    FROM gyms
-    ' . $queryConditions . '
-    ' . $gymareaQuery . '
-    ORDER BY gym_name ' . $collateQuery
+  // If found over 20 gyms, print letters
+  $select = 'SELECT DISTINCT UPPER(SUBSTR(gym_name, 1, 1)) AS first_letter';
+  $group_order = ' ORDER BY 1';
+  // Special/Custom gym letters?
+  if(!empty($config->RAID_CUSTOM_GYM_LETTERS)) {
+    // Explode special letters.
+    $special_keys = explode(',', $config->RAID_CUSTOM_GYM_LETTERS);
+    $select = 'SELECT CASE ';
+    foreach($special_keys as $letter)
+    {
+      $letter = trim($letter);
+      debug_log($letter, 'Special gym letter:');
+      // Fix chinese chars, prior: $length = strlen($letter);
+      $length = strlen(utf8_decode($letter));
+      $select .= SP . 'WHEN UPPER(LEFT(gym_name, ' . $length . ')) = \'' . $letter . '\' THEN UPPER(LEFT(gym_name, ' . $length . '))' . SP;
+    }
+    $select .= 'ELSE UPPER(LEFT(gym_name, 1)) END AS first_letter';
+    $group_order = ' GROUP BY 1 ORDER BY gym_name';
+  }
+  $rs = my_query(
+    $select .
+    ' FROM gyms ' .
+    $queryConditions . ' ' .
+    $gymareaQuery .
+    $group_order .
+    $collateQuery
   );
-  // Init empty keys array.
-  $keys = [];
-
   while ($gym = $rs->fetch()) {
-    if($gym['id'] == NULL) continue;
-    $active_raid = active_raid_duplication_check($gym['id']);
-
-    $gym_name = $gym['gym_name'];
-    // Show Ex-Gym-Marker?
-    if($config->RAID_CREATION_EX_GYM_MARKER && $gym['ex_gym'] == 1) {
-      $ex_raid_gym_marker = (strtolower($config->RAID_EX_GYM_MARKER) == 'icon') ? EMOJI_STAR : $config->RAID_EX_GYM_MARKER;
-      $gym_name = $ex_raid_gym_marker . SP . $gym['gym_name'];
-    }
-    // Add warning emoji for active raid
-    if ($active_raid > 0) {
-      $gym_name = EMOJI_WARN . SP . $gym_name;
-    }
-    $callback = [
-      'callbackAction' => $menuActions[$buttonAction],
-      'g' => $gym['id'],
-      'ga' => $gymareaId,
-      'h' => $showHidden,
-    ];
-    if($buttonAction == 'list') $callback['r'] = $active_raid;
+    // Add first letter to keys array
     $keys[] = array(
-      'text'          => $gym_name,
-      'callback_data' => formatCallbackData($callback)
+      'text'          => $gym['first_letter'],
+      'callback_data' => formatCallbackData(['callbackAction' => 'gymMenu', 'a' => $buttonAction, 'stage' => $stage+1, 'fl' => $gym['first_letter'], 'ga' => $gymareaId])
     );
   }
 
   // Get the inline key array.
-  return [inline_key_array($keys, 1), false];
+  return [inline_key_array($keys, 4), true];
 }
 /**
  * Raid edit gym keys with active raids marker.
  * @param string $firstLetter
  * @param bool $showHidden
  * @param string $gymareaQuery
- * @param string $action
+ * @param string $buttonAction
  * @return array
  */
-function createGymListKeysByFirstLetter($firstLetter, $showHidden, $gymareaQuery = '', $action = '', $gymareaId = false) {
-  global $config, $menuActions;
+function createGymListKeysByFirstLetter($firstLetter, $showHidden, $gymareaQuery = '', $buttonAction = '', $gymareaId = false) {
+  global $config, $menuActions, $botUser;
   // Length of first letter.
   // Fix chinese chars, prior: $first_length = strlen($first);
   $first_length = strlen(utf8_decode($firstLetter));
@@ -281,15 +255,29 @@ function createGymListKeysByFirstLetter($firstLetter, $showHidden, $gymareaQuery
   }
   $show_gym = $showHidden ? 0 : 1;
 
+  $eventQuery = 'event IS NULL';
+  if($botUser->accessCheck('ex-raids', true)) {
+    if($botUser->accessCheck('event-raids', true))
+      $eventQuery = '';
+    else
+      $eventQuery .= ' OR event = ' . EVENT_ID_EX;
+  }elseif($botUser->accessCheck('event-raids', true)) {
+    $eventQuery = 'event != ' . EVENT_ID_EX .' OR event IS NULL';
+  }
+  $eventQuery = ($eventQuery == '') ? ' ' : ' AND ('.$eventQuery.') ';
+
+  $letterQuery = ($firstLetter != '') ? 'AND UPPER(LEFT(gym_name, ' . $first_length . ')) = UPPER(\'' . $firstLetter . '\')' : '';
+
   $query_collate = ($config->MYSQL_SORT_COLLATE != '') ? 'COLLATE ' . $config->MYSQL_SORT_COLLATE : '';
   // Get gyms from database
   $rs = my_query('
-    SELECT  gyms.id, gyms.gym_name, gyms.ex_gym
+    SELECT  gyms.id, gyms.gym_name, gyms.ex_gym,
+            case when (select 1 from raids where gym_id = gyms.id and end_time > utc_timestamp() '.$eventQuery.' LIMIT 1) = 1 then 1 else 0 end as active_raid
     FROM    gyms
-    WHERE   UPPER(LEFT(gym_name, ' . $first_length . ')) = UPPER(\'' . $firstLetter . '\')
+    WHERE   show_gym = ?
+    ' . $letterQuery . '
     ' . $not . '
     ' . $gymareaQuery . '
-    AND     show_gym = ?
     ORDER BY  gym_name ' . $query_collate
     , [$show_gym]
   );
@@ -298,8 +286,7 @@ function createGymListKeysByFirstLetter($firstLetter, $showHidden, $gymareaQuery
   $keys = [];
 
   while ($gym = $rs->fetch()) {
-    $active_raid = active_raid_duplication_check($gym['id']);
-    if($action == 'list' && $active_raid == 0) continue;
+    if ($buttonAction == 'list' && $gym['active_raid'] == 0) continue;
     // Show Ex-Gym-Marker?
     if($config->RAID_CREATION_EX_GYM_MARKER && $gym['ex_gym'] == 1) {
       $ex_raid_gym_marker = (strtolower($config->RAID_EX_GYM_MARKER) == 'icon') ? EMOJI_STAR : $config->RAID_EX_GYM_MARKER;
@@ -308,17 +295,16 @@ function createGymListKeysByFirstLetter($firstLetter, $showHidden, $gymareaQuery
       $gym_name = $gym['gym_name'];
     }
     // Add warning emoji for active raid
-    if ($active_raid > 0) {
+    if ($gym['active_raid'] == 1) {
       $gym_name = EMOJI_WARN . SP . $gym_name;
     }
     $callback = [
-      'callbackAction' => $menuActions[$action],
+      'callbackAction' => $menuActions[$buttonAction],
       'g' => $gym['id'],
       'ga' => $gymareaId,
+      'fl' => $firstLetter,
       'h' => $showHidden,
     ];
-    if($action == 'list') $callback['r'] = $active_raid;
-    else $callback['fl'] = $firstLetter;
     $keys[] = array(
       'text'          => $gym_name,
       'callback_data' => formatCallbackData($callback)
