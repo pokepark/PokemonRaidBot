@@ -109,6 +109,8 @@ $keys = raid_edit_raidlevel_keys($data, $admin_access);
 
 $backData = $data;
 $backData['callbackAction'] = 'gymMenu';
+$backData['a'] = 'create';
+$backData['stage'] = 2;
 // Add navigation keys.
 $keys[] = [
   [

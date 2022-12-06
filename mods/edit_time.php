@@ -15,8 +15,8 @@ $botUser->accessCheck('create');
 $raid_id = $data['r'] ?? 0;
 $gym_id = $data['g'] ?? 0;
 $event_id = $data['e'] ?? NULL;
-$raid_level = $data['rl'];
-$pokemon_table_id = $data['p'];
+$raid_level = $data['rl'] ?? 0;
+$pokemon_table_id = $data['p'] ?? 0;
 $starttime = $data['t'] ?? 0;
 $opt_arg = $data['o'] ?? 'new-raid';
 
@@ -190,7 +190,7 @@ debug_log($keys);
 
 // Build callback message string.
 if ($opt_arg != 'more' && $event_id == NULL) {
-  $callback_response = getTranslation('start_date_time') . ' ' . $arg_time;
+  $callback_response = 'OK';
 } else {
   $callback_response = getTranslation('raid_starts_when_view_changed');
 }
