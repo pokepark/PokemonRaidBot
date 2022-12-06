@@ -102,13 +102,13 @@ if($rs->rowcount() == 1) {
     $keys[] = [
       [
         'text'          => $i . '. ' . $raid_pokemon_name,
-        'callback_data' => formatCallbackData(['callbackAction' => 'list_raid', 'r' => $raid['id']])
+        'callback_data' => formatCallbackData(['list_raid', 'r' => $raid['id']])
       ]
     ];
     $i++;
   }
   $callback = [
-    'callbackAction' => 'gymMenu',
+    'gymMenu',
     'stage' => 2,
     'a' => 'list',
     'fl' => $data['fl'],

@@ -47,7 +47,7 @@ if($botUser->accessCheck('raid-duration', true)) {
   $keys[] = [
     [
       'text'          => getTranslation('change_raid_duration'),
-      'callback_data' => formatCallbackData(['callbackAction' => 'edit_time', 'r' => $id, 'o' => 'm'])
+      'callback_data' => formatCallbackData(['edit_time', 'r' => $id, 'o' => 'm'])
     ]
   ];
 }

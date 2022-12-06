@@ -35,15 +35,15 @@ if ($duplicate_id > 0) {
     $msg .= getTranslation('inspect_raid_or_create_event') . ':';
 
     $eventData = $backData = $data;
-    $eventData['callbackAction'] = 'edit_event';
-    $backData['callbackAction'] = 'gymMenu';
+    $eventData[0] = 'edit_event';
+    $backData[0] = 'gymMenu';
     $backData['stage'] = 2;
     $backData['a'] = 'create';
     $keys = [
       [
         [
           'text'          => getTranslation('saved_raid'),
-          'callback_data' => formatCallbackData(['callbackAction' => 'raids_list', 'id' => $duplicate_id])
+          'callback_data' => formatCallbackData(['raids_list', 'id' => $duplicate_id])
         ]
       ],
       [
@@ -59,7 +59,7 @@ if ($duplicate_id > 0) {
         ],
         [
           'text'          => getTranslation('exit'),
-          'callback_data' => formatCallbackData(['callbackAction' => 'exit'])
+          'callback_data' => 'exit'
         ]
       ],
     ];
@@ -87,7 +87,7 @@ if ($duplicate_id > 0) {
     }
     $keys[][] = [
       'text' => getTranslation('abort'),
-      'callback_data' => formatCallbackData(['callbackAction' => 'exit'])
+      'callback_data' => 'exit'
     ];
   }
 
@@ -108,7 +108,7 @@ if ($duplicate_id > 0) {
 $keys = raid_edit_raidlevel_keys($data, $admin_access);
 
 $backData = $data;
-$backData['callbackAction'] = 'gymMenu';
+$backData[0] = 'gymMenu';
 $backData['a'] = 'create';
 $backData['stage'] = 2;
 // Add navigation keys.
@@ -119,7 +119,7 @@ $keys[] = [
   ],
   [
     'text'          => getTranslation('abort'),
-    'callback_data' => formatCallbackData(['callbackAction' => 'exit'])
+    'callback_data' => 'exit'
   ]
 ];
 

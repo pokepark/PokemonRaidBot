@@ -27,13 +27,13 @@ if ($gymId > 0 && $confirm == false) {
     [
       [
         'text'          => getTranslation('yes'),
-        'callback_data' => formatCallbackData(['callbackAction' => 'gym_delete', 'g' => $gymId, 'c' => 1])
+        'callback_data' => formatCallbackData(['gym_delete', 'g' => $gymId, 'c' => 1])
       ]
     ],
     [
       [
         'text'          => getTranslation('no'),
-        'callback_data' => formatCallbackData(['callbackAction' => 'gym_edit_details', 'g' => $gymId])
+        'callback_data' => formatCallbackData(['gym_edit_details', 'g' => $gymId])
       ]
     ]
   ];

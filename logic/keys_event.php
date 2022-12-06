@@ -8,7 +8,7 @@
  */
 function keys_event($callbackData, $action, $admin_access = [false,false]) {
   $keys = [];
-  $callbackData['callbackAction'] = $action;
+  $callbackData[0] = $action;
   if($admin_access[1] === true) {
     $q = my_query('
       SELECT  id,

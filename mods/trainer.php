@@ -69,7 +69,7 @@ if ($config->ENABLE_GYM_AREAS == true) {
   $keys[] = [
     [
       'text'          => getTranslation('default_gymarea'),
-      'callback_data' => formatCallbackData(['callbackAction' => 'trainerGymarea'])
+      'callback_data' => 'trainerGymarea'
     ]
   ];
 }

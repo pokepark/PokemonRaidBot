@@ -169,8 +169,8 @@ function share_keys($id, $action, $update, $raidLevel = '', $chats = '', $hideGe
  */
 function formatCallbackData($array)
 {
-  $return = $array['callbackAction'] . '|';
-  unset($array['callbackAction']);
+  $return = $array[0] . '|';
+  unset($array[0]);
   foreach($array as $key => $value) {
     $return .= $key . '=' . $value . '|';
   }

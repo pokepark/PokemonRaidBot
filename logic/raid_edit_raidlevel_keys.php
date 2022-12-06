@@ -40,7 +40,7 @@ function raid_edit_raidlevel_keys($callbackData, $admin_access = [false,false], 
     // Add key for pokemon if we have just 1 pokemon for a level
     if($level['raid_level_count'] != 1) {
       // Raid level and action
-      $buttonData['callbackAction'] = 'edit_pokemon';
+      $buttonData[0] = 'edit_pokemon';
       $buttonData['rl'] = $level['raid_level'];
       // Add key for raid level
       $keys[] = array(
@@ -65,7 +65,7 @@ function raid_edit_raidlevel_keys($callbackData, $admin_access = [false,false], 
       ', [$level['raid_level']]
     );
     $pokemon = $query_mon->fetch();
-    $buttonData['callbackAction'] = 'edit_starttime';
+    $buttonData[0] = 'edit_starttime';
     $buttonData['rl'] = $level['raid_level'];
     $buttonData['p'] = $pokemon['id'];
     // Add key for pokemon
@@ -78,7 +78,7 @@ function raid_edit_raidlevel_keys($callbackData, $admin_access = [false,false], 
   // Add key for raid event if user allowed to create event raids
   if(($admin_access[1] === true or $admin_access[0] === true) && $event === false) {
     $eventData = $callbackData;
-    $eventData['callbackAction'] = 'edit_event';
+    $eventData[0] = 'edit_event';
     $keys[] = array(
       'text'          => getTranslation('event'),
       'callback_data' => formatCallbackData($eventData)

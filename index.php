@@ -48,11 +48,11 @@ if (isset($update['callback_query']['data'])) {
   // Split callback data and assign to data array.
   if(count($splitDataOld) > 2) {
     $data['id'] = $splitDataOld[0];
-    $data['callbackAction'] = $splitDataOld[1];
+    $data[0] = $splitDataOld[1];
     $data['arg'] = $splitDataOld[2];
   }else {
     $splitData = explode('|', $thedata);
-    $data['callbackAction'] = $splitData[0];
+    $data[0] = $splitData[0];
     unset($splitData[0]);
     foreach($splitData as $dataPiece) {
       [$key, $value] = explode('=', $dataPiece, 2);

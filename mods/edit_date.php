@@ -20,7 +20,7 @@ $buttonData = $data;
 if (strlen($raid_time) == 8) {
   debug_log('Generating buttons for each hour of the day');
   // Buttons for each hour
-  $buttonData['callbackAction'] = 'edit_date';
+  $buttonData[0] = 'edit_date';
   for ($i = 0; $i <= 23; $i = $i + 1) {
     $buttonData['t'] = $data['t'] . str_pad($i, 2, '0', STR_PAD_LEFT);
     // Create the keys.
@@ -38,7 +38,7 @@ if (strlen($raid_time) == 8) {
   debug_log('Generating buttons for minute of the hour');
   $hour = substr($raid_time,8,2);
   // Buttons for each minute
-  $buttonData['callbackAction'] = 'edit_date';
+  $buttonData[0] = 'edit_date';
   for ($i = 0; $i <= 45; $i = $i + 15) {
     $buttonData['t'] = $data['t'] . str_pad($i, 2, '0', STR_PAD_LEFT);
     // Create the keys.
@@ -73,7 +73,7 @@ if (strlen($raid_time) == 8) {
   debug_log('Waiting for confirmation to save the raid');
 
   // Adding button to continue with next step in raid creation
-  $buttonData['callbackAction'] = 'edit_time';
+  $buttonData[0] = 'edit_time';
   $buttonData['t'] = $utc_raid_time;
   $keys[] = array(
     'text'          => getTranslation('next'),
@@ -93,7 +93,7 @@ $nav_keys = [];
 // Back key id, action and arg
 if(substr_count($raid_time, '-') == 1 || substr_count($raid_time, '-') == 4) {
   $backData = $data;
-  $backData['callbackAction'] = 'edit_starttime';
+  $backData[0] = 'edit_starttime';
   unset($backData['t']);
   $nav_keys[] = [
     'text' => getTranslation('back'),
@@ -103,7 +103,7 @@ if(substr_count($raid_time, '-') == 1 || substr_count($raid_time, '-') == 4) {
 
 $nav_keys[] = [
   'text' => getTranslation('abort'),
-  'callback_data' => formatCallbackData(['callbackAction' => 'exit'])
+  'callback_data' => 'exit'
 ];
 $nav_keys = inline_key_array($nav_keys, 2);
 

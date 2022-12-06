@@ -31,7 +31,7 @@ if($event_id != NULL or $raid_level == 9) {
   $days = ($raid_level == 9) ? 1 : 14;
   unset($data['o']);
   $buttonData = $data;
-  $buttonData['callbackAction'] = 'edit_date';
+  $buttonData[0] = 'edit_date';
   // Drop these from callback_data string, these are no longer needed
   unset($buttonData['fl']);
   unset($buttonData['ga']);
@@ -75,7 +75,7 @@ if($event_id != NULL or $raid_level == 9) {
 
   // Copy received callbackData to new variable that we can edit
   $buttonData = $data;
-  $buttonData['callbackAction'] = 'edit_time';
+  $buttonData[0] = 'edit_time';
   if ($arg == "min") {
     // Set switch view.
     $switch_text = getTranslation('raid_starts_when_clocktime_view');
@@ -111,7 +111,7 @@ if($event_id != NULL or $raid_level == 9) {
   // Init empty keys other options array.
   $keys_opt = [];
   $keyData = $data;
-  $keyData['callbackAction'] = 'edit_time';
+  $keyData[0] = 'edit_time';
   $keyData['o'] = 'm';
   $keyData['t'] = utctime($now,"H-i");
   // Raid already running
@@ -119,7 +119,7 @@ if($event_id != NULL or $raid_level == 9) {
     'text'	    => getTranslation('is_raid_active'),
     'callback_data' => formatCallbackData($keyData)
   );
-  $keyData['callbackAction'] = 'edit_starttime';
+  $keyData[0] = 'edit_starttime';
   $keyData['o'] = $switch_view;
   unset($keyData['t']);
   // Switch view: clocktime / minutes until start
@@ -152,7 +152,7 @@ if (!$keys) {
   ];
 } else {
   $backData = $data;
-  $backData['callbackAction'] = 'edit_pokemon';
+  $backData[0] = 'edit_pokemon';
   // Add navigation keys.
   $keys[] = [
     [
@@ -161,7 +161,7 @@ if (!$keys) {
     ],
     [
       'text' => getTranslation('abort'),
-      'callback_data' => formatCallbackData(['callbackAction' => 'exit'])
+      'callback_data' => 'exit'
     ]
   ];
 }

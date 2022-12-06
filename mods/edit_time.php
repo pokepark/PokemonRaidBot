@@ -147,7 +147,7 @@ if($opt_arg == 'm') {
     $keys[] = array(
     // Just show the time, no text - not everyone has a phone or tablet with a large screen...
       'text'          => floor($i / 60) . ':' . str_pad($i % 60, 2, '0', STR_PAD_LEFT),
-      'callback_data' => formatCallbackData(['callbackAction' => 'edit_save', 'd' => $i, 'r' => $raid_id])
+      'callback_data' => formatCallbackData(['edit_save', 'd' => $i, 'r' => $raid_id])
     );
   }
 
@@ -162,7 +162,7 @@ if($opt_arg == 'm') {
   // Reset data array
   $data = [];
   $data['r'] = $raid_id;
-  $data['callbackAction'] = 'edit_save';
+  $data[0] = 'edit_save';
   $data['d'] = $raidduration;
 
   // Write to log.

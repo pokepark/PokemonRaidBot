@@ -53,7 +53,7 @@ if(!empty($keys_share)) {
 // Exit key
 $keys[][] = [
   'text' => getTranslation('done'),
-  'callback_data' => formatCallbackData(['callbackAction' => 'exit'])
+  'callback_data' => 'exit'
 ];
 
 // Get message.

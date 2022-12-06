@@ -29,7 +29,7 @@ function gymMenu($buttonAction, $showHidden, $stage, $firstLetter = false, $gyma
   // Stage 2: Gym names
   $stage = ($config->ENABLE_GYM_AREAS && $stage == 1 && $gymareaId == false) ? 0 : $stage;
   [$gymareaName, $gymareaKeys, $gymareaQuery] = ($config->ENABLE_GYM_AREAS) ? getGymareas($gymareaId, $stage, $buttonAction) : ['', [], ''];
-  if($stage == 2)
+  if($stage == 2 && $firstLetter != '')
     $gymKeys = createGymListKeysByFirstLetter($firstLetter, $showHidden, $gymareaQuery, $buttonAction, $gymareaId);
   else
     $gymKeys = createGymKeys($buttonAction, $showHidden, $gymareaId, $gymareaQuery, $stage);
@@ -53,56 +53,52 @@ function gymMenu($buttonAction, $showHidden, $stage, $firstLetter = false, $gyma
   if($config->RAID_VIA_LOCATION_FUNCTION == 'remote' && $buttonAction == 'list') {
     $query_remote = my_query('SELECT count(*) as count FROM raids LEFT JOIN gyms on raids.gym_id = gyms.id WHERE raids.end_time > (UTC_TIMESTAMP() - INTERVAL 10 MINUTE) AND temporary_gym = 1');
     if($query_remote->fetch()['count'] > 0) {
-      $keys = array_merge($keys, [[[
+      $keys[][] = [
         'text'          => getTranslation('remote_raids'),
-        'callback_data' => formatCallbackData(['callbackAction' => 'list_remote_raids'])
-      ]]]);
+        'callback_data' => 'list_remote_raids'
+      ];
     }
   }
   // Merge keys.
-  if($stage < 2 && $showHidden == 0) {
+  if(($stage < 2 or ($stage == 2 && $firstLetter == '')) && $showHidden == 0) {
     $keys = array_merge($keys, inline_key_array($gymareaKeys, 2));
   }
   // Add key for hidden gyms.
   if($buttonAction == 'gym') {
     if($stage == 1 && $showHidden == 0) {
       // Add key for hidden gyms.
-      $h_keys[] = [
-        [
-          'text'          => getTranslation('hidden_gyms'),
-          'callback_data' => formatCallbackData(['callbackAction' => 'gymMenu', 'h' => 1, 'a' => 'gym', 'ga' => $gymareaId])
-        ]
+      $h_keys[][] = [
+        'text'          => getTranslation('hidden_gyms'),
+        'callback_data' => formatCallbackData(['gymMenu', 'h' => 1, 'a' => 'gym', 'ga' => $gymareaId])
       ];
       $keys = array_merge($h_keys, $keys);
     }
     if($stage == 0 && $botUser->accessCheck('gym-add', true)) {
-      $keys[] = [
-        [
-          'text'          => getTranslation('gym_create'),
-          'callback_data' => formatCallbackData(['callbackAction' => 'gym_create'])
-        ]
+      $keys[][] = [
+        'text'          => getTranslation('gym_create'),
+        'callback_data' => 'gym_create'
       ];
     }
   }
-  if($stage == 1 && $config->DEFAULT_GYM_AREA === false) {
+  if((($stage == 1 or ($stage == 2 && $firstLetter == '')) && $config->DEFAULT_GYM_AREA === false)) {
     $backKey = [
       'text'          => getTranslation('back'),
-      'callback_data' => formatCallbackData(['callbackAction' => 'gymMenu', 'stage' => 0, 'a' => $buttonAction])
+      'callback_data' => formatCallbackData(['gymMenu', 'stage' => 0, 'a' => $buttonAction])
     ];
-  }elseif($stage == 2) {
+  }elseif($stage == 2 && $firstLetter !== '') {
     $backKey = [
       'text'          => getTranslation('back'),
-      'callback_data' => formatCallbackData(['callbackAction' => 'gymMenu', 'stage' => 1, 'a' => $buttonAction, 'h' => $showHidden, 'ga' => $gymareaId])
+      'callback_data' => formatCallbackData(['gymMenu', 'stage' => 1, 'a' => $buttonAction, 'h' => $showHidden, 'ga' => $gymareaId])
     ];
   }
   $abortKey = [
     'text'          => getTranslation('abort'),
-    'callback_data' => formatCallbackData(['callbackAction' => 'exit', 'arg' => 0])
+    'callback_data' => 'exit'
   ];
-  if(isset($backKey))
+  if (isset($backKey)) {
     $keys[] = [$backKey, $abortKey];
-  else
-    $keys[] = [$abortKey];
+  }else{
+    $keys[] = [$abortKey];}
   return ['keys' => $keys, 'gymareaTitle' => $gymareaTitle];
 }
 
@@ -123,18 +119,18 @@ function getGymareas($gymareaId, $stage, $buttonAction) {
       }
       $gymareaName = $area['name'];
       if($points[0] != $points[count($points)-1]) $points[] = $points[0];
-    } else {
-      $gymareaKeys[] = [
-        'text'          => $area['name'],
-        'callback_data' => formatCallbackData(['callbackAction' => 'gymMenu', 'a' => $buttonAction, 'stage' => 1, 'ga' => $area['id']])
-      ];
     }
+    if ($stage != 0 && $gymareaId == $area['id']) continue;
+    $gymareaKeys[] = [
+      'text'          => $area['name'],
+      'callback_data' => formatCallbackData(['gymMenu', 'a' => $buttonAction, 'stage' => 1, 'ga' => $area['id']])
+    ];
   }
   if(count($gymareaKeys) > 6 && $stage != 0) {
     // If list of area buttons is getting too large, replace it with a key that opens a submenu
     $gymareaKeys = [[
       'text'          => getTranslation('gymareas'),
-      'callback_data' => formatCallbackData(['callbackAction' => 'gymMenu', 'a' => $buttonAction, 'stage' => 0])
+      'callback_data' => formatCallbackData(['gymMenu', 'a' => $buttonAction, 'stage' => 0])
     ]];
   }
   $polygon_string = implode(',', $points);
@@ -148,7 +144,7 @@ function getGymareas($gymareaId, $stage, $buttonAction) {
  * @param int $gymareaId
  * @param string $gymareaQuery
  * @param int $stage
- * @return array
+ * @return array [keyArray, isArrayListOfLetters]
  */
 function createGymKeys($buttonAction, $showHidden, $gymareaId, $gymareaQuery, $stage) {
   global $config, $menuActions, $botUser;
@@ -183,7 +179,7 @@ function createGymKeys($buttonAction, $showHidden, $gymareaId, $gymareaQuery, $s
   // Found 20 or less gyms, print gym names
   if($gym_count['count'] <= 20) {
     $keys = createGymListKeysByFirstLetter('', $showHidden, $gymareaQuery, $buttonAction, $gymareaId);
-    return [$keys[0], false];
+    return $keys;
   }
 
   // If found over 20 gyms, print letters
@@ -217,7 +213,7 @@ function createGymKeys($buttonAction, $showHidden, $gymareaId, $gymareaQuery, $s
     // Add first letter to keys array
     $keys[] = array(
       'text'          => $gym['first_letter'],
-      'callback_data' => formatCallbackData(['callbackAction' => 'gymMenu', 'a' => $buttonAction, 'stage' => $stage+1, 'fl' => $gym['first_letter'], 'ga' => $gymareaId])
+      'callback_data' => formatCallbackData(['gymMenu', 'a' => $buttonAction, 'stage' => $stage+1, 'fl' => $gym['first_letter'], 'ga' => $gymareaId])
     );
   }
 
@@ -299,7 +295,7 @@ function createGymListKeysByFirstLetter($firstLetter, $showHidden, $gymareaQuery
       $gym_name = EMOJI_WARN . SP . $gym_name;
     }
     $callback = [
-      'callbackAction' => $menuActions[$buttonAction],
+      $menuActions[$buttonAction],
       'g' => $gym['id'],
       'ga' => $gymareaId,
       'fl' => $firstLetter,
@@ -314,6 +310,6 @@ function createGymListKeysByFirstLetter($firstLetter, $showHidden, $gymareaQuery
   // Get the inline key array.
   $keys = inline_key_array($keys, 1);
 
-  return [$keys];
+  return [$keys, false];
 
 }

@@ -27,30 +27,30 @@ if($id == 0) {
   // All raid level keys.
   $keys[][] = array(
     'text'          => getTranslation('pokedex_all_raid_level'),
-    'callback_data' => formatCallbackData(['callbackAction' => 'pogoinfo', 'rl' => RAID_LEVEL_ALL])
+    'callback_data' => formatCallbackData(['pogoinfo', 'rl' => RAID_LEVEL_ALL])
   );
 
   // Add key for each raid level
   foreach($levels as $l) {
     $keys[][] = array(
       'text'          => getTranslation($l . 'stars'),
-      'callback_data' => formatCallbackData(['callbackAction' => 'pogoinfo', 'rl' => $l])
+      'callback_data' => formatCallbackData(['pogoinfo', 'rl' => $l])
     );
   }
   $keys[][] = array(
     'text'          => getTranslation('1stars') . ' & ' . getTranslation('3stars'),
-    'callback_data' => formatCallbackData(['callbackAction' => 'pogoinfo', 'rl' => '1,3'])
+    'callback_data' => formatCallbackData(['pogoinfo', 'rl' => '1,3'])
   );
 
   // Add back and abort buttons
   $keys[] = [
     [
       'text'          => getTranslation('back'),
-      'callback_data' => formatCallbackData(['callbackAction' => 'pokedex_import'])
+      'callback_data' => 'pokedex_import'
     ],
     [
       'text'          => getTranslation('abort'),
-      'callback_data' => formatCallbackData(['callbackAction' => 'exit'])
+      'callback_data' => 'exit'
     ]
   ];
 
@@ -185,8 +185,8 @@ foreach($raiddata as $tier => $tier_pokemon) {
       $e = $exclusions;
       $e[] = $pokemon_arg;
       $keyAction = ($action == 's') ?
-        ['callbackAction' => 'pokedex_edit_pokemon', 'id' => $dex_id . "-" . $dex_form, 'arg' => ''] :
-        ['callbackAction' => 'pogoinfo', 'rl' => $id, 'e' => implode('#', $e)];
+        ['pokedex_edit_pokemon', 'id' => $dex_id . "-" . $dex_form, 'arg' => ''] :
+        ['pogoinfo', 'rl' => $id, 'e' => implode('#', $e)];
       // Add key
       $keys[] = array(
         'text'          => $keyText,
@@ -226,20 +226,20 @@ if($action == 's') {
   // Back button.
   $nav_keys[] = array(
     'text'          => getTranslation('back'),
-    'callback_data' => formatCallbackData(['callbackAction' => 'pogoinfo'])
+    'callback_data' => 'pogoinfo'
   );
 
   // Save button.
   $nav_keys[] = array(
     'text'          => EMOJI_DISK,
-    'callback_data' => formatCallbackData(['callbackAction' => 'pogoinfo', 'rl' => $id, 'a' => 's', 'e' => implode('#', $exclusions)])
+    'callback_data' => formatCallbackData(['pogoinfo', 'rl' => $id, 'a' => 's', 'e' => implode('#', $exclusions)])
   );
 
   // Reset button.
   if(isset($exclusions[0])) {
     $nav_keys[] = array(
       'text'          => getTranslation('reset'),
-      'callback_data' => formatCallbackData(['callbackAction' => 'pogoinfo', 'rl' => $id])
+      'callback_data' => formatCallbackData(['pogoinfo', 'rl' => $id])
     );
   }
 

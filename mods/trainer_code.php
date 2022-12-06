@@ -25,6 +25,7 @@ if($action == 'cancel') {
 
   $data['arg'] = $data['id'] = 0;
   require_once(ROOT_PATH . '/mods/trainer.php');
+  exit;
 }elseif($action == 'delete') {
   my_query('DELETE FROM user_input WHERE user_id = :user_id AND handler=\'change_trainercode\'', ['user_id' => $user_id]);
   my_query('
@@ -39,37 +40,34 @@ if($action == 'cancel') {
 
   $data['arg'] = $data['id'] = 0;
   require_once(ROOT_PATH . '/mods/trainer.php');
-}else {
-  $user_data = get_user($user_id, false, true);
-  // Build message string.
-  $msg = '<b>' . getTranslation('your_trainer_info') . '</b>' . CR;
-  $msg .= $user_data['message'] . CR;
-
-  // Save the message id to db so we can delete it later
-  $modifiers = json_encode(['old_message_id'=>$update['callback_query']['message']['message_id']]);
-
-  $msg .= '<b>' . getTranslation('trainercode_select') . '</b>';
-  // Data for handling response from the user
-  my_query('INSERT INTO user_input SET user_id = ?, handler = \'change_trainercode\', modifiers = ?',[$user_id, $modifiers]);
-
-  // Build callback message string.
-  $callback_response = 'OK';
-
-  $keys[] = [
-    [
-      'text'          => getTranslation('back'),
-      'callback_data' => '0:trainer_code:cancel'
-    ],[
-      'text'          => getTranslation('delete'),
-      'callback_data' => '0:trainer_code:delete'
-    ]
-  ];
-  // Answer callback.
-  answerCallbackQuery($update['callback_query']['id'], $callback_response);
-
-  // Edit message.
-  edit_message($update, $msg, $keys, false);
+  exit;
 }
+$user_data = get_user($user_id, false, true);
+// Build message string.
+$msg = '<b>' . getTranslation('your_trainer_info') . '</b>' . CR;
+$msg .= $user_data['message'] . CR;
 
-// Exit.
-exit();
+// Save the message id to db so we can delete it later
+$modifiers = json_encode(['old_message_id'=>$update['callback_query']['message']['message_id']]);
+
+$msg .= '<b>' . getTranslation('trainercode_select') . '</b>';
+// Data for handling response from the user
+my_query('INSERT INTO user_input SET user_id = ?, handler = \'change_trainercode\', modifiers = ?',[$user_id, $modifiers]);
+
+// Build callback message string.
+$callback_response = 'OK';
+
+$keys[] = [
+  [
+    'text'          => getTranslation('back'),
+    'callback_data' => '0:trainer_code:cancel'
+  ],[
+    'text'          => getTranslation('delete'),
+    'callback_data' => '0:trainer_code:delete'
+  ]
+];
+// Answer callback.
+answerCallbackQuery($update['callback_query']['id'], $callback_response);
+
+// Edit message.
+edit_message($update, $msg, $keys, false);

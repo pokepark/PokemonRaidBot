@@ -18,7 +18,7 @@ $admin_access[1] = $botUser->accessCheck('event-raids', true);
 $keys = keys_event($data, 'edit_event_raidlevel', $admin_access);
 
 $backData = $data;
-$backData['callbackAction'] = 'edit_raidlevel';
+$backData[0] = 'edit_raidlevel';
 
 // Add navigation keys.
 $keys[] = [
@@ -28,7 +28,7 @@ $keys[] = [
   ],
   [
     'text' => getTranslation('abort'),
-    'callback_data' => formatCallbackData(['callbackAction' => 'exit'])
+    'callback_data' => 'exit'
   ]
 ];
 

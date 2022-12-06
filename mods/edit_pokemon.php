@@ -30,7 +30,7 @@ $back_action = ($eventId == NULL) ? 'edit_raidlevel' : 'edit_event_raidlevel';
 
 // Add navigation keys.
 $backData = $data;
-$backData['callbackAction'] = $back_action;
+$backData[0] = $back_action;
 $keys[] = [
   [
     'text' => getTranslation('back'),
@@ -38,7 +38,7 @@ $keys[] = [
   ],
   [
     'text' => getTranslation('abort'),
-    'callback_data' => formatCallbackData(['callbackAction' => 'exit'])
+    'callback_data' => 'exit'
   ]
 ];
 

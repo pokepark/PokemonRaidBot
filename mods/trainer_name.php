@@ -15,7 +15,7 @@ $mode = $data['id'];
 $action = $data['arg'];
 
 // Set the user_id
-$user_id = $update['callback_query']['from']['id'];
+$user_id = $botUser->userId;
 
 if($action == 'cancel') {
   my_query('DELETE FROM user_input WHERE user_id = ? AND handler=\'change_trainername\'', [$user_id]);
@@ -25,6 +25,7 @@ if($action == 'cancel') {
 
   $data['arg'] = $data['id'] = 0;
   require_once(ROOT_PATH . '/mods/trainer.php');
+  exit;
 }elseif($action == 'delete') {
   my_query('DELETE FROM user_input WHERE user_id = ? AND handler = \'change_trainername\'', [$user_id]);
   my_query('
@@ -93,11 +94,11 @@ if($action != 'add') {
   }
 }
 $keys[] = [
-    [
-      'text'          => getTranslation('back'),
-      'callback_data' => $mode.':trainer_name:cancel'
-    ]
-  ];
+  [
+    'text'          => getTranslation('back'),
+    'callback_data' => '0:trainer_name:cancel'
+  ]
+];
 
   // Answer callback.
 answerCallbackQuery($update['callback_query']['id'], $callback_response);

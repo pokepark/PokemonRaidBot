@@ -28,18 +28,18 @@ foreach($json as $area) {
   if($area['id'] == $gymarea) $gymareaName = $area['name'];
   $keys[] = [
     'text'          => $area['name'],
-    'callback_data' => formatCallbackData(['callbackAction' => 'trainerGymarea', 'i' => $area['id']])
+    'callback_data' => formatCallbackData(['trainerGymarea', 'i' => $area['id']])
   ];
 }
 $keys = inline_key_array($keys, 2);
 $keys[] = [
   [
     'text'          => getTranslation('back'),
-    'callback_data' => formatCallbackData(['callbackAction' => 'trainer', 'arg' => 0])
+    'callback_data' => formatCallbackData(['trainer', 'arg' => 0])
   ],
   [
     'text'          => getTranslation('done'),
-    'callback_data' => formatCallbackData(['callbackAction' => 'exit', 'arg' => 1])
+    'callback_data' => formatCallbackData(['exit', 'arg' => 1])
   ]
 ];
 // Set message.

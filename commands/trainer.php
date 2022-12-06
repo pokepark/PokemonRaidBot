@@ -13,7 +13,7 @@ $botUser->accessCheck('trainer');
 // Set message.
 $msg = '<b>' . getTranslation('trainerinfo_set_yours') . '</b>';
 
-$user_id = $update['message']['from']['id'];
+$user_id = $botUser->userId;
 $msg .= CR . CR . get_user($user_id, false);
 
 // Init empty keys array.
@@ -42,12 +42,12 @@ $keys[] = [
   ]
 ];
 if ($config->RAID_AUTOMATIC_ALARM == false) {
-  $q_user = my_query("SELECT auto_alarm FROM users WHERE user_id = '{$user_id}' LIMIT 1");
+  $q_user = my_query('SELECT auto_alarm FROM users WHERE user_id = ? LIMIT 1', [$user_id]);
   $alarm_status = $q_user->fetch()['auto_alarm'];
   $keys[] = [
     [
       'text'          => ($alarm_status == 1 ? getTranslation('switch_alarm_off') . ' ' . EMOJI_NO_ALARM : getTranslation('switch_alarm_on') . ' ' . EMOJI_ALARM),
-      'callback_data' => '0:trainer:a'
+      'callback_data' => formatCallbackData(['trainerGymarea', 'a' => ($alarm_status == 1 ? 0 : 1)])
     ]
   ];
 }
@@ -63,7 +63,7 @@ if ($config->ENABLE_GYM_AREAS == true) {
   $keys[] = [
     [
       'text'          => getTranslation('default_gymarea'),
-      'callback_data' => formatCallbackData(['callbackAction' => 'trainerGymarea'])
+      'callback_data' => 'trainerGymarea'
     ]
   ];
 }

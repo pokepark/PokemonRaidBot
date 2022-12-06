@@ -37,7 +37,7 @@ function pokemon_keys($callbackData, $raid_level, $action, $event_id = false)
     ', ['raidLevel' => $raid_level, 'eggId' => $egg_id]
   );
   // Add key for each raid level
-  $callbackData['callbackAction'] = $action;
+  $callbackData[0] = $action;
   while ($pokemon = $rs->fetch()) {
     $callbackData['p'] = $pokemon['id'];
     $keys[] = array(

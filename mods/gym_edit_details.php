@@ -61,18 +61,18 @@ if(in_array($action, ['name','note','gps','addr'])) {
 
     $keys[0][] = [
       'text' => getTranslation('abort'),
-      'callback_data' => formatCallbackData(['callbackAction' => 'gym_edit_details', 'g' => $gym_id, 'a' => 'abort', 'd' => $dbh->lastInsertId()])
+      'callback_data' => formatCallbackData(['gym_edit_details', 'g' => $gym_id, 'a' => 'abort', 'd' => $dbh->lastInsertId()])
     ];
     if($action == 'note' && !empty($gym['gym_note'])) {
       $keys[0][] = [
         'text' => getTranslation('delete'),
-        'callback_data' => formatCallbackData(['callbackAction' => 'gym_edit_details', 'g' => $gym_id, 'a' => 'note', 'd' => $dbh->lastInsertId()])
+        'callback_data' => formatCallbackData(['gym_edit_details', 'g' => $gym_id, 'a' => 'note', 'd' => $dbh->lastInsertId()])
       ];
     }
     if($action == 'addr') {
       $keys[0][] = [
         'text' => getTranslation('gym_save_lookup_result'),
-        'callback_data' => formatCallbackData(['callbackAction' => 'gym_edit_details', 'g' => $gym_id, 'a' => 'addr', 'd' => $dbh->lastInsertId()])
+        'callback_data' => formatCallbackData(['gym_edit_details', 'g' => $gym_id, 'a' => 'addr', 'd' => $dbh->lastInsertId()])
       ];
     }
   }

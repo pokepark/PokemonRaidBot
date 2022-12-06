@@ -14,8 +14,8 @@ ddosCheck($update, $data);
 function verifyUpdate($update, $data) {
   global $metrics;
   if ($update['type'] == 'callback_query'
-    && (in_array($data['callbackAction'], ['overview_refresh', 'refresh_polls', 'getdb', 'update_bosses'])
-    or ($data['callbackAction'] == 'post_raid' && $update['skip_ddos'] == true))
+    && (in_array($data[0], ['overview_refresh', 'refresh_polls', 'getdb', 'update_bosses'])
+    or ($data[0] == 'post_raid' && $update['skip_ddos'] == true))
     or isset($update['cleanup']))
   {
     debug_log('Skipping DDOS check...','!');
@@ -51,7 +51,7 @@ function ddosCheck($update, $data) {
   // Get callback query data
   if (!isset($update['callback_query']) or !$update['callback_query']['data']) return;
   // Split callback data and assign to data array.
-  $splitAction = explode('_', $data['callbackAction']);
+  $splitAction = explode('_', $data[0]);
   // Check the action
   if ($splitAction[0] != 'vote') return;
 
