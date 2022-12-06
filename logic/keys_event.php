@@ -1,13 +1,14 @@
 <?php
 /**
  * Event keys.
- * @param $gym_id_plus_letter
+ * @param $callbackData
  * @param $action
  * @param $admin_access array of access rights [ex-raids, event-raids]
  * @return array
  */
-function keys_event($gym_id_plus_letter, $action, $admin_access = [false,false]) {
+function keys_event($callbackData, $action, $admin_access = [false,false]) {
   $keys = [];
+  $callbackData['callbackAction'] = $action;
   if($admin_access[1] === true) {
     $q = my_query('
       SELECT  id,
@@ -20,16 +21,18 @@ function keys_event($gym_id_plus_letter, $action, $admin_access = [false,false])
         info_log('Invalid event name on event '. $event['id']);
         continue;
       }
+      $callbackData['e'] = $event['id'];
       $keys[] = array(
         'text'          => $event['name'],
-        'callback_data' => $gym_id_plus_letter . ':' . $action . ':' . $event['id']
+        'callback_data' => formatCallbackData($callbackData)
       );
     }
   }
   if($admin_access[0] === true) {
+    $callbackData['e'] = 'X';
     $keys[] = array(
       'text'          => getTranslation("Xstars"),
-      'callback_data' => $gym_id_plus_letter . ':' . $action . ':X'
+      'callback_data' => formatCallbackData($callbackData)
     );
   }
   // Get the inline key array.

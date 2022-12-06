@@ -1,12 +1,13 @@
 <?php
 /**
  * Pokemon keys.
- * @param $gym_id_plus_letter
- * @param $raid_level
- * @param $event_id
+ * @param array $callbackData
+ * @param int $raid_level
+ * @param string $action
+ * @param int|bool $event_id
  * @return array
  */
-function pokemon_keys($gym_id_plus_letter, $raid_level, $action, $event_id = false)
+function pokemon_keys($callbackData, $raid_level, $action, $event_id = false)
 {
   global $config;
   // Init empty keys array.
@@ -36,10 +37,12 @@ function pokemon_keys($gym_id_plus_letter, $raid_level, $action, $event_id = fal
     ', ['raidLevel' => $raid_level, 'eggId' => $egg_id]
   );
   // Add key for each raid level
+  $callbackData['callbackAction'] = $action;
   while ($pokemon = $rs->fetch()) {
+    $callbackData['p'] = $pokemon['id'];
     $keys[] = array(
       'text'          => get_local_pokemon_name($pokemon['pokedex_id'], $pokemon['pokemon_form_id']),
-      'callback_data' => $gym_id_plus_letter . ':' . $action . ':' . (($event_id!==false) ? $event_id . ',' . $raid_level . ',' : '') . $pokemon['id']
+      'callback_data' => formatCallbackData($callbackData)
     );
   }
 

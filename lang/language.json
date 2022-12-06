@@ -1962,6 +1962,45 @@
     "FI": "Raidi on jo olemassa!",
     "ES": "¡La incursión ya existe!"
   },
+  "inspect_raid_or_create_event": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Inspect the existing raid or create a new event raid",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Tarkaste tallennettua raidia tai luo tapahtuma",
+    "ES": "TRANSLATE"
+  },
+  "saved_raid": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Show saved raid",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Tallennettu raidi",
+    "ES": "TRANSLATE"
+  },
+  "create_event_raid": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Create event raid",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Luo raiditapahtuma",
+    "ES": "TRANSLATE"
+  },
   "create_raid": {
     "NL": "Begin Raid in",
     "DE": "Erstelle Raid in",

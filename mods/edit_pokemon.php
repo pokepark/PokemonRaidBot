@@ -10,17 +10,12 @@ debug_log('edit_pokemon()');
 // Check access.
 $botUser->accessCheck('create');
 
-// Set the id.
-$gym_id_plus_letter = $data['id'];
-
-$arg_data = explode(",", $data['arg']);
-
 // Set the raid level and event.
-$event_id = $arg_data[0];
-$raid_level = $arg_data[1];
+$eventId = $data['e'] ?? NULL;
+$raidLevel = $data['rl'];
 
 // Check if we are creating an event
-if($event_id != "N") {
+if($eventId != NULL) {
   // If yes, go to date selection
   $action = "edit_time";
 }else {
@@ -29,39 +24,23 @@ if($event_id != "N") {
 }
 
 // Get the keys.
-$keys = pokemon_keys($gym_id_plus_letter, $raid_level, "edit_starttime", $event_id);
+$keys = pokemon_keys($data, $raidLevel, 'edit_starttime', $eventId);
 
-// No keys found.
-if (!$keys) {
-  $keys = [
-    [
-      [
-        'text'          => getTranslation('abort'),
-        'callback_data' => '0:exit:0'
-      ]
-    ]
-  ];
-} else {
-  if($event_id == "N") {
-    $back_id_arg = explode(',', $gym_id_plus_letter);
-    $back_id = $back_id_arg[1];
-    $back_action = 'edit_raidlevel';
-    $back_arg = $back_id_arg[0];
-  }else {
-    $back_id = $gym_id_plus_letter;
-    $back_action = 'edit_event_raidlevel';
-    $back_arg = $event_id;
-  }
+$back_action = ($eventId == NULL) ? 'edit_raidlevel' : 'edit_event_raidlevel';
 
-  // Add navigation keys.
-  $nav_keys = [];
-  $nav_keys[] = universal_inner_key($nav_keys, $back_id, $back_action, $back_arg, getTranslation('back'));
-  $nav_keys[] = universal_inner_key($nav_keys, $back_arg, 'exit', '2', getTranslation('abort'));
-  $nav_keys = inline_key_array($nav_keys, 2);
-
-  // Merge keys.
-  $keys = array_merge($keys, $nav_keys);
-}
+// Add navigation keys.
+$backData = $data;
+$backData['callbackAction'] = $back_action;
+$keys[] = [
+  [
+    'text' => getTranslation('back'),
+    'callback_data' => formatCallbackData($backData),
+  ],
+  [
+    'text' => getTranslation('abort'),
+    'callback_data' => formatCallbackData(['callbackAction' => 'exit'])
+  ]
+];
 
 // Build callback message string.
 $callback_response = 'OK';

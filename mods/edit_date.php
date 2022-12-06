@@ -9,61 +9,55 @@ debug_log('edit_date()');
 // Check access.
 $botUser->accessCheck('create');
 
-// Set the id.
-$id = $data['id'];
-$gym_id = explode(',',$data['id'])[0];
-
-// Get the argument.
-$arg = $data['arg'];
-$arg_data = explode(',', $arg);
-$event_id = $arg_data[0];
-$raid_level = $arg_data[1];
-$pokemon_id = $arg_data[2];
-$raid_time = $arg_data[3];
+$raid_time = $data['t'];
 
 // Init empty keys array and set keys count.
 $keys = [];
 $keys_count = 2;
 
-// Received: Year-Month-Day / 1970-01-01 / 2x "-"
-if (substr_count($raid_time, '-') == 2) {
+$buttonData = $data;
+// Received: YearMonthDay / 19700101
+if (strlen($raid_time) == 8) {
   debug_log('Generating buttons for each hour of the day');
   // Buttons for each hour
+  $buttonData['callbackAction'] = 'edit_date';
   for ($i = 0; $i <= 23; $i = $i + 1) {
+    $buttonData['t'] = $data['t'] . str_pad($i, 2, '0', STR_PAD_LEFT);
     // Create the keys.
     $keys[] = array(
       // Just show the time, no text - not everyone has a phone or tablet with a large screen...
       'text'          => str_pad($i, 2, '0', STR_PAD_LEFT) . ':xx',
-      'callback_data' => $id . ':edit_date:' . $arg . ' ' . str_pad($i, 2, '0', STR_PAD_LEFT) . '-'
+      'callback_data' => formatCallbackData($buttonData)
     );
   }
   // Set keys count and message.
   $keys_count = 4;
   $msg = getTranslation('raid_select_hour');
-// Received: Year-Month-Day Hour- / 1970-01-01 00- / 3x "-"
-} else if (substr_count($raid_time, '-') == 3) {
+// Received: YearMonthDayHour / 1970010100
+} else if (strlen($raid_time) == 10) {
   debug_log('Generating buttons for minute of the hour');
-  $hour = explode(" ", $raid_time);
-  $hour = $hour[1];
+  $hour = substr($raid_time,8,2);
   // Buttons for each minute
+  $buttonData['callbackAction'] = 'edit_date';
   for ($i = 0; $i <= 45; $i = $i + 15) {
+    $buttonData['t'] = $data['t'] . str_pad($i, 2, '0', STR_PAD_LEFT);
     // Create the keys.
     $keys[] = array(
       // Just show the time, no text - not everyone has a phone or tablet with a large screen...
-      'text'          => substr($hour, 0, -1) . ':' . str_pad($i, 2, '0', STR_PAD_LEFT),
-      'callback_data' => $id . ':edit_date:' . $arg . str_pad($i, 2, '0', STR_PAD_LEFT) . '-00'
+      'text'          => $hour . ':' . str_pad($i, 2, '0', STR_PAD_LEFT),
+      'callback_data' => formatCallbackData($buttonData)
     );
   }
   // Set keys count and message.
   $keys_count = 4;
   $msg = getTranslation('raid_select_start_time');
-// Received: Year-Month-Day Hour-Minute-Second / 1970-01-01 00-00-00 / 4x "-"
-} else if (substr_count($raid_time, '-') == 4) {
+// Received: YearMonthDayHourMinute / 197001010000
+} else if (strlen($raid_time) == 12) {
   debug_log('Received the following date for the raid: ' . $raid_time);
 
   // Format date, e.g 14 April 2019, 15:15h
   $tz = $config->TIMEZONE;
-  $tz_raid_time = DateTimeImmutable::createFromFormat('Y-m-d H-i-s', $raid_time, new DateTimeZone($tz));
+  $tz_raid_time = DateTimeImmutable::createFromFormat('YmdHi', $raid_time, new DateTimeZone($tz));
   $date_tz = $tz_raid_time->format('Y-m-d');
   $text_split = explode('-', $date_tz);
   $text_day = $text_split[2];
@@ -73,15 +67,17 @@ if (substr_count($raid_time, '-') == 2) {
 
   // Raid time in UTC
   $utc_raid_time = $tz_raid_time->setTimezone(new DateTimeZone('UTC'));
-  $utc_raid_time = $utc_raid_time->format('Y-m-d H-i-s');
+  $utc_raid_time = $utc_raid_time->format('YmdHi');
   debug_log('Converting date to UTC to store in database');
   debug_log('UTC date for the raid: ' . $utc_raid_time);
   debug_log('Waiting for confirmation to save the raid');
 
   // Adding button to continue with next step in raid creation
+  $buttonData['callbackAction'] = 'edit_time';
+  $buttonData['t'] = $utc_raid_time;
   $keys[] = array(
     'text'          => getTranslation('next'),
-    'callback_data' => $id . ':edit_time:' . $event_id . ','. $raid_level . ',' . $pokemon_id . ',' . $utc_raid_time . ',X,0'
+    'callback_data' => formatCallbackData($buttonData)
   );
 
   // Set message.
@@ -96,13 +92,19 @@ $nav_keys = [];
 
 // Back key id, action and arg
 if(substr_count($raid_time, '-') == 1 || substr_count($raid_time, '-') == 4) {
-  $back_id = $id;
-  $back_action = 'edit_starttime';
-  $back_arg = $arg;
-  $nav_keys[] = universal_inner_key($nav_keys, $back_id, $back_action, $back_arg, getTranslation('back'));
+  $backData = $data;
+  $backData['callbackAction'] = 'edit_starttime';
+  unset($backData['t']);
+  $nav_keys[] = [
+    'text' => getTranslation('back'),
+    'callback_data' => formatCallbackData($backData)
+  ];
 }
 
-$nav_keys[] = universal_inner_key($nav_keys, $gym_id, 'exit', '2', getTranslation('abort'));
+$nav_keys[] = [
+  'text' => getTranslation('abort'),
+  'callback_data' => formatCallbackData(['callbackAction' => 'exit'])
+];
 $nav_keys = inline_key_array($nav_keys, 2);
 
 // Merge keys.

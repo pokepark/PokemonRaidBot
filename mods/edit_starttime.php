@@ -10,23 +10,15 @@ debug_log('edit_starttime()');
 $botUser->accessCheck('create');
 
 // Get the argument.
-$arg_data = explode(",", $data['arg']);
-$event_id = $arg_data[0];
-$raid_level = $arg_data[1];
-$pokemon_id = $arg_data[2];
-$arg = "";
-// Check for options.
-if (isset($arg_data[3]))
-{
-  // Switch time display ( min / clock )
-  $arg = $arg_data[3];
-}
+$event_id = $data['e'] ?? NULL;
+$raid_level = $data['rl'];
+$arg = $data['o'] ?? '';
+
 // Set the id.
-$gym_id_plus_letter  = $data['id'];
-$gym_id = explode(',', $data['id'])[0];
+$gym_id  = $data['g'];
 
 // Are we creating an event?
-if($event_id != 'N' or $raid_level == 9) {
+if($event_id != NULL or $raid_level == 9) {
   // Init empty keys array.
   $keys = [];
 
@@ -37,22 +29,27 @@ if($event_id != 'N' or $raid_level == 9) {
 
   // Create date buttons. Two days for Elite Raids, 15 days for EX raids.
   $days = ($raid_level == 9) ? 1 : 14;
+  unset($data['o']);
+  $buttonData = $data;
+  $buttonData['callbackAction'] = 'edit_date';
+  // Drop these from callback_data string, these are no longer needed
+  unset($buttonData['fl']);
+  unset($buttonData['ga']);
   for ($d = 0; $d <= $days; $d++) {
     // Add day to today.
     $today_plus_d = $today->add(new DateInterval("P".$d."D"));
 
     // Format date, e.g 14 April 2019
-    $date_tz = $today_plus_d->format('Y-m-d');
-    $text_split = explode('-', $date_tz);
-    $text_day = $text_split[2];
-    $text_month = getTranslation('month_' . $text_split[1]);
-    $text_year = $text_split[0];
+    $date_tz = $today_plus_d->format('Ymd');
+    $text_day = $today_plus_d->format('d');
+    $text_month = getTranslation('month_' . $today_plus_d->format('m'));
+    $text_year = $today_plus_d->format('Y');
 
     // Add keys.
-    $cb_date = $today_plus_d->format('Y-m-d');
+    $buttonData['t'] = $date_tz;
     $keys[] = array(
       'text'          => $text_day . SP . $text_month . SP . $text_year,
-      'callback_data' => $gym_id_plus_letter . ':edit_date:' . $event_id . ',' . $raid_level . ',' . $pokemon_id . ',' . $cb_date
+      'callback_data' => formatCallbackData($buttonData)
     );
   }
 
@@ -76,43 +73,36 @@ if($event_id != 'N' or $raid_level == 9) {
   // Now
   $now = utcnow();
 
+  // Copy received callbackData to new variable that we can edit
+  $buttonData = $data;
+  $buttonData['callbackAction'] = 'edit_time';
   if ($arg == "min") {
     // Set switch view.
     $switch_text = getTranslation('raid_starts_when_clocktime_view');
     $switch_view = "clock";
     $key_count = 5;
 
-    for ($i = 1; $i <= $config->RAID_EGG_DURATION; $i = $i + 1) {
-      // Create new DateTime object, add minutes and convert back to string.
-      $now_plus_i = new DateTime($now, new DateTimeZone('UTC'));
-      $now_plus_i->add(new DateInterval('PT'.$i.'M'));
-      $now_plus_i = $now_plus_i->format("Y-m-d H:i:s");
-      // Create the keys.
-      $keys[] = array(
-        // Just show the time, no text - not everyone has a phone or tablet with a large screen...
-        'text'          => floor($i / 60) . ':' . str_pad($i % 60, 2, '0', STR_PAD_LEFT),
-        'callback_data' => $gym_id_plus_letter  . ':edit_time:' . $event_id . ',' . $raid_level . ',' . $pokemon_id . ',' . utctime($now_plus_i,"H-i")
-      );
-    }
   } else {
     // Set switch view.
     $switch_text = getTranslation('raid_starts_when_minutes_view');
     $switch_view = "min";
     // Small screen fix
     $key_count = 4;
+  }
+  $now_plus_i = new DateTime($now, new DateTimeZone('UTC'));
+  for ($i = 1; $i <= $config->RAID_EGG_DURATION; $i = $i + 1) {
+    $now_plus_i->add(new DateInterval('PT1M'));
+    $buttonData['t'] = $now_plus_i->format("H:i");
+    if ($arg == 'min')
+      $buttonText = floor($i / 60) . ':' . str_pad($i % 60, 2, '0', STR_PAD_LEFT);
+    else
+      $buttonText = dt2time($now_plus_i->format('Y-m-d H:i:s'));
 
-    for ($i = 1; $i <= $config->RAID_EGG_DURATION; $i = $i + 1) {
-      // Create new DateTime object, add minutes and convert back to string.
-      $now_plus_i = new DateTime($now, new DateTimeZone('UTC'));
-      $now_plus_i->add(new DateInterval('PT'.$i.'M'));
-      $now_plus_i = $now_plus_i->format("Y-m-d H:i:s");
-      // Create the keys.
-	    // Just show the time, no text - not everyone has a phone or tablet with a large screen...
-      $keys[] = array(
-	      'text'	        => dt2time($now_plus_i),
-        'callback_data' => $gym_id_plus_letter . ':edit_time:' . $event_id . ',' . $raid_level . ',' . $pokemon_id . ',' . utctime($now_plus_i,"H-i")
-      );
-    }
+    // Create the keys.
+    $keys[] = array(
+      'text'          => $buttonText,
+      'callback_data' => formatCallbackData($buttonData)
+    );
   }
 
   // Get the inline key array.
@@ -120,17 +110,22 @@ if($event_id != 'N' or $raid_level == 9) {
 
   // Init empty keys other options array.
   $keys_opt = [];
-
+  $keyData = $data;
+  $keyData['callbackAction'] = 'edit_time';
+  $keyData['o'] = 'm';
+  $keyData['t'] = utctime($now,"H-i");
   // Raid already running
   $keys_opt[] = array(
     'text'	    => getTranslation('is_raid_active'),
-    'callback_data' => $gym_id_plus_letter . ':edit_time:' . $event_id . ',' . $raid_level . ',' . $pokemon_id . ',' . utctime($now,"H-i").",more,0"
+    'callback_data' => formatCallbackData($keyData)
   );
-
+  $keyData['callbackAction'] = 'edit_starttime';
+  $keyData['o'] = $switch_view;
+  unset($keyData['t']);
   // Switch view: clocktime / minutes until start
   $keys_opt[] = array(
     'text'	    => $switch_text,
-    'callback_data' => $gym_id_plus_letter . ':edit_starttime:' . $event_id . ',' . $raid_level . ',' . $pokemon_id . ',' . $switch_view
+    'callback_data' => formatCallbackData($keyData)
   );
 
   // Get the inline key array.
@@ -156,19 +151,19 @@ if (!$keys) {
     ]
   ];
 } else {
-  // Back key id, action and arg
-  $back_id = $gym_id_plus_letter;
-  $back_action = 'edit_pokemon';
-  $back_arg = $event_id . ',' . $raid_level;
-
+  $backData = $data;
+  $backData['callbackAction'] = 'edit_pokemon';
   // Add navigation keys.
-  $nav_keys = [];
-  $nav_keys[] = universal_inner_key($nav_keys, $back_id, $back_action, $back_arg, getTranslation('back'));
-  $nav_keys[] = universal_inner_key($nav_keys, $gym_id, 'exit', '2', getTranslation('abort'));
-  $nav_keys = inline_key_array($nav_keys, 2);
-
-  // Merge keys.
-  $keys = array_merge($keys, $nav_keys);
+  $keys[] = [
+    [
+      'text' => getTranslation('back'),
+      'callback_data' => formatCallbackData($backData)
+    ],
+    [
+      'text' => getTranslation('abort'),
+      'callback_data' => formatCallbackData(['callbackAction' => 'exit'])
+    ]
+  ];
 }
 
 // Build callback message string.

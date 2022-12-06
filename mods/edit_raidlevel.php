@@ -13,31 +13,82 @@ require_once(LOGIC_PATH . '/show_raid_poll_small.php');
 // Check access.
 $botUser->accessCheck('create');
 
-// Get gym data via ID in arg
 $gym_id = $data['g'];
 $gym = get_gym($gym_id);
-
-$gym_first_letter = $data['fl'] ?? '';
-$showHidden = $data['h'] ?? 0;
-$gymareaId = $data['ga'] ?? false;
 
 // Telegram JSON array.
 $tg_json = array();
 
+//Initialize admin rights table [ ex-raid , raid-event ]
+$admin_access = [false,false];
+// Check access - user must be admin for raid_level X
+$admin_access[0] = $botUser->accessCheck('ex-raids', true);
+// Check access - user must be admin for raid event creation
+$admin_access[1] = $botUser->accessCheck('event-raids', true);
+
 // Active raid?
 $duplicate_id = active_raid_duplication_check($gym_id);
 if ($duplicate_id > 0) {
-  $keys = [];
-  $raid_id = $duplicate_id;
-  $raid = get_raid($raid_id);
-  $msg = EMOJI_WARN . SP . getTranslation('raid_already_exists') . SP . EMOJI_WARN . CR . show_raid_poll_small($raid);
+  // In case gym has already a normal raid saved to it and user has privileges to create an event raid, create a special menu
+  if($admin_access[0] == true || $admin_access[1] == true) {
+    $msg = EMOJI_WARN . SP . getTranslation('raid_already_exists') . CR;
+    $msg .= getTranslation('inspect_raid_or_create_event') . ':';
 
-  $keys = share_keys($raid_id, 'raid_share', $update, $raid['level']);
-
-  // Add keys for sharing the raid.
-  if(!empty($keys)) {
-    // Exit key
-    $keys = universal_key($keys, '0', 'exit', '0', getTranslation('abort'));
+    $eventData = $backData = $data;
+    $eventData['callbackAction'] = 'edit_event';
+    $backData['callbackAction'] = 'gymMenu';
+    $backData['stage'] = 2;
+    $backData['a'] = 'create';
+    $keys = [
+      [
+        [
+          'text'          => getTranslation('saved_raid'),
+          'callback_data' => formatCallbackData(['callbackAction' => 'raids_list', 'id' => $duplicate_id])
+        ]
+      ],
+      [
+        [
+          'text'          => getTranslation('create_event_raid'),
+          'callback_data' => formatCallbackData($eventData)
+        ]
+      ],
+      [
+        [
+          'text'          => getTranslation('back'),
+          'callback_data' => formatCallbackData($backData)
+        ],
+        [
+          'text'          => getTranslation('exit'),
+          'callback_data' => formatCallbackData(['callbackAction' => 'exit'])
+        ]
+      ],
+    ];
+  } else {
+    $keys = [];
+    $raid_id = $duplicate_id;
+    $raid = get_raid($raid_id);
+    $msg = EMOJI_WARN . SP . getTranslation('raid_already_exists') . SP . EMOJI_WARN . CR . show_raid_poll_small($raid);
+    $keys = share_keys($raid_id, 'raid_share', $update, $raid['level']);
+    if($botUser->raidaccessCheck($raid['id'], 'pokemon', true)) {
+      $keys[] = [
+        [
+          'text'          => getTranslation('update_pokemon'),
+          'callback_data' => $raid['id'] . ':raid_edit_poke:' . $raid['level'],
+        ]
+      ];
+    }
+    if($botUser->raidaccessCheck($raid['id'], 'delete', true)) {
+      $keys[] = [
+        [
+          'text'          => getTranslation('delete'),
+          'callback_data' => $raid['id'] . ':raids_delete:0'
+        ]
+      ];
+    }
+    $keys[][] = [
+      'text' => getTranslation('abort'),
+      'callback_data' => formatCallbackData(['callbackAction' => 'exit'])
+    ];
   }
 
   // Answer callback.
@@ -53,26 +104,22 @@ if ($duplicate_id > 0) {
   exit();
 }
 
-//Initialize admin rights table [ ex-raid , raid-event ]
-$admin_access = [false,false];
-// Check access - user must be admin for raid_level X
-$admin_access[0] = $botUser->accessCheck('ex-raids', true);
-// Check access - user must be admin for raid event creation
-$admin_access[1] = $botUser->accessCheck('event-raids', true);
-
 // Get the keys.
-$keys = raid_edit_raidlevel_keys($gym_id, $gym_first_letter, $admin_access);
+$keys = raid_edit_raidlevel_keys($data, $admin_access);
 
+$backData = $data;
+$backData['callbackAction'] = 'gymMenu';
 // Add navigation keys.
-$nav_keys = [];
-$nav_keys[] = [
-  'text'          => getTranslation('back'),
-  'callback_data' => formatCallbackData(['callbackAction' => 'gymMenu', 'stage' => 2, 'a' => 'create', 'h' => $showHidden, 'ga' => $gymareaId, 'fl' => $gym_first_letter])
+$keys[] = [
+  [
+    'text'          => getTranslation('back'),
+    'callback_data' => formatCallbackData($backData)
+  ],
+  [
+    'text'          => getTranslation('abort'),
+    'callback_data' => formatCallbackData(['callbackAction' => 'exit'])
+  ]
 ];
-$nav_keys[] = universal_inner_key($nav_keys, $gym_id, 'exit', '2', getTranslation('abort'));
-$nav_keys = inline_key_array($nav_keys, 2);
-// Merge keys.
-$keys = array_merge($keys, $nav_keys);
 
 // Build message.
 $msg = getTranslation('create_raid') . ': <i>' . (($gym['address']=="") ? $gym['gym_name'] : $gym['address']) . '</i>';

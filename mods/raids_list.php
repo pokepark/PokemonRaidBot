@@ -27,18 +27,18 @@ $keys = [
 ];
 if($botUser->raidaccessCheck($raidId, 'pokemon', true)) {
   $keys[] = [
-      [
-        'text'          => getTranslation('update_pokemon'),
-        'callback_data' => $raid['id'] . ':raid_edit_poke:' . $raid['level'],
-      ]
+    [
+      'text'          => getTranslation('update_pokemon'),
+      'callback_data' => $raid['id'] . ':raid_edit_poke:' . $raid['level'],
+    ]
   ];
 }
 if($botUser->raidaccessCheck($raidId, 'delete', true)) {
   $keys[] = [
-      [
-        'text'          => getTranslation('delete'),
-        'callback_data' => $raid['id'] . ':raids_delete:0'
-      ]
+    [
+      'text'          => getTranslation('delete'),
+      'callback_data' => $raid['id'] . ':raids_delete:0'
+    ]
   ];
 }
 
@@ -51,7 +51,10 @@ if(!empty($keys_share)) {
   debug_log('There are no groups to share to, is SHARE_CHATS set?');
 }
 // Exit key
-$keys = universal_key($keys, '0', 'exit', '1', getTranslation('done'));
+$keys[][] = [
+  'text' => getTranslation('done'),
+  'callback_data' => formatCallbackData(['callbackAction' => 'exit'])
+];
 
 // Get message.
 $msg = show_raid_poll_small($raid);
