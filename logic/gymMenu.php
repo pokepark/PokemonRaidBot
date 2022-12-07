@@ -152,18 +152,17 @@ function createGymKeys($buttonAction, $showHidden, $gymareaId, $gymareaQuery, $s
   $show_gym = $showHidden ? 0 : 1;
   $collateQuery = ($config->MYSQL_SORT_COLLATE != '') ? ' COLLATE ' . $config->MYSQL_SORT_COLLATE : '';
 
-  $eventQuery = ' ';
   if ($buttonAction == 'list') {
     // Select only gyms with active raids
     $queryConditions = '
     LEFT JOIN raids
     ON      raids.gym_id = gyms.id
-    WHERE   show_gym = ' . $show_gym;
-    $queryConditions .= ' AND end_time > UTC_TIMESTAMP() ';
+    WHERE   show_gym = ' . $show_gym . '
+    AND end_time > UTC_TIMESTAMP() ';
     $eventQuery = 'event IS NULL';
     if($botUser->accessCheck('ex-raids', true)) {
       if($botUser->accessCheck('event-raids', true))
-        $eventQuery = ' ';
+        $eventQuery = '';
       else
         $eventQuery .= ' OR event = ' . EVENT_ID_EX;
     }elseif($botUser->accessCheck('event-raids', true)) {
@@ -171,7 +170,8 @@ function createGymKeys($buttonAction, $showHidden, $gymareaId, $gymareaQuery, $s
     }
     $eventQuery = ($eventQuery == '') ? ' ' : ' AND ('.$eventQuery.') ';
   }else {
-    $queryConditions = ' WHERE   show_gym = ' . $show_gym;
+    $eventQuery = ' ';
+    $queryConditions = ' WHERE show_gym = ' . $show_gym;
   }
   $rs_count = my_query('SELECT COUNT(gym_name) as count FROM gyms ' . $queryConditions . $eventQuery . $gymareaQuery);
   $gym_count = $rs_count->fetch();

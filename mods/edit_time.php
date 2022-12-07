@@ -32,6 +32,7 @@ if ($raid_id == 0 && $gym_id != 0) {
 
   // Event raids
   if($event_id != NULL) {
+    $event_id = ($event_id == 'X') ? EVENT_ID_EX : $event_id;
     // Date was received in format YearMonthDayHourMinute so we need to reformat it to datetime
     $start_date_time = substr($starttime,0,4) . '-' . substr($starttime,4,2) . '-' . substr($starttime,6,2) . ' ' .  substr($starttime,8,2) . ':' .  substr($starttime,10,2) . ':00';
     debug_log('Event time :D ... Setting raid date to ' . $start_date_time);
