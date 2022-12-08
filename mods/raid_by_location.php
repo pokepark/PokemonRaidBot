@@ -142,13 +142,13 @@ $keys = [
   [
     [
       'text'          => getTranslation('next'),
-      'callback_data' => $gym_letter . ':edit_raidlevel:' . $gym_id
+      'callback_data' => formatCallbackData(['edit_raidlevel', 'gl' => $gym_letter, 'g' => $gym_id, 'r' => 1])
     ]
   ],
   [
     [
       'text'          => getTranslation('abort'),
-      'callback_data' => $gym_id . ':exit:2'
+      'callback_data' => 'exit'
     ]
   ]
 ];

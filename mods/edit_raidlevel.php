@@ -58,7 +58,7 @@ if ($duplicate_id > 0) {
           'callback_data' => formatCallbackData($backData)
         ],
         [
-          'text'          => getTranslation('exit'),
+          'text'          => getTranslation('abort'),
           'callback_data' => 'exit'
         ]
       ],
@@ -107,21 +107,23 @@ if ($duplicate_id > 0) {
 // Get the keys.
 $keys = raid_edit_raidlevel_keys($data, $admin_access);
 
-$backData = $data;
-$backData[0] = 'gymMenu';
-$backData['a'] = 'create';
-$backData['stage'] = 2;
-// Add navigation keys.
-$keys[] = [
-  [
+$lastRow = [];
+if(!isset($data['r']) or $data['r'] != 1) {
+  $backData = $data;
+  $backData[0] = 'gymMenu';
+  $backData['a'] = 'create';
+  $backData['stage'] = 2;
+  // Add navigation keys.
+  $lastRow[] = [
     'text'          => getTranslation('back'),
     'callback_data' => formatCallbackData($backData)
-  ],
-  [
-    'text'          => getTranslation('abort'),
-    'callback_data' => 'exit'
-  ]
+  ];
+}
+$lastRow[] = [
+  'text'          => getTranslation('abort'),
+  'callback_data' => 'exit'
 ];
+$keys[] = $lastRow;
 
 // Build message.
 $msg = getTranslation('create_raid') . ': <i>' . (($gym['address']=="") ? $gym['gym_name'] : $gym['address']) . '</i>';
