@@ -37,8 +37,8 @@ $keys = [];
 $stage = $modifiers['stage'] ?? 1;
 
 if(isset($action) && $action == 'abort') {
-  my_query("DELETE FROM user_input WHERE id = :deleteId", ['deleteId' => $deleteId]);
-  $msg = getTranslation("action_aborted");
+  my_query('DELETE FROM user_input WHERE id = :deleteId', ['deleteId' => $deleteId]);
+  $msg = getTranslation('action_aborted');
   editMessageText($update['callback_query']['message']['message_id'], $msg, [], $update['callback_query']['from']['id']);
   exit;
 }
@@ -59,7 +59,6 @@ if($stage == 1) {
   $sendMsg = EMOJI_HERE . getTranslation('gym_gps_instructions') . CR;
   $sendMsg .= getTranslation('gym_gps_example');
   respondToUser($userId, $oldMessageId, $editMsg, $editKeys, $sendMsg, [], $callbackResponse, $callbackId);
-  exit;
 }
 $userId = $update['message']['from']['id'];
 $oldMessageId = $modifiers['oldMessageId'];
@@ -79,7 +78,6 @@ if($stage == 2) {
     $msg = getTranslation('gym_gps_coordinates_format_error');
     respondToUser($userId, 0, '', [], $msg);
   }
-  exit;
 }
 if($stage == 3) {
   $input = trim($update['message']['text']);
@@ -91,7 +89,7 @@ if($stage == 3) {
     $keys[] = [
       [
         'text' => getTranslation('show_gym_details'),
-        'callback_data' => 'N:gym_details:' . $gymId
+        'callback_data' => formatCallbackData(['gym_details', 'g' => $gymId])
       ]
     ];
     respondToUser($userId, $oldMessageId, 'OK', [], $msg, $keys);
@@ -99,5 +97,4 @@ if($stage == 3) {
     $msg = getTranslation('gym_edit_text_too_long');
     respondToUser($userId, 0, '', [], $msg);
   }
-  exit;
 }
