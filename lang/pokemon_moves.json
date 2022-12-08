@@ -2741,5 +2741,14 @@
         "EN": "Poltergeist",
         "FR": "Esprit Frappeur",
         "RU": "Полтергейст"
+    },
+    "pokemon_move_377": {
+        "PT-BR": "Potência Equina",
+        "EN": "High Horsepower",
+        "FR": "Cavalerie Lourde",
+        "DE": "Pferdestärke",
+        "IT": "Forza Equina",
+        "RU": "Лошадиная Сила",
+        "ES": "Fuerza Equina"
     }
 }
