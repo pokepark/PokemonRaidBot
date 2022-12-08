@@ -73,7 +73,7 @@ function gymMenu($buttonAction, $showHidden, $stage, $firstLetter = false, $gyma
       ];
       $keys = array_merge($h_keys, $keys);
     }
-    if($stage == 0 && $botUser->accessCheck('gym-add', true)) {
+    if($stage == 0 or $stage == 1 && $botUser->accessCheck('gym-add', true)) {
       $keys[][] = [
         'text'          => getTranslation('gym_create'),
         'callback_data' => 'gym_create'
@@ -150,7 +150,6 @@ function createGymKeys($buttonAction, $showHidden, $gymareaId, $gymareaQuery, $s
   global $config, $menuActions, $botUser;
   // Show hidden gyms?
   $show_gym = $showHidden ? 0 : 1;
-  $collateQuery = ($config->MYSQL_SORT_COLLATE != '') ? ' COLLATE ' . $config->MYSQL_SORT_COLLATE : '';
 
   if ($buttonAction == 'list') {
     // Select only gyms with active raids
@@ -206,8 +205,7 @@ function createGymKeys($buttonAction, $showHidden, $gymareaId, $gymareaQuery, $s
     ' FROM gyms ' .
     $queryConditions . ' ' .
     $gymareaQuery .
-    $group_order .
-    $collateQuery
+    $group_order
   );
   while ($gym = $rs->fetch()) {
     // Add first letter to keys array
