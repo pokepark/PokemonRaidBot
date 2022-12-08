@@ -156,7 +156,7 @@ CREATE TABLE `users` (
   `tutorial` TINYINT(1) NOT NULL DEFAULT 0,
   `auto_alarm` TINYINT(1) UNSIGNED NULL DEFAULT 0,
   `gymarea` TINYINT UNSIGNED NULL,
-  `privileges` JSON NULL,
+  `privileges` TEXT NULL,
    PRIMARY KEY (`id`),
   UNIQUE KEY `i_userid` (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8mb4;
