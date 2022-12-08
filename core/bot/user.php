@@ -18,7 +18,9 @@ class botUser
     $q = my_query('SELECT privileges FROM users WHERE user_id = ? LIMIT 1', [$this->userId]);
     $result = $q->fetch();
     if($result['privileges'] === NULL) return;
-    $this->userPrivileges = json_decode($result['privileges'], true);
+    $privilegesArray = json_decode($result['privileges'], true);
+    $this->userPrivileges['privileges'] = $privilegesArray['privileges'] ?? [];
+    $this->userPrivileges['grantedBy'] = $privilegesArray['grantedBy'] ?? [];
   }
 
   /**
@@ -34,6 +36,7 @@ class botUser
     if(empty($config->BOT_ADMINS)) {
       debug_log('Bot access is not restricted! Allowing access for user: ' . CR . $this->userId);
       $this->userPrivileges['grantedBy'] = 'NOT_RESTRICTED';
+      my_query('UPDATE users SET privileges = ? WHERE user_id = ? LIMIT 1', [json_encode(['grantedBy' => 'NOT_RESTRICTED']), $this->userId]);
       return;
     }
     // Admin?
@@ -42,6 +45,7 @@ class botUser
       debug_log('Positive result on access check for Bot Admins');
       debug_log('Bot Admins: ' . $config->BOT_ADMINS);
       debug_log('user_id: ' . $this->userId);
+      my_query('UPDATE users SET privileges = ? WHERE user_id = ? LIMIT 1', [json_encode(['grantedBy' => 'BOT_ADMINS']), $this->userId]);
       $this->userPrivileges['grantedBy'] = 'BOT_ADMINS';
       return;
     }
