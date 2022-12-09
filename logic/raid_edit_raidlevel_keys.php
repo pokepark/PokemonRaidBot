@@ -6,7 +6,7 @@
  * @param int|bool $event_id
  * @return array
  */
-function raid_edit_raidlevel_keys($callbackData, $admin_access = [false,false], $event = false)
+function raid_edit_raidlevel_keys($callbackData, $admin_access = [false,false], $event = false, $excludeElite = false)
 {
   global $config;
 
@@ -37,6 +37,7 @@ function raid_edit_raidlevel_keys($callbackData, $admin_access = [false,false], 
   // Add key for each raid level
   $buttonData = $callbackData;
   while ($level = $rs_counts->fetch()) {
+    if ($level['raid_level'] == 9 && $excludeElite) continue;
     // Add key for pokemon if we have just 1 pokemon for a level
     if($level['raid_level_count'] != 1) {
       // Raid level and action

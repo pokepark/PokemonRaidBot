@@ -104,8 +104,17 @@ if ($duplicate_id > 0) {
   exit();
 }
 
+$eliteId = active_raid_duplication_check($gym_id, 9);
+$excludeElite = $eliteId == 0 ? false : true;
 // Get the keys.
-$keys = raid_edit_raidlevel_keys($data, $admin_access);
+$keys = raid_edit_raidlevel_keys($data, $admin_access, false, $excludeElite);
+
+if($eliteId > 0) {
+  $keys[][] = [
+    'text' => getTranslation('saved_raid'),
+    'callback_data' => formatCallbackData(['raids_list', 'r' => $eliteId])
+  ];
+}
 
 $lastRow = [];
 if(!isset($data['r']) or $data['r'] != 1) {
