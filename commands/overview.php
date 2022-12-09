@@ -14,11 +14,11 @@ $keys = [
   [
     [
       'text'          => getTranslation('overview_share'),
-      'callback_data' => '0:overview_share:0'
+      'callback_data' => 'overview_share'
     ],
     [
       'text'          => getTranslation('overview_delete'),
-      'callback_data' => '0:overview_delete:0'
+      'callback_data' => 'overview_delete'
     ]
   ]
 ];

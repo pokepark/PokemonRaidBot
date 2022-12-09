@@ -36,7 +36,7 @@ if ($raid_level != '0') {
     [
       [
         'text'          => getTranslation('not_supported'),
-        'callback_data' => '0:exit:0'
+        'callback_data' => 'exit'
       ]
     ]
   ];

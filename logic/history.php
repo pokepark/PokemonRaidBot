@@ -42,7 +42,7 @@ function create_history_date_msg_keys($current = '(SELECT max(start_time) FROM r
     $keys[] = [
         [
             'text'          => getTranslation('abort'),
-            'callback_data' => '0:exit:0'
+            'callback_data' => 'exit'
         ]
     ];
     return [$msg, $keys];

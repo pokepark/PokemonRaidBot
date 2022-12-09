@@ -17,31 +17,31 @@ $keys = [
     [
       [
         'text'          => getTranslation('import') . SP . '(Pokebattler)',
-        'callback_data' => '0:pokebattler:0'
+        'callback_data' => 'pokebattler'
       ]
     ],
     [
       [
         'text'          => getTranslation('import') . SP . getTranslation('upcoming') . SP . '(Pokebattler)',
-        'callback_data' => '0:import_future_bosses:0'
+        'callback_data' => 'import_future_bosses'
       ]
     ],
     [
       [
         'text'          => getTranslation('import') . SP . getTranslation('shiny') . SP . '(Pokebattler)',
-        'callback_data' => '0:import_shinyinfo:0'
+        'callback_data' => 'import_shinyinfo'
       ]
     ],
     [
       [
         'text'          => getTranslation('import') . SP . '(ccev pogoinfo)',
-        'callback_data' => '0:pogoinfo:0'
+        'callback_data' => 'pogoinfo'
       ]
     ],
     [
       [
         'text'          => getTranslation('abort'),
-        'callback_data' => '0:exit:0'
+        'callback_data' => 'exit'
       ]
     ]
   ];

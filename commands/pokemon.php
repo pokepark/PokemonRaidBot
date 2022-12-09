@@ -57,7 +57,7 @@ while ($row = $query->fetch()) {
   $text .= get_local_pokemon_name($row['pokemon'], $row['pokemon_form']) . SP . '—' . SP . (($raid_day == $today) ? '' : ($raid_day . ', ')) . $start . SP . getTranslation('to') . SP . $end . CR . CR;
   $keys[] = array(
     'text'          => $keys_text,
-    'callback_data' => $row['id'] . ':raid_edit_poke:' . $row['level'],
+    'callback_data' => formatCallbackData(['raid_edit_poke', 'r' => $row['id'], 'rl' => $row['level']]),
   );
 
   // Counter++
@@ -75,7 +75,7 @@ if($count == 0) {
   $keys[] = [
     [
       'text'          => getTranslation('abort'),
-      'callback_data' => '0:exit:0'
+      'callback_data' => 'exit'
     ]
   ];
 

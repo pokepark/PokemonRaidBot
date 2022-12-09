@@ -24,19 +24,19 @@ $keys = [
   [
     [
       'text' => getTranslation('events_manage'),
-      'callback_data' => '0:events:0',
+      'callback_data' => 'events',
     ]
   ],
   [
     [
       'text' => getTranslation('events_create'),
-      'callback_data' => '0:events_add:0',
+      'callback_data' => 'events_add',
     ]
   ],
   [
     [
       'text' => getTranslation('done'),
-      'callback_data' => '0:exit:1',
+      'callback_data' => formatCallbackData(['exit', 'd' => '1']),
     ]
   ]
 ];

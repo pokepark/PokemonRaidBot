@@ -57,7 +57,7 @@ if($arg == '1') {
       [
         [
           'text'=>getTranslation('back'),
-          'callback_data' => '0:pokedex_import:0'
+          'callback_data' => 'pokedex_import'
         ]
       ]
     ];
@@ -67,7 +67,7 @@ if($arg == '1') {
       [
         [
           'text' => getTranslation('done'),
-          'callback_data' => '0:exit:1'
+          'callback_data' => formatCallbackData(['exit', 'd' => '1'])
         ]
       ]
     ];

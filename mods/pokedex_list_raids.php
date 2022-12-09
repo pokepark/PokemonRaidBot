@@ -94,7 +94,7 @@ if(!empty($msg)) {
   $keys[] = [
     [
       'text'          => getTranslation('done'),
-      'callback_data' => '0:exit:1'
+      'callback_data' => formatCallbackData(['exit', 'd' => '1'])
     ]
   ];
 } else {

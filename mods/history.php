@@ -77,7 +77,7 @@ if($current_day == 0) {
     ],
     [
       'text'          => getTranslation('abort'),
-      'callback_data' => '0:exit:0'
+      'callback_data' => 'exit'
     ]
   ];
 

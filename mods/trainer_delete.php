@@ -72,7 +72,7 @@ if($action == 0 || $trainer_chat == 0) {
     [
       [
         'text'          => getTranslation('no'),
-        'callback_data' => '0:exit:0'
+        'callback_data' => 'exit'
       ]
     ]
   ];

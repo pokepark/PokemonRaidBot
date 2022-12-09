@@ -60,7 +60,7 @@ if($access) {
   [
     [
       'text'          => getTranslation('next'),
-      'callback_data' => '0:tutorial:0'
+      'callback_data' => 'tutorial'
     ]
   ]
   ];

@@ -47,32 +47,32 @@ if(count($keys) == 0 ) {
       [
         [
           'text'          => getTranslation('pokedex_raid_pokemon'),
-          'callback_data' => '0:pokedex_list_raids:0'
+          'callback_data' => 'pokedex_list_raids'
         ]
       ],
       [
         [
           'text'          => getTranslation('edit_pokemon'),
-          'callback_data' => '0:pokedex:0'
+          'callback_data' => 'pokedex'
         ]
       ],
       [
         [
           'text'          => getTranslation('disable_raid_level'),
-          'callback_data' => '0:pokedex_disable_raids:0'
+          'callback_data' => 'pokedex_disable_raids'
         ]
       ],
       [
         [
           'text'          => getTranslation('import'),
-          'callback_data' => '0:pokedex_import:0'
+          'callback_data' => 'pokedex_import'
         ]
       ]
     ];
   }
   $keys[][] = [
     'text'          => getTranslation('update_pokemon_table'),
-    'callback_data' => '0:getdb:0'
+    'callback_data' => 'getdb'
   ];
   // Set message.
   $msg = '<b>' . getTranslation('pokedex_start') . ':</b>';
@@ -80,7 +80,7 @@ if(count($keys) == 0 ) {
 $keys[] = [
   [
     'text'          => getTranslation('abort'),
-    'callback_data' => '0:exit:0'
+    'callback_data' => 'exit'
   ]
 ];
 

@@ -88,7 +88,7 @@ if($status == 'alarm') {
         ],
         [
           'text'          =>  getTranslation('no'),
-          'callback_data' =>  '0:exit:0'
+          'callback_data' =>  'exit'
         ],
       ]];
       if($status == 'raid_done') $msg = getTranslation("delete_remote_raid_done");

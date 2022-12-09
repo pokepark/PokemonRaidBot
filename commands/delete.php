@@ -51,7 +51,7 @@ while ($row = $query->fetch()) {
   $text .= get_local_pokemon_name($row['pokemon'], $row['pokemon_form']) . SP . '—' . SP . (($raid_day == $today) ? '' : ($raid_day . ', ')) . $start . SP . getTranslation('to') . SP . $end . CR . CR;
   $keys[] = array(
     'text'          => $row['gym_name'],
-    'callback_data' => $row['id'] . ':raids_delete:0'
+    'callback_data' => formatCallbackData(['raids_delete', 'r' => $row['id']])
   );
 
   // Counter++
@@ -69,7 +69,7 @@ if($count == 0) {
   $keys[] = [
     [
       'text'          => getTranslation('abort'),
-      'callback_data' => '0:exit:0'
+      'callback_data' => 'exit'
     ]
   ];
 

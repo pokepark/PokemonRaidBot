@@ -25,7 +25,7 @@ $keys[] = [
   ],
   [
     'text'          => getTranslation('no'),
-    'callback_data' => '0:pokedex_list_raids:0'
+    'callback_data' => 'pokedex_list_raids'
   ],
 ];
 

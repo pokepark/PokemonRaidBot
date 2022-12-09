@@ -22,23 +22,23 @@ $keys = [];
 if($config->CUSTOM_TRAINERNAME){
   $keys[0][] = [
     'text'          => getTranslation('name'),
-    'callback_data' => '0:trainer_name:0'
+    'callback_data' => 'trainer_name'
   ];
 }
 if($config->RAID_POLL_SHOW_TRAINERCODE){
   $keys[0][] = [
   'text'          => getTranslation('trainercode'),
-  'callback_data' => '0:trainer_code:0'
+  'callback_data' => 'trainer_code'
   ];
 }
 $keys[] = [
   [
     'text'          => getTranslation('team'),
-    'callback_data' => '0:trainer_team:0'
+    'callback_data' => 'trainer_team'
   ],
   [
     'text'          => getTranslation('level'),
-    'callback_data' => '0:trainer_level:0'
+    'callback_data' => 'trainer_level'
   ]
 ];
 if ($config->RAID_AUTOMATIC_ALARM == false) {
@@ -55,7 +55,7 @@ if ($config->LANGUAGE_PRIVATE == '') {
   $keys[] = [
     [
       'text'          => getTranslation('bot_lang'),
-      'callback_data' => '0:bot_lang:0'
+      'callback_data' => 'bot_lang'
     ]
   ];
 }

@@ -54,7 +54,7 @@ foreach($pb_data['tiers'] as $tier) {
 $keys[] = [
   [
     'text'      => getTranslation('done'),
-    'callback_data' => '0:exit:1'
+    'callback_data' => formatCallbackData(['exit', 'd' => '1'])
   ]
 ];
 if(count($shinydata) > 0) {

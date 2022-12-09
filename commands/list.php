@@ -87,12 +87,12 @@ foreach($raids as $raid) {
 
   $keys[] = array(
     'text'          => $keys_text,
-    'callback_data' => $raid['id'] . ':raids_list:0'
+    'callback_data' => formatCallbackData(['raids_list', 'r' => $raid['id']])
   );
 }
 $keys[] = array(
   'text'          => getTranslation('done'),
-  'callback_data' => '0:exit:1'
+  'callback_data' => formatCallbackData(['exit', 'd' => '1'])
 );
 
 // Get the inline key array.

@@ -135,7 +135,7 @@ if(isset($data['arg']) && $data['arg'] == 1) {
     $keys[] = [
       [
         'text'          => getTranslation('abort'),
-        'callback_data' => '0:exit:0'
+        'callback_data' => 'exit'
       ]
     ];
 

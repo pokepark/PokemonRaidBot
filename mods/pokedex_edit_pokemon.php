@@ -86,11 +86,11 @@ if(!in_array($pokedex_id, $GLOBALS['eggs'])) {
 $keys[] = [
   [
     'text'          => getTranslation('back'),
-    'callback_data' => '0:pokedex:0'
+    'callback_data' => 'pokedex'
   ],
   [
     'text'          => getTranslation('abort'),
-    'callback_data' => '0:exit:0'
+    'callback_data' => 'exit'
   ]
 ];
 

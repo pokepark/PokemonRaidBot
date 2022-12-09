@@ -72,11 +72,11 @@ if($confirm == 0) {
     [
       [
         'text'          => getTranslation('back'),
-        'callback_data' => '0:trainer:0'
+        'callback_data' => 'trainer'
       ],
       [
         'text'          => getTranslation('done'),
-        'callback_data' => '0:exit:1'
+        'callback_data' => formatCallbackData(['exit', 'd' => '1'])
       ]
     ]
   ];

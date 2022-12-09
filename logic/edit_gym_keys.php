@@ -72,7 +72,7 @@ function edit_gym_keys($update, $gym_id, $show_gym, $ex_gym, $gym_note, $gym_add
   $keys[] = [
     [
       'text'          => getTranslation('done'),
-      'callback_data' => '0:exit:1'
+      'callback_data' => formatCallbackData(['exit', 'd' => '1'])
     ]
   ];
 

@@ -11,10 +11,10 @@ require_once(LOGIC_PATH . '/show_raid_poll_small.php');
 // 0 -> Confirmation required
 // 1 -> Cancel deletion
 // 2 -> Execute deletion
-$action = $data['arg'];
+$action = $data['a'];
 
 // Get the raid id.
-$raidId = $data['id'];
+$raidId = $data['r'];
 
 // Access check.
 $botUser->raidaccessCheck($raidId, 'delete');
@@ -33,11 +33,11 @@ if ($action == 0) {
     [
       [
         'text'          => getTranslation('yes'),
-        'callback_data' => $raid['id'] . ':raids_delete:2'
+        'callback_data' => formatCallbackData(['raids_delete', 'r' => $raid['id'], 'a' => 2])
       ],
       [
         'text'          => getTranslation('no'),
-        'callback_data' => $raid['id'] . ':raids_delete:1'
+        'callback_data' => formatCallbackData(['raids_delete', 'r' => $raid['id'], 'a' => 1])
       ]
     ]
   ];

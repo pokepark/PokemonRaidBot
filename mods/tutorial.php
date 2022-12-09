@@ -67,11 +67,11 @@ if($action == 'end') {
       [
         [
             'text'          => getTranslation('yes'),
-            'callback_data' => '0:trainer:0'
+            'callback_data' => 'trainer'
         ],
         [
             'text'          => getTranslation('no'),
-            'callback_data' => '0:exit:1'
+            'callback_data' => formatCallbackData(['exit', 'd' => '1'])
         ]
       ]
     ];

@@ -26,11 +26,11 @@ if($data['arg'] != '0') {
   $keys[] = [
     [
       'text'          => getTranslation('back', $new_lang_internal),
-      'callback_data' => '0:trainer:0'
+      'callback_data' => 'trainer'
     ],
     [
       'text'          => getTranslation('done', $new_lang_internal),
-      'callback_data' => '0:exit:1'
+      'callback_data' => formatCallbackData(['exit', 'd' => '1'])
     ]
   ];
   $callback_msg = $msg;
@@ -47,11 +47,11 @@ if($data['arg'] != '0') {
   $keys[] = [
     [
       'text'          => getTranslation('back'),
-      'callback_data' => '0:trainer:0'
+      'callback_data' => 'trainer'
     ],
     [
       'text'          => getTranslation('done'),
-      'callback_data' => '0:exit:1'
+      'callback_data' => formatCallbackData(['exit', 'd' => '1'])
     ]
   ];
   $msg = getTranslation('change_lang').':';

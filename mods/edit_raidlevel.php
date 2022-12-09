@@ -43,7 +43,7 @@ if ($duplicate_id > 0) {
       [
         [
           'text'          => getTranslation('saved_raid'),
-          'callback_data' => formatCallbackData(['raids_list', 'id' => $duplicate_id])
+          'callback_data' => formatCallbackData(['raids_list', 'r' => $duplicate_id])
         ]
       ],
       [
@@ -73,7 +73,7 @@ if ($duplicate_id > 0) {
       $keys[] = [
         [
           'text'          => getTranslation('update_pokemon'),
-          'callback_data' => $raid['id'] . ':raid_edit_poke:' . $raid['level'],
+          'callback_data' => formatCallbackData(['raid_edit_poke', 'r' => $raid['id'], 'rl' => $raid['level']]),
         ]
       ];
     }
@@ -81,7 +81,7 @@ if ($duplicate_id > 0) {
       $keys[] = [
         [
           'text'          => getTranslation('delete'),
-          'callback_data' => $raid['id'] . ':raids_delete:0'
+          'callback_data' => formatCallbackData(['raids_delete', 'r' => $raid['id']])
         ]
       ];
     }
@@ -126,7 +126,7 @@ $lastRow[] = [
 $keys[] = $lastRow;
 
 // Build message.
-$msg = getTranslation('create_raid') . ': <i>' . (($gym['address']=="") ? $gym['gym_name'] : $gym['address']) . '</i>';
+$msg = getTranslation('create_raid') . ': <i>' . (($gym['address'] == '') ? $gym['gym_name'] : $gym['address']) . '</i>';
 
 // Build callback message string.
 $callback_response = getTranslation('gym_saved');

@@ -8,7 +8,7 @@ require_once(LOGIC_PATH . '/show_raid_poll_small.php');
 //debug_log($data);
 
 // Get ID.
-$raidId = $data['id'];
+$raidId = $data['r'];
 
 // Check access.
 $botUser->accessCheck('list');

@@ -146,7 +146,7 @@ if (!$keys) {
     [
       [
         'text'          => getTranslation('abort'),
-        'callback_data' => '0:exit:0'
+        'callback_data' => 'exit'
       ]
     ]
   ];

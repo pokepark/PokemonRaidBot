@@ -50,7 +50,7 @@ if($arg == 0) {
   // Add abort button
   $keys[] = array(
     'text'          => getTranslation('abort'),
-    'callback_data' => '0:exit:0'
+    'callback_data' => 'exit'
   );
 
   // Get the inline key array.
@@ -105,7 +105,7 @@ if($arg == 0) {
   // Abort.
   $keys[] = array(
     'text'          => getTranslation('no'),
-    'callback_data' => '0:exit:0'
+    'callback_data' => 'exit'
   );
 
   // Inline keys array.

@@ -8,7 +8,7 @@ debug_log('exit()');
 
 // Set empty keys.
 $keys = [];
-$arg = $data['arg'] ?? 0;
+$arg = $data['d'] ?? 0;
 
 // Build message string.
 $msg = ($arg == 1) ? (getTranslation('done') . '!') : (getTranslation('action_aborted'));

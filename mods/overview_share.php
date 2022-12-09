@@ -80,7 +80,7 @@ if($chat_id != 0) {
         ],
         [
           'text'          => getTranslation('done'),
-          'callback_data' => '0:exit:1'
+          'callback_data' => formatCallbackData(['exit', 'd' => '1'])
         ]
       ];
       $res = $rs->fetch();

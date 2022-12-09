@@ -246,7 +246,7 @@ if($action == 's') {
   // Abort button.
   $nav_keys[] = array(
     'text'          => getTranslation('abort'),
-    'callback_data' => '0:exit:0'
+    'callback_data' => 'exit'
   );
 
   // Get the inline key array and merge keys.
