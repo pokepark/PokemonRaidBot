@@ -27,6 +27,14 @@ function get_local_pokemon_name($pokemon_id, $pokemon_form_id, $override_languag
   if ($pokemon_form_name != 'normal') {
     $pokemon_form_name = $getTypeTranslation('pokemon_form_' . $pokemon_form_name);
   }
-
+  // If we didn't find Pokemon name or form name from translation files, use the name from database as fallback
+  if(empty($pokemon_name) or empty($pokemon_form_name)) {
+    // Pokemon name
+    $pokemon_name = (empty($pokemon_name) ? $res['pokemon_name'] : $pokemon_name);
+    // Pokemon form
+    if(empty($pokemon_form_name) && $res['pokemon_form_name'] != 'normal') {
+        $pokemon_form_name = ucfirst(str_replace('_',' ',$res['pokemon_form_name']));
+    }
+  }
   return $pokemon_name . ($pokemon_form_name != "normal" ? " " . $pokemon_form_name : "");
 }
