@@ -825,5 +825,8 @@
   },
   "pokemon_form_question_mark": {
     "EN": "?"
+  },
+  "pokemon_form_unbound": {
+    "EN": "Unbound"
   }
 }
