@@ -2,10 +2,9 @@
 /**
  * Pokedex edit pokemon keys.
  * @param $limit
- * @param $action
  * @return array
  */
-function edit_pokedex_keys($limit, $action)
+function edit_pokedex_keys($limit)
 {
   // Number of entries to display at once.
   $entries = 10;
@@ -13,11 +12,8 @@ function edit_pokedex_keys($limit, $action)
   // Number of entries to skip with skip-back and skip-next buttons
   $skip = 50;
 
-  // Module for back and next keys
-  $module = 'pokedex';
-
   // Init empty keys array.
-  $keys = [];
+  $pokemonKeys = [];
 
   // Get all pokemon from database
   $rs = my_query('
@@ -40,10 +36,10 @@ function edit_pokedex_keys($limit, $action)
   // List users / moderators
   while ($mon = $rs->fetch()) {
     $pokemon_name = get_local_pokemon_name($mon['pokedex_id'], $mon['pokemon_form_id']);
-    $keys[] = array(
+    $pokemonKeys[][] = [
       'text'          => $mon['pokedex_id'] . SP . $pokemon_name,
       'callback_data' => $mon['pokedex_id'] . '-' . $mon['pokemon_form_id'] . ':pokedex_edit_pokemon:0'
-    );
+    ];
   }
 
   // Empty backs and next keys
@@ -53,46 +49,45 @@ function edit_pokedex_keys($limit, $action)
   // Add back key.
   if ($limit > 0) {
     $new_limit = $limit - $entries;
-    $empty_back_key = [];
-    $back = universal_key($empty_back_key, $new_limit, $module, $action, getTranslation('back') . ' (-' . $entries . ')');
-    $keys_back[] = $back[0][0];
+    $keys_back[0][] = [
+      'text' => getTranslation('back') . ' (-' . $entries . ')',
+      'callback_data' => formatCallbackData(['pokedex', 'l' => $new_limit])
+    ];
   }
 
   // Add skip back key.
   if ($limit - $skip > 0) {
     $new_limit = $limit - $skip - $entries;
-    $empty_back_key = [];
-    $back = universal_key($empty_back_key, $new_limit, $module, $action, getTranslation('back') . ' (-' . $skip . ')');
-    $keys_back[] = $back[0][0];
+    $keys_back[0][] = [
+      'text' => getTranslation('back') . ' (-' . $skip . ')',
+      'callback_data' => formatCallbackData(['pokedex', 'l' => $new_limit])
+    ];
   }
 
   // Add next key.
   if (($limit + $entries) < $count) {
     $new_limit = $limit + $entries;
-    $empty_next_key = [];
-    $next = universal_key($empty_next_key, $new_limit, $module, $action, getTranslation('next') . ' (+' . $entries . ')');
-    $keys_next[] = $next[0][0];
+    $keys_next[0][] = [
+      'text' => getTranslation('next') . ' (+' . $entries . ')',
+      'callback_data' => formatCallbackData(['pokedex', 'l' => $new_limit])
+    ];
   }
 
   // Add skip next key.
   if (($limit + $skip + $entries) < $count) {
     $new_limit = $limit + $skip + $entries;
-    $empty_next_key = [];
-    $next = universal_key($empty_next_key, $new_limit, $module, $action, getTranslation('next') . ' (+' . $skip . ')');
-    $keys_next[] = $next[0][0];
+    $keys_next[0][] = [
+      'text' => getTranslation('next') . ' (+' . $skip . ')',
+      'callback_data' => formatCallbackData(['pokedex', 'l' => $new_limit])
+    ];
   }
 
-  // Exit key
-  $empty_exit_key = [];
-  $key_exit = universal_key($empty_exit_key, '0', 'exit', '0', getTranslation('abort'));
-
   // Get the inline key array.
-  $keys = inline_key_array($keys, 1);
-  $keys_back = inline_key_array($keys_back, 2);
-  $keys_next = inline_key_array($keys_next, 2);
-  $keys = array_merge($keys_back, $keys);
-  $keys = array_merge($keys, $keys_next);
-  $keys = array_merge($keys, $key_exit);
+  $keys = array_merge($keys_back, $pokemonKeys, $keys_next);
+  $keys[][] = [
+    'text' => getTranslation('abort'),
+    'callback_data' => 'exit'
+  ];
 
   return $keys;
 }

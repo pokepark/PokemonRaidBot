@@ -47,7 +47,7 @@ if ($config->RAID_AUTOMATIC_ALARM == false) {
   $keys[] = [
     [
       'text'          => ($alarm_status == 1 ? getTranslation('switch_alarm_off') . ' ' . EMOJI_NO_ALARM : getTranslation('switch_alarm_on') . ' ' . EMOJI_ALARM),
-      'callback_data' => formatCallbackData(['trainerGymarea', 'a' => ($alarm_status == 1 ? 0 : 1)])
+      'callback_data' => formatCallbackData(['trainer', 'a' => 1])
     ]
   ];
 }

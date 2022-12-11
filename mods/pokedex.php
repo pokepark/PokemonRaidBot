@@ -11,16 +11,13 @@ require_once(LOGIC_PATH . '/edit_pokedex_keys.php');
 $botUser->accessCheck('pokedex');
 
 // Get the limit.
-$limit = $data['id'];
-
-// Get the action.
-$action = $data['arg'];
+$limit = $data['l'] ?? 0;
 
 // Set message.
 $msg = getTranslation('pokedex_list_of_all') . CR . CR . '<b>' . getTranslation('pokedex_edit_pokemon') . '</b>';
 
 // Get pokemon.
-$keys = edit_pokedex_keys($limit, $action);
+$keys = edit_pokedex_keys($limit);
 
 // Empty keys?
 if (!$keys) {

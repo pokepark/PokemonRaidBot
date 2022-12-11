@@ -11,17 +11,17 @@ $botUser->accessCheck('trainer');
 
 $keys = [];
 
-if($data['arg'] != '0') {
+if(isset($data['l'])) {
   $query = my_query('
     UPDATE  users
     SET     lang_manual = 1,
             lang= :lang
     WHERE   user_id = :user_id
     ',[
-      'lang' => $data['arg'],
+      'lang' => $data['l'],
       'user_id' => $update['callback_query']['from']['id'],
     ]);
-  $new_lang_internal = $languages[$data['arg']];
+  $new_lang_internal = $languages[$data['l']];
   $msg = getTranslation('new_lang_saved', $new_lang_internal);
   $keys[] = [
     [
@@ -40,7 +40,7 @@ if($data['arg'] != '0') {
     if(in_array($lang_internal, $displayedLanguages)) continue;
     $keys[][] = [
       'text'          => getTranslation('lang_name', $lang_internal),
-      'callback_data' => '0:bot_lang:'.$lang_tg
+      'callback_data' => formatCallbackData(['bot_lang', 'l' => $lang_tg])
     ];
     $displayedLanguages[] = $lang_internal;
   }

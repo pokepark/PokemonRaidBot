@@ -69,7 +69,7 @@ while ($pokemon = $rs->fetch()) {
   if($pokemon['scheduled'] == 1) {
     $keys[] = array(
       'text'          => EMOJI_CLOCK . ' [' . $pokemon['raid_level'] . ']' . SP . $poke_name,
-      'callback_data' => $pokemon['id'] . ':delete_scheduled_entry:0'
+      'callback_data' => formatCallbackData(['delete_scheduled_entry', 'i' => $pokemon['id']])
     );
   } else {
     $keys[] = array(

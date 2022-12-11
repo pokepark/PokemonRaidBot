@@ -10,15 +10,13 @@ require_once(LOGIC_PATH . '/get_user.php');
 // Access check.
 $botUser->accessCheck('trainer');
 
-// Confirmation and level
-$confirm = $data['id'];
-$level = $data['arg'];
+$level = $data['l'] ?? 0;
 
 // Set the user_id
 $user_id = $update['callback_query']['from']['id'];
 
 // Ask for user level
-if($confirm == 0) {
+if($level == 0) {
   // Build message string.
   $msg = '<b>' . getTranslation('your_trainer_info') . '</b>' . CR;
   $msg .= get_user($user_id) . CR;
@@ -27,29 +25,32 @@ if($confirm == 0) {
   // Set keys.
   $keys = [];
   for($i = 5; $i <= $config->TRAINER_MAX_LEVEL; $i++) {
-    $keys[] = array(
+    $keys[] = [
       'text'          => $i,
-      'callback_data' => '1:trainer_level:' . $i
-    );
+      'callback_data' => formatCallbackData(['trainer_level', 'l' => $i])
+    ];
   }
 
   // Get the inline key array.
   $keys = inline_key_array($keys, 5);
 
   // Add navigation keys.
-  $nav_keys = [];
-  $nav_keys[] = universal_inner_key($nav_keys, '0', 'trainer', '0', getTranslation('back'));
-  $nav_keys[] = universal_inner_key($nav_keys, '0', 'exit', '0', getTranslation('abort'));
-  $nav_keys = inline_key_array($nav_keys, 2);
-
-  // Merge keys.
-  $keys = array_merge($keys, $nav_keys);
+  $keys[] = [
+    [
+      'text'          => getTranslation('back'),
+      'callback_data' => 'trainer'
+    ],
+    [
+      'text'          => getTranslation('done'),
+      'callback_data' => formatCallbackData(['exit', 'd' => '1'])
+    ]
+  ];
 
   // Build callback message string.
   $callback_response = 'OK';
 
 // Save user level
-} else if($confirm == 1 && $level > 0) {
+} else {
 
   // Update the user.
   my_query('

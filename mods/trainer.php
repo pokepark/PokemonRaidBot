@@ -11,7 +11,7 @@ require_once(LOGIC_PATH . '/get_user.php');
 $botUser->accessCheck('trainer');
 
 $user_id = $update['callback_query']['from']['id'];
-if($data['arg'] == 'a') {
+if(isset($data['a']) && $data['a'] == 1) {
   my_query('UPDATE users SET auto_alarm = IF(auto_alarm = 1, 0, 1) WHERE user_id = ?', [$user_id]);
 }
 
@@ -53,7 +53,7 @@ if($config->RAID_AUTOMATIC_ALARM == false) {
   $keys[] = [
     [
       'text'          => ($alarm_status == 1 ? getTranslation('switch_alarm_off') . ' ' . EMOJI_NO_ALARM : getTranslation('switch_alarm_on') . ' ' . EMOJI_ALARM),
-      'callback_data' => '0:trainer:a'
+      'callback_data' => formatCallbackData(['trainer', 'a' => 1])
     ]
   ];
 }
@@ -89,7 +89,10 @@ if($botUser->accessCheck('trainer-share', true)) {
 }
 
 // Get the inline key array.
-$keys = universal_key($keys, '0', 'exit', '1', getTranslation('done'));
+$keys[][] = [
+  'text' => getTranslation('done'),
+  'callback_data' => formatCallbackData(['exit', 'd' => 1])
+];
 
 // Answer callback.
 answerCallbackQuery($update['callback_query']['id'], 'OK');

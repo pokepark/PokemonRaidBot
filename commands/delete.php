@@ -6,40 +6,37 @@ debug_log('DELETE()');
 //debug_log($update);
 //debug_log($data);
 
-// Check access.
-$botUser->accessCheck('access-bot');
-
-// Count results.
-$count = 0;
-$own_sql = '';
-$own_arr = [];
-if(!$botUser->accessCheck('delete', true) && $botUser->accessCheck('delete-own',true)) {
-  $own_sql = 'AND users.user_id = :user_id';
-  $own_arr = [":user_id"=>$update['message']['from']['id']];
+if($botUser->accessCheck('delete-own', true)) {
+  $userRestriction = 'AND raids.user_id = ?';
+  $binds = [$update['message']['chat']['id']];
+}elseif($botUser->accessCheck('delete-all', true)) {
+  $userRestriction = '';
+  $binds = [];
+}else {
+  $botUser->denyAccess();
 }
+
+$query = my_query('
+  SELECT  raids.*, gyms.gym_name
+  FROM    raids
+  LEFT JOIN gyms
+  ON      raids.gym_id = gyms.id
+  WHERE   raids.end_time > UTC_TIMESTAMP
+  ' . $userRestriction . '
+  ORDER BY raids.end_time ASC
+  LIMIT 20
+', $binds);
+
+if($query->rowCount() == 0) {
+  $msg = '<b>' . getTranslation('no_active_raids_found') . '</b>';
+  send_message($update['message']['chat']['id'], $msg);
+  exit;
+}
+
 // Init text and keys.
 $text = '';
 $keys = [];
 
-$query = my_query('
-  SELECT
-    raids.*, gyms.lat ,
-    gyms.lon ,
-    gyms.address ,
-    gyms.gym_name ,
-    gyms.ex_gym ,
-    users. NAME
-  FROM
-    raids
-  LEFT JOIN gyms ON raids.gym_id = gyms.id
-  LEFT JOIN users ON raids.user_id = users.user_id
-  WHERE
-    raids.end_time > UTC_TIMESTAMP()
-  '.$own_sql.'
-  ORDER BY
-    raids.end_time ASC
-  LIMIT 20
-', $own_arr);
 while ($row = $query->fetch()) {
   // Set text and keys.
   $text .= $row['gym_name'] . CR;
@@ -49,35 +46,25 @@ while ($row = $query->fetch()) {
   $start = dt2time($row['start_time']);
   $end = dt2time($row['end_time']);
   $text .= get_local_pokemon_name($row['pokemon'], $row['pokemon_form']) . SP . '—' . SP . (($raid_day == $today) ? '' : ($raid_day . ', ')) . $start . SP . getTranslation('to') . SP . $end . CR . CR;
-  $keys[] = array(
+  $keys[] = [
     'text'          => $row['gym_name'],
     'callback_data' => formatCallbackData(['raids_delete', 'r' => $row['id']])
-  );
-
-  // Counter++
-  $count = $count + 1;
-}
-
-// Set message.
-if($count == 0) {
-  $msg = '<b>' . getTranslation('no_active_raids_found') . '</b>';
-} else {
-  // Get the inline key array.
-  $keys = inline_key_array($keys, 1);
-
-  // Add exit key.
-  $keys[] = [
-    [
-      'text'          => getTranslation('abort'),
-      'callback_data' => 'exit'
-    ]
   ];
-
-  // Build message.
-  $msg = '<b>' . getTranslation('list_all_active_raids') . ':</b>' . CR;
-  $msg .= $text;
-  $msg .= '<b>' . getTranslation('select_gym_name') . '</b>' . CR;
 }
+
+// Get the inline key array.
+$keys = inline_key_array($keys, 1);
+
+// Add exit key.
+$keys[][] = [
+  'text'          => getTranslation('abort'),
+  'callback_data' => 'exit'
+];
+
+// Build message.
+$msg = '<b>' . getTranslation('list_all_active_raids') . ':</b>' . CR;
+$msg .= $text;
+$msg .= '<b>' . getTranslation('select_gym_name') . '</b>' . CR;
 
 // Build callback message string.
 $callback_response = 'OK';

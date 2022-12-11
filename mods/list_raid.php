@@ -84,7 +84,10 @@ if($rs->rowcount() == 1) {
     debug_log('There are no groups to share to, is SHARE_CHATS set?');
   }
   // Exit key
-  $keys = universal_key($keys, '0', 'exit', '1', getTranslation('done'));
+  $keys[][] = [
+  'text' => getTranslation('done'),
+  'callback_data' => formatCallbackData(['exit', 'd' => 1])
+];
 
   // Get message.
   $msg = show_raid_poll_small($raid);

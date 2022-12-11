@@ -8,28 +8,25 @@ debug_log('raid_edit_poke()');
 //debug_log($data);
 
 // Set the id.
-$raid_id = $data['id'];
+$raid_id = $data['r'] ?? 0;
 
 // Access check.
 $botUser->raidaccessCheck($raid_id, 'pokemon');
 
 // Get raid level
-$raid_level = $data['arg'];
+$raid_level = $data['rl'];
 
 debug_log('Raid level of pokemon: ' . $raid_level);
 
 // Level found
 if ($raid_level != '0') {
   // Get the keys.
-  $keys = pokemon_keys($raid_id, $raid_level, 'raid_set_poke');
+  $keys = pokemon_keys($data, $raid_level, 'raid_set_poke');
 
-  // Add navigation keys.
-  $nav_keys = [];
-  $nav_keys[] = universal_inner_key($nav_keys, '0', 'exit', '0', getTranslation('abort'));
-  $nav_keys = inline_key_array($nav_keys, 1);
-
-  // Merge keys.
-  $keys = array_merge($keys, $nav_keys);
+  $keys[][] = [
+    'text' => getTranslation('abort'),
+    'callback_data' => 'exit'
+  ];
 } else {
   // Create the keys.
   $keys = [

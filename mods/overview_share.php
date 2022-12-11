@@ -12,8 +12,7 @@ require_once(LOGIC_PATH . '/get_overview.php');
 $botUser->accessCheck('overview');
 
 // Get chat ID from data
-$chat_id = 0;
-$chat_id = $data['arg'];
+$chat_id = $data['c'] ?? 0;
 
 // Get all or specific overview
 $query_chat = '';
@@ -59,58 +58,59 @@ if($chat_id != 0) {
 
   // Send the message, but disable the web preview!
   $tg_json[] = send_message($chat_id, $overview_message, $keys, ['disable_web_page_preview' => 'true'], true, 'overview');
-}else {
-  // List all overviews to user
-  foreach( array_keys($active_raids) as $chat_id ) {
-    // Make sure it's not already shared
-    $rs = my_query('
-      SELECT  chat_id, message_id, chat_title, chat_username
-      FROM    overview
-      WHERE   chat_id = ?
-      LIMIT 1
-      ', [$chat_id]
-    );
-    $keys = [];
-    // Already shared
-    if($rs->rowCount() > 0 ) {
-      $keys[] = [
-        [
-          'text'          => EMOJI_REFRESH,
-          'callback_data' => '0:overview_refresh:' . $chat_id
-        ],
-        [
-          'text'          => getTranslation('done'),
-          'callback_data' => formatCallbackData(['exit', 'd' => '1'])
-        ]
-      ];
-      $res = $rs->fetch();
-      $chat_title = $res['chat_title'];
-      $chat_username = $res['chat_username'];
-    }else {
-      [$chat_title, $chat_username] = get_chat_title_username($chat_id);
-      $keys[] = [
-        [
-          'text'          => getTranslation('share_with') . ' ' . $chat_title,
-          'callback_data' => '0:overview_share:' . $chat_id
-        ]
-      ];
-    }
-    $overview_message = get_overview($active_raids[$chat_id], $chat_title, $chat_username);
-    // Send the message, but disable the web preview!
-    $tg_json[] = send_message($update['callback_query']['message']['chat']['id'], $overview_message, $keys, ['disable_web_page_preview' => 'true'], true);
-  }
-  // Set the callback message and keys
-  $callback_keys = [];
-  $callback_msg = '<b>' . getTranslation('list_all_overviews') . ':</b>';
+  // Telegram multicurl request.
+  curl_json_multi_request($tg_json);
 
-  // Answer the callback.
-  $tg_json[] = answerCallbackQuery($update['callback_query']['id'], 'OK', true);
-
-  // Edit the message.
-  $tg_json[] = edit_message($update, $callback_msg, $callback_keys, false, true);
+  exit;
 }
+// List all overviews to user
+foreach( array_keys($active_raids) as $chat_id ) {
+  // Make sure it's not already shared
+  $rs = my_query('
+    SELECT  chat_id, message_id, chat_title, chat_username
+    FROM    overview
+    WHERE   chat_id = ?
+    LIMIT 1
+    ', [$chat_id]
+  );
+  $keys = [];
+  // Already shared
+  if($rs->rowCount() > 0 ) {
+    $keys[] = [
+      [
+        'text'          => EMOJI_REFRESH,
+        'callback_data' => '0:overview_refresh:' . $chat_id
+      ],
+      [
+        'text'          => getTranslation('done'),
+        'callback_data' => formatCallbackData(['exit', 'd' => '1'])
+      ]
+    ];
+    $res = $rs->fetch();
+    $chat_title = $res['chat_title'];
+    $chat_username = $res['chat_username'];
+  }else {
+    [$chat_title, $chat_username] = get_chat_title_username($chat_id);
+    $keys[] = [
+      [
+        'text'          => getTranslation('share_with') . ' ' . $chat_title,
+        'callback_data' => formatCallbackData(['overview_share', 'c' => $chat_id])
+      ]
+    ];
+  }
+  $overview_message = get_overview($active_raids[$chat_id], $chat_title, $chat_username);
+  // Send the message, but disable the web preview!
+  $tg_json[] = send_message($update['callback_query']['message']['chat']['id'], $overview_message, $keys, ['disable_web_page_preview' => 'true'], true);
+}
+// Set the callback message and keys
+$callback_keys = [];
+$callback_msg = '<b>' . getTranslation('list_all_overviews') . ':</b>';
+
+// Answer the callback.
+$tg_json[] = answerCallbackQuery($update['callback_query']['id'], 'OK', true);
+
+// Edit the message.
+$tg_json[] = edit_message($update, $callback_msg, $callback_keys, false, true);
 
 // Telegram multicurl request.
 curl_json_multi_request($tg_json);
-
-exit;

@@ -6,34 +6,36 @@ debug_log('POKEMON()');
 //debug_log($update);
 //debug_log($data);
 
-// Check access.
-$botUser->accessCheck('access-bot');
+if($botUser->accessCheck('pokemon-own', true)) {
+  $userRestriction = 'AND raids.user_id = ?';
+  $binds = [$update['message']['chat']['id']];
+}elseif($botUser->accessCheck('pokemon-all', true)) {
+  $userRestriction = '';
+  $binds = [];
+}else {
+  $botUser->denyAccess();
+}
 
-// Count results.
-$count = 0;
+$query = my_query('
+  SELECT  raids.*, gyms.gym_name
+  FROM    raids
+  LEFT JOIN gyms
+  ON      raids.gym_id = gyms.id
+  WHERE   raids.end_time > UTC_TIMESTAMP
+  ' . $userRestriction . '
+  ORDER BY raids.end_time ASC
+  LIMIT 20
+', $binds);
+
+if($query->rowCount() == 0) {
+  $msg = '<b>' . getTranslation('no_active_raids_found') . '</b>';
+  send_message($update['message']['chat']['id'], $msg);
+  exit;
+}
 
 // Init text and keys.
 $text = '';
 $keys = [];
-
-$query = my_query('
-  SELECT
-    raids.*, gyms.lat ,
-    gyms.lon ,
-    gyms.address ,
-    gyms.gym_name ,
-    gyms.ex_gym ,
-    users. NAME
-  FROM
-    raids
-  LEFT JOIN gyms ON raids.gym_id = gyms.id
-  LEFT JOIN users ON raids.user_id = users.user_id
-  WHERE
-    raids.end_time > UTC_TIMESTAMP
-  ORDER BY
-    raids.end_time ASC
-  LIMIT 20
-');
 
 while ($row = $query->fetch()) {
   // Get times.
@@ -55,38 +57,25 @@ while ($row = $query->fetch()) {
   // Set text and keys.
   $text .= $row['gym_name'] . CR;
   $text .= get_local_pokemon_name($row['pokemon'], $row['pokemon_form']) . SP . '—' . SP . (($raid_day == $today) ? '' : ($raid_day . ', ')) . $start . SP . getTranslation('to') . SP . $end . CR . CR;
-  $keys[] = array(
+  $keys[] = [
     'text'          => $keys_text,
     'callback_data' => formatCallbackData(['raid_edit_poke', 'r' => $row['id'], 'rl' => $row['level']]),
-  );
-
-  // Counter++
-  $count = $count + 1;
-}
-
-// Set message.
-if($count == 0) {
-  $msg = '<b>' . getTranslation('no_active_raids_found') . '</b>';
-} else {
-  // Get the inline key array.
-  $keys = inline_key_array($keys, 1);
-
-  // Add exit key.
-  $keys[] = [
-    [
-      'text'          => getTranslation('abort'),
-      'callback_data' => 'exit'
-    ]
   ];
-
-  // Build message.
-  $msg = '<b>' . getTranslation('list_all_active_raids') . ':</b>' . CR;
-  $msg .= $text;
-  $msg .= '<b>' . getTranslation('select_gym_name') . '</b>' . CR;
 }
 
-// Build callback message string.
-$callback_response = 'OK';
+// Get the inline key array.
+$keys = inline_key_array($keys, 1);
+
+// Add exit key.
+$keys[][] = [
+  'text'          => getTranslation('abort'),
+  'callback_data' => 'exit'
+];
+
+// Build message.
+$msg = '<b>' . getTranslation('list_all_active_raids') . ':</b>' . CR;
+$msg .= $text;
+$msg .= '<b>' . getTranslation('select_gym_name') . '</b>' . CR;
 
 // Send message.
 send_message($update['message']['chat']['id'], $msg, $keys, ['reply_markup' => ['selective' => true, 'one_time_keyboard' => true]]);

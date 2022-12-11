@@ -9,9 +9,6 @@ debug_log('EVENTS()');
 // Check access.
 $botUser->accessCheck('event-manage');
 
-$id = $data['id'];
-$arg = $data['arg'];
-
 $keys = [];
 $callback_response = 'OK';
 

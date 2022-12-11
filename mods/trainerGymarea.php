@@ -39,7 +39,7 @@ $keys[] = [
   ],
   [
     'text'          => getTranslation('done'),
-    'callback_data' => formatCallbackData(['exit', 'arg' => 1])
+    'callback_data' => formatCallbackData(['exit', 'd' => 1])
   ]
 ];
 // Set message.

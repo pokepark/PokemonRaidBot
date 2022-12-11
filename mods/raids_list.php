@@ -29,7 +29,7 @@ if($botUser->raidaccessCheck($raidId, 'pokemon', true)) {
   $keys[] = [
     [
       'text'          => getTranslation('update_pokemon'),
-      'callback_data' => $raid['id'] . ':raid_edit_poke:' . $raid['level'],
+      'callback_data' => formatCallbackData(['raid_edit_poke', 'r' => $raid['id'], 'rl' => $raid['level']]),
     ]
   ];
 }

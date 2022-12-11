@@ -4,9 +4,9 @@ debug_log('delete_scheduled_entry()');
 
 // Check access.
 $botUser->accessCheck('pokedex');
-$id = $data['id'];
+$id = $data['i'];
 
-if($arg == 1) {
+if(isset($data['s']) && $data['s'] == 1) {
   my_query('DELETE FROM raid_bosses WHERE id = ?', [$id]);
   include(ROOT_PATH . '/mods/pokedex_list_raids.php');
   exit();
@@ -21,7 +21,7 @@ $msg .= get_local_pokemon_name($pokemon['pokedex_id'], $pokemon['pokemon_form_id
 $keys[] = [
   [
     'text'          => getTranslation('yes'),
-    'callback_data' => $id . ':' . 'delete_scheduled_entry' . ':1'
+    'callback_data' => formatCallbackData(['delete_scheduled_entry', 'i' => $id, 's' => 1])
   ],
   [
     'text'          => getTranslation('no'),

@@ -10,9 +10,7 @@ require_once(LOGIC_PATH . '/get_user.php');
 // Access check.
 $botUser->accessCheck('trainer');
 
-// Mode and action
-$mode = $data['id'];
-$action = $data['arg'];
+$action = $data['a'] ?? '';
 
 // Set the user_id
 $user_id = $botUser->userId;
@@ -72,23 +70,23 @@ if($action != 'add') {
     $keys[] = [
         [
           'text'          => getTranslation('switch_display_name'),
-          'callback_data' => '0:trainer_name:switch'
+          'callback_data' => formatCallbackData(['trainer_name', 'a' => 'switch'])
         ]
       ];
     $keys[] = [
         [
           'text'          => getTranslation('trainername_edit'),
-          'callback_data' => '0:trainer_name:add'
+          'callback_data' => formatCallbackData(['trainer_name', 'a' => 'add'])
         ],[
           'text'          => getTranslation('delete'),
-          'callback_data' => '0:trainer_name:delete'
+          'callback_data' => formatCallbackData(['trainer_name', 'a' => 'delete'])
         ]
       ];
   }else {
     $keys[] = [
         [
           'text'          => getTranslation('trainername_add'),
-          'callback_data' => '0:trainer_name:add'
+          'callback_data' => formatCallbackData(['trainer_name', 'a' => 'add'])
         ]
       ];
   }
@@ -96,7 +94,7 @@ if($action != 'add') {
 $keys[] = [
   [
     'text'          => getTranslation('back'),
-    'callback_data' => '0:trainer_name:cancel'
+    'callback_data' => formatCallbackData(['trainer_name', 'a' => 'cancel'])
   ]
 ];
 

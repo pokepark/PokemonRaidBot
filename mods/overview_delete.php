@@ -7,8 +7,7 @@ debug_log('overview_delete()');
 //debug_log($data);
 
 // Delete or list to deletion?
-$chat_id = 0;
-$chat_id = $data['arg'];
+$chat_id = $data['c'] ?? 0;
 
 // Check access.
 $botUser->accessCheck('overview');
@@ -49,11 +48,11 @@ if ($chat_id == 0) {
       [
         [
           'text'          => getTranslation('yes'),
-          'callback_data' => '0:overview_delete:' . $rowOverviews['chat_id']
+          'callback_data' => formatCallbackData(['overview_delete', 'c' => $rowOverviews['chat_id']])
         ],
         [
           'text'          => getTranslation('no'),
-          'callback_data' => '0:overview_delete:1'
+          'callback_data' => formatCallbackData(['overview_delete', 'c' => 1])
         ]
       ]
     ];

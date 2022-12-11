@@ -11,29 +11,28 @@ require_once(LOGIC_PATH . '/get_user.php');
 $botUser->accessCheck('trainer');
 
 // Confirmation and level
-$confirm = $data['id'];
-$team = $data['arg'];
+$team = $data['t'] ?? '';
 
 // Set the user_id
 $user_id = $update['callback_query']['from']['id'];
 
 // Ask for user level
-if($confirm == 0) {
+if($team == '') {
 
   // Set keys.
   $keys = [
     [
       [
         'text'          => TEAM_B,
-        'callback_data' => '1:trainer_team:mystic'
+        'callback_data' => formatCallbackData(['trainer_team', 't' => 'mystic'])
       ],
       [
         'text'          => TEAM_R,
-        'callback_data' => '1:trainer_team:valor'
+        'callback_data' => formatCallbackData(['trainer_team', 't' => 'valor'])
       ],
       [
         'text'          => TEAM_Y,
-        'callback_data' => '1:trainer_team:instinct'
+        'callback_data' => formatCallbackData(['trainer_team', 't' => 'instinct'])
       ]
     ],
     [
@@ -57,7 +56,7 @@ if($confirm == 0) {
   $callback_response = 'OK';
 
 // Write team to database.
-} else if($confirm == 1 && ($team == 'mystic' || $team == 'valor' || $team == 'instinct')) {
+} else if($team == 'mystic' || $team == 'valor' || $team == 'instinct') {
   // Update the user.
   my_query('
     UPDATE  users

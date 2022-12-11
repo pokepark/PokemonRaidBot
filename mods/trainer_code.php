@@ -11,8 +11,7 @@ require_once(LOGIC_PATH . '/get_user.php');
 $botUser->accessCheck('trainer');
 
 // Mode and action
-$mode = $data['id'];
-$action = $data['arg'];
+$action = $data['a'] ?? '';
 
 // Set the user_id
 $user_id = $update['callback_query']['from']['id'];
@@ -60,10 +59,10 @@ $callback_response = 'OK';
 $keys[] = [
   [
     'text'          => getTranslation('back'),
-    'callback_data' => '0:trainer_code:cancel'
+    'callback_data' => formatCallbackData(['trainer_code', 'a' => 'cancel'])
   ],[
     'text'          => getTranslation('delete'),
-    'callback_data' => '0:trainer_code:delete'
+    'callback_data' => formatCallbackData(['trainer_code', 'a' => 'delete'])
   ]
 ];
 // Answer callback.

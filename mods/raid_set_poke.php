@@ -10,12 +10,12 @@ require_once(LOGIC_PATH . '/show_raid_poll_small.php');
 //debug_log($data);
 
 // Set the id.
-$raidId = $data['id'];
+$raidId = $data['r'];
 
 // Access check.
 $botUser->raidaccessCheck($raidId, 'pokemon');
 
-$pokemon_id_form = get_pokemon_by_table_id($data['arg']);
+$pokemon_id_form = get_pokemon_by_table_id($data['p']);
 
 // Update pokemon in the raid table.
 my_query('
