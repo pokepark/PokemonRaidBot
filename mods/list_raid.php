@@ -70,7 +70,7 @@ if($rs->rowcount() == 1) {
     $keys[] = [
         [
           'text'          => getTranslation('delete'),
-          'callback_data' => $raid['id'] . ':raids_delete:0'
+          'callback_data' => formatCallbackData(['raids_delete', 'r' => $raid['id']])
         ]
     ];
   }

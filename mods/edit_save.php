@@ -36,7 +36,7 @@ $keys = [
   [
     [
       'text'          => getTranslation('delete'),
-      'callback_data' => $id . ':raids_delete:0'
+      'callback_data' => formatCallbackData(['raids_delete', 'r' => $id])
     ]
   ]
 ];

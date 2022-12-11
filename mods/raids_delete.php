@@ -11,7 +11,7 @@ require_once(LOGIC_PATH . '/show_raid_poll_small.php');
 // 0 -> Confirmation required
 // 1 -> Cancel deletion
 // 2 -> Execute deletion
-$action = $data['a'];
+$action = $data['a'] ?? 0;
 
 // Get the raid id.
 $raidId = $data['r'];
