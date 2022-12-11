@@ -142,10 +142,9 @@ class botUser
    * @param string $permission Permission to check
    * @param bool $return_result Return the result of privilege check
    * @param bool $new_user Has user completed tutorial or not
-   * @return bool|string
+   * @return bool|void
   */
   public function accessCheck($permission = 'access-bot', $return_result = false, $new_user = false) {
-    global $update;
     if(!$new_user && in_array($permission, $this->userPrivileges['privileges']) or $this->userPrivileges['grantedBy'] === 'BOT_ADMINS' or $this->userPrivileges['grantedBy'] === 'NOT_RESTRICTED') {
       return true;
     }
@@ -154,6 +153,15 @@ class botUser
     if($return_result)
       return false;
 
+    $this->denyAccess();
+  }
+
+  /**
+   * Send Access denied -message to user and exit
+   * @return void
+  */
+  public function denyAccess() {
+    global $update;
     $response_msg = '<b>' . getTranslation('bot_access_denied') . '</b>';
     // Edit message or send new message based on type of received call
     if ($update['type'] != 'callback_query') {
