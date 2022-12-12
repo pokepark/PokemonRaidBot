@@ -176,3 +176,19 @@ function formatCallbackData($array)
   }
   return rtrim($return, '|');
 }
+
+/**
+ * Return a button element
+ * @param string Button text
+ * @param string|array Callback data
+ * @return array Button
+ */
+function button($text, $callbackData)
+{
+  $callback = is_array($callbackData) ? formatCallbackData($callbackData) : $callbackData;
+  $button = [
+    'text' => $text,
+    'callback_data' => $callback
+  ];
+  return $button;
+}
