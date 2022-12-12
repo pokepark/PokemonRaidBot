@@ -49,31 +49,30 @@ if($protos = get_protos($proto_url)) {
       $SQL = '';
       foreach($pokemon_array as $id => $forms) {
         $pokemon_id = $id;
-        foreach($forms as $form=>$data) {
+        foreach($forms as $form => $data) {
           // Check that data is set, if not the mon is probably not in the game yet and there's no point in having them in a broken state
-          if(isset($data['weather']) && isset($data['min_cp']) && isset($data['max_cp']) && isset($data['min_weather_cp']) && isset($data['max_weather_cp']) && isset($data['pokemon_name'])) {
-            $poke_form = $form;
+          if(!isset($data['weather']) || !isset($data['min_cp']) || !isset($data['max_cp']) || !isset($data['min_weather_cp']) || !isset($data['max_weather_cp']) || !isset($data['pokemon_name'])) continue;
 
-            $poke_name = $data['pokemon_name'];
-            $form_id = $data['pokemon_form_id'];
-            $form_asset_suffix = $data['asset_suffix'];
-            $poke_min_cp = $data['min_cp'];
-            $poke_max_cp = $data['max_cp'];
-            $poke_min_weather_cp = $data['min_weather_cp'];
-            $poke_max_weather_cp = $data['max_weather_cp'];
-            $poke_type = $data['type'];
-            $poke_type2 = $data['type2'];
-            $poke_weather  = $data['weather'];
+          $poke_name = $data['pokemon_name'];
+          $form_id = $data['pokemon_form_id'];
+          $form_asset_suffix = $data['asset_suffix'];
+          $poke_min_cp = $data['min_cp'];
+          $poke_max_cp = $data['max_cp'];
+          $poke_min_weather_cp = $data['min_weather_cp'];
+          $poke_max_weather_cp = $data['max_weather_cp'];
+          $poke_type = $data['type'];
+          $poke_type2 = $data['type2'];
+          $poke_weather  = $data['weather'];
 
-            if($pokemon_id == 150 && $data['pokemon_form_name']=="a") {
-              // Because logic and consistency
-              $poke_form = 'armored';
-            }else {
-              $poke_form = strtolower($data['pokemon_form_name']);
-            }
-            if($i==0) $i=1; else $SQL .= ",";
-            $SQL .= PHP_EOL . "(\"${pokemon_id}\", \"${poke_name}\", \"${poke_form}\", \"${form_id}\", \"${form_asset_suffix}\", \"${poke_min_cp}\", \"${poke_max_cp}\", \"${poke_min_weather_cp}\", \"${poke_max_weather_cp}\", \"${poke_type}\", \"${poke_type2}\", \"${poke_weather}\")";
+          if($pokemon_id == 150 && $data['pokemon_form_name']=="a") {
+            // Because logic and consistency
+            $poke_form = 'armored';
+          }else {
+            $poke_form = strtolower($data['pokemon_form_name']);
           }
+          if($i==0) $i=1; else $SQL .= ",";
+          $insertData = [$pokemon_id, $poke_name, $poke_form, $form_id, $form_asset_suffix, $poke_min_cp, $poke_max_cp, $poke_min_weather_cp, $poke_max_weather_cp, $poke_type, $poke_type2, $poke_weather];
+          $SQL .= PHP_EOL . '("' . implode('","', $insertData) . '")';
         }
       }
       ## MySQL 8 compatible
@@ -88,6 +87,7 @@ if($protos = get_protos($proto_url)) {
       $SQL .= 'type = VALUES(type), type2 = VALUES(type2), weather = VALUES(weather);' . PHP_EOL;
       try {
         $prep = $dbh->prepare($SQL);
+        info_log($SQL);
         $prep->execute();
       } catch (Exception $e) {
         if(isset($update['message']['from']['id'])) $error = $e;
