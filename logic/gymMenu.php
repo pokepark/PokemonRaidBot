@@ -55,7 +55,7 @@ function gymMenu($buttonAction, $showHidden, $stage, $firstLetter = false, $gyma
     if($query_remote->fetch()['count'] > 0) {
       $keys[][] = [
         'text'          => getTranslation('remote_raids'),
-        'callback_data' => 'list_remote_raids'
+        'callback_data' => 'list_remote_gyms'
       ];
     }
   }
