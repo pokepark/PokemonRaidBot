@@ -16,6 +16,12 @@ $botUser->accessCheck('create');
 $gym_id = $data['g'];
 $gym = get_gym($gym_id);
 
+$showBackButton = true;
+if(isset($data['z'])) {
+  $showBackButton = false;
+  unset($data['z']);
+}
+
 // Telegram JSON array.
 $tg_json = array();
 
@@ -117,7 +123,7 @@ if($eliteId > 0) {
 }
 
 $lastRow = [];
-if(!isset($data['r']) or $data['r'] != 1) {
+if($showBackButton) {
   $backData = $data;
   $backData[0] = 'gymMenu';
   $backData['a'] = 'create';

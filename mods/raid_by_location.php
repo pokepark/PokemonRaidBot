@@ -142,7 +142,7 @@ $keys = [
   [
     [
       'text'          => getTranslation('next'),
-      'callback_data' => formatCallbackData(['edit_raidlevel', 'gl' => $gym_letter, 'g' => $gym_id, 'r' => 1])
+      'callback_data' => formatCallbackData(['edit_raidlevel', 'gl' => $gym_letter, 'g' => $gym_id, 'z' => 1])
     ]
   ],
   [
