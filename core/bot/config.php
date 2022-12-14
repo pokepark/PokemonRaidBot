@@ -16,7 +16,7 @@ function get_config_array($file) {
   $config_array = json_decode($file_contents, true);
 
   if(json_last_error() !== JSON_ERROR_NONE) {
-    error_log('Invalid JSON (' . json_last_error_msg()  . '): ' . $file);
+    error_log('[core/bot/config.php] Invalid JSON (' . json_last_error_msg()  . '): ' . $file . "\n What we got from the file: \n" . $file_contents);
     die('Config file not valid JSON, cannot continue: ' . $file);
   }
 

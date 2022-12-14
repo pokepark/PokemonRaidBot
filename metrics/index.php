@@ -7,9 +7,9 @@ use Prometheus\CollectorRegistry;
 use Prometheus\RenderTextFormat;
 
 require_once __DIR__ . '/../core/bot/paths.php';
+require_once(CORE_BOT_PATH . '/config.php');
 require_once(ROOT_PATH . '/logic/debug.php');
 require_once(ROOT_PATH . '/logic/bearer_token.php');
-require_once(CORE_BOT_PATH . '/config.php');
 
 // Authentication is done based on a Bearer Token provided as a header
 $bearer_token = getBearerToken();
