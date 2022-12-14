@@ -1,5 +1,8 @@
 <?php
 
+# Ensure PHP is reporting all errors.
+error_reporting(E_ALL);
+
 require_once(CORE_BOT_PATH . '/is_init.php');
 
 # Ensure logfile directories exist, otherwise logging will fail.

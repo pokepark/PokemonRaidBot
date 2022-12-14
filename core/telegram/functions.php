@@ -682,7 +682,7 @@ function editMessageMedia($id_val, $text_val, $media_content, $content_type, $in
         $post_contents['media']['media'] = $media_content;
     }
     $post_contents['media'] = json_encode($post_contents['media']);
-    debug_log(print_r($post_contents, true), '->');
+    debug_log("Editing message ${post_contents['message_id']} media: ${post_contents['media']}", '->');
 
     // Send request to telegram api.
     return curl_request($post_contents, $multicurl, $identifier);
