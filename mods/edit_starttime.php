@@ -92,7 +92,7 @@ if($event_id != NULL or $raid_level == 9) {
   $now_plus_i = new DateTime($now, new DateTimeZone('UTC'));
   for ($i = 1; $i <= $config->RAID_EGG_DURATION; $i = $i + 1) {
     $now_plus_i->add(new DateInterval('PT1M'));
-    $buttonData['t'] = $now_plus_i->format("H:i");
+    $buttonData['t'] = $now_plus_i->format("YmdHi");
     if ($arg == 'min')
       $buttonText = floor($i / 60) . ':' . str_pad($i % 60, 2, '0', STR_PAD_LEFT);
     else
@@ -115,18 +115,12 @@ if($event_id != NULL or $raid_level == 9) {
   $keyData['o'] = 'm';
   $keyData['t'] = utctime($now,"H-i");
   // Raid already running
-  $keys_opt[] = array(
-    'text'	    => getTranslation('is_raid_active'),
-    'callback_data' => formatCallbackData($keyData)
-  );
+  $keys_opt[] = button(getTranslation('is_raid_active'), $keyData);
   $keyData[0] = 'edit_starttime';
   $keyData['o'] = $switch_view;
   unset($keyData['t']);
   // Switch view: clocktime / minutes until start
-  $keys_opt[] = array(
-    'text'	    => $switch_text,
-    'callback_data' => formatCallbackData($keyData)
-  );
+  $keys_opt[] = button($switch_text, $keyData);
 
   // Get the inline key array.
   $keys_opt = inline_key_array($keys_opt, 2);
@@ -142,27 +136,14 @@ if($event_id != NULL or $raid_level == 9) {
 // No keys found.
 if (!$keys) {
   // Create the keys.
-  $keys = [
-    [
-      [
-        'text'          => getTranslation('abort'),
-        'callback_data' => 'exit'
-      ]
-    ]
-  ];
+  $keys[][] = button(getTranslation('abort'), 'exit');
 } else {
   $backData = $data;
   $backData[0] = 'edit_pokemon';
   // Add navigation keys.
   $keys[] = [
-    [
-      'text' => getTranslation('back'),
-      'callback_data' => formatCallbackData($backData)
-    ],
-    [
-      'text' => getTranslation('abort'),
-      'callback_data' => 'exit'
-    ]
+    button(getTranslation('back'), formatCallbackData($backData)),
+    button(getTranslation('abort'), 'exit')
   ];
 }
 

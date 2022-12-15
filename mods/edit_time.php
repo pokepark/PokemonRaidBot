@@ -30,11 +30,11 @@ if ($raid_id == 0 && $gym_id != 0) {
   // Replace "-" with ":" to get proper time format
   debug_log('Formatting the raid time properly now.');
 
+  // Date was received in format YearMonthDayHourMinute so we need to reformat it to datetime
+  $start_date_time = substr($starttime,0,4) . '-' . substr($starttime,4,2) . '-' . substr($starttime,6,2) . ' ' .  substr($starttime,8,2) . ':' .  substr($starttime,10,2) . ':00';
   // Event raids
   if($event_id != NULL) {
     $event_id = ($event_id == 'X') ? EVENT_ID_EX : $event_id;
-    // Date was received in format YearMonthDayHourMinute so we need to reformat it to datetime
-    $start_date_time = substr($starttime,0,4) . '-' . substr($starttime,4,2) . '-' . substr($starttime,6,2) . ' ' .  substr($starttime,8,2) . ':' .  substr($starttime,10,2) . ':00';
     debug_log('Event time :D ... Setting raid date to ' . $start_date_time);
     $query = my_query('SELECT raid_duration FROM events WHERE id = ? LIMIT 1', [$event_id]);
     $result = $query->fetch();
@@ -43,20 +43,12 @@ if ($raid_id == 0 && $gym_id != 0) {
 
   // Elite raids
   }elseif($raid_level == 9) {
-    // Date was received in format YearMonthDayHourMinute so we need to reformat it to datetime
-    $start_date_time = substr($starttime,0,4) . '-' . substr($starttime,4,2) . '-' . substr($starttime,6,2) . ' ' .  substr($starttime,8,2) . ':' .  substr($starttime,10,2) . ':00';
     debug_log('Elite Raid time :D ... Setting raid date to ' . $start_date_time);
     $duration = $config->RAID_DURATION_ELITE;
     $egg_duration = $config->RAID_EGG_DURATION_ELITE;
 
   // Normal raids
   } else {
-    $arg_time = str_replace('-', ':', $starttime);
-    // Current date
-    $current_date = date('Y-m-d', strtotime('now'));
-    debug_log('Today is a raid day! Setting raid date to ' . $current_date);
-    // Raid time
-    $start_date_time = $current_date . ' ' . $arg_time . ':00';
     debug_log('Received the following time for the raid: ' . $start_date_time);
     $duration = $config->RAID_DURATION;
     $egg_duration = $config->RAID_EGG_DURATION;
@@ -81,7 +73,7 @@ if ($raid_id == 0 && $gym_id != 0) {
     // Add keys for sharing the raid.
     if(!empty($keys)) {
       // Exit key
-      $keys = universal_key($keys, '0', 'exit', '0', getTranslation('abort'));
+      $keys[][] = button(getTranslation('abort'), 'exit');
     }
 
     // Answer callback.
@@ -145,11 +137,8 @@ if($opt_arg == 'm') {
 
   for ($i = $slotmax; $i >= 15; $i = $i - $slotsize) {
     // Create the keys.
-    $keys[] = array(
-    // Just show the time, no text - not everyone has a phone or tablet with a large screen...
-      'text'          => floor($i / 60) . ':' . str_pad($i % 60, 2, '0', STR_PAD_LEFT),
-      'callback_data' => formatCallbackData(['edit_save', 'd' => $i, 'r' => $raid_id])
-    );
+    $buttonText = floor($i / 60) . ':' . str_pad($i % 60, 2, '0', STR_PAD_LEFT);
+    $keys[] = button($buttonText, ['edit_save', 'd' => $i, 'r' => $raid_id]);
   }
 
 } else {
