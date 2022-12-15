@@ -10,8 +10,7 @@ require_once(LOGIC_PATH . '/resolve_raid_boss.php');
 //debug_log($data);
 
 // Get chat ID from data
-$chat_id = 0;
-$chat_id = $data['arg'];
+$chat_id = $data['c'] ?? 0;
 
 // Get all or specific overview
 $query_chat = '';
@@ -77,14 +76,8 @@ foreach($overviews as $overview_row) {
     $message_id = $update['callback_query']['message']['message_id'];
     $chat_id = $update['callback_query']['from']['id'];
     $keys[] = [
-      [
-        'text'          => EMOJI_REFRESH,
-        'callback_data' => '0:overview_refresh:' . $overview_row['chat_id']
-      ],
-      [
-        'text'          => getTranslation('done'),
-        'callback_data' => formatCallbackData(['exit', 'd' => '1'])
-      ]
+      button(EMOJI_REFRESH, ['overview_refresh', 'c' => $overview_row['chat_id']]),
+      button(getTranslation('done'), ['exit', 'd' => '1'])
     ];
   }else {
     $message_id = $overview_row['message_id'];

@@ -9,13 +9,9 @@ debug_log('HISTORY');
 // Check access.
 $botUser->accessCheck('history');
 
-// Expected callback data: [Date, YYYY-MM-DD]/[GYM_LETTER]:history_raids:[GYM_ID]
-
-$id_data = explode('/',$data['id']);
-$current_date = $id_data[0];
-$gym_first_letter = $id_data[1];
-
-$gym_id = $data['arg'];
+$current_date = $data['d'];
+$gym_first_letter = $data['fl'];
+$gym_id = $data['g'];
 
 // Get raids from database
 $rs = my_query('
@@ -33,22 +29,16 @@ $rs = my_query('
   ', [$gym_id]
 );
 while ($raid = $rs->fetch()) {
-  $keys[][] = [
-    'text'          => dt2time($raid['start_time']) . ': ' . get_local_pokemon_name($raid['pokemon'],$raid['pokemon_form']),
-    'callback_data' => $data['id'] . ':history_raid:' . $gym_id .'/' . $raid['id']
-  ];
+  $newData = $data;
+  $newData[0] = 'history_raid';
+  $newData['r'] = $raid['id'];
+  $keys[][] = button(dt2time($raid['start_time']) . ': ' . get_local_pokemon_name($raid['pokemon'],$raid['pokemon_form']), $newData);
   $gym_name = $raid['gym_name'];
   $start_time = $raid['start_time'];
 }
 $nav_keys = [
-  [
-    'text'          => getTranslation('back'),
-    'callback_data' => $current_date . ':history_gyms:' . $gym_first_letter
-  ],
-  [
-    'text'          => getTranslation('abort'),
-    'callback_data' => 'exit'
-  ],
+  button(getTranslation('back'), ['history_gyms', 'd' => $current_date, 'fl' => $gym_first_letter]),
+  button(getTranslation('abort'), 'exit')
 ];
 $keys[] = $nav_keys;
 

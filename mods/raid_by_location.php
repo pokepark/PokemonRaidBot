@@ -138,20 +138,8 @@ debug_log('Gym ID: ' . $gym_id);
 debug_log('Gym Name: ' . $gym_name);
 
 // Create the keys.
-$keys = [
-  [
-    [
-      'text'          => getTranslation('next'),
-      'callback_data' => formatCallbackData(['edit_raidlevel', 'gl' => $gym_letter, 'g' => $gym_id, 'z' => 1])
-    ]
-  ],
-  [
-    [
-      'text'          => getTranslation('abort'),
-      'callback_data' => 'exit'
-    ]
-  ]
-];
+$keys[][] = button(getTranslation('next'), ['edit_raidlevel', 'gl' => $gym_letter, 'g' => $gym_id, 'z' => 1]);
+$keys[][] = button(getTranslation('abort'), 'exit');
 
 // Answer location message.
 if(isset($update['message']['location'])) {

@@ -14,8 +14,8 @@ $botUser->accessCheck('trainer-delete');
 $keys = [];
 
 // Get chat id and action
-$trainer_chat = $data['id'];
-$action = $data['arg'];
+$trainer_chat = $data['c'] ?? 0;
+$action = $data['a'] ?? 0;
 
 // Show chats to delete
 if($action == 0 || $trainer_chat == 0) {
@@ -30,7 +30,7 @@ if($action == 0 || $trainer_chat == 0) {
     $chat_id = $row['chat_id'];
     [$chat_title, $chat_username] = get_chat_title_username($chat_id);
 
-    $keys[] = universal_inner_key($keys, $chat_id, 'trainer_delete', '1', $chat_title);
+    $keys[] = button($chat_title, ['trainer_delete', 'c' => $chat_id, 'a' => 1]);
   }
 
   // Add abort key.
@@ -40,8 +40,8 @@ if($action == 0 || $trainer_chat == 0) {
 
     // Add back navigation key.
     $nav_keys = [];
-    $nav_keys[] = universal_inner_key($keys, '0', 'trainer', '0', getTranslation('back'));
-    $nav_keys[] = universal_inner_key($keys, '0', 'exit', '0', getTranslation('abort'));
+    $nav_keys[] = button(getTranslation('back'), 'trainer');
+    $nav_keys[] = button(getTranslation('abort'), 'exit');
 
     // Get the inline key array.
     $keys[] = $nav_keys;
@@ -62,20 +62,8 @@ if($action == 0 || $trainer_chat == 0) {
   $msg .= EMOJI_WARN . SP . '<b>' . getTranslation('delete_trainer_message_from_chat') . '</b>' . SP . EMOJI_WARN;
 
   // Create the keys.
-  $keys = [
-    [
-      [
-        'text'          => getTranslation('yes'),
-        'callback_data' => $trainer_chat . ':trainer_delete:2'
-      ]
-    ],
-    [
-      [
-        'text'          => getTranslation('no'),
-        'callback_data' => 'exit'
-      ]
-    ]
-  ];
+  $keys[][] = button(getTranslation('yes'), ['trainer_delete', 'c' => $trainer_chat, 'a' => 2]);
+  $keys[][] = button(getTranslation('no'), 'exit');
 
 // Delete trainer message
 } else if($action == 2 && $trainer_chat != 0) {

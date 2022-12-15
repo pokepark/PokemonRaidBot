@@ -36,58 +36,39 @@ function edit_pokedex_keys($limit)
   // List users / moderators
   while ($mon = $rs->fetch()) {
     $pokemon_name = get_local_pokemon_name($mon['pokedex_id'], $mon['pokemon_form_id']);
-    $pokemonKeys[][] = [
-      'text'          => $mon['pokedex_id'] . SP . $pokemon_name,
-      'callback_data' => $mon['pokedex_id'] . '-' . $mon['pokemon_form_id'] . ':pokedex_edit_pokemon:0'
-    ];
+    $pokemonKeys[][] = button($mon['pokedex_id'] . SP . $pokemon_name, ['pokedex_edit_pokemon', 'p' => $mon['pokedex_id'] . '-' . $mon['pokemon_form_id']]);
   }
 
   // Empty backs and next keys
-  $keys_back = [];
-  $keys_next = [];
+  $keys_back = $keys_next = [];
 
   // Add back key.
   if ($limit > 0) {
     $new_limit = $limit - $entries;
-    $keys_back[0][] = [
-      'text' => getTranslation('back') . ' (-' . $entries . ')',
-      'callback_data' => formatCallbackData(['pokedex', 'l' => $new_limit])
-    ];
+    $keys_back[0][] = button(getTranslation('back') . ' (-' . $entries . ')',['pokedex', 'l' => $new_limit]);
   }
 
   // Add skip back key.
   if ($limit - $skip > 0) {
     $new_limit = $limit - $skip - $entries;
-    $keys_back[0][] = [
-      'text' => getTranslation('back') . ' (-' . $skip . ')',
-      'callback_data' => formatCallbackData(['pokedex', 'l' => $new_limit])
-    ];
+    $keys_back[0][] = button(getTranslation('back') . ' (-' . $skip . ')', ['pokedex', 'l' => $new_limit]);
   }
 
   // Add next key.
   if (($limit + $entries) < $count) {
     $new_limit = $limit + $entries;
-    $keys_next[0][] = [
-      'text' => getTranslation('next') . ' (+' . $entries . ')',
-      'callback_data' => formatCallbackData(['pokedex', 'l' => $new_limit])
-    ];
+    $keys_next[0][] = button(getTranslation('next') . ' (+' . $entries . ')', ['pokedex', 'l' => $new_limit]);
   }
 
   // Add skip next key.
   if (($limit + $skip + $entries) < $count) {
     $new_limit = $limit + $skip + $entries;
-    $keys_next[0][] = [
-      'text' => getTranslation('next') . ' (+' . $skip . ')',
-      'callback_data' => formatCallbackData(['pokedex', 'l' => $new_limit])
-    ];
+    $keys_next[0][] = button(getTranslation('next') . ' (+' . $skip . ')', ['pokedex', 'l' => $new_limit]);
   }
 
   // Get the inline key array.
   $keys = array_merge($keys_back, $pokemonKeys, $keys_next);
-  $keys[][] = [
-    'text' => getTranslation('abort'),
-    'callback_data' => 'exit'
-  ];
+  $keys[][] = button(getTranslation('abort'), 'exit');
 
   return $keys;
 }

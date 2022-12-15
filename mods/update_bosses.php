@@ -64,7 +64,6 @@ if($levels != 'scheduled') {
   exit();
 }
 $count = count($add_mons);
-$start = false;
 $sql_values = '';
 if($count == 0) exit;
 

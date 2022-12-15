@@ -29,18 +29,8 @@ if ($action == 0) {
   debug_log($raid);
 
   // Create keys array.
-  $keys = [
-    [
-      [
-        'text'          => getTranslation('yes'),
-        'callback_data' => formatCallbackData(['raids_delete', 'r' => $raid['id'], 'a' => 2])
-      ],
-      [
-        'text'          => getTranslation('no'),
-        'callback_data' => formatCallbackData(['raids_delete', 'r' => $raid['id'], 'a' => 1])
-      ]
-    ]
-  ];
+  $keys[0][0] = button(getTranslation('yes'), ['raids_delete', 'r' => $raid['id'], 'a' => 2]);
+  $keys[0][1] = button(getTranslation('no'), ['raids_delete', 'r' => $raid['id'], 'a' => 1]);
 
   // Set message.
   $msg = EMOJI_WARN . '<b> ' . getTranslation('delete_this_raid') . ' </b>' . EMOJI_WARN . CR . CR;

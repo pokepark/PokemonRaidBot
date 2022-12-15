@@ -59,21 +59,12 @@ if(in_array($action, ['name','note','gps','addr'])) {
     $msg .= CR . CR . '<b>' . getTranslation($instructions) . '</b>';
     if($action == 'gps') $msg .= CR. getTranslation('gym_gps_example');
 
-    $keys[0][] = [
-      'text' => getTranslation('abort'),
-      'callback_data' => formatCallbackData(['gym_edit_details', 'g' => $gym_id, 'a' => 'abort', 'd' => $dbh->lastInsertId()])
-    ];
+    $keys[0][] = button(getTranslation('abort'), ['gym_edit_details', 'g' => $gym_id, 'a' => 'abort', 'd' => $dbh->lastInsertId()]);
     if($action == 'note' && !empty($gym['gym_note'])) {
-      $keys[0][] = [
-        'text' => getTranslation('delete'),
-        'callback_data' => formatCallbackData(['gym_edit_details', 'g' => $gym_id, 'a' => 'note', 'd' => $dbh->lastInsertId()])
-      ];
+      $keys[0][] = button(getTranslation('delete'), ['gym_edit_details', 'g' => $gym_id, 'a' => 'note', 'd' => $dbh->lastInsertId()]);
     }
     if($action == 'addr') {
-      $keys[0][] = [
-        'text' => getTranslation('gym_save_lookup_result'),
-        'callback_data' => formatCallbackData(['gym_edit_details', 'g' => $gym_id, 'a' => 'addr', 'd' => $dbh->lastInsertId()])
-      ];
+      $keys[0][] = button(getTranslation('gym_save_lookup_result'), ['gym_edit_details', 'g' => $gym_id, 'a' => 'addr', 'd' => $dbh->lastInsertId()]);
     }
   }
 }else {

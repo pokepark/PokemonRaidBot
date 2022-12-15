@@ -53,10 +53,7 @@ function gymMenu($buttonAction, $showHidden, $stage, $firstLetter = false, $gyma
   if($config->RAID_VIA_LOCATION_FUNCTION == 'remote' && $buttonAction == 'list') {
     $query_remote = my_query('SELECT count(*) as count FROM raids LEFT JOIN gyms on raids.gym_id = gyms.id WHERE raids.end_time > (UTC_TIMESTAMP() - INTERVAL 10 MINUTE) AND temporary_gym = 1');
     if($query_remote->fetch()['count'] > 0) {
-      $keys[][] = [
-        'text'          => getTranslation('remote_raids'),
-        'callback_data' => 'list_remote_gyms'
-      ];
+      $keys[][] = button(getTranslation('remote_raids'), 'list_remote_gyms');
     }
   }
   // Merge keys.
@@ -67,34 +64,19 @@ function gymMenu($buttonAction, $showHidden, $stage, $firstLetter = false, $gyma
   if($buttonAction == 'gym') {
     if($stage == 1 && $showHidden == 0) {
       // Add key for hidden gyms.
-      $h_keys[][] = [
-        'text'          => getTranslation('hidden_gyms'),
-        'callback_data' => formatCallbackData(['gymMenu', 'h' => 1, 'a' => 'gym', 'ga' => $gymareaId])
-      ];
+      $h_keys[][] = button(getTranslation('hidden_gyms'), ['gymMenu', 'h' => 1, 'a' => 'gym', 'ga' => $gymareaId]);
       $keys = array_merge($h_keys, $keys);
     }
     if($stage == 0 or $stage == 1 && $botUser->accessCheck('gym-add', true)) {
-      $keys[][] = [
-        'text'          => getTranslation('gym_create'),
-        'callback_data' => 'gym_create'
-      ];
+      $keys[][] = button(getTranslation('gym_create'), 'gym_create');
     }
   }
   if((($stage == 1 or ($stage == 2 && $firstLetter == '')) && $config->DEFAULT_GYM_AREA === false)) {
-    $backKey = [
-      'text'          => getTranslation('back'),
-      'callback_data' => formatCallbackData(['gymMenu', 'stage' => 0, 'a' => $buttonAction])
-    ];
+    $backKey = button(getTranslation('back'), ['gymMenu', 'stage' => 0, 'a' => $buttonAction]);
   }elseif($stage == 2 && $firstLetter !== '') {
-    $backKey = [
-      'text'          => getTranslation('back'),
-      'callback_data' => formatCallbackData(['gymMenu', 'stage' => 1, 'a' => $buttonAction, 'h' => $showHidden, 'ga' => $gymareaId])
-    ];
+    $backKey = button(getTranslation('back'), ['gymMenu', 'stage' => 1, 'a' => $buttonAction, 'h' => $showHidden, 'ga' => $gymareaId]);
   }
-  $abortKey = [
-    'text'          => getTranslation('abort'),
-    'callback_data' => 'exit'
-  ];
+  $abortKey = button(getTranslation('abort'), 'exit');
   if (isset($backKey)) {
     $keys[] = [$backKey, $abortKey];
   }else{
@@ -121,17 +103,12 @@ function getGymareas($gymareaId, $stage, $buttonAction) {
       if($points[0] != $points[count($points)-1]) $points[] = $points[0];
     }
     if ($stage != 0 && $gymareaId == $area['id']) continue;
-    $gymareaKeys[] = [
-      'text'          => $area['name'],
-      'callback_data' => formatCallbackData(['gymMenu', 'a' => $buttonAction, 'stage' => 1, 'ga' => $area['id']])
-    ];
+    $gymareaKeys[] = button($area['name'], ['gymMenu', 'a' => $buttonAction, 'stage' => 1, 'ga' => $area['id']]);
+
   }
   if(count($gymareaKeys) > 6 && $stage != 0) {
     // If list of area buttons is getting too large, replace it with a key that opens a submenu
-    $gymareaKeys = [[
-      'text'          => getTranslation('gymareas'),
-      'callback_data' => formatCallbackData(['gymMenu', 'a' => $buttonAction, 'stage' => 0])
-    ]];
+    $gymareaKeys[] = button(getTranslation('gymareas'), ['gymMenu', 'a' => $buttonAction, 'stage' => 0]);
   }
   $polygon_string = implode(',', $points);
   $query = count($points) > 0 ? 'AND ST_CONTAINS(ST_GEOMFROMTEXT(\'POLYGON(('.$polygon_string.'))\'), ST_GEOMFROMTEXT(CONCAT(\'POINT(\',lat,\' \',lon,\')\')))' : '';
@@ -209,10 +186,7 @@ function createGymKeys($buttonAction, $showHidden, $gymareaId, $gymareaQuery, $s
   );
   while ($gym = $rs->fetch()) {
     // Add first letter to keys array
-    $keys[] = array(
-      'text'          => $gym['first_letter'],
-      'callback_data' => formatCallbackData(['gymMenu', 'a' => $buttonAction, 'stage' => $stage+1, 'fl' => $gym['first_letter'], 'ga' => $gymareaId])
-    );
+    $keys[] = button($gym['first_letter'], ['gymMenu', 'a' => $buttonAction, 'stage' => $stage+1, 'fl' => $gym['first_letter'], 'ga' => $gymareaId]);
   }
 
   // Get the inline key array.
@@ -299,10 +273,7 @@ function createGymListKeysByFirstLetter($firstLetter, $showHidden, $gymareaQuery
       'fl' => $firstLetter,
       'h' => $showHidden,
     ];
-    $keys[] = array(
-      'text'          => $gym_name,
-      'callback_data' => formatCallbackData($callback)
-    );
+    $keys[] = button($gym_name, $callback);
   }
 
   // Get the inline key array.

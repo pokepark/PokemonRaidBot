@@ -57,20 +57,14 @@ while ($row = $query->fetch()) {
   // Set text and keys.
   $text .= $row['gym_name'] . CR;
   $text .= get_local_pokemon_name($row['pokemon'], $row['pokemon_form']) . SP . '—' . SP . (($raid_day == $today) ? '' : ($raid_day . ', ')) . $start . SP . getTranslation('to') . SP . $end . CR . CR;
-  $keys[] = [
-    'text'          => $keys_text,
-    'callback_data' => formatCallbackData(['raid_edit_poke', 'r' => $row['id'], 'rl' => $row['level']]),
-  ];
+  $keys[] = button($keys_text, ['raid_edit_poke', 'r' => $row['id'], 'rl' => $row['level']]);
 }
 
 // Get the inline key array.
 $keys = inline_key_array($keys, 1);
 
 // Add exit key.
-$keys[][] = [
-  'text'          => getTranslation('abort'),
-  'callback_data' => 'exit'
-];
+$keys[][] = button(getTranslation('abort'), 'exit');
 
 // Build message.
 $msg = '<b>' . getTranslation('list_all_active_raids') . ':</b>' . CR;

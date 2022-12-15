@@ -7,7 +7,7 @@ debug_log('gym_create()');
 //debug_log($data);
 
 // Check access.
-$botUser->accessCheck('gym-edit');
+$botUser->accessCheck('gym-add');
 
 function insertUserInput($userId, $stage, $oldMessageId, $gymId = 0) {
   global $dbh;
@@ -25,19 +25,13 @@ function respondToUser($userId, $oldMessageId = 0, $editMsg = '', $editKeys = []
   if($editMsg != '') editMessageText($oldMessageId, $editMsg, $editKeys, $userId, ['disable_web_page_preview' => 'true']);
   if($sendMsg != '') send_message($userId, $sendMsg, $sendKeys, ['disable_web_page_preview' => 'true']);
 }
-if(isset($data['arg'])) {
-  // Split the arg.
-  $split_arg = explode('-', $data['arg']);
-  $action = $split_arg[0] ?? false;
-  $deleteId = $split_arg[1] ?? false;
-}
 // Set keys.
 $keys = [];
 
 $stage = $modifiers['stage'] ?? 1;
 
-if(isset($action) && $action == 'abort') {
-  my_query('DELETE FROM user_input WHERE id = :deleteId', ['deleteId' => $deleteId]);
+if(isset($data['a'])) {
+  my_query('DELETE FROM user_input WHERE id = :deleteId', ['deleteId' => $data['a']]);
   $msg = getTranslation('action_aborted');
   editMessageText($update['callback_query']['message']['message_id'], $msg, [], $update['callback_query']['from']['id']);
   exit;
@@ -51,11 +45,8 @@ if($stage == 1) {
 
   $userInputId = insertUserInput($userId, $stage, $oldMessageId);
 
-  $editMsg = getTranslation("gym_create") . ':';
-  $editKeys[0][] = [
-      'text' => getTranslation("abort"),
-      'callback_data' => '0:gym_create:abort-' . $userInputId
-    ];
+  $editMsg = getTranslation('gym_create') . ':';
+  $editKeys[0][] = button(getTranslation('abort'), ['gym_create', 'a' => $userInputId]);
   $sendMsg = EMOJI_HERE . getTranslation('gym_gps_instructions') . CR;
   $sendMsg .= getTranslation('gym_gps_example');
   respondToUser($userId, $oldMessageId, $editMsg, $editKeys, $sendMsg, [], $callbackResponse, $callbackId);
@@ -86,12 +77,7 @@ if($stage == 3) {
     my_query('UPDATE gyms SET gym_name = :gym_name WHERE id = :gymId', [':gym_name' => $input, ':gymId' => $gymId]);
 
     $msg = getTranslation('gym_added');
-    $keys[] = [
-      [
-        'text' => getTranslation('show_gym_details'),
-        'callback_data' => formatCallbackData(['gym_details', 'g' => $gymId])
-      ]
-    ];
+    $keys[][] = button(getTranslation('show_gym_details'), ['gym_details', 'g' => $gymId]);
     respondToUser($userId, $oldMessageId, 'OK', [], $msg, $keys);
   }else {
     $msg = getTranslation('gym_edit_text_too_long');

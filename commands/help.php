@@ -56,14 +56,7 @@ if($access) {
   }else {
     $msg = $tutorial[0]['msg'];
   }
-  $keys = [
-  [
-    [
-      'text'          => getTranslation('next'),
-      'callback_data' => 'tutorial'
-    ]
-  ]
-  ];
+  $keys[][] = button(getTranslation('next'), 'tutorial');
   $photo = $tutorial[0]['photo'];
   send_photo($update['message']['from']['id'],$photo, false, $msg, $keys, ['disable_web_page_preview' => 'true']);
   exit();

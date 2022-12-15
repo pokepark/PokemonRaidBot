@@ -38,24 +38,9 @@ if ($end_time > $now) {
   $text .= get_local_pokemon_name($raid['pokemon'], $raid['pokemon_form']) . SP . '-' . SP . (($raid_day == $today) ? '' : ($raid_day . ', ')) . $start . SP . getTranslation('to') . SP . $end . CR . CR;
 
   // Add exit key.
-  $keys = [
-    [
-      [
-        'text'          => getTranslation('start_raid_public'),
-        'callback_data' => $raid['id'] . ':code:public-unconfirmed'
-      ],
-      [
-        'text'          => getTranslation('start_raid_private'),
-        'callback_data' => $raid['id'] . ':code:0-0-0-add'
-      ]
-    ],
-    [
-      [
-        'text'          => getTranslation('abort'),
-        'callback_data' => 'exit'
-      ]
-    ]
-  ];
+  $keys[0][] = button(getTranslation('start_raid_public'), ['code', 'r' => $raid['id'], 'a' => 'public-unconfirmed']);
+  $keys[0][] = button(getTranslation('start_raid_private'), ['code', 'r' => $raid['id'], 'a' => '0-0-0-add']);
+  $keys[1][] = button(getTranslation('abort'), 'exit');
 
   // Build message.
   $msg = '<b>' . getTranslation('start_raid_now') . ':</b>' . CR . CR;

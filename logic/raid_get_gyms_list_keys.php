@@ -28,10 +28,7 @@ function raid_get_gyms_list_keys($searchterm)
 
   while ($gym = $rs->fetch()) {
     $first = strtoupper(substr($gym['gym_name'], 0, 1));
-    $keys[] = array(
-      'text'          => $gym['gym_name'],
-      'callback_data' => formatCallbackData(['edit_raidlevel', 'g' => $gym['id'], 'fl' => $first])
-    );
+    $keys[] = button($gym['gym_name'], ['edit_raidlevel', 'g' => $gym['id'], 'fl' => $first]);
   }
 
   // Add abort key.

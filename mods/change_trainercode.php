@@ -24,18 +24,8 @@ my_query('
 edit_message_keyboard($modifiers['old_message_id'], [], $target_user_id);
 
 // Create the keys.
-$keys = [
-  [
-    [
-      'text'          => getTranslation('back'),
-      'callback_data' => 'trainer'
-    ],
-    [
-      'text'          => getTranslation('done'),
-      'callback_data' => formatCallbackData(['exit', 'd' => '1'])
-    ]
-  ]
-];
+$keys[0][0] = button(getTranslation('back'), 'trainer');
+$keys[0][1] = button(getTranslation('done'), ['exit', 'd' => '1']);
 
 // confirm Trainercode-Change
 send_message($target_user_id, getTranslation('trainercode_success').' <b>'.$trainercode.'</b>', $keys);

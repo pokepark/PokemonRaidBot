@@ -17,7 +17,7 @@ $id = $data['r'];
 $userid = $update['callback_query']['from']['id'];
 
 // Update only if time is not equal to RAID_DURATION
-if($data['d'] != $config->RAID_DURATION) {
+if(isset($data['d']) && $data['d'] != $config->RAID_DURATION) {
 
   // Build query.
   my_query('
@@ -32,24 +32,12 @@ if($data['d'] != $config->RAID_DURATION) {
 $tg_json = array();
 
 // Add delete to keys.
-$keys = [
-  [
-    [
-      'text'          => getTranslation('delete'),
-      'callback_data' => formatCallbackData(['raids_delete', 'r' => $id])
-    ]
-  ]
-];
+$keys[][] = button(getTranslation('delete'), ['raids_delete', 'r' => $id]);
 
 // Check access level prior allowing to change raid time
 if($botUser->accessCheck('raid-duration', true)) {
   // Add time change to keys.
-  $keys[] = [
-    [
-      'text'          => getTranslation('change_raid_duration'),
-      'callback_data' => formatCallbackData(['edit_time', 'r' => $id, 'o' => 'm'])
-    ]
-  ];
+  $keys[][] = button(getTranslation('change_raid_duration'), ['edit_time', 'r' => $id, 'o' => 'm']);
 }
 
 // Get raid times.
@@ -60,12 +48,7 @@ $raid_level = $raid['level'];
 
 if($raid['event'] !== NULL) {
   $event_button_text = ($raid['event_note'] == NULL) ? getTranslation("event_note_add") : getTranslation("event_note_edit");
-  $keys[] = [
-    [
-      'text'          => $event_button_text,
-      'callback_data' => $id . ':edit_event_note:0'
-    ]
-  ];
+  $keys[][] = button($event_button_text, ['edit_event_note', 'r' => $id, 'm' => 'e']);
 }
 
 // Add keys to share.

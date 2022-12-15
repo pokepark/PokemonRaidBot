@@ -11,11 +11,6 @@ require_once(LOGIC_PATH . '/curl_get_contents.php');
 $botUser->accessCheck('pokedex');
 
 include(LOGIC_PATH . '/resolve_boss_name_to_ids.php');
-// Get raid levels
-$id = $data['id'];
-
-// Exclude pokemon
-$arg = $data['arg'];
 
 $link = 'https://fight.pokebattler.com/raids';
 $pb_data = curl_get_contents($link);
@@ -26,13 +21,11 @@ $keys = [];
 $msg = '';
 $shinydata = [];
 foreach($pb_data['tiers'] as $tier) {
-
   // Raid level and message.
   $rl = str_replace('RAID_LEVEL_','', $tier['tier']);
   if($rl == "MEGA") $raid_level_id = 6; else $raid_level_id = $rl;
   $rl_parts = explode('_', $rl);
   if($rl_parts[count($rl_parts)-1] == 'FUTURE') continue;
-  #$msg .= '<b>' . getTranslation('pokedex_raid_level') . SP . $rl . ':</b>' . CR;
 
   // Get raid bosses for each raid level.
   foreach($tier['raids'] as $raid) {
@@ -48,15 +41,9 @@ foreach($pb_data['tiers'] as $tier) {
     }
     $shinydata[] = [':dex_id' => $dex_id, ':dex_form' => $dex_form];
   }
-  $msg .= CR;
 }
 // Back button.
-$keys[] = [
-  [
-    'text'      => getTranslation('done'),
-    'callback_data' => formatCallbackData(['exit', 'd' => '1'])
-  ]
-];
+$keys[][] = button(getTranslation('done'), ['exit', 'd' => '1']);
 if(count($shinydata) > 0) {
   $query = $dbh->prepare("UPDATE pokemon SET shiny = 1 WHERE pokedex_id = :dex_id AND pokemon_form_id = :dex_form");
   foreach($shinydata as $row_data) {

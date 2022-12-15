@@ -44,18 +44,8 @@ if ($chat_id == 0) {
     $msg = '<b>' . getTranslation('delete_raid_overview_for_chat') . ' ' . $chat_title . '?</b>';
 
     // Set keys - Delete button.
-    $keys = [
-      [
-        [
-          'text'          => getTranslation('yes'),
-          'callback_data' => formatCallbackData(['overview_delete', 'c' => $rowOverviews['chat_id']])
-        ],
-        [
-          'text'          => getTranslation('no'),
-          'callback_data' => formatCallbackData(['overview_delete', 'c' => 1])
-        ]
-      ]
-    ];
+    $keys[0][0] = button(getTranslation('yes'), ['overview_delete', 'c' => $rowOverviews['chat_id']]);
+    $keys[0][1] = button(getTranslation('no'), ['overview_delete', 'c' => 1]);
 
     // Send the message, but disable the web preview!
     $tg_json[] = send_message($update['callback_query']['message']['chat']['id'], $msg, $keys, false, true);

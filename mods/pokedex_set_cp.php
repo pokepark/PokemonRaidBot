@@ -11,7 +11,7 @@ require_once(LOGIC_PATH . '/get_pokemon_info.php');
 $botUser->accessCheck('pokedex');
 
 // Set the id.
-$pokedex_id = $data['id'];
+$pokedex_id = $data['p'];
 
 // Split pokedex_id and form
 $dex_id_form = explode('-',$pokedex_id,2);
@@ -19,17 +19,15 @@ $dex_id = $dex_id_form[0];
 $dex_form = $dex_id_form[1];
 
 // Get the type, level and cp
-$arg = $data['arg'];
-$data = explode("-", $arg);
-$cp_type = $data[0];
-$cp_level = $data[1];
-$cp_value = $data[3];
+$cp_type = $data['t'];
+$cp_level = $data['l'];
+$cp_value = $data['cp'] ?? 0;
 
 // Set boosted string
 $boosted = ($cp_level == 25) ? '_weather_cp' : '_cp';
 
 // Action to do: Save or add digits to cp
-$action = $data[2];
+$action = $data['a'];
 
 // Get current CP values
 $pokemon = get_pokemon_info($dex_id, $dex_form);
@@ -48,18 +46,12 @@ if($action == 'add') {
   $keys = [];
 
   // Get the keys.
-  $keys = cp_keys($pokedex_id, 'pokedex_set_cp', $arg);
+  $keys = cp_keys($data);
 
   // Back and abort.
   $keys[] = [
-    [
-      'text'          => getTranslation('back'),
-      'callback_data' => $pokedex_id . ':pokedex_edit_pokemon:0'
-    ],
-    [
-      'text'          => getTranslation('abort'),
-      'callback_data' => 'exit'
-    ]
+    button(getTranslation('back'), ['pokedex_edit_pokemon', 'p' => $pokedex_id]),
+    button(getTranslation('abort'), 'exit')
   ];
 
   // Build callback message string.
@@ -85,18 +77,8 @@ if($action == 'add') {
   );
 
   // Back to pokemon and done keys.
-  $keys = [
-    [
-      [
-        'text'          => getTranslation('back') . ' (' . get_local_pokemon_name($dex_id, $dex_form) . ')',
-        'callback_data' => $pokedex_id . ':pokedex_edit_pokemon:0'
-      ],
-      [
-        'text'          => getTranslation('done'),
-        'callback_data' => formatCallbackData(['exit', 'd' => '1'])
-      ]
-    ]
-  ];
+  $keys[0][0] = button(getTranslation('back') . ' (' . get_local_pokemon_name($dex_id, $dex_form) . ')', ['pokedex_edit_pokemon', 'p' => $pokedex_id]);
+  $keys[0][1] = button(getTranslation('done') . ' (' . get_local_pokemon_name($dex_id, $dex_form) . ')', ['exit', 'd' => '1']);
 
   // Build callback message string.
   $callback_response = getTranslation('pokemon_saved') . ' ' . get_local_pokemon_name($dex_id, $dex_form);
@@ -119,17 +101,15 @@ $tg_json[] = edit_message($update, $msg, $keys, false, true);
 // Telegram multicurl request.
 curl_json_multi_request($tg_json);
 
-function cp_keys($pokedex_id, $action, $arg)
+function cp_keys($data)
 {
   // Get the type, level and cp
-  $data = explode("-", $arg);
-  $cp_type_level = $data[0] . '-' . $data[1];
-  $cp_add = $data[0] . '-' . $data[1] . '-' . $data[2] . '-';
-  $old_cp = $data[3];
+  $old_cp = $data['cp'] ?? '';
 
   // Save and reset values
-  $save_arg = $cp_type_level . '-save-' . $old_cp;
-  $reset_arg = $cp_add . '0';
+  $saveData = $resetData = $data;
+  $saveData['a'] = 'save';
+  unset($resetData['cp']);
 
   // Init empty keys array.
   $keys = [];
@@ -138,7 +118,7 @@ function cp_keys($pokedex_id, $action, $arg)
   // Keys will be shown up to 999 and when user is adding one more number we exceed 999, so we remove the keys then
   // This means we do not exceed a Max CP of 9999 :)
   if($old_cp <= 999) {
-
+    $buttonData = $data;
     // Add keys 0 to 9
     /**
      * 7 8 9
@@ -150,36 +130,21 @@ function cp_keys($pokedex_id, $action, $arg)
     // 7 8 9
     foreach ([7, 8, 9, 4, 5, 6, 1, 2, 3] as $i) {
       // Set new cp
-      $new_cp = $cp_add . ($old_cp == 0 ? '' : $old_cp) . $i;
-
+      $buttonData['cp'] = $old_cp . $i;
       // Set keys.
-      $keys[] = array(
-        'text'          => $i,
-        'callback_data' => $pokedex_id . ':' . $action . ':' . $new_cp
-      );
+      $keys[] = button($i, $buttonData);
     }
 
     // 0
-    $new_cp = ($old_cp != 0) ? $cp_add . $old_cp . '0' : $reset_arg;
-
-    // Set keys.
-    $keys[] = array(
-      'text'            => '0',
-      'callback_data'   => $pokedex_id . ':' . $action . ':' . $new_cp
-    );
+    $buttonData['cp'] = $old_cp . '0';
+    $keys[] = button('0', $buttonData);
   }
 
   // Save
-  $keys[] = array(
-    'text'          => EMOJI_DISK,
-    'callback_data' => $pokedex_id . ':' . $action . ':' . $save_arg
-  );
+  $keys[] = button(EMOJI_DISK, $saveData);
 
   // Reset
-  $keys[] = array(
-    'text'          => getTranslation('reset'),
-    'callback_data' => $pokedex_id . ':' . $action . ':' . $reset_arg
-  );
+  $keys[] = button(getTranslation('reset'), $resetData);
 
   // Get the inline key array.
   $keys = inline_key_array($keys, 3);

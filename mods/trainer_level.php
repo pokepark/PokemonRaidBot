@@ -25,10 +25,7 @@ if($level == 0) {
   // Set keys.
   $keys = [];
   for($i = 5; $i <= $config->TRAINER_MAX_LEVEL; $i++) {
-    $keys[] = [
-      'text'          => $i,
-      'callback_data' => formatCallbackData(['trainer_level', 'l' => $i])
-    ];
+    $keys[] = button($i, ['trainer_level', 'l' => $i]);
   }
 
   // Get the inline key array.
@@ -36,14 +33,8 @@ if($level == 0) {
 
   // Add navigation keys.
   $keys[] = [
-    [
-      'text'          => getTranslation('back'),
-      'callback_data' => 'trainer'
-    ],
-    [
-      'text'          => getTranslation('done'),
-      'callback_data' => formatCallbackData(['exit', 'd' => '1'])
-    ]
+    button(getTranslation('back'), 'trainer'),
+    button(getTranslation('done'), ['exit', 'd' => '1'])
   ];
 
   // Build callback message string.
@@ -69,17 +60,9 @@ if($level == 0) {
   $callback_response = 'OK';
 
   // Create the keys.
-  $keys = [
-    [
-      [
-        'text'          => getTranslation('back'),
-        'callback_data' => 'trainer'
-      ],
-      [
-        'text'          => getTranslation('done'),
-        'callback_data' => formatCallbackData(['exit', 'd' => '1'])
-      ]
-    ]
+  $keys[] = [
+    button(getTranslation('back'), 'trainer'),
+    button(getTranslation('done'), ['exit', 'd' => '1'])
   ];
 }
 

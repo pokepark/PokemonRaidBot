@@ -56,12 +56,7 @@ if(!$keys) {
 
 // No keys found.
 if ($addAbortKey) {
-  $keys[] = [
-    [
-      'text'          => getTranslation('abort'),
-      'callback_data' => 'exit'
-    ]
-  ];
+  $keys[][] = button(getTranslation('abort'), 'exit');
 }
 
 // Send message.

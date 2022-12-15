@@ -9,8 +9,7 @@ $raid_id = $modifiers['id'];
 $user_id = $update['message']['from']['id'];
 
 // Update the event note to raid table
-$query = $dbh->prepare("UPDATE raids SET event_note=:text WHERE id = :id");
-$query->execute([':text' => $update['message']['text'], ':id' => $raid_id]);
+my_query('UPDATE raids SET event_note=:text WHERE id = :id', [':text' => $update['message']['text'], ':id' => $raid_id]);
 
 // Remove back button from previous message to avoid confusion
 edit_message_keyboard($modifiers['old_message_id'], [], $user_id);
@@ -23,20 +22,8 @@ $msg .= CR.getTranslation('event_note').': '.$update['message']['text'].CR2;
 $msg .= show_raid_poll_small($raid) . CR;
 debug_log($msg);
 
-$keys = [
-  [
-    [
-      'text'          => getTranslation('event_note_edit'),
-      'callback_data' => $raid_id . ':edit_event_note:edit'
-    ]
-  ],
-  [
-    [
-      'text'          => getTranslation('delete'),
-      'callback_data' => formatCallbackData(['raids_delete', 'r' => $raid_id])
-    ]
-  ]
-];
+$keys[][] = button(getTranslation('event_note_edit'), ['edit_event_note', 'r' => $raid_id, 'm' => 'e']);
+$keys[][] = button(getTranslation('delete'), ['raids_delete', 'r' => $raid_id]);
 $keys_share = share_keys($raid_id, 'raid_share', $update, $raid['level']);
 $keys = array_merge($keys, $keys_share);
 debug_log($keys);

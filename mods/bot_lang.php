@@ -23,36 +23,19 @@ if(isset($data['l'])) {
     ]);
   $new_lang_internal = $languages[$data['l']];
   $msg = getTranslation('new_lang_saved', $new_lang_internal);
-  $keys[] = [
-    [
-      'text'          => getTranslation('back', $new_lang_internal),
-      'callback_data' => 'trainer'
-    ],
-    [
-      'text'          => getTranslation('done', $new_lang_internal),
-      'callback_data' => formatCallbackData(['exit', 'd' => '1'])
-    ]
-  ];
+  $keys[0][] = button(getTranslation('back', $new_lang_internal), 'trainer');
+  $keys[0][] = button(getTranslation('done', $new_lang_internal), ['exit', 'd' => '1']);
   $callback_msg = $msg;
 } else {
   $displayedLanguages = [];
   foreach($languages as $lang_tg => $lang_internal) {
     if(in_array($lang_internal, $displayedLanguages)) continue;
-    $keys[][] = [
-      'text'          => getTranslation('lang_name', $lang_internal),
-      'callback_data' => formatCallbackData(['bot_lang', 'l' => $lang_tg])
-    ];
+    $keys[][] = button(getTranslation('lang_name', $lang_internal), ['bot_lang', 'l' => $lang_tg]);
     $displayedLanguages[] = $lang_internal;
   }
   $keys[] = [
-    [
-      'text'          => getTranslation('back'),
-      'callback_data' => 'trainer'
-    ],
-    [
-      'text'          => getTranslation('done'),
-      'callback_data' => formatCallbackData(['exit', 'd' => '1'])
-    ]
+    button(getTranslation('back'), 'trainer'),
+    button(getTranslation('done'), ['exit', 'd' => '1'])
   ];
   $msg = getTranslation('change_lang').':';
   $callback_msg = getTranslation('change_lang');

@@ -28,12 +28,7 @@ if(!empty($pokemon)) {
   }
   $query = my_query('SELECT pokedex_id, pokemon_form_id FROM pokemon WHERE pokedex_id = :pokedex_id', [':pokedex_id' => $pokedex_id]);
   while ($pokemon = $query->fetch()) {
-    $keys[] = [
-      [
-        'text'          => get_local_pokemon_name($pokemon['pokedex_id'], $pokemon['pokemon_form_id']),
-        'callback_data' => $pokemon['pokedex_id'] . '-' . $pokemon['pokemon_form_id'] . ':pokedex_edit_pokemon:0'
-      ]
-    ];
+    $keys[][] = button(get_local_pokemon_name($pokemon['pokedex_id'], $pokemon['pokemon_form_id']), ['pokedex_edit_pokemon', 'p' => $pokemon['pokedex_id'] . '-' . $pokemon['pokemon_form_id']]);
   }
   // Set message.
   $msg = '<b>' . getTranslation('pokedex_edit_pokemon') . '</b>';
@@ -43,46 +38,16 @@ if(count($keys) == 0 ) {
   $query = my_query('SELECT id FROM pokemon WHERE pokedex_id = 9999 and pokemon_form_id = 0'); // A simple check to see if pokemon table has all the necessary data in it
   if($query->rowCount() > 0) {
     // Create keys array.
-    $keys = [
-      [
-        [
-          'text'          => getTranslation('pokedex_raid_pokemon'),
-          'callback_data' => 'pokedex_list_raids'
-        ]
-      ],
-      [
-        [
-          'text'          => getTranslation('edit_pokemon'),
-          'callback_data' => 'pokedex'
-        ]
-      ],
-      [
-        [
-          'text'          => getTranslation('disable_raid_level'),
-          'callback_data' => 'pokedex_disable_raids'
-        ]
-      ],
-      [
-        [
-          'text'          => getTranslation('import'),
-          'callback_data' => 'pokedex_import'
-        ]
-      ]
-    ];
+    $keys[][] = button(getTranslation('pokedex_raid_pokemon'), 'pokedex_list_raids');
+    $keys[][] = button(getTranslation('edit_pokemon'), 'pokedex');
+    $keys[][] = button(getTranslation('disable_raid_level'), 'pokedex_disable_raids');
+    $keys[][] = button(getTranslation('import'), 'pokedex_import');
   }
-  $keys[][] = [
-    'text'          => getTranslation('update_pokemon_table'),
-    'callback_data' => 'getdb'
-  ];
+  $keys[][] = button(getTranslation('update_pokemon_table'), 'getdb');
   // Set message.
   $msg = '<b>' . getTranslation('pokedex_start') . ':</b>';
 }
-$keys[] = [
-  [
-    'text'          => getTranslation('abort'),
-    'callback_data' => 'exit'
-  ]
-];
+$keys[][] = button(getTranslation('abort'), 'exit');
 
 // Send message.
 send_message($update['message']['chat']['id'], $msg, $keys, ['reply_markup' => ['selective' => true, 'one_time_keyboard' => true]]);

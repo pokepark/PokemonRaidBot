@@ -20,25 +20,9 @@ foreach($q->fetchAll() as $event) {
   $msg .= $event['description'] . CR . CR;
 }
 
-$keys = [
-  [
-    [
-      'text' => getTranslation('events_manage'),
-      'callback_data' => 'events',
-    ]
-  ],
-  [
-    [
-      'text' => getTranslation('events_create'),
-      'callback_data' => 'events_add',
-    ]
-  ],
-  [
-    [
-      'text' => getTranslation('done'),
-      'callback_data' => formatCallbackData(['exit', 'd' => '1']),
-    ]
-  ]
-];
+$keys[][] = button(getTranslation('events_manage'), 'events');
+$keys[][] = button(getTranslation('events_create'), 'events_add');
+$keys[][] = button(getTranslation('done'), ['exit', 'd' => '1']);
+
 // Send message.
 send_message($update['message']['chat']['id'], $msg, $keys, ['reply_markup' => ['selective' => true, 'one_time_keyboard' => true]]);

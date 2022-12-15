@@ -8,13 +8,13 @@ require_once(LOGIC_PATH . '/send_raid_poll.php');
 //debug_log($data);
 
 // Get raid id.
-$raidId = $data['id'];
+$raidId = $data['r'];
 
 // Access check.
 $botUser->raidaccessCheck($raidId, 'share');
 
 // Get chat id.
-$chat = $data['arg'];
+$chat = $data['c'];
 
 $tg_json = send_raid_poll($raidId, $chat);
 

@@ -24,11 +24,7 @@ if (strlen($raid_time) == 8) {
   for ($i = 0; $i <= 23; $i = $i + 1) {
     $buttonData['t'] = $data['t'] . str_pad($i, 2, '0', STR_PAD_LEFT);
     // Create the keys.
-    $keys[] = array(
-      // Just show the time, no text - not everyone has a phone or tablet with a large screen...
-      'text'          => str_pad($i, 2, '0', STR_PAD_LEFT) . ':xx',
-      'callback_data' => formatCallbackData($buttonData)
-    );
+    $keys[] = button(str_pad($i, 2, '0', STR_PAD_LEFT) . ':xx', $buttonData);
   }
   // Set keys count and message.
   $keys_count = 4;
@@ -42,11 +38,7 @@ if (strlen($raid_time) == 8) {
   for ($i = 0; $i <= 45; $i = $i + 15) {
     $buttonData['t'] = $data['t'] . str_pad($i, 2, '0', STR_PAD_LEFT);
     // Create the keys.
-    $keys[] = array(
-      // Just show the time, no text - not everyone has a phone or tablet with a large screen...
-      'text'          => $hour . ':' . str_pad($i, 2, '0', STR_PAD_LEFT),
-      'callback_data' => formatCallbackData($buttonData)
-    );
+    $keys[] = button($hour . ':' . str_pad($i, 2, '0', STR_PAD_LEFT), $buttonData);
   }
   // Set keys count and message.
   $keys_count = 4;
@@ -75,10 +67,7 @@ if (strlen($raid_time) == 8) {
   // Adding button to continue with next step in raid creation
   $buttonData[0] = 'edit_time';
   $buttonData['t'] = $utc_raid_time;
-  $keys[] = array(
-    'text'          => getTranslation('next'),
-    'callback_data' => formatCallbackData($buttonData)
-  );
+  $keys[] = button(getTranslation('next'), $buttonData);
 
   // Set message.
   $msg = getTranslation('start_date_time') . ':' . CR .'<b>' . $text_day . SP . $text_month . SP . $text_year . ',' . SP . $time_tz . '</b>';
@@ -95,16 +84,10 @@ if(substr_count($raid_time, '-') == 1 || substr_count($raid_time, '-') == 4) {
   $backData = $data;
   $backData[0] = 'edit_starttime';
   unset($backData['t']);
-  $nav_keys[] = [
-    'text' => getTranslation('back'),
-    'callback_data' => formatCallbackData($backData)
-  ];
+  $nav_keys[] = button(getTranslation('back'), $backData);
 }
 
-$nav_keys[] = [
-  'text' => getTranslation('abort'),
-  'callback_data' => 'exit'
-];
+$nav_keys[] = button(getTranslation('abort'), 'exit');
 $nav_keys = inline_key_array($nav_keys, 2);
 
 // Merge keys.

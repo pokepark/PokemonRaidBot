@@ -67,15 +67,12 @@ while ($pokemon = $rs->fetch()) {
 
   // Add button to edit pokemon.
   if($pokemon['scheduled'] == 1) {
-    $keys[] = array(
-      'text'          => EMOJI_CLOCK . ' [' . $pokemon['raid_level'] . ']' . SP . $poke_name,
-      'callback_data' => formatCallbackData(['delete_scheduled_entry', 'i' => $pokemon['id']])
+    $keys[] = button(
+      EMOJI_CLOCK . ' [' . $pokemon['raid_level'] . ']' . SP . $poke_name,
+      ['delete_scheduled_entry', 'i' => $pokemon['id']]
     );
   } else {
-    $keys[] = array(
-      'text'          => '[' . $pokemon['raid_level'] . ']' . SP . $poke_name,
-      'callback_data' => $pokemon['pokedex_id'] . '-' . $pokemon['pokemon_form_id'] . ':pokedex_edit_pokemon:0'
-    );
+    $keys[] = button('[' . $pokemon['raid_level'] . ']' . SP . $poke_name, ['pokedex_edit_pokemon', 'p' => $pokemon['pokedex_id'] . '-' . $pokemon['pokemon_form_id']]);
   }
 
   // Prepare next run.
@@ -91,12 +88,7 @@ if(!empty($msg)) {
   $keys = inline_key_array($keys, 2);
 
   // Done key.
-  $keys[] = [
-    [
-      'text'          => getTranslation('done'),
-      'callback_data' => formatCallbackData(['exit', 'd' => '1'])
-    ]
-  ];
+  $keys[][] = button(getTranslation('done'), ['exit', 'd' => '1']);
 } else {
   // Set empty keys.
   $keys = [];

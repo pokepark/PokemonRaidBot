@@ -47,10 +47,7 @@ if($event_id != NULL or $raid_level == 9) {
 
     // Add keys.
     $buttonData['t'] = $date_tz;
-    $keys[] = array(
-      'text'          => $text_day . SP . $text_month . SP . $text_year,
-      'callback_data' => formatCallbackData($buttonData)
-    );
+    $keys[] = button($text_day . SP . $text_month . SP . $text_year, $buttonData);
   }
 
   // Get the inline key array.
@@ -99,10 +96,7 @@ if($event_id != NULL or $raid_level == 9) {
       $buttonText = dt2time($now_plus_i->format('Y-m-d H:i:s'));
 
     // Create the keys.
-    $keys[] = array(
-      'text'          => $buttonText,
-      'callback_data' => formatCallbackData($buttonData)
-    );
+    $keys[] = button($buttonText, $buttonData);
   }
 
   // Get the inline key array.

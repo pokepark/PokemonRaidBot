@@ -12,10 +12,10 @@ require_once(LOGIC_PATH . '/alarm.php');
 //$botUser->accessCheck('list');
 
 // Set the raid id.
-$raid_id = $data['id'];
+$raid_id = $data['r'];
 
 // Set the arg.
-$arg = $data['arg'];
+$arg = $data['a'] ?? '';
 
 // Telegram JSON array.
 $tg_json = array();
@@ -60,16 +60,8 @@ if($arg == 'public-unconfirmed' || $arg == 'public-send') {
     $keys = [];
 
     // Back and abort.
-    $keys[] = [
-      [
-        'text'          => EMOJI_INVITE,
-        'callback_data' => $raid_id . ':code:public-send'
-      ],
-      [
-        'text'          => getTranslation('abort'),
-        'callback_data' => 'exit'
-      ]
-    ];
+    $keys[0][0] = button(EMOJI_INVITE, ['code' ,'r' => $raid_id, 'a' => 'public-send']);
+    $keys[0][1] = button(getTranslation('abort'), 'exit');
 
     // Build callback message string.
     $callback_response = 'OK';
@@ -108,12 +100,7 @@ if($arg == 'public-unconfirmed' || $arg == 'public-send') {
     $keys = group_code_keys($raid_id, 'code', $arg);
 
     // Back and abort.
-    $keys[] = [
-      [
-        'text'          => getTranslation('abort'),
-        'callback_data' => 'exit'
-      ]
-    ];
+    $keys[][] = button(getTranslation('abort'), 'exit');
 
     // Build callback message string.
     $callback_response = 'OK';

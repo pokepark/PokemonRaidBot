@@ -13,8 +13,8 @@ $botUser->accessCheck('history');
 
 require_once(LOGIC_PATH .'/history.php');
 
-$current_day = $data['id'];
-$current_year_month = $data['arg'];
+$current_day = $data['d'] ?? 0;
+$current_year_month = $data['m'] ?? '';
 
 if($current_day == 0) {
   $msg_keys = create_history_date_msg_keys($current_year_month);
@@ -44,41 +44,32 @@ if($current_day == 0) {
   $date = $current_year_month.'-'.$current_day;
 
   $rs = my_query('
-      SELECT '.$select_query.' AS first_letter
-      FROM    raids
-      LEFT JOIN gyms
-      ON    raids.gym_id = gyms.id
-      LEFT JOIN attendance
-      ON    attendance.raid_id = raids.id
-      WHERE   date_format(start_time, "%Y-%m-%d") =  \''.$date.'\'
-      AND     raids.end_time < UTC_TIMESTAMP()
-      AND     attendance.id IS NOT NULL
-      AND     gyms.gym_name IS NOT NULL
-      ORDER BY  first_letter
-  ');
+    SELECT '.$select_query.' AS first_letter
+    FROM    raids
+    LEFT JOIN gyms
+    ON    raids.gym_id = gyms.id
+    LEFT JOIN attendance
+    ON    attendance.raid_id = raids.id
+    WHERE   date_format(start_time, "%Y-%m-%d") = ?
+    AND     raids.end_time < UTC_TIMESTAMP()
+    AND     attendance.id IS NOT NULL
+    AND     gyms.gym_name IS NOT NULL
+    ORDER BY  first_letter
+  ', [$date]);
 
   // Init empty keys array.
   $keys = [];
 
   while ($gym = $rs->fetch()) {
 	// Add first letter to keys array
-    $keys[] = array(
-      'text'          => $gym['first_letter'],
-      'callback_data' => $date . ':history_gyms:' . $gym['first_letter']
-    );
+    $keys[] = button($gym['first_letter'],['history_gyms', 'd' => $date, 'fl' => $gym['first_letter']]);
   }
   // Format buttons
   $keys = inline_key_array($keys, 4);
 
   $nav_keys = [
-    [
-      'text'          => getTranslation('back'),
-      'callback_data' => '0:history:' . $current_year_month
-    ],
-    [
-      'text'          => getTranslation('abort'),
-      'callback_data' => 'exit'
-    ]
+    button(getTranslation('back'), ['history', 'm' => $current_year_month]),
+    button(getTranslation('abort'), 'exit')
   ];
 
   // Get the inline key array.

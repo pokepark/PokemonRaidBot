@@ -57,13 +57,8 @@ my_query('INSERT INTO user_input SET user_id = ?, handler = \'change_trainercode
 $callback_response = 'OK';
 
 $keys[] = [
-  [
-    'text'          => getTranslation('back'),
-    'callback_data' => formatCallbackData(['trainer_code', 'a' => 'cancel'])
-  ],[
-    'text'          => getTranslation('delete'),
-    'callback_data' => formatCallbackData(['trainer_code', 'a' => 'delete'])
-  ]
+  button(getTranslation('back'), ['trainer_code', 'a' => 'cancel']),
+  button(getTranslation('delete'), ['trainer_code', 'a' => 'delete'])
 ];
 // Answer callback.
 answerCallbackQuery($update['callback_query']['id'], $callback_response);

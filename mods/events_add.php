@@ -23,12 +23,7 @@ if(isset($modifiers)) {
   editMessageText($modifiers['old_message_id'], getTranslation('events_created'), [], $userId);
   $msg = '<b>' . getTranslation('events_created') . '</b>' . CR;
   $msg .= $value;
-  $keys[] = [
-    [
-      'text' => getTranslation('next'),
-      'callback_data' => $eventId . ':events_manage:0',
-    ]
-  ];
+  $keys[][] = button(getTranslation('next'), ['events_manage', 'e' => $eventId]);
 }else {
   if($abort == 0) {
     // Add a new event
@@ -41,10 +36,7 @@ if(isset($modifiers)) {
     // Data for handling response from the user
     my_query('INSERT INTO user_input SET user_id = ?, handler = \'events_add\', modifiers = ?', [$userId, $modifiers]);
 
-    $keys[][] = [
-      'text' => getTranslation('abort'),
-      'callback_data' => formatCallbackData(['events_add', 'a' => 1]),
-    ];
+    $keys[][] = button(getTranslation('abort'), ['events_add', 'a' => 1]);
   }elseif($abort == 1) {
     my_query('DELETE FROM user_input WHERE user_id = ?', [$userId]);
     answerCallbackQuery($update['callback_query']['id'], 'OK');

@@ -24,18 +24,8 @@ my_query('
 edit_message_keyboard($modifiers['old_message_id'], [], $userid);
 
 // Create the keys.
-$keys = [
-  [
-    [
-      'text'          => getTranslation('back'),
-      'callback_data' => 'trainer'
-    ],
-    [
-      'text'          => getTranslation('done'),
-      'callback_data' => formatCallbackData(['exit', 'd' => '1'])
-    ]
-  ]
-];
+$keys[0][] = button(getTranslation('back'), 'trainer');
+$keys[0][] = button(getTranslation('done'), ['exit', 'd' => '1']);
 
 // confirm Name-Change
 send_message($userid, getTranslation('trainername_success').' <b>'.$trainername.'</b>', $keys);

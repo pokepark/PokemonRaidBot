@@ -20,32 +20,11 @@ $user_id = $update['callback_query']['from']['id'];
 if($team == '') {
 
   // Set keys.
-  $keys = [
-    [
-      [
-        'text'          => TEAM_B,
-        'callback_data' => formatCallbackData(['trainer_team', 't' => 'mystic'])
-      ],
-      [
-        'text'          => TEAM_R,
-        'callback_data' => formatCallbackData(['trainer_team', 't' => 'valor'])
-      ],
-      [
-        'text'          => TEAM_Y,
-        'callback_data' => formatCallbackData(['trainer_team', 't' => 'instinct'])
-      ]
-    ],
-    [
-      [
-        'text'          => getTranslation('back'),
-        'callback_data' => 'trainer'
-      ],
-      [
-        'text'          => getTranslation('abort'),
-        'callback_data' => 'exit'
-      ]
-    ]
-  ];
+  $keys[0][0] = button(TEAM_B, ['trainer_team', 't' => 'mystic']);
+  $keys[0][1] = button(TEAM_R, ['trainer_team', 't' => 'valor']);
+  $keys[0][2] = button(TEAM_Y, ['trainer_team', 't' => 'instinct']);
+  $keys[1][0] = button(getTranslation('back'), 'trainer');
+  $keys[1][1] = button(getTranslation('abort'), 'exit');
 
   // Build message string.
   $msg = '<b>' . getTranslation('your_trainer_info') . '</b>' . CR;
@@ -74,19 +53,8 @@ if($team == '') {
   $callback_response = 'OK';
 
   // Create the keys.
-  $keys = [
-    [
-      [
-        'text'          => getTranslation('back'),
-        'callback_data' => 'trainer'
-      ],
-      [
-        'text'          => getTranslation('done'),
-        'callback_data' => formatCallbackData(['exit', 'd' => '1'])
-      ]
-    ]
-  ];
-
+  $keys[0][0] = button(getTranslation('back'), 'trainer');
+  $keys[0][1] = button(getTranslation('done'), ['exit', 'd' => '1']);
 }
 
 // Answer callback.

@@ -8,7 +8,7 @@ require_once(LOGIC_PATH . '/send_vote_time_first.php');
 //debug_log($update);
 //debug_log($data);
 
-$raidId = $data['id'];
+$raidId = $data['r'];
 
 $query_select = my_query('
   SELECT  want_invite, CASE WHEN cancel = 1 or raid_done = 1 THEN 1 ELSE 0 END as cancelOrDone

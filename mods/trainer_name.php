@@ -67,38 +67,18 @@ if($action == 'add') {
 $callback_response = 'OK';
 if($action != 'add') {
   if(!empty($user_data['row']['trainername'])) {
+    $keys[][] = button(getTranslation('switch_display_name'), ['trainer_name', 'a' => 'switch']);
     $keys[] = [
-        [
-          'text'          => getTranslation('switch_display_name'),
-          'callback_data' => formatCallbackData(['trainer_name', 'a' => 'switch'])
-        ]
-      ];
-    $keys[] = [
-        [
-          'text'          => getTranslation('trainername_edit'),
-          'callback_data' => formatCallbackData(['trainer_name', 'a' => 'add'])
-        ],[
-          'text'          => getTranslation('delete'),
-          'callback_data' => formatCallbackData(['trainer_name', 'a' => 'delete'])
-        ]
-      ];
+      button(getTranslation('trainername_edit'), ['trainer_name', 'a' => 'add']),
+      button(getTranslation('delete'), ['trainer_name', 'a' => 'delete'])
+    ];
   }else {
-    $keys[] = [
-        [
-          'text'          => getTranslation('trainername_add'),
-          'callback_data' => formatCallbackData(['trainer_name', 'a' => 'add'])
-        ]
-      ];
+    $keys[][] = button(getTranslation('trainername_add'), ['trainer_name', 'a' => 'add']);
   }
 }
-$keys[] = [
-  [
-    'text'          => getTranslation('back'),
-    'callback_data' => formatCallbackData(['trainer_name', 'a' => 'cancel'])
-  ]
-];
+$keys[][] = button(getTranslation('back'), ['trainer_name', 'a' => 'cancel']);
 
-  // Answer callback.
+// Answer callback.
 answerCallbackQuery($update['callback_query']['id'], $callback_response);
 
 // Edit message.

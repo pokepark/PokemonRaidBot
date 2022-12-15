@@ -32,14 +32,8 @@ $back_action = ($eventId == NULL) ? 'edit_raidlevel' : 'edit_event_raidlevel';
 $backData = $data;
 $backData[0] = $back_action;
 $keys[] = [
-  [
-    'text' => getTranslation('back'),
-    'callback_data' => formatCallbackData($backData),
-  ],
-  [
-    'text' => getTranslation('abort'),
-    'callback_data' => 'exit'
-  ]
+  button(getTranslation('back'), $backData),
+  button(getTranslation('abort'), 'exit')
 ];
 
 // Build callback message string.

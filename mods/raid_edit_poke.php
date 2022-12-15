@@ -23,20 +23,10 @@ if ($raid_level != '0') {
   // Get the keys.
   $keys = pokemon_keys($data, $raid_level, 'raid_set_poke');
 
-  $keys[][] = [
-    'text' => getTranslation('abort'),
-    'callback_data' => 'exit'
-  ];
+  $keys[][] = button(getTranslation('abort'), 'exit');
 } else {
   // Create the keys.
-  $keys = [
-    [
-      [
-        'text'          => getTranslation('not_supported'),
-        'callback_data' => 'exit'
-      ]
-    ]
-  ];
+  $keys[][] = button(getTranslation('not_supported'), 'exit');
 }
 
 // Build callback message string.

@@ -8,13 +8,14 @@ require_once(LOGIC_PATH . '/send_trainerinfo.php');
 //debug_log($data);
 
 // Get action.
-$action = $data['arg'];
+$action = $data['a'] ?? '';
+$show = $data['s'] ?? '';
+$level = $data['l'] ?? '';
 
 // Up-vote.
-if ($action == 'up') {
+if ($level == 'up') {
   // Increase users level.
-  my_query(
-    '
+  my_query('
     UPDATE  users
     SET     level = IF(level = 0, 30, level+1)
       WHERE   user_id = ?
@@ -24,10 +25,9 @@ if ($action == 'up') {
 }
 
 // Down-vote.
-if ($action == 'down') {
+if ($level == 'down') {
   // Decrease users level.
-  my_query(
-    '
+  my_query('
     UPDATE  users
     SET     level = level-1
       WHERE   user_id = ?
@@ -37,22 +37,20 @@ if ($action == 'down') {
 }
 
 // Message coming from raid or trainer info?
-if($data['id'] == 'trainer') {
-  if($action == 'hide') {
+if($action == 'trainer') {
+  if($show == 'hide') {
     // Send trainer info update.
     send_trainerinfo($update, false);
   }
   // Send trainer info update.
   send_trainerinfo($update, true);
+  exit;
 }
 // Send vote response.
 require_once(LOGIC_PATH . '/update_raid_poll.php');
 
-$tg_json = update_raid_poll($data['id'], false, $update);
+$tg_json = update_raid_poll($data['r'], false, $update);
 
 $tg_json[] = answerCallbackQuery($update['callback_query']['id'], getTranslation('vote_updated'), true);
 
 curl_json_multi_request($tg_json);
-
-
-exit();

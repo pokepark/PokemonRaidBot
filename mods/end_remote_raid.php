@@ -1,6 +1,6 @@
 <?php
 
-$raid_id = $data['id'];
+$raid_id = $data['r'];
 
 my_query('UPDATE raids SET end_time = date_sub(UTC_TIMESTAMP(),interval 1 minute) WHERE id = ?', [$raid_id]);
 

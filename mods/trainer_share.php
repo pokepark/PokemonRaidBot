@@ -12,7 +12,7 @@ require_once(LOGIC_PATH . '/show_trainerinfo.php');
 $botUser->accessCheck('trainer-share');
 
 // Get chat id.
-$chat = $data['arg'];
+$chat = $data['c'];
 
 // Get text and keys.
 $text = show_trainerinfo($update);

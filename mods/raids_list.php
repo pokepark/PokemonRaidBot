@@ -17,29 +17,12 @@ $botUser->accessCheck('list');
 $raid = get_raid($raidId);
 
 // Create keys array.
-$keys = [
-  [
-    [
-      'text'          => getTranslation('expand'),
-      'callback_data' => $raid['id'] . ':vote_refresh:0',
-    ]
-  ]
-];
+$keys[][] = button(getTranslation('expand'), ['vote_refresh', 'r' => $raid['id']]);
 if($botUser->raidaccessCheck($raidId, 'pokemon', true)) {
-  $keys[] = [
-    [
-      'text'          => getTranslation('update_pokemon'),
-      'callback_data' => formatCallbackData(['raid_edit_poke', 'r' => $raid['id'], 'rl' => $raid['level']]),
-    ]
-  ];
+  $keys[][] = button(getTranslation('update_pokemon'), ['raid_edit_poke', 'r' => $raid['id'], 'rl' => $raid['level']]);
 }
 if($botUser->raidaccessCheck($raidId, 'delete', true)) {
-  $keys[] = [
-    [
-      'text'          => getTranslation('delete'),
-      'callback_data' => formatCallbackData(['raids_delete', 'r' => $raid['id']])
-    ]
-  ];
+  $keys[][] = button(getTranslation('delete'), ['raids_delete', 'r' => $raid['id']]);
 }
 
 // Add keys to share.
@@ -51,10 +34,7 @@ if(!empty($keys_share)) {
   debug_log('There are no groups to share to, is SHARE_CHATS set?');
 }
 // Exit key
-$keys[][] = [
-  'text' => getTranslation('done'),
-  'callback_data' => 'exit'
-];
+$keys[][] = button(getTranslation('done'), 'exit');
 
 // Get message.
 $msg = show_raid_poll_small($raid);

@@ -10,7 +10,7 @@ require_once(LOGIC_PATH . '/send_vote_time_first.php');
 //debug_log($update);
 //debug_log($data);
 
-$raidId = $data['id'];
+$raidId = $data['r'];
 
 // Get current remote status of user
 $rs = my_query('

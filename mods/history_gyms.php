@@ -11,8 +11,8 @@ $botUser->accessCheck('history');
 
 // Expected callback data: [Date, YYYY-MM-DD]:history_gyms:[GYM_LETTER]
 
-$current_date = $data['id'];
-$first = $data['arg'];
+$current_date = $data['d'];
+$first = $data['fl'];
 
 $split_date = explode('-', $current_date);
 $current_day = $split_date[2];
@@ -43,8 +43,7 @@ if($config->MYSQL_SORT_COLLATE != '') {
   $query_collate = 'COLLATE ' . $config->MYSQL_SORT_COLLATE;
 }
 // Get gyms from database
-$rs = my_query(
-  '
+$rs = my_query('
   SELECT  gyms.id, gyms.gym_name, gyms.ex_gym
   FROM    gyms
   LEFT JOIN raids
@@ -58,7 +57,6 @@ $rs = my_query(
   ' . $not . '
   GROUP BY  gym_name, raids.gym_id, gyms.id, gyms.ex_gym
   ORDER BY  gym_name ' . $query_collate
-
 );
 
 while ($gym = $rs->fetch()) {
@@ -69,20 +67,11 @@ while ($gym = $rs->fetch()) {
   } else {
     $gym_name = $gym['gym_name'];
   }
-  $keys[][] = [
-    'text'          => $gym_name,
-    'callback_data' => $current_date . '/' . $first . ':history_raids:' . $gym['id']
-  ];
+  $keys[][] = button($gym_name, ['history_raids', 'd' => $current_date, 'fl' => $first, 'g' => $gym['id']]);
 }
 $nav_keys = [
-  [
-    'text'          => getTranslation('back'),
-    'callback_data' => $current_day.':history:' . $current_year_month
-  ],
-  [
-    'text'          => getTranslation('abort'),
-    'callback_data' => 'exit'
-  ],
+  button(getTranslation('back'), ['history', 'd' => $current_day, 'm' => $current_year_month]),
+  button(getTranslation('abort'), 'exit')
 ];
 $keys[] = $nav_keys;
 

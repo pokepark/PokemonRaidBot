@@ -30,16 +30,8 @@ $keys = raid_edit_raidlevel_keys($data, $admin_access, $event_id);
 $backData = $data;
 $backData[0] = 'edit_event';
 // Add navigation keys.
-$keys[] = [
-  [
-    'text' => getTranslation('back'),
-    'callback_data' => formatCallbackData($backData)
-  ],
-  [
-    'text' => getTranslation('abort'),
-    'callback_data' => 'exit'
-  ]
-];
+$keys[0][] = button(getTranslation('back'), $backData);
+$keys[0][] = button(getTranslation('abort'), 'exit');
 
 // Get event info
 $q = my_query('SELECT name, description FROM events WHERE id = ? LIMIT 1', [$event_id]);

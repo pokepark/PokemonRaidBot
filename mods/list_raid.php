@@ -50,29 +50,13 @@ if($rs->rowcount() == 1) {
   debug_log($raid);
 
   // Create keys array.
-  $keys = [
-    [
-      [
-        'text'          => getTranslation('expand'),
-        'callback_data' => $raid['id'] . ':vote_refresh:0',
-      ]
-    ]
-  ];
+  $keys = [];
+  $keys[][] = button(getTranslation('expand'), ['vote_refresh', 'r' => $raid['id']]);
   if($botUser->raidaccessCheck($raid['id'], 'pokemon', true)) {
-    $keys[] = [
-        [
-          'text'          => getTranslation('update_pokemon'),
-          'callback_data' => formatCallbackData(['raid_edit_poke', 'r' => $raid['id'], 'rl' => $raid['level']]),
-        ]
-    ];
+    $keys[][] = button(getTranslation('update_pokemon'), ['raid_edit_poke', 'r' => $raid['id'], 'rl' => $raid['level']]);
   }
   if($botUser->raidaccessCheck($raid['id'], 'delete', true)) {
-    $keys[] = [
-        [
-          'text'          => getTranslation('delete'),
-          'callback_data' => formatCallbackData(['raids_delete', 'r' => $raid['id']])
-        ]
-    ];
+    $keys[][] = button(getTranslation('delete'), ['raids_delete', 'r' => $raid['id']]);
   }
 
   // Add keys to share.
@@ -84,10 +68,7 @@ if($rs->rowcount() == 1) {
     debug_log('There are no groups to share to, is SHARE_CHATS set?');
   }
   // Exit key
-  $keys[][] = [
-  'text' => getTranslation('done'),
-  'callback_data' => formatCallbackData(['exit', 'd' => 1])
-];
+  $keys[][] = button(getTranslation('done'), ['exit', 'd' => 1]);
 
   // Get message.
   $msg = show_raid_poll_small($raid);
@@ -102,28 +83,14 @@ if($rs->rowcount() == 1) {
     $msg .= '<b>' . $i .'. ' . $raid_pokemon_name . '</b>' . CR;
     if(!empty($raid['event_name'])) $msg .= $raid['event_name'] . CR;
     $msg .= get_raid_times($raid,false, true) . CR . CR;
-    $keys[] = [
-      [
-        'text'          => $i . '. ' . $raid_pokemon_name,
-        'callback_data' => formatCallbackData(['list_raid', 'r' => $raid['id']])
-      ]
-    ];
+    $keys[][] = button($i . '. ' . $raid_pokemon_name,['list_raid', 'r' => $raid['id']]);
     $i++;
   }
-  $callback = [
-    'gymMenu',
-    'stage' => 2,
-    'a' => 'list',
-    'fl' => $data['fl'],
-    'ga' => $data['ga'],
-    'h' => $data['h'],
-  ];
-  $keys[] = [
-    [
-      'text'          => getTranslation('back'),
-      'callback_data' => formatCallbackData($callback)
-    ]
-  ];
+  $backData = $data;
+  $backData[0] = 'gymMenu';
+  $backData['stage'] = 2;
+  $backData['a'] = 'list';
+  $keys[][] = button(getTranslation('back'), $backData);
 }
 
 // Build callback message string.

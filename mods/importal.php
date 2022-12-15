@@ -118,24 +118,9 @@ if($config->RAID_PICTURE_STORE_GYM_IMAGES_LOCALLY && $gym_image) {
 }
 
 // Set keys.
-$keys = [
-  [
-    [
-      'text'          => getTranslation('delete'),
-      'callback_data' => $gym_name[0] . ':gym_delete:' . $gym_id . '-delete'
-    ],
-    [
-      'text'          => getTranslation('show_gym'),
-      'callback_data' => $gym_id . ':gym_edit_details:show-1'
-    ]
-  ],
-  [
-    [
-      'text'          => getTranslation('done'),
-      'callback_data' => formatCallbackData(['exit', 'd' => '1'])
-    ]
-  ]
-];
+$keys[][] = button(getTranslation('delete'), ['gym_delete', 'fl' => $gym_name[0], 'g' =>  $gym_id, 'c' => 0]);
+$keys[][] = button(getTranslation('show_gym'), ['gym_edit_details', 'g' => $gym_id, 'a' => 'show', 'v' => 1]);
+$keys[][] = button(getTranslation('done'), ['exit', 'd' => '1']);
 
 // Send the message.
 send_message($update['message']['chat']['id'], $msg, $keys, ['disable_web_page_preview' => 'true']);

@@ -13,38 +13,11 @@ $msg = 'Import data from community maintained sources:'.CR;
 $msg.= '<a href="https://github.com/ccev/pogoinfo">ccev\'s github repository</a>'.CR;
 $msg.= '<a href="https://www.pokebattler.com">Pokebattler</a>';
 
-$keys = [
-    [
-      [
-        'text'          => getTranslation('import') . SP . '(Pokebattler)',
-        'callback_data' => 'pokebattler'
-      ]
-    ],
-    [
-      [
-        'text'          => getTranslation('import') . SP . getTranslation('upcoming') . SP . '(Pokebattler)',
-        'callback_data' => 'import_future_bosses'
-      ]
-    ],
-    [
-      [
-        'text'          => getTranslation('import') . SP . getTranslation('shiny') . SP . '(Pokebattler)',
-        'callback_data' => 'import_shinyinfo'
-      ]
-    ],
-    [
-      [
-        'text'          => getTranslation('import') . SP . '(ccev pogoinfo)',
-        'callback_data' => 'pogoinfo'
-      ]
-    ],
-    [
-      [
-        'text'          => getTranslation('abort'),
-        'callback_data' => 'exit'
-      ]
-    ]
-  ];
+$keys[][] = button(getTranslation('import') . SP . '(Pokebattler)', 'pokebattler');
+$keys[][] = button(getTranslation('import') . SP . getTranslation('upcoming') . SP . '(Pokebattler)', 'import_future_bosses');
+$keys[][] = button(getTranslation('import') . SP . getTranslation('shiny') . SP . '(Pokebattler)', 'import_shinyinfo');
+$keys[][] = button(getTranslation('import') . SP . '(ccev pogoinfo)', 'pogoinfo');
+$keys[][] = button(getTranslation('abort'), 'exit');
 
 // Callback message string.
 $callback_response = 'OK';

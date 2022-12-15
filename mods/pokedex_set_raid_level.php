@@ -11,10 +11,10 @@ require_once(LOGIC_PATH . '/get_pokemon_info.php');
 $botUser->accessCheck('pokedex');
 
 // Set the id.
-$pokedex_id = $data['id'];
+$pokedex_id = $data['p'];
 
 // Get the raid level.
-$arg = $data['arg'];
+$newLevel = $data['l'] ?? false;
 
 // Split pokedex_id and form
 $dex_id_form = explode('-',$pokedex_id,2);
@@ -24,7 +24,7 @@ $dex_form = $dex_id_form[1];
 $pokemon = get_pokemon_info($dex_id, $dex_form);
 
 // Set raid level or show raid levels?
-if($data['arg'] == 'setlevel') {
+if($newLevel === false) {
   $raid_levels = str_split('0' . RAID_LEVEL_ALL);
 
   // Init empty keys array.
@@ -32,24 +32,13 @@ if($data['arg'] == 'setlevel') {
 
   // Create keys array.
   foreach($raid_levels as $lv) {
-    $keys[] = [
-      array(
-        'text'          => getTranslation($lv . 'stars'),
-        'callback_data' => $pokedex_id . ':pokedex_set_raid_level:' . $lv
-      )
-    ];
+    $keys[][] = button(getTranslation($lv . 'stars'), ['pokedex_set_raid_level', 'p' => $pokedex_id, 'l' => $lv]);
   }
 
   // Back and abort.
   $keys[] = [
-    [
-      'text'          => getTranslation('back'),
-      'callback_data' => $pokedex_id . ':pokedex_edit_pokemon:0'
-    ],
-    [
-      'text'          => getTranslation('abort'),
-      'callback_data' => 'exit'
-    ]
+    button(getTranslation('back'), ['pokedex_edit_pokemon', 'p' => $pokedex_id]),
+    button(getTranslation('abort'), 'exit')
   ];
 
   // Build callback message string.
@@ -68,26 +57,19 @@ if($data['arg'] == 'setlevel') {
     AND     scheduled = 0
     ', [$dex_id, $dex_form]
   );
-  if($arg != 0) {
+  if($newLevel != 0) {
     my_query('
       INSERT INTO raid_bosses (pokedex_id, pokemon_form_id, raid_level)
       VALUES (?, ?, ?)
-      ',[$dex_id, $dex_form, $arg]
+      ',
+      [$dex_id, $dex_form, $newLevel]
     );
   }
 
   // Back to pokemon and done keys.
-  $keys = [
-    [
-      [
-        'text'          => getTranslation('back') . ' (' . get_local_pokemon_name($dex_id, $dex_form) . ')',
-        'callback_data' => $pokedex_id . ':pokedex_edit_pokemon:0'
-      ],
-      [
-        'text'          => getTranslation('done'),
-        'callback_data' => formatCallbackData(['exit', 'd' => '1'])
-      ]
-    ]
+  $keys[] = [
+    button(getTranslation('back') . ' (' . get_local_pokemon_name($dex_id, $dex_form) . ')', ['pokedex_edit_pokemon', 'p' => $pokedex_id]),
+    button(getTranslation('done'), ['exit', 'd' => '1'])
   ];
 
   // Build callback message string.
@@ -97,7 +79,7 @@ if($data['arg'] == 'setlevel') {
   $msg = getTranslation('pokemon_saved') . CR;
   $msg .= '<b>' . get_local_pokemon_name($dex_id, $dex_form) . ' (#' . $dex_id . ')</b>' . CR . CR;
   $msg .= getTranslation('pokedex_new_raid_level') . ':' . CR;
-  $msg .= '<b>' . getTranslation($arg . 'stars') . '</b>';
+  $msg .= '<b>' . getTranslation($newLevel . 'stars') . '</b>';
 }
 
 // Telegram JSON array.

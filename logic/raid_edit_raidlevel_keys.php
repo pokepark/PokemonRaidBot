@@ -44,10 +44,7 @@ function raid_edit_raidlevel_keys($callbackData, $admin_access = [false,false], 
       $buttonData[0] = 'edit_pokemon';
       $buttonData['rl'] = $level['raid_level'];
       // Add key for raid level
-      $keys[] = array(
-        'text'          => getTranslation($level['raid_level'] . 'stars'),
-        'callback_data' => formatCallbackData($buttonData)
-      );
+      $keys[] = button(getTranslation($level['raid_level'] . 'stars'), $buttonData);
       continue;
     }
     $query_mon = my_query('
@@ -70,20 +67,14 @@ function raid_edit_raidlevel_keys($callbackData, $admin_access = [false,false], 
     $buttonData['rl'] = $level['raid_level'];
     $buttonData['p'] = $pokemon['id'];
     // Add key for pokemon
-    $keys[] = array(
-      'text'          => get_local_pokemon_name($pokemon['pokedex_id'], $pokemon['pokemon_form_id']),
-      'callback_data' => formatCallbackData($buttonData)
-    );
+    $keys[] = button(get_local_pokemon_name($pokemon['pokedex_id'], $pokemon['pokemon_form_id']), $buttonData);
     unset($buttonData['p']);
   }
   // Add key for raid event if user allowed to create event raids
   if(($admin_access[1] === true or $admin_access[0] === true) && $event === false) {
     $eventData = $callbackData;
     $eventData[0] = 'edit_event';
-    $keys[] = array(
-      'text'          => getTranslation('event'),
-      'callback_data' => formatCallbackData($eventData)
-    );
+    $keys[] = button(getTranslation('event'), $eventData);
   }
 
   // Get the inline key array.

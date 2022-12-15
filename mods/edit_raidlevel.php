@@ -35,6 +35,7 @@ $admin_access[1] = $botUser->accessCheck('event-raids', true);
 // Active raid?
 $duplicate_id = active_raid_duplication_check($gym_id);
 if ($duplicate_id > 0) {
+  $keys = [];
   // In case gym has already a normal raid saved to it and user has privileges to create an event raid, create a special menu
   if($admin_access[0] == true || $admin_access[1] == true) {
     $msg = EMOJI_WARN . SP . getTranslation('raid_already_exists') . CR;
@@ -45,56 +46,22 @@ if ($duplicate_id > 0) {
     $backData[0] = 'gymMenu';
     $backData['stage'] = 2;
     $backData['a'] = 'create';
-    $keys = [
-      [
-        [
-          'text'          => getTranslation('saved_raid'),
-          'callback_data' => formatCallbackData(['raids_list', 'r' => $duplicate_id])
-        ]
-      ],
-      [
-        [
-          'text'          => getTranslation('create_event_raid'),
-          'callback_data' => formatCallbackData($eventData)
-        ]
-      ],
-      [
-        [
-          'text'          => getTranslation('back'),
-          'callback_data' => formatCallbackData($backData)
-        ],
-        [
-          'text'          => getTranslation('abort'),
-          'callback_data' => 'exit'
-        ]
-      ],
-    ];
+    $keys[0][0] = button(getTranslation('saved_raid'), ['raids_list', 'r' => $duplicate_id]);
+    $keys[1][0] = button(getTranslation('create_event_raid'), $eventData);
+    $keys[2][0] = button(getTranslation('back'), $backData);
+    $keys[2][1] = button(getTranslation('abort'), 'exit');
   } else {
-    $keys = [];
     $raid_id = $duplicate_id;
     $raid = get_raid($raid_id);
     $msg = EMOJI_WARN . SP . getTranslation('raid_already_exists') . SP . EMOJI_WARN . CR . show_raid_poll_small($raid);
     $keys = share_keys($raid_id, 'raid_share', $update, $raid['level']);
     if($botUser->raidaccessCheck($raid['id'], 'pokemon', true)) {
-      $keys[] = [
-        [
-          'text'          => getTranslation('update_pokemon'),
-          'callback_data' => formatCallbackData(['raid_edit_poke', 'r' => $raid['id'], 'rl' => $raid['level']]),
-        ]
-      ];
+      $keys[][] = button(getTranslation('update_pokemon'), ['raid_edit_poke', 'r' => $raid['id'], 'rl' => $raid['level']]);
     }
     if($botUser->raidaccessCheck($raid['id'], 'delete', true)) {
-      $keys[] = [
-        [
-          'text'          => getTranslation('delete'),
-          'callback_data' => formatCallbackData(['raids_delete', 'r' => $raid['id']])
-        ]
-      ];
+      $keys[][] = button(getTranslation('delete'), ['raids_delete', 'r' => $raid['id']]);
     }
-    $keys[][] = [
-      'text' => getTranslation('abort'),
-      'callback_data' => 'exit'
-    ];
+    $keys[][] = button(getTranslation('abort'), 'exit');
   }
 
   // Answer callback.
@@ -116,10 +83,7 @@ $excludeElite = $eliteId == 0 ? false : true;
 $keys = raid_edit_raidlevel_keys($data, $admin_access, false, $excludeElite);
 
 if($eliteId > 0) {
-  $keys[][] = [
-    'text' => getTranslation('saved_raid'),
-    'callback_data' => formatCallbackData(['raids_list', 'r' => $eliteId])
-  ];
+  $keys[][] = button(getTranslation('saved_raid'), ['raids_list', 'r' => $eliteId]);
 }
 
 $lastRow = [];
@@ -129,15 +93,9 @@ if($showBackButton) {
   $backData['a'] = 'create';
   $backData['stage'] = 2;
   // Add navigation keys.
-  $lastRow[] = [
-    'text'          => getTranslation('back'),
-    'callback_data' => formatCallbackData($backData)
-  ];
+  $lastRow[] = button(getTranslation('back'), $backData);
 }
-$lastRow[] = [
-  'text'          => getTranslation('abort'),
-  'callback_data' => 'exit'
-];
+$lastRow[] = button(getTranslation('abort'), 'exit');
 $keys[] = $lastRow;
 
 // Build message.

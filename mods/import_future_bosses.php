@@ -10,68 +10,51 @@ debug_log('pokebattler()');
 $botUser->accessCheck('pokedex');
 require_once(LOGIC_PATH . '/read_upcoming_bosses.php');
 
-$id = $data['id'];
-$arg = $data['arg'];
+$action = $data['a'] ?? 0;
 
-if($arg == '1') {
+if($action == '1') {
   $sql = 'DELETE FROM raid_bosses WHERE scheduled = 1;';
   $sql .= read_upcoming_bosses(true);
   $query = my_query($sql);
   $msg = getTranslation('import_done');
-  $keys = [];
-}else {
-  $list = read_upcoming_bosses();
-  $msg = '';
-  if(!empty($list)) {
-    $now = new DateTime('now', new DateTimeZone($config->TIMEZONE));
-    $query = my_query("
-        SELECT id, pokedex_id, pokemon_form_id, raid_level, scheduled, DATE_FORMAT(date_start, '%e.%c. ".getTranslation('raid_egg_opens_at')." %H:%i') as date_start, DATE_FORMAT(date_end, '%e.%c. ".getTranslation('raid_egg_opens_at')." %H:%i') as date_end FROM raid_bosses
-        WHERE     date_end > '" . $now->format('Y-m-d H:i:s') . "'
-        AND     scheduled = 1
-        ORDER BY  date_start, raid_level, pokedex_id, pokemon_form_id
-        ");
-    $prev_start = $prev_rl = '';
-    $msg = '<b><u>' . getTranslation('current_scheduled_bosses') . ':</u></b>';
-    foreach($query->fetchAll() as $result) {
-      if($prev_start != $result['date_start']) {
-        $msg.= CR . EMOJI_CLOCK . ' <b>' . $result['date_start'] . '  —  ' . $result['date_end'] . ':</b>' . CR;
-        $prev_rl = '';
-      }
-      if($prev_rl != $result['raid_level']) {
-        $msg.= '<b>' . getTranslation($result['raid_level'] . 'stars') .':</b>' . CR;
-      }
-      $msg.= get_local_pokemon_name($result['pokedex_id'], $result['pokemon_form_id']) . CR;
-      $prev_start = $result['date_start'];
-      $prev_rl = $result['raid_level'];
+  $tg_json = array();
+  $tg_json[] = answerCallbackQuery($update['callback_query']['id'], 'OK', true);
+  $tg_json[] = edit_message($update, $msg, [], false, true);
+  curl_json_multi_request($tg_json);
+  exit();
+}
+$list = read_upcoming_bosses();
+$msg = '';
+if(!empty($list)) {
+  $now = new DateTime('now', new DateTimeZone($config->TIMEZONE));
+  $query = my_query("
+      SELECT id, pokedex_id, pokemon_form_id, raid_level, scheduled, DATE_FORMAT(date_start, '%e.%c. ".getTranslation('raid_egg_opens_at')." %H:%i') as date_start, DATE_FORMAT(date_end, '%e.%c. ".getTranslation('raid_egg_opens_at')." %H:%i') as date_end FROM raid_bosses
+      WHERE     date_end > '" . $now->format('Y-m-d H:i:s') . "'
+      AND     scheduled = 1
+      ORDER BY  date_start, raid_level, pokedex_id, pokemon_form_id
+      ");
+  $prev_start = $prev_rl = '';
+  $msg = '<b><u>' . getTranslation('current_scheduled_bosses') . ':</u></b>';
+  foreach($query->fetchAll() as $result) {
+    if($prev_start != $result['date_start']) {
+      $msg.= CR . EMOJI_CLOCK . ' <b>' . $result['date_start'] . '  —  ' . $result['date_end'] . ':</b>' . CR;
+      $prev_rl = '';
     }
-    $msg .= CR . CR . '<b><u>' . getTranslation('found_upcoming_bosses') . ':</u></b>';
-    $msg .= $list;
-    $msg .= CR . CR . getTranslation('confirm_replace_upcoming');
-    $keys = [
-      [
-        [
-          'text' => getTranslation('replace'),
-          'callback_data' => '1:import_future_bosses:1'
-        ]
-      ],
-      [
-        [
-          'text'=>getTranslation('back'),
-          'callback_data' => 'pokedex_import'
-        ]
-      ]
-    ];
-  }else {
-    $msg .= getTranslation('upcoming_bosses_not_found');
-    $keys = [
-      [
-        [
-          'text' => getTranslation('done'),
-          'callback_data' => formatCallbackData(['exit', 'd' => '1'])
-        ]
-      ]
-    ];
+    if($prev_rl != $result['raid_level']) {
+      $msg.= '<b>' . getTranslation($result['raid_level'] . 'stars') .':</b>' . CR;
+    }
+    $msg.= get_local_pokemon_name($result['pokedex_id'], $result['pokemon_form_id']) . CR;
+    $prev_start = $result['date_start'];
+    $prev_rl = $result['raid_level'];
   }
+  $msg .= CR . CR . '<b><u>' . getTranslation('found_upcoming_bosses') . ':</u></b>';
+  $msg .= $list;
+  $msg .= CR . CR . getTranslation('confirm_replace_upcoming');
+  $keys[][] = button(getTranslation('replace'), ['import_future_bosses', 'a' => 1]);
+  $keys[][] = button(getTranslation('back'), 'pokedex_import');
+}else {
+  $msg .= getTranslation('upcoming_bosses_not_found');
+  $keys[][] = button(getTranslation('done'), ['exit', 'd' => '1']);
 }
 
 // Callback message string.
@@ -88,5 +71,3 @@ $tg_json[] = edit_message($update, $msg, $keys, false, true);
 
 // Telegram multicurl request.
 curl_json_multi_request($tg_json);
-
-exit();

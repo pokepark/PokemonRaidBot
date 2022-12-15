@@ -13,7 +13,7 @@ require_once(LOGIC_PATH . '/weather_keys.php');
 $botUser->accessCheck('pokedex');
 
 // Set the id.
-$pokedex_id = $data['id'];
+$pokedex_id = $data['p'];
 
 // Split pokedex_id and form
 $dex_id_form = explode('-',$pokedex_id,2);
@@ -21,10 +21,8 @@ $dex_id = $dex_id_form[0];
 $dex_form = $dex_id_form[1];
 
 // Get the action, old and new weather
-$arg = $data['arg'];
-$data = explode("-", $arg);
-$action = $data[0];
-$new_weather = $data[1];
+$action = $data['a'] ?? 'add';
+$new_weather = $data['w'] ?? 0;
 
 $pokemon = get_pokemon_info($dex_id, $dex_form);
 $old_weather = $pokemon['weather'];
@@ -40,21 +38,15 @@ $keys = [];
 if($action == 'add') {
 
   // Get the keys.
-  $keys = weather_keys($pokedex_id, 'pokedex_set_weather', $arg);
+  $keys = weather_keys($data);
 
   // Build callback message string.
   $callback_response = 'OK';
 
   // Back and abort.
   $keys[] = [
-    [
-      'text'          => getTranslation('back'),
-      'callback_data' => $pokedex_id . ':pokedex_edit_pokemon:0'
-    ],
-    [
-      'text'          => getTranslation('abort'),
-      'callback_data' => 'exit'
-    ]
+    button(getTranslation('back'), ['pokedex_edit_pokemon', 'p' => $pokedex_id]),
+    button(getTranslation('abort'), 'exit')
   ];
 
   // Set the message.
@@ -74,16 +66,8 @@ if($action == 'add') {
     );
 
   // Back to pokemon and done keys.
-  $keys[] = [
-    [
-      'text'          => getTranslation('back') . ' (' . get_local_pokemon_name($dex_id, $dex_form) . ')',
-      'callback_data' => $pokedex_id . ':pokedex_edit_pokemon:0'
-    ],
-    [
-      'text'          => getTranslation('done'),
-      'callback_data' => formatCallbackData(['exit', 'd' => '1'])
-    ]
-  ];
+  $keys[0][0] = button(getTranslation('back') . ' (' . get_local_pokemon_name($dex_id, $dex_form) . ')', ['pokedex_edit_pokemon', 'p' => $pokedex_id]);
+  $keys[0][1] = button(getTranslation('abort'), ['exit', 'd' => '1']);
 
   // Build callback message string.
   $callback_response = getTranslation('pokemon_saved') . ' ' . get_local_pokemon_name($dex_id, $dex_form);

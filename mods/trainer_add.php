@@ -74,20 +74,19 @@ $log_chats_db = implode(',', $chats_db);
 debug_log($log_chats_db, 'Chats already having the trainer message:');
 
 $chats = array_diff($chats, $chats_db);
-$chats = implode(',', $chats);
-debug_log($chats, 'Chat list without duplicates:');
+debug_log(implode(',', $chats), 'Chat list without duplicates:');
 
 // Create keys.
 if(!empty($chats)) {
-  $keys = share_keys('0', 'trainer_share', $update, '', $chats, true);
+  $keys = share_keys(false, 'trainer_share', $update, '', $chats, true);
 }
 
 // Add abort key.
 if($keys) {
   // Add back navigation key.
   $nav_keys = [];
-  $nav_keys[] = universal_inner_key($keys, '0', 'trainer', '0', getTranslation('back'));
-  $nav_keys[] = universal_inner_key($keys, '0', 'exit', '0', getTranslation('abort'));
+  $nav_keys[] = button(getTranslation('back'), 'trainer');
+  $nav_keys[] = button(getTranslation('abort'), 'exit');
 
   // Get the inline key array.
   $keys[] = $nav_keys;

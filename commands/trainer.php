@@ -20,52 +20,26 @@ $msg .= CR . CR . get_user($user_id, false);
 $keys = [];
 // Create keys array.
 if($config->CUSTOM_TRAINERNAME){
-  $keys[0][] = [
-    'text'          => getTranslation('name'),
-    'callback_data' => 'trainer_name'
-  ];
+  $keys[0][] = button(getTranslation('name'), 'trainer_name');
 }
 if($config->RAID_POLL_SHOW_TRAINERCODE){
-  $keys[0][] = [
-  'text'          => getTranslation('trainercode'),
-  'callback_data' => 'trainer_code'
-  ];
+  $keys[0][] = button(getTranslation('trainercode'), 'trainer_code');
 }
 $keys[] = [
-  [
-    'text'          => getTranslation('team'),
-    'callback_data' => 'trainer_team'
-  ],
-  [
-    'text'          => getTranslation('level'),
-    'callback_data' => 'trainer_level'
-  ]
+  button(getTranslation('team'), 'trainer_team'),
+  button(getTranslation('level'), 'trainer_level')
 ];
 if ($config->RAID_AUTOMATIC_ALARM == false) {
   $q_user = my_query('SELECT auto_alarm FROM users WHERE user_id = ? LIMIT 1', [$user_id]);
   $alarm_status = $q_user->fetch()['auto_alarm'];
-  $keys[] = [
-    [
-      'text'          => ($alarm_status == 1 ? getTranslation('switch_alarm_off') . ' ' . EMOJI_NO_ALARM : getTranslation('switch_alarm_on') . ' ' . EMOJI_ALARM),
-      'callback_data' => formatCallbackData(['trainer', 'a' => 1])
-    ]
-  ];
+  $buttonText = ($alarm_status == 1 ? getTranslation('switch_alarm_off') . ' ' . EMOJI_NO_ALARM : getTranslation('switch_alarm_on') . ' ' . EMOJI_ALARM);
+  $keys[][] = button($buttonText, ['trainer', 'a' => 1]);
 }
 if ($config->LANGUAGE_PRIVATE == '') {
-  $keys[] = [
-    [
-      'text'          => getTranslation('bot_lang'),
-      'callback_data' => 'bot_lang'
-    ]
-  ];
+  $keys[][] = button(getTranslation('bot_lang'), 'bot_lang');
 }
 if ($config->ENABLE_GYM_AREAS == true) {
-  $keys[] = [
-    [
-      'text'          => getTranslation('default_gymarea'),
-      'callback_data' => 'trainerGymarea'
-    ]
-  ];
+  $keys[][] = button(getTranslation('default_gymarea'), 'trainerGymarea');
 }
 
 // Check access.
@@ -75,8 +49,8 @@ $access = $botUser->accessCheck('trainer-share', true);
 if($access) {
   // Add sharing keys.
   $share_keys = [];
-  $share_keys[] = universal_inner_key($keys, '0', 'trainer_add', '0', getTranslation('trainer_message_share'));
-  $share_keys[] = universal_inner_key($keys, '0', 'trainer_delete', '0', getTranslation('trainer_message_delete'));
+  $share_keys[] = button(getTranslation('trainer_message_share'), 'trainer_add');
+  $share_keys[] = button(getTranslation('trainer_message_delete'), 'trainer_delete');
 
   // Get the inline key array.
   $keys[] = $share_keys;
@@ -87,7 +61,7 @@ if($access) {
 
 // Add abort key.
 $nav_keys = [];
-$nav_keys[] = universal_inner_key($keys, '0', 'exit', '1', getTranslation('done'));
+$nav_keys[] = button(getTranslation('done'), 'exit');
 
 // Get the inline key array.
 $keys[] = $nav_keys;

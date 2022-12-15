@@ -20,19 +20,9 @@ foreach($q->fetchAll() as $event) {
   if(empty($event['description'])) $event['description'] = '<i>' . getTranslation('events_no_description') . '</i>';
   $msg .= '<u>' . $event['name'] . '</u>' . CR;
   $msg .= $event['description'] . CR . CR;
-  $keys[] = [
-    [
-      'text' => $event['name'],
-      'callback_data' => $event['id'] . ':events_manage:0',
-    ]
-  ];
+  $keys[][] = button($event['name'], ['events_manage', 'e' => $event['id']]);
 }
-$keys[] = [
-  [
-    'text' => getTranslation('done'),
-    'callback_data' => formatCallbackData(['exit', 'd' => '1']),
-  ]
-];
+$keys[][] = button(getTranslation('done'), ['exit', 'd' => '1']);
 
 $tg_json = [];
 

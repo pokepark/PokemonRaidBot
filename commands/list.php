@@ -85,15 +85,9 @@ foreach($raids as $raid) {
   }
   $keys_text .= ($raid['ex_gym'] === 1 ? EMOJI_STAR . SP : '') . $gym_name;
 
-  $keys[] = array(
-    'text'          => $keys_text,
-    'callback_data' => formatCallbackData(['raids_list', 'r' => $raid['id']])
-  );
+  $keys[] = button($keys_text, ['raids_list', 'r' => $raid['id']]);
 }
-$keys[] = array(
-  'text'          => getTranslation('done'),
-  'callback_data' => formatCallbackData(['exit', 'd' => '1'])
-);
+$keys[] = button(getTranslation('done'), ['exit', 'd' => '1']);
 
 // Get the inline key array.
 $keys = inline_key_array($keys, 1);

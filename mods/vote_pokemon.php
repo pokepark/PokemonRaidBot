@@ -8,13 +8,16 @@ require_once(LOGIC_PATH . '/send_vote_time_first.php');
 //debug_log($update);
 //debug_log($data);
 
+$raidId = $raidId;
+$pokemon = $pokemon ?? 0;
+
 // Check if the user has voted for this raid before.
 $rs = my_query('
   SELECT  *
   FROM    attendance
     WHERE   raid_id = ?
     AND   user_id = ?
-  ', [$data['id'], $update['callback_query']['from']['id']]
+  ', [$raidId, $update['callback_query']['from']['id']]
 );
 
 // Init empty attendances array and counter.
@@ -31,7 +34,7 @@ if(empty($atts)) {
   exit;
 }
 // Any pokemon?
-if($data['arg'] == 0) {
+if($pokemon == 0) {
   // Delete any attendances except the first one.
   my_query('
     DELETE FROM attendance
@@ -45,7 +48,7 @@ if($data['arg'] == 0) {
     )
     AND raid_id = :raidId
     AND user_id = :userId
-    ', ['raidId' => $data['id'], 'userId' => $update['callback_query']['from']['id']]
+    ', ['raidId' => $raidId, 'userId' => $update['callback_query']['from']['id']]
   );
 
   // Update attendance.
@@ -54,11 +57,11 @@ if($data['arg'] == 0) {
     SET     pokemon = ?
     WHERE   raid_id = ?
     AND     user_id = ?
-    ', [$data['arg'], $data['id'], $update['callback_query']['from']['id']]
+    ', [$pokemon, $raidId, $update['callback_query']['from']['id']]
   );
 
   // Send alarm
-  $tg_json = alarm($data['id'],$update['callback_query']['from']['id'],'pok_individual',$data['arg']);
+  $tg_json = alarm($raidId,$update['callback_query']['from']['id'],'pok_individual',$pokemon);
 } else {
   // Init found and count.
   $found = false;
@@ -66,7 +69,7 @@ if($data['arg'] == 0) {
   // Loop thru attendances
   foreach($atts as $att_row => $att_data) {
     // Remove vote for specific pokemon
-    if($att_data['pokemon'] == $data['arg']) {
+    if($att_data['pokemon'] == $pokemon) {
       // Is it the only vote? Update to "Any raid boss" instead of deleting it!
       if($count == 1) {
         my_query('
@@ -74,7 +77,7 @@ if($data['arg'] == 0) {
         SET     pokemon = 0
         WHERE   raid_id = ?
         AND     user_id = ?
-        ', [$data['id'], $update['callback_query']['from']['id']]
+        ', [$raidId, $update['callback_query']['from']['id']]
         );
       // Other votes are still there, delete this one!
       } else {
@@ -83,11 +86,11 @@ if($data['arg'] == 0) {
         WHERE  raid_id = ?
         AND   user_id = ?
         AND   pokemon = ?
-        ', [$data['id'], $update['callback_query']['from']['id'], $data['arg']]
+        ', [$raidId, $update['callback_query']['from']['id'], $pokemon]
         );
       }
       // Send alarm
-      $tg_json = alarm($data['id'],$update['callback_query']['from']['id'],'pok_cancel_individual',$data['arg']);
+      $tg_json = alarm($raidId,$update['callback_query']['from']['id'],'pok_cancel_individual',$pokemon);
 
       // Update count.
       $count = $count - 1;
@@ -101,7 +104,7 @@ if($data['arg'] == 0) {
   // Not found? Insert!
   if(!$found) {
     // Send alarm
-    $tg_json = alarm($data['id'],$update['callback_query']['from']['id'],'pok_individual',$data['arg']);
+    $tg_json = alarm($raidId,$update['callback_query']['from']['id'],'pok_individual',$pokemon);
 
     $keys = $values = '';
     $binds = [];
@@ -109,7 +112,7 @@ if($data['arg'] == 0) {
       if($key == 'id') continue;
       $keys .= $key . ',';
       $values .= '?,';
-      $binds[] = ($key == 'pokemon') ? $data['arg'] : $value;
+      $binds[] = ($key == 'pokemon') ? $pokemon : $value;
     }
     $keys = rtrim($keys, ',');
     $values = rtrim($values, ',');
@@ -131,14 +134,14 @@ if($data['arg'] == 0) {
       WHERE  raid_id = ?
       AND   user_id = ?
       AND   pokemon = 0
-      ', [$data['id'], $update['callback_query']['from']['id']]
+      ', [$raidId, $update['callback_query']['from']['id']]
     );
   }
 }
 
 require_once(LOGIC_PATH . '/update_raid_poll.php');
 
-$tg_json = update_raid_poll($data['id'], false, $update, $tg_json);
+$tg_json = update_raid_poll($raidId, false, $update, $tg_json);
 
 $tg_json[] = answerCallbackQuery($update['callback_query']['id'], getTranslation('vote_updated'), true);
 

@@ -18,16 +18,8 @@ $msg .= $pokemon['date_start'] . ' - ' . $pokemon['date_end'] . ':' . CR;
 $msg .= getTranslation($pokemon['raid_level'] . 'stars') . ': ';
 $msg .= get_local_pokemon_name($pokemon['pokedex_id'], $pokemon['pokemon_form_id']);
 
-$keys[] = [
-  [
-    'text'          => getTranslation('yes'),
-    'callback_data' => formatCallbackData(['delete_scheduled_entry', 'i' => $id, 's' => 1])
-  ],
-  [
-    'text'          => getTranslation('no'),
-    'callback_data' => 'pokedex_list_raids'
-  ],
-];
+$keys[0][] = button(getTranslation('yes'), ['delete_scheduled_entry', 'i' => $id, 's' => 1]);
+$keys[0][] = button(getTranslation('no'), 'pokedex_list_raids');
 
 // Build callback message string.
 $callback_response = 'OK';

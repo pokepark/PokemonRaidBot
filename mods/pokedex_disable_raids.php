@@ -10,10 +10,10 @@ debug_log('pokedex_disable_raids()');
 $botUser->accessCheck('pokedex');
 
 // Get raid levels.
-$id = $data['id'];
+$id = $data['rl'] ?? 0;
 
 // Get argument.
-$arg = $data['arg'];
+$arg = $data['a'] ?? 0;
 
 // Specify raid levels.
 $levels = str_split(RAID_LEVEL_ALL);
@@ -34,27 +34,15 @@ if($arg == 0) {
   $keys = [];
 
   // All raid level keys.
-  $keys[] = array(
-    'text'          => getTranslation('pokedex_all_raid_level'),
-    'callback_data' => RAID_LEVEL_ALL . ':pokedex_disable_raids:1'
-  );
+  $keys[][] = button(getTranslation('pokedex_all_raid_level'), ['pokedex_disable_raids', 'rl' => RAID_LEVEL_ALL, 'a' => 1]);
 
   // Add key for each raid level
   foreach($levels as $l) {
-    $keys[] = array(
-      'text'          => getTranslation($l . 'stars'),
-      'callback_data' => $l . ':pokedex_disable_raids:1'
-    );
+    $keys[][] = button(getTranslation($l . 'stars'), ['pokedex_disable_raids', 'rl' => $l, 'a' => 1]);
   }
 
   // Add abort button
-  $keys[] = array(
-    'text'          => getTranslation('abort'),
-    'callback_data' => 'exit'
-  );
-
-  // Get the inline key array.
-  $keys = inline_key_array($keys, 1);
+  $keys[][] = button(getTranslation('abort'), 'exit');
 
 // Confirmation to disable raid level
 } else if($arg == 1) {
@@ -97,16 +85,10 @@ if($arg == 0) {
   }
 
   // Disable.
-  $keys[] = array(
-    'text'          => getTranslation('yes'),
-    'callback_data' => $id . ':pokedex_disable_raids:2'
-  );
+  $keys[] = button(getTranslation('yes'), ['pokedex_disable_raids', 'rl' => $id, 'a' => 2]);
 
   // Abort.
-  $keys[] = array(
-    'text'          => getTranslation('no'),
-    'callback_data' => 'exit'
-  );
+  $keys[] = button(getTranslation('no'), 'exit');
 
   // Inline keys array.
   $keys = inline_key_array($keys, 2);

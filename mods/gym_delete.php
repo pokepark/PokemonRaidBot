@@ -15,6 +15,7 @@ $botUser->accessCheck('gym-delete');
 $gymId = $data['g'];
 $confirm = $data['c'] == 1 ? true : false;
 
+$keys = [];
 if ($gymId > 0 && $confirm == false) {
   $gym = get_gym($gymId);
 
@@ -23,20 +24,8 @@ if ($gymId > 0 && $confirm == false) {
   $msg .= CR . get_gym_details($gym);
 
   // Create the keys.
-  $keys = [
-    [
-      [
-        'text'          => getTranslation('yes'),
-        'callback_data' => formatCallbackData(['gym_delete', 'g' => $gymId, 'c' => 1])
-      ]
-    ],
-    [
-      [
-        'text'          => getTranslation('no'),
-        'callback_data' => formatCallbackData(['gym_edit_details', 'g' => $gymId])
-      ]
-    ]
-  ];
+  $keys[][] = button(getTranslation('yes'), ['gym_delete', 'g' => $gymId, 'c' => 1]);
+  $keys[][] = button(getTranslation('no'), ['gym_edit_details', 'g' => $gymId]);
 
 // Delete the gym.
 } else if ($gymId > 0 && $confirm == true) {
@@ -49,7 +38,6 @@ if ($gymId > 0 && $confirm == false) {
   // Set message
   $msg = '<b>' . getTranslation('deleted_this_gym') . '</b>' . CR;
   $msg .= get_gym_details($gym);
-  $keys = [];
 
   // Delete gym.
   my_query('

@@ -15,13 +15,13 @@ my_query('
           END
   WHERE  raid_id = ?
   AND    user_id = ?
-  ', [$data['id'], $update['callback_query']['from']['id']]
+  ', [$data['r'], $update['callback_query']['from']['id']]
 );
 
 // Send vote response.
 require_once(LOGIC_PATH . '/update_raid_poll.php');
 
-$tg_json = update_raid_poll($data['id'], false, $update);
+$tg_json = update_raid_poll($data['r'], false, $update);
 
 $tg_json[] = answerCallbackQuery($update['callback_query']['id'], getTranslation('vote_updated'), true);
 

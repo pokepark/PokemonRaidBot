@@ -76,27 +76,14 @@ foreach( array_keys($active_raids) as $chat_id ) {
   $keys = [];
   // Already shared
   if($rs->rowCount() > 0 ) {
-    $keys[] = [
-      [
-        'text'          => EMOJI_REFRESH,
-        'callback_data' => '0:overview_refresh:' . $chat_id
-      ],
-      [
-        'text'          => getTranslation('done'),
-        'callback_data' => formatCallbackData(['exit', 'd' => '1'])
-      ]
-    ];
+    $keys[0][] = button(EMOJI_REFRESH, ['overview_refresh', 'c' => $chat_id]);
+    $keys[0][] = button(getTranslation('done'), ['exit', 'd' => '1']);
     $res = $rs->fetch();
     $chat_title = $res['chat_title'];
     $chat_username = $res['chat_username'];
   }else {
     [$chat_title, $chat_username] = get_chat_title_username($chat_id);
-    $keys[] = [
-      [
-        'text'          => getTranslation('share_with') . ' ' . $chat_title,
-        'callback_data' => formatCallbackData(['overview_share', 'c' => $chat_id])
-      ]
-    ];
+    $keys[][] = button(getTranslation('share_with') . ' ' . $chat_title, ['overview_share', 'c' => $chat_id]);
   }
   $overview_message = get_overview($active_raids[$chat_id], $chat_title, $chat_username);
   // Send the message, but disable the web preview!

@@ -10,11 +10,7 @@ require_once(LOGIC_PATH . '/show_raid_poll.php');
 // Check access.
 $botUser->accessCheck('history');
 
-// Expected callback data: [Date, YYYY-MM-DD]/[GYM_LETTER]:history_raid:[GYM_ID]/[RAID_ID]
-
-$arg_data = explode('/',$data['arg']);
-$gym_id = $arg_data[0];
-$raid_id = $arg_data[1];
+$raid_id = $data['r'];
 
 $raid = get_raid($raid_id);
 
@@ -26,15 +22,11 @@ $tg_json = [];
 // Answer callback.
 $tg_json[] = answerCallbackQuery($update['callback_query']['id'], 'OK', true);
 
+$backData = $data;
+$backData[0] = 'history_raids';
 $keys[] = [
-  [
-    'text'          => getTranslation('back'),
-    'callback_data' => $data['id'] . ':history_raids:' . $gym_id
-  ],
-  [
-    'text'          => getTranslation('done'),
-    'callback_data' => formatCallbackData(['exit', 'd' => '1'])
-  ],
+  button(getTranslation('back'), $backData),
+  button(getTranslation('done'), ['exit', 'd' => '1'])
 ];
 
 // Edit message.

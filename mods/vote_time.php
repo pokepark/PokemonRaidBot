@@ -11,9 +11,9 @@ require_once(LOGIC_PATH . '/send_vote_time_future.php');
 //debug_log($update);
 //debug_log($data);
 
-$raidId = $data['id'];
+$raidId = $data['r'];
 
-$vote_time = $data['arg'];
+$vote_time = $data['t'] ?? 0;
 // Raid anytime?
 $attend_time_save = $attend_time_compare = ANYTIME;
 if($vote_time != 0) {

@@ -10,7 +10,8 @@ require_once(LOGIC_PATH . '/send_vote_time_first.php');
 //debug_log($update);
 //debug_log($data);
 
-$raidId = $data['id'];
+$raidId = $data['r'];
+$act = $data['a'] ?? 0;
 
 // Check if the user has voted for this raid before and check if they are attending remotely.
 $rs = my_query('
@@ -42,7 +43,7 @@ if (empty($answer) or $answer['cancelOrDone'] == 1) {
   exit;
 }
 
-if($data['arg'] == '0') {
+if($act == '0') {
   // Reset team extra people.
   my_query('
     UPDATE  attendance
@@ -56,7 +57,7 @@ if($data['arg'] == '0') {
       'userId' => $update['callback_query']['from']['id'],
     ]
   );
-  $tg_json = alarm($raidId, $update['callback_query']['from']['id'], 'extra_alone', $data['arg'], $tg_json);
+  $tg_json = alarm($raidId, $update['callback_query']['from']['id'], 'extra_alone', $act, $tg_json);
 } else if($answer['can_invite'] == 1 ) {
   // People who are only inviting others can't add extras
   $msg = getTranslation('vote_status_not_allowed');
@@ -70,19 +71,19 @@ if($data['arg'] == '0') {
   $remote_users = get_remote_users_count($raidId, $update['callback_query']['from']['id']);
   // Skip remote user limit check if user is not attending remotely.
   // If they are, check if attend time already has max number of remote users.
-  if (($answer['remote'] == 1 or $data['arg'] == 'alien') && ($remote_users >= $config->RAID_REMOTEPASS_USERS_LIMIT or $answer['user_count'] >= $config->RAID_REMOTEPASS_USERS_LIMIT)) {
+  if (($answer['remote'] == 1 or $act == 'alien') && ($remote_users >= $config->RAID_REMOTEPASS_USERS_LIMIT or $answer['user_count'] >= $config->RAID_REMOTEPASS_USERS_LIMIT)) {
     // Send max remote users reached.
     send_vote_remote_users_limit_reached($update);
     exit;
   }
   // Force invite beggars to user extra_in_person even if they vote +alien
-  if($answer['want_invite'] == 1 && $data['arg'] == 'alien') $data['arg'] = 'in_person';
+  if($answer['want_invite'] == 1 && $act == 'alien') $act = 'in_person';
 
-  if(!in_array($data['arg'], ['in_person', 'alien'])) {
-    error_log('Invalid vote variable: ' . $data['arg']);
+  if(!in_array($act, ['in_person', 'alien'])) {
+    error_log('Invalid vote variable: ' . $act);
     exit;
   }
-  $team = 'extra_' . $data['arg'];
+  $team = 'extra_' . $act;
   // Increase team extra people.
   my_query('
     UPDATE  attendance
@@ -95,7 +96,7 @@ if($data['arg'] == '0') {
       'userId' => $update['callback_query']['from']['id'],
     ]
   );
-  $tg_json = alarm($raidId, $update['callback_query']['from']['id'], 'extra', $data['arg'], $tg_json);
+  $tg_json = alarm($raidId, $update['callback_query']['from']['id'], 'extra', $act, $tg_json);
 }
 
 // Send vote response.

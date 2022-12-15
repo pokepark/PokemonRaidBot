@@ -40,10 +40,7 @@ function pokemon_keys($callbackData, $raid_level, $action, $event_id = false)
   $callbackData[0] = $action;
   while ($pokemon = $rs->fetch()) {
     $callbackData['p'] = $pokemon['id'];
-    $keys[] = array(
-      'text'          => get_local_pokemon_name($pokemon['pokedex_id'], $pokemon['pokemon_form_id']),
-      'callback_data' => formatCallbackData($callbackData)
-    );
+    $keys[] = button(get_local_pokemon_name($pokemon['pokedex_id'], $pokemon['pokemon_form_id']), $callbackData);
   }
 
   // Get the inline key array.

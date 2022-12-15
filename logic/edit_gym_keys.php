@@ -22,59 +22,31 @@ function edit_gym_keys($update, $gym_id, $show_gym, $ex_gym, $gym_note, $gym_add
 
   // Add buttons to show/hide the gym and add/remove ex-raid flag
   $keys = [];
-  $callback = ['gym_edit_details', 'g' => $gym_id];
   $keys[] = [
-    [
-      'text'            => $text_show_button,
-      'callback_data'   => formatCallbackData(['gym_edit_details', 'g' => $gym_id, 'a' => 'show', 'v' => $arg_show])
-    ],
-    [
-      'text'          => $text_ex_button,
-      'callback_data' => formatCallbackData(['gym_edit_details', 'g' => $gym_id, 'a' => 'ex', 'v' => $arg_ex])
-    ]
+    button($text_show_button, ['gym_edit_details', 'g' => $gym_id, 'a' => 'show', 'v' => $arg_show]),
+    button($text_ex_button, ['gym_edit_details', 'g' => $gym_id, 'a' => 'ex', 'v' => $arg_ex])
   ];
   if($botUser->accessCheck('gym-name', true)) {
-    $keys[] = [
-      [
-        'text'          => EMOJI_PENCIL . ' ' . getTranslation("gym_name_edit"),
-        'callback_data' => formatCallbackData(['gym_edit_details', 'g' => $gym_id, 'a' => 'name'])
-      ]
-    ];
+    $keys[][] = button(EMOJI_PENCIL . ' ' . getTranslation('gym_name_edit'), ['gym_edit_details', 'g' => $gym_id, 'a' => 'name']);
   }
   if($botUser->accessCheck('gym-edit', true)) {
-    $keys[] = [
-      [
-        'text'          => EMOJI_INFO . ' ' . (!empty($gym_note) ? getTranslation("edit") : getTranslation("add") ) . ' ' . getTranslation("gym_add_edit_note"),
-        'callback_data' => formatCallbackData(['gym_edit_details', 'g' => $gym_id, 'a' => 'note'])
-      ]
-    ];
-    $keys[] = [
-      [
-        'text'          => EMOJI_MAP . ' ' . ((!empty($gym_address) && $gym_address != getTranslation("directions")) ? getTranslation("edit") : getTranslation("add") ) . ' ' . getTranslation("gym_address"),
-        'callback_data' => formatCallbackData(['gym_edit_details', 'g' => $gym_id, 'a' => 'addr'])
-      ]
-    ];
-    $keys[] = [
-      [
-        'text'          => EMOJI_HERE . ' ' . getTranslation("gym_edit_coordinates"),
-        'callback_data' => formatCallbackData(['gym_edit_details', 'g' => $gym_id, 'a' => 'gps'])
-      ]
-    ];
+    $keys[][] = button(
+      EMOJI_INFO . ' ' . (!empty($gym_note) ? getTranslation('edit') : getTranslation('add') ) . ' ' . getTranslation('gym_add_edit_note'),
+      ['gym_edit_details', 'g' => $gym_id, 'a' => 'note']
+    );
+    $keys[][] = button(
+      EMOJI_MAP . ' ' . ((!empty($gym_address) && $gym_address != getTranslation('directions')) ? getTranslation('edit') : getTranslation('add')) . ' ' . getTranslation('gym_address'),
+      ['gym_edit_details', 'g' => $gym_id, 'a' => 'addr']
+    );
+    $keys[][] = button(
+      EMOJI_HERE . ' ' . getTranslation('gym_edit_coordinates'),
+      ['gym_edit_details', 'g' => $gym_id, 'a' => 'gps']
+    );
   }
   if($botUser->accessCheck('gym-delete', true)) {
-    $keys[] = [
-      [
-        'text'          => EMOJI_DELETE . ' ' . getTranslation("gym_delete"),
-        'callback_data' => formatCallbackData(['gym_delete', 'g' => $gym_id, 'c' => 0])
-      ]
-    ];
+    $keys[][] = button(EMOJI_DELETE . ' ' . getTranslation('gym_delete'), ['gym_delete', 'g' => $gym_id, 'c' => 0]);
   }
-  $keys[] = [
-    [
-      'text'          => getTranslation('done'),
-      'callback_data' => formatCallbackData(['exit', 'd' => '1'])
-    ]
-  ];
+  $keys[][] = button(getTranslation('done'), ['exit', 'd' => '1']);
 
   return $keys;
 }

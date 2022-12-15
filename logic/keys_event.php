@@ -22,18 +22,12 @@ function keys_event($callbackData, $action, $admin_access = [false,false]) {
         continue;
       }
       $callbackData['e'] = $event['id'];
-      $keys[] = array(
-        'text'          => $event['name'],
-        'callback_data' => formatCallbackData($callbackData)
-      );
+      $keys[] = button($event['name'], $callbackData);
     }
   }
   if($admin_access[0] === true) {
     $callbackData['e'] = 'X';
-    $keys[] = array(
-      'text'          => getTranslation("Xstars"),
-      'callback_data' => formatCallbackData($callbackData)
-    );
+    $keys[] = button(getTranslation('Xstars'), $callbackData);
   }
   // Get the inline key array.
   $keys = inline_key_array($keys, 1);
