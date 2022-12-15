@@ -87,7 +87,6 @@ if($protos = get_protos($proto_url)) {
       $SQL .= 'type = VALUES(type), type2 = VALUES(type2), weather = VALUES(weather);' . PHP_EOL;
       try {
         $prep = $dbh->prepare($SQL);
-        info_log($SQL);
         $prep->execute();
       } catch (Exception $e) {
         if(isset($update['message']['from']['id'])) $error = $e;
