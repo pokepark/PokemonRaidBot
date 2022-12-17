@@ -107,7 +107,7 @@ if($event_id != NULL or $raid_level == 9) {
   $keyData = $data;
   $keyData[0] = 'edit_time';
   $keyData['o'] = 'm';
-  $keyData['t'] = utctime($now,"H-i");
+  $keyData['t'] = utctime($now,"YmdHi");
   // Raid already running
   $keys_opt[] = button(getTranslation('is_raid_active'), $keyData);
   $keyData[0] = 'edit_starttime';
