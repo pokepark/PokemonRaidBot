@@ -33,6 +33,11 @@ function get_raid($raid_id)
   // Get the row.
   $raid = $rs->fetch();
 
+  if ($rs->rowCount() == 0) {
+    // Fail gracefully when a raid id is unknown
+    edit_message($GLOBALS['update'], getTranslation('internal_error'), []);
+    exit;
+  }
   // Resolve the boss id
   $resolved_boss = resolve_raid_boss($raid['pokemon'], $raid['pokemon_form'], $raid['spawn'], $raid['level']);
   $raid['pokemon'] = $resolved_boss['pokedex_id'];
