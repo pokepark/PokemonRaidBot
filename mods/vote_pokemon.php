@@ -8,8 +8,8 @@ require_once(LOGIC_PATH . '/send_vote_time_first.php');
 //debug_log($update);
 //debug_log($data);
 
-$raidId = $raidId;
-$pokemon = $pokemon ?? 0;
+$raidId = $data['r'];
+$pokemon = $data['p'] ?? 0;
 
 // Check if the user has voted for this raid before.
 $rs = my_query('
