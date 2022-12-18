@@ -3,3 +3,5 @@ ALTER TABLE `users` ADD COLUMN IF NOT EXISTS `privileges` TEXT NULL AFTER `gymar
 
 ALTER TABLE `photo_cache` ADD COLUMN IF NOT EXISTS `end_time` DATETIME NULL AFTER `ended`;
 ALTER TABLE `photo_cache` ADD COLUMN IF NOT EXISTS `start_time` DATETIME NULL AFTER `ended`;
+
+ALTER TABLE `pokemon` DROP COLUMN IF EXISTS `asset_suffix`;

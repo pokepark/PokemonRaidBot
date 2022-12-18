@@ -21,11 +21,12 @@ if($protos = get_protos($proto_url)) {
   if(file_put_contents(ROOT_PATH.'/protos/costume.json', json_encode($costume, JSON_PRETTY_PRINT))) {
     // Parse the game master data together with form ids into format we can use
     $pokemon_array = parse_master_into_pokemon_table($form_ids, $game_master_url);
+    info_log(print_r($pokemon_array, true));
     if(!$pokemon_array) {
       $error =  "Failed to open game master file.";
     } else {
       $PRE = 'INSERT INTO `pokemon`' . PHP_EOL;
-      $PRE .= '(pokedex_id, pokemon_name, pokemon_form_name, pokemon_form_id, asset_suffix, min_cp, max_cp, min_weather_cp, max_weather_cp, type, type2, weather) VALUES';
+      $PRE .= '(pokedex_id, pokemon_name, pokemon_form_name, pokemon_form_id, min_cp, max_cp, min_weather_cp, max_weather_cp, type, type2, weather) VALUES';
       foreach($eggs as $egg) {
         $pokemon_id = $egg;
         $form_name = 'normal';
@@ -34,7 +35,6 @@ if($protos = get_protos($proto_url)) {
           'pokemon_name'=>$pokemon_name,
           'pokemon_form_name'=>$form_name,
           'pokemon_form_id'=>0,
-          'asset_suffix'=>0,
           'shiny'=>0,
           'min_cp'=>0,
           'max_cp'=>0,
@@ -54,8 +54,8 @@ if($protos = get_protos($proto_url)) {
           if(!isset($data['weather']) || !isset($data['min_cp']) || !isset($data['max_cp']) || !isset($data['min_weather_cp']) || !isset($data['max_weather_cp']) || !isset($data['pokemon_name'])) continue;
 
           $poke_name = $data['pokemon_name'];
+          $poke_form = strtolower($data['pokemon_form_name']);
           $form_id = $data['pokemon_form_id'];
-          $form_asset_suffix = $data['asset_suffix'];
           $poke_min_cp = $data['min_cp'];
           $poke_max_cp = $data['max_cp'];
           $poke_min_weather_cp = $data['min_weather_cp'];
@@ -64,25 +64,19 @@ if($protos = get_protos($proto_url)) {
           $poke_type2 = $data['type2'];
           $poke_weather  = $data['weather'];
 
-          if($pokemon_id == 150 && $data['pokemon_form_name']=="a") {
-            // Because logic and consistency
-            $poke_form = 'armored';
-          }else {
-            $poke_form = strtolower($data['pokemon_form_name']);
-          }
           if($i==0) $i=1; else $SQL .= ",";
-          $insertData = [$pokemon_id, $poke_name, $poke_form, $form_id, $form_asset_suffix, $poke_min_cp, $poke_max_cp, $poke_min_weather_cp, $poke_max_weather_cp, $poke_type, $poke_type2, $poke_weather];
+          $insertData = [$pokemon_id, $poke_name, $poke_form, $form_id, $poke_min_cp, $poke_max_cp, $poke_min_weather_cp, $poke_max_weather_cp, $poke_type, $poke_type2, $poke_weather];
           $SQL .= PHP_EOL . '("' . implode('","', $insertData) . '")';
         }
       }
       ## MySQL 8 compatible
       #$SQL = $PRE . $SQL . ' as new' . PHP_EOL;
       #$SQL .= 'ON DUPLICATE KEY UPDATE pokedex_id = new.pokedex_id, pokemon_name = new.pokemon_name, pokemon_form_name = new.pokemon_form_name,' . PHP_EOL;
-      #$SQL .= 'pokemon_form_id = new.pokemon_form_id, asset_suffix = new.asset_suffix, min_cp = new.min_cp, max_cp = new.max_cp,' . PHP_EOL;
+      #$SQL .= 'pokemon_form_id = new.pokemon_form_id, min_cp = new.min_cp, max_cp = new.max_cp,' . PHP_EOL;
       #$SQL .= 'min_weather_cp = new.min_weather_cp, max_weather_cp = new.max_weather_cp, type = new.type, type2 = new.type2, weather = new.weather;';
       $SQL = $PRE . $SQL . PHP_EOL;
       $SQL .= 'ON DUPLICATE KEY UPDATE pokedex_id = VALUES(pokedex_id), pokemon_name = VALUES(pokemon_name), pokemon_form_name = VALUES(pokemon_form_name),' . PHP_EOL;
-      $SQL .= 'pokemon_form_id = VALUES(pokemon_form_id), asset_suffix = VALUES(asset_suffix), min_cp = VALUES(min_cp),' . PHP_EOL;
+      $SQL .= 'pokemon_form_id = VALUES(pokemon_form_id), min_cp = VALUES(min_cp),' . PHP_EOL;
       $SQL .= 'max_cp = VALUES(max_cp), min_weather_cp = VALUES(min_weather_cp), max_weather_cp = VALUES(max_weather_cp),' . PHP_EOL;
       $SQL .= 'type = VALUES(type), type2 = VALUES(type2), weather = VALUES(weather);' . PHP_EOL;
       try {
@@ -188,7 +182,6 @@ function parse_master_into_pokemon_table($form_ids, $game_master_url) {
   // Using negative to prevent mixup with actual form ID's
   // Collected from pogoprotos (hoping they won't change, so hard coding them here)
   $mega_ids = array('MEGA'=>-1,'MEGA_X'=>-2,'MEGA_Y'=>-3);
-  $mega_asset_suffixes = array('MEGA'=>51,'MEGA_X'=>51,'MEGA_Y'=>52);
 
   $weatherboost_table = array(
     'POKEMON_TYPE_BUG'    => '3',
@@ -237,24 +230,18 @@ function parse_master_into_pokemon_table($form_ids, $game_master_url) {
       foreach($form_data as $form) {
         $form_name = strtolower(str_replace($pokemon_name.'_','',$form['form']));
         if($form_name == 'purified' || $form_name == 'shadow') continue;
-
-        // Nidoran
-        $poke_name = ucfirst(strtolower(str_replace(['_FEMALE','_MALE'],['♀','♂'],$row['data']['formSettings']['pokemon'])));
-        // Ho-oh
-        $poke_name = str_replace('_','-',$poke_name);
+        $poke_name = ucfirst(strtolower($row['data']['formSettings']['pokemon']));
 
         if(!isset($form_ids[$form['form']])) {
           $form_id = 0;
         }else {
           $form_id = $form_ids[$form['form']];
         }
-        $form_asset_suffix = (isset($form['assetBundleValue']) ? $form['assetBundleValue'] : (isset($form['assetBundleSuffix'])?$form['assetBundleSuffix']:'00'));
 
         $pokemon_array[$pokemon_id][$form_name] = [
           'pokemon_name'=>$poke_name,
           'pokemon_form_name'=>$form_name,
           'pokemon_form_id'=>$form_id,
-          'asset_suffix'=>$form_asset_suffix
         ];
       }
     }else if ($part[1] == "POKEMON" && $part[0][0] == "V" && isset($row['data']['pokemonSettings'])) {
@@ -262,15 +249,17 @@ function parse_master_into_pokemon_table($form_ids, $game_master_url) {
       $pokemon_id = (int)str_replace("V","",$part[0]);
       $form_name = str_replace($row['data']['pokemonSettings']['pokemonId']."_","",substr($row['data']['templateId'],14));
       if($form_name == 'PURIFIED' || $form_name == 'SHADOW' || $form_name == 'NORMAL'
-      || !isset($pokemon_array[$pokemon_id])
-      || !isset($row['data']['pokemonSettings']['stats']['baseAttack'])
-      || !isset($row['data']['pokemonSettings']['stats']['baseDefense'])
-      || !isset($row['data']['pokemonSettings']['stats']['baseStamina'])) {
+        || !isset($pokemon_array[$pokemon_id])
+        || !isset($row['data']['pokemonSettings']['stats']['baseAttack'])
+        || !isset($row['data']['pokemonSettings']['stats']['baseDefense'])
+        || !isset($row['data']['pokemonSettings']['stats']['baseStamina'])
+      ) {
         continue;
       }
-      $form_name = "normal";
       if($form_name != $row['data']['pokemonSettings']['pokemonId']) {
         $form_name = strtolower($form_name);
+      }else {
+        $form_name = "normal";
       }
       [$min_cp, $max_cp, $min_weather_cp, $max_weather_cp] = calculate_cps($row['data']['pokemonSettings']['stats']);
 
@@ -323,7 +312,6 @@ function parse_master_into_pokemon_table($form_ids, $game_master_url) {
           'pokemon_name'    => $pokemon_array[$pokemon_id][$form_name]['pokemon_name'],
           'pokemon_form_name' => $mega_evolution_name,
           'pokemon_form_id'   => $mega_ids[$mega_evolution_name],
-          'asset_suffix'    => $mega_asset_suffixes[$mega_evolution_name],
           'min_cp'      => $min_cp,
           'max_cp'      => $max_cp,
           'min_weather_cp'  => $min_weather_cp,

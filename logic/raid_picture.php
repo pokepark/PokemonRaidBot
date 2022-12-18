@@ -61,7 +61,7 @@ function create_raid_picture($raid, $standalone_photo = false, $debug = false) {
   // Query missing raid info
   $q_pokemon_info = my_query('
     SELECT
-        pokemon_form_name, min_cp, max_cp, min_weather_cp, max_weather_cp, weather, shiny, asset_suffix, type, type2,
+        pokemon_form_name, min_cp, max_cp, min_weather_cp, max_weather_cp, weather, shiny, type, type2,
         (SELECT img_url FROM gyms WHERE id=:gymId LIMIT 1) as img_url
     FROM pokemon
     WHERE pokedex_id = :pokemonId

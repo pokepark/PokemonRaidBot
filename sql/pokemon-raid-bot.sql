@@ -93,7 +93,6 @@ CREATE TABLE `pokemon` (
   `type` varchar(10) DEFAULT '',
   `type2` varchar(10) DEFAULT '',
   `shiny` tinyint(1) unsigned DEFAULT 0,
-  `asset_suffix` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx_pokemon_pokedex_id_pokemon_form_id` (`pokedex_id`,`pokemon_form_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8mb4;

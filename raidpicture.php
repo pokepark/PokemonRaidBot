@@ -66,7 +66,7 @@ if(array_key_exists('costume', $_GET) && $_GET['costume'] != '') {
   $raid['costume'] = preg_replace("/\D/","",$_GET['costume']);
 }
 $q_pokemon_info = my_query('
-  SELECT pokemon_form_name, min_cp, max_cp, min_weather_cp, max_weather_cp, weather, shiny, asset_suffix, type, type2
+  SELECT pokemon_form_name, min_cp, max_cp, min_weather_cp, max_weather_cp, weather, shiny, type, type2
   FROM pokemon
   WHERE pokedex_id = ?
   AND pokemon_form_id = ?
