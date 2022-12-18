@@ -84,7 +84,7 @@ function debug_log($message, $type = '*')
   if ($config->DEBUG === false){
     return;
   }
-  generic_log($message, $type, $logfile = $config->DEBUG_LOGFILE);
+  generic_log($message, $type, $config->DEBUG_LOGFILE);
 }
 
 /**
@@ -98,7 +98,7 @@ function cleanup_log($message, $type = '*'){
   if ($config->CLEANUP_LOG === false){
     return;
   }
-  generic_log($message, $type, $logfile = $config->CLEANUP_LOGFILE);
+  generic_log($message, $type, $config->CLEANUP_LOGFILE);
 }
 
 /**
