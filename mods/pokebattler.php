@@ -205,7 +205,7 @@ if($action == 's') {
   $msg .= CR . '<b>' . getTranslation('pokedex_edit_pokemon') . '</b>';
 
   // Abort button.
-  $nav_keys[][] = button(getTranslation('done'), 'exit');
+  $nav_keys[][] = button(getTranslation('done'), ['exit', 'd' => 1]);
 
 // User is still on the import.
 } else {
