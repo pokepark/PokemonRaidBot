@@ -17,7 +17,7 @@ $repos[] = array('owner'   => "PokeMiners",
 $repos[] = array('owner'   => "PokeMiners",
                  'name'   => "pogo_assets",
                  'branch' => "master",
-                 'subdir' => "Addressable_Assets/",
+                 'subdir' => "",
                  'dir'  => "Images/Pokemon - 256x256/Addressable Assets");
 
 // Get download function curl_get_contents
@@ -108,7 +108,7 @@ foreach ($repos as $key => $r)
     echo "Repo content: " . $repo_content . PHP_EOL;
     continue;
   }
-  $count_unchanged = $count_extension = $i = $successfull_count = $files_downloaded = $chunk_start = 0;
+  $count_unchanged = $count_extension = $i = $successfull_count = $files_downloaded = $chunk_start = $count_naming = 0;
   $multi_handle = curl_multi_init();
   $treecount = count($content['tree']);
   // Divide downloadable content into chunks. Download 20 files at a time by default
@@ -135,6 +135,11 @@ foreach ($repos as $key => $r)
         $count_unchanged = $count_unchanged + 1;
         // Debug
         // echo 'Skipping file: ' . $c['path'] . " (File hasn't changed.)" . PHP_EOL;
+        continue;
+      }
+      // Skip files that don't match the new addressable assets naming convention
+      if(substr($c['path'], 0, 2) != 'pm') {
+        $count_naming++;
         continue;
       }
       echo 'Downloading ' . $c['path'] . PHP_EOL;
@@ -183,6 +188,9 @@ foreach ($repos as $key => $r)
   // Filtered files
   if($count_extension > 0) {
     echo 'Skipped ' . $count_extension . ' files due to wrong file extension'. PHP_EOL;
+  }
+  if($count_naming > 0) {
+    echo 'Skipped ' . $count_naming . ' files with old file naming convention'. PHP_EOL;
   }
 }
 

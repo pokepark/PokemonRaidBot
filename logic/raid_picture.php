@@ -250,16 +250,6 @@ function create_raid_picture($raid, $standalone_photo = false, $debug = false) {
   $show_boss_pokemon_types = false;
   // Raid running
   if(!$raid['raid_ended']) {
-    if(strlen($raid['asset_suffix']) > 2) {
-      $icon_suffix = $raid['asset_suffix'];
-    }else {
-      $pad_zeroes = '';
-      for ($o=3-strlen($raid['pokemon']);$o>0;$o--) {
-        $pad_zeroes .= 0;
-      }
-      $icon_suffix = $pad_zeroes.$raid['pokemon'] . "_" . $raid['asset_suffix'];
-    }
-
     // Raid Egg
     if($raid['pokemon'] > 9990) {
       // Getting the actual icon
@@ -285,26 +275,19 @@ function create_raid_picture($raid, $standalone_photo = false, $debug = false) {
         $uicons_icon .= '_f'.$raid['pokemon_form'];
       }
 
-      // Getting the actual icon filename
-      $p_icon = "pokemon_icon_" . $icon_suffix;
-
       // Add costume info for every mon except megas
       if($raid['costume'] != 0 && $raid['pokemon_form'] >= 0) {
-        $p_icon .= '_' . str_pad($raid['costume'], 2, '0', STR_PAD_LEFT);
-
         $costume = json_decode(file_get_contents(ROOT_PATH . '/protos/costume.json'), true);
         $addressable_icon .= '.c' . array_search($raid['costume'],$costume);
 
         $uicons_icon .= '_c'.$raid['costume'];
       }
       if($raid['shiny'] == 1 && $config->RAID_PICTURE_SHOW_SHINY) {
-        $p_icon = $p_icon . "_shiny";
         $addressable_icon .= '.s';
         $uicons_icon .= '_s';
         $shiny_icon = grab_img(IMAGES_PATH . "/shinystars.png");
       }
       $addressable_icon .= '.icon.png';
-      $p_icon = $p_icon . ".png";
       $uicons_icon .= '.png';
 
       foreach($p_sources as $p_dir) {
@@ -314,16 +297,8 @@ function create_raid_picture($raid, $standalone_photo = false, $debug = false) {
         $p_img_base_path = IMAGES_PATH . "/" . $asset_dir;
 
         // Check if file exists in this collection
-        // Prioritize addressable asset file
         if(file_exists($p_img_base_path . "/" . $addressable_icon) && filesize($p_img_base_path . "/" . $addressable_icon) > 0) {
           $img_file = $p_img_base_path . "/" . $addressable_icon;
-          break;
-        // These elseifs become redundant after PokeMiners move the files from Addressable Assets folder to the parent directory on 1.6.2022
-        }else if(file_exists($p_img_base_path . "/Addressable_Assets/" . $addressable_icon) && filesize($p_img_base_path . "/Addressable_Assets/" . $addressable_icon) > 0) {
-          $img_file = $p_img_base_path . "/Addressable_Assets/" . $addressable_icon;
-          break;
-        }else if(file_exists($p_img_base_path . "/" . $p_icon) && filesize($p_img_base_path . "/" . $p_icon) > 0) {
-          $img_file = $p_img_base_path . "/" . $p_icon;
           break;
         }else if(file_exists($p_img_base_path . "/" . $uicons_icon) && filesize($p_img_base_path . "/" . $uicons_icon) > 0) {
           $img_file = $p_img_base_path . "/" . $uicons_icon;
@@ -334,7 +309,7 @@ function create_raid_picture($raid, $standalone_photo = false, $debug = false) {
 
       // If no image was found, substitute with a fallback
       if($img_file === null) {
-        info_log($p_icon . ' ' . $addressable_icon, 'Failed to find an image in any pokemon image collection for:');
+        info_log($addressable_icon . ' ' . $uicons_icon, 'Failed to find an image in any pokemon image collection for:');
         $img_fallback_file = null;
         // If we know the raid level, fallback to egg image
         if(array_key_exists('level', $raid) && $raid['level'] !== null && $raid['level'] != 0) {
