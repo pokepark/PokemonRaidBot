@@ -21,7 +21,6 @@ if($protos = get_protos($proto_url)) {
   if(file_put_contents(ROOT_PATH.'/protos/costume.json', json_encode($costume, JSON_PRETTY_PRINT))) {
     // Parse the game master data together with form ids into format we can use
     $pokemon_array = parse_master_into_pokemon_table($form_ids, $game_master_url);
-    info_log(print_r($pokemon_array, true));
     if(!$pokemon_array) {
       $error =  "Failed to open game master file.";
     } else {
