@@ -109,7 +109,7 @@ function keys_vote($raid)
   }
 
   if($raid['event_vote_key_mode'] == 1) {
-    $keys_time = button(getPublicTranslation('Participate'), ['vote_time', 'r' => $raid['id'], 't' => utctime($raid['start_time'], 'YmdHis')]);
+    $keys_time[] = button(getPublicTranslation('Participate'), ['vote_time', 'r' => $raid['id'], 't' => utctime($raid['start_time'], 'YmdHis')]);
   }else {
     $RAID_SLOTS = ($raid['event_time_slots'] > 0) ? $raid['event_time_slots'] : $config->RAID_SLOTS;
     $keys_time = generateTimeslotKeys($RAID_SLOTS, $raid);
