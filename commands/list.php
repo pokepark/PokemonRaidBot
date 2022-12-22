@@ -8,36 +8,34 @@ require_once(LOGIC_PATH . '/resolve_raid_boss.php');
 //debug_log($data);
 
 // Check access.
-$botUser->accessCheck($update, 'list');
+$botUser->accessCheck('list');
 
 $event_sql = 'event IS NULL';
-if($botUser->accessCheck($update, 'ex-raids', true)) {
-  if($botUser->accessCheck($update, 'event-raids', true))
+if($botUser->accessCheck('ex-raids', true)) {
+  if($botUser->accessCheck('event-raids', true))
     $event_sql = '';
   else
     $event_sql .= ' OR event = ' . EVENT_ID_EX;
-}elseif($botUser->accessCheck($update, 'event-raids', true)) {
+}elseif($botUser->accessCheck('event-raids', true)) {
   $event_sql = 'event != ' . EVENT_ID_EX .' OR event IS NULL';
 }
-
+$event_sql = ($event_sql == '') ? '' : 'AND ('.$event_sql.')';
 // Get last 12 active raids data.
-$rs = my_query(
-    '
+$rs = my_query('
     SELECT     raids.pokemon, raids.pokemon_form, raids.id, raids.spawn, raids.start_time, raids.end_time, raids.level, raids.event,
                gyms.gym_name, gyms.ex_gym,
                events.name as event_name,
-               (SELECT COUNT(*) FROM raids WHERE end_time>UTC_TIMESTAMP() ' . ($event_sql == '' ? '' : 'AND ('.$event_sql.')') . ') as r_active
+               (SELECT COUNT(*) FROM raids WHERE end_time>UTC_TIMESTAMP() ' . $event_sql  . ') as r_active
     FROM       raids
     LEFT JOIN  gyms
     ON         raids.gym_id = gyms.id
     LEFT JOIN  events
     ON         events.id = raids.event
     WHERE      end_time>UTC_TIMESTAMP()
-    ' . ($event_sql == '' ? '' : 'AND ('.$event_sql.')') . '
+    ' . $event_sql . '
     ORDER BY   end_time ASC
     LIMIT      12
-    '
-);
+');
 
 // Get the raids.
 $raids = $rs->fetchAll();
@@ -53,7 +51,7 @@ if(count($raids) == 0) {
 
 debug_log($raids[0]['r_active'], 'Active raids:');
 // More raids as we like?
-if($raids[0]['r_active'] > 12 && $botUser->accessCheck($update, 'listall', true)) {
+if($raids[0]['r_active'] > 12 && $botUser->accessCheck('listall', true)) {
   // Forward to /listall
   debug_log('Too much raids, forwarding to /listall');
   $skip_access = true;
@@ -87,22 +85,12 @@ foreach($raids as $raid) {
   }
   $keys_text .= ($raid['ex_gym'] === 1 ? EMOJI_STAR . SP : '') . $gym_name;
 
-  $keys[] = array(
-    'text'          => $keys_text,
-    'callback_data' => $raid['id'] . ':raids_list:0'
-  );
+  $keys[] = button($keys_text, ['raids_list', 'r' => $raid['id']]);
 }
+$keys[] = button(getTranslation('done'), ['exit', 'd' => '1']);
 
 // Get the inline key array.
 $keys = inline_key_array($keys, 1);
-
-// Add exit key.
-$keys[] = [
-  [
-    'text'          => getTranslation('abort'),
-    'callback_data' => '0:exit:0'
-  ]
-];
 
 // Build message.
 $msg = '<b>' . getTranslation('list_all_active_raids') . ':</b>' . CR;
@@ -111,4 +99,3 @@ $msg .= '<b>' . getTranslation('select_gym_name') . '</b>' . CR;
 
 // Send message.
 send_message($update['message']['chat']['id'], $msg, $keys, ['reply_markup' => ['selective' => true, 'one_time_keyboard' => true]]);
-?>

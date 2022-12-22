@@ -1,16 +1,18 @@
 <?php
 // Write to log.
 debug_log('trainer_share()');
+require_once(LOGIC_PATH . '/keys_trainerinfo.php');
+require_once(LOGIC_PATH . '/show_trainerinfo.php');
 
 // For debug.
 //debug_log($update);
 //debug_log($data);
 
 // Access check.
-$botUser->accessCheck($update, 'trainer-share');
+$botUser->accessCheck('trainer-share');
 
 // Get chat id.
-$chat = $data['arg'];
+$chat = $data['c'];
 
 // Get text and keys.
 $text = show_trainerinfo($update);
@@ -34,6 +36,3 @@ $tg_json[] = edit_message($update, $callback_msg, $callback_keys, false, true);
 
 // Telegram multicurl request.
 curl_json_multi_request($tg_json);
-
-// Exit.
-exit();

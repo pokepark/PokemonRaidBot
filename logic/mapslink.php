@@ -42,4 +42,3 @@ function mapslink($gym, $gym_address = '0'){
   // returning Maps Link
   return $maps_link;
 }
-?>

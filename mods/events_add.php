@@ -7,7 +7,9 @@ debug_log('EVENTS()');
 //debug_log($data);
 
 // Check access.
-$botUser->accessCheck($update, 'event-manage');
+$botUser->accessCheck('event-manage');
+
+$abort = $data['a'] ?? 0;
 
 $keys = [];
 $callback_response = 'OK';
@@ -17,19 +19,13 @@ if(isset($modifiers)) {
   $value = htmlspecialchars(trim($update['message']['text']));
   my_query('INSERT INTO events SET name=?',[$value]);
   $eventId = $dbh->lastInsertId();
-  my_query('DELETE FROM user_input WHERE user_id=?', [$userId]);
   $callback_response = getTranslation('done');
   editMessageText($modifiers['old_message_id'], getTranslation('events_created'), [], $userId);
   $msg = '<b>' . getTranslation('events_created') . '</b>' . CR;
   $msg .= $value;
-  $keys[] = [
-    [
-      'text' => getTranslation('next'),
-      'callback_data' => $eventId . ':events_manage:0',
-    ]
-  ];
+  $keys[][] = button(getTranslation('next'), ['events_manage', 'e' => $eventId]);
 }else {
-  if($data['arg'] == 0) {
+  if($abort == 0) {
     // Add a new event
     $msg = '<b>' . getTranslation('events_create') . '</b>' . CR;
     $msg .= getTranslation('events_give_name') . ':';
@@ -38,16 +34,11 @@ if(isset($modifiers)) {
     $userId = $update['callback_query']['from']['id'];
 
     // Data for handling response from the user
-    my_query('INSERT INTO user_input SET user_id=?, handler=\'events_add\', modifiers=?', [$userId, $modifiers]);
+    my_query('INSERT INTO user_input SET user_id = ?, handler = \'events_add\', modifiers = ?', [$userId, $modifiers]);
 
-    $keys[] = [
-      [
-        'text' => getTranslation('abort'),
-        'callback_data' => '0:events_add:a',
-      ]
-    ];
-  }elseif($data['arg'] == 'a') {
-    my_query('DELETE FROM user_input WHERE user_id=?', [$userId]);
+    $keys[][] = button(getTranslation('abort'), ['events_add', 'a' => 1]);
+  }elseif($abort == 1) {
+    my_query('DELETE FROM user_input WHERE user_id = ?', [$userId]);
     answerCallbackQuery($update['callback_query']['id'], 'OK');
     editMessageText($update['callback_query']['message']['message_id'], getTranslation('action_aborted'), [], $userId);
     exit;
@@ -67,6 +58,3 @@ if(isset($update['callback_query'])) {
 
 // Telegram multicurl request.
 curl_json_multi_request($tg_json);
-
-// Exit.
-exit();

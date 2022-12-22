@@ -8,13 +8,13 @@ require_once(LOGIC_PATH . '/send_raid_poll.php');
 //debug_log($data);
 
 // Get raid id.
-$raidId = $data['id'];
+$raidId = $data['r'];
 
 // Access check.
-$botUser->raidAccessCheck($update, $raidId, 'share');
+$botUser->raidaccessCheck($raidId, 'share');
 
 // Get chat id.
-$chat = $data['arg'];
+$chat = $data['c'];
 
 $tg_json = send_raid_poll($raidId, $chat);
 
@@ -30,7 +30,3 @@ $tg_json[] = edit_message($update, $callback_msg, $callback_keys, false, true);
 
 // Telegram multicurl request.
 curl_json_multi_request($tg_json);
-
-// Exit.
-$dbh = null;
-exit();

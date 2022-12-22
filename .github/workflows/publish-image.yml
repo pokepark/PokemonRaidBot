@@ -60,3 +60,5 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: "New Docker image has been built: ${{ steps.meta.outputs.tags }}"
           disable_web_page_preview: true
+          disable_notification: true
+

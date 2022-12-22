@@ -18,6 +18,3 @@ $tg_json = send_raid_poll($id, $chat);
 
 // Telegram multicurl request.
 curl_json_multi_request($tg_json);
-
-// Exit.
-exit();

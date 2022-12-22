@@ -12,7 +12,7 @@ function get_config_array($file) {
     error_log('Unable to read config file, check permissions: ' . $file);
     die('Config file not readable, cannot continue: ' . $file);
   }
-  
+
   $config_array = json_decode($file_contents, true);
 
   if(json_last_error() !== JSON_ERROR_NONE) {
@@ -92,5 +92,3 @@ function build_config() {
 
 // Object, access a config option with e.g. $config->VERSION
 $config = build_config();
-
-?>

@@ -1,4 +1,5 @@
 <?php
+require_once(LOGIC_PATH . '/pokemon_keys.php');
 // Write to log.
 debug_log('raid_edit_poke()');
 
@@ -7,38 +8,25 @@ debug_log('raid_edit_poke()');
 //debug_log($data);
 
 // Set the id.
-$raid_id = $data['id'];
+$raid_id = $data['r'] ?? 0;
 
 // Access check.
-$botUser->raidAccessCheck($update, $raid_id, 'pokemon');
+$botUser->raidaccessCheck($raid_id, 'pokemon');
 
 // Get raid level
-$raid_level = $data['arg'];
+$raid_level = $data['rl'];
 
 debug_log('Raid level of pokemon: ' . $raid_level);
 
 // Level found
 if ($raid_level != '0') {
-    // Get the keys.
-    $keys = pokemon_keys($raid_id, $raid_level, 'raid_set_poke');
+  // Get the keys.
+  $keys = pokemon_keys($data, $raid_level, 'raid_set_poke');
 
-    // Add navigation keys.
-    $nav_keys = [];
-    $nav_keys[] = universal_inner_key($nav_keys, '0', 'exit', '0', getTranslation('abort'));
-    $nav_keys = inline_key_array($nav_keys, 1);
-
-    // Merge keys.
-    $keys = array_merge($keys, $nav_keys);
+  $keys[][] = button(getTranslation('abort'), 'exit');
 } else {
-    // Create the keys.
-    $keys = [
-        [
-            [
-                'text'          => getTranslation('not_supported'),
-                'callback_data' => '0:exit:0'
-            ]
-        ]
-    ];
+  // Create the keys.
+  $keys[][] = button(getTranslation('not_supported'), 'exit');
 }
 
 // Build callback message string.
@@ -55,13 +43,10 @@ $raid = get_raid($raid_id);
 $msg = getTranslation('raid_boss') . ':' . SP . get_local_pokemon_name($raid['pokemon'],$raid['pokemon_form']) . CR . CR;
 $msg .= '<b>' . getTranslation('select_raid_boss') . ':</b>';
 if (isset($update['callback_query']['inline_message_id'])) {
-    $tg_json[] = editMessageText($update['callback_query']['inline_message_id'], $msg, $keys, NULL, false, true);
+  $tg_json[] = editMessageText($update['callback_query']['inline_message_id'], $msg, $keys, NULL, false, true);
 } else {
-    $tg_json[] = editMessageText($update['callback_query']['message']['message_id'], $msg, $keys, $update['callback_query']['message']['chat']['id'], $keys, true);
+  $tg_json[] = editMessageText($update['callback_query']['message']['message_id'], $msg, $keys, $update['callback_query']['message']['chat']['id'], $keys, true);
 }
 
 // Telegram multicurl request.
 curl_json_multi_request($tg_json);
-
-// Exit.
-exit();

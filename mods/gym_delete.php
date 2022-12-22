@@ -1,74 +1,50 @@
 <?php
 // Write to log.
 debug_log('gym_delete()');
+require_once(LOGIC_PATH . '/get_gym_details.php');
+require_once(LOGIC_PATH . '/get_gym.php');
 
 // For debug.
 //debug_log($update);
 //debug_log($data);
 
 // Check access.
-$botUser->accessCheck($update, 'gym-delete');
+$botUser->accessCheck('gym-delete');
 
 // Get the arg.
-$arg = $data['arg'];
+$gymId = $data['g'];
+$confirm = $data['c'] == 1 ? true : false;
 
-// Delete?
-if(substr_count($arg, '-') == 1) {
-    $split_arg = explode('-', $arg);
-    $new_arg = $split_arg[0];
-    $delete = true;
-    $confirm = false;
-} else if(substr_count($arg, '-') == 2) {
-    $split_arg = explode('-', $arg);
-    $new_arg = $split_arg[0];
-    $delete = true;
-    $confirm = true;
-} else {
-    $msg = 'ERROR!';
-    $keys = [];
-}
+$keys = [];
+if ($gymId > 0 && $confirm == false) {
+  $gym = get_gym($gymId);
 
-if ($new_arg > 0 && $delete == true && $confirm == false) {
-    $gym = get_gym($new_arg);
-    
-    // Set message
-    $msg = EMOJI_WARN . SP . '<b>' . getTranslation('delete_this_gym') . '</b>' . SP . EMOJI_WARN;
-    $msg .= CR . get_gym_details($gym);
+  // Set message
+  $msg = EMOJI_WARN . SP . '<b>' . getTranslation('delete_this_gym') . '</b>' . SP . EMOJI_WARN;
+  $msg .= CR . get_gym_details($gym);
 
-    // Create the keys.
-    $keys = [
-        [
-            [
-                'text'          => getTranslation('yes'),
-                'callback_data' => '0:gym_delete:' . $new_arg . '-delete-yes'
-            ]
-        ],
-        [
-            [
-                'text'          => getTranslation('no'),
-                'callback_data' => $new_arg . ':gym_edit_details:'
-            ]
-        ]
-    ];
+  // Create the keys.
+  $keys[][] = button(getTranslation('yes'), ['gym_delete', 'g' => $gymId, 'c' => 1]);
+  $keys[][] = button(getTranslation('no'), ['gym_edit_details', 'g' => $gymId]);
 
 // Delete the gym.
-} else if ($new_arg > 0 && $delete == true && $confirm == true) {
-    debug_log('Deleting gym with ID ' . $new_arg);
-    // Get gym.
-    $gym = get_gym($new_arg);
-    
-    // Set message
-    $msg = '<b>' . getTranslation('deleted_this_gym') . '</b>' . CR;
-    $msg .= get_gym_details($gym);
-    $keys = [];
+} else if ($gymId > 0 && $confirm == true) {
+  require_once(LOGIC_PATH . '/get_gym_details.php');
+  require_once(LOGIC_PATH . '/get_gym.php');
+  debug_log('Deleting gym with ID ' . $gymId);
+  // Get gym.
+  $gym = get_gym($gymId);
 
-    // Delete gym.
-    my_query(
-        "
-        DELETE FROM gyms
-        WHERE     id = {$new_arg}
-        "
-    );
+  // Set message
+  $msg = '<b>' . getTranslation('deleted_this_gym') . '</b>' . CR;
+  $msg .= get_gym_details($gym);
+
+  // Delete gym.
+  my_query('
+    DELETE FROM gyms
+    WHERE   id = ?
+    ', [$gymId]
+  );
 }
 
 // Build callback message string.
@@ -85,6 +61,3 @@ $tg_json[] = edit_message($update, $msg, $keys, ['disable_web_page_preview' => '
 
 // Telegram multicurl request.
 curl_json_multi_request($tg_json);
-
-// Exit.
-exit();

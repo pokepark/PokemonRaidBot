@@ -73,6 +73,8 @@ CREATE TABLE `photo_cache` (
   `form_id` int(4) DEFAULT NULL,
   `raid_id` int(10) unsigned DEFAULT NULL,
   `ended` tinyint(1) DEFAULT NULL,
+  `start_time` datetime DEFAULT NULL,
+  `end_time` datetime DEFAULT NULL,
   `gym_id` int(10) unsigned DEFAULT NULL,
   `standalone` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`unique_id`)
@@ -91,7 +93,6 @@ CREATE TABLE `pokemon` (
   `type` varchar(10) DEFAULT '',
   `type2` varchar(10) DEFAULT '',
   `shiny` tinyint(1) unsigned DEFAULT 0,
-  `asset_suffix` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx_pokemon_pokedex_id_pokemon_form_id` (`pokedex_id`,`pokemon_form_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8mb4;
@@ -153,6 +154,8 @@ CREATE TABLE `users` (
   `lang_manual` TINYINT UNSIGNED NOT NULL DEFAULT 0,
   `tutorial` TINYINT(1) NOT NULL DEFAULT 0,
   `auto_alarm` TINYINT(1) UNSIGNED NULL DEFAULT 0,
+  `gymarea` TINYINT UNSIGNED NULL,
+  `privileges` TEXT NULL,
    PRIMARY KEY (`id`),
   UNIQUE KEY `i_userid` (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8mb4;

@@ -7,20 +7,18 @@ debug_log('EVENTS()');
 //debug_log($data);
 
 // Check access.
-$botUser->accessCheck($update, 'event-manage');
+$botUser->accessCheck('event-manage');
 
 $columnSettings = [
   'vote_key_mode'     => ['allowed' => [0,1],   'default' => 0, 'nullable' => false],
-  'hide_raid_picture' => ['allowed' => [0,1],   'default' => 0, 'nullable' => false],
   'pokemon_title'     => ['allowed' => [0,1,2], 'default' => 1, 'nullable' => false],
   'time_slots'        => ['nullable' => true],
   'raid_duration'     => ['nullable' => false],
   'poll_template'     => ['nullable' => true],
 ];
 
-$eventId = $data['id'] ?? false;
-$arg = $data['arg'] ?? false;
-$subArg = ($arg !== false) ? explode('-', $arg) : [];
+$eventId = $data['e'] ?? false;
+$action = $data['a'] ?? false;
 $keys = [];
 $callback_response = 'OK';
 $userId = $update['callback_query']['from']['id'] ?? $update['message']['from']['id'];
@@ -31,11 +29,11 @@ if(isset($modifiers) && isset($modifiers['action'])) {
   if($modifiers['action'] == 1) {
     // User input is new event name
     $column = 'name';
-    $arg = 0;
+    $action = 0;
   }else if($modifiers['action'] == 2) {
     // User input is new description
     $column = 'description';
-    $arg = 0;
+    $action = 0;
   }else if($modifiers['action'] == 3) {
     // User input is raid poll settings
     $column = $modifiers['column'];
@@ -63,12 +61,11 @@ if(isset($modifiers) && isset($modifiers['action'])) {
       }
       $value = (strtolower($value) == 'null' ? NULL : json_encode($inputArray));
     }
-    $arg = 3;
+    $action = 3;
   }
   $eventId = $modifiers['eventId'];
   my_query('UPDATE events SET ' . $column . ' = ? WHERE id=?', [$value, $eventId]);
   $callback_response = getTranslation('done');
-  my_query('DELETE FROM user_input WHERE user_id=?', [$userId]);
   editMessageText($modifiers['old_message_id'], getTranslation('updated'), [], $userId);
 }
 
@@ -83,44 +80,44 @@ $msg = '<b>' . getTranslation('events_manage') . '</b>' . CR . CR;
 $msg .= '<u>' . $event['name'] . '</u>' . CR;
 $msg .= $event['description'] . CR . CR;
 
-if($arg == 0 || $arg == 'a') {
-  if($arg == 'a') {
+if($action == 0 || $action == 'a') {
+  if($action == 'a') {
     my_query('DELETE FROM user_input WHERE user_id=?', [$userId]);
     $callback_response = getTranslation('action_aborted');
   }
   if($eventId != EVENT_ID_EX)
-    $keys = universal_key($keys, $eventId, 'events_manage', '1', getTranslation('events_edit_name'));
-  $keys = universal_key($keys, $eventId, 'events_manage', '2', getTranslation('events_edit_description'));
-  $keys = universal_key($keys, $eventId, 'events_manage', '3', getTranslation('events_edit_raid_poll'));
+    $keys[][] = button(getTranslation('events_edit_name'), ['events_manage', 'e' => $eventId, 'a' => 1]);
+  $keys[][] = button(getTranslation('events_edit_description'), ['events_manage', 'e' => $eventId, 'a' => 2]);
+  $keys[][] = button(getTranslation('events_edit_raid_poll'), ['events_manage', 'e' => $eventId, 'a' => 3]);
   if($eventId != EVENT_ID_EX)
-    $keys = universal_key($keys, $eventId, 'events_manage', '4', getTranslation('events_delete'));
+    $keys[][] = button(getTranslation('events_delete'), ['events_manage', 'e' => $eventId, 'a' => 4]);
 
   $keys[] = [
-    universal_inner_key($keys, '0', 'events', '0', getTranslation('back')),
-    universal_inner_key($keys, '0', 'exit', '0', getTranslation('done'))
+    button(getTranslation('back'), 'events'),
+    button(getTranslation('done'), 'exit')
   ];
 
 // Edit event name
-}else if($arg == 1) {
+}else if($action == 1) {
   $modifiers = json_encode(['old_message_id'=>$update['callback_query']['message']['message_id'],'action'=>1,'eventId'=>$eventId]);
   my_query('INSERT INTO user_input SET user_id=?, handler=\'events_manage\', modifiers=?', [$userId, $modifiers]);
 
   $msg .= '<u>' . getTranslation('events_edit_name') . '</u>' . CR;
   $msg .= getTranslation('events_give_name') . ':' . CR;
-  $keys = universal_key($keys, $eventId, 'events_manage', 'a', getTranslation('abort'));
+  $keys[][] = button(getTranslation('abort'), ['events_manage', 'e' => $eventId, 'a' => 'a']);
 
 // Edit event description
-}else if($arg == 2) {
+}else if($action == 2) {
   $modifiers = json_encode(['old_message_id'=>$update['callback_query']['message']['message_id'],'action'=>2,'eventId'=>$eventId]);
   my_query('INSERT INTO user_input SET user_id=?, handler=\'events_manage\', modifiers=?', [$userId, $modifiers]);
   $msg .= '<u>' . getTranslation('events_edit_description') . '</u>' . CR;
   $msg .= getTranslation('events_give_description') . ':';
-  $keys = universal_key($keys, $eventId, 'events_manage', 'a', getTranslation('abort'));
+  $keys[][] = button(getTranslation('abort'), ['events_manage', 'e' => $eventId, 'a' => 'a']);
 
 // Edt event raid poll settings
-}else if($arg == 3) {
+}else if($action == 3) {
   my_query('DELETE FROM user_input WHERE user_id=?', [$userId]);
-  $templateArray = ($event['poll_template'] == NULL) ? $config->RAID_POLL_UI_TEMPLATE : json_decode($event['poll_template'], true); 
+  $templateArray = ($event['poll_template'] == NULL) ? $config->RAID_POLL_UI_TEMPLATE : json_decode($event['poll_template'], true);
   $event['poll_template'] = templateJsonToString($templateArray);
   $printColumns = ['vote_key_mode','time_slots','raid_duration','hide_raid_picture','pokemon_title','poll_template'];
 
@@ -130,36 +127,35 @@ if($arg == 0 || $arg == 'a') {
     $msg .= $column . ': ';
     $msg .= ($column == 'poll_template' ? CR : '');
     $msg .= '<code>' . ($event[$column] === NULL ? 'NULL' : $event[$column]) . '</code>' . CR;
-    $keys = universal_key($keys, $eventId, 'events_manage', 'e-'.$column, $column);
+    $keys[][] = button($column, ['events_manage', 'e' => $eventId, 'a' => 'e', 'c' => $column]);
   }
   $keys[] = [
-    universal_inner_key($keys, $eventId, 'events_manage', '0', getTranslation('back')),
-    universal_inner_key($keys, '0', 'exit', '1', getTranslation('done'))
+    button(getTranslation('back'), ['events_manage', 'e' => $eventId, 'a' => 0]),
+    button(getTranslation('done'), ['exit', 'd' => 1]),
   ];
 
 // Delete event confirmation
-}else if($arg == 4) {
+}else if($action == 4) {
   $msg .= '<b>' . getTranslation('events_delete_confirmation') . '</b>' . CR;
   $keys[] = [
-    universal_inner_key($keys, $eventId, 'events_manage', 'd', getTranslation('yes')),
-    universal_inner_key($keys, $eventId, 'events_manage', '0', getTranslation('no'))
+    button(getTranslation('yes'), ['events_manage', 'e' => $eventId, 'a' => 'd']),
+    button(getTranslation('no'), ['events_manage', 'e' => $eventId, 'a' => 0]),
   ];
 
 // Delete event
-}else if($arg == 'd') {
+}else if($action == 'd') {
   if($eventId != EVENT_ID_EX) my_query('DELETE FROM events WHERE id=?', [$eventId]);
-  $data['id'] = $data['arg'] = 0;
   include(ROOT_PATH . '/mods/events.php');
   exit;
 
 // Prompt for raid poll value editing
-}else if($subArg[0] == 'e') {
-  $valueToEdit = $subArg[1];
+}else if($action == 'e') {
+  $valueToEdit = $data['c'];
   $modifiers = json_encode(['old_message_id'=>$update['callback_query']['message']['message_id'],'action'=>3,'column'=>$valueToEdit,'eventId'=>$eventId]);
   my_query('INSERT INTO user_input SET user_id=?, handler=\'events_manage\', modifiers=?', [$userId, $modifiers]);
 
   if($valueToEdit == 'poll_template') {
-    $templateArray = ($event['poll_template'] == NULL) ? $config->RAID_POLL_UI_TEMPLATE : json_decode($event['poll_template'], true); 
+    $templateArray = ($event['poll_template'] == NULL) ? $config->RAID_POLL_UI_TEMPLATE : json_decode($event['poll_template'], true);
     $event['poll_template'] = templateJsonToString($templateArray);
   }
 
@@ -167,7 +163,7 @@ if($arg == 0 || $arg == 'a') {
   $msg .= getTranslation('old_value') . CR;
   $msg .= '<code>' . ($event[$valueToEdit] === NULL ? 'NULL' : $event[$valueToEdit]) . '</code>' . CR . CR;
   $msg .= getTranslation('new_value');
-  $keys = universal_key($keys, $eventId, 'events_manage', '3', getTranslation('back'));
+  $keys[][] = button(getTranslation('back'), ['events_manage', 'e' => $eventId, 'a' => 3]);
 
 }
 
@@ -189,12 +185,9 @@ function templateJsonToString($templateArray) {
   $templateString = '';
   foreach($templateArray as $line) {
     foreach($line as $button) {
-      $templateString .= $button;
-      $templateString .= ',';
+      $templateString .= $button . ',';
     }
     $templateString = rtrim($templateString, ',') . CR;
   }
   return $templateString;
 }
-// Exit.
-exit();

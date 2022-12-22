@@ -1,10 +1,9 @@
 <?php
 /**
  * Get raid time message.
- * @param $raid
- * @param override_language
- * @param pokemon
- * @param unformatted
+ * @param array $raid
+ * @param bool $override_language
+ * @param bool $unformatted
  * @return string
  */
 function get_raid_times($raid, $override_language = true, $unformatted = false)
@@ -89,5 +88,3 @@ function get_raid_times($raid, $override_language = true, $unformatted = false)
 
     return $msg;
 }
-
-?>

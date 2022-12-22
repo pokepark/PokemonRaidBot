@@ -1,56 +1,40 @@
 <?php
 // Write to log.
 debug_log('raids_list()');
+require_once(LOGIC_PATH . '/show_raid_poll_small.php');
 
 // For debug.
 //debug_log($update);
 //debug_log($data);
 
 // Get ID.
-$raidId = $data['id'];
+$raidId = $data['r'];
 
 // Check access.
-$botUser->accessCheck($update, 'list');
+$botUser->accessCheck('list');
 
 // Get raid details.
 $raid = get_raid($raidId);
 
 // Create keys array.
-$keys = [
-    [
-        [
-            'text'          => getTranslation('expand'),
-            'callback_data' => $raid['id'] . ':vote_refresh:0',
-        ]
-    ]
-];
-if($botUser->raidAccessCheck($update, $raidId, 'pokemon', true)) {
-    $keys[] = [
-            [
-                'text'          => getTranslation('update_pokemon'),
-                'callback_data' => $raid['id'] . ':raid_edit_poke:' . $raid['level'],
-            ]
-    ];
+$keys[][] = button(getTranslation('expand'), ['vote_refresh', 'r' => $raid['id']]);
+if($botUser->raidaccessCheck($raidId, 'pokemon', true)) {
+  $keys[][] = button(getTranslation('update_pokemon'), ['raid_edit_poke', 'r' => $raid['id'], 'rl' => $raid['level']]);
 }
-if($botUser->raidAccessCheck($update, $raidId, 'delete', true)) {
-    $keys[] = [
-            [
-                'text'          => getTranslation('delete'),
-                'callback_data' => $raid['id'] . ':raids_delete:0'
-            ]
-    ];
+if($botUser->raidaccessCheck($raidId, 'delete', true)) {
+  $keys[][] = button(getTranslation('delete'), ['raids_delete', 'r' => $raid['id']]);
 }
 
 // Add keys to share.
 debug_log($raid, 'raw raid data for share: ');
 $keys_share = share_keys($raid['id'], 'raid_share', $update, $raid['level']);
 if(!empty($keys_share)) {
-    $keys = array_merge($keys, $keys_share);
+  $keys = array_merge($keys, $keys_share);
 } else {
-    debug_log('There are no groups to share to, is SHARE_CHATS set?');
+  debug_log('There are no groups to share to, is SHARE_CHATS set?');
 }
 // Exit key
-$keys = universal_key($keys, '0', 'exit', '1', getTranslation('done'));
+$keys[][] = button(getTranslation('done'), 'exit');
 
 // Get message.
 $msg = show_raid_poll_small($raid);
@@ -69,6 +53,3 @@ $tg_json[] = edit_message($update, $msg, $keys, false, true);
 
 // Telegram multicurl request.
 curl_json_multi_request($tg_json);
-
-// Exit.
-exit();

@@ -77,7 +77,7 @@
     "FI": "Mega Y",
     "ES": "Mega Y"
   },
-  "pokemon_form_armored": {
+  "pokemon_form_a": {
     "NL": "Armored",
     "DE": "Rüstungsform",
     "EN": "Armored",
@@ -825,5 +825,8 @@
   },
   "pokemon_form_question_mark": {
     "EN": "?"
+  },
+  "pokemon_form_unbound": {
+    "EN": "Unbound"
   }
 }

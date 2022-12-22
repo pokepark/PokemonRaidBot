@@ -51,5 +51,3 @@ function get_remote_users_count($raidId, $userId, $attendTime = false)
 
   return $remoteUsers;
 }
-
-?>

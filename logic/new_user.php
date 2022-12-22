@@ -17,13 +17,11 @@ function new_user($user_id) {
  * @return int
  */
 function user_tutorial($user_id) {
-  debug_log("Reading user's tutorial value: ".$user_id);
-  $query = my_query("SELECT tutorial FROM users WHERE user_id = :user_id LIMIT 1", [":user_id"=>$user_id]);
+  debug_log('Reading user\'s tutorial value: '.$user_id);
+  $query = my_query('SELECT tutorial FROM users WHERE user_id = :user_id LIMIT 1', [":user_id"=>$user_id]);
   $res = $query->fetch();
   $result = 0;
   if($query->rowCount() > 0) $result = $res['tutorial'];
-  debug_log("Result: ".$result);
+  debug_log('Result: '.$result);
   return $result;
 }
-
-?>

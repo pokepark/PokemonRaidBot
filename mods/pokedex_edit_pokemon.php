@@ -1,20 +1,19 @@
 <?php
 // Write to log.
 debug_log('pokedex_edit_pokemon()');
+require_once(LOGIC_PATH . '/get_formatted_pokemon_cp.php');
+require_once(LOGIC_PATH . '/get_pokemon_info.php');
+require_once(LOGIC_PATH . '/get_weather_icons.php');
 
 // For debug.
 //debug_log($update);
 //debug_log($data);
 
 // Check access.
-$botUser->accessCheck($update, 'pokedex');
-require_once(LOGIC_PATH . '/get_pokemon_info.php');
+$botUser->accessCheck('pokedex');
 // Set the id.
-$poke_id_form = $data['id'];
-[$pokedex_id, $pokemon_form_id] = explode('-',$data['id'],2);
-
-// Set the arg.
-$arg = $data['arg'];
+$poke_id_form = $data['p'];
+[$pokedex_id, $pokemon_form_id] = explode('-',$poke_id_form,2);
 
 // Set the message.
 $pokemon = get_pokemon_info($pokedex_id, $pokemon_form_id);
@@ -27,69 +26,22 @@ $msg .= (($pokemon['shiny'] == 1) ? (EMOJI_SHINY . SP . getTranslation('shiny'))
 $msg .= '<b>' . getTranslation('pokedex_select_action') . '</b>';
 
 // Create keys array.
-$keys = [
-    [
-        [
-            'text'          => getTranslation('pokedex_raid_level'),
-            'callback_data' => $poke_id_form . ':pokedex_set_raid_level:setlevel'
-        ]
-    ]
-];
+$keys[][] = button(getTranslation('pokedex_raid_level'), ['pokedex_set_raid_level', 'p' => $poke_id_form]);
 
 // Raid-Egg? Hide specific options!
 if(!in_array($pokedex_id, $GLOBALS['eggs'])) {
-    $keys_cp_weather = [
-        [  
-            [
-                'text'          => getTranslation('pokedex_min_cp'),
-                'callback_data' => $poke_id_form . ':pokedex_set_cp:min-20-add-0'
-            ]
-        ],
-        [
-            [
-                'text'          => getTranslation('pokedex_max_cp'),
-                'callback_data' => $poke_id_form . ':pokedex_set_cp:max-20-add-0'
-            ]
-        ],
-        [
-            [
-                'text'          => getTranslation('pokedex_min_weather_cp'),
-                'callback_data' => $poke_id_form . ':pokedex_set_cp:min-25-add-0'
-            ]
-        ],
-        [
-            [
-                'text'          => getTranslation('pokedex_max_weather_cp'),
-                'callback_data' => $poke_id_form . ':pokedex_set_cp:max-25-add-0'
-            ]
-        ],
-        [
-            [
-                'text'          => getTranslation('pokedex_weather'),
-                'callback_data' => $poke_id_form . ':pokedex_set_weather:add-0'
-            ]
-        ],
-        [
-            [
-                'text'          => getTranslation('shiny'),
-                'callback_data' => $poke_id_form . ':pokedex_set_shiny:setshiny'
-            ]
-        ]
-    ];
-
-    $keys = array_merge($keys, $keys_cp_weather);
+  $keys[][] = button(getTranslation('pokedex_min_cp'), ['pokedex_set_cp', 'p' => $poke_id_form, 'a' => 'add', 'l' => 20, 't' => 'min']);
+  $keys[][] = button(getTranslation('pokedex_max_cp'), ['pokedex_set_cp', 'p' => $poke_id_form, 'a' => 'add', 'l' => 20, 't' => 'max']);
+  $keys[][] = button(getTranslation('pokedex_min_weather_cp'), ['pokedex_set_cp', 'p' => $poke_id_form, 'a' => 'add', 'l' => 25, 't' => 'min']);
+  $keys[][] = button(getTranslation('pokedex_max_weather_cp'), ['pokedex_set_cp', 'p' => $poke_id_form, 'a' => 'add', 'l' => 25, 't' => 'max']);
+  $keys[][] = button(getTranslation('pokedex_weather'), ['pokedex_set_weather', 'p' => $poke_id_form]);
+  $keys[][] = button(getTranslation('shiny'), ['pokedex_set_shiny', 'p' => $poke_id_form]);
 }
 
 // Back and abort.
 $keys[] = [
-    [
-        'text'          => getTranslation('back'),
-        'callback_data' => '0:pokedex:0'
-    ],
-    [
-        'text'          => getTranslation('abort'),
-        'callback_data' => '0:exit:0'
-    ]
+  button(getTranslation('back'), 'pokedex'),
+  button(getTranslation('abort'), 'exit')
 ];
 
 // Build callback message string.
@@ -106,6 +58,3 @@ $tg_json[] = edit_message($update, $msg, $keys, false, true);
 
 // Telegram multicurl request.
 curl_json_multi_request($tg_json);
-
-// Exit.
-exit();

@@ -5,11 +5,9 @@
  */
 function send_vote_time_future($update)
 {
-    // Set the message.
-    $msg = getPublicTranslation('vote_time_future');
+  // Set the message.
+  $msg = getPublicTranslation('vote_time_future');
 
-    // Answer the callback.
-    answerCallbackQuery($update['callback_query']['id'], $msg);
+  // Answer the callback.
+  answerCallbackQuery($update['callback_query']['id'], $msg);
 }
-
-?>

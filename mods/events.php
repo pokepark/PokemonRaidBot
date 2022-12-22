@@ -7,10 +7,7 @@ debug_log('EVENTS()');
 //debug_log($data);
 
 // Check access.
-$botUser->accessCheck($update, 'event-manage');
-
-$id = $data['id'];
-$arg = $data['arg'];
+$botUser->accessCheck('event-manage');
 
 $keys = [];
 $callback_response = 'OK';
@@ -23,19 +20,9 @@ foreach($q->fetchAll() as $event) {
   if(empty($event['description'])) $event['description'] = '<i>' . getTranslation('events_no_description') . '</i>';
   $msg .= '<u>' . $event['name'] . '</u>' . CR;
   $msg .= $event['description'] . CR . CR;
-  $keys[] = [
-    [
-      'text' => $event['name'],
-      'callback_data' => $event['id'] . ':events_manage:0',
-    ]
-  ];
+  $keys[][] = button($event['name'], ['events_manage', 'e' => $event['id']]);
 }
-$keys[] = [
-  [
-    'text' => getTranslation('done'),
-    'callback_data' => '0:exit:1',
-  ]
-];
+$keys[][] = button(getTranslation('done'), ['exit', 'd' => '1']);
 
 $tg_json = [];
 
@@ -47,6 +34,3 @@ $tg_json[] = edit_message($update, $msg, $keys, false, true);
 
 // Telegram multicurl request.
 curl_json_multi_request($tg_json);
-
-// Exit.
-exit();

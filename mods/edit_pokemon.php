@@ -1,4 +1,5 @@
 <?php
+require_once(LOGIC_PATH . '/pokemon_keys.php');
 // Write to log.
 debug_log('edit_pokemon()');
 
@@ -7,60 +8,33 @@ debug_log('edit_pokemon()');
 //debug_log($data);
 
 // Check access.
-$botUser->accessCheck($update, 'create');
-
-// Set the id.
-$gym_id_plus_letter = $data['id'];
-
-$arg_data = explode(",", $data['arg']);
+$botUser->accessCheck('create');
 
 // Set the raid level and event.
-$event_id = $arg_data[0];
-$raid_level = $arg_data[1];
+$eventId = $data['e'] ?? NULL;
+$raidLevel = $data['rl'];
 
 // Check if we are creating an event
-if($event_id != "N") {
-    // If yes, go to date selection
-    $action = "edit_time";
+if($eventId != NULL) {
+  // If yes, go to date selection
+  $action = "edit_time";
 }else {
-    // If not, select start time
-    $action = "edit_starttime";
+  // If not, select start time
+  $action = "edit_starttime";
 }
 
 // Get the keys.
-$keys = pokemon_keys($gym_id_plus_letter, $raid_level, "edit_starttime", $event_id);
+$keys = pokemon_keys($data, $raidLevel, 'edit_starttime', $eventId);
 
-// No keys found.
-if (!$keys) {
-    $keys = [
-        [
-            [
-                'text'          => getTranslation('abort'),
-                'callback_data' => '0:exit:0'
-            ]
-        ]
-    ];
-} else {
-    if($event_id == "N") {
-        $back_id_arg = explode(',', $gym_id_plus_letter);
-        $back_id = $back_id_arg[1];
-        $back_action = 'edit_raidlevel';
-        $back_arg = $back_id_arg[0];
-    }else {
-        $back_id = $gym_id_plus_letter;
-        $back_action = 'edit_event_raidlevel';
-        $back_arg = $event_id;
-    }
+$back_action = ($eventId == NULL) ? 'edit_raidlevel' : 'edit_event_raidlevel';
 
-    // Add navigation keys.
-    $nav_keys = [];
-    $nav_keys[] = universal_inner_key($nav_keys, $back_id, $back_action, $back_arg, getTranslation('back'));
-    $nav_keys[] = universal_inner_key($nav_keys, $back_arg, 'exit', '2', getTranslation('abort'));
-    $nav_keys = inline_key_array($nav_keys, 2);
-
-    // Merge keys.
-    $keys = array_merge($keys, $nav_keys);
-}
+// Add navigation keys.
+$backData = $data;
+$backData[0] = $back_action;
+$keys[] = [
+  button(getTranslation('back'), $backData),
+  button(getTranslation('abort'), 'exit')
+];
 
 // Build callback message string.
 $callback_response = 'OK';
@@ -73,13 +47,10 @@ $tg_json[] = answerCallbackQuery($update['callback_query']['id'], $callback_resp
 
 // Edit the message.
 if (isset($update['callback_query']['inline_message_id'])) {
-    $tg_json[] = editMessageText($update['callback_query']['inline_message_id'], getTranslation('select_raid_boss') . ':', $keys, NULL, false, true);
+  $tg_json[] = editMessageText($update['callback_query']['inline_message_id'], getTranslation('select_raid_boss') . ':', $keys, NULL, false, true);
 } else {
-    $tg_json[] = editMessageText($update['callback_query']['message']['message_id'], getTranslation('select_raid_boss') . ':', $keys, $update['callback_query']['message']['chat']['id'], $keys, true);
+  $tg_json[] = editMessageText($update['callback_query']['message']['message_id'], getTranslation('select_raid_boss') . ':', $keys, $update['callback_query']['message']['chat']['id'], $keys, true);
 }
 
 // Telegram multicurl request.
 curl_json_multi_request($tg_json);
-
-// Exit.
-exit();

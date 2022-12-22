@@ -1,14 +1,19 @@
 <?php
 // Write to log.
 debug_log('vote_time()');
+require_once(LOGIC_PATH . '/alarm.php');
+require_once(LOGIC_PATH . '/get_remote_users_count.php');
+require_once(LOGIC_PATH . '/sendalarmnotice.php');
+require_once(LOGIC_PATH . '/send_vote_remote_users_limit_reached.php');
+require_once(LOGIC_PATH . '/send_vote_time_future.php');
 
 // For debug.
 //debug_log($update);
 //debug_log($data);
 
-$raidId = $data['id'];
+$raidId = $data['r'];
 
-$vote_time = $data['arg'];
+$vote_time = $data['t'] ?? 0;
 // Raid anytime?
 $attend_time_save = $attend_time_compare = ANYTIME;
 if($vote_time != 0) {
@@ -34,8 +39,7 @@ if($attend_time_compare != ANYTIME && $now >= $attend_time_compare && $raid['eve
 }
 
 // Check if the user has voted for this raid before.
-$rs = my_query(
-  '
+$rs = my_query('
   SELECT  count(attendance.attend_time) AS count, userInfo.*
   FROM    attendance
   LEFT JOIN (
@@ -81,7 +85,6 @@ if ($answer['user_count'] != NULL) {
   if(($answer['remote'] != 0 or $answer['extra_alien'] > 0) && $vote_time != 0 && $config->RAID_REMOTEPASS_USERS_LIMIT < ($remote_users + $answer['user_count'])) {
     // Send max remote users reached.
     send_vote_remote_users_limit_reached($update);
-    $dbh = null;
     exit;
   }
 
@@ -105,8 +108,7 @@ if ($answer['user_count'] != NULL) {
     ]);
     $update_pokemon_sql = 'pokemon = \'0\',';
   }
-  my_query(
-    '
+  my_query('
     UPDATE  attendance
     SET     attend_time = :attendTimeSave,
             cancel = 0,

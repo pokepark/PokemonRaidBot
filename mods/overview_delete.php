@@ -7,109 +7,94 @@ debug_log('overview_delete()');
 //debug_log($data);
 
 // Delete or list to deletion?
-$chat_id = 0;
-$chat_id = $data['arg'];
+$chat_id = $data['c'] ?? 0;
 
 // Check access.
-$botUser->accessCheck($update, 'overview');
+$botUser->accessCheck('overview');
 
 // Telegram JSON array.
 $tg_json = array();
 
 // Get all or specific overview
 if ($chat_id == 0) {
-    $request_overviews = my_query(
-        "
-        SELECT    *
-        FROM      overview
-        "
-    );
+  $request_overviews = my_query('
+    SELECT  *
+    FROM    overview
+  ');
 
-    // Count results.
-    $count = 0;
+  // Count results.
+  $count = 0;
 
-    while ($rowOverviews = $request_overviews->fetch()) {
-        // Counter++
-        $count = $count + 1;
+  while ($rowOverviews = $request_overviews->fetch()) {
+    // Counter++
+    $count = $count + 1;
 
-        // Get info about chat for title.
-        debug_log('Getting chat object for chat_id: ' . $rowOverviews['chat_id']);
-        $chat_obj = get_chat($rowOverviews['chat_id']);
-        $chat_title = '';
+    // Get info about chat for title.
+    debug_log('Getting chat object for chat_id: ' . $rowOverviews['chat_id']);
+    $chat_obj = get_chat($rowOverviews['chat_id']);
+    $chat_title = '';
 
-        // Set title.
-        if ($chat_obj['ok'] == 'true') {
-            $chat_title = $chat_obj['result']['title'];
-            debug_log('Title of the chat: ' . $chat_obj['result']['title']);
-        }
-
-        // Build message string.
-        $msg = '<b>' . getTranslation('delete_raid_overview_for_chat') . ' ' . $chat_title . '?</b>';
-
-        // Set keys - Delete button.
-        $keys = [
-            [
-                [
-                    'text'          => getTranslation('yes'),
-                    'callback_data' => '0:overview_delete:' . $rowOverviews['chat_id']
-                ],
-                [
-                    'text'          => getTranslation('no'),
-                    'callback_data' => '0:overview_delete:1'
-                ]
-            ]
-        ];
-
-        // Send the message, but disable the web preview!
-        $tg_json[] = send_message($update['callback_query']['message']['chat']['id'], $msg, $keys, false, true);
+    // Set title.
+    if ($chat_obj['ok'] == 'true') {
+      $chat_title = $chat_obj['result']['title'];
+      debug_log('Title of the chat: ' . $chat_obj['result']['title']);
     }
 
-    // Set message.
-    if($count == 0) {
-        $callback_msg = '<b>' . getTranslation('no_overviews_found') . '</b>';
-    } else {
-        $callback_msg = '<b>' . getTranslation('list_all_overviews') . ':</b>';
-    }
+    // Build message string.
+    $msg = '<b>' . getTranslation('delete_raid_overview_for_chat') . ' ' . $chat_title . '?</b>';
+
+    // Set keys - Delete button.
+    $keys[0][0] = button(getTranslation('yes'), ['overview_delete', 'c' => $rowOverviews['chat_id']]);
+    $keys[0][1] = button(getTranslation('no'), ['overview_delete', 'c' => 1]);
+
+    // Send the message, but disable the web preview!
+    $tg_json[] = send_message($update['callback_query']['message']['chat']['id'], $msg, $keys, false, true);
+  }
+
+  // Set message.
+  if($count == 0) {
+    $callback_msg = '<b>' . getTranslation('no_overviews_found') . '</b>';
+  } else {
+    $callback_msg = '<b>' . getTranslation('list_all_overviews') . ':</b>';
+  }
 } else if ($chat_id == 1) {
-    // Write to log.
-    debug_log('Deletion of the raid overview was canceled!');
+  // Write to log.
+  debug_log('Deletion of the raid overview was canceled!');
 
-    // Set message.
-    $callback_msg = '<b>' . getTranslation('overview_deletion_was_canceled') . '</b>';
+  // Set message.
+  $callback_msg = '<b>' . getTranslation('overview_deletion_was_canceled') . '</b>';
 } else {
-    // Write to log.
-    debug_log('Triggering deletion of overview for Chat_ID ' . $chat_id);
+  // Write to log.
+  debug_log('Triggering deletion of overview for Chat_ID ' . $chat_id);
 
-    // Get chat and message ids for overview.
-    $request_overviews = my_query(
-        "
-        SELECT    *
-        FROM      overview
-        WHERE     chat_id = '{$chat_id}'
-        "
-    );
+  // Get chat and message ids for overview.
+  $request_overviews = my_query('
+    SELECT  *
+    FROM    overview
+    WHERE   chat_id = ?
+    ', [$chat_id]
+  );
 
-    $overview = $request_overviews->fetch();
+  $overview = $request_overviews->fetch();
 
-    // Delete overview
-    $chat_id = $overview['chat_id'];
-    $message_id = $overview['message_id'];
+  // Delete overview
+  $chat_id = $overview['chat_id'];
+  $message_id = $overview['message_id'];
 
-    // Delete telegram message.
-    debug_log('Deleting overview telegram message ' . $message_id . ' from chat ' . $chat_id);
-    delete_message($chat_id, $message_id);
+  // Delete telegram message.
+  debug_log('Deleting overview telegram message ' . $message_id . ' from chat ' . $chat_id);
+  delete_message($chat_id, $message_id);
 
-    // Delete overview from database.
-    debug_log('Deleting overview information from database for Chat_ID: ' . $chat_id);
-    $rs = my_query(
-        "
-        DELETE FROM   overview
-        WHERE   chat_id = '{$chat_id}'
-        "
-    );
+  // Delete overview from database.
+  debug_log('Deleting overview information from database for Chat_ID: ' . $chat_id);
+  $rs = my_query('
+    DELETE FROM   overview
+    WHERE   chat_id = ?
+    ', [$chat_id]
+  );
 
-    // Set message.
-    $callback_msg = '<b>' . getTranslation('overview_successfully_deleted') . '</b>';
+  // Set message.
+  $callback_msg = '<b>' . getTranslation('overview_successfully_deleted') . '</b>';
 }
 
 // Set keys.
@@ -126,7 +111,3 @@ $tg_json[] = edit_message($update, $callback_msg, $callback_keys, false, true);
 
 // Telegram multicurl request.
 curl_json_multi_request($tg_json);
-
-// Exit.
-$dbh = null;
-exit();

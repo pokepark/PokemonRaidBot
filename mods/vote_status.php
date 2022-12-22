@@ -1,25 +1,28 @@
 <?php
 // Write to log.
 debug_log('vote_status()');
+require_once(LOGIC_PATH . '/alarm.php');
+require_once(LOGIC_PATH . '/sendalarmnotice.php');
+require_once(LOGIC_PATH . '/send_vote_time_first.php');
 
 // For debug.
 //debug_log($update);
 //debug_log($data);
+$raidId = $data['r'];
 
 // Check if the user has voted for this raid before.
-$rs = my_query(
-    "
-    SELECT    attendance.want_invite, attendance.alarm,
-              IF(temporary_gym = 1, 1, 0)                                           as is_remote_gym,
-              IF(raids.user_id = {$update['callback_query']['from']['id']}, 1, 0)   as user_is_creator
-    FROM      attendance
-    LEFT JOIN raids
-    ON        raids.id = attendance.raid_id
-    LEFT JOIN gyms
-    ON        gyms.id = raids.gym_id
-      WHERE   attendance.raid_id = {$data['id']}
-        AND   attendance.user_id = {$update['callback_query']['from']['id']}
-    "
+$rs = my_query('
+  SELECT  attendance.want_invite, attendance.alarm,
+        IF(temporary_gym = 1, 1, 0)                       as is_remote_gym,
+        IF(raids.user_id = :userId, 1, 0)   as user_is_creator
+  FROM    attendance
+  LEFT JOIN raids
+  ON    raids.id = attendance.raid_id
+  LEFT JOIN gyms
+  ON    gyms.id = raids.gym_id
+    WHERE   attendance.raid_id = :raidId
+    AND   attendance.user_id = :userId
+  ', ['userId' => $update['callback_query']['from']['id'], 'raidId' => $raidId]
 );
 
 // Get the answer.
@@ -32,81 +35,71 @@ debug_log($answer);
 $tg_json = array();
 
 // Get status to update
-$status = $data['arg'];
+$status = $data['a'];
 
 // Make sure user has voted before.
-if (!empty($answer)) {
-    // Prevent invite beggars from voting late or arrived
-    if(!($answer['want_invite'] == 1 && ($status == 'late' || $status == 'arrived'))) {
-        // Update attendance.
-        if($status == 'alarm') {
-            // Enable / Disable alarm 
-            my_query(
-            "
-            UPDATE attendance
-            SET    alarm = CASE
-                   WHEN alarm = '0' THEN '1'
-                   ELSE '0'
-                   END
-            WHERE  raid_id = {$data['id']}
-            AND    user_id = {$update['callback_query']['from']['id']}
-            "
-            );
-            $new_alarm_value = $answer['alarm'] = 0 ? 1 : 0;
-            // Inform User about change
-            sendAlertOnOffNotice($data['id'], $update['callback_query']['from']['id'], $new_alarm_value);
-        } else {
-            // All other status-updates are using the short query
-            my_query(
-            "
-            UPDATE  attendance
-            SET     arrived = 0,
-                    raid_done = 0,
-                    cancel = 0,
-                    late = 0,
-                    $status = 1
-            WHERE   raid_id = {$data['id']}
-            AND     user_id = {$update['callback_query']['from']['id']}
-            "
-            );
-            if($status == 'raid_done' or $status == 'cancel') {
-                if($status == 'cancel') $tg_json = alarm($data['id'],$update['callback_query']['from']['id'],'status',$status, $tg_json);
-                // If the gym is a temporary remote raid gym and raid creator voted for done, send message asking for raid deletion
-                if($answer['is_remote_gym'] == '1' && $answer['user_is_creator']) {
-                    $keys = [[
-                                [
-                                'text'          =>  getTranslation('yes'),
-                                'callback_data' =>  $data['id'].':end_remote_raid:0'
-                                ],
-                                [
-                                'text'          =>  getTranslation('no'),
-                                'callback_data' =>  '0:exit:0'
-                                ],
-                             ]];
-                    if($status == 'raid_done') $msg = getTranslation("delete_remote_raid_done");
-                    else if($status == 'cancel') $msg = getTranslation("delete_remote_raid_cancel");
-                    $tg_json[] = send_message($update['callback_query']['from']['id'], $msg, $keys, false, true);
-                }
-            }elseif($status != 'arrived') {
-                $tg_json = alarm($data['id'],$update['callback_query']['from']['id'],'status',$status, $tg_json);
-            }
-        }
-
-        // Send vote response.
-        require_once(LOGIC_PATH . '/update_raid_poll.php');
-
-        $tg_json = update_raid_poll($data['id'], false, $update, $tg_json);
-
-        $tg_json[] = answerCallbackQuery($update['callback_query']['id'], getTranslation('vote_updated'), true);
-
-        curl_json_multi_request($tg_json);
-    }else {
-        $msg = getTranslation('vote_status_not_allowed');
-        answerCallbackQuery($update['callback_query']['id'], $msg);
-    }
-} else {
-    // Send vote time first.
-    send_vote_time_first($update);
+if (empty($answer)) {
+  // Send vote time first.
+  send_vote_time_first($update);
+  exit;
 }
+// Prevent invite beggars from voting late or arrived
+if(($answer['want_invite'] == 1 && ($status == 'late' || $status == 'arrived'))) {
+  $msg = getTranslation('vote_status_not_allowed');
+  answerCallbackQuery($update['callback_query']['id'], $msg);
+  exit;
+}
+// Update attendance.
+if($status == 'alarm') {
+  // Enable / Disable alarm
+  my_query('
+  UPDATE attendance
+  SET  alarm = CASE
+        WHEN alarm = 0 THEN 1
+        ELSE 0
+        END
+  WHERE  raid_id = ?
+  AND  user_id = ?
+  ', [$raidId, $update['callback_query']['from']['id']]
+  );
+  $new_alarm_value = $answer['alarm'] = 0 ? 1 : 0;
+  // Inform User about change
+  sendAlertOnOffNotice($raidId, $update['callback_query']['from']['id'], $new_alarm_value);
+} else {
+  // All other status-updates are using the short query
+  my_query('
+    UPDATE  attendance
+    SET arrived = 0,
+        raid_done = 0,
+        cancel = 0,
+        late = 0,
+        ' . $status . ' = 1
+    WHERE raid_id = ?
+    AND   user_id = ?
+    ', [$raidId, $update['callback_query']['from']['id']]
+  );
+  if($status == 'raid_done' or $status == 'cancel') {
+    if($status == 'cancel') $tg_json = alarm($raidId,$update['callback_query']['from']['id'],'status',$status, $tg_json);
+    // If the gym is a temporary remote raid gym and raid creator voted for done, send message asking for raid deletion
+    if($answer['is_remote_gym'] == '1' && $answer['user_is_creator']) {
+      $keys[0][0] = button(getTranslation('yes'), ['end_remote_raid', 'r' => $raidId]);
+      $keys[0][0] = button(getTranslation('no'), 'exit');
+      if($status == 'raid_done') $msg = getTranslation("delete_remote_raid_done");
+      else if($status == 'cancel') $msg = getTranslation("delete_remote_raid_cancel");
+      $tg_json[] = send_message($update['callback_query']['from']['id'], $msg, $keys, false, true);
+    }
+  }elseif($status != 'arrived') {
+    $tg_json = alarm($raidId,$update['callback_query']['from']['id'],'status',$status, $tg_json);
+  }
+}
+
+// Send vote response.
+require_once(LOGIC_PATH . '/update_raid_poll.php');
+
+$tg_json = update_raid_poll($raidId, false, $update, $tg_json);
+
+$tg_json[] = answerCallbackQuery($update['callback_query']['id'], getTranslation('vote_updated'), true);
+
+curl_json_multi_request($tg_json);
 
 exit();

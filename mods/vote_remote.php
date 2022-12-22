@@ -1,16 +1,19 @@
 <?php
 // Write to log.
 debug_log('vote_remote()');
+require_once(LOGIC_PATH . '/alarm.php');
+require_once(LOGIC_PATH . '/get_remote_users_count.php');
+require_once(LOGIC_PATH . '/send_vote_remote_users_limit_reached.php');
+require_once(LOGIC_PATH . '/send_vote_time_first.php');
 
 // For debug.
 //debug_log($update);
 //debug_log($data);
 
-$raidId = $data['id'];
+$raidId = $data['r'];
 
 // Get current remote status of user
-$rs = my_query(
-  '
+$rs = my_query('
   SELECT remote, (1 + extra_in_person + extra_alien) as user_count, CASE WHEN cancel = 1 or raid_done = 1 THEN 1 ELSE 0 END as cancelOrDone
   FROM   attendance
   WHERE  raid_id = :raidId
@@ -42,8 +45,7 @@ if($remote_status == 0 && $config->RAID_REMOTEPASS_USERS_LIMIT < $remote_users +
   exit;
 }
 // Update users table.
-my_query(
-  '
+my_query('
   UPDATE  attendance
   SET  remote = CASE
     WHEN remote = 0 THEN 1

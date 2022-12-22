@@ -7,7 +7,7 @@ debug_log('EVENTS()');
 //debug_log($data);
 
 // Check access.
-$botUser->accessCheck($update, 'event-manage');
+$botUser->accessCheck('event-manage');
 
 $q = my_query('SELECT * FROM events');
 
@@ -20,24 +20,9 @@ foreach($q->fetchAll() as $event) {
   $msg .= $event['description'] . CR . CR;
 }
 
-$keys = [];
-$keys[] = [
-  [
-    'text' => getTranslation('events_manage'),
-    'callback_data' => '0:events:0',
-  ]
-];
-$keys[] = [
-  [
-    'text' => getTranslation('events_create'),
-    'callback_data' => '0:events_add:0',
-  ]
-];
-$keys[] = [
-  [
-    'text' => getTranslation('done'),
-    'callback_data' => '0:exit:1',
-  ]
-];
+$keys[][] = button(getTranslation('events_manage'), 'events');
+$keys[][] = button(getTranslation('events_create'), 'events_add');
+$keys[][] = button(getTranslation('done'), ['exit', 'd' => '1']);
+
 // Send message.
 send_message($update['message']['chat']['id'], $msg, $keys, ['reply_markup' => ['selective' => true, 'one_time_keyboard' => true]]);

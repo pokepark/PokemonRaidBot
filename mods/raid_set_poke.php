@@ -1,27 +1,29 @@
 <?php
 // Write to log.
 debug_log('raid_set_poke()');
+require_once(LOGIC_PATH . '/alarm.php');
+require_once(LOGIC_PATH . '/get_pokemon_by_table_id.php');
+require_once(LOGIC_PATH . '/show_raid_poll_small.php');
 
 // For debug.
 //debug_log($update);
 //debug_log($data);
 
 // Set the id.
-$raidId = $data['id'];
+$raidId = $data['r'];
 
 // Access check.
-$botUser->raidAccessCheck($update, $raidId, 'pokemon');
+$botUser->raidaccessCheck($raidId, 'pokemon');
 
-$pokemon_id_form = get_pokemon_by_table_id($data['arg']);
+$pokemon_id_form = get_pokemon_by_table_id($data['p']);
 
 // Update pokemon in the raid table.
-my_query(
-    "
-    UPDATE    raids
-    SET       pokemon = '{$pokemon_id_form['pokedex_id']}',
-              pokemon_form = '{$pokemon_id_form['pokemon_form_id']}'
-      WHERE   id = {$raidId}
-    "
+my_query('
+  UPDATE  raids
+  SET     pokemon = ?,
+          pokemon_form = ?
+  WHERE   id = ?
+  ',[$pokemon_id_form['pokedex_id'], $pokemon_id_form['pokemon_form_id'], $raidId]
 );
 
 // Get raid times.
@@ -56,6 +58,3 @@ $tg_json = alarm($raid, $update['callback_query']['from']['id'], 'new_boss', '',
 
 // Telegram multicurl request.
 curl_json_multi_request($tg_json);
-
-// Exit.
-exit();
