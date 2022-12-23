@@ -268,6 +268,7 @@ function create_raid_picture($raid, $standalone_photo = false, $debug = false) {
       $p_sources = explode(',', $config->RAID_PICTURE_POKEMON_ICONS);
 
       $addressable_icon = 'pm'.$raid['pokemon'];
+      $addressableFallback = 'pm'.$raid['pokemon'].'.fNORMAL';
       $uicons_icon = $raid['pokemon'];
 
       if($raid['pokemon_form_name'] != 'normal') {
@@ -279,15 +280,18 @@ function create_raid_picture($raid, $standalone_photo = false, $debug = false) {
       if($raid['costume'] != 0 && $raid['pokemon_form'] >= 0) {
         $costume = json_decode(file_get_contents(ROOT_PATH . '/protos/costume.json'), true);
         $addressable_icon .= '.c' . array_search($raid['costume'],$costume);
+        $addressableFallback .= '.c' . array_search($raid['costume'],$costume);
 
         $uicons_icon .= '_c'.$raid['costume'];
       }
       if($raid['shiny'] == 1 && $config->RAID_PICTURE_SHOW_SHINY) {
         $addressable_icon .= '.s';
+        $addressableFallback .= '.s';
         $uicons_icon .= '_s';
         $shiny_icon = grab_img(IMAGES_PATH . "/shinystars.png");
       }
       $addressable_icon .= '.icon.png';
+      $addressableFallback .= '.icon.png';
       $uicons_icon .= '.png';
 
       foreach($p_sources as $p_dir) {
@@ -299,6 +303,10 @@ function create_raid_picture($raid, $standalone_photo = false, $debug = false) {
         // Check if file exists in this collection
         if(file_exists($p_img_base_path . "/" . $addressable_icon) && filesize($p_img_base_path . "/" . $addressable_icon) > 0) {
           $img_file = $p_img_base_path . "/" . $addressable_icon;
+          break;
+        }else if(file_exists($p_img_base_path . "/" . $addressableFallback) && filesize($p_img_base_path . "/" . $addressableFallback) > 0) {
+          $img_file = $p_img_base_path . "/" . $addressableFallback;
+          $uicons = true;
           break;
         }else if(file_exists($p_img_base_path . "/" . $uicons_icon) && filesize($p_img_base_path . "/" . $uicons_icon) > 0) {
           $img_file = $p_img_base_path . "/" . $uicons_icon;
