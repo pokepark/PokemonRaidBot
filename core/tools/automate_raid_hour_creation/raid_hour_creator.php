@@ -11,6 +11,9 @@ if(json_last_error() !== JSON_ERROR_NONE) {
     die('Config file not valid JSON, cannot continue.');
 }
 
+$tz = $config->TIMEZONE;
+date_default_timezone_set($tz);
+
 // Establish mysql connection.
 // TODO(artanicus): This should be centralized & imported instead of duplicated
 $dbh = new PDO('mysql:host=' . $config->DB_HOST . ';dbname=' . $config->DB_NAME . ';charset=utf8mb4', $config->DB_USER, $config->DB_PASSWORD, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
