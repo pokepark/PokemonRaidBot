@@ -93,7 +93,7 @@ function gymMenu($buttonAction, $showHidden, $stage, $firstLetter = false, $gyma
 function getGymareas($gymareaId, $stage, $buttonAction) {
   $gymareaKeys = $points = [];
   $gymareaName = '';
-  $json = json_decode(file_get_contents(CONFIG_PATH . '/geoconfig_gym_areas.json'), 1);
+  $json = json_decode(file_get_contents(botSpecificConfigFile('geoconfig_gym_areas.json')), 1);
   foreach($json as $area) {
     if($gymareaId == $area['id']) {
       foreach($area['path'] as $point) {

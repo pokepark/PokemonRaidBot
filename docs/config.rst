@@ -94,6 +94,22 @@ How to make a Supergroup
 * Once a group has been converted to a Supergroup it cannot go back to a normal Group, even if you change back the option that caused it to convert.
 * Be aware that the group ID will change completely when the group gets converted so you'll need to find it again!
 
+Configuring multiple bots
+-------------------------
+
+If you want to run multiple Telegram bots using this directory, you can create for each of them config and access files by prepending them with a unique name:
+
+.. code-block::
+
+access/bot1-creator111222333
+access/bot2-creator111222333
+config/bot1-config.json
+config/bot1-geoconfig.json
+config/bot2-config.json
+config/bot2-geoconfig.json
+
+When setting webhook to Telegram using ``webhook.html`` you must set the matching bot name.
+
 Database connection
 -------------------
 

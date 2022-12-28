@@ -51,7 +51,7 @@ if($count == 0) {
 }
 
 // Config
-$cfile = CONFIG_PATH . '/config.json';
+$cfile = botSpecificConfigFile('config.json');
 if(is_file($cfile)) {
   $str = file_get_contents($cfile);
   $json = json_decode($str, true);
@@ -59,7 +59,7 @@ if(is_file($cfile)) {
 
 // Real config name or alias?
 $alias = '';
-$afile = CONFIG_PATH . '/alias.json';
+$afile = botSpecificConfigFile('alias.json');
 if(is_file($afile)) {
   debug_log('Checking alias for config option ' . $config_name);
   $astr = file_get_contents($afile);
@@ -126,7 +126,7 @@ if(in_array($config_name, $allowed) && $restrict == 'no') {
 
   // Write to file.
   if(json_last_error() === JSON_ERROR_NONE) {
-    file_put_contents(CONFIG_PATH . '/config.json', $jsonString);
+    file_put_contents(botSpecificConfigFile('config.json'), $jsonString);
     $msg = getTranslation('config_updated') . ':' . CR . CR;
     $msg .= '<b>' . (empty($alias) ? $config_name : $alias) . '</b>' . CR;
     $msg .= getTranslation('old_value') . SP . $old_value . CR;

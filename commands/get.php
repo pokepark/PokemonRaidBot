@@ -20,14 +20,14 @@ $allowed_bool = explode(',', $config->ALLOW_ONLY_TRUE_FALSE);
 $allowed_numbers = explode(',', $config->ALLOW_ONLY_NUMBERS);
 
 // Get config.
-$cfile = CONFIG_PATH . '/config.json';
+$cfile = botSpecificConfigFile('config.json');
 if(is_file($cfile)) {
   $str = file_get_contents($cfile);
   $json = json_decode($str, true);
 }
 
 // Get config aliases.
-$afile = CONFIG_PATH . '/alias.json';
+$afile = botSpecificConfigFile('alias.json');
 if(is_file($afile)) {
   $astr = file_get_contents($afile);
   $ajson = json_decode($astr, true);

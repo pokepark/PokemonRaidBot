@@ -8,16 +8,12 @@ function get_verified_update(){
   global $config, $argv;
 
   // Get api key from get parameters.
-  if(isset($_GET['apikey'])) {
-    $apiKey = $_GET['apikey'];
-  // Get api key from argv.
-  } elseif(!empty($argv[1])) {
-    $apiKey = $argv[1];
-  } else {
+  if(!isset($_GET['apikey'])) {
     debug_log('Called without apikey, returning empty content.');
     http_response_code(204); // HTTP 204: No Content
     exit();
   }
+  $apiKey = $_GET['apikey'];
 
   // Check if hashed api key is matching config.
   if (hash('sha512', $apiKey) != strtolower($config->APIKEY_HASH)) {
@@ -35,11 +31,6 @@ function get_verified_update(){
   if($content) {
     // Decode the json string.
     $update = json_decode($content, true);
-  } elseif(!empty($argv[2])) {
-    $update = json_decode($argv[2], true);
-  }
-
-  if ($update) {
     debug_log_incoming($update, '<');
   }
 

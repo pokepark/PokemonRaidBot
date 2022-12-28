@@ -15,6 +15,11 @@
                     <input class="input" type="text" v-model="token" />
                 </p>
                 <br/>
+                <label class="label">Bot name (optional):</label>
+                <p class="control">
+                    <input class="input" type="text" v-model="botname" />
+                </p>
+                <br/>
                 <label class="label">Host URL:</label>
                 <p class="control">
                     <input class="input" type="text" v-model="host" />
@@ -64,6 +69,7 @@
      el: '#app',
      data: {
          token: '123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11',
+         botname: '',
          maxconnection: '80',
          port: '',
          host: 'https://' + window.location.hostname + location.pathname.replace(/[^/]*$/, '')
@@ -94,6 +100,9 @@
              var bot = document.createElement('a');
              bot.href = this.host;
              bot_string = bot.origin + port_string + bot.pathname.replace(/\/?$/, '/') + 'index.php?apikey=' + this.token;
+             if (this.botname) {
+                bot_string = bot_string + '&bot_name=' + this.botname
+             }
 
              return bot_string
          }

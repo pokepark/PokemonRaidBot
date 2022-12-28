@@ -7,7 +7,7 @@
 function upgrade_config_version($version)
 {
   debug_log('Bumping config.json VERSION to: ' . $version);
-  return write_config_array(array("VERSION" => $version), CONFIG_PATH . '/config.json');
+  return write_config_array(array("VERSION" => $version), botSpecificConfigFile('config.json'));
 }
 
 /**

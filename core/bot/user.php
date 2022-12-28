@@ -59,9 +59,16 @@ class botUser
       'kicked'        => 'kicked',
     ];
 
+    $privilegeArray = [
+      'privileges' => [],
+      'grantedBy' => '',
+    ];
     $accessFilesList = $tg_json = [];
     foreach(glob(ACCESS_PATH . '/*') as $filePath) {
       $filename = str_replace(ACCESS_PATH . '/', '', $filePath);
+      // If bot name is set read only bot specific files
+      if (isset($_GET['bot_name']) && !empty($_GET['bot_name']) && !preg_match('/^' . $_GET['bot_name'] . '/', $filename))
+        continue;
       // Get chat object - remove comments from filename
       // This way some kind of comment like the channel name can be added to the end of the filename, e.g. creator-100123456789-MyPokemonChannel to easily differ between access files :)
       preg_match('/(access)('.$this->userId.')|(access|creator|admins|members|restricted|kicked)(-[0-9]+)/', '-' . $filename, $result);
@@ -127,14 +134,14 @@ class botUser
           'privileges' => $privilegeList,
           'grantedBy' => $accessFile,
         ];
-        my_query('UPDATE users SET privileges = ? WHERE user_id = ? LIMIT 1', [json_encode($privilegeArray), $this->userId]);
-        $this->userPrivileges = $privilegeArray;
         break;
       }
       // Deny access
       debug_log($chatId, 'Negative result on access check for chat:');
       debug_log('Continuing with next chat...');
     }
+    my_query('UPDATE users SET privileges = ? WHERE user_id = ? LIMIT 1', [json_encode($privilegeArray), $this->userId]);
+    $this->userPrivileges = $privilegeArray;
   }
 
   /**

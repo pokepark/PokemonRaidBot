@@ -22,8 +22,8 @@ function isPointInsidePolygon($point, $vertices) {
 }
 // Geofences
 $geofences = false;
-if(file_exists(CONFIG_PATH . '/geoconfig.json')) {
-  $raw = file_get_contents(CONFIG_PATH . '/geoconfig.json');
+if(file_exists(botSpecificConfigFile('geoconfig.json'))) {
+  $raw = file_get_contents(botSpecificConfigFile('geoconfig.json'));
   $geofences = json_decode($raw, true);
   $geofence_polygons = [];
   foreach($geofences as $geofence) {

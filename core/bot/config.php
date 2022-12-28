@@ -68,7 +68,7 @@ function build_config() {
   // Iterate over subconfigs getting defaults and merging in custom overrides
   foreach ($default_configs as $filename) {
     $dfile = CONFIG_PATH . '/' . $filename; // config defaults, e.g. defaults-config.json
-    $cfile = CONFIG_PATH . '/' . str_replace('defaults-', '', $filename); // custom config overrides e.g. config.json
+    $cfile = botSpecificConfigFile(str_replace('defaults-', '', $filename)); // custom config overrides e.g. config.json
 
     // Get default config as an array so we can do an array merge later
     $config_array = get_config_array($dfile);
@@ -88,6 +88,12 @@ function build_config() {
 
   // Return the whole multi-source config as an Object
   return (Object)$config;
+}
+function botSpecificConfigFile($filename) {
+  $prefix = '';
+  if (isset($_GET['bot_name']) && !empty($_GET['bot_name']))
+    $prefix = $_GET['bot_name'] . '-';
+  return CONFIG_PATH . '/' . $prefix . $filename;
 }
 
 // Object, access a config option with e.g. $config->VERSION

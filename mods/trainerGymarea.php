@@ -22,7 +22,7 @@ if($gymarea !== false) {
 // Init empty keys array.
 $keys = [];
 
-$json = json_decode(file_get_contents(CONFIG_PATH . '/geoconfig_gym_areas.json'), 1);
+$json = json_decode(file_get_contents(botSpecificConfigFile('geoconfig_gym_areas.json')), 1);
 $gymareaName = '';
 foreach($json as $area) {
   if($area['id'] == $gymarea) $gymareaName = $area['name'];
