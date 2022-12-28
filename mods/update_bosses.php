@@ -6,7 +6,6 @@ if(!$config->ENABLE_BOSS_AUTO_UPDATE) { exit; }
 
 $levels = $data['id'];
 $source = $data['arg'];
-$add_mons = [];
 if($levels != 'scheduled') {
   $get_levels = explode(',',$levels);
 
@@ -23,11 +22,10 @@ if($levels != 'scheduled') {
   $data = json_decode($data,true);
 
   debug_log('Processing received ccev pogoinfo raid bosses for each raid level');
-  foreach($data as $tier => $tier_pokemon) {
-    // Process raid level?
-    if(!in_array($tier,$get_levels)) continue;
-
-    foreach($tier_pokemon as $raid_id_form) {
+  $sql_values = '';
+  foreach($get_levels as $level) {
+    // Process requested levels
+    foreach($data[$level] as $raid_id_form) {
       if(!isset($raid_id_form['id'])) continue;
       $dex_id = $raid_id_form['id'];
       $dex_form = 0;
@@ -46,13 +44,13 @@ if($levels != 'scheduled') {
         $dex_form = $result['pokemon_form_id'];
       }
 
-      $add_mons[] = [
-        'pokedex_id' => $dex_id,
-        'pokemon_form_id' => $dex_form,
-        'raid_level' => $tier,
-      ];
+      $sql_values .= '(\'' . implode("', '", [$dex_id, $dex_form, $level]) . '\'),';
     }
   }
+  if($sql_values == '') exit;
+  $sql_values = rtrim($sql_values, ',');
+
+  $sql = 'INSERT INTO raid_bosses (pokedex_id, pokemon_form_id, raid_level) VALUES ' . $sql_values . ';';
 }elseif($levels == 'scheduled') {
   require_once(LOGIC_PATH . '/read_upcoming_bosses.php');
   $data = read_upcoming_bosses(true);
@@ -63,15 +61,5 @@ if($levels != 'scheduled') {
   info_log("Invalid argumens supplied to update_bosses!");
   exit();
 }
-$count = count($add_mons);
-$sql_values = '';
-if($count == 0) exit;
-
-$sql_cols = implode(", ", array_keys($add_mons[0]));
-for($i=0;$i<$count;$i++) {
-  if($i > 0) $sql_values .= ',';
-  $sql_values .= '(\'' . implode("', '", array_values($add_mons[$i])) . '\')';
-}
-$sql = 'INSERT INTO raid_bosses (' . $sql_cols . ') VALUES ' . $sql_values . ';';
 
 my_query($sql);
