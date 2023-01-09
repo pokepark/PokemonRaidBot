@@ -101,12 +101,12 @@ If you want to run multiple Telegram bots using this directory, you can create f
 
 .. code-block::
 
-access/bot1-creator111222333
-access/bot2-creator111222333
-config/bot1-config.json
-config/bot1-geoconfig.json
-config/bot2-config.json
-config/bot2-geoconfig.json
+    access/bot1-creator111222333
+    access/bot2-creator111222333
+    config/bot1-config.json
+    config/bot1-geoconfig.json
+    config/bot2-config.json
+    config/bot2-geoconfig.json
 
 When setting webhook to Telegram using ``webhook.html`` you must set the matching bot name.
 
