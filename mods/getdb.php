@@ -6,7 +6,7 @@ require_once(CORE_BOT_PATH . '/db.php');
 require_once(LOGIC_PATH . '/sql_utils.php');
 require_once(LOGIC_PATH . '/debug.php');
 require_once(LOGIC_PATH . '/curl_get_contents.php');
-$proto_url = 'https://raw.githubusercontent.com/Furtif/POGOProtos-Swift/master/Sources/POGOProtos/POGOProtos.pb.swift';
+$proto_url = 'https://raw.githubusercontent.com/123FLO321/POGOProtos-Swift/master/Sources/POGOProtos/POGOProtos.pb.swift';
 $game_master_url = 'https://raw.githubusercontent.com/PokeMiners/game_masters/master/latest/latest.json';
 
 $error = false;
@@ -31,19 +31,19 @@ $PRE = 'INSERT INTO `pokemon`' . PHP_EOL;
 $PRE .= '(pokedex_id, pokemon_name, pokemon_form_name, pokemon_form_id, min_cp, max_cp, min_weather_cp, max_weather_cp, type, type2, weather) VALUES';
 foreach($eggs as $egg) {
   $pokemon_id = $egg;
-  $pokemon_name = 'Level '. $egg[3] .' Egg';
+  $pokemon_name = 'Level '. str_replace('999', '', $egg) .' Egg';
   $pokemon_array[$pokemon_id]['normal'] = [
-    'pokemon_name'=>$pokemon_name,
-    'pokemon_form_name'=> 'normal',
-    'pokemon_form_id'=>0,
-    'shiny'=>0,
-    'min_cp'=>0,
-    'max_cp'=>0,
-    'min_weather_cp'=>0,
-    'max_weather_cp'=>0,
+    'pokemon_name' => $pokemon_name,
+    'pokemon_form_name' => 'normal',
+    'pokemon_form_id' => 0,
+    'shiny' => 0,
+    'min_cp' => 0,
+    'max_cp' => 0,
+    'min_weather_cp' => 0,
+    'max_weather_cp' => 0,
     'type' => '',
     'type2' => '',
-    'weather'=>0
+    'weather' => 0,
   ];
 }
 $i = 0;
@@ -101,7 +101,7 @@ function sendResults($msg, $update, $error = false) {
 }
 function calculate_cps($base_stats) {
   //   CP = (Attack * Defense^0.5 * Stamina^0.5 * CP_Multiplier^2) / 10
-  $cp_multiplier = array(20 => 0.5974 ,25 =>0.667934 );
+  $cp_multiplier = array(20 => 0.5974, 25 => 0.667934);
   $min = floor((($base_stats['baseAttack']+10)*(($base_stats['baseDefense']+10)**0.5)*(($base_stats['baseStamina']+10)**0.5)*$cp_multiplier[20]**2)/10);
   $max = floor((($base_stats['baseAttack']+15)*(($base_stats['baseDefense']+15)**0.5)*(($base_stats['baseStamina']+15)**0.5)*$cp_multiplier[20]**2)/10);
   $min_weather = floor((($base_stats['baseAttack']+10)*(($base_stats['baseDefense']+10)**0.5)*(($base_stats['baseStamina']+10)**0.5)*$cp_multiplier[25]**2)/10);
@@ -152,7 +152,7 @@ function parse_master_into_pokemon_table($form_ids, $game_master_url) {
   // Set ID's for mega evolutions
   // Using negative to prevent mixup with actual form ID's
   // Collected from pogoprotos (hoping they won't change, so hard coding them here)
-  $mega_ids = array('MEGA'=>-1,'MEGA_X'=>-2,'MEGA_Y'=>-3);
+  $mega_ids = array('MEGA' => -1, 'MEGA_X' => -2, 'MEGA_Y' => -3, 'PRIMAL' => -4);
 
   $weatherboost_table = array(
     'POKEMON_TYPE_BUG'    => '3',
@@ -177,17 +177,17 @@ function parse_master_into_pokemon_table($form_ids, $game_master_url) {
   if(!$master_file = curl_get_contents($game_master_url)) return false;
   $master = json_decode($master_file, true);
   foreach($master as $row) {
-    $part = explode('_',$row['templateId']);
+    $part = explode('_', $row['templateId']);
     $form_data = [];
     $pokemon_id = '';
-    if(count($part)<2) continue;
+    if(count($part) < 2) continue;
     if(preg_match('/FORMS_V([0-9]*)_POKEMON_([a-zA-Z0-9_]*)/', $row['templateId'], $matches)) {
       // Found Pokemon form data
       $pokemon_id = (int)$matches[1];
       $pokemon_name = $matches[2];
       // Get pokemon forms
       if(!isset($row['data']['formSettings']['forms']) or empty($row['data']['formSettings']['forms'][0])) {
-        $form_data[] = array('form'=>$pokemon_name.'_NORMAL');
+        $form_data[] = array('form' => $pokemon_name . '_NORMAL');
       }else {
         $form_data = $row['data']['formSettings']['forms'];
       }
@@ -198,15 +198,15 @@ function parse_master_into_pokemon_table($form_ids, $game_master_url) {
         $form_id = $form_ids[$form['form']] ?? 0;
 
         $pokemon_array[$pokemon_id][$form_name] = [
-          'pokemon_name'=>$poke_name,
-          'pokemon_form_name'=>$form_name,
-          'pokemon_form_id'=>$form_id,
+          'pokemon_name' => $poke_name,
+          'pokemon_form_name' => $form_name,
+          'pokemon_form_id' => $form_id,
         ];
       }
     }else if (preg_match('/V([0-9]*)_POKEMON_([a-zA-Z0-9_]*)/', $row['templateId'], $matches) && isset($row['data']['pokemonSettings'])) {
       // Found Pokemon data
       $pokemon_id = (int)$matches[1];
-      $form_name = str_replace($row['data']['pokemonSettings']['pokemonId']."_","",$matches[2]);
+      $form_name = str_replace($row['data']['pokemonSettings']['pokemonId'] . '_', '', $matches[2]);
       if($form_name == 'PURIFIED' || $form_name == 'SHADOW' || $form_name == 'NORMAL'
         || !isset($pokemon_array[$pokemon_id])
         || !isset($row['data']['pokemonSettings']['stats']['baseAttack'])
@@ -218,16 +218,16 @@ function parse_master_into_pokemon_table($form_ids, $game_master_url) {
       if($form_name != $row['data']['pokemonSettings']['pokemonId']) {
         $form_name = strtolower($form_name);
       }else {
-        $form_name = "normal";
+        $form_name = 'normal';
       }
       [$min_cp, $max_cp, $min_weather_cp, $max_weather_cp] = calculate_cps($row['data']['pokemonSettings']['stats']);
 
-      $type = strtolower(str_replace('POKEMON_TYPE_','', $row['data']['pokemonSettings']['type']));
+      $type = strtolower(str_replace('POKEMON_TYPE_', '', $row['data']['pokemonSettings']['type']));
       $type2 = '';
 
       $weather = $weatherboost_table[$row['data']['pokemonSettings']['type']];
       if(isset($row['data']['pokemonSettings']['type2'])) {
-        $type2 = strtolower(str_replace('POKEMON_TYPE_','', $row['data']['pokemonSettings']['type2']));
+        $type2 = strtolower(str_replace('POKEMON_TYPE_', '', $row['data']['pokemonSettings']['type2']));
 
         # Add type2 weather boost only if there is a second type and it's not the same weather as the first type!
         if($weatherboost_table[$row['data']['pokemonSettings']['type2']] != $weatherboost_table[$row['data']['pokemonSettings']['type']]) {
@@ -258,14 +258,14 @@ function parse_master_into_pokemon_table($form_ids, $game_master_url) {
       foreach($row['data']['pokemonSettings']['tempEvoOverrides'] as $temp_evolution) {
         if(!isset($temp_evolution['tempEvoId'])) continue;
 
-        $mega_evolution_name = str_replace('TEMP_EVOLUTION_','',$temp_evolution['tempEvoId']);
+        $mega_evolution_name = str_replace('TEMP_EVOLUTION_', '', $temp_evolution['tempEvoId']);
         // We only override the types for megas
         // weather info is used to display boosts for caught mons, which often are different from mega's typing
-        $typeOverride = strtolower(str_replace('POKEMON_TYPE_','', $temp_evolution['typeOverride1']));
+        $typeOverride = strtolower(str_replace('POKEMON_TYPE_', '', $temp_evolution['typeOverride1']));
         $typeOverride2 = '';
 
         if(isset($temp_evolution['typeOverride2'])) {
-          $typeOverride2 = strtolower(str_replace('POKEMON_TYPE_','', $temp_evolution['typeOverride2']));
+          $typeOverride2 = strtolower(str_replace('POKEMON_TYPE_', '', $temp_evolution['typeOverride2']));
         }
         $pokemon_array[$pokemon_id][$mega_evolution_name] = [
           'pokemon_name'    => $pokemon_array[$pokemon_id][$form_name]['pokemon_name'],

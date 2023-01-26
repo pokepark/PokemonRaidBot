@@ -3,10 +3,11 @@
 define('PORTAL_IMAGES_PATH', IMAGES_PATH . '/gyms');
 
 // raid levels constant
-define('RAID_LEVEL_ALL', 'X98765431');
+define('RAID_LEVEL_ALL', ['X', 10, 9, 8, 7, 6, 5, 4, 3, 1]);
 
 // Raid eggs.
 $eggs = array(
+  '99910',  // Level 10 / Primal raid
   '9999',  // Level 9 / Elite raid
   '9998',  // Level 8 / Ultra beast
   '9997',  // Level 7 / Legendary Mega
@@ -22,7 +23,7 @@ $eggs = array(
 define('RAID_LEVEL_LOCAL_ONLY', [4, 9]);
 
 // Levels available for import at PokeBattler
-$pokebattler_levels = array('9', '8', '7', '6', '5', '4', '3', '1');
+$pokebattler_levels = array('10', '9', '8', '7', '6', '5', '4', '3', '1');
 
 // Map our raid levels to tier names PokeBattler uses
 $pokebattler_level_map = [
@@ -34,6 +35,7 @@ $pokebattler_level_map = [
   '7' => 'MEGA_5',
   '8' => 'ULTRA_BEAST',
   '9' => 'ELITE',
+  '10' => 'PRIMAL',
 ];
 
 $pokebattler_pokemon_map = [
@@ -42,8 +44,11 @@ $pokebattler_pokemon_map = [
   'ZAMAZENTA' => 'ZAMAZENTA_HERO_FORM',
 ];
 
+// Storing Primal Kyogre and Groudon for now. These are not needed if Pokebattler starts using own raid tier for primals
+define('PRIMAL_MONS', [382, 383]);
+
 // Limit the tiers of upcoming raid bosses imported from PokeBattler to legendary and mega
-$pokebattler_import_future_tiers = [5, 6, 7, 8, 9];
+$pokebattler_import_future_tiers = [5, 6, 7, 8, 9, 10];
 
 // Default language.
 defined('DEFAULT_LANGUAGE') or define('DEFAULT_LANGUAGE', 'EN');

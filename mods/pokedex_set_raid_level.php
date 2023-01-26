@@ -25,7 +25,7 @@ $pokemon = get_pokemon_info($dex_id, $dex_form);
 
 // Set raid level or show raid levels?
 if($newLevel === false) {
-  $raid_levels = str_split('0' . RAID_LEVEL_ALL);
+  $raid_levels = array_merge([0], RAID_LEVEL_ALL);
 
   // Init empty keys array.
   $keys = [];

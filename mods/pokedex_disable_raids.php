@@ -16,10 +16,10 @@ $id = $data['rl'] ?? 0;
 $arg = $data['a'] ?? 0;
 
 // Specify raid levels.
-$levels = str_split(RAID_LEVEL_ALL);
+$levels = RAID_LEVEL_ALL;
 
 // All raid levels?
-if($id == RAID_LEVEL_ALL) {
+if($id == 'all') {
   $clear = "'" . implode("','", $levels) . "'";
 } else {
   $clear = "'" . $id . "'";
@@ -34,7 +34,7 @@ if($arg == 0) {
   $keys = [];
 
   // All raid level keys.
-  $keys[][] = button(getTranslation('pokedex_all_raid_level'), ['pokedex_disable_raids', 'rl' => RAID_LEVEL_ALL, 'a' => 1]);
+  $keys[][] = button(getTranslation('pokedex_all_raid_level'), ['pokedex_disable_raids', 'rl' => 'all', 'a' => 1]);
 
   // Add key for each raid level
   foreach($levels as $l) {
@@ -103,15 +103,15 @@ if($arg == 0) {
   $msg = '<b>' . getTranslation('disabled_raid_level') . ':</b>' . CR;
 
   // All levels
-  if($id == RAID_LEVEL_ALL) {
+  if($id == 'all') {
     foreach($levels as $lv) {
       $msg .= getTranslation($lv . 'stars') . CR;
     }
 
-   // Specific level
-   } else {
+  // Specific level
+  } else {
     $msg .= getTranslation($id . 'stars');
-   }
+  }
 
    // Empty keys.
    $keys = [];

@@ -102,7 +102,7 @@ CREATE TABLE `raid_bosses` (
   `pokemon_form_id` int(4) DEFAULT NULL,
   `date_start` datetime NOT NULL DEFAULT '1970-01-01 00:00:01',
   `date_end` datetime NOT NULL DEFAULT '2038-01-19 03:14:07',
-  `raid_level` enum('1','2','3','4','5','6','7','8','9','X') DEFAULT NULL,
+  `raid_level` enum('1','2','3','4','5','6','7','8','9','10','X') DEFAULT NULL,
   `scheduled` TINYINT(1) NULL DEFAULT 0,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -116,7 +116,7 @@ CREATE TABLE `raids` (
   `end_time` datetime DEFAULT NULL,
   `gym_team` enum('mystic','valor','instinct') DEFAULT NULL,
   `gym_id` int(10) unsigned NOT NULL,
-  `level` enum('1','2','3','4','5','6','7','8','9','X') DEFAULT NULL,
+  `level` enum('1','2','3','4','5','6','7','8','9','10','X') DEFAULT NULL,
   `move1` varchar(255) DEFAULT NULL,
   `move2` varchar(255) DEFAULT NULL,
   `gender` varchar(255) DEFAULT NULL,

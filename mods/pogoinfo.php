@@ -25,7 +25,7 @@ if($id == 0) {
   $keys = [];
 
   // All raid level keys.
-  $keys[][] = button(getTranslation('pokedex_all_raid_level'), ['pogoinfo', 'rl' => RAID_LEVEL_ALL]);
+  $keys[][] = button(getTranslation('pokedex_all_raid_level'), ['pogoinfo', 'rl' => 'all']);
 
   // Add key for each raid level
   foreach($levels as $l) {
@@ -66,7 +66,7 @@ $raiddata = curl_get_contents($link);
 $raiddata = json_decode($raiddata,true);
 
 // All raid levels?
-if($id == RAID_LEVEL_ALL) {
+if($id == 'all') {
   $get_levels = $levels;
   $clear = "'6','5','3','1'";
 } else {
@@ -164,7 +164,7 @@ foreach($raiddata as $tier => $tier_pokemon) {
       if(count($exclusions) == 3) continue;
 
       $keyText = $local_pokemon;
-      if($id == RAID_LEVEL_ALL) {
+      if($id == 'all') {
         $keyText = '[' . ($tier) . ']' . SP . $local_pokemon;
       }
       $e = $exclusions;

@@ -818,6 +818,19 @@
     "FI": "Ex-Raidi",
     "ES": "Incursión EX"
   },
+  "10stars": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Primal raid",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Primal raid",
+    "ES": "TRANSLATE"
+  },
   "9stars": {
     "NL": "Elite raid",
     "DE": "TRANSLATE",
@@ -999,6 +1012,19 @@
     "PL": "Nieaktywny",
     "FI": "Pois käytöstä",
     "ES": "Desactivado"
+  },
+  "egg_10": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Primal raid egg",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Primal raid -muna",
+    "ES": "TRANSLATE"
   },
   "egg_9": {
     "NL": "Elite raid egg",
