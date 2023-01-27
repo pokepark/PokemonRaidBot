@@ -138,7 +138,7 @@ function alarm($raid_id_array, $user_id, $action, $info = '', $tg_json = [])
       $msg_text .= create_traincode_msg($trainercode);
 
     } else if($action == 'new_boss') {
-      $msg_text = '<b>' . getTranslation('alert_raid_boss') . '</b>' . CR;
+      $msg_text = '<b>' . getTranslation('alert_raid_boss', $recipient_language) . '</b>' . CR;
       $msg_text .= EMOJI_HERE . SP . $gymname . SP . '(' . $raidtimes . ')' . CR;
       $msg_text .= EMOJI_EGG . SP . '<b>' . get_local_pokemon_name($raid['pokemon'], $raid['pokemon_form']) . '</b>' . CR;
 
