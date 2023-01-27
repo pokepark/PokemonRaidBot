@@ -82,7 +82,7 @@ CREATE TABLE `photo_cache` (
 CREATE TABLE `pokemon` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `pokedex_id` int(10) unsigned NOT NULL,
-  `pokemon_name` varchar(12) DEFAULT NULL,
+  `pokemon_name` varchar(30) DEFAULT NULL,
   `pokemon_form_name` varchar(45) DEFAULT NULL,
   `pokemon_form_id` int(4) DEFAULT NULL,
   `min_cp` int(10) unsigned NOT NULL DEFAULT 0,
