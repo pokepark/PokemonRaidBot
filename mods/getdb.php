@@ -11,25 +11,35 @@ $game_master_url = 'https://raw.githubusercontent.com/PokeMiners/game_masters/ma
 
 $error = false;
 
+# We only have an update if the call came from TG
+if(!isset($update)){
+  $update = false;
+}
+
 // Read the form ids from protos
 if (!$protos = get_protos($proto_url)) {
   sendResults('Failed to get protos.', $update, true);
 }
 
 [$form_ids, $costume] = $protos;
+// Parse the game master data together with form ids into format we can use
+$pokemon_array = parse_master_into_pokemon_table($form_ids, $game_master_url);
+if(!$pokemon_array) {
+  sendResults('Failed to open game master file.', $update, true);
+}
 
-// Save costume data to json file
+// Save our core datasets to json files for further use
 if(!file_put_contents(ROOT_PATH.'/protos/costume.json', json_encode($costume, JSON_PRETTY_PRINT))) {
   sendResults('Failed to write costume data to protos/costume.json', $update, true);
 }
 if(!file_put_contents(ROOT_PATH.'/protos/form.json', json_encode($form_ids, JSON_PRETTY_PRINT))) {
   sendResults('Failed to write form data to protos/form.json', $update, true);
 }
-// Parse the game master data together with form ids into format we can use
-$pokemon_array = parse_master_into_pokemon_table($form_ids, $game_master_url);
-if(!$pokemon_array) {
-  sendResults('Failed to open game master file.', $update, true);
+if(!file_put_contents(ROOT_PATH.'/protos/pokemon.json', json_encode($pokemon_array, JSON_PRETTY_PRINT))) {
+  sendResults('Failed to write pokemon data to protos/pokemon.json', $update, true);
 }
+
+// Craft egg data
 $PRE = 'INSERT INTO `pokemon`' . PHP_EOL;
 $PRE .= '(pokedex_id, pokemon_name, pokemon_form_name, pokemon_form_id, min_cp, max_cp, min_weather_cp, max_weather_cp, type, type2, weather) VALUES';
 foreach($eggs as $egg) {
@@ -49,6 +59,8 @@ foreach($eggs as $egg) {
     'weather' => 0,
   ];
 }
+
+// Craft the rest of the pokemon data
 $i = 0;
 $dataSql = '';
 foreach($pokemon_array as $pokemon_id => $forms) {
@@ -97,9 +109,11 @@ function sendResults($msg, $update, $error = false) {
     info_log($msg);
     exit();
   }
-  $tg_json[] = answerCallbackQuery($update['callback_query']['id'], (!$error) ? 'OK!' : 'Error!', true);
-  $tg_json[] = editMessageText($update['callback_query']['message']['message_id'], $msg, [], $update['callback_query']['message']['chat']['id'], false, true);
-  curl_json_multi_request($tg_json);
+  if($update){
+    $tg_json[] = answerCallbackQuery($update['callback_query']['id'], (!$error) ? 'OK!' : 'Error!', true);
+    $tg_json[] = editMessageText($update['callback_query']['message']['message_id'], $msg, [], $update['callback_query']['message']['chat']['id'], false, true);
+    curl_json_multi_request($tg_json);
+  }
   exit;
 }
 function calculate_cps($base_stats) {
