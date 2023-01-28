@@ -22,6 +22,9 @@ if (!$protos = get_protos($proto_url)) {
 if(!file_put_contents(ROOT_PATH.'/protos/costume.json', json_encode($costume, JSON_PRETTY_PRINT))) {
   sendResults('Failed to write costume data to protos/costume.json', $update, true);
 }
+if(!file_put_contents(ROOT_PATH.'/protos/form.json', json_encode($form_ids, JSON_PRETTY_PRINT))) {
+  sendResults('Failed to write form data to protos/form.json', $update, true);
+}
 // Parse the game master data together with form ids into format we can use
 $pokemon_array = parse_master_into_pokemon_table($form_ids, $game_master_url);
 if(!$pokemon_array) {
