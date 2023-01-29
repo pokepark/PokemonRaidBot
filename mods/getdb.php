@@ -109,11 +109,9 @@ function sendResults($msg, $update, $error = false) {
     info_log($msg);
     exit();
   }
-  if($update){
-    $tg_json[] = answerCallbackQuery($update['callback_query']['id'], (!$error) ? 'OK!' : 'Error!', true);
-    $tg_json[] = editMessageText($update['callback_query']['message']['message_id'], $msg, [], $update['callback_query']['message']['chat']['id'], false, true);
-    curl_json_multi_request($tg_json);
-  }
+  $tg_json[] = answerCallbackQuery($update['callback_query']['id'], (!$error) ? 'OK!' : 'Error!', true);
+  $tg_json[] = editMessageText($update['callback_query']['message']['message_id'], $msg, [], $update['callback_query']['message']['chat']['id'], false, true);
+  curl_json_multi_request($tg_json);
   exit;
 }
 function calculate_cps($base_stats) {
