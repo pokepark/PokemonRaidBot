@@ -108,8 +108,7 @@ while ($raid = $rs->fetch()) {
   $pokedex_id = explode('-', $raid['pokemon'])[0];
 
   // Pokemon is an egg?
-  $eggs = $GLOBALS['eggs'];
-  if(in_array($pokedex_id, $eggs)) {
+  if(in_array($pokedex_id, EGGS)) {
     $keys_text = EMOJI_EGG . SP . $gym_name;
   } else {
     $keys_text = $gym_name;

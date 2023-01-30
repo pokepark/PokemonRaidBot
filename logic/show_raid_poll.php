@@ -116,7 +116,7 @@ function show_raid_poll($raid, $inline = false)
   // Remaining attendances are combined and treated as users that voted for any pokemon from now on
   $order_by_sql = 'pokemon,';
   $combine_attendances = false;
-  if(!in_array($raid['pokemon'], $GLOBALS['eggs'])) {
+  if(!in_array($raid['pokemon'], EGGS)) {
     $hide_users_sql.= 'AND (pokemon = \''.$raid['pokemon'].'-'.$raid['pokemon_form'].'\' OR pokemon = \'0\')';
     $order_by_sql = ''; // Remove sorting by pokemon since all attendances are combined
     $combine_attendances = true;

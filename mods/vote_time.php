@@ -90,7 +90,7 @@ if ($answer['user_count'] != NULL) {
 
   // Update attendance.
   $update_pokemon_sql = '';
-  if(!in_array($raid['pokemon'], $eggs)) {
+  if(!in_array($raid['pokemon'], EGGS)) {
     // If raid egg has hatched
     // -> clean up attendance table from votes for other pokemon
     // -> leave one entry remaining and set the pokemon to 0 there

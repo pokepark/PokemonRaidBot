@@ -80,7 +80,7 @@ foreach($raids as $raid) {
 
   // Pokemon is an egg?
   $keys_text = '';
-  if(in_array($resolved_boss['pokedex_id'], $GLOBALS['eggs'])) {
+  if(in_array($resolved_boss['pokedex_id'], EGGS)) {
     $keys_text = EMOJI_EGG . SP;
   }
   $keys_text .= ($raid['ex_gym'] === 1 ? EMOJI_STAR . SP : '') . $gym_name;

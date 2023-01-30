@@ -42,7 +42,7 @@ if(!file_put_contents(ROOT_PATH.'/protos/pokemon.json', json_encode($pokemon_arr
 // Craft egg data
 $PRE = 'INSERT INTO `pokemon`' . PHP_EOL;
 $PRE .= '(pokedex_id, pokemon_name, pokemon_form_name, pokemon_form_id, min_cp, max_cp, min_weather_cp, max_weather_cp, type, type2, weather) VALUES';
-foreach($eggs as $egg) {
+foreach(EGGS as $egg) {
   $pokemon_id = $egg;
   $pokemon_name = 'Level '. str_replace('999', '', $egg) .' Egg';
   $pokemon_array[$pokemon_id]['normal'] = [

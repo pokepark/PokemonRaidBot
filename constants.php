@@ -6,7 +6,7 @@ define('PORTAL_IMAGES_PATH', IMAGES_PATH . '/gyms');
 define('RAID_LEVEL_ALL', ['X', 10, 9, 8, 7, 6, 5, 4, 3, 1]);
 
 // Raid eggs.
-$eggs = array(
+define('EGGS', [
   '99910',  // Level 10 / Primal raid
   '9999',  // Level 9 / Elite raid
   '9998',  // Level 8 / Ultra beast
@@ -16,8 +16,8 @@ $eggs = array(
   '9994',  // Level 4
   '9993',  // Level 3
   '9992',  // Level 2
-  '9991'   // Level 1
-);
+  '9991',  // Level 1
+]);
 
 // Raid levels limited to local players only
 define('RAID_LEVEL_LOCAL_ONLY', [4, 9]);

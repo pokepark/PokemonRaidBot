@@ -161,7 +161,7 @@ function keys_vote($raid)
   // Init keys pokemon array.
   $buttons['pokemon'] = [];
   // Show pokemon keys only if the raid boss is an egg
-  if(in_array($raid_pokemon_id, $GLOBALS['eggs'])) {
+  if(in_array($raid_pokemon_id, EGGS)) {
     // Get pokemon from database
     $raid_spawn = dt2time($raid['spawn'], 'Y-m-d H:i'); // Convert utc spawntime to local time
     $raid_bosses = get_raid_bosses($raid_spawn, $raid_level);
@@ -169,7 +169,7 @@ function keys_vote($raid)
     if(count($raid_bosses) > 2) {
       // Add key for each raid level
       foreach($raid_bosses as $pokemon) {
-        if(in_array($pokemon['pokedex_id'], $GLOBALS['eggs'])) continue;
+        if(in_array($pokemon['pokedex_id'], EGGS)) continue;
         $buttons['pokemon'][] = button(
           get_local_pokemon_name($pokemon['pokedex_id'], $pokemon['pokemon_form_id'], true),
           ['vote_pokemon', 'r' => $raid['id'], 'p' => $pokemon['pokedex_id'] . '-' . $pokemon['pokemon_form_id']]

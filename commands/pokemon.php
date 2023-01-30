@@ -50,7 +50,7 @@ while ($row = $query->fetch()) {
 
   // Pokemon is an egg?
   $keys_text = $row['gym_name'];
-  if(in_array($pokedex_id, $GLOBALS['eggs'])) {
+  if(in_array($pokedex_id, EGGS)) {
     $keys_text = EMOJI_EGG . SP . $row['gym_name'];
   }
 

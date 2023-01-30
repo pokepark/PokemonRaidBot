@@ -63,7 +63,7 @@ function get_overview( $active_raids, $chat_title, $chat_username )
       $msg .= $pokemon . ' — <b>' . getPublicTranslation('still') . SP . $time_left . 'h</b>' . CR;
     }
     $exclude_pokemon_sql = '';
-    if(!in_array($row['pokemon'], $GLOBALS['eggs'])) {
+    if(!in_array($row['pokemon'], EGGS)) {
       $exclude_pokemon_sql = 'AND (pokemon = \''.$row['pokemon'].'-'.$row['pokemon_form'].'\' or pokemon = \'0\')';
     }
     // Count attendances

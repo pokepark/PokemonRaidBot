@@ -19,10 +19,9 @@ function get_local_pokemon_name($pokemon_id, $pokemon_form_id, $override_languag
 
   // Init pokemon name and define fake pokedex ids used for raid eggs
   $pokemon_name = '';
-  $eggs = $GLOBALS['eggs'];
 
   // Get eggs from normal translation.
-  $pokemon_name = (in_array($pokemon_id, $eggs)) ? $getTypeTranslation('egg_' . str_replace('999', '', $pokemon_id)) : $getTypeTranslation('pokemon_id_' . $pokemon_id);
+  $pokemon_name = (in_array($pokemon_id, EGGS)) ? $getTypeTranslation('egg_' . str_replace('999', '', $pokemon_id)) : $getTypeTranslation('pokemon_id_' . $pokemon_id);
 
   if ($pokemon_form_name != 'normal') {
     $pokemon_form_name = $getTypeTranslation('pokemon_form_' . $pokemon_form_name);

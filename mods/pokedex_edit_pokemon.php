@@ -29,7 +29,7 @@ $msg .= '<b>' . getTranslation('pokedex_select_action') . '</b>';
 $keys[][] = button(getTranslation('pokedex_raid_level'), ['pokedex_set_raid_level', 'p' => $poke_id_form]);
 
 // Raid-Egg? Hide specific options!
-if(!in_array($pokedex_id, $GLOBALS['eggs'])) {
+if(!in_array($pokedex_id, EGGS)) {
   $keys[][] = button(getTranslation('pokedex_min_cp'), ['pokedex_set_cp', 'p' => $poke_id_form, 'a' => 'add', 'l' => 20, 't' => 'min']);
   $keys[][] = button(getTranslation('pokedex_max_cp'), ['pokedex_set_cp', 'p' => $poke_id_form, 'a' => 'add', 'l' => 20, 't' => 'max']);
   $keys[][] = button(getTranslation('pokedex_min_weather_cp'), ['pokedex_set_cp', 'p' => $poke_id_form, 'a' => 'add', 'l' => 25, 't' => 'min']);
