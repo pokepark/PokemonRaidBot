@@ -2737,6 +2737,24 @@
         "RU": "Метеоритный Луч",
         "ES": "Rayo Meteórico"
     },
+    "pokemon_move_374": {
+        "PT-BR": "Raio de Fusão",
+        "EN": "Fusion Bolt",
+        "FR": "Éclair Croix",
+        "DE": "Kreuzdonner",
+        "IT": "Incrotuono",
+        "RU": "Термоядерный Разряд",
+        "ES": "Rayo Fusión"
+    },
+    "pokemon_move_375": {
+        "PT-BR": "Chama da Fusão",
+        "EN": "Fusion Flare",
+        "FR": "Flamme Croix",
+        "DE": "Kreuzflamme",
+        "IT": "Incrofiamma",
+        "RU": "Ядерная Вспышка",
+        "ES": "Llama Fusión"
+    },
     "pokemon_move_376": {
         "EN": "Poltergeist",
         "FR": "Esprit Frappeur",
@@ -2750,5 +2768,14 @@
         "IT": "Forza Equina",
         "RU": "Лошадиная Сила",
         "ES": "Fuerza Equina"
+    },
+    "pokemon_move_378": {
+        "PT-BR": "Glaciar",
+        "EN": "Glaciate",
+        "FR": "Ère Glaciaire",
+        "DE": "Eiszeit",
+        "IT": "Gelamondo",
+        "RU": "Замораживание",
+        "ES": "Mundo Gélido"
     }
 }
