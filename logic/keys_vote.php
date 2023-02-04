@@ -248,9 +248,7 @@ function get_raid_bosses($time, $raid_level)
 function generateTimeslotKeys($RAID_SLOTS, $raid) {
   global $config;
   // Get current time.
-  $now_helper = new DateTimeImmutable('now', new DateTimeZone('UTC'));
-  $now_helper = $now_helper->format('Y-m-d H:i') . ':00';
-  $dt_now = new DateTimeImmutable($now_helper, new DateTimeZone('UTC'));
+  $dt_now = DateTimeImmutable::createFromFormat('Y-m-d H:i', date('Y-m-d H:i'));
 
   // Get direct start slot
   $direct_slot = new DateTimeImmutable($raid['start_time'], new DateTimeZone('UTC'));
@@ -263,14 +261,7 @@ function generateTimeslotKeys($RAID_SLOTS, $raid) {
   $five_slot = $five_slot->add(new DateInterval('PT'.$diff.'M'));
 
   // Get first regular raidslot
-  $first_slot = new DateTimeImmutable($raid['start_time'], new DateTimeZone('UTC'));
-  $minute = $directStartMinutes % $RAID_SLOTS;
-
-  // Count minutes to next raidslot multiple minutes if necessary
-  if($minute != 0) {
-    $diff = $RAID_SLOTS - $minute;
-    $first_slot = $first_slot->add(new DateInterval('PT'.$diff.'M'));
-  }
+  $first_slot = $five_slot->add(new DateInterval('PT'.$RAID_SLOTS.'M'));
 
   // Write slots to log.
   debug_log($direct_slot, 'Direct start slot:');
