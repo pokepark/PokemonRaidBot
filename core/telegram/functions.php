@@ -688,6 +688,21 @@ function editMessageMedia($id_val, $text_val, $media_content, $content_type, $in
 }
 
 /**
+ * Approve chat join request
+ * @param int $chatId
+ * @param int $userId
+ * @param bool $multicurl
+ */
+function approveChatJoinRequest($chatId, $userId, $multicurl = false) {
+  $post_contents = [
+    'method' => 'approveChatJoinRequest',
+    'chat_id' => $chatId,
+    'user_id' => $userId,
+  ];
+  return curl_request($post_contents, $multicurl);
+}
+
+/**
  * Send request to telegram api - single or multi?.
  * @param $post_contents
  * @param $multicurl

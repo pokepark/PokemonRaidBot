@@ -6,8 +6,12 @@ debug_log('TUTORIAL()');
 //debug_log($update);
 //debug_log($data);
 
+$skipAccessCheck = $data['s'];
+
 // Check access.
-$botUser->accessCheck('tutorial');
+if($skipAccessCheck !== '1') {
+  $botUser->accessCheck('tutorial');
+}
 
 // Tutorial
 if(is_file(ROOT_PATH . '/config/tutorial.php')) {
@@ -15,15 +19,18 @@ if(is_file(ROOT_PATH . '/config/tutorial.php')) {
 }
 $action = $data['p'];
 $user_id = $update['callback_query']['from']['id'];
-$new_user = new_user($user_id);
+$new_user = new_user($user_id, true);
 $tutorial_count = count($tutorial);
 
 if($action == 'end') {
   answerCallbackQuery($update['callback_query']['id'], 'OK!');
   delete_message($update['callback_query']['message']['chat']['id'],$update['callback_query']['message']['message_id']);
   if($new_user) {
-    my_query('UPDATE users SET tutorial = ? WHERE user_id = ?', [$data['l'], $user_id]);
+    my_query('UPDATE users SET tutorial = ? WHERE user_id = ?', [$tutorial_grant_level, $user_id]);
     send_message($user_id, $tutorial_done, []);
+
+    if(isset($data['c']))
+      approveChatJoinRequest($data['c'], $user_id);
 
     // Post the user id to external address if specified
     if(isset($config->TUTORIAL_COMPLETED_CURL_ADDRESS) && $config->TUTORIAL_COMPLETED_CURL_ADDRESS != '') {
@@ -73,13 +80,17 @@ if($new_user && isset($tutorial[($action)]['msg_new'])) {
 }
 $photo =  $tutorial[$action]['photo'];
 $keys = [];
+$sendData = $data;
 if($action > 0) {
-  $keys[0][] = button(getTranslation('back') . ' ('.($action).'/'.($tutorial_count).')', ['tutorial', 'p' => $action-1]);
+  $sendData['p'] = $action-1;
+  $keys[0][] = button(getTranslation('back') . ' ('.($action).'/'.($tutorial_count).')', $sendData);
 }
 if($action < ($tutorial_count - 1)) {
-  $keys[0][] = button(getTranslation('next') . ' ('.($action+2).'/'.($tutorial_count).')', ['tutorial', 'p' => $action+1]);
+  $sendData['p'] = $action+1;
+  $keys[0][] = button(getTranslation('next') . ' ('.($action+2).'/'.($tutorial_count).')', $sendData);
 }else {
-  $keys[0][] = button(getTranslation('done'), ['tutorial', 'p' => 'end', 'l' => $tutorial_grant_level]);
+  $sendData['p'] = 'end';
+  $keys[0][] = button(getTranslation('done'), $sendData);
 }
 answerCallbackQuery($update['callback_query']['id'], 'OK!');
 editMessageMedia($update['callback_query']['message']['message_id'], $msg, $photo, false, $keys, $update['callback_query']['message']['chat']['id'], ['disable_web_page_preview' => 'true']);

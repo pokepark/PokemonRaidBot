@@ -38,6 +38,20 @@ if(isset($update['message'])) {
   $update['type'] = 'channel_post';
 }
 
+// Process chat join requests
+if(isset($update['chat_join_request']) && $config->TUTORIAL_MODE) {
+  if(in_array($update['chat_join_request']['chat']['id'], $config->JOIN_REQUEST_CHATS)) {
+    $userId = $update['chat_join_request']['user_chat_id'];
+    if(!new_user($userId, true)) {
+      approveChatJoinRequest($update['chat_join_request']['chat']['id'], $userId);
+      exit;
+    }
+    $skipAccessCheck = 1;
+    require_once(ROOT_PATH . '/commands/tutorial.php');
+  }
+  exit;
+}
+
 // Init empty data array.
 $data = [];
 

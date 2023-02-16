@@ -1,14 +1,20 @@
 <?php
 /**
  * Check if the user is new (has not completed tutorial)
- * @param $user_id
+ * @param int $user_id
+ * @param bool $ignoreForcePrivilege
  * @return bool
  */
-function new_user($user_id) {
+function new_user($user_id, $ignoreForcePrivilege = false) {
   global $config, $botUser;
-  if($config->TUTORIAL_MODE && in_array("force-tutorial", $botUser->userPrivileges['privileges']) && user_tutorial($user_id) < $config->TUTORIAL_LEVEL_REQUIREMENT)
-    return true;
-  return false;
+  if(
+    !$config->TUTORIAL_MODE ||
+    (!$ignoreForcePrivilege && !in_array('force-tutorial', $botUser->userPrivileges['privileges'])) ||
+    user_tutorial($user_id) >= $config->TUTORIAL_LEVEL_REQUIREMENT
+  ) {
+    return false;
+  }
+  return true;
 }
 
 /**

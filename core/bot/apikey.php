@@ -2,7 +2,7 @@
 
 /**
  * Verify a GET param apikey and return a provided update Array
- * @return Array
+ * @return array
  */
 function get_verified_update(){
   global $config, $argv;
