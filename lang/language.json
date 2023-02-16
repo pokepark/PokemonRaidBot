@@ -831,6 +831,19 @@
     "FI": "Primal raid",
     "ES": "TRANSLATE"
   },
+  "10stars_short": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Primal",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Primal",
+    "ES": "TRANSLATE"
+  },
   "9stars": {
     "NL": "Elite raid",
     "DE": "TRANSLATE",

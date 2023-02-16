@@ -104,10 +104,15 @@ foreach($pb_data['breakingNews'] as $news) {
   $starttime->setTimezone($ph);
   $endtime->setTimezone($ph);
 
-  if(in_array($news['tier'], $raidlevels) && $starttime->getTimestamp() < $now->getTimestamp() && $endtime->getTimestamp() > $now->getTimestamp()) {
+  $tierHolder = $news['tier'];
+  [$dex_id, $form_id] = resolve_boss_name_to_ids($news['pokemon']);
+  if(in_array($dex_id, PRIMAL_MONS) && $news['tier'] == 'RAID_LEVEL_MEGA_5') {
+    $raid_level_id = 10;
+    $tierHolder = 'RAID_LEVEL_PRIMAL';
+  }
+  if(in_array($tierHolder, $raidlevels) && $starttime->getTimestamp() < $now->getTimestamp() && $endtime->getTimestamp() > $now->getTimestamp()) {
     $levels_processed[$raid_level_id] = $news['tier'];
-    $dex_id_form = resolve_boss_name_to_ids($news['pokemon']);
-    $bosses[$raid_level_id][] = ['id' => $dex_id_form, 'shiny' => $news['shiny']];
+    $bosses[$raid_level_id][] = ['dex_id' => $dex_id, 'form_id' => $form_id, 'shiny' => $news['shiny']];
   }
 }
 // Process raid tier(s)
@@ -126,8 +131,8 @@ foreach($pb_data['tiers'] as $tier) {
       debug_log('Skipping raid boss ' . $raid['pokemon'] . ' since it has no id, it\'s likely in the future!');
       continue;
     }
-    $dex_id_form = resolve_boss_name_to_ids($raid['pokemon']);
-    $bosses[$raid_level_id][] = ['id' => $dex_id_form, 'shiny' => $raid['shiny']];
+    [$dex_id, $form_id] = resolve_boss_name_to_ids($raid['pokemon']);
+    $bosses[$raid_level_id][] = ['dex_id' => $dex_id, 'form_id' => $form_id, 'shiny' => $raid['shiny']];
   }
 }
 
@@ -136,7 +141,8 @@ foreach($get_levels as $raid_level_id) {
   if($raid_level_id > 5) $raid_level_text = getTranslation($raid_level_id . 'stars_short'); else $raid_level_text = $raid_level_id;
   $msg .= '<b>' . getTranslation('pokedex_raid_level') . SP . $raid_level_text . ':</b>' . CR;
   foreach($bosses[$raid_level_id] as $dex_id_form) {
-    [$dex_id, $dex_form] = $dex_id_form['id'];
+    $dex_id = $dex_id_form['dex_id'];
+    $dex_form = $dex_id_form['form_id'];
     $pokemon_arg = $dex_id . (($dex_form != 'normal') ? ('-' . $dex_form) : '-0');
     $local_pokemon = get_local_pokemon_name($dex_id, $dex_form);
     debug_log('Got this pokemon dex id: ' . $dex_id);
