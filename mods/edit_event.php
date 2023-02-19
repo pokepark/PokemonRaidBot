@@ -21,8 +21,10 @@ $backData = $data;
 $backData[0] = 'edit_raidlevel';
 
 // Add navigation keys.
-$keys[0][] = button(getTranslation('back'), $backData);
-$keys[0][] = button(getTranslation('abort'), 'exit');
+$keys[] = [
+  button(getTranslation('back'), $backData),
+  button(getTranslation('abort'), 'exit')
+];
 
 
 // Build callback message string.
