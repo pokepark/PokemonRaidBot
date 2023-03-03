@@ -16,15 +16,16 @@ $id = $data['r'];
 // Set the user id.
 $userid = $update['callback_query']['from']['id'];
 
-// Update only if time is not equal to RAID_DURATION
-if(isset($data['d']) && $data['d'] != $config->RAID_DURATION) {
-
-  // Build query.
+// Update raid end time
+if(isset($data['d'])) {
   my_query('
     UPDATE  raids
-    SET     end_time = DATE_ADD(start_time, INTERVAL ' . $data['d'] . ' MINUTE)
+    SET     end_time = DATE_ADD(start_time, INTERVAL :duration MINUTE)
       WHERE   id = :id
-    ', ['id' => $id]
+    ', [
+      'id' => $id,
+      'duration' => $data['d']
+    ]
   );
 }
 
