@@ -1,9 +1,13 @@
 <?php
+// Ex-raid event ID
+defined('EVENT_ID_EX') 		or define('EVENT_ID_EX', '999');
+defined('RAID_ID_EX') 		or define('RAID_ID_EX', '99');
+
 // Paths.
 define('PORTAL_IMAGES_PATH', IMAGES_PATH . '/gyms');
 
 // raid levels constant
-define('RAID_LEVEL_ALL', ['X', 10, 9, 8, 7, 6, 5, 4, 3, 1]);
+define('RAID_LEVEL_ALL', [RAID_ID_EX, 10, 9, 8, 7, 6, 5, 4, 3, 1]);
 
 // Raid eggs.
 define('EGGS', [
@@ -69,9 +73,6 @@ $languages = array(
 // Value used for denoting anytime attendance
 define('ANYTIME', '1970-01-01 00:00:00');
 define('ANYTIME_TS', preg_replace("/[^0-9]/", "", ANYTIME));
-
-// Ex-raid event ID
-defined('EVENT_ID_EX') 		or define('EVENT_ID_EX', '999');
 
 // Icons.
 defined('TEAM_B') 		or define('TEAM_B',        iconv('UCS-4LE', 'UTF-8', pack('V', 0x1F499)));

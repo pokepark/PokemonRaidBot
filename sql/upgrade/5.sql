@@ -9,8 +9,8 @@ ALTER TABLE `photo_cache` ADD COLUMN IF NOT EXISTS `start_time` DATETIME DEFAULT
 ALTER TABLE `cleanup` ADD COLUMN IF NOT EXISTS `media_unique_id` varchar(45) DEFAULT NULL AFTER `date_of_posting`;
 CREATE UNIQUE INDEX IF NOT EXISTS `unique_chat_msg` ON `cleanup` (chat_id, message_id);
 
-ALTER TABLE `raids` CHANGE COLUMN IF EXISTS `level` `level` enum('1','2','3','4','5','6','7','8','9','10','X') DEFAULT NULL;
-ALTER TABLE `raid_bosses` CHANGE COLUMN IF EXISTS `raid_level` `raid_level` enum('1','2','3','4','5','6','7','8','9','10','X') DEFAULT NULL;
+ALTER TABLE `raids` CHANGE COLUMN IF EXISTS `level` `level` TINYINT UNSIGNED DEFAULT NULL;
+ALTER TABLE `raid_bosses` CHANGE COLUMN IF EXISTS `raid_level` `raid_level` TINYINT UNSIGNED DEFAULT NULL;
 
 ALTER TABLE `events` ADD COLUMN IF NOT EXISTS `pokemon_title` TINYINT(1) NULL DEFAULT 1 AFTER `hide_raid_picture`;
 

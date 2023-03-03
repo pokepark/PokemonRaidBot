@@ -30,16 +30,18 @@ $keys = raid_edit_raidlevel_keys($data, $admin_access, $event_id);
 $backData = $data;
 $backData[0] = 'edit_event';
 // Add navigation keys.
-$keys[0][] = button(getTranslation('back'), $backData);
-$keys[0][] = button(getTranslation('abort'), 'exit');
+$keys[] = [
+  button(getTranslation('back'), $backData),
+  button(getTranslation('abort'), 'exit')
+];
 
 // Get event info
 $q = my_query('SELECT name, description FROM events WHERE id = ? LIMIT 1', [$event_id]);
 $rs = $q->fetch();
 
 // Build message.
-if($event_id == 'X') {
-  $msg = '<b>' . getTranslation('Xstars') . '</b>' . CR;
+if($event_id == EVENT_ID_EX) {
+  $msg = '<b>' . getTranslation(RAID_ID_EX . 'stars') . '</b>' . CR;
 }else {
   $msg = '<b>' . $rs['name'] . '</b>' . CR . $rs['description'] . CR;
 }
