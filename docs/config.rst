@@ -378,7 +378,7 @@ Sharing raid polls can be restricted, so only specific chats/users can be allowe
 
 With a predefined list ``SHARE_CHATS`` you can specify the chats which should appear as buttons for sharing raid polls.
 
-You can define different chats for specific raid levels using ``SHARE_CHATS_LEVEL_`` plus the raid level too. Raid levels can be 'X', '5', '4', '3', '2' or '1'.
+You can define different chats for specific raid levels using ``SHARE_CHATS_LEVEL_`` plus the raid level too.
 
 For the ID of a chat either forward a message from the chat to a bot like @RawDataBot, @getidsbot or search the web for another method ;)
 

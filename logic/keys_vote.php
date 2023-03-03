@@ -215,7 +215,7 @@ function keys_vote($raid)
 /**
  * Get active raid bosses at a certain time.
  * @param string $time - string, datetime, local time
- * @param int|string $raid_level - ENUM('1', '2', '3', '4', '5', '6', 'X')
+ * @param int $raid_level
  * @return array
  */
 function get_raid_bosses($time, $raid_level)

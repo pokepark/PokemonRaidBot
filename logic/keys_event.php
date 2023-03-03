@@ -26,8 +26,8 @@ function keys_event($callbackData, $action, $admin_access = [false,false]) {
     }
   }
   if($admin_access[0] === true) {
-    $callbackData['e'] = 'X';
-    $keys[] = button(getTranslation('Xstars'), $callbackData);
+    $callbackData['e'] = EVENT_ID_EX;
+    $keys[] = button(getTranslation(RAID_ID_EX . 'stars'), $callbackData);
   }
   // Get the inline key array.
   $keys = inline_key_array($keys, 1);

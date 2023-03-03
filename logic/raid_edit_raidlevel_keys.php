@@ -12,10 +12,10 @@ function raid_edit_raidlevel_keys($callbackData, $admin_access = [false,false], 
 
   if($event === false) {
     // Set event ID to null if no event was selected
-    $query_event = 'AND raid_bosses.raid_level != \'X\'';
+    $query_event = 'AND raid_bosses.raid_level != ' . RAID_ID_EX;
   }else {
     if($admin_access[0] === true) $query_event = '';
-    else $query_event = 'AND raid_bosses.raid_level != \'X\'';
+    else $query_event = 'AND raid_bosses.raid_level != ' . RAID_ID_EX;
   }
   $query_counts = '
     SELECT  raid_level, COUNT(*) AS raid_level_count
@@ -26,7 +26,7 @@ function raid_edit_raidlevel_keys($callbackData, $admin_access = [false,false], 
       )
       '.$query_event.'
     GROUP BY  raid_bosses.raid_level
-    ORDER BY  FIELD(raid_bosses.raid_level, \'9\', \'8\', \'7\', \'6\', \'5\', \'4\', \'3\', \'2\', \'1\', \'X\')
+    ORDER BY  (CASE WHEN raid_level = ' . RAID_ID_EX . ' THEN 0 ELSE 1 END) DESC, raid_level DESC
   ';
   // Get all raid levels from database
   $rs_counts = my_query($query_counts);
