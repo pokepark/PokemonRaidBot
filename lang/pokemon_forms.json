@@ -26,7 +26,7 @@
     "ES": "Galar"
   },
   "pokemon_form_hisuian": {
-    "NL": "TRANSLATE",
+    "NL": "Hisuian",
     "DE": "TRANSLATE",
     "EN": "Hisuian",
     "IT": "TRANSLATE",
@@ -39,7 +39,7 @@
     "ES": "TRANSLATE"
   },
   "pokemon_form_primal": {
-    "NL": "TRANSLATE",
+    "NL": "Primal",
     "DE": "TRANSLATE",
     "EN": "Primal",
     "IT": "TRANSLATE",
@@ -52,7 +52,7 @@
     "ES": "TRANSLATE"
   },
   "pokemon_form_mega": {
-    "NL": "TRANSLATE",
+    "NL": "Mega",
     "DE": "TRANSLATE",
     "EN": "Mega",
     "IT": "TRANSLATE",
@@ -65,7 +65,7 @@
     "ES": "Mega"
   },
   "pokemon_form_mega_x": {
-    "NL": "TRANSLATE",
+    "NL": "Mega X",
     "DE": "TRANSLATE",
     "EN": "Mega X",
     "IT": "TRANSLATE",
@@ -78,7 +78,7 @@
     "ES": "Mega X"
   },
   "pokemon_form_mega_y": {
-    "NL": "TRANSLATE",
+    "NL": "Mega Y",
     "DE": "TRANSLATE",
     "EN": "Mega Y",
     "IT": "TRANSLATE",
@@ -198,7 +198,7 @@
     "ES": "Soleada"
   },
   "pokemon_form_rainy": {
-    "NL": "TRANSLATE",
+    "NL": "Rainy",
     "DE": "TRANSLATE",
     "EN": "Rainy",
     "IT": "TRANSLATE",
@@ -210,7 +210,7 @@
     "ES": "TRANSLATE"
   },
   "pokemon_form_snowy": {
-    "NL": "TRANSLATE",
+    "NL": "Snowy",
     "DE": "TRANSLATE",
     "EN": "Snowy",
     "IT": "TRANSLATE",
@@ -426,7 +426,7 @@
     "ES": "Volador"
   },
   "pokemon_form_fighting": {
-    "NL": "TRANSLATE",
+    "NL": "Fighting",
     "DE": "TRANSLATE",
     "EN": "Fighting",
     "IT": "TRANSLATE",
@@ -606,7 +606,7 @@
     "ES": "Brío"
   },
   "pokemon_form_burn": {
-    "NL": "TRANSLATE",
+    "NL": "Burn",
     "DE": "TRANSLATE",
     "EN": "Burn",
     "IT": "TRANSLATE",
@@ -618,7 +618,7 @@
     "ES": "TRANSLATE"
   },
   "pokemon_form_chill": {
-    "NL": "TRANSLATE",
+    "NL": "Chill",
     "DE": "TRANSLATE",
     "EN": "Chill",
     "IT": "TRANSLATE",
@@ -630,7 +630,7 @@
     "ES": "TRANSLATE"
   },
   "pokemon_form_douse": {
-    "NL": "TRANSLATE",
+    "NL": "Douse",
     "DE": "TRANSLATE",
     "EN": "Douse",
     "IT": "TRANSLATE",
@@ -642,7 +642,7 @@
     "ES": "TRANSLATE"
   },
   "pokemon_form_shock": {
-    "NL": "TRANSLATE",
+    "NL": "Shock",
     "DE": "TRANSLATE",
     "EN": "Shock",
     "IT": "TRANSLATE",
@@ -654,7 +654,7 @@
     "ES": "TRANSLATE"
   },
   "pokemon_form_black": {
-    "NL": "TRANSLATE",
+    "NL": "Black",
     "DE": "TRANSLATE",
     "EN": "Black",
     "IT": "TRANSLATE",
@@ -666,7 +666,7 @@
     "ES": "TRANSLATE"
   },
   "pokemon_form_white": {
-    "NL": "TRANSLATE",
+    "NL": "White",
     "DE": "TRANSLATE",
     "EN": "White",
     "IT": "TRANSLATE",
@@ -678,7 +678,7 @@
     "ES": "TRANSLATE"
   },
   "pokemon_form_hero": {
-    "NL": "TRANSLATE",
+    "NL": "Hero",
     "DE": "TRANSLATE",
     "EN": "Hero",
     "IT": "TRANSLATE",
@@ -690,7 +690,7 @@
     "ES": "TRANSLATE"
   },
   "pokemon_form_crowned_sword": {
-    "NL": "TRANSLATE",
+    "NL": "Crowned Sword",
     "DE": "TRANSLATE",
     "EN": "Crowned Sword",
     "IT": "TRANSLATE",
@@ -702,7 +702,7 @@
     "ES": "TRANSLATE"
   },
   "pokemon_form_crowned_shield": {
-    "NL": "TRANSLATE",
+    "NL": "Crowned Shield",
     "DE": "TRANSLATE",
     "EN": "Crowned Shield",
     "IT": "TRANSLATE",
@@ -714,7 +714,7 @@
     "ES": "TRANSLATE"
   },
   "pokemon_form_zen": {
-    "NL": "TRANSLATE",
+    "NL": "Zen",
     "DE": "TRANSLATE",
     "EN": "Zen",
     "IT": "TRANSLATE",
@@ -726,7 +726,7 @@
     "ES": "TRANSLATE"
   },
   "pokemon_form_galarian_zen": {
-    "NL": "TRANSLATE",
+    "NL": "Galarian Zen",
     "DE": "TRANSLATE",
     "EN": "Galarian Zen",
     "IT": "TRANSLATE",
@@ -738,7 +738,7 @@
     "ES": "TRANSLATE"
   },
   "pokemon_form_male": {
-    "NL": "TRANSLATE",
+    "NL": "Man",
     "DE": "TRANSLATE",
     "EN": "Male",
     "IT": "TRANSLATE",
@@ -750,7 +750,7 @@
     "ES": "TRANSLATE"
   },
   "pokemon_form_female": {
-    "NL": "TRANSLATE",
+    "NL": "Vrouw",
     "DE": "TRANSLATE",
     "EN": "Female",
     "IT": "TRANSLATE",
@@ -762,7 +762,7 @@
     "ES": "TRANSLATE"
   },
   "pokemon_form_blue_striped": {
-    "NL": "TRANSLATE",
+    "NL": "Blue Striped",
     "DE": "TRANSLATE",
     "EN": "Blue Striped",
     "IT": "TRANSLATE",
@@ -774,7 +774,7 @@
     "ES": "TRANSLATE"
   },
   "pokemon_form_red_striped": {
-    "NL": "TRANSLATE",
+    "NL": "Red Striped",
     "DE": "TRANSLATE",
     "EN": "Red Striped",
     "IT": "TRANSLATE",
@@ -786,7 +786,7 @@
     "ES": "TRANSLATE"
   },
   "pokemon_form_autumn": {
-    "NL": "TRANSLATE",
+    "NL": "Herfst",
     "DE": "TRANSLATE",
     "EN": "Autumn",
     "IT": "TRANSLATE",
@@ -798,7 +798,7 @@
     "ES": "TRANSLATE"
   },
   "pokemon_form_spring": {
-    "NL": "TRANSLATE",
+    "NL": "Lente",
     "DE": "TRANSLATE",
     "EN": "Spring",
     "IT": "TRANSLATE",
@@ -810,7 +810,7 @@
     "ES": "TRANSLATE"
   },
   "pokemon_form_summer": {
-    "NL": "TRANSLATE",
+    "NL": "Zomer",
     "DE": "TRANSLATE",
     "EN": "Summer",
     "IT": "TRANSLATE",
@@ -822,7 +822,7 @@
     "ES": "TRANSLATE"
   },
   "pokemon_form_winter": {
-    "NL": "TRANSLATE",
+    "NL": "Winter",
     "DE": "TRANSLATE",
     "EN": "Winter",
     "IT": "TRANSLATE",
