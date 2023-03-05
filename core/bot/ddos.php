@@ -21,7 +21,8 @@ function verifyUpdate($update, $data) {
     debug_log('Skipping DDOS check...','!');
     return;
   }
-  $id_file = DDOS_PATH . '/update_id';
+  // Prepend update_id with bot name if it's set
+  $id_file = DDOS_PATH . '/' . (isset($_GET['bot_name']) && !empty($_GET['bot_name']) ? $_GET['bot_name'] . '-' : ''). 'update_id';
 
   // Update the update_id and reject old updates
   // Get update_ids from Telegram and locally stored in the file
