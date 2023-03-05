@@ -40,11 +40,11 @@ function get_rev()
  * Bot upgrade check
  * @param $current
  * @param $latest
- * @return bool: if a manual upgrade is needed
+ * @return
  */
 function bot_upgrade_check($current, $latest)
 {
-  global $config, $metrics, $namespace;
+  global $config, $metrics, $namespace, $dbh;
   $orig = $current; // we may have to do multiple upgrades
   if ($metrics){
     // This is the one place where we have full knowledge of version information & upgrades
