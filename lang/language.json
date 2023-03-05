@@ -455,7 +455,7 @@
     "ES": "Añadir"
   },
   "replace": {
-    "NL": "TRANSLATE",
+    "NL": "Vervang",
     "DE": "TRANSLATE",
     "EN": "Replace",
     "IT": "TRANSLATE",
@@ -637,7 +637,7 @@
     "ES": "Valor de la opción de configuración"
   },
   "config_option": {
-    "NL": "TRANSLATE",
+    "NL": "Configuratie optie",
     "DE": "TRANSLATE",
     "EN": "Configuration option",
     "IT": "TRANSLATE",
@@ -819,7 +819,7 @@
     "ES": "Incursión EX"
   },
   "10stars": {
-    "NL": "TRANSLATE",
+    "NL": "Primal raid",
     "DE": "TRANSLATE",
     "EN": "Primal raid",
     "IT": "TRANSLATE",
@@ -832,7 +832,7 @@
     "ES": "TRANSLATE"
   },
   "10stars_short": {
-    "NL": "TRANSLATE",
+    "NL": "Primal",
     "DE": "TRANSLATE",
     "EN": "Primal",
     "IT": "TRANSLATE",
@@ -1027,7 +1027,7 @@
     "ES": "Desactivado"
   },
   "egg_10": {
-    "NL": "TRANSLATE",
+    "NL": "Primal raid ei",
     "DE": "TRANSLATE",
     "EN": "Primal raid egg",
     "IT": "TRANSLATE",
@@ -1950,7 +1950,7 @@
     "ES": "Por favor, selecciona la zona del gimnasio:"
   },
   "default_gymarea": {
-    "NL": "TRANSLATE",
+    "NL": "Standaard gym gebied",
     "DE": "TRANSLATE",
     "EN": "Default gymarea",
     "IT": "TRANSLATE",
@@ -1963,7 +1963,7 @@
     "ES": "TRANSLATE"
   },
   "gymareas": {
-    "NL": "TRANSLATE",
+    "NL": "Gyn gebied",
     "DE": "TRANSLATE",
     "EN": "Gymareas",
     "IT": "TRANSLATE",
@@ -2002,7 +2002,7 @@
     "ES": "¡La incursión ya existe!"
   },
   "inspect_raid_or_create_event": {
-    "NL": "TRANSLATE",
+    "NL": "Inspect de bestaande raid of create een new event raid",
     "DE": "TRANSLATE",
     "EN": "Inspect the existing raid or create a new event raid",
     "IT": "TRANSLATE",
@@ -2015,7 +2015,7 @@
     "ES": "TRANSLATE"
   },
   "saved_raid": {
-    "NL": "TRANSLATE",
+    "NL": "Laat opgeslagen raid zien",
     "DE": "TRANSLATE",
     "EN": "Show saved raid",
     "IT": "TRANSLATE",
@@ -2028,7 +2028,7 @@
     "ES": "TRANSLATE"
   },
   "create_event_raid": {
-    "NL": "TRANSLATE",
+    "NL": "Maak een event raid",
     "DE": "TRANSLATE",
     "EN": "Create event raid",
     "IT": "TRANSLATE",
@@ -2990,7 +2990,7 @@
     "ES": "TRANSLATE"
   },
   "gym_stored_address": {
-    "NL": "TRANSLATE",
+    "NL": "Opgeslagen adres",
     "DE": "TRANSLATE",
     "EN": "Stored address",
     "IT": "TRANSLATE",
@@ -3016,7 +3016,7 @@
     "ES": "TRANSLATE"
   },
   "gym_address_lookup_result": {
-    "NL": "TRANSLATE",
+    "NL": "Opgezochte adres",
     "DE": "TRANSLATE",
     "EN": "Address lookup result",
     "IT": "TRANSLATE",
@@ -3029,7 +3029,7 @@
     "ES": "TRANSLATE"
   },
   "gym_save_lookup_result": {
-    "NL": "TRANSLATE",
+    "NL": "Sla opgezochte resultaat op",
     "DE": "TRANSLATE",
     "EN": "Save lookup result",
     "IT": "TRANSLATE",
@@ -4004,7 +4004,7 @@
     "ES": "Por ejemplo: <code>/gymname Waterfall in the park</code>"
   },
   "gym_id_name_missing": {
-    "NL": "TRANSLATE",
+    "NL": "Error! Gym naam mist!",
     "DE": "TRANSLATE",
     "EN": "Error! Gym name is missing!",
     "IT": "TRANSLATE",
@@ -4654,7 +4654,7 @@
     "ES": "Agrega más información para este anuncio específico sobre el evento. (por ejemplo: ruta)"
   },
   "events_manage": {
-    "NL": "TRANSLATE",
+    "NL": "Event manager",
     "DE": "TRANSLATE",
     "EN": "Manage events",
     "IT": "TRANSLATE",
@@ -4667,7 +4667,7 @@
     "ES": "TRANSLATE"
   },
   "events_create": {
-    "NL": "TRANSLATE",
+    "NL": "Maak een nieuw event",
     "DE": "TRANSLATE",
     "EN": "Create a new event",
     "IT": "TRANSLATE",
@@ -4680,7 +4680,7 @@
     "ES": "TRANSLATE"
   },
   "events_created": {
-    "NL": "TRANSLATE",
+    "NL": "Event succesvol aangemaakt!",
     "DE": "TRANSLATE",
     "EN": "Event created succesfully!",
     "IT": "TRANSLATE",
@@ -4693,7 +4693,7 @@
     "ES": "TRANSLATE"
   },
   "events_give_name": {
-    "NL": "TRANSLATE",
+    "NL": "Geef het event een naam",
     "DE": "TRANSLATE",
     "EN": "Give the event a name",
     "IT": "TRANSLATE",
@@ -4706,7 +4706,7 @@
     "ES": "TRANSLATE"
   },
   "events_give_description": {
-    "NL": "TRANSLATE",
+    "NL": "Geef de omschrijving van het event",
     "DE": "TRANSLATE",
     "EN": "Give the event a description",
     "IT": "TRANSLATE",
@@ -4719,7 +4719,7 @@
     "ES": "TRANSLATE"
   },
   "events_no_description": {
-    "NL": "TRANSLATE",
+    "NL": "Geen omschrijving",
     "DE": "TRANSLATE",
     "EN": "No description",
     "IT": "TRANSLATE",
@@ -4732,7 +4732,7 @@
     "ES": "TRANSLATE"
   },
   "events_edit_name": {
-    "NL": "TRANSLATE",
+    "NL": "Wijzig event naam",
     "DE": "TRANSLATE",
     "EN": "Edit event name",
     "IT": "TRANSLATE",
@@ -4745,7 +4745,7 @@
     "ES": "TRANSLATE"
   },
   "events_edit_description": {
-    "NL": "TRANSLATE",
+    "NL": "Wijzig de event omschrijving",
     "DE": "TRANSLATE",
     "EN": "Edit event description",
     "IT": "TRANSLATE",
@@ -4758,7 +4758,7 @@
     "ES": "TRANSLATE"
   },
   "events_edit_raid_poll": {
-    "NL": "TRANSLATE",
+    "NL": "Wijzig event raid poll",
     "DE": "TRANSLATE",
     "EN": "Edit event raid poll",
     "IT": "TRANSLATE",
@@ -4771,7 +4771,7 @@
     "ES": "TRANSLATE"
   },
   "events_delete": {
-    "NL": "TRANSLATE",
+    "NL": "Verwijder event",
     "DE": "TRANSLATE",
     "EN": "Delete event",
     "IT": "TRANSLATE",
@@ -4784,7 +4784,7 @@
     "ES": "TRANSLATE"
   },
   "events_delete_confirmation": {
-    "NL": "TRANSLATE",
+    "NL": "Wil je dit event echt verwijderen?",
     "DE": "TRANSLATE",
     "EN": "Do you really want to delete this event?",
     "IT": "TRANSLATE",
