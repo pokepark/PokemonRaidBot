@@ -24,6 +24,7 @@ if($levels != 'scheduled') {
   debug_log('Processing received ccev pogoinfo raid bosses for each raid level');
   $sql_values = '';
   foreach($get_levels as $level) {
+    if(!isset($data[$level])) continue;
     // Process requested levels
     foreach($data[$level] as $raid_id_form) {
       if(!isset($raid_id_form['id'])) continue;

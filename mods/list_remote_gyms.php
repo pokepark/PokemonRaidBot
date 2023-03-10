@@ -9,6 +9,7 @@ debug_log('list_remote gyms()');
 $user_id = $update['callback_query']['from']['id'];
 
 // Get the keys.
+$keys = [];
 $query_remote = my_query('SELECT raids.id, gyms.gym_name, raids.start_time, raids.end_time FROM gyms LEFT JOIN raids on raids.gym_id = gyms.id WHERE raids.end_time > (UTC_TIMESTAMP() - INTERVAL 10 MINUTE) AND temporary_gym = 1');
 while($gym = $query_remote->fetch()) {
   $keys[][] = button($gym['gym_name'], ['list_raid', 'r' => $gym['id']]);

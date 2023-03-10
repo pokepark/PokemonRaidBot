@@ -83,7 +83,7 @@ if($status == 'alarm') {
     // If the gym is a temporary remote raid gym and raid creator voted for done, send message asking for raid deletion
     if($answer['is_remote_gym'] == '1' && $answer['user_is_creator']) {
       $keys[0][0] = button(getTranslation('yes'), ['end_remote_raid', 'r' => $raidId]);
-      $keys[0][0] = button(getTranslation('no'), 'exit');
+      $keys[0][1] = button(getTranslation('no'), 'exit');
       if($status == 'raid_done') $msg = getTranslation("delete_remote_raid_done");
       else if($status == 'cancel') $msg = getTranslation("delete_remote_raid_cancel");
       $tg_json[] = send_message($update['callback_query']['from']['id'], $msg, $keys, false, true);
