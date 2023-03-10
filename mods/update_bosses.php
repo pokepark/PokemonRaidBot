@@ -53,7 +53,7 @@ if($levels != 'scheduled') {
   $sql = 'INSERT INTO raid_bosses (pokedex_id, pokemon_form_id, raid_level) VALUES ' . $sql_values . ';';
 }elseif($levels == 'scheduled') {
   require_once(LOGIC_PATH . '/read_upcoming_bosses.php');
-  $data = read_upcoming_bosses(true);
+  $data = read_upcoming_bosses(true, [5,6,7,8,10]);
   if(empty($data)) exit;
   $sql = 'DELETE FROM raid_bosses WHERE scheduled = 1;';
   $sql .= $data;

@@ -4,9 +4,10 @@ require_once(LOGIC_PATH . '/curl_get_contents.php');
 /**
  * Read upcoming bosses from Pokebattlers API and return the results as a HTML formatted text list
  * @param bool $return_sql Return results in sql insert query instead of text list
+ * @param array|bool $levelsToRead Array of raid levels to include in import. Otherwise use the levels set in constants.php
  * @return string
  */
-function read_upcoming_bosses($return_sql = false) {
+function read_upcoming_bosses($return_sql = false, $levelsToRead = false) {
   global $pokebattler_import_future_tiers, $pokebattler_level_map, $pokebattler_pokemon_map;
   $link = curl_get_contents('https://fight.pokebattler.com/raids');
   $pb = json_decode($link, true);
@@ -21,7 +22,10 @@ function read_upcoming_bosses($return_sql = false) {
 
     $rl = str_replace('RAID_LEVEL_','', $news['tier']);
     $raid_level_id = array_search($rl, $pokebattler_level_map);
-    if(!in_array($raid_level_id, $pokebattler_import_future_tiers)) continue; // Limit scheduling to tier 5 and higher only
+
+    $levelLimiter = !$levelsToRead ? $pokebattler_import_future_tiers : $levelsToRead;
+    if(!in_array($raid_level_id, $levelLimiter)) continue; // Limit scheduling to tier 5 and higher only
+
     $starttime = new DateTime("@".(substr($news['startDate'],0,10)), $standardTimezone);
     $endtime = new DateTime("@".(substr($news['endDate'],0,10)), $standardTimezone);
 
