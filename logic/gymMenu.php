@@ -8,6 +8,7 @@ $menuActions = [
 
 function resolveDefaultGymarea($userId) {
   global $config;
+  if(!$config->ENABLE_GYM_AREAS) return false;
   $q = my_query('SELECT gymarea FROM users WHERE user_id = ? LIMIT 1', [$userId]);
   $userGymarea = $q->fetch()['gymarea'];
   return $userGymarea !== NULL ? $userGymarea : $config->DEFAULT_GYM_AREA;
