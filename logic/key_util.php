@@ -116,7 +116,7 @@ function formatCallbackData($array)
   $return = $array[0] . '|';
   unset($array[0]);
   foreach($array as $key => $value) {
-    if(empty($value) or $value == false) continue;
+    if($value !== 0 && (empty($value) or $value === false)) continue;
     $return .= $key . '=' . $value . '|';
   }
   return rtrim($return, '|');
