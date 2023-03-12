@@ -271,18 +271,18 @@ function generateTimeslotKeys($RAID_SLOTS, $raid) {
   // Add button for when raid starts time
   if($config->RAID_DIRECT_START && $direct_slot >= $dt_now) {
     $keys_time[] = button(dt2time($direct_slot->format('Y-m-d H:i:s')), ['vote_time', 'r' => $raid['id'], 't' => $direct_slot->format('YmdHis')]);
+    $last_slot = $direct_slot;
   }
   // Add five minutes slot
   if($five_slot >= $dt_now && (empty($keys_time) || (!empty($keys_time) && $direct_slot != $five_slot))) {
     $keys_time[] = button(dt2time($five_slot->format('Y-m-d H:i:s')), ['vote_time', 'r' => $raid['id'], 't' => $five_slot->format('YmdHis')]);
+    $last_slot = $five_slot;
   }
   // Add the first normal slot
   if($first_slot >= $dt_now && $first_slot != $five_slot) {
     $keys_time[] = button(dt2time($first_slot->format('Y-m-d H:i:s')), ['vote_time', 'r' => $raid['id'], 't' => $first_slot->format('YmdHis')]);
+    $last_slot = $first_slot;
   }
-
-  // Init last slot time.
-  $last_slot = new DateTimeImmutable($raid['start_time'], new DateTimeZone('UTC'));
 
   // Get regular slots
   // Start with second slot as first slot is already added to keys.
@@ -312,7 +312,7 @@ function generateTimeslotKeys($RAID_SLOTS, $raid) {
   debug_log($last_extra_slot, 'Last extra slot:');
 
   // Last extra slot not conflicting with last slot
-  if($last_extra_slot > $last_slot && $last_extra_slot >= $dt_now) {
+  if($last_extra_slot > $last_slot && $last_extra_slot >= $dt_now && $last_extra_slot != $last_slot) {
     // Add last extra slot
     $keys_time[] = button(dt2time($last_extra_slot->format('Y-m-d H:i:s')), ['vote_time', 'r' => $raid['id'], 't' => $last_extra_slot->format('YmdHis')]);
   }
