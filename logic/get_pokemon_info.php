@@ -13,7 +13,7 @@ function get_pokemon_info($pokedex_id, $pokemon_form_id)
             FROM      raid_bosses
             WHERE     pokedex_id = :pokedex_id
             AND       pokemon_form_id = :pokemon_form_id
-            AND       scheduled = 0) as raid_level
+            AND       scheduled = 0 LIMIT 1) as raid_level
     FROM    pokemon
     WHERE   pokedex_id = :pokedex_id
     AND     pokemon_form_id = :pokemon_form_id
