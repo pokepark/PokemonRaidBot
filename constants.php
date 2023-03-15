@@ -7,10 +7,15 @@ defined('RAID_ID_EX') 		or define('RAID_ID_EX', '99');
 define('PORTAL_IMAGES_PATH', IMAGES_PATH . '/gyms');
 
 // raid levels constant
-define('RAID_LEVEL_ALL', [RAID_ID_EX, 10, 9, 8, 7, 6, 5, 4, 3, 1]);
+define('RAID_LEVEL_ALL', [RAID_ID_EX, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 1]);
 
 // Raid eggs.
 define('EGGS', [
+  '99915',  // Level 15 / Shadow 5
+  '99914',  // Level 14 / Shadow 4
+  '99913',  // Level 13 / Shadow 3
+  '99912',  // Level 12 / Shadow 2
+  '99911',  // Level 11 / Shadow 1
   '99910',  // Level 10 / Primal raid
   '9999',  // Level 9 / Elite raid
   '9998',  // Level 8 / Ultra beast
