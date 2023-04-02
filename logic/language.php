@@ -71,7 +71,6 @@ function getTranslation($text, $language = false)
 {
   global $botUser;
   if($language === false) $language = $botUser->userLanguage;
-  debug_log($text,'T:');
   $text = trim($text);
 
   $tfile = 'botLang';
@@ -87,9 +86,6 @@ function getTranslation($text, $language = false)
   // Pokemon moves?
   if(strpos($text, 'help_') === 0) $tfile = 'botHelp';
 
-  // Debug log translation file
-  debug_log($tfile,'T:');
-
   $translations = getTranslationFile($tfile);
 
   // Fallback to English when there is no language key or translation is not yet done.
@@ -103,6 +99,7 @@ function getTranslation($text, $language = false)
     $translation = false;
   else
     $translation = $text;
-  debug_log($translation,'T:');
+
+  debug_log("$text @ $tfile -> $translation", 'T:');
   return $translation;
 }

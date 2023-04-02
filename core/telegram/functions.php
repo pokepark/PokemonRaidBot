@@ -624,7 +624,10 @@ function send_photo($chat_id, $media_content, $content_type, $text = '', $inline
     $post_contents = array_merge_recursive($post_contents, $merge_args);
   }
 
-  debug_log(print_r($post_contents, true), '>');
+  // Don't log the binary portion
+  $log_contents = array_merge(array(), $post_contents);
+  $log_contents['photo'] = '[binary data]';
+  debug_log(print_r($log_contents, true), '>');
 
   // Send request to telegram api.
   return curl_request($post_contents, $multicurl, $identifier);
@@ -800,9 +803,23 @@ function curl_json_multi_request($json)
     // Add multi handle.
     curl_multi_add_handle($mh, $curly[$id]);
 
-    // Write to log.
-    if(is_array($data['post_contents'])) debug_log(print_r($data['post_contents'],true), '->');
-    else debug_log($data['post_contents'], '->');
+    // Don't log binary data as-is in nested fields.
+    // This only works for the first level down!
+    $content = $data['post_contents'];
+    $log_content = $content;
+    if(is_array($content)) {
+      $log_content = array_filter($content,function($v,$k){
+            if(isBinary($v)) {
+                return '[binary content]';
+            }
+        }, ARRAY_FILTER_USE_BOTH);
+    } else {
+      if(isBinary($content)) {
+        $log_content = '[binary content]';
+      }
+    }
+    if(is_array($log_content)) debug_log(print_r($log_content, true), '->');
+    else debug_log($log_content, '->');
   }
 
   // Get content and remove handles.
@@ -862,6 +879,18 @@ function curl_json_multi_request($json)
 }
 if($metrics) {
   $tg_response_code = $metrics->registerCounter($namespace, 'tg_response_count', 'Counters of response codes from Telegram', ['code', 'method', 'description']);
+}
+
+/**
+ * Determine whether the given value is a binary string by checking to see if it has detectable character encoding.
+ *
+ * @param string $value
+ *
+ * @return bool
+ */
+function isBinary($value): bool
+{
+    return false === mb_detect_encoding((string)$value, null, true);
 }
 
 /**

@@ -48,7 +48,6 @@ function bot_upgrade_check($current, $latest)
   $orig = $current; // we may have to do multiple upgrades
   if ($metrics){
     // This is the one place where we have full knowledge of version information & upgrades
-    debug_log('init upgrade metrics');
     $version_info = $metrics->registerGauge($namespace, 'version_info', 'Schema and revision information', ['current_schema', 'required_schema', 'rev', 'upgraded_timestamp', 'upgraded_from']);
   }
 
