@@ -803,16 +803,14 @@ function curl_json_multi_request($json)
     // Add multi handle.
     curl_multi_add_handle($mh, $curly[$id]);
 
-    // Don't log binary data as-is in nested fields.
-    // This only works for the first level down!
+    // Don't log the binary data of a photo
     $content = $data['post_contents'];
     $log_content = $content;
     if(is_array($content)) {
-      $log_content = array_filter($content,function($v,$k){
-            if(isBinary($v)) {
-                return '[binary content]';
-            }
-        }, ARRAY_FILTER_USE_BOTH);
+      if(is_object($content['photo']) or isBinary($content['photo']) ) {
+        $log_content = array_merge([],$content);
+        $log_content['photo'] = '[binary content]';
+      }
     } else {
       if(isBinary($content)) {
         $log_content = '[binary content]';
@@ -883,6 +881,7 @@ if($metrics) {
 
 /**
  * Determine whether the given value is a binary string by checking to see if it has detectable character encoding.
+ * Non-strings are treated as binary.
  *
  * @param string $value
  *
@@ -890,7 +889,10 @@ if($metrics) {
  */
 function isBinary($value): bool
 {
+  if(is_string($value)){
     return false === mb_detect_encoding((string)$value, null, true);
+  }
+  return true;
 }
 
 /**
