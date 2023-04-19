@@ -2777,5 +2777,23 @@
         "IT": "Gelamondo",
         "RU": "Замораживание",
         "ES": "Mundo Gélido"
+    },
+    "pokemon_move_379": {
+        "PT-BR": "Golpe Deslizante",
+        "EN": "Breaking Swipe",
+        "FR": "Abattage",
+        "DE": "Breitseite",
+        "IT": "Vastoimpatto",
+        "RU": "ломающий удар",
+        "ES": "Vasto Impacto"
+    },
+    "pokemon_move_380": {
+        "PT-BR": "Rajada Explosiva",
+        "EN": "Boomburst",
+        "FR": "Bang Sonique",
+        "DE": "Überschallknall",
+        "IT": "Ondaboato",
+        "RU": "Громкий Взрыв",
+        "ES": "Estruendo"
     }
 }
