@@ -37,7 +37,7 @@ if ($raid_id == 0 && $gym_id != 0) {
     debug_log('Event time :D ... Setting raid date to ' . $start_date_time);
     $query = my_query('SELECT raid_duration FROM events WHERE id = ? LIMIT 1', [$event_id]);
     $result = $query->fetch();
-    $duration = $result['raid_duration'] == 0 ? $result['raid_duration'] : $config->RAID_DURATION;
+    $duration = $result['raid_duration'] == 0 ? $config->RAID_DURATION : $result['raid_duration'];
     $egg_duration = $config->RAID_EGG_DURATION;
 
   // Elite raids
@@ -152,7 +152,6 @@ if($opt_arg == 'm') {
   $data = [];
   $data['r'] = $raid_id;
   $data[0] = 'edit_save';
-  $data['d'] = $raidduration;
 
   // Write to log.
   debug_log($data, '* NEW DATA= ');
