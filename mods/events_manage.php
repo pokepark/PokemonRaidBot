@@ -12,6 +12,7 @@ $botUser->accessCheck('event-manage');
 $columnSettings = [
   'vote_key_mode'     => ['allowed' => [0,1],   'default' => 0, 'nullable' => false],
   'pokemon_title'     => ['allowed' => [0,1,2], 'default' => 1, 'nullable' => false],
+  'hide_raid_picture' => ['allowed' => [0,1], 'default' => 0, 'nullable' => false],
   'time_slots'        => ['nullable' => true],
   'raid_duration'     => ['nullable' => false],
   'poll_template'     => ['nullable' => true],
