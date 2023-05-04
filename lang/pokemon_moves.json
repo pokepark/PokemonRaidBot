@@ -2795,5 +2795,14 @@
         "IT": "Ondaboato",
         "RU": "Громкий Взрыв",
         "ES": "Estruendo"
+    },
+    "pokemon_move_381": {
+        "PT-BR": "Pancada de Ferro Dupla",
+        "EN": "Double Iron Bash",
+        "FR": "Écrous d’Poing",
+        "DE": "Panzerfäuste",
+        "IT": "Pugni Corazzati",
+        "RU": "Двойной Стальной Таран",
+        "ES": "Ferropuño Doble"
     }
 }

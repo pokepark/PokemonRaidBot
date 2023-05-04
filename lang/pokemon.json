@@ -5098,5 +5098,17 @@
         "FR": "Amovénus",
         "DE": "Cupidos",
         "RU": "Энаморус"
+    },
+    "pokemon_id_999": {
+        "EN": "Gimmighoul",
+        "FR": "Mordudor",
+        "DE": "Gierspenst",
+        "RU": "Гиммигул"
+    },
+    "pokemon_id_1000": {
+        "EN": "Gholdengo",
+        "FR": "Gromago",
+        "DE": "Monetigo",
+        "RU": "Голденго"
     }
 }
