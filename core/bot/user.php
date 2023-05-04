@@ -17,7 +17,11 @@ class botUser
   public function initPrivileges() {
     $q = my_query('SELECT privileges FROM users WHERE user_id = ? LIMIT 1', [$this->userId]);
     $result = $q->fetch();
-    if($result['privileges'] === NULL) return;
+    if($result['privileges'] === NULL) {
+      // New users haven't probably used any command that would trigger privilegeCheck so we run it here
+      $this->privilegeCheck();
+      return;
+    }
     $privilegesArray = json_decode($result['privileges'], true);
     $this->userPrivileges['privileges'] = $privilegesArray['privileges'] ?? [];
     $this->userPrivileges['grantedBy'] = $privilegesArray['grantedBy'] ?? [];
