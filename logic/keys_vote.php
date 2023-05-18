@@ -308,7 +308,7 @@ function generateTimeslotKeys($RAID_SLOTS, $raid) {
   $last_extra_slot = $last_extra_slot->setTimestamp($s * floor($last_extra_slot->getTimestamp() / $s));
 
   // Log last and last extra slot.
-  debug_log($last_slot, 'Last slot:');
+  if(isset($last_slot)) debug_log($last_slot, 'Last slot:');
   debug_log($last_extra_slot, 'Last extra slot:');
 
   // Last extra slot not conflicting with last slot
