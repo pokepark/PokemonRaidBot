@@ -792,6 +792,19 @@
     "FI": "Et voi käyttää tätä käskyä ennen kuin olet käynyt ohjeen läpi.",
     "ES": "No puede usar este comando antes de seguir el tutorial."
   },
+  "shadow": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Shadow",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Shadow",
+    "ES": "TRANSLATE"
+  },
   "raid": {
     "NL": "Raid",
     "DE": "Raid",

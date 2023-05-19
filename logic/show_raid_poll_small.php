@@ -26,7 +26,7 @@ function show_raid_poll_small($raid, $override_language = false)
   }
   // Pokemon
   if(!empty($raid['pokemon'])) {
-    $msg .= '<b>' . get_local_pokemon_name($raid['pokemon'], $raid['pokemon_form']) . '</b> ' . CR;
+    $msg .= '<b>' . get_local_pokemon_name($raid['pokemon'], $raid['pokemon_form']) . ($raid['shadow'] ? ' ' . getTranslation('shadow') : '') . '</b> ' . CR;
   }
   // Start time and end time
   if(!empty($raid['start_time']) && !empty($raid['end_time'])) {

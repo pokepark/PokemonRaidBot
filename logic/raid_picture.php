@@ -367,25 +367,31 @@ function create_raid_picture($raid, $standalone_photo = false, $debug = false) {
 
   // Add pokemon to image
   imagecopyresampled($canvas,$img_pokemon,$dst_x,$dst_y,0,0,$dst_w,$dst_h,$src_w,$src_h);
+  if($raid['shadow']) {
+    $img_shadow = grab_img(IMAGES_PATH . '/shadow.png');
+    $icon_x = 275;
+    imagecopyresampled($canvas,$img_shadow,$icon_x,275,0,0,75,75,55,62);
+    $icon_x -= 45;
+  }
 
   // Add pokemon types
   if($config->RAID_PICTURE_POKEMON_TYPES && $show_boss_pokemon_types) {
     $img_type = grab_img(IMAGES_PATH . "/types/".$raid['type'].".png");
-    $type1_x = 300;
+    $icon_x = $icon_x ?? 300;
     imagesavealpha($img_type, true);
     if($raid['type2'] != '') {
       $img_type2 = grab_img(IMAGES_PATH . "/types/".$raid['type2'].".png");
       imagesavealpha($img_type2, true);
-      imagecopyresampled($canvas,$img_type2,300,300,0,0,40,40,64,64);
-      $type1_x -= 50;
+      imagecopyresampled($canvas,$img_type2,$icon_x,300,0,0,40,40,64,64);
+      $icon_x -= 50;
     }
-    imagecopyresampled($canvas,$img_type,$type1_x,300,0,0,40,40,64,64);
+    imagecopyresampled($canvas,$img_type,$icon_x,300,0,0,40,40,64,64);
   }
   if(isset($shiny_icon)) {
     imagesavealpha($shiny_icon,true);
     $light_white = imagecolorallocatealpha($canvas, 255,255,255,50);
-    imagefilledellipse($canvas, $type1_x-35 ,320,40,40,$light_white);
-    imagecopyresampled($canvas,$shiny_icon,$type1_x-52,301,0,0,35,35,100,100);
+    imagefilledellipse($canvas, $icon_x-35 ,320,40,40,$light_white);
+    imagecopyresampled($canvas,$shiny_icon,$icon_x-52,301,0,0,35,35,100,100);
   }
 
   // Ex-Raid?
@@ -542,7 +548,7 @@ function create_raid_picture($raid, $standalone_photo = false, $debug = false) {
 
 
   // Pokemon raid boss
-  $pokemon_name = get_local_pokemon_name($raid['pokemon'], $raid['pokemon_form'], true);
+  $pokemon_name = get_local_pokemon_name($raid['pokemon'], $raid['pokemon_form'], true) . ($raid['shadow'] ? ' ' . getPublicTranslation('shadow') : '');
 
   // Pokemon name and form?
   $pokemon_text_lines = array($pokemon_name);

@@ -29,7 +29,10 @@ define('EGGS', [
 ]);
 
 // Raid levels limited to local players only
-define('RAID_LEVEL_LOCAL_ONLY', [4, 9]);
+define('RAID_LEVEL_LOCAL_ONLY', [4, 9, 11, 12, 13, 14, 15]);
+
+// Shadow raid levels
+define('RAID_LEVEL_SHADOW', [11, 12, 13, 14, 15]);
 
 // Levels available for import at PokeBattler
 $pokebattler_levels = array('10', '9', '8', '7', '6', '5', '4', '3', '1');

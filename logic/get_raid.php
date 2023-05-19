@@ -43,6 +43,8 @@ function get_raid($raid_id)
   $raid['pokemon'] = $resolved_boss['pokedex_id'];
   $raid['pokemon_form'] = $resolved_boss['pokemon_form_id'];
 
+  $raid['shadow'] = in_array($raid['level'], RAID_LEVEL_SHADOW) ? 1 : 0;
+
   if (!$raid){
     $rs = my_query('SELECT * FROM raids WHERE raids.id = ?', [$raid_id]);
     $row = json_encode($rs->fetch());
