@@ -367,7 +367,7 @@ function create_raid_picture($raid, $standalone_photo = false, $debug = false) {
 
   // Add pokemon to image
   imagecopyresampled($canvas,$img_pokemon,$dst_x,$dst_y,0,0,$dst_w,$dst_h,$src_w,$src_h);
-  if($raid['shadow']) {
+  if(isset($raid['shadow']) && $raid['shadow']) {
     $img_shadow = grab_img(IMAGES_PATH . '/shadow.png');
     $icon_x = 275;
     imagecopyresampled($canvas,$img_shadow,$icon_x,275,0,0,75,75,55,62);
@@ -548,7 +548,7 @@ function create_raid_picture($raid, $standalone_photo = false, $debug = false) {
 
 
   // Pokemon raid boss
-  $pokemon_name = get_local_pokemon_name($raid['pokemon'], $raid['pokemon_form'], true) . ($raid['shadow'] ? ' ' . getPublicTranslation('shadow') : '');
+  $pokemon_name = get_local_pokemon_name($raid['pokemon'], $raid['pokemon_form'], true) . (isset($raid['shadow']) && $raid['shadow'] ? ' ' . getPublicTranslation('shadow') : '');
 
   // Pokemon name and form?
   $pokemon_text_lines = array($pokemon_name);
