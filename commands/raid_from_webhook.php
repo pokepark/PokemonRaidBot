@@ -308,6 +308,7 @@ foreach($update as $raid) {
     'event_pokemon_title' => NULL,
     'event_poll_template' => NULL,
     'raid_ended' => 0,
+    'shadow' => (in_array($level, RAID_LEVEL_SHADOW) ? 1 : 0),
   ]);
 
   $chats_geofence = $chats_raidlevel = $webhook_chats = $chats_by_pokemon = [];
