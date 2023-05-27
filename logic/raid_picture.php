@@ -370,7 +370,7 @@ function create_raid_picture($raid, $standalone_photo = false, $debug = false) {
 
   // Add pokemon to image
   imagecopyresampled($canvas,$img_pokemon,$dst_x,$dst_y,0,0,$dst_w,$dst_h,$src_w,$src_h);
-  if(isset($raid['shadow']) && $raid['shadow'] && !in_array($raid['level'], RAID_LEVEL_SHADOW)) {
+  if(isset($raid['shadow']) && $raid['shadow'] && !in_array($raid['pokemon'], EGGS)) {
     $img_shadow = grab_img(IMAGES_PATH . '/shadow.png');
     $icon_x = 275;
     imagecopyresampled($canvas,$img_shadow,$icon_x,275,0,0,75,75,55,62);
