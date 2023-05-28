@@ -89,7 +89,7 @@ function show_raid_poll($raid, $inline = false)
     if($raid['event_pokemon_title'] == 1) $title = getPublicTranslation('raid_boss');
     elseif($raid['event_pokemon_title'] == 2) $title = getPublicTranslation('featured_pokemon');
     else $title = getPublicTranslation('raid_boss');
-    $msg = raid_poll_message($msg, $title . ': <b>' . get_local_pokemon_name($raid_pokemon_id, $raid['pokemon_form'], true) . ' ' . (isset($raid['shadow']) && $raid['shadow'] ? ' ' . getPublicTranslation('shadow') : '') . '</b>', true);
+    $msg = raid_poll_message($msg, $title . ': <b>' . get_local_pokemon_name($raid_pokemon_id, $raid['pokemon_form'], true) . ' ' . (isset($raid['shadow']) && $raid['shadow'] && !in_array($raid['pokemon'], EGGS) ? ' ' . getPublicTranslation('shadow') : '') . '</b>', true);
 
     // Display raid boss weather.
     $msg = raid_poll_message($msg, ($raid_pokemon_info['weather'] != 0) ? (' ' . get_weather_icons($raid_pokemon_info['weather'])) : '', true);
