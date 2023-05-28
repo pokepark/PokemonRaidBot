@@ -807,7 +807,7 @@ function curl_json_multi_request($json)
     $content = $data['post_contents'];
     $log_content = $content;
     if(is_array($content)) {
-      if(is_object($content['photo']) or isBinary($content['photo']) ) {
+      if(isset($content['photo']) && is_object($content['photo']) or isBinary($content['photo']) ) {
         $log_content = array_merge([],$content);
         $log_content['photo'] = '[binary content]';
       }
