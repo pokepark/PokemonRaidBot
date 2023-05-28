@@ -13,7 +13,7 @@ $botUser->accessCheck('tutorial');
 if(is_file(ROOT_PATH . '/config/tutorial.php')) {
   require_once(ROOT_PATH . '/config/tutorial.php');
 }
-$action = $data['p'];
+$action = $data['p'] ?? 1;
 $user_id = $update['callback_query']['from']['id'];
 $new_user = new_user($user_id);
 $tutorial_count = count($tutorial);
