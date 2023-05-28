@@ -4,9 +4,9 @@ CREATE UNIQUE INDEX IF NOT EXISTS `idx_pokemon_pokedex_id_pokemon_form_id` ON `p
 
 ALTER TABLE `raids`
 DROP COLUMN IF EXISTS `first_seen`,
-ADD COLUMN IF NOT EXISTS `spawn` DATETIME NULL DEFAULT NULL AFTER `pokemon_form`,
 MODIFY `pokemon` int(4) DEFAULT NULL,
 ADD COLUMN IF NOT EXISTS `pokemon_form` int(4) unsigned NOT NULL DEFAULT 0,
+ADD COLUMN IF NOT EXISTS `spawn` DATETIME NULL DEFAULT NULL AFTER `pokemon_form`,
 ADD COLUMN IF NOT EXISTS `level` enum('1','2','3','4','5','6','X') DEFAULT NULL AFTER `gym_id`,
 ADD COLUMN IF NOT EXISTS `event` int(3) unsigned DEFAULT NULL AFTER `gender`,
 ADD COLUMN IF NOT EXISTS `event_note` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL AFTER `event`;
