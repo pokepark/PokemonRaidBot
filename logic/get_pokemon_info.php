@@ -23,6 +23,6 @@ function get_pokemon_info($pokedex_id, $pokemon_form_id)
         'pokemon_form_id' => $pokemon_form_id
       ]);
   $result = $query->fetch();
-  if($result['raid_level'] == NULL) $result['raid_level'] = 0;
+  if(is_array($result) && $result['raid_level'] == NULL) $result['raid_level'] = 0;
   return $result;
 }
