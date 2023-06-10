@@ -35,7 +35,7 @@ define('RAID_LEVEL_LOCAL_ONLY', [4, 9, 11, 12, 13, 14, 15]);
 define('RAID_LEVEL_SHADOW', [11, 12, 13, 14, 15]);
 
 // Levels available for import at PokeBattler
-$pokebattler_levels = array('10', '9', '8', '7', '6', '5', '4', '3', '1');
+$pokebattler_levels = array('15','13','11','10', '9', '8', '7', '6', '5', '4', '3', '1');
 
 // Map our raid levels to tier names PokeBattler uses
 $pokebattler_level_map = [
@@ -48,6 +48,9 @@ $pokebattler_level_map = [
   '8' => 'ULTRA_BEAST',
   '9' => 'ELITE',
   '10' => 'PRIMAL',
+  '11' => '1_SHADOW',
+  '13' => '3_SHADOW',
+  '15' => '5_SHADOW',
 ];
 
 $pokebattler_pokemon_map = [
@@ -60,7 +63,7 @@ $pokebattler_pokemon_map = [
 define('PRIMAL_MONS', [382, 383]);
 
 // Limit the tiers of upcoming raid bosses imported from PokeBattler to legendary and mega
-$pokebattler_import_future_tiers = [5, 6, 7, 8, 9, 10];
+$pokebattler_import_future_tiers = [5, 6, 7, 8, 9, 10, 15];
 
 // Default language.
 defined('DEFAULT_LANGUAGE') or define('DEFAULT_LANGUAGE', 'EN');
