@@ -275,7 +275,9 @@ function create_raid_picture($raid, $standalone_photo = false, $debug = false) {
       $uicons_icon = $raid['pokemon'];
 
       if($raid['pokemon_form_name'] != 'normal') {
-        $addressable_icon .= '.f'.strtoupper($raid['pokemon_form_name']);
+        $addrFormPrefix = '';
+        if($raid['pokemon'] == 201) $addrFormPrefix = 'UNOWN_';
+        $addressable_icon .= '.f' . $addrFormPrefix . strtoupper($raid['pokemon_form_name']);
         $uicons_icon .= '_f'.$raid['pokemon_form'];
       }
 
