@@ -2784,7 +2784,7 @@
         "FR": "Abattage",
         "DE": "Breitseite",
         "IT": "Vastoimpatto",
-        "RU": "ломающий удар",
+        "RU": "Разбивающий Удар",
         "ES": "Vasto Impacto"
     },
     "pokemon_move_380": {
@@ -2804,5 +2804,32 @@
         "IT": "Pugni Corazzati",
         "RU": "Двойной Стальной Таран",
         "ES": "Ferropuño Doble"
+    },
+    "pokemon_move_382": {
+        "PT-BR": "Fogo Místico",
+        "EN": "Mystical Fire",
+        "FR": "Feu Ensorcelé",
+        "DE": "Magieflamme",
+        "IT": "Magifiamma",
+        "RU": "Мистический Огонь",
+        "ES": "Llama Embrujada"
+    },
+    "pokemon_move_383": {
+        "PT-BR": "Aquaríete",
+        "EN": "Liquidation",
+        "FR": "Aqua-Brèche",
+        "DE": "Aquadurchstoß",
+        "IT": "Idrobreccia",
+        "RU": "Ликвидация",
+        "ES": "Hidroariete"
+    },
+    "pokemon_move_385": {
+        "PT-BR": "Folhagem",
+        "EN": "Leafage",
+        "FR": "Feuillage",
+        "DE": "Blattwerk",
+        "IT": "Fogliame",
+        "RU": "Облиствление",
+        "ES": "Follaje"
     }
 }
