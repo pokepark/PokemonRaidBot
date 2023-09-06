@@ -9,13 +9,13 @@ function keys_trainerinfo($show = false)
   global $config;
   // Toggle state.
   $status = 'show';
-  if(!$show || $config->TRAINER_BUTTONS_TOGGLE) {
+  if(!$show) {
     // Key to show/hide trainer info.
     $keys[][] = button(getPublicTranslation('trainerinfo'), ['vote_level', 'a' => 'trainer', 's' => $status]);
     return $keys;
   }
   // Always show buttons?
-  if(($show == true && !$config->TRAINER_BUTTONS_TOGGLE) || $config->TRAINER_BUTTONS_TOGGLE) {
+  if($show == true) {
     $status = 'hide';
   }
 

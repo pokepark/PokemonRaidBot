@@ -467,8 +467,6 @@ The command '/trainer' allows users of the bot to change their trainer data like
 
 With ``TRAINER_CHATS`` you can specify additional chats which should appear as buttons too for sharing the trainer message.
 
-Set ``TRAINER_BUTTONS_TOGGLE`` to true to enable the toggle which shows/hides the team and level+/- buttons under the trainer message. To disable the toggle button and always show the team and level+/- buttons set it to false.
-
 Add additional chats -100999555111 and -100888444222 to share the trainer message
 
 ``"TRAINER_CHATS":"-100999555111,-100888444222"``
@@ -1098,8 +1096,6 @@ Config reference
      - Timezone definition to use as per `TZ database names <https://www.wikiwand.com/en/List_of_tz_database_time_zones#/List>`_
    * - TRAINER_MAX_LEVEL
      - Int, Maximum level a trainer can be (currently 50)
-   * - TRAINER_BUTTONS_TOGGLE
-     - Bool, true to show/hide the team and level+/- buttons below the trainer data setup messages once a users hits the "trainer info" button. False to always show the team and level+/- buttons.
    * - TRAINER_CHATS
      - List of chats where trainer data setup messages can be shared
    * - UPGRADE_SQL_AUTO
