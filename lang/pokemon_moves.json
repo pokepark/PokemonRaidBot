@@ -2737,6 +2737,15 @@
         "RU": "Метеоритный Луч",
         "ES": "Rayo Meteórico"
     },
+    "pokemon_move_373": {
+        "PT-BR": "Estrela Ninja de Água",
+        "EN": "Water Shuriken",
+        "FR": "Sheauriken",
+        "DE": "Wasser-Shuriken",
+        "IT": "Acqualame",
+        "RU": "Водяной Сюрикен",
+        "ES": "Shuriken de Agua"
+    },
     "pokemon_move_374": {
         "PT-BR": "Raio de Fusão",
         "EN": "Fusion Bolt",
@@ -2831,5 +2840,44 @@
         "IT": "Fogliame",
         "RU": "Облиствление",
         "ES": "Follaje"
+    },
+    "pokemon_move_386": {
+        "PT-BR": "Tempestade de Magma",
+        "EN": "Magma Storm",
+        "FR": "Vortex Magma",
+        "DE": "Lavasturm",
+        "IT": "Magmaclisma",
+        "RU": "Магма-Буря",
+        "ES": "Lluvia Ígnea"
+    },
+    "pokemon_move_387": {
+        "PT-BR": "Geomancia",
+        "EN": "Geomancy",
+        "FR": "Géo-Contrôle",
+        "DE": "Geokontrolle",
+        "IT": "Geocontrollo",
+        "RU": "Геомантия",
+        "ES": "Geocontrol"
+    },
+    "pokemon_move_388": {
+        "PT-BR": "Laceração Espacial",
+        "EN": "Spacial Rend",
+        "FR": "Spatio-Rift",
+        "DE": "Raumschlag",
+        "IT": "Fendispazio",
+        "RU": "Пространственный Разрыв",
+        "ES": "Corte Vacío"
+    },
+    "pokemon_move_389": {
+        "PT-BR": "Asa do Esquecimento",
+        "EN": "Oblivion Wing",
+        "FR": "Mort-Ailes",
+        "DE": "Unheilsschwingen",
+        "IT": "Ali del Fato",
+        "RU": "Крылья Забвения",
+        "ES": "Ala Mortífera"
+    },
+    "pokemon_move_384": {
+        "EN": "Dragon Ascent"
     }
 }
