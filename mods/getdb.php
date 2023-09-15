@@ -21,9 +21,9 @@ if (!$protos = get_protos($proto_url)) {
   sendResults('Failed to get protos.', $update, true);
 }
 
-[$form_ids, $costume] = $protos;
+[$form_ids, $form_names, $costume] = $protos;
 // Parse the game master data together with form ids into format we can use
-$pokemon_array = parse_master_into_pokemon_table($form_ids, $game_master_url);
+$pokemon_array = parse_master_into_pokemon_table($form_ids, $form_names, $game_master_url);
 if(!$pokemon_array) {
   sendResults('Failed to open game master file.', $update, true);
 }
@@ -129,7 +129,7 @@ function get_protos($proto_url) {
   if(!$proto_file = curl_get_contents($proto_url)) return false;
   $proto =  preg_split('/\r\n|\r|\n/', $proto_file);
   $count = count($proto);
-  $form_ids = $costume = array();
+  $form_ids = $costume = $form_names = array();
   $data_array = false;
   for($i=0;$i<$count;$i++) {
     $line = trim($proto[$i]);
@@ -147,6 +147,9 @@ function get_protos($proto_url) {
       $value = explode('"', $data[1]);
       if(strlen($value[1]) > 0) {
         ${$data_array}[trim($value[1])] = trim($data[0]);
+        if($data_array == 'form_ids') {
+          $form_names[trim($data[0])] = trim($value[1]);
+        }
       }
       continue;
     }
@@ -160,10 +163,10 @@ function get_protos($proto_url) {
     }
   }
   unset($proto);
-  return [$form_ids, $costume];
+  return [$form_ids, $form_names, $costume];
 }
 
-function parse_master_into_pokemon_table($form_ids, $game_master_url) {
+function parse_master_into_pokemon_table($form_ids, $form_names, $game_master_url) {
   // Set ID's for mega evolutions
   // Using negative to prevent mixup with actual form ID's
   // Collected from pogoprotos (hoping they won't change, so hard coding them here)
@@ -207,10 +210,15 @@ function parse_master_into_pokemon_table($form_ids, $game_master_url) {
         $form_data = $row['data']['formSettings']['forms'];
       }
       foreach($form_data as $form) {
-        $form_name = strtolower(str_replace($pokemon_name.'_','',$form['form']));
+        // This is some new niantic shit
+        $pokemon_form_name = $form['form'];
+        if(is_int($form['form'])) {
+          $pokemon_form_name = $form_names[$form['form']];
+        }
+        $form_name = strtolower(str_replace($pokemon_name.'_','',$pokemon_form_name));
         if($form_name == 'purified' || $form_name == 'shadow') continue;
         $poke_name = ucfirst(strtolower($row['data']['formSettings']['pokemon']));
-        $form_id = $form_ids[$form['form']] ?? 0;
+        $form_id = $form_ids[$pokemon_form_name] ?? 0;
 
         $pokemon_array[$pokemon_id][$form_name] = [
           'pokemon_name' => $poke_name,
