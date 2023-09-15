@@ -1,30 +1,30 @@
 <?php
 $lang_dir = __DIR__ . '/lang/';
 
-$lang_directory_url = [
-  'https://raw.githubusercontent.com/PokeMiners/pogo_assets/master/Texts/Latest%20APK/',
-  'https://raw.githubusercontent.com/PokeMiners/pogo_assets/master/Texts/Latest%20Remote/'
-];
-$translations_available = ['BrazilianPortuguese','ChineseTraditional','English','French','German','Italian','Japanese','Korean','Russian','Spanish','Thai'];
+#$lang_directory_url = [
+#  'https://raw.githubusercontent.com/PokeMiners/pogo_assets/master/Texts/Latest%20APK/',
+#  'https://raw.githubusercontent.com/PokeMiners/pogo_assets/master/Texts/Latest%20Remote/'
+#];
+$translations_available = ['brazilianportuguese','chinesetraditional','english','french','german','italian','japanese','korean','russian','spanish','thai'];
 
 // Map wanted translations to raidbot language codes
 $pokemon_translations_to_fetch = [
-  'BrazilianPortuguese'   => ['PT-BR'],
-  'English'   => ['EN'],
-  'French'    => ['FR'],
-  'German'    => ['DE'],
-  'Italian'   => ['IT'],
-  'Russian'   => ['RU'],
-  'Spanish'   => ['ES'],
+  'brazilianportuguese'   => ['PT-BR'],
+  'english'   => ['EN'],
+  'french'    => ['FR'],
+  'german'    => ['DE'],
+  'italian'   => ['IT'],
+  'russian'   => ['RU'],
+  'spanish'   => ['ES'],
 ];
 $move_translations_to_fetch = [
-  'BrazilianPortuguese'   => ['PT-BR'],
-  'English'               => ['EN', 'FI', 'NL', 'NO', 'PL'],
-  'French'                => ['FR'],
-  'German'                => ['DE'],
-  'Italian'               => ['IT'],
-  'Russian'               => ['RU'],
-  'Spanish'               => ['ES'],
+  'brazilianportuguese'   => ['PT-BR'],
+  'english'               => ['EN', 'FI', 'NL', 'NO', 'PL'],
+  'french'                => ['FR'],
+  'german'                => ['DE'],
+  'italian'               => ['IT'],
+  'russian'               => ['RU'],
+  'spanish'               => ['ES'],
 ];
 
 // Initialize array
@@ -40,6 +40,35 @@ foreach($translations_available as $language) {
   if( !$write_pokemon_translation && !$write_move_translation ) {
     continue;
   }
+  $file = curl_open_file('https://raw.githubusercontent.com/PokeMiners/pogo_assets/master/Texts/Latest%20APK/JSON/i18n_'. $language. '.json');
+  $translation = json_decode($file, true);
+  $title = true;
+  foreach($translation['data'] as $row) {
+    // Handle resource ID rows
+    if($title) {
+      $resource_part = explode('_',$row);
+      // Only proceed to processing translation if it's pokemon/move name and it isn't a mega pokemon name
+      if(count($resource_part) == 3 && $resource_part[1] == 'name') {
+        $title = false;
+      }
+      continue;
+    }
+    // Handle text rows
+    $id = intval($resource_part[2]); // remove leading zeroes
+    // Save pokemon names into an array if pokemon id is larger than 0
+    if($write_pokemon_translation && $resource_part[0] == 'pokemon' && $id > 0) {
+      foreach($pokemon_translations_to_fetch[$language] as $lan) {
+        $pokemon_array['pokemon_id_'.$id][$lan] = $row;
+      }
+    // Save pokemon moves into an array
+    }elseif($write_move_translation && $resource_part[0] == 'move') {
+      foreach($move_translations_to_fetch[$language] as $lan) {
+        $move_array['pokemon_move_'.$id][$lan] = $row;
+      }
+    }
+    $title = true;
+  }
+  /*
   // Open the file(s) and write it into an array
   foreach($lang_directory_url as $url) {
     $file = curl_open_file($url . $language . '.txt');
@@ -76,7 +105,7 @@ foreach($translations_available as $language) {
     }
     unset($file);
     unset($data);
-  }
+  }*/
 }
 // Bot defaults to using english translations, so no need to add duplicates for every language
 $pokemon_array = remove_duplicate_translations($pokemon_array);
