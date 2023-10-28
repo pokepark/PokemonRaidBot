@@ -1034,6 +1034,14 @@ Config reference
      - Fully qualified HTTPS URL to ``raidpicture.php``\ , for example ``https://example.com/raidbot/raidpicture.php``
    * - RAID_PIN_MESSAGE
      - Custom message added to the bottom of the raid overview messages
+   * - RAID_BOSS_LIST"
+     - Bool, adds a list of saved raid bosses to overview message
+   * - RAID_BOSS_LIST_TITLE
+     - String, title of the list
+   * - RAID_BOSS_LIST_RAID_LEVELS
+     - Array, list of raid levels included in the list
+   * - RAID_BOSS_LIST_ROW_LIMIT
+     - Int, limit the list to set number of rows
    * - RAID_POLL_HIDE_BUTTONS_POKEMON
      - List of Pokemon dex IDs for which voting buttons are disabled
    * - RAID_POLL_HIDE_BUTTONS_RAID_LEVEL

@@ -1,5 +1,6 @@
 <?php
 require_once(LOGIC_PATH . '/get_raid_times.php');
+require_once(LOGIC_PATH . '/createRaidBossList.php');
 /**
  * Return the overview message for a specific chat.
  * @param array $active_raids - Custom array of gym and raid info
@@ -15,6 +16,9 @@ function get_overview( $active_raids, $chat_title, $chat_username )
 
   if(count($active_raids) == 0) {
     $msg .= getPublicTranslation('no_active_raids') . CR . CR;
+    if($config->RAID_BOSS_LIST) {
+      $msg .=  createRaidBossList() . CR . CR;
+    }
     //Add custom message from the config.
     if (!empty($config->RAID_PIN_MESSAGE)) {
       $msg .=  $config->RAID_PIN_MESSAGE;
@@ -104,6 +108,9 @@ function get_overview( $active_raids, $chat_title, $chat_username )
     $msg .= ((($att['extra_alien']) > 0) ? EMOJI_ALIEN . ($att['extra_alien']) . '  ' : '');
     $msg .= (($att['count_want_invite'] > 0) ? EMOJI_WANT_INVITE . $att['count_want_invite'] : '');
     $msg .= CR . CR;
+  }
+  if($config->RAID_BOSS_LIST) {
+    $msg .=  createRaidBossList() . CR . CR;
   }
   //Add custom message from the config.
   if (!empty($config->RAID_PIN_MESSAGE)) {
