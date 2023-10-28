@@ -2832,6 +2832,15 @@
         "RU": "Ликвидация",
         "ES": "Hidroariete"
     },
+    "pokemon_move_384": {
+        "PT-BR": "Ascenção do Dragão",
+        "EN": "Dragon Ascent",
+        "FR": "Draco Ascension",
+        "DE": "Zenitstürmer",
+        "IT": "Ascesa del Drago",
+        "RU": "Взлёт Дракона",
+        "ES": "Ascenso Draco"
+    },
     "pokemon_move_385": {
         "PT-BR": "Folhagem",
         "EN": "Leafage",
@@ -2877,7 +2886,29 @@
         "RU": "Крылья Забвения",
         "ES": "Ala Mortífera"
     },
-    "pokemon_move_384": {
-        "EN": "Dragon Ascent"
+    "pokemon_move_391": {
+        "PT-BR": "Pinote Triplo",
+        "EN": "Triple Axel",
+        "DE": "Dreifach-Axel",
+        "IT": "Triplo Axel",
+        "RU": "Тройной Аксель"
+    },
+    "pokemon_move_392": {
+        "PT-BR": "Desbravar",
+        "EN": "Trailblaze",
+        "FR": "Désherbaffe",
+        "DE": "Wegbereiter",
+        "IT": "Apripista",
+        "RU": "Новый Путь",
+        "ES": "Abrecaminos"
+    },
+    "pokemon_move_393": {
+        "PT-BR": "Areias Ardentes",
+        "EN": "Scorching Sands",
+        "FR": "Sable Ardent",
+        "DE": "Brandsand",
+        "IT": "Sabbiardente",
+        "RU": "Раскалённый Песок",
+        "ES": "Arenas Ardientes"
     }
 }
