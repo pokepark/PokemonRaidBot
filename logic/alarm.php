@@ -86,7 +86,7 @@ function alarm($raid_id_array, $user_id, $action, $info = '', $tg_json = [])
       }
       $msg_text .= EMOJI_HERE . SP . $gymname . SP . '(' . $raidtimes . ')' . CR;
       $msg_text .= EMOJI_SINGLE . SP . $username . SP . '+' . $icons[$info] . CR;
-      $msg_text .= EMOJI_CLOCK . SP . check_time($attendtime);
+      $msg_text .= EMOJI_CLOCK . SP . check_time($attendtime, $recipient_language);
       $msg_text .= create_traincode_msg($trainercode);
 
     // Updating status - here or cancel
@@ -98,14 +98,14 @@ function alarm($raid_id_array, $user_id, $action, $info = '', $tg_json = [])
         $msg_text = '<b>' . getTranslation('alert_later', $recipient_language) . '</b>' . CR;
         $msg_text .= EMOJI_HERE . SP . $gymname . SP . '(' . $raidtimes . ')' . CR;
         $msg_text .= EMOJI_SINGLE . SP . $username . CR;
-        $msg_text .= EMOJI_CLOCK . SP . check_time($attendtime);
+        $msg_text .= EMOJI_CLOCK . SP . check_time($attendtime, $recipient_language);
         $msg_text .= create_traincode_msg($trainercode);
       } else if($info == 'cancel') {
         debug_log('Alarm cancel: ' . $info);
         $msg_text = '<b>' . getTranslation('alert_cancel', $recipient_language) . '</b>' . CR;
         $msg_text .= TEAM_CANCEL . SP . $gymname . SP . '(' . $raidtimes . ')' . CR;
         $msg_text .= EMOJI_SINGLE . SP . $username . CR;
-        $msg_text .= EMOJI_CLOCK . SP . check_time($attendtime);
+        $msg_text .= EMOJI_CLOCK . SP . check_time($attendtime, $recipient_language);
       }
 
     // Updating pokemon
@@ -123,7 +123,7 @@ function alarm($raid_id_array, $user_id, $action, $info = '', $tg_json = [])
       }
       $msg_text .= EMOJI_HERE . SP . $gymname . SP . '(' . $raidtimes . ')' . CR;
       $msg_text .= EMOJI_SINGLE . SP . $username . CR;
-      $msg_text .= EMOJI_CLOCK . SP . check_time($attendtime);
+      $msg_text .= EMOJI_CLOCK . SP . check_time($attendtime, $recipient_language);
       $msg_text .= create_traincode_msg($trainercode);
 
     // Cancel pokemon
@@ -134,7 +134,7 @@ function alarm($raid_id_array, $user_id, $action, $info = '', $tg_json = [])
       $msg_text = '<b>' . getTranslation('alert_cancel_individual_poke', $recipient_language) . SP . $poke_name . '</b>' . CR;
       $msg_text .= EMOJI_HERE . SP . $gymname . SP . '(' . $raidtimes . ')' . CR;
       $msg_text .= EMOJI_SINGLE . SP . $username . CR;
-      $msg_text .= EMOJI_CLOCK . SP . check_time($attendtime);
+      $msg_text .= EMOJI_CLOCK . SP . check_time($attendtime, $recipient_language);
       $msg_text .= create_traincode_msg($trainercode);
 
     } else if($action == 'new_boss') {
@@ -149,7 +149,7 @@ function alarm($raid_id_array, $user_id, $action, $info = '', $tg_json = [])
       $msg_text = '<b>' . getTranslation('alert_new_att', $recipient_language) . '</b>' . CR;
       $msg_text .= EMOJI_HERE . SP . $gymname . SP . '(' . $raidtimes . ')' . CR;
       $msg_text .= EMOJI_SINGLE . SP . $username . CR;
-      $msg_text .= EMOJI_CLOCK . SP . check_time($info);
+      $msg_text .= EMOJI_CLOCK . SP . check_time($info, $recipient_language);
       $msg_text .= create_traincode_msg($trainercode);
 
     // Attendance time change
@@ -159,7 +159,7 @@ function alarm($raid_id_array, $user_id, $action, $info = '', $tg_json = [])
       $msg_text = '<b>' . getTranslation('alert_change_time', $recipient_language) . '</b>' . CR;
       $msg_text .= EMOJI_HERE . SP . $gymname . SP . '(' . $raidtimes . ')' . CR;
       $msg_text .= EMOJI_SINGLE . SP . $username . CR;
-      $msg_text .= EMOJI_CLOCK . SP . '<b>' . check_time($info) . '</b>';
+      $msg_text .= EMOJI_CLOCK . SP . '<b>' . check_time($info, $recipient_language) . '</b>';
       $msg_text .= create_traincode_msg($trainercode);
 
     // Attendance from remote
@@ -169,7 +169,7 @@ function alarm($raid_id_array, $user_id, $action, $info = '', $tg_json = [])
       $msg_text = '<b>' . getTranslation('alert_remote', $recipient_language) . '</b>' . CR;
       $msg_text .= EMOJI_REMOTE . SP . $gymname . SP . '(' . $raidtimes . ')' . CR;
       $msg_text .= EMOJI_SINGLE . SP . $username . CR;
-      $msg_text .= EMOJI_CLOCK . SP . '<b>' . check_time($attendtime) . '</b>';
+      $msg_text .= EMOJI_CLOCK . SP . '<b>' . check_time($attendtime, $recipient_language) . '</b>';
       $msg_text .= create_traincode_msg($trainercode);
 
     // Attendance no longer from remote
@@ -179,7 +179,7 @@ function alarm($raid_id_array, $user_id, $action, $info = '', $tg_json = [])
       $msg_text = '<b>' . getTranslation('alert_no_remote', $recipient_language) . '</b>' . CR;
       $msg_text .= EMOJI_REMOTE . SP . $gymname . SP . '(' . $raidtimes . ')' . CR;
       $msg_text .= EMOJI_SINGLE . SP . $username . CR;
-      $msg_text .= EMOJI_CLOCK . SP . '<b>' . check_time($attendtime) . '</b>';
+      $msg_text .= EMOJI_CLOCK . SP . '<b>' . check_time($attendtime, $recipient_language) . '</b>';
 
     // No additional trainer
     } else if($action == 'extra_alone') {
@@ -187,7 +187,7 @@ function alarm($raid_id_array, $user_id, $action, $info = '', $tg_json = [])
       $msg_text = '<b>' . getTranslation('alert_extra_alone', $recipient_language) . '</b>' . CR;
       $msg_text .= EMOJI_HERE . SP . $gymname . SP . '(' . $raidtimes . ')' . CR;
       $msg_text .= EMOJI_SINGLE . SP . $username . CR;
-      $msg_text .= EMOJI_CLOCK . SP . check_time($attendtime);
+      $msg_text .= EMOJI_CLOCK . SP . check_time($attendtime, $recipient_language);
       $msg_text .= create_traincode_msg($trainercode);
 
     // Group code public
@@ -222,7 +222,7 @@ function alarm($raid_id_array, $user_id, $action, $info = '', $tg_json = [])
       $msg_text = '<b>' . getTranslation('alert_want_invite', $recipient_language) . '</b>' . CR;
       $msg_text .= EMOJI_WANT_INVITE . SP . $gymname . SP . '(' . $raidtimes . ')' . CR;
       $msg_text .= EMOJI_SINGLE . SP . $username . CR;
-      $msg_text .= EMOJI_CLOCK . SP . '<b>' . check_time($attendtime) . '</b>';
+      $msg_text .= EMOJI_CLOCK . SP . '<b>' . check_time($attendtime, $recipient_language) . '</b>';
       $msg_text .= create_traincode_msg($trainercode);
 
     // Attendance no longer from remote
@@ -231,7 +231,7 @@ function alarm($raid_id_array, $user_id, $action, $info = '', $tg_json = [])
       $msg_text = '<b>' . getTranslation('alert_no_want_invite', $recipient_language) . '</b>' . CR;
       $msg_text .= EMOJI_WANT_INVITE . SP . $gymname . SP . '(' . $raidtimes . ')' . CR;
       $msg_text .= EMOJI_SINGLE . SP . $username . CR;
-      $msg_text .= EMOJI_CLOCK . SP . '<b>' . check_time($attendtime) . '</b>';
+      $msg_text .= EMOJI_CLOCK . SP . '<b>' . check_time($attendtime, $recipient_language) . '</b>';
       $msg_text .= create_traincode_msg($trainercode);
 
     // Let others know you are not playing, but can invite others
@@ -240,7 +240,7 @@ function alarm($raid_id_array, $user_id, $action, $info = '', $tg_json = [])
       $msg_text = '<b>' . getTranslation('alert_can_invite', $recipient_language) . '</b>' . CR;
       $msg_text .= EMOJI_CAN_INVITE . SP . $gymname . SP . '(' . $raidtimes . ')' . CR;
       $msg_text .= EMOJI_SINGLE . SP . $username . CR;
-      $msg_text .= EMOJI_CLOCK . SP . '<b>' . check_time($attendtime) . '</b>';
+      $msg_text .= EMOJI_CLOCK . SP . '<b>' . check_time($attendtime, $recipient_language) . '</b>';
       $msg_text .= create_traincode_msg($trainercode);
 
     // Let others know you are not longer able to invite them
@@ -249,7 +249,7 @@ function alarm($raid_id_array, $user_id, $action, $info = '', $tg_json = [])
       $msg_text = '<b>' . getTranslation('alert_no_can_invite', $recipient_language) . '</b>' . CR;
       $msg_text .= EMOJI_CAN_INVITE . SP . $gymname . SP . '(' . $raidtimes . ')' . CR;
       $msg_text .= EMOJI_SINGLE . SP . $username . CR;
-      $msg_text .= EMOJI_CLOCK . SP . '<b>' . check_time($attendtime) . '</b>';
+      $msg_text .= EMOJI_CLOCK . SP . '<b>' . check_time($attendtime, $recipient_language) . '</b>';
       $msg_text .= create_traincode_msg($trainercode);
     }
     $tg_json[] = send_message($answer['user_id'], $msg_text, false, false, true);
@@ -276,12 +276,13 @@ function create_traincode_msg($trainercode){
 /**
  * Check attendance time against anytime.
  * @param $time
+ * @param $recipientLanguage
  */
-function check_time($time)
+function check_time($time, $recipientLanguage)
 {
   // Raid anytime?
   if(strcmp($time, ANYTIME)===0){
-    return getTranslation('anytime');
+    return getTranslation('anytime', $recipientLanguage);
   }
   return dt2time($time);
 }
