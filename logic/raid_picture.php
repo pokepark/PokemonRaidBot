@@ -284,14 +284,15 @@ function create_raid_picture($raid, $standalone_photo = false, $debug = false) {
       // Add costume info for every mon except megas
       if($raid['costume'] != 0 && $raid['pokemon_form'] >= 0) {
         $costume = json_decode(file_get_contents(ROOT_PATH . '/protos/costume.json'), true);
-        $addressable_icon .= '.c' . array_search($raid['costume'],$costume);
-        $addressableFallback .= '.c' . array_search($raid['costume'],$costume);
+        $costumeName = array_search($raid['costume'],$costume);
+        if(!empty($costumeName)) {
+          $addressable_icon .= '.c' . array_search($raid['costume'],$costume);
 
-        $uicons_icon .= '_c'.$raid['costume'];
+          $uicons_icon .= '_c'.$raid['costume'];
+        }
       }
       if($raid['shiny'] == 1 && $config->RAID_PICTURE_SHOW_SHINY) {
         $addressable_icon .= '.s';
-        $addressableFallback .= '.s';
         $uicons_icon .= '_s';
         $shiny_icon = grab_img(IMAGES_PATH . "/shinystars.png");
       }
