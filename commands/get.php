@@ -52,6 +52,8 @@ foreach($json as $cfg_name => $cfg_value) {
     if(isset($ajson[$cfg_name])){
       $alias = $ajson[$cfg_name];
     }
+    if($cfg_value === true) $cfg_value = 'true';
+    elseif($cfg_value === false) $cfg_value = 'false';  
     // Config name / Alias + value
     $msg .= (empty($alias) ? $cfg_name : $alias) . SP . (empty($cfg_value) ? '<i>' . getTranslation('no_value') . '</i>' : $cfg_value);
 

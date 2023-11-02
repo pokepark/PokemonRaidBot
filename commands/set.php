@@ -119,6 +119,8 @@ if(in_array($config_name, $allowed) && $restrict == 'no') {
   // Prepare data, replace " with '
   $config_value = str_replace('"', "'", $config_value);
   $old_value = $json[$config_name];
+  if($old_value === true) $old_value = 'true';
+  elseif($old_value === false) $old_value = 'false';
   $json[$config_name] = $config_value;
   $jsonString = json_encode($json, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK | JSON_PRETTY_PRINT);
   debug_log($config_name, 'CONFIG NAME:');
