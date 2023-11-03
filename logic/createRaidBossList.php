@@ -22,7 +22,16 @@ function createRaidBossList() {
   $dateFormat = 'j.m.';
   $timeFormat = 'H:i';
   $levelList = '(' . implode(',', $config->RAID_BOSS_LIST_RAID_LEVELS). ')';
-  $q = my_query('SELECT pokedex_id,pokemon_form_id,date_start,date_end,concat(date_format(date_start,"%d%m%y%k"),date_format(date_end,"%d%m%y%k")) as arrkey,CASE WHEN date(date_start) = date(date_end) THEN 1 ELSE 0 END as sameDay FROM raid_bosses where raid_level in ' . $levelList . ' order by sameDay, date_start, date_end');
+  $q = my_query('
+    SELECT  
+      pokedex_id, pokemon_form_id, date_start, date_end,
+      CONCAT(DATE_FORMAT(date_start,"%d%m%y%k"), DATE_FORMAT(date_end,"%d%m%y%k")) AS arrkey,
+      CASE WHEN date(date_start) = date(date_end) THEN 1 ELSE 0 END AS sameDay
+    FROM  raid_bosses
+    WHERE raid_level IN ' . $levelList . '
+    AND   date_end > DATE_ADD(NOW(), INTERVAL 1 HOUR)
+    ORDER BY sameDay, date_start, date_end
+  ');
   $list = '';
   $prevStartDate = '';
   $data[0] = $data[1] = [];
