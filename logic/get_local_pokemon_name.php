@@ -23,16 +23,24 @@ function get_local_pokemon_name($pokemon_id, $pokemon_form_id, $override_languag
   // Get eggs from normal translation.
   $pokemon_name = (in_array($pokemon_id, EGGS)) ? $getTypeTranslation('egg_' . str_replace('999', '', $pokemon_id)) : $getTypeTranslation('pokemon_id_' . $pokemon_id);
 
+  $skipFallback = false;
   if ($pokemon_form_name != 'normal') {
     $pokemon_form_name = $getTypeTranslation('pokemon_form_' . $pokemon_form_name);
+    // Use only form name if form name contains Pokemon name
+    // e.g. Black Kyurem, Frost Rotom
+    if(strpos($pokemon_form_name, $pokemon_name, 0)) {
+      $pokemon_name = $pokemon_form_name;
+      $pokemon_form_name = '';
+      $skipFallback = true;
+    }
   }
   // If we didn't find Pokemon name or form name from translation files, use the name from database as fallback
-  if(empty($pokemon_name) or empty($pokemon_form_name)) {
+  if(empty($pokemon_name) or empty($pokemon_form_name) && !$skipFallback) {
     // Pokemon name
     $pokemon_name = (empty($pokemon_name) ? $res['pokemon_name'] : $pokemon_name);
     // Pokemon form
     if(empty($pokemon_form_name) && $res['pokemon_form_name'] != 'normal') {
-        $pokemon_form_name = ucfirst(str_replace('_',' ',$res['pokemon_form_name']));
+      $pokemon_form_name = ucfirst(str_replace('_',' ',$res['pokemon_form_name']));
     }
   }
   return $pokemon_name . ($pokemon_form_name != "normal" ? " " . $pokemon_form_name : "");

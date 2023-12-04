@@ -555,7 +555,7 @@ function create_raid_picture($raid, $standalone_photo = false, $debug = false) {
 
   // Pokemon raid boss
   $pokemon_name = get_local_pokemon_name($raid['pokemon'], $raid['pokemon_form'], true);
-  if(!in_array($raid['pokemon'], EGGS) && isset($raid['shadow']) && $raid['shadow']) $pokemon_name .= ' ' . getPublicTranslation('shadow');
+  if(!in_array($raid['pokemon'], EGGS) && isset($raid['shadow']) && $raid['shadow']) $pokemon_name .= ' ' . getPublicTranslation('pokemon_form_shadow');
 
   // Pokemon name and form?
   $pokemon_text_lines = array($pokemon_name);

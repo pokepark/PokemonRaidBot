@@ -1,845 +1,1448 @@
 {
-  "pokemon_form_alola": {
-    "NL": "Alolan",
-    "DE": "Alola",
-    "EN": "Alolan",
-    "IT": "TRANSLATE",
-    "PT-BR": "de Alola",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "Alolan",
-    "FI": "Alolan",
-    "ES": "Alola"
-  },
-  "pokemon_form_galarian": {
-    "NL": "Galarian",
-    "DE": "Galar",
-    "EN": "Galarian",
-    "IT": "Galarian",
-    "PT-BR": "Galarian",
-    "RU": "Galarian",
-    "NO": "Galarian",
-    "FR": "Galarian",
-    "PL": "Galarian",
-    "FI": "Galarian",
-    "ES": "Galar"
-  },
-  "pokemon_form_hisuian": {
-    "NL": "Hisuian",
-    "DE": "TRANSLATE",
-    "EN": "Hisuian",
-    "IT": "TRANSLATE",
-    "PT-BR": "TRANSLATE",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "TRANSLATE",
-    "FI": "Hisuian",
-    "ES": "TRANSLATE"
-  },
-  "pokemon_form_primal": {
-    "NL": "Primal",
-    "DE": "TRANSLATE",
-    "EN": "Primal",
-    "IT": "TRANSLATE",
-    "PT-BR": "TRANSLATE",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "TRANSLATE",
-    "FI": "Primal",
-    "ES": "TRANSLATE"
-  },
-  "pokemon_form_mega": {
-    "NL": "Mega",
-    "DE": "TRANSLATE",
-    "EN": "Mega",
-    "IT": "TRANSLATE",
-    "PT-BR": "TRANSLATE",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "TRANSLATE",
-    "FI": "Mega",
-    "ES": "Mega"
-  },
-  "pokemon_form_mega_x": {
-    "NL": "Mega X",
-    "DE": "TRANSLATE",
-    "EN": "Mega X",
-    "IT": "TRANSLATE",
-    "PT-BR": "TRANSLATE",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "TRANSLATE",
-    "FI": "Mega X",
-    "ES": "Mega X"
-  },
-  "pokemon_form_mega_y": {
-    "NL": "Mega Y",
-    "DE": "TRANSLATE",
-    "EN": "Mega Y",
-    "IT": "TRANSLATE",
-    "PT-BR": "TRANSLATE",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "TRANSLATE",
-    "FI": "Mega Y",
-    "ES": "Mega Y"
-  },
-  "pokemon_form_a": {
-    "NL": "Armored",
-    "DE": "Rüstungsform",
-    "EN": "Armored",
-    "IT": "Armatura",
-    "PT-BR": "Armadura",
-    "RU": "Bronya",
-    "NO": "Rustning",
-    "FR": "Armure",
-    "ES": "Acorazado"
-  },
-  "pokemon_form_attack": {
-    "NL": "Attack",
-    "DE": "Angriffsform",
-    "EN": "Attack",
-    "IT": "TRANSLATE",
-    "PT-BR": "Ataque",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "Attack",
-    "ES": "Ataque"
-  },
-  "pokemon_form_defense": {
-    "NL": "Defense",
-    "DE": "Verteidigungsform",
-    "EN": "Defense",
-    "IT": "TRANSLATE",
-    "PT-BR": "Defesa",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "Defense",
-    "ES": "Defensa"
-  },
-  "pokemon_form_speed": {
-    "NL": "Speed",
-    "DE": "Initiativeform",
-    "EN": "Speed",
-    "IT": "TRANSLATE",
-    "PT-BR": "Velocidade",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "Speed",
-    "ES": "Velocidad"
-  },
-  "pokemon_form_plant": {
-    "NL": "Plant",
-    "DE": "Pflanzenumhang",
-    "EN": "Plant",
-    "IT": "TRANSLATE",
-    "PT-BR": "Planta",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "Plant",
-    "ES": "Planta"
-  },
-  "pokemon_form_sandy": {
-    "NL": "Sandy",
-    "DE": "Sandumhang",
-    "EN": "Sandy",
-    "IT": "TRANSLATE",
-    "PT-BR": "Areia",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "Sandy",
-    "ES": "Arena"
-  },
-  "pokemon_form_trash": {
-    "NL": "Trash",
-    "DE": "Lumpenumhang",
-    "EN": "Trash",
-    "IT": "TRANSLATE",
-    "PT-BR": "Lixo",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "Trash",
-    "ES": "Basura"
-  },
-  "pokemon_form_overcast": {
-    "NL": "Overcast",
-    "DE": "Wolkenform",
-    "EN": "Overcast",
-    "IT": "TRANSLATE",
-    "PT-BR": "Negativo",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "Overcast",
-    "ES": "Encapotada"
-  },
-  "pokemon_form_sunny": {
-    "NL": "Sunny",
-    "DE": "Sonnenform",
-    "EN": "Sunny",
-    "IT": "TRANSLATE",
-    "PT-BR": "Positivo",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "Sunny",
-    "ES": "Soleada"
-  },
-  "pokemon_form_rainy": {
-    "NL": "Rainy",
-    "DE": "TRANSLATE",
-    "EN": "Rainy",
-    "IT": "TRANSLATE",
-    "PT-BR": "TRANSLATE",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "TRANSLATE",
-    "ES": "TRANSLATE"
-  },
-  "pokemon_form_snowy": {
-    "NL": "Snowy",
-    "DE": "TRANSLATE",
-    "EN": "Snowy",
-    "IT": "TRANSLATE",
-    "PT-BR": "TRANSLATE",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "TRANSLATE",
-    "ES": "TRANSLATE"
-  },
-  "pokemon_form_east_sea": {
-    "NL": "East",
-    "DE": "Ostform",
-    "EN": "East",
-    "IT": "TRANSLATE",
-    "PT-BR": "Leste",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "East",
-    "ES": "Este"
-  },
-  "pokemon_form_west_sea": {
-    "NL": "West",
-    "DE": "Westform",
-    "EN": "West",
-    "IT": "TRANSLATE",
-    "PT-BR": "Oeste",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "West",
-    "ES": "Oeste"
-  },
-  "pokemon_form_fan": {
-    "NL": "Fan",
-    "DE": "Wirbel-Form",
-    "EN": "Fan",
-    "IT": "TRANSLATE",
-    "PT-BR": "Ventilador",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "Fan",
-    "ES": "Ventilador"
-  },
-  "pokemon_form_frost": {
-    "NL": "Frost",
-    "DE": "Frost-Form",
-    "EN": "Frost",
-    "IT": "TRANSLATE",
-    "PT-BR": "Congelado",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "Frost",
-    "ES": "Frío"
-  },
-  "pokemon_form_heat": {
-    "NL": "Heat",
-    "DE": "Hitze-Form",
-    "EN": "Heat",
-    "IT": "TRANSLATE",
-    "PT-BR": "Calor",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "Heat",
-    "ES": "Calor"
-  },
-  "pokemon_form_mow": {
-    "NL": "Mow",
-    "DE": "Schneid-Form",
-    "EN": "Mow",
-    "IT": "TRANSLATE",
-    "PT-BR": "Cortador",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "Mow",
-    "ES": "Corte"
-  },
-  "pokemon_form_wash": {
-    "NL": "Wash",
-    "DE": "Wasch-Form",
-    "EN": "Wash",
-    "IT": "TRANSLATE",
-    "PT-BR": "Lavagem",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "Wash",
-    "ES": "Lavado"
-  },
-  "pokemon_form_altered": {
-    "NL": "Altered",
-    "DE": "Wandelform",
-    "EN": "Altered",
-    "IT": "TRANSLATE",
-    "PT-BR": "Alterado",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "Altered",
-    "ES": "Modificada"
-  },
-  "pokemon_form_origin": {
-    "NL": "Origin",
-    "DE": "Urform",
-    "EN": "Origin",
-    "IT": "TRANSLATE",
-    "PT-BR": "Original",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "Origin",
-    "ES": "Origen"
-  },
-  "pokemon_form_land": {
-    "NL": "Land",
-    "DE": "Landform",
-    "EN": "Land",
-    "IT": "TRANSLATE",
-    "PT-BR": "Terrestre",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "Land",
-    "ES": "Tierra"
-  },
-  "pokemon_form_sky": {
-    "NL": "Sky",
-    "DE": "Zenitform",
-    "EN": "Sky",
-    "IT": "TRANSLATE",
-    "PT-BR": "Celeste",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "Sky",
-    "ES": "Cielo"
-  },
-  "pokemon_form_bug": {
-    "NL": "Bug",
-    "DE": "Käfer-Form",
-    "EN": "Bug",
-    "IT": "TRANSLATE",
-    "PT-BR": "Inseto",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "Bug",
-    "ES": "Bicho"
-  },
-  "pokemon_form_dark": {
-    "NL": "Dark",
-    "DE": "Unlicht-Form",
-    "EN": "Dark",
-    "IT": "TRANSLATE",
-    "PT-BR": "TRANSLATE",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "Dark",
-    "ES": "Siniestro"
-  },
-  "pokemon_form_dragon": {
-    "NL": "Dragon",
-    "DE": "Drache-Form",
-    "EN": "Dragon",
-    "IT": "TRANSLATE",
-    "PT-BR": "Dragão",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "Dragon",
-    "ES": "Dragón"
-  },
-  "pokemon_form_electric": {
-    "NL": "Electric",
-    "DE": "Elektro-Form",
-    "EN": "Electric",
-    "IT": "TRANSLATE",
-    "PT-BR": "Elétrico",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "Electric",
-    "ES": "Eléctrico"
-  },
-  "pokemon_form_fairy": {
-    "NL": "Fairy",
-    "DE": "Fee-Form",
-    "EN": "Fairy",
-    "IT": "TRANSLATE",
-    "PT-BR": "Fada",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "Fairy",
-    "ES": "Hada"
-  },
-  "pokemon_form_flying": {
-    "NL": "Flying",
-    "DE": "Flug-Form",
-    "EN": "Flying",
-    "IT": "TRANSLATE",
-    "PT-BR": "Voador",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "Flying",
-    "ES": "Volador"
-  },
-  "pokemon_form_fighting": {
-    "NL": "Fighting",
-    "DE": "TRANSLATE",
-    "EN": "Fighting",
-    "IT": "TRANSLATE",
-    "PT-BR": "TRANSLATE",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "TRANSLATE",
-    "ES": "TRANSLATE"
-  },
-  "pokemon_form_fire": {
-    "NL": "Fire",
-    "DE": "Feuer-Form",
-    "EN": "Fire",
-    "IT": "TRANSLATE",
-    "PT-BR": "Fogo",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "Fire",
-    "ES": "Fuego"
-  },
-  "pokemon_form_ghost": {
-    "NL": "Ghost",
-    "DE": "Geist-Form",
-    "EN": "Ghost",
-    "IT": "TRANSLATE",
-    "PT-BR": "Fantasma",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "Ghost",
-    "ES": "Fantasma"
-  },
-  "pokemon_form_grass": {
-    "NL": "Grass",
-    "DE": "Pflanze-Form",
-    "EN": "Grass",
-    "IT": "TRANSLATE",
-    "PT-BR": "Planta",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "Grass",
-    "ES": "Planta"
-  },
-  "pokemon_form_ground": {
-    "NL": "Ground",
-    "DE": "Boden-Form",
-    "EN": "Ground",
-    "IT": "TRANSLATE",
-    "PT-BR": "Terra",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "Ground",
-    "ES": "Tierra"
-  },
-  "pokemon_form_ice": {
-    "NL": "Ice",
-    "DE": "Eis-Form",
-    "EN": "Ice",
-    "IT": "TRANSLATE",
-    "PT-BR": "Gelo",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "Ice",
-    "ES": "Hielo"
-  },
-  "pokemon_form_poison": {
-    "NL": "Poison",
-    "DE": "Gift-Form",
-    "EN": "Poison",
-    "IT": "TRANSLATE",
-    "PT-BR": "Veneno",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "Poison",
-    "ES": "Veneno"
-  },
-  "pokemon_form_psychic": {
-    "NL": "Psychic",
-    "DE": "Psycho-Form",
-    "EN": "Psychic",
-    "IT": "TRANSLATE",
-    "PT-BR": "Psíquico",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "Psychic",
-    "ES": "Psíquico"
-  },
-  "pokemon_form_rock": {
-    "NL": "Rock",
-    "DE": "Gestein-Form",
-    "EN": "Rock",
-    "IT": "TRANSLATE",
-    "PT-BR": "Pedra",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "Rock",
-    "ES": "Roca"
-  },
-  "pokemon_form_steel": {
-    "NL": "Steel",
-    "DE": "Stahl-Form",
-    "EN": "Steel",
-    "IT": "TRANSLATE",
-    "PT-BR": "Metálico",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "Steel",
-    "ES": "Acero"
-  },
-  "pokemon_form_water": {
-    "NL": "Water",
-    "DE": "Wasser-Form",
-    "EN": "Water",
-    "IT": "TRANSLATE",
-    "PT-BR": "Água",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "Water",
-    "ES": "Agua"
-  },
-  "pokemon_form_incarnate": {
-    "NL": "Incarnate",
-    "DE": "Inkarnationsform",
-    "EN": "Incarnate",
-    "IT": "TRANSLATE",
-    "PT-BR": "TRANSLATE",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "Incarnate",
-    "ES": "Avatar"
-  },
-  "pokemon_form_therian": {
-    "NL": "Therian",
-    "DE": "Tiergeistform",
-    "EN": "Therian",
-    "IT": "TRANSLATE",
-    "PT-BR": "TRANSLATE",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "Therian",
-    "ES": "Tótem"
-  },
-  "pokemon_form_ordinary": {
-    "NL": "Ordinary",
-    "DE": "Standardform",
-    "EN": "Ordinary",
-    "IT": "TRANSLATE",
-    "PT-BR": "TRANSLATE",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "Ordinary",
-    "ES": "Normal"
-  },
-  "pokemon_form_resolute": {
-    "NL": "Resolute",
-    "DE": "Resolutform",
-    "EN": "Resolute",
-    "IT": "TRANSLATE",
-    "PT-BR": "TRANSLATE",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "Resolute",
-    "ES": "Brío"
-  },
-  "pokemon_form_burn": {
-    "NL": "Burn",
-    "DE": "TRANSLATE",
-    "EN": "Burn",
-    "IT": "TRANSLATE",
-    "PT-BR": "TRANSLATE",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "TRANSLATE",
-    "ES": "TRANSLATE"
-  },
-  "pokemon_form_chill": {
-    "NL": "Chill",
-    "DE": "TRANSLATE",
-    "EN": "Chill",
-    "IT": "TRANSLATE",
-    "PT-BR": "TRANSLATE",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "TRANSLATE",
-    "ES": "TRANSLATE"
-  },
-  "pokemon_form_douse": {
-    "NL": "Douse",
-    "DE": "TRANSLATE",
-    "EN": "Douse",
-    "IT": "TRANSLATE",
-    "PT-BR": "TRANSLATE",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "TRANSLATE",
-    "ES": "TRANSLATE"
-  },
-  "pokemon_form_shock": {
-    "NL": "Shock",
-    "DE": "TRANSLATE",
-    "EN": "Shock",
-    "IT": "TRANSLATE",
-    "PT-BR": "TRANSLATE",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "TRANSLATE",
-    "ES": "TRANSLATE"
-  },
-  "pokemon_form_black": {
-    "NL": "Black",
-    "DE": "TRANSLATE",
-    "EN": "Black",
-    "IT": "TRANSLATE",
-    "PT-BR": "TRANSLATE",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "TRANSLATE",
-    "ES": "TRANSLATE"
-  },
-  "pokemon_form_white": {
-    "NL": "White",
-    "DE": "TRANSLATE",
-    "EN": "White",
-    "IT": "TRANSLATE",
-    "PT-BR": "TRANSLATE",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "TRANSLATE",
-    "ES": "TRANSLATE"
-  },
-  "pokemon_form_hero": {
-    "NL": "Hero",
-    "DE": "TRANSLATE",
-    "EN": "Hero",
-    "IT": "TRANSLATE",
-    "PT-BR": "TRANSLATE",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "TRANSLATE",
-    "ES": "TRANSLATE"
-  },
-  "pokemon_form_crowned_sword": {
-    "NL": "Crowned Sword",
-    "DE": "TRANSLATE",
-    "EN": "Crowned Sword",
-    "IT": "TRANSLATE",
-    "PT-BR": "TRANSLATE",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "TRANSLATE",
-    "ES": "TRANSLATE"
-  },
-  "pokemon_form_crowned_shield": {
-    "NL": "Crowned Shield",
-    "DE": "TRANSLATE",
-    "EN": "Crowned Shield",
-    "IT": "TRANSLATE",
-    "PT-BR": "TRANSLATE",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "TRANSLATE",
-    "ES": "TRANSLATE"
-  },
-  "pokemon_form_zen": {
-    "NL": "Zen",
-    "DE": "TRANSLATE",
-    "EN": "Zen",
-    "IT": "TRANSLATE",
-    "PT-BR": "TRANSLATE",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "TRANSLATE",
-    "ES": "TRANSLATE"
-  },
-  "pokemon_form_galarian_zen": {
-    "NL": "Galarian Zen",
-    "DE": "TRANSLATE",
-    "EN": "Galarian Zen",
-    "IT": "TRANSLATE",
-    "PT-BR": "TRANSLATE",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "TRANSLATE",
-    "ES": "TRANSLATE"
-  },
-  "pokemon_form_male": {
-    "NL": "Man",
-    "DE": "TRANSLATE",
-    "EN": "Male",
-    "IT": "TRANSLATE",
-    "PT-BR": "TRANSLATE",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "TRANSLATE",
-    "ES": "TRANSLATE"
-  },
-  "pokemon_form_female": {
-    "NL": "Vrouw",
-    "DE": "TRANSLATE",
-    "EN": "Female",
-    "IT": "TRANSLATE",
-    "PT-BR": "TRANSLATE",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "TRANSLATE",
-    "ES": "TRANSLATE"
-  },
-  "pokemon_form_blue_striped": {
-    "NL": "Blue Striped",
-    "DE": "TRANSLATE",
-    "EN": "Blue Striped",
-    "IT": "TRANSLATE",
-    "PT-BR": "TRANSLATE",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "TRANSLATE",
-    "ES": "TRANSLATE"
-  },
-  "pokemon_form_red_striped": {
-    "NL": "Red Striped",
-    "DE": "TRANSLATE",
-    "EN": "Red Striped",
-    "IT": "TRANSLATE",
-    "PT-BR": "TRANSLATE",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "TRANSLATE",
-    "ES": "TRANSLATE"
-  },
-  "pokemon_form_autumn": {
-    "NL": "Herfst",
-    "DE": "TRANSLATE",
-    "EN": "Autumn",
-    "IT": "TRANSLATE",
-    "PT-BR": "TRANSLATE",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "TRANSLATE",
-    "ES": "TRANSLATE"
-  },
-  "pokemon_form_spring": {
-    "NL": "Lente",
-    "DE": "TRANSLATE",
-    "EN": "Spring",
-    "IT": "TRANSLATE",
-    "PT-BR": "TRANSLATE",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "TRANSLATE",
-    "ES": "TRANSLATE"
-  },
-  "pokemon_form_summer": {
-    "NL": "Zomer",
-    "DE": "TRANSLATE",
-    "EN": "Summer",
-    "IT": "TRANSLATE",
-    "PT-BR": "TRANSLATE",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "TRANSLATE",
-    "ES": "TRANSLATE"
-  },
-  "pokemon_form_winter": {
-    "NL": "Winter",
-    "DE": "TRANSLATE",
-    "EN": "Winter",
-    "IT": "TRANSLATE",
-    "PT-BR": "TRANSLATE",
-    "RU": "TRANSLATE",
-    "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
-    "PL": "TRANSLATE",
-    "ES": "TRANSLATE"
-  },
-  "pokemon_form_exclamation_point": {
-    "EN": "!"
-  },
-  "pokemon_form_question_mark": {
-    "EN": "?"
-  },
-  "pokemon_form_unbound": {
-    "EN": "Unbound"
-  }
+    "pokemon_form_10": {
+        "EN": "10"
+    },
+    "pokemon_form_11": {
+        "EN": "11"
+    },
+    "pokemon_form_12": {
+        "EN": "12"
+    },
+    "pokemon_form_13": {
+        "EN": "13"
+    },
+    "pokemon_form_14": {
+        "EN": "14"
+    },
+    "pokemon_form_15": {
+        "EN": "15"
+    },
+    "pokemon_form_16": {
+        "EN": "16"
+    },
+    "pokemon_form_17": {
+        "EN": "17"
+    },
+    "pokemon_form_18": {
+        "EN": "18"
+    },
+    "pokemon_form_19": {
+        "EN": "19"
+    },
+    "pokemon_form_2020": {
+        "EN": "2020"
+    },
+    "pokemon_form_2021": {
+        "EN": "2021"
+    },
+    "pokemon_form_2022": {
+        "EN": "2022"
+    },
+    "pokemon_form_a": {
+        "EN": "A"
+    },
+    "pokemon_form_b": {
+        "EN": "B"
+    },
+    "pokemon_form_c": {
+        "EN": "C"
+    },
+    "pokemon_form_d": {
+        "EN": "D"
+    },
+    "pokemon_form_e": {
+        "EN": "E"
+    },
+    "pokemon_form_f": {
+        "EN": "F"
+    },
+    "pokemon_form_g": {
+        "EN": "G"
+    },
+    "pokemon_form_h": {
+        "EN": "H"
+    },
+    "pokemon_form_i": {
+        "EN": "I"
+    },
+    "pokemon_form_j": {
+        "EN": "J"
+    },
+    "pokemon_form_k": {
+        "EN": "K"
+    },
+    "pokemon_form_l": {
+        "EN": "L"
+    },
+    "pokemon_form_m": {
+        "EN": "M"
+    },
+    "pokemon_form_n": {
+        "EN": "N"
+    },
+    "pokemon_form_o": {
+        "EN": "O"
+    },
+    "pokemon_form_p": {
+        "EN": "P"
+    },
+    "pokemon_form_q": {
+        "EN": "Q"
+    },
+    "pokemon_form_r": {
+        "EN": "R"
+    },
+    "pokemon_form_s": {
+        "EN": "S"
+    },
+    "pokemon_form_t": {
+        "EN": "T"
+    },
+    "pokemon_form_u": {
+        "EN": "U"
+    },
+    "pokemon_form_v": {
+        "EN": "V"
+    },
+    "pokemon_form_w": {
+        "EN": "W"
+    },
+    "pokemon_form_x": {
+        "EN": "X"
+    },
+    "pokemon_form_y": {
+        "EN": "Y"
+    },
+    "pokemon_form_z": {
+        "EN": "Z"
+    },
+    "pokemon_form_exclamation_point": {
+        "EN": "Exclamation Point",
+        "FR": "!",
+        "DE": "!",
+        "RU": "!"
+    },
+    "pokemon_form_question_mark": {
+        "EN": "Question Mark",
+        "FR": "?",
+        "DE": "?",
+        "RU": "?"
+    },
+    "pokemon_form_normal": {
+        "EN": "Normal",
+        "IT": "Normale",
+        "RU": "Нормальный"
+    },
+    "pokemon_form_sunny": {
+        "PT-BR": "Ensolarada",
+        "EN": "Sunny",
+        "FR": "Solaire",
+        "DE": "Sonnenform",
+        "IT": "Sole",
+        "RU": "Солнечная форма",
+        "ES": "Sol"
+    },
+    "pokemon_form_rainy": {
+        "EN": "Rainy",
+        "FR": "Eau de pluie",
+        "DE": "Regenform",
+        "RU": "Дождливая форма"
+    },
+    "pokemon_form_snowy": {
+        "EN": "Snowy",
+        "FR": "Blizzard",
+        "DE": "Schneeform",
+        "RU": "Снежная форма"
+    },
+    "pokemon_form_attack": {
+        "PT-BR": "Ataque",
+        "EN": "Attack",
+        "FR": "Attaque",
+        "DE": "Angriffsform",
+        "IT": "Attacco",
+        "RU": "Атакующая форма",
+        "ES": "Ataque"
+    },
+    "pokemon_form_defense": {
+        "PT-BR": "Defesa",
+        "EN": "Defense",
+        "FR": "Défense",
+        "DE": "Verteidigungsform",
+        "IT": "Difesa",
+        "RU": "Защитная форма",
+        "ES": "Defensa"
+    },
+    "pokemon_form_speed": {
+        "PT-BR": "Velocidade",
+        "EN": "Speed",
+        "FR": "Vitesse",
+        "DE": "Initiativeform",
+        "IT": "Velocità",
+        "RU": "Скоростная форма",
+        "ES": "Velocidad"
+    },
+    "pokemon_form_00": {
+        "EN": "00"
+    },
+    "pokemon_form_01": {
+        "EN": "01"
+    },
+    "pokemon_form_02": {
+        "EN": "02"
+    },
+    "pokemon_form_03": {
+        "EN": "03"
+    },
+    "pokemon_form_04": {
+        "EN": "04"
+    },
+    "pokemon_form_05": {
+        "EN": "05"
+    },
+    "pokemon_form_06": {
+        "EN": "06"
+    },
+    "pokemon_form_07": {
+        "EN": "07"
+    },
+    "pokemon_form_alola": {
+        "EN": "Alola",
+        "RU": "Алольская форма"
+    },
+    "pokemon_form_frost_rotom": {
+        "PT-BR": "Rotom Congelante",
+        "EN": "Frost Rotom",
+        "FR": "Motisma Froid",
+        "DE": "Frost",
+        "IT": "Rotom Gelo",
+        "RU": "Холодильник",
+        "ES": "Rotom Frío"
+    },
+    "pokemon_form_fan_rotom": {
+        "PT-BR": "Rotom Ventilador",
+        "EN": "Fan Rotom",
+        "FR": "Motisma Hélice",
+        "DE": "Wirbel",
+        "IT": "Rotom Vortice",
+        "RU": "Вентилятор",
+        "ES": "Rotom Ventilador"
+    },
+    "pokemon_form_mow_rotom": {
+        "PT-BR": "Rotom Corte",
+        "EN": "Mow Rotom",
+        "FR": "Motisma Tonte",
+        "DE": "Schneid",
+        "IT": "Rotom Taglio",
+        "RU": "Газонокосилка",
+        "ES": "Rotom Corte"
+    },
+    "pokemon_form_wash_rotom": {
+        "PT-BR": "Rotom Lavagem",
+        "EN": "Wash Rotom",
+        "FR": "Motisma Lavage",
+        "DE": "Wasch",
+        "IT": "Rotom Lavaggio",
+        "RU": "Стиралка",
+        "ES": "Rotom Lavado"
+    },
+    "pokemon_form_heat_rotom": {
+        "PT-BR": "Rotom Calor",
+        "EN": "Heat Rotom",
+        "FR": "Motisma Chaleur",
+        "DE": "Hitze",
+        "IT": "Rotom Calore",
+        "RU": "Обогреватель",
+        "ES": "Rotom Calor"
+    },
+    "pokemon_form_plant_cloak": {
+        "PT-BR": "Manto Vegetal",
+        "EN": "Plant Cloak",
+        "FR": "Cape Plante",
+        "DE": "Pflanzenumhang",
+        "IT": "Manto Pianta",
+        "RU": "Растительный покров",
+        "ES": "Tronco Planta"
+    },
+    "pokemon_form_sandy_cloak": {
+        "PT-BR": "Manto Arenoso",
+        "EN": "Sandy Cloak",
+        "FR": "Cape Sable",
+        "DE": "Sandumhang",
+        "IT": "Manto Sabbia",
+        "RU": "Песчанный покров",
+        "ES": "Tronco Arena"
+    },
+    "pokemon_form_trash_cloak": {
+        "PT-BR": "Manto de Lixo",
+        "EN": "Trash Cloak",
+        "FR": "Cape Déchet",
+        "DE": "Lumpenumhang",
+        "IT": "Manto Scarti",
+        "RU": "Мусорный покров",
+        "ES": "Tronco Basura"
+    },
+    "pokemon_form_altered_forme": {
+        "PT-BR": "Forma Alterada",
+        "EN": "Altered Forme",
+        "FR": "Forme Alternative",
+        "DE": "Wandel",
+        "IT": "Forma Alterata",
+        "RU": "Изменённая форма",
+        "ES": "Forma Modificada"
+    },
+    "pokemon_form_origin_forme": {
+        "PT-BR": "Forma Origem",
+        "EN": "Origin Forme",
+        "FR": "Forme Originelle",
+        "DE": "Urform",
+        "IT": "Forma Originale",
+        "RU": "Исходная форма",
+        "ES": "Forma Origen"
+    },
+    "pokemon_form_sky_forme": {
+        "PT-BR": "Forma Céu",
+        "EN": "Sky Forme",
+        "FR": "Forme Céleste",
+        "DE": "Zenit",
+        "IT": "Forma Cielo",
+        "RU": "Небесная форма",
+        "ES": "Forma Cielo"
+    },
+    "pokemon_form_land_forme": {
+        "PT-BR": "Forma Terrestre",
+        "EN": "Land Forme",
+        "FR": "Forme Terrestre",
+        "DE": "Land",
+        "IT": "Forma Terra",
+        "RU": "Земная форма",
+        "ES": "Forma Tierra"
+    },
+    "pokemon_form_overcast_form": {
+        "PT-BR": "Forma Nublada",
+        "EN": "Overcast Form",
+        "FR": "Temps Couvert",
+        "DE": "Wolkenform",
+        "IT": "Forma Nuvola",
+        "RU": "Пасмурная форма",
+        "ES": "Forma Encapotado"
+    },
+    "pokemon_form_west_sea": {
+        "PT-BR": "Mar Ocidental",
+        "EN": "West Sea",
+        "FR": "Mer Occident",
+        "DE": "Westliches Meer",
+        "IT": "Mare Ovest",
+        "RU": "Западно-морская форма",
+        "ES": "Mar Oeste"
+    },
+    "pokemon_form_east_sea": {
+        "PT-BR": "Mar Leste",
+        "EN": "East Sea",
+        "FR": "Mer Orient",
+        "DE": "Östliches Meer",
+        "IT": "Mare Est",
+        "RU": "Восточно-морская форма",
+        "ES": "Mar Este"
+    },
+    "pokemon_form_fighting": {
+        "PT-BR": "Lutador",
+        "EN": "Fighting",
+        "FR": "Combat",
+        "DE": "Kampf",
+        "IT": "Lotta",
+        "RU": "Боевая форма",
+        "ES": "Lucha"
+    },
+    "pokemon_form_flying": {
+        "PT-BR": "Voador",
+        "EN": "Flying",
+        "FR": "Vol",
+        "DE": "Flug",
+        "IT": "Volante",
+        "RU": "Летающая форма",
+        "ES": "Volador"
+    },
+    "pokemon_form_poison": {
+        "PT-BR": "Venenoso",
+        "EN": "Poison",
+        "DE": "Gift",
+        "IT": "Veleno",
+        "RU": "Ядовитая форма",
+        "ES": "Veneno"
+    },
+    "pokemon_form_ground": {
+        "PT-BR": "Terrestre",
+        "EN": "Ground",
+        "FR": "Sol",
+        "DE": "Boden",
+        "IT": "Terra",
+        "RU": "Земляная форма",
+        "ES": "Tierra"
+    },
+    "pokemon_form_rock": {
+        "PT-BR": "Pedra",
+        "EN": "Rock",
+        "FR": "Roche",
+        "DE": "Gestein",
+        "IT": "Roccia",
+        "RU": "Каменная форма",
+        "ES": "Roca"
+    },
+    "pokemon_form_bug": {
+        "PT-BR": "Inseto",
+        "EN": "Bug",
+        "FR": "Insecte",
+        "DE": "Käfer",
+        "IT": "Coleottero",
+        "RU": "Жучья форма",
+        "ES": "Bicho"
+    },
+    "pokemon_form_ghost": {
+        "PT-BR": "Fantasma",
+        "EN": "Ghost",
+        "FR": "Spectre",
+        "DE": "Geist",
+        "IT": "Spettro",
+        "RU": "Призрачная форма",
+        "ES": "Fantasma"
+    },
+    "pokemon_form_steel": {
+        "PT-BR": "Aço",
+        "EN": "Steel",
+        "FR": "Acier",
+        "DE": "Stahl",
+        "IT": "Acciaio",
+        "RU": "Стальная форма",
+        "ES": "Acero"
+    },
+    "pokemon_form_fire": {
+        "PT-BR": "Fogo",
+        "EN": "Fire",
+        "FR": "Feu",
+        "DE": "Feuer",
+        "IT": "Fuoco",
+        "RU": "Огненная форма",
+        "ES": "Fuego"
+    },
+    "pokemon_form_water": {
+        "PT-BR": "Água",
+        "EN": "Water",
+        "FR": "Eau",
+        "DE": "Wasser",
+        "IT": "Acqua",
+        "RU": "Водная форма",
+        "ES": "Agua"
+    },
+    "pokemon_form_grass": {
+        "PT-BR": "Planta",
+        "EN": "Grass",
+        "FR": "Plante",
+        "DE": "Pflanze",
+        "IT": "Erba",
+        "RU": "Травяная форма",
+        "ES": "Planta"
+    },
+    "pokemon_form_electric": {
+        "PT-BR": "Elétrico",
+        "EN": "Electric",
+        "FR": "Électrik",
+        "DE": "Elektro",
+        "IT": "Elettro",
+        "RU": "Электрическая форма",
+        "ES": "Eléctrico"
+    },
+    "pokemon_form_psychic": {
+        "PT-BR": "Psíquico",
+        "EN": "Psychic",
+        "FR": "Psy",
+        "DE": "Psycho",
+        "IT": "Psico",
+        "RU": "Психическая форма",
+        "ES": "Psíquico"
+    },
+    "pokemon_form_ice": {
+        "PT-BR": "Gelo",
+        "EN": "Ice",
+        "FR": "Glace",
+        "DE": "Eis",
+        "IT": "Ghiaccio",
+        "RU": "Ледяная форма",
+        "ES": "Hielo"
+    },
+    "pokemon_form_dragon": {
+        "PT-BR": "Dragão",
+        "EN": "Dragon",
+        "DE": "Drache",
+        "IT": "Drago",
+        "RU": "Драконья форма",
+        "ES": "Dragón"
+    },
+    "pokemon_form_dark": {
+        "PT-BR": "Sombrio",
+        "EN": "Dark",
+        "FR": "Ténèbres",
+        "DE": "Unlicht",
+        "IT": "Buio",
+        "RU": "Темная форма",
+        "ES": "Siniestro"
+    },
+    "pokemon_form_fairy": {
+        "PT-BR": "Fada",
+        "EN": "Fairy",
+        "FR": "Fée",
+        "DE": "Fee",
+        "IT": "Folletto",
+        "RU": "Феечная форма",
+        "ES": "Hada"
+    },
+    "pokemon_form_08": {
+        "EN": "08"
+    },
+    "pokemon_form_09": {
+        "EN": "09"
+    },
+    "pokemon_form_red-striped": {
+        "PT-BR": "Listras Vermelhas",
+        "EN": "Red-Striped",
+        "FR": "Motif Rouge",
+        "DE": "Rotlinig",
+        "IT": "Forma Linearossa",
+        "RU": "Красно-полосатая форма",
+        "ES": "Forma Raya Roja"
+    },
+    "pokemon_form_blue-striped": {
+        "PT-BR": "Listras Azuis",
+        "EN": "Blue-Striped",
+        "FR": "Motif Bleu",
+        "DE": "Blaulinig",
+        "IT": "Forma Lineablu",
+        "RU": "Сине-полосатая форма",
+        "ES": "Forma Raya Azul"
+    },
+    "pokemon_form_standard": {
+        "EN": "Standard",
+        "RU": "Обычная форма"
+    },
+    "pokemon_form_zen": {
+        "EN": "Zen",
+        "DE": "Trance",
+        "RU": "Дзен"
+    },
+    "pokemon_form_incarnate_forme": {
+        "PT-BR": "Forma Materializada",
+        "EN": "Incarnate Forme",
+        "FR": "Forme Avatar",
+        "DE": "Inkarnationsform",
+        "IT": "Forma Incarnazione",
+        "RU": "Воплощённая форма",
+        "ES": "Forma Avatar"
+    },
+    "pokemon_form_therian_forme": {
+        "PT-BR": "Forma Therian",
+        "EN": "Therian Forme",
+        "FR": "Forme Totémique",
+        "DE": "Tiergeistform",
+        "IT": "Forma Totem",
+        "RU": "Форма Териан",
+        "ES": "Forma Tótem"
+    },
+    "pokemon_form_black_kyurem": {
+        "PT-BR": "Kyurem Preto",
+        "EN": "Black Kyurem",
+        "FR": "Kyurem Noir",
+        "DE": "Schwarz",
+        "IT": "Kyurem Nero",
+        "RU": "Чёрный Кьюрем",
+        "ES": "Kyurem Negro"
+    },
+    "pokemon_form_white_kyurem": {
+        "PT-BR": "Kyurem Branco",
+        "EN": "White Kyurem",
+        "FR": "Kyurem Blanc",
+        "DE": "Weiß",
+        "IT": "Kyurem Bianco",
+        "RU": "Белый Кьюрем",
+        "ES": "Kyurem Blanco"
+    },
+    "pokemon_form_ordinary_form": {
+        "PT-BR": "Forma Comum",
+        "EN": "Ordinary Form",
+        "FR": "Aspect Normal",
+        "DE": "Standard",
+        "IT": "Forma Normale",
+        "RU": "Обычная форма",
+        "ES": "Forma Habitual"
+    },
+    "pokemon_form_resolute_form": {
+        "PT-BR": "Forma Resoluta",
+        "EN": "Resolute Form",
+        "FR": "Resolute",
+        "DE": "Resolut",
+        "IT": "Forma Risoluta",
+        "RU": "Решительная форма",
+        "ES": "Forma Brío"
+    },
+    "pokemon_form_aria_forme": {
+        "PT-BR": "Forma Ária",
+        "EN": "Aria Forme",
+        "FR": "Forme Chant",
+        "DE": "Gesang",
+        "IT": "Forma Canto",
+        "RU": "Форма Арии",
+        "ES": "Forma Lírica"
+    },
+    "pokemon_form_pirouette_forme": {
+        "PT-BR": "Forma Pirueta",
+        "EN": "Pirouette Forme",
+        "FR": "Pirouette",
+        "DE": "Tanz",
+        "IT": "Forma Danza",
+        "RU": "Форма Пируэта",
+        "ES": "Forma Danza"
+    },
+    "pokemon_form_shadow": {
+        "PT-BR": "Sombroso",
+        "EN": "Shadow",
+        "FR": "Obscur",
+        "DE": "Crypto",
+        "IT": "Ombra",
+        "RU": "Теневые",
+        "ES": "Oscuro"
+    },
+    "pokemon_form_purified": {
+        "PT-BR": "Purificado",
+        "EN": "Purified",
+        "FR": "Purifié",
+        "DE": "Erlöst",
+        "IT": "Purificato",
+        "RU": "Очищенные",
+        "ES": "Purificado"
+    },
+    "pokemon_form_spring_form": {
+        "PT-BR": "Forma Primavera",
+        "EN": "Spring Form",
+        "FR": "Forme Printemps",
+        "DE": "Frühling",
+        "IT": "Forma Primavera",
+        "RU": "Весенняя форма",
+        "ES": "Forma Primavera"
+    },
+    "pokemon_form_summer_form": {
+        "PT-BR": "Forma Verão",
+        "EN": "Summer Form",
+        "FR": "Forme Été",
+        "DE": "Sommer",
+        "IT": "Forma Estate",
+        "RU": "Летняя форма",
+        "ES": "Forma Verano"
+    },
+    "pokemon_form_autumn_form": {
+        "PT-BR": "Forma Outono",
+        "EN": "Autumn Form",
+        "FR": "Forme Automne",
+        "DE": "Herbst",
+        "IT": "Forma Autunno",
+        "RU": "Осенняя форма",
+        "ES": "Forma Otoño"
+    },
+    "pokemon_form_winter_form": {
+        "PT-BR": "Forma Inverno",
+        "EN": "Winter Form",
+        "FR": "Forme Hiver",
+        "DE": "Winter",
+        "IT": "Forma Inverno",
+        "RU": "Зимняя форма",
+        "ES": "Forma Invierno"
+    },
+    "pokemon_form_shock": {
+        "EN": "Shock",
+        "FR": "Module Choc",
+        "DE": "Blitzmodul",
+        "RU": "Электрический привод"
+    },
+    "pokemon_form_burn": {
+        "EN": "Burn",
+        "FR": "Module Pyro",
+        "DE": "Flammenmodul",
+        "RU": "Огненный привод"
+    },
+    "pokemon_form_chill": {
+        "EN": "Chill",
+        "FR": "Module Cryo",
+        "DE": "Gefriermodul",
+        "RU": "Ледяной привод"
+    },
+    "pokemon_form_douse": {
+        "EN": "Douse",
+        "FR": "Module Aqua",
+        "DE": "Aquamodul",
+        "RU": "Водный привод"
+    },
+    "pokemon_form_fall_2019": {
+        "EN": "Fall 2019",
+        "FR": "Automne 2019",
+        "DE": "Herbst 2019"
+    },
+    "pokemon_form_vs_2019": {
+        "EN": "Vs 2019"
+    },
+    "pokemon_form_galarian": {
+        "EN": "Galarian"
+    },
+    "pokemon_form_copy_2019": {
+        "EN": "Copy 2019",
+        "FR": "Clone 2019",
+        "RU": "Клон 2019"
+    },
+    "pokemon_form_spring_2020": {
+        "EN": "Spring 2020",
+        "FR": "Printemps 2020",
+        "DE": "Frühjahr 2020",
+        "RU": "Весна 2020"
+    },
+    "pokemon_form_female": {
+        "PT-BR": "Fêmea",
+        "EN": "Female",
+        "FR": "Femelle",
+        "DE": "Weiblich",
+        "IT": "Femmina",
+        "RU": "Женский",
+        "ES": "Hembra"
+    },
+    "pokemon_form_costume_2020": {
+        "EN": "Costume 2020",
+        "DE": "Kostüm 2020",
+        "RU": "Костюм 2020"
+    },
+    "pokemon_form_galarian_standard": {
+        "EN": "Galarian Standard",
+        "DE": "Galar Normal",
+        "RU": "Галарская форма"
+    },
+    "pokemon_form_galarian_zen": {
+        "EN": "Galarian Zen",
+        "DE": "Galar Trance",
+        "RU": "Галарская форма Дзен"
+    },
+    "pokemon_form_low_key_form": {
+        "PT-BR": "Forma Grave",
+        "EN": "Low Key Form",
+        "DE": "Tief-Form",
+        "IT": "Forma Basso",
+        "RU": "Сдержанная форма",
+        "ES": "Forma Grave"
+    },
+    "pokemon_form_amped_form": {
+        "PT-BR": "Forma Aguda",
+        "EN": "Amped Form",
+        "DE": "Hoch-Form",
+        "IT": "Forma Melodia",
+        "RU": "Восторженная форма",
+        "ES": "Forma Aguda"
+    },
+    "pokemon_form_phony_form": {
+        "PT-BR": "Forma Falsificada",
+        "EN": "Phony Form",
+        "DE": "Fälschungsform",
+        "IT": "Forma Contraffatta",
+        "RU": "Фальшивая форма",
+        "ES": "Forma Falsificada"
+    },
+    "pokemon_form_antique_form": {
+        "PT-BR": "Forma Autêntica",
+        "EN": "Antique Form",
+        "DE": "Originalform",
+        "IT": "Forma Autentica",
+        "RU": "Антикварная форма",
+        "ES": "Forma Genuina"
+    },
+    "pokemon_form_ice_face": {
+        "PT-BR": "Cara de Gelo",
+        "EN": "Ice Face",
+        "DE": "Tiefkühlkopf",
+        "IT": "Gelofaccia",
+        "RU": "Ледяное лицо",
+        "ES": "Cara de Hielo"
+    },
+    "pokemon_form_noice_face": {
+        "PT-BR": "Cara Degelada",
+        "EN": "Noice Face",
+        "DE": "Wohlfühlkopf",
+        "IT": "Liquefaccia",
+        "RU": "Неледяное лицо",
+        "ES": "Cara Deshielo"
+    },
+    "pokemon_form_male": {
+        "PT-BR": "Macho",
+        "EN": "Male",
+        "FR": "Mâle",
+        "DE": "Männlich",
+        "IT": "Maschio",
+        "RU": "Мужская форма",
+        "ES": "Macho"
+    },
+    "pokemon_form_full_belly_mode": {
+        "PT-BR": "Forma Saciada",
+        "EN": "Full Belly Mode",
+        "DE": "Pappsatt",
+        "IT": "Motivo Panciapiena",
+        "RU": "Режим Полный Живот",
+        "ES": "Forma Saciada"
+    },
+    "pokemon_form_hangry_mode": {
+        "PT-BR": "Forma Voraz",
+        "EN": "Hangry Mode",
+        "DE": "Kohldampf",
+        "IT": "Motivo Panciavuota",
+        "RU": "Злоголодный режим",
+        "ES": "Forma Voraz"
+    },
+    "pokemon_form_crowned_sword": {
+        "PT-BR": "Espada Coroada",
+        "EN": "Crowned Sword",
+        "DE": "König des Schwertes",
+        "IT": "Re delle Spade",
+        "RU": "Коронованный Меч",
+        "ES": "Espada Suprema"
+    },
+    "pokemon_form_hero_of_many_battles": {
+        "PT-BR": "Herói Veterano",
+        "EN": "Hero of Many Battles",
+        "DE": "Heldenhafter Krieger",
+        "IT": "Eroe di Mille Lotte",
+        "RU": "Герой многих битв",
+        "ES": "Guerrero Avezado"
+    },
+    "pokemon_form_crowned_shield": {
+        "PT-BR": "Escudo Coroado",
+        "EN": "Crowned Shield",
+        "DE": "König des Schildes",
+        "IT": "Re degli Scudi",
+        "RU": "Коронованный Щит",
+        "ES": "Escudo Supremo"
+    },
+    "pokemon_form_eternamax": {
+        "EN": "Eternamax",
+        "DE": "Unendynamax",
+        "RU": "Этернамакс"
+    },
+    "pokemon_form_ten_percent": {
+        "EN": "Ten Percent",
+        "DE": "10%",
+        "RU": "10% форма"
+    },
+    "pokemon_form_fifty_percent": {
+        "EN": "Fifty Percent",
+        "DE": "50%",
+        "RU": "50% форма"
+    },
+    "pokemon_form_complete": {
+        "EN": "Complete",
+        "DE": "Optimum",
+        "RU": "Завершенная форма"
+    },
+    "pokemon_form_archipelago": {
+        "EN": "Archipelago"
+    },
+    "pokemon_form_continental": {
+        "EN": "Continental"
+    },
+    "pokemon_form_elegant": {
+        "EN": "Elegant"
+    },
+    "pokemon_form_fancy": {
+        "EN": "Fancy"
+    },
+    "pokemon_form_garden": {
+        "EN": "Garden"
+    },
+    "pokemon_form_high_plains": {
+        "EN": "High Plains"
+    },
+    "pokemon_form_icy_snow": {
+        "EN": "Icy Snow"
+    },
+    "pokemon_form_jungle": {
+        "EN": "Jungle"
+    },
+    "pokemon_form_marine": {
+        "EN": "Marine"
+    },
+    "pokemon_form_meadow": {
+        "EN": "Meadow"
+    },
+    "pokemon_form_modern": {
+        "EN": "Modern"
+    },
+    "pokemon_form_monsoon": {
+        "EN": "Monsoon"
+    },
+    "pokemon_form_ocean": {
+        "EN": "Ocean"
+    },
+    "pokemon_form_pokeball": {
+        "EN": "Pokeball"
+    },
+    "pokemon_form_polar": {
+        "EN": "Polar"
+    },
+    "pokemon_form_river": {
+        "EN": "River"
+    },
+    "pokemon_form_sandstorm": {
+        "EN": "Sandstorm"
+    },
+    "pokemon_form_savanna": {
+        "EN": "Savanna"
+    },
+    "pokemon_form_tundra": {
+        "EN": "Tundra"
+    },
+    "pokemon_form_red_flower": {
+        "EN": "Red Flower",
+        "FR": "Red",
+        "DE": "Rotblütler",
+        "RU": "Красная форма"
+    },
+    "pokemon_form_yellow_flower": {
+        "EN": "Yellow Flower",
+        "FR": "Yellow",
+        "DE": "Gelbblütler",
+        "RU": "Желтая форма"
+    },
+    "pokemon_form_orange_flower": {
+        "EN": "Orange Flower",
+        "FR": "Orange",
+        "DE": "Orangeblütler",
+        "RU": "Оранжевая форма"
+    },
+    "pokemon_form_blue_flower": {
+        "EN": "Blue Flower",
+        "FR": "Blue",
+        "DE": "Blaublütler",
+        "RU": "Синяя форма"
+    },
+    "pokemon_form_white_flower": {
+        "EN": "White Flower",
+        "FR": "White",
+        "DE": "Weißblütler",
+        "RU": "Белая форма"
+    },
+    "pokemon_form_natural": {
+        "EN": "Natural",
+        "DE": "Zottelform",
+        "RU": "Исходная форма"
+    },
+    "pokemon_form_heart_trim": {
+        "EN": "Heart Trim",
+        "FR": "Heart",
+        "DE": "Herzchenschnitt",
+        "RU": "Сердечная форма"
+    },
+    "pokemon_form_star_trim": {
+        "EN": "Star Trim",
+        "FR": "Star",
+        "DE": "Sternchenschnitt",
+        "RU": "Звездная форма"
+    },
+    "pokemon_form_diamond_trim": {
+        "EN": "Diamond Trim",
+        "FR": "Diamond",
+        "DE": "Diamantenschnitt",
+        "RU": "Бриллиантовая форма"
+    },
+    "pokemon_form_debutante_trim": {
+        "EN": "Debutante Trim",
+        "FR": "Debutante",
+        "DE": "Fräuleinschnitt",
+        "RU": "Дебютантская форма"
+    },
+    "pokemon_form_matron_trim": {
+        "EN": "Matron Trim",
+        "FR": "Matron",
+        "DE": "Damenschnitt",
+        "RU": "Матронская форма"
+    },
+    "pokemon_form_dandy_trim": {
+        "EN": "Dandy Trim",
+        "FR": "Dandy",
+        "DE": "Kavaliersschnitt",
+        "RU": "Светская форма"
+    },
+    "pokemon_form_la_reine_trim": {
+        "EN": "La Reine Trim",
+        "FR": "La Reine",
+        "DE": "Königinnenschnitt",
+        "RU": "Форма Ла Рейне"
+    },
+    "pokemon_form_kabuki_trim": {
+        "EN": "Kabuki Trim",
+        "FR": "Kabuki",
+        "DE": "Kabuki-Schnitt",
+        "RU": "Форма кабуки"
+    },
+    "pokemon_form_pharaoh_trim": {
+        "EN": "Pharaoh Trim",
+        "FR": "Pharaoh",
+        "DE": "Herrscherschnitt",
+        "RU": "Форма фараона"
+    },
+    "pokemon_form_shield": {
+        "EN": "Shield",
+        "DE": "Schild",
+        "RU": "Форма щита"
+    },
+    "pokemon_form_blade": {
+        "EN": "Blade",
+        "DE": "Schwert",
+        "RU": "Форма меча"
+    },
+    "pokemon_form_small": {
+        "EN": "Small",
+        "FR": "Mini",
+        "DE": "S",
+        "RU": "Маленькая форма"
+    },
+    "pokemon_form_average": {
+        "EN": "Average",
+        "FR": "Normale",
+        "DE": "M",
+        "RU": "Средняя форма"
+    },
+    "pokemon_form_large": {
+        "EN": "Large",
+        "FR": "Maxi",
+        "DE": "L",
+        "RU": "Большая форма"
+    },
+    "pokemon_form_super": {
+        "EN": "Super",
+        "FR": "Ultra",
+        "DE": "XL",
+        "RU": "Огромная форма"
+    },
+    "pokemon_form_neutral": {
+        "EN": "Neutral",
+        "RU": "Нейтральная форма"
+    },
+    "pokemon_form_active": {
+        "EN": "Active",
+        "DE": "Aktiv",
+        "RU": "Активная форма"
+    },
+    "pokemon_form_confined": {
+        "EN": "Confined",
+        "DE": "Beschränkt",
+        "RU": "Невольная форма"
+    },
+    "pokemon_form_unbound": {
+        "EN": "Unbound",
+        "DE": "Ungebunden",
+        "RU": "Высвобожденная форма"
+    },
+    "pokemon_form_costume_2020_deprecated": {
+        "EN": "Costume 2020 Deprecated",
+        "DE": "Kostüm 2020 Deprecated",
+        "RU": "Костюм 2020 Устаревший"
+    },
+    "pokemon_form_adventure_hat_2020": {
+        "EN": "Adventure Hat 2020",
+        "DE": "Abenteuerhut 2020"
+    },
+    "pokemon_form_winter_2020": {
+        "EN": "Winter 2020"
+    },
+    "pokemon_form_kariyushi": {
+        "EN": "Kariyushi",
+        "RU": "Кариюши"
+    },
+    "pokemon_form_pop_star": {
+        "EN": "Pop Star",
+        "RU": "Поп-звезда"
+    },
+    "pokemon_form_rock_star": {
+        "EN": "Rock Star",
+        "RU": "Рок-звезда"
+    },
+    "pokemon_form_flying_5th_anniv": {
+        "EN": "Flying 5th Anniv",
+        "DE": "Fliegendes 5. Jubiläum",
+        "RU": "Пятилетняя годовщина"
+    },
+    "pokemon_form_baile_style": {
+        "PT-BR": "Estilo Flamenco",
+        "EN": "Baile Style",
+        "FR": "Style Flamenco",
+        "DE": "Flamenco",
+        "IT": "Stile Flamenco",
+        "RU": "Бальный стиль",
+        "ES": "Estilo Apasionado"
+    },
+    "pokemon_form_pom-pom_style": {
+        "PT-BR": "Estilo Pompom",
+        "EN": "Pom-Pom Style",
+        "FR": "Style Pom-Pom",
+        "DE": "Cheerleading",
+        "IT": "Stile Cheerdance",
+        "RU": "Стиль Пом-Пом",
+        "ES": "Estilo Animado"
+    },
+    "pokemon_form_pa’u_style": {
+        "PT-BR": "Estilo Hula",
+        "EN": "Pa’u Style",
+        "FR": "Style Hula",
+        "DE": "Hula",
+        "IT": "Stile Hula",
+        "RU": "Стиль Пау",
+        "ES": "Estilo Plácido"
+    },
+    "pokemon_form_sensu_style": {
+        "PT-BR": "Estilo Leque",
+        "EN": "Sensu Style",
+        "FR": "Style Buyô",
+        "DE": "Buyo",
+        "IT": "Stile Buyō",
+        "RU": "Чувственный стиль",
+        "ES": "Estilo Refinado"
+    },
+    "pokemon_form_midday_form": {
+        "PT-BR": "Forma Diurna",
+        "EN": "Midday Form",
+        "FR": "Forme Diurne",
+        "DE": "Tag",
+        "IT": "Forma Giorno",
+        "RU": "Полуденная форма",
+        "ES": "Forma Diurna"
+    },
+    "pokemon_form_midnight_form": {
+        "PT-BR": "Forma Noturna",
+        "EN": "Midnight Form",
+        "FR": "Forme Nocturne",
+        "DE": "Nacht",
+        "IT": "Forma Notte",
+        "RU": "Полуночная форма",
+        "ES": "Forma Nocturna"
+    },
+    "pokemon_form_dusk_form": {
+        "PT-BR": "Forma Crepúsculo",
+        "EN": "Dusk Form",
+        "FR": "Forme Crépusculaire",
+        "DE": "Zwielichtform",
+        "IT": "Forma Crepuscolo",
+        "RU": "Сумеречная форма",
+        "ES": "Forma Crepuscular"
+    },
+    "pokemon_form_solo_form": {
+        "PT-BR": "Forma Individual",
+        "EN": "Solo Form",
+        "DE": "Einzel",
+        "IT": "Forma Individuale",
+        "RU": "Форма соло",
+        "ES": "Forma Individual"
+    },
+    "pokemon_form_school_form": {
+        "PT-BR": "Forma Cardume",
+        "EN": "School Form",
+        "DE": "Schwarm",
+        "IT": "Forma Banco",
+        "RU": "Форма стая",
+        "ES": "Forma Banco"
+    },
+    "pokemon_form_meteor_blue": {
+        "EN": "Meteor Blue",
+        "DE": "Meteor",
+        "RU": "Метеорная форма"
+    },
+    "pokemon_form_blue_plumage": {
+        "PT-BR": "Plumagem Azul",
+        "EN": "Blue Plumage",
+        "FR": "Plumage Bleu",
+        "DE": "Blaugefiedert",
+        "IT": "Piume Azzurre",
+        "RU": "Синее оперение",
+        "ES": "Plumaje Azul"
+    },
+    "pokemon_form_green_plumage": {
+        "PT-BR": "Plumagem Verde",
+        "EN": "Green Plumage",
+        "FR": "Plumage Vert",
+        "DE": "Grüngefiedert",
+        "IT": "Piume Verdi",
+        "RU": "Зелёное оперение",
+        "ES": "Plumaje Verde"
+    },
+    "pokemon_form_indigo": {
+        "EN": "Indigo",
+        "DE": "Hellblau",
+        "RU": "Индиго форма"
+    },
+    "pokemon_form_orange": {
+        "EN": "Orange",
+        "RU": "Оранжевая форма"
+    },
+    "pokemon_form_red": {
+        "EN": "Red",
+        "DE": "Rot",
+        "RU": "Красная форма"
+    },
+    "pokemon_form_violet": {
+        "EN": "Violet",
+        "DE": "Violett",
+        "RU": "Фиолетовая форма"
+    },
+    "pokemon_form_yellow_plumage": {
+        "PT-BR": "Plumagem Amarela",
+        "EN": "Yellow Plumage",
+        "FR": "Plumage Jaune",
+        "DE": "Gelbgefiedert",
+        "IT": "Piume Gialle",
+        "RU": "Жёлтое оперение",
+        "ES": "Plumaje Amarillo"
+    },
+    "pokemon_form_busted_form": {
+        "PT-BR": "Forma Desmascarada",
+        "EN": "Busted Form",
+        "DE": "Entlarvt",
+        "IT": "Forma Smascherata",
+        "RU": "Сломанная форма",
+        "ES": "Forma Descubierta"
+    },
+    "pokemon_form_disguised_form": {
+        "PT-BR": "Forma Mascarada",
+        "EN": "Disguised Form",
+        "DE": "Standard",
+        "IT": "Forma Mascherata",
+        "RU": "Замаскированная форма",
+        "ES": "Forma Encubierta"
+    },
+    "pokemon_form_dusk_mane": {
+        "EN": "Dusk Mane",
+        "DE": "Abendmähne",
+        "RU": "Грива заката"
+    },
+    "pokemon_form_dawn_wings": {
+        "EN": "Dawn Wings",
+        "DE": "Morgenschwingen",
+        "RU": "Крылья рассвета"
+    },
+    "pokemon_form_ultra": {
+        "EN": "Ultra",
+        "RU": "Ультра форма"
+    },
+    "pokemon_form_original_color": {
+        "EN": "Original Color",
+        "DE": "Originalfarbe",
+        "RU": "Исходный цвет"
+    },
+    "pokemon_form_single_strike": {
+        "EN": "Single Strike",
+        "DE": "Fokussierter Stil",
+        "RU": "Фома одного удара"
+    },
+    "pokemon_form_rapid_strike": {
+        "EN": "Rapid Strike",
+        "DE": "Fließender Stil",
+        "RU": "Форма множества ударов"
+    },
+    "pokemon_form_ice_rider": {
+        "EN": "Ice Rider",
+        "DE": "Schimmelreiter",
+        "RU": "Ледяной всадник"
+    },
+    "pokemon_form_shadow_rider": {
+        "EN": "Shadow Rider",
+        "RU": "Теневой всадник"
+    },
+    "pokemon_form_hisuian": {
+        "EN": "Hisuian"
+    },
+    "pokemon_form_flying_okinawa": {
+        "EN": "Flying Okinawa"
+    },
+    "pokemon_form_meteor_green": {
+        "EN": "Meteor Green"
+    },
+    "pokemon_form_meteor_indigo": {
+        "EN": "Meteor Indigo"
+    },
+    "pokemon_form_meteor_orange": {
+        "EN": "Meteor Orange"
+    },
+    "pokemon_form_meteor_red": {
+        "EN": "Meteor Red"
+    },
+    "pokemon_form_meteor_violet": {
+        "EN": "Meteor Violet"
+    },
+    "pokemon_form_meteor_yellow": {
+        "EN": "Meteor Yellow"
+    },
+    "pokemon_form_white-striped_form": {
+        "PT-BR": "Forma Listras Brancas",
+        "EN": "White-Striped Form",
+        "FR": "Motif Blanc",
+        "DE": "Weißlinige Form",
+        "IT": "Forma Lineabianca",
+        "RU": "Белая полосатая форма",
+        "ES": "Forma Raya Blanca"
+    },
+    "pokemon_form_gofest_2022": {
+        "EN": "Gofest 2022"
+    },
+    "pokemon_form_wcs_2022": {
+        "EN": "Wcs 2022"
+    },
+    "pokemon_form_tshirt_01": {
+        "EN": "Tshirt 01"
+    },
+    "pokemon_form_tshirt_02": {
+        "EN": "Tshirt 02"
+    },
+    "pokemon_form_flying_01": {
+        "EN": "Flying 01"
+    },
+    "pokemon_form_flying_02": {
+        "EN": "Flying 02"
+    },
+    "pokemon_form_complete_ten_percent": {
+        "EN": "Complete Ten Percent"
+    },
+    "pokemon_form_complete_fifty_percent": {
+        "EN": "Complete Fifty Percent"
+    },
+    "pokemon_form_gotour_2024_a": {
+        "EN": "Gotour 2024 A"
+    },
+    "pokemon_form_gotour_2024_b": {
+        "EN": "Gotour 2024 B"
+    },
+    "pokemon_form_gotour_2024_a_02": {
+        "EN": "Gotour 2024 A 02"
+    },
+    "pokemon_form_gotour_2024_b_02": {
+        "EN": "Gotour 2024 B 02"
+    },
+    "pokemon_form_family_of_three": {
+        "EN": "Family Of Three"
+    },
+    "pokemon_form_family_of_four": {
+        "EN": "Family Of Four"
+    },
+    "pokemon_form_white": {
+        "EN": "White"
+    },
+    "pokemon_form_zero_form": {
+        "PT-BR": "Forma Zero",
+        "EN": "Zero Form",
+        "FR": "Forme Ordinaire",
+        "DE": "Alltagsform",
+        "IT": "Forma Ingenua",
+        "RU": "Нулевая форма",
+        "ES": "Forma Ingenua"
+    },
+    "pokemon_form_curly_form": {
+        "PT-BR": "Forma Curvada",
+        "EN": "Curly Form",
+        "FR": "Forme Courbée",
+        "DE": "Gebogene Form",
+        "IT": "Forma Arcuata",
+        "RU": "Изогнутая форма",
+        "ES": "Forma Curvada"
+    },
+    "pokemon_form_droopy_form": {
+        "PT-BR": "Forma Pendular",
+        "EN": "Droopy Form",
+        "FR": "Forme Affalée",
+        "DE": "Hängende Form",
+        "IT": "Forma Adagiata",
+        "RU": "Свисающая форма",
+        "ES": "Forma Lánguida"
+    },
+    "pokemon_form_stretchy_form": {
+        "PT-BR": "Forma Estendida",
+        "EN": "Stretchy Form",
+        "FR": "Forme Raide",
+        "DE": "Gestreckte Form",
+        "IT": "Forma Tesa",
+        "RU": "Вытянутая форма",
+        "ES": "Forma Recta"
+    },
+    "pokemon_form_two-segment_form": {
+        "PT-BR": "Forma Bissegmentar",
+        "EN": "Two-Segment Form",
+        "FR": "Forme Double",
+        "DE": "Zweisegmentform",
+        "IT": "Forma Bimetamero",
+        "RU": "Двухсегментная форма",
+        "ES": "Forma Binodular"
+    },
+    "pokemon_form_three-segment_form": {
+        "PT-BR": "Forma Trissegmentar",
+        "EN": "Three-Segment Form",
+        "FR": "Forme Triple",
+        "DE": "Dreisegmentform",
+        "IT": "Forma Trimetamero",
+        "RU": "Трёхсегментная форма",
+        "ES": "Forma Trinodular"
+    },
+    "pokemon_form_apex_build": {
+        "PT-BR": "Versão Plena",
+        "EN": "Apex Build",
+        "FR": "Forme Finale",
+        "DE": "Vollkommene Gestalt",
+        "IT": "Foggia Integrale",
+        "RU": "Финальная форма",
+        "ES": "Fisonomía Plena"
+    },
+    "pokemon_form_ultimate_mode": {
+        "PT-BR": "Modo Supremo",
+        "EN": "Ultimate Mode",
+        "FR": "Mode Ultime",
+        "DE": "Kompletter Modus",
+        "IT": "Assetto Completo",
+        "RU": "Полноценный режим",
+        "ES": "Modo Pleno"
+    },
+    "pokemon_form_summer_2023": {
+        "EN": "Summer 2023"
+    },
+    "pokemon_form_summer_2023_a": {
+        "EN": "Summer 2023 A"
+    },
+    "pokemon_form_summer_2023_b": {
+        "EN": "Summer 2023 B"
+    },
+    "pokemon_form_summer_2023_c": {
+        "EN": "Summer 2023 C"
+    },
+    "pokemon_form_summer_2023_d": {
+        "EN": "Summer 2023 D"
+    },
+    "pokemon_form_paldea_combat": {
+        "EN": "Paldea Combat"
+    },
+    "pokemon_form_paldea_blaze": {
+        "EN": "Paldea Blaze"
+    },
+    "pokemon_form_paldea_aqua": {
+        "EN": "Paldea Aqua"
+    },
+    "pokemon_form_paldea": {
+        "EN": "Paldea"
+    },
+    "pokemon_form_summer_2023_e": {
+        "EN": "Summer 2023 E"
+    },
+    "pokemon_form_flying_03": {
+        "EN": "Flying 03"
+    },
+    "pokemon_form_jeju": {
+        "EN": "Jeju"
+    },
+    "pokemon_form_doctor": {
+        "EN": "Doctor"
+    },
+    "pokemon_form_wcs_2023": {
+        "EN": "Wcs 2023"
+    }
 }

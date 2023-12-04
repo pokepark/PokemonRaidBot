@@ -41,7 +41,7 @@
         "FR": "Fouet Lianes",
         "DE": "Rankenhieb",
         "IT": "Frustata",
-        "RU": "Плеть-Лиана",
+        "RU": "Плеть-лиана",
         "ES": "Látigo Cepa"
     },
     "pokemon_move_6": {
@@ -299,7 +299,7 @@
         "FR": "Crève-Cœur",
         "DE": "Herzstempel",
         "IT": "Cuorestampo",
-        "RU": "Печать-Сердце",
+        "RU": "ПечатьСердце",
         "ES": "Arrumaco"
     },
     "pokemon_move_35": {
@@ -423,7 +423,7 @@
         "FR": "Méga-Sangsue",
         "DE": "Megasauger",
         "IT": "Megassorbimento",
-        "RU": "Мега-Осушение",
+        "RU": "Мега-осушение",
         "ES": "Megaagotar"
     },
     "pokemon_move_49": {
@@ -522,7 +522,7 @@
         "FR": "Canon Graine",
         "DE": "Samenbomben",
         "IT": "Semebomba",
-        "RU": "Семя-Бомба",
+        "RU": "Семя-бомба",
         "ES": "Bomba Germen"
     },
     "pokemon_move_60": {
@@ -594,7 +594,7 @@
         "FR": "Poing Ombre",
         "DE": "Finsterfaust",
         "IT": "Pugnodombra",
-        "RU": "Теневой Кулак",
+        "RU": "Теневая форма Кулак",
         "ES": "Puño Sombra"
     },
     "pokemon_move_68": {
@@ -890,7 +890,7 @@
         "FR": "Plaie Croix",
         "DE": "Kreuzschere",
         "IT": "Forbice X",
-        "RU": "Икс-Ножницы",
+        "RU": "Икс-ножницы",
         "ES": "Tijera X"
     },
     "pokemon_move_101": {
@@ -1016,7 +1016,7 @@
         "FR": "Giga-Sangsue",
         "DE": "Gigasauger",
         "IT": "Gigassorbimento",
-        "RU": "Гига-Осушение",
+        "RU": "Гига-осушение",
         "ES": "Gigadrenado"
     },
     "pokemon_move_115": {
@@ -1043,7 +1043,7 @@
         "FR": "Lame Feuille",
         "DE": "Laubklinge",
         "IT": "Fendifoglia",
-        "RU": "Лист-Лезвие",
+        "RU": "Лист-лезвие",
         "ES": "Hoja Aguda"
     },
     "pokemon_move_118": {
@@ -1356,7 +1356,7 @@
         "FR": "Fouet Lianes",
         "DE": "Rankenhieb",
         "IT": "Frustata",
-        "RU": "Плеть-Лиана",
+        "RU": "Плеть-лиана",
         "ES": "Látigo Cepa"
     },
     "pokemon_move_215": {
@@ -1828,7 +1828,7 @@
         "FR": "Gyroballe",
         "DE": "Gyroball",
         "IT": "Vortexpalla",
-        "RU": "Гиро-Шар",
+        "RU": "Гиро-шар",
         "ES": "Giro Bola"
     },
     "pokemon_move_268": {
@@ -2306,7 +2306,7 @@
         "EN": "Giga Impact",
         "DE": "Gigastoß",
         "IT": "Gigaimpatto",
-        "RU": "Гига-Удар",
+        "RU": "Гига-удар",
         "ES": "Gigaimpacto"
     },
     "pokemon_move_322": {
@@ -2527,8 +2527,12 @@
         "FR": "Calcination",
         "DE": "Einäschern",
         "IT": "Bruciatutto",
-        "RU": " Превращение в Пепел",
+        "RU": "Превращение в Пепел",
         "ES": "Calcinación"
+    },
+    "pokemon_move_347": {
+        "EN": "Dark Void",
+        "RU": "Темная Бездна"
     },
     "pokemon_move_348": {
         "PT-BR": "Dança das Penas",
@@ -2539,14 +2543,22 @@
         "RU": "Танец с Перьями",
         "ES": "Danza Pluma"
     },
+    "pokemon_move_349": {
+        "EN": "Fiery Dance",
+        "RU": "Горячий Танец"
+    },
     "pokemon_move_350": {
         "PT-BR": "Vento de Fada",
         "EN": "Fairy Wind",
         "FR": "Vent Féérique",
         "DE": "Feenbrise",
         "IT": "Vento di Fata",
-        "RU": "Ветер Феи",
+        "RU": "Ветер Фей",
         "ES": "Viento Feérico"
+    },
+    "pokemon_move_351": {
+        "EN": "Relic Song",
+        "RU": "Древняя Песня"
     },
     "pokemon_move_352": {
         "PT-BR": "Esfera Climática",
@@ -2886,6 +2898,9 @@
         "RU": "Крылья Забвения",
         "ES": "Ala Mortífera"
     },
+    "pokemon_move_390": {
+        "EN": "Natures Madness"
+    },
     "pokemon_move_391": {
         "PT-BR": "Pinote Triplo",
         "EN": "Triple Axel",
@@ -2910,5 +2925,26 @@
         "IT": "Sabbiardente",
         "RU": "Раскалённый Песок",
         "ES": "Arenas Ardientes"
+    },
+    "pokemon_move_394": {
+        "PT-BR": "Rugido do Tempo",
+        "EN": "Roar of Time",
+        "FR": "Hurle-Temps",
+        "DE": "Zeitenlärm",
+        "IT": "Fragortempo",
+        "RU": "Рёв Времени",
+        "ES": "Distorsión"
+    },
+    "pokemon_move_395": {
+        "EN": "Bleakwind Storm"
+    },
+    "pokemon_move_396": {
+        "EN": "Sandsear Storm"
+    },
+    "pokemon_move_397": {
+        "EN": "Wildbolt Storm"
+    },
+    "pokemon_move_398": {
+        "EN": "Spirit Shackle"
     }
 }
