@@ -39,7 +39,7 @@ function createRaidBossList() {
   foreach($q->fetchAll() as $row) {
     $data[$row['sameDay']][$row['arrkey']][] = $row;
   }
-  if(count($row) == 0) return '';
+  if($q->rowCount() == 0) return '';
   $i = 1;
   $list = $config->RAID_BOSS_LIST_TITLE;
   // Print list of bosses that run for multiple days
