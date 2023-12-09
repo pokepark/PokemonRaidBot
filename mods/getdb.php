@@ -199,13 +199,14 @@ function parse_master_data($game_master_url) {
       $form_id = -$tempData['tempEvoId'];
       $form_name = $mega_names[$form_id];
       if(isset($tempData['types'])) {
+        $type = '';
         foreach($tempData['types'] as $key => $data) {
           if($type == '') {
-            $type = $key;
+            $type = $typeArray[$key];
             $weather = $weatherboost_table[$key];
             continue;
           }
-          $type2 = $key;
+          $type2 = $typeArray[$key];
           $weather .= $weatherboost_table[$key];
         }
       }
