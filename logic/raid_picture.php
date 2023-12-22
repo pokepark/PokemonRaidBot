@@ -267,18 +267,16 @@ function create_raid_picture($raid, $standalone_photo = false, $debug = false) {
     } else {
       // Check pokemon icon source and create image
       $img_file = null;
-      $uicons = false;
+      $addressableFilename = $uiconsFilename = ['','','','',''];
       $p_sources = explode(',', $config->RAID_PICTURE_POKEMON_ICONS);
 
-      $addressable_icon = 'pm'.$raid['pokemon'];
-      $addressableFallback = 'pm'.$raid['pokemon'].'.fNORMAL';
-      $uicons_icon = $raid['pokemon'];
-
+      $addressableFilename[0] = 'pm'.$raid['pokemon'];
+      $uiconsFilename[0] = $raid['pokemon'];
       if($raid['pokemon_form_name'] != 'normal') {
         $addrFormPrefix = '';
         if($raid['pokemon'] == 201) $addrFormPrefix = 'UNOWN_';
-        $addressable_icon .= '.f' . $addrFormPrefix . strtoupper($raid['pokemon_form_name']);
-        $uicons_icon .= '_f'.$raid['pokemon_form'];
+        $addressableFilename[1] = '.f' . $addrFormPrefix . strtoupper($raid['pokemon_form_name']);
+        $uiconsFilename[1] = '_f' . $raid['pokemon_form'];
       }
 
       // Add costume info for every mon except megas
@@ -286,20 +284,18 @@ function create_raid_picture($raid, $standalone_photo = false, $debug = false) {
         $costume = json_decode(file_get_contents(ROOT_PATH . '/protos/costume.json'), true);
         $costumeName = array_search($raid['costume'],$costume);
         if(!empty($costumeName)) {
-          $addressable_icon .= '.c' . array_search($raid['costume'],$costume);
-
-          $uicons_icon .= '_c'.$raid['costume'];
+          $addressableFilename[2] = '.c' . $costumeName;
+          $uiconsFilename[2] = '_c' . $raid['costume'];
         }
       }
       if($raid['shiny'] == 1 && $config->RAID_PICTURE_SHOW_SHINY) {
-        $addressable_icon .= '.s';
-        $uicons_icon .= '_s';
+        $addressableFilename[3] = '.s';
+        $uiconsFilename[3] = '_s';
         $shiny_icon = grab_img(IMAGES_PATH . "/shinystars.png");
       }
-      $addressable_icon .= '.icon.png';
-      $addressableFallback .= '.icon.png';
-      $uicons_icon .= '.png';
-
+      $addressableFilename[4] = '.icon.png';
+      $uiconsFilename[4] = '.png';
+      $imageFilenames = createFilenameList($addressableFilename, $uiconsFilename);
       foreach($p_sources as $p_dir) {
         // Icon dir named 'pokemon'? Then change path to not add '_repo-owner' to icon folder name
         if($p_dir == 'pokemon') $asset_dir = 'pokemon'; else $asset_dir = 'pokemon_' . $p_dir;
@@ -307,23 +303,17 @@ function create_raid_picture($raid, $standalone_photo = false, $debug = false) {
         $p_img_base_path = IMAGES_PATH . "/" . $asset_dir;
 
         // Check if file exists in this collection
-        if(file_exists($p_img_base_path . "/" . $addressable_icon) && filesize($p_img_base_path . "/" . $addressable_icon) > 0) {
-          $img_file = $p_img_base_path . "/" . $addressable_icon;
-          break;
-        }else if(file_exists($p_img_base_path . "/" . $addressableFallback) && filesize($p_img_base_path . "/" . $addressableFallback) > 0) {
-          $img_file = $p_img_base_path . "/" . $addressableFallback;
-          $uicons = true;
-          break;
-        }else if(file_exists($p_img_base_path . "/" . $uicons_icon) && filesize($p_img_base_path . "/" . $uicons_icon) > 0) {
-          $img_file = $p_img_base_path . "/" . $uicons_icon;
-          $uicons = true;
-          break;
+        foreach($imageFilenames as $filename) {
+          if(file_exists($p_img_base_path . "/" . $filename) && filesize($p_img_base_path . "/" . $filename) > 0) {
+            $img_file = $p_img_base_path . "/" . $filename;
+            break 2;
+          }
         }
       }
 
       // If no image was found, substitute with a fallback
       if($img_file === null) {
-        info_log($addressable_icon . ' ' . $uicons_icon, 'Failed to find an image in any pokemon image collection for:');
+        info_log(join($addressableFilename) . ' ' . join($uiconsFilename), 'Failed to find an image in any pokemon image collection for:');
         $img_fallback_file = null;
         // If we know the raid level, fallback to egg image
         if(array_key_exists('level', $raid) && $raid['level'] !== null && $raid['level'] != 0) {
@@ -340,10 +330,7 @@ function create_raid_picture($raid, $standalone_photo = false, $debug = false) {
       // Position and size of the picture
       $dst_x = $dst_y = 100;
       $dst_w = $dst_h = 256;
-      $src_w = $src_h = $dst_w;
-      if($uicons === true) {
-        [$src_w, $src_h] = getimagesize($img_file);
-      }
+      [$src_w, $src_h] = getimagesize($img_file);
 
       if($raid['type'] != '') $show_boss_pokemon_types = true;
     }
@@ -435,7 +422,7 @@ function create_raid_picture($raid, $standalone_photo = false, $debug = false) {
   $gym_name_words = explode(SP, $gym_name);
   $gym_name_word_lengths = array_map('strlen', array_map('utf8_decode', $gym_name_words));
   $gym_name_word_largest = max($gym_name_word_lengths);
-  $gym_name_total_chars = strlen(utf8_decode($gym_name));
+  $gym_name_total_chars = strlen(mb_convert_encoding($gym_name, 'ISO-8859-1', 'UTF-8'));
 
   // Number of rows based on number of words or total chars
   $gym_name_rows = 1;
@@ -671,4 +658,21 @@ function grab_img($uri) {
     return false;
   }
   return $img;
+}
+
+function createFilenameList($a, $u) {
+  // Full filename of addressable icon
+  $filenames[0] = join($a);
+  // Full filename of uicons icon
+  $filenames[1] = join($u);
+  // List of fallback icons for addressable assets
+  $filenames[2] = join([$a[0], '.fNORMAL', $a[2], $a[3], $a[4]]);
+  $filenames[3] = join([$a[0], $a[1], $a[2], $a[4]]);
+  $filenames[4] = join([$a[0], '.fNORMAL', $a[2], $a[4]]);
+  $filenames[5] = join([$a[0], $a[1], $a[4]]);
+  $filenames[6] = join([$a[0], '.fNORMAL', $a[4]]);
+  $filenames[7] = join([$a[0], $a[4]]);
+  $filenames[8] = join([$a[0], $a[4]]);
+  
+  return $filenames;
 }
