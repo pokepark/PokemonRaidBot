@@ -9,10 +9,10 @@ function resolve_boss_name_to_ids($pokemon_name) {
   $name = $pokemon_name;
   $form = 'normal';
   // Pokemon name ending with "_FORM" ?
-  if (preg_match('/(MEGA|MEGA_Y|MEGA_X|PRIMAL|FORM|SHADOW)$/', $pokemon_name)) {
+  if (preg_match('/(MEGA|MEGA_Y|MEGA_X|PRIMAL|FORM|SHADOW|FORME)$/', $pokemon_name)) {
     debug_log('Pokemon with a special form received: ' . $pokemon_name);
     // Remove "_FORM"
-    $pokemon = str_replace('_FORM', '', $pokemon_name);
+    $pokemon = preg_replace('/_FORM$/', '', $pokemon_name);
 
     // Get pokemon name and form.
     [$name, $form] = explode("_", $pokemon, 2);

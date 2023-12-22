@@ -46,13 +46,13 @@ function get_pokemon_id_by_name($pokemon_name, $get_from_db = false)
       SELECT  pokedex_id, pokemon_form_id
       FROM    pokemon
       WHERE   pokemon_name = :poke_name
-      AND     pokemon_form_name = :form_name
+      AND     pokemon_form_name LIKE :form_name
       LIMIT   1
-      ', ['poke_name' => $poke_name, 'form_name' => $pokemon_form]
+      ', ['poke_name' => $poke_name, 'form_name' => '%'.$pokemon_form.'%']
     );
-    $res = $query->fetch();
     $pokemon_form_id = 0;
     if($query->rowCount() > 0) {
+      $res = $query->fetch();
       $pokemon_form_id = $res['pokemon_form_id'];
       $pokemon_id = $res['pokedex_id'];
     }
