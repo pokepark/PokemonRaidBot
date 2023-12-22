@@ -19,7 +19,7 @@ require_once(LOGIC_PATH . '/get_raid_times.php');
  */
 function createRaidBossList() {
   global $config;
-  $dateFormat = 'j.m.';
+  $dateFormat = 'j.n.';
   $timeFormat = 'H:i';
   $levelList = '(' . implode(',', $config->RAID_BOSS_LIST_RAID_LEVELS). ')';
   $q = my_query('
