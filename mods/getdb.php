@@ -176,9 +176,10 @@ function parse_master_data($game_master_url) {
       $type2 = $typeArray[$key];
       $weather .= $weatherboost_table[$key];
     }
-    foreach($row['forms'] as $formId => $formData) {
-      if($formId == 0 || $formData['name'] == 'Shadow' || $formData['name'] == 'Purified') continue;
+    foreach($row['forms'] as $formData) {
+      if($formData['name'] == 'Shadow' || $formData['name'] == 'Purified') continue;
       $form_name = strtolower(preg_replace('/\s/', '_', $formData['name']));
+      if($form_name == 'unset') $form_name = 'normal';
       $form_id = $formData['form'];
       $pokemon_array[$pokemon_id][$form_name] = [
         'pokemon_name'      => $pokemon_name,
