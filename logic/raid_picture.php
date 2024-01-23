@@ -61,7 +61,7 @@ function create_raid_picture($raid, $standalone_photo = false, $debug = false) {
   // Query missing raid info
   $q_pokemon_info = my_query('
     SELECT
-        pokemon_form_name, min_cp, max_cp, min_weather_cp, max_weather_cp, weather, shiny, type, type2,
+        pokemon_name, pokemon_form_name, min_cp, max_cp, min_weather_cp, max_weather_cp, weather, shiny, type, type2,
         (SELECT img_url FROM gyms WHERE id=:gymId LIMIT 1) as img_url
     FROM pokemon
     WHERE pokedex_id = :pokemonId
@@ -267,15 +267,14 @@ function create_raid_picture($raid, $standalone_photo = false, $debug = false) {
     } else {
       // Check pokemon icon source and create image
       $img_file = null;
-      $addressableFilename = $uiconsFilename = ['','','','',''];
+      $addressableFilename = $uiconsFilename = ['','','','','',''];
       $p_sources = explode(',', $config->RAID_PICTURE_POKEMON_ICONS);
 
       $addressableFilename[0] = 'pm'.$raid['pokemon'];
       $uiconsFilename[0] = $raid['pokemon'];
       if($raid['pokemon_form_name'] != 'normal') {
-        $addrFormPrefix = '';
-        if($raid['pokemon'] == 201) $addrFormPrefix = 'UNOWN_';
-        $addressableFilename[1] = '.f' . $addrFormPrefix . strtoupper($raid['pokemon_form_name']);
+        $addressableFilename[1] = '.f' . strtoupper($raid['pokemon_form_name']);
+        $addressableFilename[5] = '.f' . str_replace(strtoupper($raid['pokemon_name']).'_', '', strtoupper($raid['pokemon_form_name']));
         $uiconsFilename[1] = '_f' . $raid['pokemon_form'];
       }
 
@@ -547,7 +546,7 @@ function create_raid_picture($raid, $standalone_photo = false, $debug = false) {
   // Pokemon name and form?
   $pokemon_text_lines = array($pokemon_name);
   if(strlen($pokemon_name) > 20) {
-    $pokemon_text_lines = explode(SP,$pokemon_name);
+    $pokemon_text_lines = explode(SP,$pokemon_name, 2);
     if(count($pokemon_text_lines) == 1) {
       // Wrapping the time text if too long (to 20 letters)
       $pokemon_text_lines = explode(PHP_EOL,wordwrap(trim($pokemon_name),20,PHP_EOL));
@@ -662,17 +661,18 @@ function grab_img($uri) {
 
 function createFilenameList($a, $u) {
   // Full filename of addressable icon
-  $filenames[0] = join($a);
+  $filenames[] = join([$a[0], $a[1], $a[2], $a[3], $a[5]]);
   // Full filename of uicons icon
-  $filenames[1] = join($u);
+  $filenames[] = join($u);
   // List of fallback icons for addressable assets
-  $filenames[2] = join([$a[0], '.fNORMAL', $a[2], $a[3], $a[4]]);
-  $filenames[3] = join([$a[0], $a[1], $a[2], $a[4]]);
-  $filenames[4] = join([$a[0], '.fNORMAL', $a[2], $a[4]]);
-  $filenames[5] = join([$a[0], $a[1], $a[4]]);
-  $filenames[6] = join([$a[0], '.fNORMAL', $a[4]]);
-  $filenames[7] = join([$a[0], $a[4]]);
-  $filenames[8] = join([$a[0], $a[4]]);
+  $filenames[] = join([$a[0], $a[5], $a[2], $a[3], $a[4]]);
+  $filenames[] = join([$a[0], '.fNORMAL', $a[2], $a[3], $a[4]]);
+  $filenames[] = join([$a[0], $a[1], $a[2], $a[4]]);
+  $filenames[] = join([$a[0], '.fNORMAL', $a[2], $a[4]]);
+  $filenames[] = join([$a[0], $a[1], $a[4]]);
+  $filenames[] = join([$a[0], '.fNORMAL', $a[4]]);
+  $filenames[] = join([$a[0], $a[4]]);
+  $filenames[] = join([$a[0], $a[4]]);
   
   return $filenames;
 }
