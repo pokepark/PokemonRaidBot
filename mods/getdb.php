@@ -165,7 +165,6 @@ function parse_master_data($game_master_url) {
     if(!isset($row['stats']['attack']) || !isset($row['stats']['defense']) || !isset($row['stats']['stamina'])) {
       continue;
     }
-    [$min_cp, $max_cp, $min_weather_cp, $max_weather_cp] = calculate_cps($row['stats']);
     $type = $type2 = '';
     foreach($row['types'] as $key => $data) {
       if($type == '') {
@@ -177,9 +176,17 @@ function parse_master_data($game_master_url) {
       $weather .= $weatherboost_table[$key];
     }
     foreach($row['forms'] as $formData) {
-      if($formData['name'] == 'Shadow' || $formData['name'] == 'Purified') continue;
-      $form_name = strtolower(preg_replace('/\s/', '_', $formData['name']));
-      if($form_name == 'unset') $form_name = 'normal';
+      if(($formData['name'] == 'Unset' && count($row['forms']) > 1) || $formData['name'] == 'Shadow' || $formData['name'] == 'Purified') continue;
+      if($formData['name'] == 'Normal') {
+        $pokemon_array[$pokemon_id]['protoName'] = str_replace('_NORMAL', '', $formData['proto']);
+        $form_name = 'normal';
+      }else {
+        if(isset($pokemon_array[$pokemon_id]['protoName']))
+          $form_name = str_replace($pokemon_array[$pokemon_id]['protoName'].'_', '', $formData['proto']);
+        else
+          $form_name = ($formData['proto'] == 'FORM_UNSET') ? 'normal' : $formData['proto'];
+      }
+      [$min_cp, $max_cp, $min_weather_cp, $max_weather_cp] = (isset($formData['stats'])) ? calculate_cps($formData['stats']) : calculate_cps($row['stats']);
       $form_id = $formData['form'];
       $pokemon_array[$pokemon_id][$form_name] = [
         'pokemon_name'      => $pokemon_name,
@@ -211,6 +218,7 @@ function parse_master_data($game_master_url) {
           $weather .= $weatherboost_table[$key];
         }
       }
+      [$min_cp, $max_cp, $min_weather_cp, $max_weather_cp] = calculate_cps($row['stats']);
       $pokemon_array[$pokemon_id][$form_name] = [
         'pokemon_name'      => $pokemon_name,
         'pokemon_form_name' => $form_name,
