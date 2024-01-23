@@ -1,8 +1,6 @@
 <?php
 $lang_dir = __DIR__ . '/lang/';
 
-$game_master_url = 'https://raw.githubusercontent.com/WatWowMap/Masterfile-Generator/master/master-latest-everything.json';
-
 // Translations available
 // pt-br, zh-tw, en, fr, de, it, ja, ko, ru, es, th
 
@@ -19,19 +17,6 @@ $translations_to_fetch = [
 
 // Initialize array
 $move_array = $pokemon_array = $form_array = [];
-$gameMasterFile = curl_open_file($game_master_url);
-$master = json_decode($gameMasterFile, true);
-$formsToFetch = [];
-
-// Collect form names currently in use and only translate these
-// We use english names as identifiers when saving these translations so we can also use these for that
-foreach($master['pokemon'] as $masterPokemon) {
-  if(!isset($masterPokemon['forms'])) continue;
-  foreach($masterPokemon['forms'] as $form) {
-    if($form['form'] == 0 || in_array($form['name'], $formsToFetch)) continue;
-    $formsToFetch[] = $form['name'];
-  }
-}
 
 // Loop through translations
 foreach($translations_to_fetch as $lanfile => $language) {
@@ -47,15 +32,8 @@ foreach($translations_to_fetch as $lanfile => $language) {
     // Save pokemon moves into an array
     }elseif($key == 'move') {
       $move_array['pokemon_move_'.$id][$language] = $translation;
-    }
-  }
-  // This translation file uses english names as reference
-  $formFile = curl_open_file('https://raw.githubusercontent.com/WatWowMap/pogo-translations/master/static/englishRef/forms_'. $lanfile. '.json');
-  $formTranslationData = json_decode($formFile, true);
-  foreach($formTranslationData as $title => $translation) {
-    if(in_array($title, $formsToFetch)) {
-      $formName = preg_replace("/\s/", "_", strtolower($title));
-      $form_array['pokemon_form_'. $formName][$language] = $translation;
+    }elseif($key == 'form') {
+      $form_array['pokemon_form_'. $id][$language] = $translation;
     }
   }
 }
@@ -86,7 +64,10 @@ function remove_duplicate_translations($array) {
   $new_array = [];
   foreach($array as $translation_id => $translations) {
     foreach($translations as $lang => $translation) {
-      if($lang == 'EN' or $translation != $array[$translation_id]['EN'])
+      if(
+        ($lang == 'EN' or $translation != $array[$translation_id]['EN']) and
+        !in_array($array[$translation_id]['EN'], ['Normal','Purified','Shadow'])
+        )
         $new_array[$translation_id][$lang] = $translation;
     }
   }
