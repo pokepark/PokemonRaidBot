@@ -25,7 +25,7 @@ function get_local_pokemon_name($pokemon_id, $pokemon_form_id, $override_languag
 
   $skipFallback = false;
   if ($pokemon_form_name != 'normal') {
-    $pokemon_form_name = $getTypeTranslation('pokemon_form_' . $pokemon_form_name);
+    $pokemon_form_name = $getTypeTranslation('pokemon_form_' . $pokemon_form_id);
     // Use only form name if form name contains Pokemon name
     // e.g. Black Kyurem, Frost Rotom
     if(strpos($pokemon_form_name, $pokemon_name, 0)) {
