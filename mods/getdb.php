@@ -117,26 +117,6 @@ function parse_master_data($game_master_url) {
   // Collected from pogoprotos (hoping they won't change, so hard coding them here)
   $mega_names = array(-1 => 'mega', -2 => 'mega_x', -3 => 'mega_y', -4 => 'primal');
   $pokemon_array = [];
-  $typeArray = [
-    1 => 'normal',
-    2 => 'fighting',
-    3 => 'flying',
-    4 => 'poison',
-    5 => 'ground',
-    6 => 'rock',
-    7 => 'bug',
-    8 => 'ghost',
-    9 => 'steel',
-    10 => 'fire',
-    11 => 'water',
-    12 => 'grass',
-    13 => 'electric',
-    14 => 'psychic',
-    15 => 'ice',
-    16 => 'dragon',
-    17 => 'dark',
-    18 => 'fairy',
-  ];
   $weatherboost_table = array(
     1 => '4',
     2 => '5',
@@ -165,16 +145,12 @@ function parse_master_data($game_master_url) {
     if(!isset($row['stats']['attack']) || !isset($row['stats']['defense']) || !isset($row['stats']['stamina'])) {
       continue;
     }
-    $type = $type2 = '';
-    foreach($row['types'] as $key => $data) {
-      if($type == '') {
-        $type = $typeArray[$key];
-        $weather = $weatherboost_table[$key];
-        continue;
-      }
-      $type2 = $typeArray[$key];
-      $weather .= $weatherboost_table[$key];
-    }
+    $pokemon_types = array_keys($row['types']);
+    $weather = $weatherboost_table[$pokemon_types[0]];
+    if(!isset($pokemon_types[1]))
+      $pokemon_types[1] = '';
+    elseif($weatherboost_table[$pokemon_types[0]] != $weatherboost_table[$pokemon_types[1]])
+      $weather .= $weatherboost_table[$pokemon_types[1]];
     foreach($row['forms'] as $formData) {
       if(($formData['name'] == 'Unset' && count($row['forms']) > 1) || $formData['name'] == 'Shadow' || $formData['name'] == 'Purified') continue;
       if($formData['name'] == 'Normal') {
@@ -197,8 +173,8 @@ function parse_master_data($game_master_url) {
         'min_weather_cp'    => $min_weather_cp,
         'max_weather_cp'    => $max_weather_cp,
         'weather'           => $weather,
-        'type'              => $type,
-        'type2'             => $type2,
+        'type'              => $pokemon_types[0],
+        'type2'             => $pokemon_types[1],
       ];
     }
     if(!isset($row['tempEvolutions'])) continue;
@@ -207,16 +183,12 @@ function parse_master_data($game_master_url) {
       $form_id = -$tempData['tempEvoId'];
       $form_name = $mega_names[$form_id];
       if(isset($tempData['types'])) {
-        $type = '';
-        foreach($tempData['types'] as $key => $data) {
-          if($type == '') {
-            $type = $typeArray[$key];
-            $weather = $weatherboost_table[$key];
-            continue;
-          }
-          $type2 = $typeArray[$key];
-          $weather .= $weatherboost_table[$key];
-        }
+        $pokemon_types = array_keys($tempData['types']);
+        $weather = $weatherboost_table[$pokemon_types[0]];
+        if(!isset($pokemon_types[1]))
+          $pokemon_types[1] = '';
+        elseif($weatherboost_table[$pokemon_types[0]] != $weatherboost_table[$pokemon_types[1]])
+          $weather .= $weatherboost_table[$pokemon_types[1]];
       }
       [$min_cp, $max_cp, $min_weather_cp, $max_weather_cp] = calculate_cps($row['stats']);
       $pokemon_array[$pokemon_id][$form_name] = [
@@ -228,8 +200,8 @@ function parse_master_data($game_master_url) {
         'min_weather_cp'    => $min_weather_cp,
         'max_weather_cp'    => $max_weather_cp,
         'weather'           => $weather,
-        'type'              => $type,
-        'type2'             => $type2,
+        'type'              => $pokemon_types[0],
+        'type2'             => $pokemon_types[1],
       ];
     }
   }
