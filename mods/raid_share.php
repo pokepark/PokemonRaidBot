@@ -15,8 +15,9 @@ $botUser->raidaccessCheck($raidId, 'share');
 
 // Get chat id.
 $chat = $data['c'];
-
-$tg_json = send_raid_poll($raidId, $chat);
+$thread = $data['t'] ?? '';
+$chatObj = [['id' => $chat, 'thread' => $thread]];
+$tg_json = send_raid_poll($raidId, $chatObj);
 
 // Set callback keys and message
 $callback_msg = getTranslation('successfully_shared');

@@ -67,4 +67,4 @@ if($access) {
 }
 
 // Send message.
-send_message($update['message']['from']['id'], $msg);
+send_message(create_chat_object([$update['message']['chat']['id']]), $msg);

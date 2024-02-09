@@ -5,7 +5,7 @@ if(!isset($update['message']['via_bot']) || !in_array($update['message']['via_bo
   // Invalid input or unknown bot - send message and end.
   $msg = '<b>' . getTranslation('invalid_input') . '</b>';
   $msg .= CR . CR . getTranslation('not_supported') . SP . getTranslation('or') . SP . getTranslation('internal_error');
-  send_message($update['message']['from']['id'], $msg);
+  send_message(create_chat_object([$update['message']['chat']['id']]), $msg);
   exit();
 }
 

@@ -16,7 +16,7 @@ if(!$access && !$new_user) {
     require('list.php');
   }else {
     $response_msg = '<b>' . getTranslation('bot_access_denied') . '</b>';
-    send_message($update['message']['from']['id'], $response_msg);
+    send_message(create_chat_object([$update['message']['chat']['id']]), $response_msg);
   }
   exit;
 }
@@ -60,4 +60,4 @@ if ($addAbortKey) {
 }
 
 // Send message.
-send_message($update['message']['chat']['id'], $msg, $keys, ['reply_markup' => ['selective' => true, 'one_time_keyboard' => true]]);
+send_message(create_chat_object([$update['message']['chat']['id']]), $msg, $keys, ['reply_markup' => ['selective' => true, 'one_time_keyboard' => true]]);

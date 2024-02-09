@@ -177,4 +177,4 @@ if(in_array($config_name, $allowed) && $restrict == 'no') {
 }
 
 // Send message.
-send_message($update['message']['chat']['id'], $msg);
+send_message(create_chat_object([$update['message']['chat']['id']]), $msg);

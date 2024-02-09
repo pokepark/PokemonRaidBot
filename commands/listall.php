@@ -20,4 +20,4 @@ $msg = '<b>' . getTranslation('list_all_active_raids') . '</b>' . CR;
 $msg.= $keys_and_gymarea['gymareaTitle'];
 
 // Send message.
-send_message($update['message']['chat']['id'], $msg, $keys, ['reply_markup' => ['selective' => true, 'one_time_keyboard' => true], 'disable_web_page_preview' => 'true']);
+send_message(create_chat_object([$update['message']['chat']['id']]), $msg, $keys, ['reply_markup' => ['selective' => true, 'one_time_keyboard' => true], 'disable_web_page_preview' => 'true']);

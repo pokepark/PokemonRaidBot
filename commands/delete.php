@@ -29,7 +29,7 @@ $query = my_query('
 
 if($query->rowCount() == 0) {
   $msg = '<b>' . getTranslation('no_active_raids_found') . '</b>';
-  send_message($update['message']['chat']['id'], $msg);
+  send_message(create_chat_object([$update['message']['chat']['id']]), $msg);
   exit;
 }
 
@@ -66,4 +66,4 @@ $msg .= '<b>' . getTranslation('select_gym_name') . '</b>' . CR;
 $callback_response = 'OK';
 
 // Send message.
-send_message($update['message']['chat']['id'], $msg, $keys, ['reply_markup' => ['selective' => true, 'one_time_keyboard' => true]]);
+send_message(create_chat_object([$update['message']['chat']['id']]), $msg, $keys, ['reply_markup' => ['selective' => true, 'one_time_keyboard' => true]]);

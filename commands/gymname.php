@@ -50,4 +50,4 @@ if($gym && !empty($input) && $gym['id'] > 0) {
 }
 
 // Send message.
-send_message($update['message']['chat']['id'], $msg, [], ['reply_markup' => ['selective' => true, 'one_time_keyboard' => true], 'disable_web_page_preview' => 'true']);
+send_message(create_chat_object([$update['message']['chat']['id']]), $msg, [], ['reply_markup' => ['selective' => true, 'one_time_keyboard' => true], 'disable_web_page_preview' => 'true']);

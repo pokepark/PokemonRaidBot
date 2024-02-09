@@ -76,7 +76,7 @@ function update_raid_poll($raid_id, $raid = false, $update = false, $tg_json = f
   $text = show_raid_poll($raid);
   $post_text = false;
   if(array_key_exists('short', $text)) {
-    $msg_short_len = strlen(utf8_decode($text['short']));
+    $msg_short_len = strlen(mb_convert_encoding($text['short'], 'ISO-8859-1'));
     debug_log($msg_short_len, 'Raid poll short message length:');
     // Message short enough?
     if($msg_short_len >= 1024) {

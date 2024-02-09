@@ -13,7 +13,7 @@ if (isset($update['message']['text']) && substr($update['message']['text'], 0, 1
   }
 
   if(isset($update['message']['chat']['id']) && new_user($update['message']['chat']['id']) && $com != 'start' && $com != 'tutorial') {
-    send_message($update['message']['chat']['id'],  getTranslation("tutorial_command_failed"));
+    send_message(create_chat_object([$update['message']['chat']['id']]),  getTranslation("tutorial_command_failed"));
     exit();
   }
 
@@ -33,6 +33,6 @@ if (isset($update['message']['text']) && substr($update['message']['text'], 0, 1
     // Include start file and exit.
     include_once($startcommand);
   } else {
-    send_message($update['message']['chat']['id'], '<b>' . getTranslation('not_supported') . '</b>');
+    send_message(create_chat_object([$update['message']['chat']['id']]), '<b>' . getTranslation('not_supported') . '</b>');
   }
 }
