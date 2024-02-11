@@ -86,7 +86,7 @@ if($status == 'alarm') {
       $keys[0][1] = button(getTranslation('no'), 'exit');
       if($status == 'raid_done') $msg = getTranslation("delete_remote_raid_done");
       else if($status == 'cancel') $msg = getTranslation("delete_remote_raid_cancel");
-      $tg_json[] = send_message($update['callback_query']['from']['id'], $msg, $keys, false, true);
+      $tg_json[] = send_message(create_chat_object([$update['callback_query']['from']['id']]), $msg, $keys, false, true);
     }
   }elseif($status != 'arrived') {
     $tg_json = alarm($raidId,$update['callback_query']['from']['id'],'status',$status, $tg_json);

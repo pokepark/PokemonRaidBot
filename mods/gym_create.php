@@ -23,7 +23,7 @@ function insertUserInput($userId, $stage, $oldMessageId, $gymId = 0) {
 function respondToUser($userId, $oldMessageId = 0, $editMsg = '', $editKeys = [], $sendMsg = '', $sendKeys = [], $callbackMsg = '', $callbackId = 0) {
   if($callbackId != 0) answerCallbackQuery($callbackId, $callbackMsg);
   if($editMsg != '') editMessageText($oldMessageId, $editMsg, $editKeys, $userId, ['disable_web_page_preview' => 'true']);
-  if($sendMsg != '') send_message($userId, $sendMsg, $sendKeys, ['disable_web_page_preview' => 'true']);
+  if($sendMsg != '') send_message(create_chat_object([$userId]), $sendMsg, $sendKeys, ['disable_web_page_preview' => 'true']);
 }
 // Set keys.
 $keys = [];
@@ -50,6 +50,7 @@ if($stage == 1) {
   $sendMsg = EMOJI_HERE . getTranslation('gym_gps_instructions') . CR;
   $sendMsg .= getTranslation('gym_gps_example');
   respondToUser($userId, $oldMessageId, $editMsg, $editKeys, $sendMsg, [], $callbackResponse, $callbackId);
+  exit;
 }
 $userId = $update['message']['from']['id'];
 $oldMessageId = $modifiers['oldMessageId'];
@@ -69,6 +70,7 @@ if($stage == 2) {
     $msg = getTranslation('gym_gps_coordinates_format_error');
     respondToUser($userId, 0, '', [], $msg);
   }
+  exit;
 }
 if($stage == 3) {
   $input = trim($update['message']['text']);
@@ -83,4 +85,5 @@ if($stage == 3) {
     $msg = getTranslation('gym_edit_text_too_long');
     respondToUser($userId, 0, '', [], $msg);
   }
+  exit;
 }

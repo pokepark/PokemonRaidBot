@@ -29,4 +29,4 @@ $keys = array_merge($keys, $keys_share);
 debug_log($keys);
 
 // Send response message to user
-send_message($user_id, $msg, $keys, []);
+send_message(create_chat_object([$user_id]), $msg, $keys, []);
