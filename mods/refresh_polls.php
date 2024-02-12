@@ -8,7 +8,7 @@ if(!$config->AUTO_REFRESH_POLLS) {
 if(strlen($data['id']) > 5) $where_chat = 'chat_id = '.$data['id']; else $where_chat = 'chat_id != 0';
 if(!empty($config->RAID_POLL_HIDE_BUTTONS_RAID_LEVEL)) $level_exclude = 'AND raids.level NOT IN ('.$config->RAID_POLL_HIDE_BUTTONS_RAID_LEVEL.')'; else $level_exclude = '';
 $query_messages = my_query('
-  SELECT      cleanup.raid_id, cleanup.chat_id, cleanup.message_id, cleanup.type, cleanup.media_unique_id
+  SELECT      cleanup.raid_id, cleanup.chat_id, cleanup.thread_id, cleanup.message_id, cleanup.type, cleanup.media_unique_id
   FROM        cleanup
   LEFT JOIN   raids
   ON          cleanup.raid_id = raids.id

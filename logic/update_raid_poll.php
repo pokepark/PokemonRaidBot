@@ -31,7 +31,7 @@ function update_raid_poll($raid_id, $raid = false, $update = false, $tg_json = f
   if(empty($chat_and_message) or isset($update['callback_query']['inline_message_id'])) {
     if($update_photo) $photo_query = 'AND (type = \'photo\' OR type = \'poll_photo\')'; else $photo_query = '';
     $rs_chann = my_query('
-      SELECT chat_id, message_id, type, media_unique_id
+      SELECT chat_id, message_id, thread_id, type, media_unique_id
       FROM cleanup
         WHERE raid_id = ?
         ' . $photo_query,[$raid_id]
@@ -95,6 +95,7 @@ function update_raid_poll($raid_id, $raid = false, $update = false, $tg_json = f
   foreach($chat_and_message as $chat_id_msg_id) {
     $chat = $chat_id_msg_id['chat_id'];
     $message = $chat_id_msg_id['message_id'];
+    $thread_id = $chat_id_msg_id['thread_id'];
     $type = $chat_id_msg_id['type'];
     if ($type == 'poll_text') {
       $raid_picture_hide_level = explode(",",$config->RAID_PICTURE_HIDE_LEVEL);
@@ -120,8 +121,8 @@ function update_raid_poll($raid_id, $raid = false, $update = false, $tg_json = f
         $media_content = get_raid_picture($raid, true);
         $raid['standalone_photo'] = true; // Inject this into raid array so we can pass it all the way to photo cache
         // Resend raid poll as text message.
-        send_photo($chat, $media_content[1], $media_content[0], '', [], [], false, $raid);
-        send_message($chat, $text['full'], $keys, ['disable_web_page_preview' => 'true'], false, $raid_id);
+        send_photo(create_chat_object([$chat, $thread_id]), $media_content[1], $media_content[0], '', [], [], false, $raid);
+        send_message(create_chat_object([$chat, $thread_id]), $text['full'], $keys, ['disable_web_page_preview' => 'true'], false, $raid_id);
         continue;
       }
       $media_content = get_raid_picture($raid);

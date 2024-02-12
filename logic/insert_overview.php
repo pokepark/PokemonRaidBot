@@ -1,12 +1,13 @@
 <?php
 /**
  * Insert overview.
- * @param $chat_id
- * @param $message_id
- * @param $chat_title
- * @param $chat_username
+ * @param int $chat_id
+ * @param int $message_id
+ * @param int|null $thread_id
+ * @param string $chat_title
+ * @param string $chat_username
  */
-function insert_overview($chat_id, $message_id, $chat_title, $chat_username)
+function insert_overview($chat_id, $message_id, $thread_id, $chat_title, $chat_username)
 {
   // Build query to check if overview details are already in database or not
   $rs = my_query('
@@ -31,12 +32,14 @@ function insert_overview($chat_id, $message_id, $chat_title, $chat_username)
     INSERT INTO overview
     SET   chat_id = :chat_id,
           message_id = :message_id,
+          thread_id = :thread_id,
           chat_title = :chat_title,
           chat_username = :chat_username,
           updated = DATE(NOW())
     ', [
       'chat_id' => $chat_id,
       'message_id' => $message_id,
+      'thread_id' => $thread_id,
       'chat_title' => $chat_title,
       'chat_username' => $chat_username,
     ]

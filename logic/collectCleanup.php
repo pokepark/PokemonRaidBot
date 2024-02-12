@@ -21,10 +21,12 @@ function collectCleanup($response, $request, $identifier = false)
   // Set chat and message_id
   $chat_id = $response['result']['chat']['id'];
   $message_id = $response['result']['message_id'];
+  $thread_id = $response['result']['message_thread_id'] ?? null;
+
   debug_log('Return data: Chat id: '.$chat_id.', message_id: '.$message_id.', type: '.(is_array($identifier) ? print_r($identifier,true) : $identifier));
   if($identifier == 'trainer') {
     debug_log('Adding trainermessage info to database now!');
-    insert_trainerinfo($chat_id, $message_id);
+    insert_trainerinfo($chat_id, $message_id, $thread_id);
     return $response;
   }
   if ($identifier == 'overview') {
@@ -32,7 +34,7 @@ function collectCleanup($response, $request, $identifier = false)
     $chat_title = $response['result']['chat']['title'];
     $chat_username = $response['result']['chat']['username'] ?? '';
 
-    insert_overview($chat_id, $message_id, $chat_title, $chat_username);
+    insert_overview($chat_id, $message_id, $thread_id, $chat_title, $chat_username);
     return $response;
   }
 
@@ -73,7 +75,7 @@ function collectCleanup($response, $request, $identifier = false)
     );
   }
   $raid_id = is_array($identifier) ? $identifier['id'] : $identifier;
-  insert_cleanup($chat_id, $message_id, $raid_id, $type, $unique_id);
+  insert_cleanup($chat_id, $message_id, $thread_id, $raid_id, $type, $unique_id);
   // Return response.
   return $response;
 }
