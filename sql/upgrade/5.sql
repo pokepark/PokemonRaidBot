@@ -7,12 +7,12 @@ ALTER TABLE `photo_cache` ADD COLUMN IF NOT EXISTS `end_time` DATETIME DEFAULT N
 ALTER TABLE `photo_cache` ADD COLUMN IF NOT EXISTS `start_time` DATETIME DEFAULT NULL AFTER `end_time`;
 
 ALTER TABLE `cleanup` ADD COLUMN IF NOT EXISTS `media_unique_id` varchar(45) DEFAULT NULL AFTER `date_of_posting`;
-ALTER TABLE `cleanup` ADD COLUMN `thread_id` INT UNSIGNED NULL AFTER `message_id`;
+ALTER TABLE `cleanup` ADD COLUMN IF NOT EXISTS `thread_id` INT UNSIGNED NULL AFTER `message_id`;
 CREATE UNIQUE INDEX IF NOT EXISTS `unique_chat_msg` ON `cleanup` (chat_id, message_id);
 
-ALTER TABLE `overview` ADD COLUMN `thread_id` INT UNSIGNED NULL AFTER `message_id`;
+ALTER TABLE `overview` ADD COLUMN IF NOT EXISTS `thread_id` INT UNSIGNED NULL AFTER `message_id`;
 
-ALTER TABLE `trainerinfo` ADD COLUMN `thread_id` INT UNSIGNED NULL AFTER `message_id`;
+ALTER TABLE `trainerinfo` ADD COLUMN IF NOT EXISTS `thread_id` INT UNSIGNED NULL AFTER `message_id`;
 
 ALTER TABLE `raids` CHANGE COLUMN IF EXISTS `level` `level` TINYINT UNSIGNED DEFAULT NULL;
 ALTER TABLE `raid_bosses` CHANGE COLUMN IF EXISTS `raid_level` `raid_level` TINYINT UNSIGNED DEFAULT NULL;
