@@ -58,7 +58,7 @@ if($access) {
   }
   $keys[][] = button(getTranslation('next'), 'tutorial');
   $photo = $tutorial[0]['photo'];
-  send_photo($update['message']['from']['id'],$photo, false, $msg, $keys, ['disable_web_page_preview' => 'true']);
+  send_photo(create_chat_object([$update['message']['from']['id']]),$photo, false, $msg, $keys, ['disable_web_page_preview' => 'true']);
   exit();
 
 // No help for the user.
