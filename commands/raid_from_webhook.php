@@ -49,6 +49,7 @@ if($metrics) {
   $webhook_raids_received_total->incBy(count($update));
 }
 foreach($update as $raid) {
+  if($raid['type'] != 'raid') continue;
   // Skip posting if create only -mode is set or raid time is greater than value set in config
   $no_auto_posting = ($config->WEBHOOK_CREATE_ONLY or ($raid['message']['end']-$raid['message']['start']) > ($config->WEBHOOK_EXCLUDE_AUTOSHARE_DURATION * 60));
 
