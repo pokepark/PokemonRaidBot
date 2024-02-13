@@ -12,6 +12,7 @@ $botUser->accessCheck('overview');
 // Create keys array.
 $keys[][] = button(getTranslation('overview_share'), 'overview_share');
 $keys[][] = button(getTranslation('overview_delete'), 'overview_delete');
+$keys[][] = button(getTranslation('abort'), ['exit', 'd' => '0']);
 
 // Set message.
 $msg = '<b>' . getTranslation('raids_share_overview') . ':</b>';

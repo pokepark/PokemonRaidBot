@@ -60,6 +60,13 @@ function list_config_chats_by_short_id() {
   return $chats;
 }
 
+function get_config_chat_by_chat_and_thread_id($chat_id, $thread_id) {
+  foreach(list_config_chats_by_short_id() as $chat) {
+    if($chat['id'] == $chat_id && ($thread_id == NULL && !isset($chat['thread']) || (isset($chat['thread']) && $chat['thread'] == $thread_id)))
+      return $chat;
+  }
+}
+
 function add_chat($chats, $chatToAdd) {
   foreach($chats as $chat) {
     if(
