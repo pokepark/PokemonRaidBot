@@ -51,7 +51,8 @@ if($rs->rowcount() == 1) {
 
   // Create keys array.
   $keys = [];
-  $keys[][] = button(getTranslation('expand'), ['vote_refresh', 'r' => $raid['id']]);
+  // Probably unused feature. Will fix if someone needs this
+  // $keys[][] = button(getTranslation('expand'), ['vote_refresh', 'r' => $raid['id']]);
   if($botUser->raidaccessCheck($raid['id'], 'pokemon', true)) {
     $keys[][] = button(getTranslation('update_pokemon'), ['raid_edit_poke', 'r' => $raid['id'], 'rl' => $raid['level']]);
   }
