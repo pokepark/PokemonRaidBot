@@ -36,7 +36,7 @@ function update_raid_poll($raid_id, $raid = false, $update = false, $tg_json = f
         WHERE raid_id = ?
         ' . $photo_query,[$raid_id]
     );
-    if ($rs_chann->rowCount() > 0) {
+    if ($rs_chann->rowCount() > 0 || false) {
       while($chat = $rs_chann->fetch()) {
         $chat_and_message[] = $chat;
       }
@@ -95,7 +95,7 @@ function update_raid_poll($raid_id, $raid = false, $update = false, $tg_json = f
   foreach($chat_and_message as $chat_id_msg_id) {
     $chat = $chat_id_msg_id['chat_id'];
     $message = $chat_id_msg_id['message_id'];
-    $thread_id = $chat_id_msg_id['thread_id'];
+    $thread_id = $chat_id_msg_id['thread_id'] ?? null;
     $type = $chat_id_msg_id['type'];
     if ($type == 'poll_text') {
       $raid_picture_hide_level = explode(",",$config->RAID_PICTURE_HIDE_LEVEL);
