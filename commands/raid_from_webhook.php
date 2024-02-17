@@ -312,7 +312,7 @@ foreach($update as $raid) {
     'shadow' => (in_array($level, RAID_LEVEL_SHADOW) ? 1 : 0),
   ]);
 
-  $chats_geofence = $chats_raidlevel = $webhook_chats = $chats_by_pokemon = [];
+  $chats_geofence = $chats_raidlevel = $webhook_chats = $chats_by_pokemon = $chats = [];
   if($send_updates == true) {
     // Update raid polls and send alerts of updates
     require_once(LOGIC_PATH .'/update_raid_poll.php');
@@ -320,14 +320,14 @@ foreach($update as $raid) {
     if($wasBossUpdated) $tg_json = alarm($raid, false, 'new_boss', '', $tg_json);
     // Post hatched Pokemon to their respective chats if configured
     // Start share_chats backwards compatibility
-    if(!$config->CHATS_SHARE) {
+    if(!isset($config->CHATS_SHARE)) {
       if(!empty($config->WEBHOOK_CHATS_BY_POKEMON[0]) && !$no_auto_posting) {
         foreach($config->WEBHOOK_CHATS_BY_POKEMON as $rule) {
           if(isset($rule['pokemon_id']) && $rule['pokemon_id'] == $pokemon && (!isset($rule['form_id']) or (isset($rule['form_id']) && $rule['form_id'] == $form))) {
             foreach($rule['chats'] as $rule_chat) {
               // If the raid isn't already posted to the chats specified in WEBHOOK_CHATS_BY_POKEMON, we add it to the array
               if(!isset($cleanup_data[$raid_id]) or !in_array($rule_chat, $cleanup_data[$raid_id])) {
-                $chats_by_pokemon[] = $rule_chat;
+                $chats_by_pokemon[] = create_chat_object([$rule_chat]);
               }
             }
           }
@@ -351,7 +351,7 @@ foreach($update as $raid) {
     if(empty($chats_by_pokemon)) continue;
   }else {
     // Start share_chats backwards compatibility
-    if(!$config->CHATS_SHARE) {
+    if(!isset($config->CHATS_SHARE)) {
       // Get chats to share to by raid level and geofence id
       if($geofences != false) {
         foreach($inside_geofences as $geofence_id) {
@@ -376,7 +376,11 @@ foreach($update as $raid) {
       if(!empty($config->WEBHOOK_CHATS_ALL_LEVELS)) {
         $webhook_chats = explode(',', $config->WEBHOOK_CHATS_ALL_LEVELS);
       }
-    // End chats_share backwards compatibility
+      $chats_combined = array_merge($chats_geofence, $chats_raidlevel, $webhook_chats);
+      foreach($chats_combined as $chat) {
+        $chats[] = create_chat_object([$chat]);
+      }
+      // End chats_share backwards compatibility
     }else {
       if($geofences != false) {
         foreach($inside_geofences as $geofence_id) {
@@ -396,16 +400,18 @@ foreach($update as $raid) {
 
       // Get chats
       $webhook_chats = $config->CHATS_SHARE['webhook']['all'] ?? [];
+      $chats = array_merge($chats_geofence, $chats_raidlevel, $webhook_chats);
     }
   }
 
-  $chats = array_merge($chats_geofence, $chats_raidlevel, $webhook_chats, $chats_by_pokemon);
   require_once(LOGIC_PATH .'/send_raid_poll.php');
   if($metrics) {
     $webhook_raids_posted_total->inc();
   }
   if(count($chats) > 0) {
     $tg_json = send_raid_poll($raid_id, $chats, $raid, $tg_json);
+  }elseif(count($chats_by_pokemon) > 0) {
+    $tg_json = send_raid_poll($raid_id, $chats_by_pokemon, $raid, $tg_json);
   }
 }
 // Telegram multicurl request.

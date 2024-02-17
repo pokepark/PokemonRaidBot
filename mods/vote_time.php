@@ -159,11 +159,12 @@ if ($answer['user_count'] != NULL) {
   // Check if RAID has no participants AND Raid should be shared to another chat at first participant
   // AND target chat was set in config AND Raid was not shared to target chat before
   // Start share_chats backwards compatibility
-  if(!$config->CHATS_SHARE) {
+  if(!isset($config->CHATS_SHARE)) {
     if($count_att == 0 && $config->SHARE_AFTER_ATTENDANCE && !empty($config->SHARE_CHATS_AFTER_ATTENDANCE)){
       // Send the message.
       require_once(LOGIC_PATH . '/send_raid_poll.php');
-      $tg_json = send_raid_poll($raidId, $config->SHARE_CHATS_AFTER_ATTENDANCE, $raid, $tg_json);
+      $chats = [create_chat_object([$config->SHARE_CHATS_AFTER_ATTENDANCE])];
+      $tg_json = send_raid_poll($raidId, $chats, $raid, $tg_json);
     }
   // End share_chats backwards compatibility
   }else {

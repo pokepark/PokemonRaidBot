@@ -51,7 +51,7 @@ function share_keys($id, $action, $update, $raidLevel = '', $chats = [], $hideGe
   }
 
   // Start share_chats backwards compatibility
-  if(!$config->CHATS_SHARE) {
+  if(!isset($config->CHATS_SHARE)) {
     // Add buttons for predefined sharing chats.
     // Default SHARE_CHATS or special chat list via $chats?
     if(empty($chats)) {
