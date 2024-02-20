@@ -34,7 +34,7 @@ if($current_day == 0) {
       $letter = trim($letter);
       debug_log($letter, 'Special gym letter:');
       // Fix chinese chars, prior: $length = strlen($letter);
-      $length = strlen(utf8_decode($letter));
+      $length = strlen(mb_convert_encoding($letter, 'ISO-8859-1'));
       $select_query .= SP . "WHEN UPPER(LEFT(gym_name, " . $length . ")) = '" . $letter . "' THEN UPPER(LEFT(gym_name, " . $length . "))" . SP;
     }
     $select_query .= 'ELSE UPPER(LEFT(gym_name, 1)) END';

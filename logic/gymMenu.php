@@ -172,7 +172,7 @@ function createGymKeys($buttonAction, $showHidden, $gymareaId, $gymareaQuery, $s
       $letter = trim($letter);
       debug_log($letter, 'Special gym letter:');
       // Fix chinese chars, prior: $length = strlen($letter);
-      $length = strlen(utf8_decode($letter));
+      $length = strlen(mb_convert_encoding($letter, 'ISO-8859-1'));
       $select .= SP . 'WHEN UPPER(LEFT(gym_name, ' . $length . ')) = \'' . $letter . '\' THEN UPPER(LEFT(gym_name, ' . $length . '))' . SP;
     }
     $select .= 'ELSE UPPER(LEFT(gym_name, 1)) END AS first_letter';
@@ -205,7 +205,7 @@ function createGymListKeysByFirstLetter($firstLetter, $showHidden, $gymareaQuery
   global $config, $menuActions, $botUser;
   // Length of first letter.
   // Fix chinese chars, prior: $first_length = strlen($first);
-  $first_length = strlen(utf8_decode($firstLetter));
+  $first_length = strlen(mb_convert_encoding($firstLetter, 'ISO-8859-1'));
 
   // Special/Custom gym letters?
   $not = '';
@@ -218,7 +218,7 @@ function createGymListKeysByFirstLetter($firstLetter, $showHidden, $gymareaQuery
       $letter = trim($letter);
       debug_log($letter, 'Special gym letter:');
       // Fix chinese chars, prior: $length = strlen($letter);
-      $length = strlen(utf8_decode($letter));
+      $length = strlen(mb_convert_encoding($letter, 'ISO-8859-1'));
       $not .= SP . 'AND UPPER(LEFT(gym_name, ' . $length . ')) != UPPER(\'' . $letter . '\')' . SP;
     }
   }
