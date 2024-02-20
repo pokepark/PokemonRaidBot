@@ -18,12 +18,16 @@ if($message != null) {
   // Get chat_id and message_id
   $chat_id = $message['chat']['id'];
   $message_id = $message['message_id'];
+  $thread_id = $message['message_thread_id'] ?? NULL;
   if(isset($message['reply_markup']['inline_keyboard'])) {
     $split_data = explode(':', $message['reply_markup']['inline_keyboard'][0][0]['callback_data']);
     $cleanup_id = $split_data[0];
   }else {
     // Get id from text.
-    $cleanup_id = substr($message['text'],strpos($message['text'], substr(strtoupper($config->BOT_ID), 0, 1) . '-ID = ') + 7);
+    $idFromText = substr($message['text'],strpos($message['text'], substr(strtoupper($config->BOT_ID), 0, 1) . '-ID = ') + 7);
+    if(preg_match("^[0-9]+^", $idFromText)) {
+      $cleanup_id = $idFromText;
+    }
   }
 
   // Write cleanup info to database.
@@ -31,6 +35,6 @@ if($message != null) {
   cleanup_log('Cleanup_ID: ' . $cleanup_id);
   if($cleanup_id != 0) {
     require_once(LOGIC_PATH . '/insert_cleanup.php');
-    insert_cleanup($chat_id, $message_id, $cleanup_id, 'inline_poll_text');
+    insert_cleanup($chat_id, $message_id, $thread_id, $cleanup_id, 'inline_poll_text');
   }
 }
