@@ -67,8 +67,8 @@ function collectCleanup($response, $request, $identifier = false)
       ':form_id' => $identifier['pokemon_form'],
       ':raid_id' => ($identifier['raid_ended'] ? 0 : $identifier['id']),  // No need to save raid id if raid has ended
       ':ended' => $identifier['raid_ended'],
-      ':start_time' => ($identifier['raid_ended'] ? 'NULL' : $identifier['start_time']),
-      ':end_time' => ($identifier['raid_ended'] ? 'NULL' : $identifier['end_time']),
+      ':start_time' => ($identifier['raid_ended'] ? NULL : $identifier['start_time']),
+      ':end_time' => ($identifier['raid_ended'] ? NULL : $identifier['end_time']),
       ':gym_id' => $identifier['gym_id'],
       ':standalone' => $standalone_photo,
       ]
