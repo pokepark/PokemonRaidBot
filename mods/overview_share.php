@@ -72,7 +72,7 @@ $keys = [];
 foreach( list_config_chats_by_short_id() as $short_id => $chat ) {
   $binds = [$chat['id']];
   $threadQuery = ' = ?';
-  if(!isset($chat['thread'])) {
+  if(!isset($chat['thread']) or $chat['thread'] == 0) {
     $threadQuery = 'IS NULL';
   }else {
     $binds[] = $chat['thread'];

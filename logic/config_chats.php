@@ -5,19 +5,22 @@ function list_config_chats_by_short_id() {
   if(!isset($config->CHATS_SHARE)) {
     $chat_vars = ['TRAINER_CHATS','SHARE_CHATS','WEBHOOK_CHATS'];
     $chatsTemp = [];
-    foreach(array_keys($config) as $var) {
+    foreach(get_object_vars($config) as $var => $value) {
       foreach($chat_vars as $start) {
-        if(!strpos($var, $start)) continue;
+        if(!is_string($var) || strpos(trim($var), $start) === false) continue;
+        if($var == 'WEBHOOK_CHATS_BY_POKEMON') continue;
         if(is_string($config->{$var})) {
           array_merge($chatsTemp, explode(',', $config->{$var}));
+          continue;
+        }elseif(is_int($config->{$var})) {
+          $chatsTemp[] = $config->{$var};
           continue;
         }
         array_merge($chatsTemp, $config->{$var});
       }
     }
-    $chats = [];
-    foreach($chatsTemp as $chat) {
-      $chats[] = create_chat_object($chat);
+    foreach(array_unique($chatsTemp) as $chat) {
+      $chats[] = create_chat_object([$chat]);
     }
   }else {
     $chats = [];
