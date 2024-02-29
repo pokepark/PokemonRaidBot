@@ -22,5 +22,5 @@ function resolve_boss_name_to_ids($pokemon_name) {
   }
   // Get ID and form name used internally.
   debug_log('Getting dex id and form for pokemon ' . $name . ' with form ' . $form);
-  return get_pokemon_id_by_name($name . ' ' . $form, true);
+  return get_pokemon_id_by_name($name, $form, true);
 }

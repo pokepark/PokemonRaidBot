@@ -1,23 +1,50 @@
 <?php
 /**
  * Get pokedex id by name of pokemon.
- * @param $pokemon_name
- * @param $get_from_db bool
- * @return string
+ * @param string $pokemon_name
+ * @param string $pokemon_form_name
+ * @param bool $get_from_db
+ * @return array [$pokemon_id, $pokemon_form_id]
  */
-function get_pokemon_id_by_name($pokemon_name, $get_from_db = false)
+function get_pokemon_id_by_name($pokemon_name, $pokemon_form_name = '', $get_from_db = false)
 {
   global $dbh, $botUser;
+  $pokemon_id = 0;
+
+  if($get_from_db) {
+    $pokemon_name = str_replace('_', ' ', $pokemon_name);
+    // Fetch Pokemon form ID from database
+    $query = my_query('
+      SELECT  pokedex_id, pokemon_form_id
+      FROM    pokemon
+      WHERE   pokemon_name = :poke_name
+      AND     pokemon_form_name LIKE :form_name
+      LIMIT   1
+      ', ['poke_name' => $pokemon_name, 'form_name' => '%'.$pokemon_form_name.'%']
+    );
+    $pokemon_form_id = 0;
+    if($query->rowCount() > 0) {
+      $res = $query->fetch();
+      $pokemon_form_id = $res['pokemon_form_id'];
+      $pokemon_id = $res['pokedex_id'];
+    }
+    // Write to log.
+    debug_log($pokemon_id,'P:');
+    debug_log($pokemon_form_name.' (ID: '.$pokemon_form_id.')','P:');
+
+    // Return pokemon_id and pokemon_form_id
+    return [$pokemon_id, $pokemon_form_id];
+  }
   debug_log($pokemon_name,'P:');
 
   // Explode pokemon name in case we have a form too.
   $delimiter = '';
-  if(strpos($pokemon_name, ' ') !== false) {
-    $delimiter = ' ';
-  } else if (strpos($pokemon_name, '-') !== false) {
+  if (strpos($pokemon_name, '-') !== false) {
     $delimiter = '-';
   } else if (strpos($pokemon_name, ',') !== false) {
     $delimiter = ',';
+  } else if (strpos($pokemon_name, '_') !== false) {
+    $delimiter = '_';
   }
 
   // Explode if delimiter was found.
@@ -33,36 +60,10 @@ function get_pokemon_id_by_name($pokemon_name, $get_from_db = false)
     debug_log($poke_form,'P FORM:');
   }
 
-  // Init id and write name to search to log.
-  $pokemon_id = 0;
-  $pokemon_form = ($poke_form!="")?$poke_form:"normal";
+  $pokemon_form = ($poke_form != "") ? $poke_form : "normal";
 
   // Set language
   $language = $botUser->userLanguage;
-
-  if($get_from_db) {
-    // Fetch Pokemon form ID from database
-    $query = my_query('
-      SELECT  pokedex_id, pokemon_form_id
-      FROM    pokemon
-      WHERE   pokemon_name = :poke_name
-      AND     pokemon_form_name LIKE :form_name
-      LIMIT   1
-      ', ['poke_name' => $poke_name, 'form_name' => '%'.$pokemon_form.'%']
-    );
-    $pokemon_form_id = 0;
-    if($query->rowCount() > 0) {
-      $res = $query->fetch();
-      $pokemon_form_id = $res['pokemon_form_id'];
-      $pokemon_id = $res['pokedex_id'];
-    }
-    // Write to log.
-    debug_log($pokemon_id,'P:');
-    debug_log($pokemon_form.' (ID: '.$pokemon_form_id.')','P:');
-
-    // Return pokemon_id and pokemon_form_id
-    return [$pokemon_id, $pokemon_form_id];
-  }
 
   // Get translation file
   $str = file_get_contents(BOT_LANG_PATH . '/pokemon.json');
