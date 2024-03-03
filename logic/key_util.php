@@ -50,23 +50,46 @@ function share_keys($id, $action, $update, $raidLevel = '', $chats = [], $hideGe
     ];
   }
 
-  // Add buttons for predefined sharing chats.
-  // Default SHARE_CHATS or special chat list via $chats?
-  if(empty($chats)) {
-    if(!empty($raidLevel)) {
-      // find chats to share ourselves, if we can
-      debug_log($raidLevel, 'Did not get specific chats to share to, checking level specific for: ');
-      $level_chat = 'SHARE_CHATS_LEVEL_' . $raidLevel;
-      if(!empty($config->{$level_chat})) {
-        $chats = explode(',', $config->{$level_chat});
-        debug_log($chats, 'Found level specific chats to share to: ');
+  // Start share_chats backwards compatibility
+  if(!isset($config->CHATS_SHARE)) {
+    // Add buttons for predefined sharing chats.
+    // Default SHARE_CHATS or special chat list via $chats?
+    if(empty($chats)) {
+      if(!empty($raidLevel)) {
+        // find chats to share ourselves, if we can
+        debug_log($raidLevel, 'Did not get specific chats to share to, checking level specific for: ');
+        $level_chat = 'SHARE_CHATS_LEVEL_' . $raidLevel;
+        $chats = [];
+        if(!empty($config->{$level_chat})) {
+          $chat_array = explode(',', $config->{$level_chat});
+          debug_log($config->{$level_chat}, 'Found level specific chats to share to: ');
+        } else {
+          $chat_array = explode(',', $config->SHARE_CHATS);
+          debug_log($config->SHARE_CHATS, 'Chats not specified for level, sharing to globals: ');
+        }
       } else {
-        $chats = explode(',', $config->SHARE_CHATS);
-        debug_log($chats, 'Chats not specified for level, sharing to globals: ');
+        $chat_array = explode(',', $config->SHARE_CHATS);
+        debug_log($config->SHARE_CHATS, 'Level not given, sharing to globals: ');
       }
-    } else {
-      $chats = explode(',', $config->SHARE_CHATS);
-      debug_log($chats, 'Level not given, sharing to globals: ');
+      foreach($chat_array as $chat) {
+        $chats[] = ['id' => $chat];
+      }
+    }
+  // End chats_share backwards compatibility
+  } else {
+    if(empty($chats)) {
+      if(!empty($raidLevel)) {
+        // find chats to share ourselves, if we can
+        debug_log($raidLevel, 'Did not get specific chats to share to, checking level specific for: ');
+        $chats = [];
+        if(!empty($config->CHATS_SHARE['manual_share'][$raidLevel])) {
+          $chats = $config->CHATS_SHARE['manual_share'][$raidLevel];
+        } else {
+          $chats = $config->CHATS_SHARE['manual_share']['all'];
+        }
+      } else {
+        $chats = $config->CHATS_SHARE['manual_share']['all'];
+      }
     }
   }
   // Add keys for each chat.
@@ -87,20 +110,22 @@ function share_keys($id, $action, $update, $raidLevel = '', $chats = [], $hideGe
     $sharedChats = $queryShared->fetchAll(PDO::FETCH_COLUMN, 0);
   }
   foreach($chats as $chat) {
-    if(in_array($chat, $sharedChats)) continue;
+    if(in_array($chat['id'], $sharedChats)) continue;
     // Get chat object
-    debug_log("Getting chat object for '" . $chat . "'");
-    $chat_obj = get_chat($chat);
+    debug_log("Getting chat object for '" . $chat['id'] . "'");
+    $chat_obj = get_chat($chat['id']);
 
     // Check chat object for proper response.
     if ($chat_obj['ok'] != true) {
       info_log($chat, 'Invalid chat id in your configuration:');
       continue;
     }
-    debug_log('Proper chat object received, continuing to add key for this chat: ' . $chat_obj['result']['title']);
-    $shareData = [0 => $action, 'c' => $chat];
+    $chatTitle = $chat['title'] ?? $chat_obj['result']['title'];
+    debug_log('Proper chat object received, continuing to add key for this chat: ' . $chatTitle);
+    $shareData = [0 => $action, 'c' => $chat['id']];
+    $shareData['t'] = $chat['thread'] ?? '';
     if($id !== false) $shareData['r'] = $id;
-    $keys[][] = button(getTranslation('share_with') . ' ' . $chat_obj['result']['title'], $shareData);
+    $keys[][] = button(getTranslation('share_with') . ' ' . $chatTitle, $shareData);
   }
 
   return $keys;

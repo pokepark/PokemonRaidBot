@@ -1,10 +1,11 @@
 <?php
 /**
  * Insert trainer info.
- * @param $chat_id
- * @param $message_id
+ * @param int $chat_id
+ * @param int $message_id
+ * @param int|null $thread_id
  */
-function insert_trainerinfo($chat_id, $message_id)
+function insert_trainerinfo($chat_id, $message_id, $thread_id)
 {
   // Build query to check if trainer info details are already in database or not
   $rs = my_query('
@@ -27,7 +28,8 @@ function insert_trainerinfo($chat_id, $message_id)
   my_query('
     INSERT INTO trainerinfo
     SET         chat_id = ?,
-                message_id = ?
-    ', [$chat_id, $message_id]
+                message_id = ?,
+                thread_id = ?
+    ', [$chat_id, $message_id, $thread_id]
   );
 }

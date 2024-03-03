@@ -23,4 +23,4 @@ if($query->rowCount() == 1) {
 }else {
   $msg = $searchterm.CR. getTranslation('trainer_not_found');
 }
-send_message($update['message']['chat']['id'], $msg, [], ['reply_markup' => ['selective' => true]]);
+send_message(create_chat_object([$update['message']['chat']['id']]), $msg, [], ['reply_markup' => ['selective' => true]]);

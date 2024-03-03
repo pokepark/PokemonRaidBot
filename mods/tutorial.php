@@ -23,7 +23,7 @@ if($action == 'end') {
   delete_message($update['callback_query']['message']['chat']['id'],$update['callback_query']['message']['message_id']);
   if($new_user) {
     my_query('UPDATE users SET tutorial = ? WHERE user_id = ?', [$data['l'], $user_id]);
-    send_message($user_id, $tutorial_done, []);
+    send_message(create_chat_object([$user_id]), $tutorial_done, []);
 
     // Post the user id to external address if specified
     if(isset($config->TUTORIAL_COMPLETED_CURL_ADDRESS) && $config->TUTORIAL_COMPLETED_CURL_ADDRESS != '') {
@@ -61,7 +61,7 @@ if($action == 'end') {
     $msg = getTranslation('tutorial_no_user_info_set');
     $keys[0][0] = button(getTranslation('yes'), 'trainer');
     $keys[0][1] = button(getTranslation('no'), ['exit', 'd' => '1']);
-    send_message($user_id,$msg,$keys);
+    send_message(create_chat_object([$user_id]),$msg,$keys);
   }
   exit();
 }

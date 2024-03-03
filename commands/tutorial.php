@@ -18,4 +18,4 @@ $new_user = $new_user ?? new_user($update['message']['from']['id']);
 $msg = ($new_user) ? $tutorial[0]['msg_new'] : $tutorial[0]['msg'];
 $keys[][] = button(getTranslation('next'), ['tutorial', 'p' => 1]);
 $photo = $tutorial[0]['photo'];
-send_photo($update['message']['from']['id'], $photo, false, $msg, $keys, ['disable_web_page_preview' => 'true'],false);
+send_photo(create_chat_object([$update['message']['from']['id']]), $photo, false, $msg, $keys, ['disable_web_page_preview' => 'true'],false);

@@ -312,7 +312,8 @@ function generateTimeslotKeys($RAID_SLOTS, $raid) {
   debug_log($last_extra_slot, 'Last extra slot:');
 
   // Last extra slot not conflicting with last slot
-  if($last_extra_slot > $last_slot && $last_extra_slot >= $dt_now && $last_extra_slot != $last_slot) {
+  if((isset($last_slot) && $last_extra_slot > $last_slot && $last_extra_slot != $last_slot && $last_extra_slot >= $dt_now) ||
+    (!isset($last_slot) && $last_extra_slot >= $dt_now)) {
     // Add last extra slot
     $keys_time[] = button(dt2time($last_extra_slot->format('Y-m-d H:i:s')), ['vote_time', 'r' => $raid['id'], 't' => $last_extra_slot->format('YmdHis')]);
   }

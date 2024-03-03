@@ -415,11 +415,11 @@ function create_raid_picture($raid, $standalone_photo = false, $debug = false) {
   // Gym name
   // Largest gym name we found so far for testing:
   //$gym_name = 'Zentrum für Junge Erwachsene der Kirche Jesu Christi der Heiligen der Letzten Tage Pfahl Düsseldorf';
-  $gym_name = $raid['gym_name'];
+  $gym_name = mb_convert_encoding($raid['gym_name'], 'ISO-8859-1');
 
   // Get length, the shortest and largest word of the gym name
   $gym_name_words = explode(SP, $gym_name);
-  $gym_name_word_lengths = array_map('strlen', array_map('utf8_decode', $gym_name_words));
+  $gym_name_word_lengths = array_map('strlen', $gym_name_words);
   $gym_name_word_largest = max($gym_name_word_lengths);
   $gym_name_total_chars = strlen(mb_convert_encoding($gym_name, 'ISO-8859-1', 'UTF-8'));
 

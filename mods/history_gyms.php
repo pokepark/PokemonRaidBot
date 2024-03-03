@@ -20,7 +20,7 @@ $current_year_month = $split_date[0].'-'.$split_date[1];
 
 // Length of first letter.
 // Fix chinese chars, prior: $first_length = strlen($first);
-$first_length = strlen(utf8_decode($first));
+$first_length = strlen(mb_convert_encoding($first, 'ISO-8859-1'));
 
 // Special/Custom gym letters?
 $not = '';
@@ -33,7 +33,7 @@ if(!empty($config->RAID_CUSTOM_GYM_LETTERS) && $first_length == 1) {
     $letter = trim($letter);
     debug_log($letter, 'Special gym letter:');
     // Fix chinese chars, prior: $length = strlen($letter);
-    $length = strlen(utf8_decode($letter));
+    $length = strlen(mb_convert_encoding($letter, 'ISO-8859-1'));
     $not .= SP . "AND UPPER(LEFT(gym_name, " . $length . ")) != UPPER('" . $letter . "')" . SP;
   }
 }

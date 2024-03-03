@@ -1,13 +1,15 @@
 <?php
 // Write to log.
 debug_log('overview_delete()');
+require_once(LOGIC_PATH . '/config_chats.php');
 
 // For debug.
 //debug_log($update);
 //debug_log($data);
 
 // Delete or list to deletion?
-$chat_id = $data['c'] ?? 0;
+$action = $data['a'] ?? 0;
+$overview_id = $data['o'] ?? null;
 
 // Check access.
 $botUser->accessCheck('overview');
@@ -16,63 +18,61 @@ $botUser->accessCheck('overview');
 $tg_json = array();
 
 // Get all or specific overview
-if ($chat_id == 0) {
+if ($action == 0) {
   $request_overviews = my_query('
     SELECT  *
     FROM    overview
   ');
 
-  // Count results.
-  $count = 0;
-
   while ($rowOverviews = $request_overviews->fetch()) {
-    // Counter++
-    $count = $count + 1;
 
     // Get info about chat for title.
     debug_log('Getting chat object for chat_id: ' . $rowOverviews['chat_id']);
-    $chat_obj = get_chat($rowOverviews['chat_id']);
-    $chat_title = '';
+    $chat_obj = get_config_chat_by_chat_and_thread_id($rowOverviews['chat_id'], $rowOverviews['thread_id']);
+    if(!isset($chat_obj['title'])) {
+      $chat_info = get_chat($rowOverviews['chat_id']);
+      $chat_title = '';
 
-    // Set title.
-    if ($chat_obj['ok'] == 'true') {
-      $chat_title = $chat_obj['result']['title'];
-      debug_log('Title of the chat: ' . $chat_obj['result']['title']);
+      // Set title.
+      if ($chat_info['ok'] == 'true') {
+        $chat_title = $chat_info['result']['title'];
+        debug_log('Title of the chat: ' . $chat_info['result']['title']);
+      }
+    }else {
+      $chat_title = $chat_obj['title'];
     }
 
     // Build message string.
     $msg = '<b>' . getTranslation('delete_raid_overview_for_chat') . ' ' . $chat_title . '?</b>';
 
     // Set keys - Delete button.
-    $keys[0][0] = button(getTranslation('yes'), ['overview_delete', 'c' => $rowOverviews['chat_id']]);
-    $keys[0][1] = button(getTranslation('no'), ['overview_delete', 'c' => 1]);
+    $keys[0][0] = button(getTranslation('yes'), ['overview_delete', 'o' => $rowOverviews['id'], 'a' => 3]);
+    $keys[0][1] = button(getTranslation('no'), ['overview_delete', 'a' => 1]);
 
     // Send the message, but disable the web preview!
-    $tg_json[] = send_message($update['callback_query']['message']['chat']['id'], $msg, $keys, false, true);
+    $tg_json[] = send_message(create_chat_object([$update['callback_query']['message']['chat']['id']]), $msg, $keys, false, true);
   }
 
   // Set message.
-  if($count == 0) {
+  if($request_overviews->rowCount() == 0) {
     $callback_msg = '<b>' . getTranslation('no_overviews_found') . '</b>';
   } else {
     $callback_msg = '<b>' . getTranslation('list_all_overviews') . ':</b>';
   }
-} else if ($chat_id == 1) {
+} else if ($action == 1) {
   // Write to log.
   debug_log('Deletion of the raid overview was canceled!');
 
   // Set message.
   $callback_msg = '<b>' . getTranslation('overview_deletion_was_canceled') . '</b>';
 } else {
-  // Write to log.
-  debug_log('Triggering deletion of overview for Chat_ID ' . $chat_id);
 
   // Get chat and message ids for overview.
   $request_overviews = my_query('
     SELECT  *
     FROM    overview
-    WHERE   chat_id = ?
-    ', [$chat_id]
+    WHERE   id = ?
+    ', [$overview_id]
   );
 
   $overview = $request_overviews->fetch();
@@ -80,17 +80,19 @@ if ($chat_id == 0) {
   // Delete overview
   $chat_id = $overview['chat_id'];
   $message_id = $overview['message_id'];
+  // Write to log.
+  debug_log('Triggering deletion of overview for Chat_ID ' . $chat_id);
 
   // Delete telegram message.
   debug_log('Deleting overview telegram message ' . $message_id . ' from chat ' . $chat_id);
   delete_message($chat_id, $message_id);
 
   // Delete overview from database.
-  debug_log('Deleting overview information from database for Chat_ID: ' . $chat_id);
+  debug_log('Deleting overview information from database for Chat_ID: ' . $chat_id . ', thread_id: ' . $overview['thread_id']);
   $rs = my_query('
     DELETE FROM   overview
-    WHERE   chat_id = ?
-    ', [$chat_id]
+    WHERE   id = ?
+    ', [$overview_id]
   );
 
   // Set message.

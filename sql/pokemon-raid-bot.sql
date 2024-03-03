@@ -23,6 +23,7 @@ CREATE TABLE `cleanup` (
   `raid_id` int(10) unsigned NOT NULL,
   `chat_id` bigint(20) NOT NULL,
   `message_id` bigint(20) unsigned NOT NULL,
+  `thread_id` int(10) UNSIGNED NULL,
   `type` VARCHAR(20) NULL,
   `date_of_posting` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `media_unique_id` varchar(45) DEFAULT NULL,
@@ -61,6 +62,7 @@ CREATE TABLE `overview` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `chat_id` bigint(20) NOT NULL,
   `message_id` bigint(20) unsigned NOT NULL,
+  `thread_id` int(10) UNSIGNED NULL,
   `chat_title` varchar(128) DEFAULT NULL,
   `chat_username` varchar(32) DEFAULT NULL,
   `updated` date DEFAULT NULL,
@@ -131,6 +133,7 @@ CREATE TABLE `trainerinfo` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `chat_id` bigint(20) NOT NULL,
   `message_id` bigint(20) unsigned NOT NULL,
+  `thread_id` int(10) UNSIGNED NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 CREATE TABLE `user_input` (

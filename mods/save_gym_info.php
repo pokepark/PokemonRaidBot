@@ -18,7 +18,7 @@ $keys = [];
 if($action == 'gps') {
   $reg_exp_coordinates = '^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$^';
   if(!preg_match($reg_exp_coordinates, $input)) {
-    send_message($user_id, getTranslation("gym_gps_coordinates_format_error") . CR . getTranslation("gym_gps_example"));
+    send_message(create_chat_object([$user_id]), getTranslation("gym_gps_coordinates_format_error") . CR . getTranslation("gym_gps_example"));
     exit();
   }
   [$lat, $lon] = explode(',', $input, 2);
@@ -32,7 +32,7 @@ if($action == 'gps') {
   $gym['lon'] = $lon;
 }else if(in_array($action, ['addr','name','note'])) {
   if(strlen($input) > 255) {
-    send_message($user_id, getTranslation('gym_edit_text_too_long'));
+    send_message(create_chat_object([$user_id]), getTranslation('gym_edit_text_too_long'));
     exit();
   }
   $column_map = ['addr' => 'address', 'name' => 'gym_name', 'note' => 'gym_note'];

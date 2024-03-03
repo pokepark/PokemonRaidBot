@@ -53,7 +53,7 @@ if(isset($update['callback_query'])) {
   // Edit the message.
   $tg_json[] = edit_message($update, $msg, $keys, false, true);
 }else {
-  $tg_json[] = send_message($update['message']['chat']['id'], $msg, $keys, false, true);
+  $tg_json[] = send_message(create_chat_object([$update['message']['chat']['id']]), $msg, $keys, false, true);
 }
 
 // Telegram multicurl request.

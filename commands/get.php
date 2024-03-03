@@ -41,7 +41,7 @@ debug_log('Allow only numeric input: ' . $config->ALLOW_ONLY_NUMBERS);
 
 // Any configs allowed?
 if(empty($allowed)) {
-  send_message($update['message']['chat']['id'], getTranslation('not_supported'));
+  send_message(create_chat_object([$update['message']['chat']['id']]), getTranslation('not_supported'));
   exit;
 }
 foreach($json as $cfg_name => $cfg_value) {
@@ -69,4 +69,4 @@ foreach($json as $cfg_name => $cfg_value) {
     $msg .= CR;
   }
 }
-send_message($update['message']['chat']['id'], $msg);
+send_message(create_chat_object([$update['message']['chat']['id']]), $msg);

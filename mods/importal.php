@@ -23,7 +23,7 @@ function escape($value){
 if(!$config->PORTAL_IMPORT) {
   $msg = getTranslation('bot_access_denied');
   $keys = [];
-  send_message($update['message']['chat']['id'], $msg, $keys, ['disable_web_page_preview' => 'true']);
+  send_message(create_chat_object([$update['message']['chat']['id']]), $msg, $keys, ['disable_web_page_preview' => 'true']);
   exit;
 }
 
@@ -123,4 +123,4 @@ $keys[][] = button(getTranslation('show_gym'), ['gym_edit_details', 'g' => $gym_
 $keys[][] = button(getTranslation('done'), ['exit', 'd' => '1']);
 
 // Send the message.
-send_message($update['message']['chat']['id'], $msg, $keys, ['disable_web_page_preview' => 'true']);
+send_message(create_chat_object([$update['message']['chat']['id']]), $msg, $keys, ['disable_web_page_preview' => 'true']);

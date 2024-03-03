@@ -15,7 +15,7 @@ $botUser->accessCheck('create');
 // Enabled?
 if(!$config->RAID_VIA_LOCATION) {
   debug_log('Creating raids by sharing a location is not enabled in config! Exiting!');
-  send_message($update['message']['chat']['id'], '<b>' . getTranslation('bot_access_denied') . '</b>');
+  send_message(create_chat_object([$update['message']['chat']['id']]), '<b>' . getTranslation('bot_access_denied') . '</b>');
   exit();
 }
 $reg_exp_coordinates = '^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$^';
@@ -28,7 +28,7 @@ if(isset($update['message']['location']) && preg_match($reg_exp_coordinates, $up
   $lat = $data['id'];
   $lon = $data['arg'];
 } else {
-  send_message($update['message']['chat']['id'], '<b>' . getTranslation('invalid_input') . '</b>');
+  send_message(create_chat_object([$update['message']['chat']['id']]), '<b>' . getTranslation('invalid_input') . '</b>');
   exit();
 }
 
@@ -78,7 +78,7 @@ if($gym) {
     $keys = [];
 
     // Send message.
-    send_message($update['message']['chat']['id'], $msg, $keys, ['reply_markup' => ['selective' => true, 'one_time_keyboard' => true]]);
+    send_message(create_chat_object([$update['message']['chat']['id']]), $msg, $keys, ['reply_markup' => ['selective' => true, 'one_time_keyboard' => true]]);
 
     exit();
   } else {
@@ -148,7 +148,7 @@ if(isset($update['message']['location'])) {
   $msg = getTranslation('create_raid') . ': <i>' . $address . '</i>';
 
   // Send message.
-  send_message($update['message']['chat']['id'], $msg, $keys, ['reply_markup' => ['selective' => true, 'one_time_keyboard' => true]]);
+  send_message(create_chat_object([$update['message']['chat']['id']]), $msg, $keys, ['reply_markup' => ['selective' => true, 'one_time_keyboard' => true]]);
 
 // Answer forwarded location message from geo_create.
 } else if(isset($update['callback_query'])) {

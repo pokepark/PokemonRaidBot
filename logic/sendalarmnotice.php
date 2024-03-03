@@ -43,5 +43,5 @@ function sendAlertOnOffNotice($raid_id, $user_id, $alarm = null, $raid = null){
     $msg_text = EMOJI_NO_ALARM . SP . '<b>' . getTranslation('alert_no_updates') . '</b>' . CR;
 	}
   $msg_text .= EMOJI_HERE . SP . $gymname . SP . '(' . $raidtimes . ')';
-  send_message($user_id, $msg_text);
+  send_message(create_chat_object([$user_id]), $msg_text);
 }

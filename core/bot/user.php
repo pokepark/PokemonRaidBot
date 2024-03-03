@@ -176,7 +176,7 @@ class botUser
     $response_msg = '<b>' . getTranslation('bot_access_denied') . '</b>';
     // Edit message or send new message based on type of received call
     if ($update['type'] != 'callback_query') {
-      send_message($update['message']['from']['id'], $response_msg);
+      send_message(create_chat_object([$update['message']['chat']['id']]), $response_msg);
       exit;
     }
     $keys = [];

@@ -50,4 +50,4 @@ if(count($keys) == 0 ) {
 $keys[][] = button(getTranslation('abort'), 'exit');
 
 // Send message.
-send_message($update['message']['chat']['id'], $msg, $keys, ['reply_markup' => ['selective' => true, 'one_time_keyboard' => true]]);
+send_message(create_chat_object([$update['message']['chat']['id']]), $msg, $keys, ['reply_markup' => ['selective' => true, 'one_time_keyboard' => true]]);

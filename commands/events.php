@@ -25,4 +25,4 @@ $keys[][] = button(getTranslation('events_create'), 'events_add');
 $keys[][] = button(getTranslation('done'), ['exit', 'd' => '1']);
 
 // Send message.
-send_message($update['message']['chat']['id'], $msg, $keys, ['reply_markup' => ['selective' => true, 'one_time_keyboard' => true]]);
+send_message(create_chat_object([$update['message']['chat']['id']]), $msg, $keys, ['reply_markup' => ['selective' => true, 'one_time_keyboard' => true]]);

@@ -252,7 +252,7 @@ function alarm($raid_id_array, $user_id, $action, $info = '', $tg_json = [])
       $msg_text .= EMOJI_CLOCK . SP . '<b>' . check_time($attendtime, $recipient_language) . '</b>';
       $msg_text .= create_traincode_msg($trainercode);
     }
-    $tg_json[] = send_message($answer['user_id'], $msg_text, false, false, true);
+    $tg_json[] = send_message(create_chat_object([$answer['user_id']]), $msg_text, false, false, true);
   }
   return $tg_json;
 }

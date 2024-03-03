@@ -17,7 +17,8 @@ $botUser->accessCheck('list');
 $raid = get_raid($raidId);
 
 // Create keys array.
-$keys[][] = button(getTranslation('expand'), ['vote_refresh', 'r' => $raid['id']]);
+// Probably unused feature. Will fix if someone needs this
+// $keys[][] = button(getTranslation('expand'), ['vote_refresh', 'r' => $raid['id']]);
 if($botUser->raidaccessCheck($raidId, 'pokemon', true)) {
   $keys[][] = button(getTranslation('update_pokemon'), ['raid_edit_poke', 'r' => $raid['id'], 'rl' => $raid['level']]);
 }

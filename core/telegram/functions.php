@@ -24,10 +24,15 @@ function is_valid_target($chat_id, $message_id, $no_chat = false, $no_message = 
   info_log("chat_id:{$chat_id}, message_id:{$message_id}", 'ERROR: Unhandled pair of chat_id & message_id, this is a bug:');
   return true;
 }
-
+function create_chat_object($arr) {
+  $return = [];
+  $return['id'] = $arr[0] ?? 0;
+  $return['thread'] = $arr[1] ?? 0;
+  return $return;
+}
 /**
  * Send message.
- * @param int $chat_id
+ * @param array $chatObj
  * @param string $text
  * @param mixed $inline_keyboard
  * @param array|bool $merge_args
@@ -35,17 +40,18 @@ function is_valid_target($chat_id, $message_id, $no_chat = false, $no_message = 
  * @param int|string $identifier
  * @return mixed
 */
-function send_message($chat_id, $text = [], $inline_keyboard = false, $merge_args = [], $multicurl = false, $identifier = false)
+function send_message($chatObj, $text = [], $inline_keyboard = false, $merge_args = [], $multicurl = false, $identifier = false)
 {
   // Create response content array.
   $reply_content = [
     'method'     => 'sendMessage',
-    'chat_id'    => $chat_id,
+    'chat_id'    => $chatObj['id'],
     'parse_mode' => 'HTML',
     'text'       => $text
   ];
-  if(!is_valid_target($chat_id, null, false, true)){
-    info_log($chat_id, 'ERROR: Cannot send to invalid chat id:');
+  if(isset($chatObj['thread'])) $reply_content['message_thread_id'] = $chatObj['thread'];
+  if(!is_valid_target($chatObj['id'], null, false, true)){
+    info_log($chatObj['id'], 'ERROR: Cannot send to invalid chat id:');
     info_log($reply_content, 'ERROR: data would have been:');
     exit();
   }
@@ -77,7 +83,7 @@ function send_message($chat_id, $text = [], $inline_keyboard = false, $merge_arg
 
 /**
  * Send venue.
- * @param $chat_id
+ * @param $chatObj
  * @param $lat
  * @param $lon
  * @param $title
@@ -87,19 +93,20 @@ function send_message($chat_id, $text = [], $inline_keyboard = false, $merge_arg
  * @param $identifier
  * @return mixed
  */
-function send_venue($chat_id, $lat, $lon, $title, $address, $inline_keyboard = false, $multicurl = false, $identifier = false)
+function send_venue($chatObj, $lat, $lon, $title, $address, $inline_keyboard = false, $multicurl = false, $identifier = false)
 {
   // Create reply content array.
   $reply_content = [
     'method'    => 'sendVenue',
-    'chat_id'   => $chat_id,
+    'chat_id'   => $chatObj['id'],
     'latitude'  => $lat,
     'longitude' => $lon,
     'title'     => $title,
     'address'   => $address
   ];
-  if(!is_valid_target($chat_id, null, false, true)){
-    info_log($chat_id, 'ERROR: Cannot send to invalid chat id:');
+  if(isset($chatObj['thread'])) $reply_content['message_thread_id'] = $chatObj['thread'];
+  if(!is_valid_target($chatObj['id'], null, false, true)){
+    info_log($chatObj['id'], 'ERROR: Cannot send to invalid chat id:');
     info_log($reply_content, 'ERROR: data would have been:');
     exit();
   }
@@ -127,20 +134,21 @@ function send_venue($chat_id, $lat, $lon, $title, $address, $inline_keyboard = f
 
 /**
  * Echo message.
- * @param $chat_id
+ * @param $chatObj
  * @param $text
  */
-function sendMessageEcho($chat_id, $text)
+function sendMessageEcho($chatObj, $text)
 {
   // Create reply content array.
   $reply_content = [
     'method'     => 'sendMessage',
-    'chat_id'    => $chat_id,
+    'chat_id'    => $chatObj['id'],
     'parse_mode' => 'HTML',
     'text'       => $text
   ];
-  if(!is_valid_target($chat_id, null, false, true)){
-    info_log($chat_id, 'ERROR: Cannot send to invalid chat id:');
+  if(isset($chatObj['thread'])) $reply_content['message_thread_id'] = $chatObj['thread'];
+  if(!is_valid_target($chatObj['id'], null, false, true)){
+    info_log($chatObj['id'], 'ERROR: Cannot send to invalid chat id:');
     info_log($reply_content, 'ERROR: data would have been:');
     exit();
   }
@@ -589,7 +597,7 @@ function get_chatmember($chat_id, $user_id, $multicurl = false)
 
 /**
  * Send photo.
- * @param $chat_id
+ * @param $chatObj
  * @param string $media_content content of the media file.
  * @param bool $content_type true = photo file, false = file_id
  * @param string|bool $text
@@ -598,20 +606,21 @@ function get_chatmember($chat_id, $user_id, $multicurl = false)
  * @param array|bool $multicurl
  * @param int|bool $identifier
  */
-function send_photo($chat_id, $media_content, $content_type, $text = '', $inline_keyboard = false, $merge_args = [], $multicurl = false, $identifier = false)
+function send_photo($chatObj, $media_content, $content_type, $text = '', $inline_keyboard = false, $merge_args = [], $multicurl = false, $identifier = false)
 {
   // Create response content array.
   $post_contents = [
     'method'        => 'sendPhoto',
-    'chat_id'       => $chat_id,
+    'chat_id'       => $chatObj['id'],
     'reply_markup'  => json_encode(['inline_keyboard' => $inline_keyboard]),
   ];
   if($text != '') {
     $post_contents['caption'] = $text;
     $post_contents['parse_mode'] = 'HTML';
   }
-  if(!is_valid_target($chat_id, null, false, true)){
-    info_log($chat_id, 'ERROR: Cannot send to invalid chat id:');
+  if(isset($chatObj['thread'])) $post_contents['message_thread_id'] = $chatObj['thread'];
+  if(!is_valid_target($chatObj['id'], null, false, true)){
+    info_log($chatObj['id'], 'ERROR: Cannot send to invalid chat id:');
     info_log(print_r($post_contents, true), 'ERROR: data would have been:');
     exit();
   }
@@ -684,7 +693,7 @@ function editMessageMedia($id_val, $text_val, $media_content, $content_type, $in
     $post_contents['media']['media'] = $media_content;
   }
   $post_contents['media'] = json_encode($post_contents['media']);
-  debug_log("Editing message ${post_contents['message_id']} media: ${post_contents['media']}", '->');
+  debug_log("Editing message ".$post_contents['message_id']." media: ".$post_contents['media'], '->');
 
   // Send request to telegram api.
   return curl_request($post_contents, $multicurl, $identifier);

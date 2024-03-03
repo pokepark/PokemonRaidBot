@@ -7,7 +7,7 @@ $returnValue = preg_match('/^[A-Za-z0-9]{0,15}$/', $update['message']['text']);
 // Only numbers and alphabetic character allowed
 if(!$returnValue){
   // Trainer Name got unallowed Chars -> Error-Message
-  send_message($userid, getTranslation('trainername_fail'));
+  send_message(create_chat_object([$userid]), getTranslation('trainername_fail'));
   exit();
 }
 $trainername = $update['message']['text'];
@@ -28,4 +28,4 @@ $keys[0][] = button(getTranslation('back'), 'trainer');
 $keys[0][] = button(getTranslation('done'), ['exit', 'd' => '1']);
 
 // confirm Name-Change
-send_message($userid, getTranslation('trainername_success').' <b>'.$trainername.'</b>', $keys);
+send_message(create_chat_object([$userid]), getTranslation('trainername_success').' <b>'.$trainername.'</b>', $keys);

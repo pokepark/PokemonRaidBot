@@ -50,7 +50,7 @@ if(isset($data['a']) && $data['a'] == 1) {
   exit;
 }
 if(!isset($update['message']['location'])) {
-  send_message($update['message']['chat']['id'], '<b>' . getTranslation('invalid_input') . '</b>');
+  send_message(create_chat_object([$update['message']['chat']['id']]), '<b>' . getTranslation('invalid_input') . '</b>');
   exit();
 }
 $lat = (float)$update['message']['location']['latitude'];
@@ -137,4 +137,4 @@ if($count == 0) {
 }
 
 // Send message.
-send_message($update['message']['chat']['id'], $msg, $keys, ['reply_markup' => ['selective' => true, 'one_time_keyboard' => true]]);
+send_message(create_chat_object([$update['message']['chat']['id']]), $msg, $keys, ['reply_markup' => ['selective' => true, 'one_time_keyboard' => true]]);
