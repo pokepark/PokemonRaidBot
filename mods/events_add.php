@@ -17,7 +17,7 @@ $userId = $update['callback_query']['from']['id'] ?? $update['message']['from'][
 
 if(isset($modifiers)) {
   $value = htmlspecialchars(trim($update['message']['text']));
-  my_query('INSERT INTO events SET name=?',[$value]);
+  my_query('INSERT INTO events SET name=?, description=""',[$value]);
   $eventId = $dbh->lastInsertId();
   $callback_response = getTranslation('done');
   editMessageText($modifiers['old_message_id'], getTranslation('events_created'), [], $userId);
