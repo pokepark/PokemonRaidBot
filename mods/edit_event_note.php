@@ -33,6 +33,7 @@ if($mode == 'e') {
 }elseif($mode == 'c') {
   my_query('DELETE FROM user_input WHERE user_id = ?', [$userid]);
   require_once('edit_save.php');
+  exit();
 }else {
   if($raid['event'] == EVENT_ID_EX) {
     $event_name = getTranslation('Xstars');

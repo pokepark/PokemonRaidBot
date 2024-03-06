@@ -32,8 +32,9 @@ if(isset($data['d'])) {
 // Telegram JSON array.
 $tg_json = array();
 
-// Add delete to keys.
+// Add delete and done to keys.
 $keys[][] = button(getTranslation('delete'), ['raids_delete', 'r' => $id]);
+$keys[][] = button(getTranslation('done'), ['exit', 'd' => 1]);
 
 // Check access level prior allowing to change raid time
 if($botUser->accessCheck('raid-duration', true)) {
