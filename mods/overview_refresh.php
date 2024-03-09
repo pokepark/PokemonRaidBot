@@ -56,14 +56,16 @@ foreach($overviews as $overview_row) {
 
   if($overview_row['update_needed'] == 1) {
     [$chat_title, $chat_username] = get_chat_title_username($overview_row['chat_id']);
-    my_query('
-      UPDATE  overview
-      SET   chat_title = ?,
-          chat_username = ?,
-          updated = DATE(NOW())
-      WHERE   chat_id = ?
-      ',[$chat_title, $chat_username, $overview_row['chat_id']]
-    );
+    if($chat_title == '' && $chat_username == '') {
+      my_query('
+        UPDATE  overview
+        SET   chat_title = ?,
+            chat_username = ?,
+            updated = DATE(NOW())
+        WHERE   chat_id = ?
+        ',[$chat_title, $chat_username, $overview_row['chat_id']]
+      );
+    }
   }else {
     $chat_title = $overview_row['chat_title'];
     $chat_username = $overview_row['chat_username'];
