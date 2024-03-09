@@ -112,7 +112,7 @@ catch (PDOException $exception) {
 function get_current_bosses($spawn) {
     global $dbh;
     $i = 0;
-    $levels = [5, 8]; // Search potential raid hour bosses from these raid levels
+    $levels = [5, 7, 8]; // Search potential raid hour bosses from these raid levels
     $pokemon = $pokemon_form = false;
     do {
         $pk = $dbh->prepare('SELECT pokedex_id,pokemon_form_id FROM raid_bosses WHERE raid_level = ? AND ? BETWEEN date_start AND date_end');
