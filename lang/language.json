@@ -267,7 +267,7 @@
     "PT-BR": "Você não tem permissão para utilizar esse comando ou bot!",
     "RU": "Вы не можете использовать эту команду или бота!",
     "NO": "Du har ikke tillatelse til å bruke denne kommandoen eller boten!",
-    "FR": "Tu n'es pas autorisé à utiliser cette commande !",
+    "FR": "Vous n'êtes pas autorisé à utiliser le bot ou cette commande!",
     "PL": "Nie masz uprawnień do korzystania z tej komendy lub bota!",
     "FI": "Sinulla ei ole oikeutta tähän komentoon tai bottiin!",
     "ES": "¡No está autorizado a utilizar este comando o bot!"
@@ -280,7 +280,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Itinéraire",
     "PL": "TRANSLATE",
     "FI": "Reittiohje",
     "ES": "Abrir mapa"
@@ -293,7 +293,7 @@
     "PT-BR": "Pokemon",
     "RU": "Pokemon",
     "NO": "Pokemon",
-    "FR": "Pokemon",
+    "FR": "Pokémon",
     "PL": "Pokemon",
     "FI": "Pokemon",
     "ES": "Pokémon"
@@ -306,7 +306,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Types de Pokémon",
     "PL": "TRANSLATE",
     "FI": "Pokemon Tyypit",
     "ES": "Tipos de Pokémon"
@@ -345,7 +345,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "ou",
     "PL": "TRANSLATE",
     "FI": "tai",
     "ES": "o"
@@ -384,7 +384,7 @@
     "PT-BR": "O processo foi abortado!",
     "RU": "Процесс был прерван!",
     "NO": "Handlingen ble avbrutt!",
-    "FR": "Le processus à échoué !",
+    "FR": "Le processus a été interrompu!",
     "PL": "Zadanie zostało anulowane",
     "FI": "Prosessi peruutettiin!",
     "ES": "¡El proceso fue cancelado!"
@@ -397,7 +397,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Sélectionnez l'action:",
     "PL": "TRANSLATE",
     "FI": "Valitse toiminto:",
     "ES": "Selecciona la acción:"
@@ -462,7 +462,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Remplacer",
     "PL": "TRANSLATE",
     "FI": "Korvaa",
     "ES": "Reemplazar"
@@ -488,7 +488,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Modifier",
     "PL": "TRANSLATE",
     "FI": "Muokkaa",
     "ES": "Editar"
@@ -514,7 +514,7 @@
     "PT-BR": "Resetar",
     "RU": "Сброс",
     "NO": "Reset",
-    "FR": "Remise à zéro",
+    "FR": "Réinitialiser",
     "PL": "Resetuj",
     "FI": "Resetoi",
     "ES": "Reiniciar"
@@ -579,7 +579,7 @@
     "PT-BR": "Compartilhado com sucesso!",
     "RU": "Успешно отправлено!",
     "NO": "Deling velykket!",
-    "FR": "Partagé avec succès !",
+    "FR": "Partagé avec succès!",
     "PL": "Pomyślnie udostępniono",
     "FI": "Jaettu onnistuneesti!",
     "ES": "¡Compartido con éxito!"
@@ -592,7 +592,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Configuration",
     "PL": "TRANSLATE",
     "FI": "Asetukset",
     "ES": "Configuración"
@@ -605,7 +605,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Configuration mise à jour",
     "PL": "TRANSLATE",
     "FI": "Asetukset päivitetty",
     "ES": "Configuración actualizada"
@@ -618,7 +618,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Réinitialisé",
     "PL": "TRANSLATE",
     "FI": "Resetoitu",
     "ES": "Reiniciado"
@@ -631,7 +631,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Valeur de l'option de configuration",
     "PL": "TRANSLATE",
     "FI": "Asetuksen arvo",
     "ES": "Valor de la opción de configuración"
@@ -644,7 +644,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Option de configuration",
     "PL": "TRANSLATE",
     "FI": "Asetuksen nimi",
     "ES": "TRANSLATE"
@@ -657,7 +657,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Aucune valeur",
     "PL": "TRANSLATE",
     "FI": "Ei arvoa",
     "ES": "Sin valor"
@@ -670,7 +670,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Nouvelle valeur:",
     "PL": "TRANSLATE",
     "FI": "Uusi arvo:",
     "ES": "Nuevo valor:"
@@ -683,7 +683,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Ancienne valeur:",
     "PL": "TRANSLATE",
     "FI": "Vanha arvo:",
     "ES": "Antiguo valor:"
@@ -696,7 +696,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Aide personnalisée du bot:",
     "PL": "TRANSLATE",
     "FI": "Henkilökohtainen bottiapu:",
     "ES": "Tu bot personal ayuda:"
@@ -709,7 +709,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Entrée invalide!",
     "PL": "TRANSLATE",
     "FI": "Epäkelpo arvo!",
     "ES": "¡Entrada inválida!"
@@ -722,7 +722,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Erreur interne!",
     "PL": "TRANSLATE",
     "FI": "Sisäinen virhe!",
     "ES": "¡Error interno!"
@@ -748,7 +748,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Aucun",
     "PL": "TRANSLATE",
     "FI": "ei mitään",
     "ES": "Nada"
@@ -761,7 +761,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Autres",
     "PL": "TRANSLATE",
     "FI": "Muu",
     "ES": "Otro"
@@ -774,7 +774,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Vous ne pouvez pas voter avant d'avoir suivi le tutoriel.",
     "PL": "TRANSLATE",
     "FI": "Et voi äänestää ennen kuin olet käynyt ohjeen läpi.",
     "ES": "No puedes votar antes de seguir el tutorial."
@@ -787,7 +787,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Vous ne pouvez pas utiliser cette commande avant d'avoir suivi le tutoriel.",
     "PL": "TRANSLATE",
     "FI": "Et voi käyttää tätä käskyä ennen kuin olet käynyt ohjeen läpi.",
     "ES": "No puede usar este comando antes de seguir el tutorial."
@@ -813,7 +813,7 @@
     "PT-BR": "Ex-Raid",
     "RU": "Экс-Рейд",
     "NO": "Ex-Raid",
-    "FR": "Raid Ex",
+    "FR": "Raid EX",
     "PL": "Ex-Rajd",
     "FI": "Ex-Raidi",
     "ES": "Incursión EX"
@@ -826,7 +826,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Obscur niveau 5",
     "PL": "TRANSLATE",
     "FI": "5 tähden shadow",
     "ES": "TRANSLATE"
@@ -839,7 +839,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Obscur 5",
     "PL": "TRANSLATE",
     "FI": "Shadow 5",
     "ES": "TRANSLATE"
@@ -852,7 +852,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Obscur niveau 4",
     "PL": "TRANSLATE",
     "FI": "4 tähden shadow",
     "ES": "TRANSLATE"
@@ -865,7 +865,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Obscur 4",
     "PL": "TRANSLATE",
     "FI": "Shadow 4",
     "ES": "TRANSLATE"
@@ -878,7 +878,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Obscur niveau 3",
     "PL": "TRANSLATE",
     "FI": "3 tähden shadow",
     "ES": "TRANSLATE"
@@ -891,7 +891,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Obscur 3",
     "PL": "TRANSLATE",
     "FI": "Shadow 3",
     "ES": "TRANSLATE"
@@ -904,7 +904,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Obscur niveau 2",
     "PL": "TRANSLATE",
     "FI": "2 tähden shadow",
     "ES": "TRANSLATE"
@@ -917,7 +917,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Obscur 2",
     "PL": "TRANSLATE",
     "FI": "Shadow 2",
     "ES": "TRANSLATE"
@@ -930,7 +930,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Obscur niveau 1",
     "PL": "TRANSLATE",
     "FI": "1 tähden shadow",
     "ES": "TRANSLATE"
@@ -943,7 +943,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Obscur 1",
     "PL": "TRANSLATE",
     "FI": "Shadow 1",
     "ES": "TRANSLATE"
@@ -956,7 +956,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Primo-raid",
     "PL": "TRANSLATE",
     "FI": "Primal raid",
     "ES": "TRANSLATE"
@@ -969,7 +969,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Primo",
     "PL": "TRANSLATE",
     "FI": "Primal",
     "ES": "TRANSLATE"
@@ -982,7 +982,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Raid d'élite",
     "PL": "TRANSLATE",
     "FI": "Elite raid",
     "ES": "TRANSLATE"
@@ -995,7 +995,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Élite",
     "PL": "TRANSLATE",
     "FI": "Elite",
     "ES": "TRANSLATE"
@@ -1008,7 +1008,7 @@
     "PT-BR": "Ultrafenda Espacial",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "Ultra-Brèche ",
+    "FR": "Raid Ultra-Chimère",
     "PL": "Ultratunel",
     "FI": "Ultramadonreikä",
     "ES": "Ultraumbral"
@@ -1021,7 +1021,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Ultra",
     "PL": "TRANSLATE",
     "FI": "TRANSLATE",
     "ES": "TRANSLATE"
@@ -1034,7 +1034,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Méga-raid légendaire",
     "PL": "TRANSLATE",
     "FI": "Legendaarinen Mega-Raidi",
     "ES": "TRANSLATE"
@@ -1047,7 +1047,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Méga lég",
     "PL": "TRANSLATE",
     "FI": "Lege Mega",
     "ES": "TRANSLATE"
@@ -1060,7 +1060,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Méga-raid",
     "PL": "TRANSLATE",
     "FI": "Mega-Raidi",
     "ES": "Mega Incursión"
@@ -1073,7 +1073,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Méga",
     "PL": "TRANSLATE",
     "FI": "Mega",
     "ES": "Mega"
@@ -1164,7 +1164,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Oeuf obscur niveau 5",
     "PL": "TRANSLATE",
     "FI": "Tason 5 shadow muna",
     "ES": "TRANSLATE"
@@ -1177,7 +1177,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Oeuf obscur niveau 4",
     "PL": "TRANSLATE",
     "FI": "Tason 4 shadow muna",
     "ES": "TRANSLATE"
@@ -1190,7 +1190,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Oeuf obscur niveau 3",
     "PL": "TRANSLATE",
     "FI": "Tason 3 shadow muna",
     "ES": "TRANSLATE"
@@ -1203,7 +1203,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Oeuf obscur niveau 2",
     "PL": "TRANSLATE",
     "FI": "Tason 2 shadow muna",
     "ES": "TRANSLATE"
@@ -1216,7 +1216,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Oeuf obscur niveau 1",
     "PL": "TRANSLATE",
     "FI": "Tason 1 shadow muna",
     "ES": "TRANSLATE"
@@ -1229,7 +1229,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Oeuf Primo-raid",
     "PL": "TRANSLATE",
     "FI": "Primal raid -muna",
     "ES": "TRANSLATE"
@@ -1242,7 +1242,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Oeuf raid d'élite",
     "PL": "TRANSLATE",
     "FI": "Elite raid -muna",
     "ES": "TRANSLATE"
@@ -1255,7 +1255,7 @@
     "PT-BR": "Ultrafenda Espacial",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "Ultra-Brèche ",
+    "FR": "Ultra-Brèche",
     "PL": "Ultratunel",
     "FI": "Ultramadonreikä",
     "ES": "Ultraumbral"
@@ -1268,7 +1268,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Oeuf Méga-raid légendaire",
     "PL": "TRANSLATE",
     "FI": "Legendaarinen Mega-Raid Muna",
     "ES": "TRANSLATE"
@@ -1281,7 +1281,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Oeuf Méga-raid",
     "PL": "TRANSLATE",
     "FI": "Mega-Raid Muna",
     "ES": "Huevo Mega Incursión"
@@ -1294,7 +1294,7 @@
     "PT-BR": "Ovo de Nível 5",
     "RU": "Яйцо уровня 5",
     "NO": "Level 5 Egg",
-    "FR": "Oeuf 5",
+    "FR": "Oeuf niveau 5",
     "PL": "Jajko 5 poziom",
     "FI": "Tason 5 muna",
     "ES": "Huevo nivel 5"
@@ -1307,7 +1307,7 @@
     "PT-BR": "Ovo de Nível 4",
     "RU": "Яйцо уровня 4",
     "NO": "Level 4 Egg",
-    "FR": "Oeuf 4",
+    "FR": "Oeuf niveau 4",
     "PL": "Jajko 4 poziom",
     "FI": "Tason 4 muna",
     "ES": "Huevo nivel 4"
@@ -1320,7 +1320,7 @@
     "PT-BR": "Ovo de Nível 3",
     "RU": "Яйцо уровня 3",
     "NO": "Level 3 Egg",
-    "FR": "Oeuf 3",
+    "FR": "Oeuf niveau 3",
     "PL": "Jajko 3 poziom",
     "FI": "Tason 3 muna",
     "ES": "Huevo nivel 3"
@@ -1333,7 +1333,7 @@
     "PT-BR": "Ovo de Nível 2",
     "RU": "Яйцо уровня 2",
     "NO": "Level 2 Egg",
-    "FR": "Oeuf 2",
+    "FR": "Oeuf niveau 2",
     "PL": "Jajko 2 poziom",
     "FI": "Tason 2 muna",
     "ES": "Huevo nivel 2"
@@ -1346,7 +1346,7 @@
     "PT-BR": "Ovo de Nível 1",
     "RU": "Яйцо уровня 1",
     "NO": "Level 1 Egg",
-    "FR": "Oeuf 1",
+    "FR": "Oeuf niveau 1",
     "PL": "Jajko 1 poziom",
     "FI": "Tason 1 muna",
     "ES": "Huevo nivel 1"
@@ -1359,7 +1359,7 @@
     "PT-BR": "Reide Ovo",
     "RU": "Рейдовое Яйцо",
     "NO": "Level 0 Egg",
-    "FR": "Oeuf 0",
+    "FR": "Oeuf raid",
     "PL": "Jajo",
     "FI": "Raid-muna",
     "ES": "Huevo Incursión"
@@ -1372,7 +1372,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "à venir",
     "PL": "TRANSLATE",
     "FI": "tulevat",
     "ES": "próximo"
@@ -1385,7 +1385,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Aucune information sur les prochains boss n'a été trouvée!",
     "PL": "TRANSLATE",
     "FI": "Tietoa tulevista bosseista ei löytynyt!",
     "ES": "¡No se encontró información de los próximos jefes!"
@@ -1398,7 +1398,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Boss de raid planifiés dans la base de données",
     "PL": "TRANSLATE",
     "FI": "Tallennetut tulevat raidibossit",
     "ES": "Jefes de incursión programados de la base de datos"
@@ -1411,7 +1411,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Boss de raid non planifiés",
     "PL": "TRANSLATE",
     "FI": "Ajastamattomat bossit",
     "ES": "Jefes no programados"
@@ -1424,7 +1424,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Voulez-vous supprimer cette entrée planifiée?",
     "PL": "TRANSLATE",
     "FI": "Haluatko poistaa tämän ajastuksen?",
     "ES": "¿Quieres eliminar esta entrada programada?"
@@ -1437,7 +1437,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Prochains boss de raid planifiés trouvés",
     "PL": "TRANSLATE",
     "FI": "Löydetyt tulevat raidibossit",
     "ES": "Próximos jefes encontrado"
@@ -1450,7 +1450,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Voulez-vous remplacer les données actuelles par celles que nous avons trouvées?",
     "PL": "TRANSLATE",
     "FI": "Haluatko korvata nykyiset tiedot nyt löydetyillä?",
     "ES": "¿Quieres reemplazar los datos actuales con los encontrados?"
@@ -1463,7 +1463,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Chromatique",
     "PL": "TRANSLATE",
     "FI": "Shiny",
     "ES": "Shiny"
@@ -1476,7 +1476,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Pas chromatique",
     "PL": "TRANSLATE",
     "FI": "Ei shiny",
     "ES": "No shiny"
@@ -1528,7 +1528,7 @@
     "PT-BR": "Cancelado",
     "RU": "Отмена",
     "NO": "Avlysning",
-    "FR": "Finalement je ne viens pas",
+    "FR": "Annulation",
     "PL": "Nie mogę przyjsć",
     "FI": "Peru",
     "ES": "Cancelar"
@@ -1541,7 +1541,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Annulé",
     "PL": "TRANSLATE",
     "FI": "Perunut",
     "ES": "Cancelado"
@@ -1567,7 +1567,7 @@
     "PT-BR": "Votos atualizados",
     "RU": "Голосование обновлено",
     "NO": "Stemme oppdatert",
-    "FR": "Mise à jour du vote",
+    "FR": "Vote mis à jour",
     "PL": "Głos zaktualizowany",
     "FI": "Äänestys päivitetty",
     "ES": "Voto actualizado"
@@ -1580,7 +1580,7 @@
     "PT-BR": "Vote por um horário primeiro!",
     "RU": "Сначала выберите время!",
     "NO": "Foreslå tid først",
-    "FR": "Votez pour une heure en premier !",
+    "FR": "Votez d'abord pour une heure!",
     "PL": "Wybierz najpierw godzinę",
     "FI": "Äänestä ensin aikaa!",
     "ES": "¡Primero selecciona un horario!"
@@ -1593,7 +1593,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Votez pour une heure dans le futur!",
     "PL": "TRANSLATE",
     "FI": "Äänestä tulevaa aikaa!",
     "ES": "¡Vota por un tiempo futuro!"
@@ -1606,7 +1606,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "La participation à distance n'est plus possible!",
     "PL": "TRANSLATE",
     "FI": "Osallistuminen etänä ei ole enää mahdollista!",
     "ES": "¡Asistir a distancia ya no es posible!"
@@ -1619,7 +1619,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Vous ne pouvez pas faire ce choix.",
     "PL": "TRANSLATE",
     "FI": "Et voi tehdä tätä valintaa.",
     "ES": "No puedes realizar esta selección."
@@ -1632,7 +1632,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Ceci est une information de raid. Le vote n'est pas disponible!",
     "PL": "TRANSLATE",
     "FI": "Tämä on raid-tiedote, ei äänestystä.",
     "ES": "Esta es una información de incursión. ¡No es posible votar!"
@@ -1658,7 +1658,7 @@
     "PT-BR": "Ovo eclode",
     "RU": "Откроется",
     "NO": "Egget klekker",
-    "FR": "POP",
+    "FR": "Éclosion",
     "PL": "Wyklucie",
     "FI": "Avautuu",
     "ES": "Abre"
@@ -1671,7 +1671,7 @@
     "PT-BR": "Ovo eclode em",
     "RU": "Откроется",
     "NO": "Klekker",
-    "FR": "RDV",
+    "FR": "Éclot le",
     "PL": "Wykluje się",
     "FI": "Avautuu",
     "ES": "Apre en"
@@ -1697,7 +1697,7 @@
     "PT-BR": "Reide até",
     "RU": "Рейд до",
     "NO": "Raid fram til",
-    "FR": "DEPOP",
+    "FR": "Raid jusqu'à",
     "PL": "Rajd trwa do",
     "FI": "Raidi kunnes",
     "ES": "Incursión hasta"
@@ -1710,7 +1710,7 @@
     "PT-BR": "PARTICIPAÇÃO APENAS COM PASSE EX",
     "RU": "УЧАСТИЕ ВОЗМОЖНО ТОЛЬКО С ПРОПУСКОМ НА ЭКС-РЕЙД",
     "NO": "DET ER BARE MULIG Å DELTA OM DU HAR ETT EX-RAID PASS FOR DENNE GYMMEN",
-    "FR": "PARTICIPATION POSSIBLE SEULEMENT SI VOUS AVEZ UN PASS RAID EX",
+    "FR": "PARTICIPATION POSSIBLE UNIQUEMENT AVEC UN PASS RAID EX",
     "PL": "Rajdowanie możliwe tylko z zaproszeniem na EX-Rajd",
     "FI": "VOIT OSALLISTUA VAIN EX-RAIDI PASSILLA",
     "ES": "PARTICIPACIÓN SOLO ES POSIBLE CON PASE EX"
@@ -1723,7 +1723,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Il n'est pas possible de participer à ce raid avec un passe à distance!",
     "PL": "TRANSLATE",
     "FI": "Tähän raidiin ei voi osallistua etäpassilla!",
     "ES": "TRANSLATE"
@@ -1736,7 +1736,7 @@
     "PT-BR": "Ainda sem participantes",
     "RU": "Пока нет участников",
     "NO": "Ingen deltaker ennå",
-    "FR": "Aucun participant",
+    "FR": "Aucun participant actuellement",
     "PL": "Brak chętnych",
     "FI": "Ei osallistujia",
     "ES": "No hay participantes"
@@ -1749,7 +1749,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Importer",
     "PL": "TRANSLATE",
     "FI": "Tuo",
     "ES": "Importar"
@@ -1762,7 +1762,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Mettre à jour le tableau des Pokémon",
     "PL": "TRANSLATE",
     "FI": "Päivitä Pokemon-taulu",
     "ES": "Actualizar tabla Pokémon"
@@ -1775,7 +1775,7 @@
     "PT-BR": "Finalizada",
     "RU": "Закончено",
     "NO": "Ferdig",
-    "FR": "terminé",
+    "FR": "Terminé",
     "PL": "Skończony",
     "FI": "Valmis",
     "ES": "Finalizado"
@@ -1814,7 +1814,7 @@
     "PT-BR": "até",
     "RU": "к",
     "NO": "til",
-    "FR": "DEPOP",
+    "FR": "à",
     "PL": "do",
     "FI": "-",
     "ES": "a"
@@ -1840,7 +1840,7 @@
     "PT-BR": "Alguns participantes estão atrasados.",
     "RU": "Некоторые участники задерживаются.",
     "NO": "Noen deltakere er forsinket",
-    "FR": "Certains participants sont en retard",
+    "FR": "Certains participants sont en retard.",
     "PL": "Ktoś się spóźni",
     "FI": "Osa osallistujista on myöhässä.",
     "ES": "Algunos participantes llegan tarde."
@@ -1853,7 +1853,7 @@
     "PT-BR": "Por favor espere RAID_LATE_TIME minutos!",
     "RU": "Пожалуйста подождите RAID_LATE_TIME минут!",
     "NO": "Vær grei og vent RAID_LATE_TIME minutter!",
-    "FR": "Attendez s'il vous plaît RAID_LATE_TIME minutes !",
+    "FR": "Attendez RAID_LATE_TIME minutes s'il vous plaît!",
     "PL": "Poczekaj RAID_LATE_TIME minut!",
     "FI": "Odottakaa RAID_LATE_TIME minuuttia!",
     "ES": "¡Por favor, esperar RAID_LATE_TIME minutos!"
@@ -1866,7 +1866,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "START_CODE le raid",
     "PL": "TRANSLATE",
     "FI": "START_CODE raidi",
     "ES": "START_CODE incursión"
@@ -1879,7 +1879,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Informer tous les participants du commencement du raid",
     "PL": "TRANSLATE",
     "FI": "Ilmoita kaikille osallistujille raidin alkamisesta",
     "ES": "Notificar a todos los participantes del inicio de la incursión"
@@ -1892,7 +1892,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "(notifier les participants)",
     "PL": "TRANSLATE",
     "FI": "(viesti kaikille)",
     "ES": "(Mensaje a todos)"
@@ -1905,7 +1905,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Groupe privé",
     "PL": "TRANSLATE",
     "FI": "Privaattiryhmä",
     "ES": "Grupo privado"
@@ -1918,7 +1918,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Publique",
     "PL": "TRANSLATE",
     "FI": "Julkinen",
     "ES": "Público"
@@ -1931,7 +1931,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Raid à distance",
     "PL": "TRANSLATE",
     "FI": "Etäraidi",
     "ES": "Incursión remota"
@@ -1944,7 +1944,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Raids à distance",
     "PL": "TRANSLATE",
     "FI": "Etäraidit",
     "ES": "Incursiones remotas"
@@ -1957,7 +1957,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Participants à distance!",
     "PL": "TRANSLATE",
     "FI": "Etäosallistujia!",
     "ES": "¡Participantes remotos!"
@@ -1970,7 +1970,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "(max. REMOTE_MAX_USERS à la fois)",
     "PL": "TRANSLATE",
     "FI": "(max. REMOTE_MAX_USERS kerrallaan)",
     "ES": "(máx. REMOTE_MAX_USERS cada vez)"
@@ -1983,7 +1983,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Vous avez participé au raid à distance que vous avez créé. Voulez-vous supprimer l'annonce du raid?",
     "PL": "TRANSLATE",
     "FI": "Olet pelannut luomasi etäraidin. Saako raidi-ilmoituksen poistaa?",
     "ES": "Has participado en la incursión remota que creaste. ¿Quieres eliminar el anuncio de la incursión?"
@@ -1996,7 +1996,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Vous avez annulé votre participation au raid à distance que vous avez créé. Voulez-vous supprimer l'annonce du raid?",
     "PL": "TRANSLATE",
     "FI": "Olet perunut osallistumisesi luomaasi etäraidin. Saako raidi-ilmoituksen poistaa?",
     "ES": "Has cancelado tu participación a la incursión remota que creaste. ¿Quieres eliminar el anuncio de la incursión?"
@@ -2009,7 +2009,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Merci! Raid à distance indiqué comme terminé!",
     "PL": "TRANSLATE",
     "FI": "Kiitos! Etäraidi merkattu päättyneeksi!",
     "ES": "¡Gracias! ¡Incursión remota marcada como finalizada!"
@@ -2022,7 +2022,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Code de groupe",
     "PL": "TRANSLATE",
     "FI": "Ryhmäkoodi",
     "ES": "Código de grupo"
@@ -2035,7 +2035,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "(aucun code de groupe requis)",
     "PL": "TRANSLATE",
     "FI": "(ei ryhmäkoodia)",
     "ES": "(no se necesita código de grupo)"
@@ -2048,7 +2048,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Vous n'êtes PAS inscrit en tant que participant à distance. Demandez le code de groupe sur place!",
     "PL": "TRANSLATE",
     "FI": "Et ole rekisteröity etäosallistujaksi. Pyydä koodi paikanpäällä!",
     "ES": "NO estás registrado como participante remoto. ¡Solicita el código de grupo en el sitio!"
@@ -2061,7 +2061,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Partager le code de groupe",
     "PL": "TRANSLATE",
     "FI": "Jaa ryhmäkoodi",
     "ES": "Compartir código de grupo"
@@ -2074,7 +2074,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Code de groupe envoyé!",
     "PL": "TRANSLATE",
     "FI": "Lähetä ryhmäkoodi!",
     "ES": "¡Código de grupo enviado!"
@@ -2087,7 +2087,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "COMMENCER",
     "PL": "TRANSLATE",
     "FI": "ALOITA",
     "ES": "INICIAR"
@@ -2100,7 +2100,7 @@
     "PT-BR": "Por favor escolha a primeira letra do ginásio:",
     "RU": "Пожалуйста, выберите первую букву гима:",
     "NO": "Hva er den første bokstaven i gym navnet",
-    "FR": "Sélectionne la première lettre de l'arène",
+    "FR": "Sélectionnez la première lettre de l'arène:",
     "PL": "Wybierz pierwszą litere nazwy Areny",
     "FI": "Valitse salin ensimmäinen kirjain:",
     "ES": "Por favor, selecciona la primera letra del gimnasio:"
@@ -2113,7 +2113,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Sélectionnez la première lettre de l'arène ou de la zone:",
     "PL": "TRANSLATE",
     "FI": "Valitse salin ensimmäinen kirjain tai alue:",
     "ES": "Seleccione la primera letra del gimnasio o la zona del gimnasio:"
@@ -2126,7 +2126,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Sélectionnez l'arène ou la zone:",
     "PL": "TRANSLATE",
     "FI": "Valitse sali tai alue:",
     "ES": "Seleccione gimnasio o zona de gimnasio:"
@@ -2139,7 +2139,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Sélectionnez la zone:",
     "PL": "TRANSLATE",
     "FI": "Valitse salialue:",
     "ES": "Por favor, selecciona la zona del gimnasio:"
@@ -2152,7 +2152,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Zone par défaut",
     "PL": "TRANSLATE",
     "FI": "Oletussalialue",
     "ES": "TRANSLATE"
@@ -2165,7 +2165,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Zones",
     "PL": "TRANSLATE",
     "FI": "Salialueet",
     "ES": "TRANSLATE"
@@ -2178,7 +2178,7 @@
     "PT-BR": "Primeira letra escolhida.:",
     "RU": "Первая буква вабрана.",
     "NO": "Første bokstav er valgt",
-    "FR": "Première lettre sélectionnée",
+    "FR": "Première lettre sélectionnée.",
     "PL": "Pierwsza litera wybrana",
     "FI": "Ensimmäinen kirjain valittu.",
     "ES": "Primera letra seleccionada."
@@ -2191,7 +2191,7 @@
     "PT-BR": "A raid já existe!",
     "RU": "Рейд уже существует!",
     "NO": "Raidet finnes allerede!",
-    "FR": "Ce raid existe déjà",
+    "FR": "Ce raid existe déjà!",
     "PL": "Rajd już istnieje",
     "FI": "Raidi on jo olemassa!",
     "ES": "¡La incursión ya existe!"
@@ -2204,7 +2204,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Afficher un raid enregistré ou créer un événement de raid",
     "PL": "TRANSLATE",
     "FI": "Tarkaste tallennettua raidia tai luo tapahtuma",
     "ES": "TRANSLATE"
@@ -2217,7 +2217,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Afficher le raid enregistré",
     "PL": "TRANSLATE",
     "FI": "Tallennettu raidi",
     "ES": "TRANSLATE"
@@ -2230,7 +2230,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Créer un événement de raid",
     "PL": "TRANSLATE",
     "FI": "Luo raiditapahtuma",
     "ES": "TRANSLATE"
@@ -2243,7 +2243,7 @@
     "PT-BR": "Criar raid em",
     "RU": "Создать рейд в",
     "NO": "Opprett raid i",
-    "FR": "Créer un raid",
+    "FR": "Créer un raid dans",
     "PL": "Utwórz Rajd w",
     "FI": "Luo Raidi",
     "ES": "Crear incursión en"
@@ -2256,7 +2256,7 @@
     "PT-BR": "Para continuar, escolha o nível da raid",
     "RU": "Чтобы продолжить, пожалуйста, укажите уровень рейда",
     "NO": "Velg raid level for å fortsette",
-    "FR": "Pour continuer, sélectionne un niveau de raid",
+    "FR": "Pour continuer, sélectionnez un niveau de raid",
     "PL": "Żeby kontynuować, wybierz poziom Rajdu",
     "FI": "Jatkaaksesi valitse raidin taso",
     "ES": "Para continuar, selecciona el nivel de incursión"
@@ -2269,7 +2269,7 @@
     "PT-BR": "Escolha o nível da raid",
     "RU": "Укажите уровень рейда",
     "NO": "Velg raid level",
-    "FR": "Sélectionne un niveau de raid",
+    "FR": "Sélectionnez un niveau de raid",
     "PL": "Wybierz poziom Rajdu",
     "FI": "Valitse raidin taso",
     "ES": "Selecciona el nivel de la incursión"
@@ -2282,7 +2282,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Désactiver le niveau de raid",
     "PL": "TRANSLATE",
     "FI": "Poista raidi taso käytöstä",
     "ES": "Desactivar el nivel de incursión"
@@ -2295,7 +2295,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Niveau de raid désactivé",
     "PL": "TRANSLATE",
     "FI": "Raidi taso ei käytössä",
     "ES": "Nivel de incursión desactivado"
@@ -2308,7 +2308,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Informations de dresseur",
     "PL": "TRANSLATE",
     "FI": "Kouluttajatieto",
     "ES": "Información del entrenador"
@@ -2321,7 +2321,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Vos données de dresseur:",
     "PL": "TRANSLATE",
     "FI": "Kouluttajatietosi:",
     "ES": "Tús datos de entrenador:"
@@ -2334,7 +2334,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Partager le message de dresseur",
     "PL": "TRANSLATE",
     "FI": "Jaa kouluttajaviesti",
     "ES": "Compartir mensaje de entrenador"
@@ -2347,7 +2347,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Supprimer le message de dresseur",
     "PL": "TRANSLATE",
     "FI": "Poista kouluttajaviesti",
     "ES": "Eliminar mensaje de entrenador"
@@ -2360,7 +2360,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Supprimer le message de dresseur de la conversation?",
     "PL": "TRANSLATE",
     "FI": "Poista kouluttajaviesti chatista?",
     "ES": "¿Eliminar mensaje de entrenador del chat?"
@@ -2373,7 +2373,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Message de dresseur supprimé!",
     "PL": "TRANSLATE",
     "FI": "Kouluttajaviesti poistettu!",
     "ES": "¡Mensaje de entrenador eliminado!"
@@ -2386,7 +2386,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Vous pouvez également partager ou supprimer le message de dresseur dans une conversation.",
     "PL": "TRANSLATE",
     "FI": "Voit myos jakaa kouluttajaviestin chatin kanssa.",
     "ES": "También puedes compartir o eliminar el mensaje de entrenador en un chat."
@@ -2399,7 +2399,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Modifiez vos informations de dresseur:",
     "PL": "TRANSLATE",
     "FI": "Aseta trainer datasi:",
     "ES": "Edita tus datos de entrenador:"
@@ -2412,7 +2412,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Via 'Informations de dresseur' vous pouvez afficher vos données. Modifiez-les avec les boutons 'Équipe' et 'Niveau'.",
     "PL": "TRANSLATE",
     "FI": "Voit tarkastella kouluttajatietojasi 'kouluttajatieto' komennolla. Muuta tietojasi 'Joukkue' ja 'Taso' -napeilla.",
     "ES": "Con 'Información del entrenador' puedes ver los datos de tu entrenador. Cambia los datos con los botones 'Equipo' y 'Nivel'."
@@ -2425,7 +2425,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Une fois terminé, cliquez à nouveau sur 'Informations de dresseur'. Les données de votre dresseur seront à nouveau masquées.",
     "PL": "TRANSLATE",
     "FI": "Kun olet valmis, paina uudelleen 'Kouluttajatieto'. Kouluttajatietosi ovat jälleen piilossa.",
     "ES": "Una vez que termines, presiona nuevamente en 'Información del entrenador'. Los datos de tu entrenador se volverán a ocultar."
@@ -2438,7 +2438,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Partagez dans une conversation le message pour afficher et modifier les informations de dresseur:",
     "PL": "TRANSLATE",
     "FI": "Jaa viesti kouluttajatietojen näyttämistä ja muuttamista varten chatin kanssa:",
     "ES": "Comparte el mensaje para mostrar y editar los datos del entrenador con un chat:"
@@ -2451,7 +2451,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Aucune conversation trouvée! Impossible de partager le message pour afficher et modifier les informations de dresseur!",
     "PL": "TRANSLATE",
     "FI": "Chatteja ei löytynyt! Et voi jakaa viestiä tietojen näyttämiseen ja muuttamiseen!",
     "ES": "¡No se encontraron chats! ¡No se puede compartir el mensaje para mostrar y editar los datos del entrenador!"
@@ -2464,7 +2464,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Nom de dresseur",
     "PL": "TRANSLATE",
     "FI": "Pelinimi",
     "ES": "Nombre de entrenador"
@@ -2477,7 +2477,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Ajouter le nom de dresseur",
     "PL": "TRANSLATE",
     "FI": "Lisää pelinimi",
     "ES": "Añadir nombre de entrenador"
@@ -2490,7 +2490,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Modifier le nom de dresseur",
     "PL": "TRANSLATE",
     "FI": "Muokkaa pelinimeä",
     "ES": "Editar nombre de entrenador"
@@ -2503,7 +2503,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Entrez votre nom de dresseur",
     "PL": "TRANSLATE",
     "FI": "Kirjoita pelinimesi:",
     "ES": "Escribe tu nombre de entrenador"
@@ -2516,7 +2516,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Merci. Votre nom est désormais:",
     "PL": "TRANSLATE",
     "FI": "Kiitos. Pelinimesi on nyt:",
     "ES": "Gracias. Ahora tu nombre es:"
@@ -2529,7 +2529,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Veuillez utiliser uniquement des caractères alphanumériques. Réessayez",
     "PL": "TRANSLATE",
     "FI": "Pelinimessä voi olla pelkästään numeroita ja kirjaimia. Yritä uudelleen.",
     "ES": "Por favor, usa solo caracteres alfanuméricos. Intentalo otra vez"
@@ -2542,7 +2542,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Modifier l'affichage du nom",
     "PL": "TRANSLATE",
     "FI": "Vaihda näyttönimeä",
     "ES": "Cambiar nombre para mostrar"
@@ -2555,7 +2555,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Code de dresseur",
     "PL": "TRANSLATE",
     "FI": "Kaverikoodi",
     "ES": "Código de entrenador"
@@ -2568,7 +2568,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "indéfini",
     "PL": "TRANSLATE",
     "FI": "Ei asetettu",
     "ES": "no establecido"
@@ -2581,7 +2581,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Entrez votre code de dresseur",
     "PL": "TRANSLATE",
     "FI": "Kirjoita kaverikoodisi:",
     "ES": "Pon tu código de entrenador"
@@ -2594,7 +2594,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Merci. Votre code de dresseur est désormais:",
     "PL": "TRANSLATE",
     "FI": "Kiitos. Kaverikoodisi on nyt:",
     "ES": "Gracias. Ahora tu código de entrenador es:"
@@ -2607,7 +2607,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Votre code de dresseur ne contient pas 12 chiffres. Réessayez",
     "PL": "TRANSLATE",
     "FI": "Annetussa kaverikoodissa ei ole 12 numeroa. Yritä uudelleen.",
     "ES": "El código de entrenador que pustiste no tiene 12 numeros. Intentalo otra vez"
@@ -2620,7 +2620,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Dresseur introuvable!",
     "PL": "TRANSLATE",
     "FI": "Kouluttajaa ei löytynyt!",
     "ES": "¡Entrenador no encontrado!"
@@ -2633,7 +2633,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Langue du bot",
     "PL": "TRANSLATE",
     "FI": "Botin kieli",
     "ES": "Idioma del bot"
@@ -2646,7 +2646,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Modifiez la langue du bot",
     "PL": "TRANSLATE",
     "FI": "Vaihda botin kieli",
     "ES": "Cambiar el idioma del bot"
@@ -2659,7 +2659,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Nouvelle langue enregistrée!",
     "PL": "TRANSLATE",
     "FI": "Kieli vaihdettu!",
     "ES": "¡Nuevo idioma guardado!"
@@ -2672,7 +2672,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "La flèche (->) indique quel nom est affiché dans les annonces de raid. Vous pouvez modifier le nom dans les paramètres.",
     "PL": "TRANSLATE",
     "FI": "Nuoli (->) osoittaa raidi-ilmoituksissa käytettävää nimeä. Voit vaihtaa näyttönimeä nimiasetuksista.",
     "ES": "La flecha (->) indica el nombre que se muestra en los anuncios de incursiones. Puedes cambiar el nombre en los ajustes."
@@ -2685,7 +2685,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Nom",
     "PL": "TRANSLATE",
     "FI": "Nimi",
     "ES": "Nombre"
@@ -2698,7 +2698,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Équipe",
     "PL": "TRANSLATE",
     "FI": "Joukkue",
     "ES": "Equipo"
@@ -2711,7 +2711,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Équipe enregistrée!",
     "PL": "TRANSLATE",
     "FI": "Joukkue tallennettu!",
     "ES": "¡Equipo guardado!"
@@ -2724,7 +2724,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Sélectionnez votre équipe:",
     "PL": "TRANSLATE",
     "FI": "Valitse joukkueesi:",
     "ES": "Selecciona tu equipo:"
@@ -2737,7 +2737,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Niveau",
     "PL": "TRANSLATE",
     "FI": "Taso",
     "ES": "Nivel"
@@ -2750,7 +2750,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Niveau enregistré!",
     "PL": "TRANSLATE",
     "FI": "Taso tallennettu!",
     "ES": "¡Nivel guardado!"
@@ -2763,7 +2763,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Sélectionnez votre niveau:",
     "PL": "TRANSLATE",
     "FI": "Valitse tasosi:",
     "ES": "Selecciona tu nivel:"
@@ -2789,7 +2789,7 @@
     "PT-BR": "Ginásio salvo.",
     "RU": "Гим сохранен",
     "NO": "Gym lagret",
-    "FR": "Arène sauvegardée",
+    "FR": "Arène enregistrée.",
     "PL": "Arena zapisana",
     "FI": "Sali tallennettu.",
     "ES": "Gimnasio guardado."
@@ -2802,7 +2802,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Arène masquée",
     "PL": "TRANSLATE",
     "FI": "Piilotettu sali",
     "ES": "Gimnasio oculto"
@@ -2815,7 +2815,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Arènes masquées",
     "PL": "TRANSLATE",
     "FI": "Piilotetut salit",
     "ES": "Gimnasios ocultos"
@@ -2828,7 +2828,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Aucune arène masquée trouvée!",
     "PL": "TRANSLATE",
     "FI": "Piilotettuja saleja ei löytynyt!",
     "ES": "¡No se encontraron gimnasios ocultos!"
@@ -2841,7 +2841,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Afficher l'arène",
     "PL": "TRANSLATE",
     "FI": "Näytä sali",
     "ES": "Ver gimnasio"
@@ -2854,7 +2854,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Masquer l'arène",
     "PL": "TRANSLATE",
     "FI": "Piilota sali",
     "ES": "Ocultar gimnasio"
@@ -2867,7 +2867,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Arène normale",
     "PL": "TRANSLATE",
     "FI": "Tavallinen sali",
     "ES": "Gimnasio normal"
@@ -2880,7 +2880,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Arène EX",
     "PL": "TRANSLATE",
     "FI": "Ex-raidi sali",
     "ES": "Gimnasio EX"
@@ -2893,7 +2893,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Informations détaillées de l'arène:",
     "PL": "TRANSLATE",
     "FI": "Salin lisätiedot:",
     "ES": "Detalles ampliados del gimnasio:"
@@ -2906,7 +2906,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Enregistrer les informations détaillées de l'arène?",
     "PL": "TRANSLATE",
     "FI": "Tallenna salin lisätiedot?",
     "ES": "¿Guardar detalles ampliados del gimnasio?"
@@ -2919,7 +2919,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Nouvelles informations détaillées de l'arène:",
     "PL": "TRANSLATE",
     "FI": "Salin uudet lisätiedot:",
     "ES": "Nuevo detalle ampliado del gimnasio:"
@@ -2932,7 +2932,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Erreur! Arène introuvable!",
     "PL": "TRANSLATE",
     "FI": "Virhe! Salia ei löytynyt!",
     "ES": "¡Error! ¡Gimnasio no encontrado!"
@@ -2945,7 +2945,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Coordonnées",
     "PL": "TRANSLATE",
     "FI": "Koordinaatit",
     "ES": "TRANSLATE"
@@ -2958,7 +2958,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Modifier les coordonnées",
     "PL": "TRANSLATE",
     "FI": "Muokkaa koordinaatteja",
     "ES": "TRANSLATE"
@@ -2971,7 +2971,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Erreur! Insérez les coordonnées au format <code>Latitude,Longitude</code> pour ajouter une nouvelle arène!",
     "PL": "TRANSLATE",
     "FI": "Virhe! Anna koordinaatit muotossa <code>Leveysaste,Pituusaste</code> lisätäksesi uuden salin!",
     "ES": "¡Error! ¡Envía las coordenadas en el formato <code>latitud,longitud</code> para agregar un nuevo gimnasio!"
@@ -2984,7 +2984,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Erreur! Inscrivez les coordonnées au format suivant: <code>Latitude,Longitude</code>",
     "PL": "TRANSLATE",
     "FI": "Virhe! Anna koordinaatit seuraavassa muodossa: <code>Leveysaste,Pituusaste</code>",
     "ES": "¡Error! Envía las coordenadas en el siguiente formato: <code>latitud,longitud</code>"
@@ -2997,7 +2997,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Envoyez-moi les coordonnées de l'arène au format suivant: <code>Latitude,Longitude</code>",
     "PL": "TRANSLATE",
     "FI": "Lähetä minulle salin koordinaatit muodossa: <code>Leveysaste,Pituusaste</code>",
     "ES": "TRANSLATE"
@@ -3010,7 +3010,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Par exemple: <code>52.516263,13.377755</code>",
     "PL": "TRANSLATE",
     "FI": "Esimerkiksi: <code>52.516263,13.377755</code>",
     "ES": "Por ejemplo: <code>52.516263,13.377755</code>"
@@ -3023,7 +3023,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Utilisez la commande /gymname <code>Nom de l'arène</code> pour définir un nom d'arène pour les coordonnées soumises précédemment. Vous pourrez ensuite envoyer une nouvelle position!",
     "PL": "TRANSLATE",
     "FI": "Käytä komentoa /gymname <code>Salin nimi</code> asettaaksesi salinimen aiemmin annetuille koordinaateille. Sitten voit antaa jälleen sijainnin!",
     "ES": "Utiliza el comando /gymname <code>Nombre del gimnasio</code> para establecer un nombre de gimnasio para las coordenadas enviadas recientemente. ¡Entonces podrás volver a enviar una ubicación!"
@@ -3036,7 +3036,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Arène ajoutée avec succès!",
     "PL": "TRANSLATE",
     "FI": "Sali lisätty onnistuneesti!",
     "ES": "¡Se agregó con éxito el gimnasio!"
@@ -3049,7 +3049,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Créer une nouvelle arène",
     "PL": "TRANSLATE",
     "FI": "Luo uusi sali",
     "ES": "TRANSLATE"
@@ -3062,7 +3062,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Arène mise à jour avec succès!",
     "PL": "TRANSLATE",
     "FI": "Sali päivitetty onnistuneesti!",
     "ES": "¡Se actualizó con éxito el gimnasio!"
@@ -3075,7 +3075,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Supprimer l'arène",
     "PL": "TRANSLATE",
     "FI": "Poista sali",
     "ES": "Eliminar gimnasio"
@@ -3088,7 +3088,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Vraiment supprimer cette arène?",
     "PL": "TRANSLATE",
     "FI": "Vahvista salin poisto?",
     "ES": "¿De verdad eliminar este gimnasio?"
@@ -3101,7 +3101,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Arène supprimée avec succès!",
     "PL": "TRANSLATE",
     "FI": "Sali poistettu onnistuneesti!",
     "ES": "¡Se eliminó con éxito este gimnasio!"
@@ -3114,7 +3114,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Détails de l'arène",
     "PL": "TRANSLATE",
     "FI": "Salin yksityiskohdat",
     "ES": "Detalles del gimnasio"
@@ -3127,7 +3127,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Afficher les détails de l'arène",
     "PL": "TRANSLATE",
     "FI": "Näytä salin yksityiskohdat",
     "ES": "Ver detalles del gimnasio"
@@ -3140,7 +3140,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Erreur! La longueur maximale du texte est de 255 caractères!",
     "PL": "TRANSLATE",
     "FI": "Virhe! Tekstin enimmäispituus on 255 merkkiä!",
     "ES": "TRANSLATE"
@@ -3153,7 +3153,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Notice d'arène",
     "PL": "TRANSLATE",
     "FI": "lisätietoja",
     "ES": "TRANSLATE"
@@ -3166,7 +3166,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Envoyez-moi la nouvelle notice d'arène (max 255 caractères):",
     "PL": "TRANSLATE",
     "FI": "Lähetä minulle salin uudet lisätiedot (max 255 merkkiä):",
     "ES": "TRANSLATE"
@@ -3179,7 +3179,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Adresse de l'arène",
     "PL": "TRANSLATE",
     "FI": "salin osoite",
     "ES": "TRANSLATE"
@@ -3192,7 +3192,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Adresse enregistrée",
     "PL": "TRANSLATE",
     "FI": "Tallennettu osoite",
     "ES": "TRANSLATE"
@@ -3205,7 +3205,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Envoyez-moi l'adresse de la nouvelle arène:",
     "PL": "TRANSLATE",
     "FI": "Lähetä minulle salin uusi osoite:",
     "ES": "TRANSLATE"
@@ -3218,7 +3218,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Résultat de la recherche d'adresse",
     "PL": "TRANSLATE",
     "FI": "Osoitehaun tulos",
     "ES": "TRANSLATE"
@@ -3231,7 +3231,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Enregistrer le résultat de la recherche d'adresse",
     "PL": "TRANSLATE",
     "FI": "Tallenna osoitehaun tulos",
     "ES": "TRANSLATE"
@@ -3244,7 +3244,7 @@
     "PT-BR": "Escolha o Pokémon chefe da raid",
     "RU": "Выберите Рейд босса",
     "NO": "Velg raid boss",
-    "FR": "Sélectionne un boss de raid",
+    "FR": "Sélectionnez un boss de raid",
     "PL": "Wybierz Bossa Rajdu",
     "FI": "Valitse raidibossi",
     "ES": "Selecciona el jefe de incursión"
@@ -3257,7 +3257,7 @@
     "PT-BR": "Escolha o Pokémon",
     "RU": "Укажите Покемона",
     "NO": "Velg Pokemon",
-    "FR": "Sélectionne un Pokémon",
+    "FR": "Sélectionnez un Pokémon",
     "PL": "Wybierz Pokemona",
     "FI": "Valitse Pokemoni",
     "ES": "Selecciona Pokémon"
@@ -3270,7 +3270,7 @@
     "PT-BR": "Raid salva:",
     "RU": "Рейд сохранен:",
     "NO": "Raid lagret",
-    "FR": "Raid sauvegardé",
+    "FR": "Raid enregistré:",
     "PL": "Rajd zapisany",
     "FI": "Raidi tallennettu:",
     "ES": "Incursión guardada:"
@@ -3283,7 +3283,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Pokémon vedette",
     "PL": "TRANSLATE",
     "FI": "Tapahtuman Pokemon",
     "ES": "TRANSLATE"
@@ -3309,7 +3309,7 @@
     "PT-BR": "Chefe da raid salvo!",
     "RU": "Рейд Босс сохранен!",
     "NO": "Raid boss lagret!",
-    "FR": "Boss de raid sauvegardé",
+    "FR": "Boss de raid enregistré!",
     "PL": "Boss Rajdu zapisany!",
     "FI": "Raidibossi tallennettu!",
     "ES": "¡Jefe de incursión guardado!"
@@ -3322,7 +3322,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Boss de raid exclus de l'importation:",
     "PL": "TRANSLATE",
     "FI": "Tuonnista poissuljetut raidibossit:",
     "ES": "Jefes de incursión excluidos de importación:"
@@ -3335,7 +3335,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Sélectionnez le boss de raid à exclure de l'importation ou terminez l'importation avec 'Enregistrer'",
     "PL": "TRANSLATE",
     "FI": "Valitse tuonnista poissuljettavat raidibossit tai lopeta tuonti valitsemalla 'Tallenna'",
     "ES": "Selecciona el jefe de incursión a excluir de la importación o finaliza la importación con 'Guardar'"
@@ -3348,7 +3348,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Importer les boss de raid?",
     "PL": "TRANSLATE",
     "FI": "Tuo raidibossit?",
     "ES": "¿Importar jefes de incursión?"
@@ -3361,7 +3361,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Importation terminée!",
     "PL": "TRANSLATE",
     "FI": "Tuonti valmis!",
     "ES": "¡Importación finalizada!"
@@ -3374,7 +3374,7 @@
     "PT-BR": "Opcional - Nome do gínasio e nome do time",
     "RU": "Опционально - Название Гима и Команда Гима",
     "NO": "Valgfri - Gym navn og gym team:",
-    "FR": "Optionnel - Couleur de l'arène",
+    "FR": "Optionnel - Nom et équipe de l'arène:",
     "PL": "Opcjonalnie - Nazwa Areny i kolor Areny",
     "FI": "Valinnainen - Salin nimi ja salin joukkue:",
     "ES": "Opcional - Nombre del gimnasio y equipo del gimnasio:"
@@ -3439,7 +3439,7 @@
     "PT-BR": "Hora de começar determinada para",
     "RU": "Установить время начала",
     "NO": "Startid satt til",
-    "FR": "Heure de début réglée à",
+    "FR": "Heure de commencement réglée à",
     "PL": "Czas startu ustawiony na",
     "FI": "Aloitusaika asetettu klo",
     "ES": "Hora de inicio establecida en"
@@ -3465,7 +3465,7 @@
     "PT-BR": "Select the <b>date</b> of the raid:",
     "RU": "Указать <b>дату</b> рейда:",
     "NO": "Velg <b>dato</b> for raidet:",
-    "FR": "Sélectionne la <b>date</b> du raid",
+    "FR": "Sélectionnez la <b>date</b> du raid:",
     "PL": "Wybierz <b>date</b> Rajdu",
     "FI": "Valitse raidin <b>päivämäärä</b>:",
     "ES": "Selecciona la <b>fecha</b> de la incursión:"
@@ -3478,7 +3478,7 @@
     "PT-BR": "Select the <b>hour</b> of the raid:",
     "RU": "Указать <b>час</b> рейда:",
     "NO": "Velg <b>tid>/b> for raidet:",
-    "FR": "Sélectionne l'<b>heure</b> du raid",
+    "FR": "Sélectionnez l'<b>heure</b> du raid:",
     "PL": "Wybierz <b>godzinę</b> rajdu:",
     "FI": "Valitse raidin <b>tunti</b>:",
     "ES": "Selecciona la <b>hora</b> de la incursión:"
@@ -3491,7 +3491,7 @@
     "PT-BR": "Select the <b>start time</b> of the raid:",
     "RU": "Указать <b>Время начала</b> рейда:",
     "NO": "Velg <b>når</b> raidet starter:",
-    "FR": "Sélectionne l'<b>heure de POP</b> du raid",
+    "FR": "Sélectionnez l'<b>heure de commencement</b> du raid:",
     "PL": "WYbierz <b>czas startu</b> Rajdu",
     "FI": "Valitse raidin <b>aloitusaika</b>:",
     "ES": "Selecciona la <b>hora de inicio</b> de la incursión:"
@@ -3530,7 +3530,7 @@
     "PT-BR": "Quando a raid irá <b>começar</b>?",
     "RU": "Когда <b>начало</b> рейда?",
     "NO": "Når <b>starter</b> raidet?",
-    "FR": "Quand <b>démarre</b> le raid ?",
+    "FR": "Quand <b>commence</b> le raid?",
     "PL": "Kiedy Rajd się <b>zaczyna</b>?",
     "FI": "Mihin aikaan raidi <b>alkaa</b>?",
     "ES": "¿Cuando va a <b>empezar</b> la incursión?"
@@ -3543,7 +3543,7 @@
     "PT-BR": "Em quantos minutos a raid irá <b>começar</b>?",
     "RU": "Через сколько минут рейд <b>начинается</b>?",
     "NO": "Hvor mange minutter til raidet <b>starter</b>?",
-    "FR": "Dans combien de minutes le raid <b>commence</b> ?",
+    "FR": "Dans combien de minutes le raid <b>commence</b>?",
     "PL": "Za ile minut <b>zacznie się</b> Rajd?",
     "FI": "Monenko minuutin päästä raidi <b>alkaa</b>?",
     "ES": "¿En cuantos minutos va <b>empezar</b> la incursión?"
@@ -3556,7 +3556,7 @@
     "PT-BR": "Ver horário",
     "RU": "Просмотр времени",
     "NO": "Klokkevisning",
-    "FR": "Voir l'heure",
+    "FR": "Vue horaire",
     "PL": "Widok zegara",
     "FI": "Kellonaika näkymä",
     "ES": "Ver horario"
@@ -3569,7 +3569,7 @@
     "PT-BR": "Ver minutos",
     "RU": "Просмотр минут",
     "NO": "Minuttvisning",
-    "FR": "Voir les minutes",
+    "FR": "Afficher les minutes",
     "PL": "Pokaż minuty",
     "FI": "Minuutti näkymä",
     "ES": "Ver minutos"
@@ -3582,7 +3582,7 @@
     "PT-BR": "Visualização mudou!",
     "RU": "Просмотр изменен!",
     "NO": "Visning endret!",
-    "FR": "L'affichage du temps à changé !",
+    "FR": "La vue horaire a changé!",
     "PL": "Widok zmieniony!",
     "FI": "Näkymä vaihdettu!",
     "ES": "¡Vista cambiada!"
@@ -3595,7 +3595,7 @@
     "PT-BR": "A raid já está ativa!",
     "RU": "Рейд уже активен!",
     "NO": "Raidet er allerede aktivt!",
-    "FR": "Le raid est déjà en cours",
+    "FR": "Le raid est déjà en cours!",
     "PL": "Rajd się już zaczął",
     "FI": "Raidi on jo aktiivinen!",
     "ES": "¡Ya está activa!"
@@ -3608,7 +3608,7 @@
     "PT-BR": "Você não tem permissão para editar esta raid!",
     "RU": "Вы не можете редактировать этот рейд!",
     "NO": "Du har ikke tillatelse til å redigere dette raidet!",
-    "FR": "Tu n'es pas autorisé à modifier ce raid",
+    "FR": "Vous n'êtes pas autorisé à modifier ce raid!",
     "PL": "Nie masz uprawnień aby edytować Rajd!",
     "FI": "Et voi muuttaa tätä raidia!",
     "ES": "¡No tienes permiso para editar esta incursión!"
@@ -3621,7 +3621,7 @@
     "PT-BR": "Nenhuma raid ativa encontrada no sistema!",
     "RU": "Не найдено активных рейдов в системе!",
     "NO": "Ingen aktive raid i systemet!",
-    "FR": "Aucun raid en cours trouvé dans le système",
+    "FR": "Aucun raid en cours n'a été trouvé dans le système!",
     "PL": "W tym momencie nie ma żadnych aktywnych Rajdów w systemie",
     "FI": "Järjestelmästä ei löytynyt aktiivisia raideja!",
     "ES": "¡No se han encontrado incursiones activas en el sistema!"
@@ -3634,7 +3634,7 @@
     "PT-BR": "Nenhuma das raids ativas foi compartilhada!",
     "RU": "Активными рейдами не делились!",
     "NO": "Ingen av de aktive raidene ble delt!",
-    "FR": "Aucun raid en cours n'a été partagé",
+    "FR": "Aucun raid en cours n'a été partagé!",
     "PL": "Żaden z aktywnych rajdów nie został udostępniony!",
     "FI": "Yhtäkään aktiivista raidia ei ole jaettu!",
     "ES": "¡Ninguna de las incursiones activas fue compartida!"
@@ -3647,7 +3647,7 @@
     "PT-BR": "Nenhuma raid ativa no momento!",
     "RU": "Нету текущих активных рейдов!",
     "NO": "Det er ingen aktive raid akkurat nå!",
-    "FR": "Aucun raid en cours",
+    "FR": "Aucun raid en cours actuellement!",
     "PL": "Brak aktywnych Rajdów w tej chwili!",
     "FI": "Ei aktiivisia raideja tällä hetkellä!",
     "ES": "¡Actualmente no hay incursiones activas!"
@@ -3660,7 +3660,7 @@
     "PT-BR": "Pokemon salvo ",
     "RU": "Покемон сохранен:",
     "NO": "Pokemon lagret:",
-    "FR": "Pokémon enregistré",
+    "FR": "Pokémon enregistré: ",
     "PL": "Pokemon zapisany:",
     "FI": "Pokemoni tallennettu:",
     "ES": "Pokémon guardado:"
@@ -3673,7 +3673,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Modifier Pokémon",
     "PL": "TRANSLATE",
     "FI": "Muuta Pokemonia",
     "ES": "Editar Pokémon"
@@ -3686,7 +3686,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Afficher, modifier et importer des boss de raid",
     "PL": "TRANSLATE",
     "FI": "Listaa, muuta ja tuo raidibosseja",
     "ES": "Ver, editar e importar jefes de incursión"
@@ -3699,7 +3699,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Afficher les boss de raid actuels",
     "PL": "TRANSLATE",
     "FI": "Listaa tämänhetkiset raidibossit",
     "ES": "Ver actuales jefes de incursión"
@@ -3712,7 +3712,7 @@
     "PT-BR": "Lista de todos os Pokémon.",
     "RU": "Список всех покемонов",
     "NO": "Liste over alle pokemon",
-    "FR": "Liste de tous les Pokémon",
+    "FR": "Liste de tous les Pokémon.",
     "PL": "Lista wszystkich Pokemonów.",
     "FI": "Listaa kaikki Pokemonit.",
     "ES": "Lista de todos los Pokémon."
@@ -3725,7 +3725,7 @@
     "PT-BR": "Erro! Nenhum pokemon encontrado!",
     "RU": "Ошибка! Покемон не найден!",
     "NO": "Feil: Ingen pokemon funnet!",
-    "FR": "Erreur, aucun Pokémon trouvé !",
+    "FR": "Erreur! Aucun Pokémon trouvé!",
     "PL": "Błąd! Pokemona nie znaleziono!",
     "FI": "Virhe! Pokemoneja ei löytynyt!",
     "ES": "¡Error! ¡No se encontró ningún Pokémon!"
@@ -3738,7 +3738,7 @@
     "PT-BR": "Selecione o chefe de raid para modificar:",
     "RU": "Выберите рейд босса для редактирования",
     "NO": "Velg raid boss som skal redigeres:",
-    "FR": "Sélectionne un boss de raid à modifier",
+    "FR": "Sélectionnez un boss de raid à modifier:",
     "PL": "Wybierz Bossa Rajdu żeby edytować:",
     "FI": "Valitse raidibossi muokattavaksi:",
     "ES": "Selecciona jefe de incursión para editar:"
@@ -3751,7 +3751,7 @@
     "PT-BR": "Nível da reide",
     "RU": "Уровень рейда",
     "NO": "Raid level",
-    "FR": "Niveau du raid",
+    "FR": "Niveau de raid",
     "PL": "Poziom Rajdu",
     "FI": "Raidin taso",
     "ES": "Nivel de incursión"
@@ -3764,7 +3764,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Tous les niveaux de raid",
     "PL": "TRANSLATE",
     "FI": "Kaikki raiditasot",
     "ES": "Todos niveles de incursión"
@@ -3790,7 +3790,7 @@
     "PT-BR": "Nível atual da reide",
     "RU": "Текущий уровень рейда",
     "NO": "Nåværende raid level:",
-    "FR": "Niveau actuel du raid",
+    "FR": "Niveau actuel de raid:",
     "PL": "Aktualny poziom Rajdu:",
     "FI": "Nykyinen raiditaso:",
     "ES": "Nivel de incursión actual:"
@@ -3803,7 +3803,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Nouveau statut",
     "PL": "TRANSLATE",
     "FI": "Uusi arvo",
     "ES": "Nuevo estado"
@@ -3816,7 +3816,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Statut actuel:",
     "PL": "TRANSLATE",
     "FI": "Nykyinen arvo:",
     "ES": "Estado actual:"
@@ -3829,7 +3829,7 @@
     "PT-BR": "Selecione a opção para modificar:",
     "RU": "Выберите функцию для изменения:",
     "NO": "Velg egenskap som skal endres:",
-    "FR": "Sélectionne l'option à changer",
+    "FR": "Sélectionnez l'option à modifier:",
     "PL": "Wybierz aby edytować:",
     "FI": "Valitse muutettava ominaisuus:",
     "ES": "Selecciona la característica a cambiar:"
@@ -3842,7 +3842,7 @@
     "PT-BR": "PC:",
     "RU": "CP",
     "NO": "CP:",
-    "FR": "PC",
+    "FR": "PC:",
     "PL": "CP",
     "FI": "CP:",
     "ES": "PC:"
@@ -3855,7 +3855,7 @@
     "PT-BR": "Min PC",
     "RU": "Min CP",
     "NO": "Min CP",
-    "FR": "PC Min",
+    "FR": "PC min.",
     "PL": "Min CP",
     "FI": "Min CP",
     "ES": "Mín. PC"
@@ -3868,7 +3868,7 @@
     "PT-BR": "Max PC",
     "RU": "Max CP",
     "NO": "Maks CP",
-    "FR": "PC Max",
+    "FR": "PC max.",
     "PL": "Max CP",
     "FI": "Max CP",
     "ES": "Máx. PC"
@@ -3881,7 +3881,7 @@
     "PT-BR": "PC mín. potenciado",
     "RU": "Min boosted CP",
     "NO": "Min boostet CP",
-    "FR": "PC Min boosté",
+    "FR": "PC min. renforcés",
     "PL": "Min boosted CP",
     "FI": "Min buustattu CP",
     "ES": "Mín. PC potenciado"
@@ -3894,7 +3894,7 @@
     "PT-BR": "PC máx. potenciado",
     "RU": "Max boosted CP",
     "NO": "Maks boostet CP",
-    "FR": "PC Max boosté",
+    "FR": "PC max. renforcés",
     "PL": "Max Boosted CP",
     "FI": "Max buustattu CP",
     "ES": "Máx. PC potenciado"
@@ -3907,7 +3907,7 @@
     "PT-BR": "PC atual:",
     "RU": "Текущий CP:",
     "NO": "Nåværende CP:",
-    "FR": "PC actuel",
+    "FR": "PC actuels:",
     "PL": "Aktualne CP",
     "FI": "Nykyinen CP:",
     "ES": "PC actual:"
@@ -3933,7 +3933,7 @@
     "PT-BR": "Clima atual:",
     "RU": "Текущая погода:",
     "NO": "Værforhold:",
-    "FR": "Météo actuelle",
+    "FR": "Météo actuelle:",
     "PL": "Aktualna pogoda:",
     "FI": "Tämänhetkinen sää:",
     "ES": "Clima actual:"
@@ -3946,7 +3946,7 @@
     "PT-BR": "Novo clima:",
     "RU": "Новая погода:",
     "NO": "Været har endret seg:",
-    "FR": "Nouvelle météo",
+    "FR": "Nouvelle météo:",
     "PL": "Nowa pogoda:",
     "FI": "Uusi sää:",
     "ES": "Nuevo clima:"
@@ -3959,7 +3959,7 @@
     "PT-BR": "Quanto tempo a reide vai <b>durar</b>",
     "RU": "Как долго рейд будет идти?",
     "NO": "Hvor lenge varer raidet?",
-    "FR": "Dans combien de temps <b>termine</b> le raid ?",
+    "FR": "Dans combien de temps se <b>termine</b> le raid?",
     "PL": "Jak długo Rajd <b>będzie trwać</b>?",
     "FI": "Kauanko raidi <b>kestää</b>?",
     "ES": "¿Cuánto <b>durará</b> la incursión?"
@@ -3985,7 +3985,7 @@
     "PT-BR": "Escolha o ginásio:",
     "RU": "Выберите Гим:",
     "NO": "Velg Gym:",
-    "FR": "Sélectionne l'arène",
+    "FR": "Sélectionnez l'arène:",
     "PL": "Wybierz Arene:",
     "FI": "Valitse sali:",
     "ES": "Por favor, selecciona el gimnasio:"
@@ -3998,7 +3998,7 @@
     "PT-BR": "Bora arrasar!",
     "RU": "А вот и мы!",
     "NO": "Kjør på!",
-    "FR": "C'est parti !",
+    "FR": "C'est parti!",
     "PL": "Zaczynamy!",
     "FI": "Nyt mennään!",
     "ES": "¡Aquí vamos!"
@@ -4024,7 +4024,7 @@
     "PT-BR": "Coordenadas enviadas com sucesso!",
     "RU": "Координаты успешно отправлены!",
     "NO": "Koordinater ble lagt til!",
-    "FR": "Coordonnées créés avec succès ",
+    "FR": "Coordonnées envoyées avec succès!",
     "PL": "Koordynaty dodano pomyślnie!",
     "FI": "Koordinaatit lähetetty onnistuneesti!",
     "ES": "¡Coordenadas enviadas con éxito!"
@@ -4037,7 +4037,7 @@
     "PT-BR": "Atualizar chefe da reide",
     "RU": "Обновить рейд босса",
     "NO": "Oppdater raid boss",
-    "FR": "Mise à jour boss de raid",
+    "FR": "Mettre à jour boss de raid",
     "PL": "Aktualizacja Bossa Rajdu",
     "FI": "Päivitä raidibossi",
     "ES": "Actualizar jefe de incursión"
@@ -4050,7 +4050,7 @@
     "PT-BR": "Atualizar Pokemon",
     "RU": "Обновить Покемона",
     "NO": "Oppdater Pokemon",
-    "FR": "Mise à jour Pokémon",
+    "FR": "Mettre à jour Pokémon",
     "PL": "Aktualizacja Pokemona",
     "FI": "Päivitä Pokemoni",
     "ES": "Actualizar Pokémon"
@@ -4076,7 +4076,7 @@
     "PT-BR": "Por favor, antes me envie a localização.",
     "RU": "Или отправить мне локацию",
     "NO": "Eller send meg lokasjonen din ved å trykke på bindersen",
-    "FR": "Ou envoi moi la localisation",
+    "FR": "Ou envoyez-moi la localisation.",
     "PL": "Albo wyślij mi swoje położenie",
     "FI": "Tai lähetä minulle sijainti.",
     "ES": "O envíame una ubicación."
@@ -4089,7 +4089,7 @@
     "PT-BR": "Ou escolha uma raid por ginásio:",
     "RU": "Сделать рейд, выбрав гим:",
     "NO": "Opprett raid ved å velge fra gym listen",
-    "FR": "Faire une sélection de raid par arène",
+    "FR": "Créer un raid en sélectionnant une arène:",
     "PL": "Wygeneruj nowy Rajd, wybierając Arene:",
     "FI": "Luo raidi salivalinnan mukaan:",
     "ES": "Crear incursión con selección de gimnasio:"
@@ -4141,7 +4141,7 @@
     "PT-BR": "Time do ginásio escolhido para",
     "RU": "Команду гима:",
     "NO": "Gym Team endret til:",
-    "FR": "Couleur d'arène réglée sur",
+    "FR": "Équipe d'arène réglée sur:",
     "PL": "Kolor Areny zmieniony na:",
     "FI": "Salin joukkueeksi asetettu:",
     "ES": "Equipo de gimnasio puesto en:"
@@ -4154,7 +4154,7 @@
     "PT-BR": "Nome de time inválido - escreva: Mystic, Valor, Instinct ou Blue, Red, Yellow",
     "RU": "Неверное имя команд - напишите: Mystic, Valor, Instinct или Синий, Красный, Желтый",
     "NO": "Ugyldig team navn - skriv: Mystic, Valor, Instinct or Blue, Red, Yellow",
-    "FR": "Couleur invalide - écrit : Sagesse, Bravoure, Intuition ou Bleu, Rouge, Jaune",
+    "FR": "Équipe invalide - écrivez : Sagesse, Bravoure, Intuition ou Bleu, Rouge, Jaune ",
     "PL": "Zła nazwa Teamu - napisz: niebieski, czerwony albo żółty",
     "FI": "Virheellinen joukkueen nimi - kirjoita: Mystic, Valor, Instinct tai Blue, Red, Yellow",
     "ES": "Nombre de equipo invalido - escribe: Sabiduría, Valor, Instinto o Azul, Rojo, Amarillo"
@@ -4167,7 +4167,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Utilisez les commandes suivantes pour modifier davantage l'arène:",
     "PL": "TRANSLATE",
     "FI": "Käytä seuraavia komentoja muokataksesi salia enemmän:",
     "ES": "Utiliza los siguientes comandos para editar más el gimnasio:"
@@ -4180,7 +4180,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Pour obtenir l'identifiant de l'arène et plus de détails, utilisez la commande /gym.",
     "PL": "TRANSLATE",
     "FI": "Saataksesi salin id numeron tai muita tietoja, käytä /gym -komentoa.",
     "ES": "Para obtener la identificación y más detalles del gimnasio, usa el comando /gym."
@@ -4193,7 +4193,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Par exemple: <code>/gymname Fontaine du parc</code>!",
     "PL": "TRANSLATE",
     "FI": "Esimerkiksi: <code>/gymname Vapauden Muistomerkki</code>!",
     "ES": "Por ejemplo: <code>/gymname Waterfall in the park</code>"
@@ -4206,7 +4206,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Erreur! Le nom de l'arène est manquant!",
     "PL": "TRANSLATE",
     "FI": "Virhe! Salin nimi puuttuu!",
     "ES": "TRANSLATE"
@@ -4219,7 +4219,7 @@
     "PT-BR": "Nome do ginásio atualizado.",
     "RU": "Название гима обновлено.",
     "NO": "Gym navn oppdatert.",
-    "FR": "Nom de l'arène mis à jour",
+    "FR": "Nom de l'arène mis à jour.",
     "PL": "Nazwa Areny zaktualizowana",
     "FI": "Salin nimi päivitetty.",
     "ES": "Nombre del gimnasio actualizado."
@@ -4232,7 +4232,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Modifier le nom de l'arène",
     "PL": "TRANSLATE",
     "FI": "Muokkaa salin nimeä",
     "ES": "TRANSLATE"
@@ -4245,7 +4245,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Envoyez-moi le nom de l'arène:",
     "PL": "TRANSLATE",
     "FI": "Lähetä minulle salin nimi:",
     "ES": "TRANSLATE"
@@ -4284,7 +4284,7 @@
     "PT-BR": "Mostrar raids ativas como lista",
     "RU": "Показать активные рейды списком",
     "NO": "Vis aktive raid som liste",
-    "FR": "Voir les raids en cours",
+    "FR": "Afficher les raids en cours sous forme de liste",
     "PL": "Pokaż liste aktywnych rajdów",
     "FI": "Näytä aktiiviset raidit listana",
     "ES": "Mostrar incursiones activas como lista"
@@ -4297,7 +4297,7 @@
     "PT-BR": "Compartilhar / deletar detalhes de raid por chat",
     "RU": "поделиться / удалить обзор рейда через чат",
     "NO": "Del / slett raid oversikten per chat",
-    "FR": "Partager / supprimer l'aperçu des raids par conversation",
+    "FR": "Partager / supprimer l'aperçu de raid par conversation",
     "PL": "Udostępnij / usuń liste przez czat",
     "FI": "Jaa / poista raidiyleiskatsaus per chatti",
     "ES": "Compartir / eliminar la descripción general de la incursión por chat"
@@ -4336,7 +4336,7 @@
     "PT-BR": "Deletar detalhe de raid para",
     "RU": "Удалить обзор рейда для",
     "NO": "Slett raid oversikt for",
-    "FR": "Supprimer l'aperçu du raid pour",
+    "FR": "Supprimer l'aperçu de raid pour",
     "PL": "Usuń podgląd Rajdu dla",
     "FI": "Poista raidiyleiskatsaus chatista",
     "ES": "Eliminar descripción general de incursión para"
@@ -4349,7 +4349,7 @@
     "PT-BR": "Nenhum detalhe de raid encontrado no sistema!",
     "RU": "В системе нет обзора рейдов!",
     "NO": "Ingen oppsummering funnet i systemet!",
-    "FR": "Aucun aperçu de raid trouvé dans le système",
+    "FR": "Aucun aperçu de raid trouvé dans le système!",
     "PL": "Brak podglądów Rajdów w systemie!",
     "FI": "Järjestelmästä ei löytynyt raidi yleiskatsauksia!",
     "ES": "¡No se han encontrado descripciones generales en el sistema!"
@@ -4362,7 +4362,7 @@
     "PT-BR": "Detalhe de raid deletado com sucesso!",
     "RU": "Обзор рейдов успешно удален!",
     "NO": "Raid oppsummeringen ble slettet!",
-    "FR": "L'aperçu de raid a été supprimé",
+    "FR": "L'aperçu de raid a été supprimé!",
     "PL": "Podgląd Rajdu usunięty!",
     "FI": "Raidi yleiskatsaus poistettu onnistuneesti!",
     "ES": "¡Descripción general eliminada con éxito!"
@@ -4375,7 +4375,7 @@
     "PT-BR": "O deletamento dos detalhes da raid foi cancelado!",
     "RU": "Удаление обзора рейда было отменено!",
     "NO": "Sletting av raid oppsummeringen ble avbrutt!",
-    "FR": "La suppression de l'aperçu du raid a été annulée",
+    "FR": "La suppression de l'aperçu de raid a été annulée!",
     "PL": "Usuwanie podglądu anulowane!",
     "FI": "Raidi yleiskatsauksen poisto peruutettiin!",
     "ES": "¡Eliminación de la descripción general de la incursión cancelada!"
@@ -4401,7 +4401,7 @@
     "PT-BR": "Realmente deletar esta raid?",
     "RU": "Действительно удалить этот рейд?",
     "NO": "Skal du virkelig slette raidet?",
-    "FR": "Supprimer ce raid ?",
+    "FR": "Vraiment supprimer ce raid?",
     "PL": "Na pewno usunąć ten Rajd?",
     "FI": "Varmasti poista tämä raidi?",
     "ES": "¿De verdad eliminar esta incursión?"
@@ -4414,7 +4414,7 @@
     "PT-BR": "O deletamento da raid foi cancelado!",
     "RU": "Удаление рейда было отменено!",
     "NO": "Sletting av raidet ble avbrutt!",
-    "FR": "La suppression du raid a été annulée",
+    "FR": "La suppression du raid a été annulée!",
     "PL": "Usuwanie Rajdu anulowane!",
     "FI": "Raidin poisto peruutettiin!",
     "ES": "¡Eliminación de la incursión fue cancelada!"
@@ -4427,7 +4427,7 @@
     "PT-BR": "Raid deletado com sucesso!",
     "RU": "Рейд был успешно удален!",
     "NO": "Raidet ble slettet",
-    "FR": "Le raid a été annulé",
+    "FR": "Le raid a été supprimé avec succès!",
     "PL": "Rajd usunięty!",
     "FI": "Raidi poistettiin onnistuneesti!",
     "ES": "¡Incursión eliminada con éxito!"
@@ -4440,7 +4440,7 @@
     "PT-BR": "A qualquer momento",
     "RU": "В любое время",
     "NO": "Alle tider passer",
-    "FR": "A tout moment",
+    "FR": "À tout moment",
     "PL": "W każdej chwili",
     "FI": "Milloin tahansa",
     "ES": "Cualquiera hora"
@@ -4466,7 +4466,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Notifications de raid désactivées!",
     "PL": "TRANSLATE",
     "FI": "Raidihäly pois käytöstä!",
     "ES": "¡Alertas de incursión desactivadas!"
@@ -4479,7 +4479,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Notifications de raid activées!",
     "PL": "TRANSLATE",
     "FI": "Raidihäly käytössä!",
     "ES": "¡Alertas de incursión activadas!"
@@ -4492,7 +4492,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Activer les notifications de raid automatiques",
     "PL": "TRANSLATE",
     "FI": "Automaattinen raidihäly päälle",
     "ES": "Activar alertas automáticas de incursiones"
@@ -4505,7 +4505,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Désactiver les notifications de raid automatiques",
     "PL": "TRANSLATE",
     "FI": "Automaattinen raidihäly pois päältä",
     "ES": "Desactivar alertas automáticas de incursiones"
@@ -4518,7 +4518,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Dresseur supplémentaire!",
     "PL": "TRANSLATE",
     "FI": "Uusi osallistuja!",
     "ES": "¡Entrenador adicional!"
@@ -4531,7 +4531,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "L'utilisateur invite un dresseur en dehors du groupe!",
     "PL": "TRANSLATE",
     "FI": "Pelaaja kutsuu kaverin ryhmän ulkopuolelta!",
     "ES": "¡Usuario está invitando a un entrenador fuera del grupo!"
@@ -4544,7 +4544,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Dresseur en retard!",
     "PL": "TRANSLATE",
     "FI": "Myöhästyvä osallistuja!",
     "ES": "¡Entrenador tarda!"
@@ -4557,7 +4557,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Annulation!",
     "PL": "TRANSLATE",
     "FI": "Peruutus!",
     "ES": "¡Cancelación!"
@@ -4570,7 +4570,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Vient pour",
     "PL": "TRANSLATE",
     "FI": "Ilmoittautuneet,",
     "ES": "Viene para"
@@ -4583,7 +4583,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Ne vient PAS pour",
     "PL": "TRANSLATE",
     "FI": "Peruuttaneet,",
     "ES": "NO viene para"
@@ -4596,7 +4596,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Vient pour",
     "PL": "TRANSLATE",
     "FI": "Ilmoittautuneet,",
     "ES": "Viene para"
@@ -4609,7 +4609,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Nouvelle participation!",
     "PL": "TRANSLATE",
     "FI": "Uusi osallistuja!",
     "ES": "¡Nueva participación!"
@@ -4622,7 +4622,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Participation à distance!",
     "PL": "TRANSLATE",
     "FI": "Etäosallistuminen!",
     "ES": "¡Participación remota!"
@@ -4635,7 +4635,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Pas plus de participants à distance!",
     "PL": "TRANSLATE",
     "FI": "Ei enää etäosallistujia!",
     "ES": "¡No más participación remota!"
@@ -4648,7 +4648,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Le raid commence maintenant!",
     "PL": "TRANSLATE",
     "FI": "Raidi alkaa nyt!",
     "ES": "¡La incursión empieza ahora!"
@@ -4661,7 +4661,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Voici comment participer au combat:",
     "PL": "TRANSLATE",
     "FI": "Näin pääset taisteluun:",
     "ES": "Cómo entrar en la batalla:"
@@ -4674,7 +4674,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Groupe de raid privé!",
     "PL": "TRANSLATE",
     "FI": "Yksityinen raidiryhmä!",
     "ES": "¡Grupo de incursión privado!"
@@ -4687,7 +4687,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Groupe de raid publique!",
     "PL": "TRANSLATE",
     "FI": "Julkinen raidiryhmä!",
     "ES": "¡Grupo de incursión público!"
@@ -4700,7 +4700,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Nouvelle heure de participation!",
     "PL": "TRANSLATE",
     "FI": "Uusi aika!",
     "ES": "¡Nueva hora de participación!"
@@ -4713,7 +4713,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Boss de raid mis à jour!",
     "PL": "TRANSLATE",
     "FI": "Raidibossi päivitetty!",
     "ES": "¡Jefe de incursión actualizado!"
@@ -4726,7 +4726,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Pas plus de dresseurs supplémentaires!",
     "PL": "TRANSLATE",
     "FI": "Ei ylimääräisiä kouluttajia!",
     "ES": "¡Sin entrenadores adicionales!"
@@ -4739,7 +4739,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Souhaite être invité.",
     "PL": "TRANSLATE",
     "FI": "Toivoo tulevansa kutsutuksi.",
     "ES": "Desea ser invitado."
@@ -4752,7 +4752,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Ne souhaite plus être invité.",
     "PL": "TRANSLATE",
     "FI": "Ei enää toivo kutsua.",
     "ES": "Ya no desea ser invitado."
@@ -4765,7 +4765,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Ne participe pas mais peut envoyer des invitations.",
     "PL": "TRANSLATE",
     "FI": "Ei osallistu raidiin, mutta voi lähettää kutsuja.",
     "ES": "No asiste pero puede enviar invitaciones."
@@ -4778,7 +4778,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Ne peut plus envoyer des invitations.",
     "PL": "TRANSLATE",
     "FI": "Ei enää pysty kutsumaan muita.",
     "ES": "Ya no puede invitar a otros."
@@ -4791,7 +4791,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Événement",
     "PL": "TRANSLATE",
     "FI": "Tapahtuma",
     "ES": "Evento"
@@ -4804,7 +4804,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Notice d'événement",
     "PL": "TRANSLATE",
     "FI": "Tapahtuman lisätiedot",
     "ES": "Nota de evento"
@@ -4817,7 +4817,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Ajouter notice d'événement",
     "PL": "TRANSLATE",
     "FI": "Lisää raiditapahtumaan lisätietoja",
     "ES": "Añadir nota de evento"
@@ -4830,7 +4830,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Modifier notice d'événement",
     "PL": "TRANSLATE",
     "FI": "Muokkaa raiditapahtuman lisätietoja",
     "ES": "Editar nota de evento"
@@ -4843,7 +4843,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Ajouter plus d'informations pour cette annonce d'événement. (par exemple: itinéraire)",
     "PL": "TRANSLATE",
     "FI": "Lisää ilmoituskohtaisia lisätietoja tapahtumaan liittyen. (esim. reitti)",
     "ES": "Agrega más información para este anuncio específico sobre el evento. (por ejemplo: ruta)"
@@ -4856,7 +4856,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Gérer les événements",
     "PL": "TRANSLATE",
     "FI": "Hallitse tapahtumia",
     "ES": "TRANSLATE"
@@ -4869,7 +4869,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Créer un nouvel événement",
     "PL": "TRANSLATE",
     "FI": "Luo uusi tapahtuma",
     "ES": "TRANSLATE"
@@ -4882,7 +4882,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Événement créé avec succès!",
     "PL": "TRANSLATE",
     "FI": "Tapahtuma luotu onnistuneesti!",
     "ES": "TRANSLATE"
@@ -4895,7 +4895,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Nommer l'événement",
     "PL": "TRANSLATE",
     "FI": "Anna tapahtuman nimi",
     "ES": "TRANSLATE"
@@ -4908,7 +4908,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Décrire l'événement",
     "PL": "TRANSLATE",
     "FI": "Anna tapahtuman lisätiedot",
     "ES": "TRANSLATE"
@@ -4921,7 +4921,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Aucune description",
     "PL": "TRANSLATE",
     "FI": "Ei kuvausta",
     "ES": "TRANSLATE"
@@ -4934,7 +4934,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Modifier le nom de l'événement",
     "PL": "TRANSLATE",
     "FI": "Muokkaa tapahtuman nimeä",
     "ES": "TRANSLATE"
@@ -4947,7 +4947,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Modifier la description de l'événement",
     "PL": "TRANSLATE",
     "FI": "Muokkaa tapahtuman kuvausta",
     "ES": "TRANSLATE"
@@ -4960,7 +4960,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Modifier l'annonce de l'événement de raid",
     "PL": "TRANSLATE",
     "FI": "Muokkaa tapahtuman raidi-ilmoitusta",
     "ES": "TRANSLATE"
@@ -4973,7 +4973,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Supprimer l'événement",
     "PL": "TRANSLATE",
     "FI": "Poista tapahtuma",
     "ES": "TRANSLATE"
@@ -4986,7 +4986,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Vraiment supprimer cet événement?",
     "PL": "TRANSLATE",
     "FI": "Haluatko varmasti poistaa tämän tapahtuman?",
     "ES": "TRANSLATE"
@@ -4999,7 +4999,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Participer",
     "PL": "TRANSLATE",
     "FI": "Osallistu",
     "ES": "Participar"
@@ -5012,7 +5012,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Participe",
     "PL": "TRANSLATE",
     "FI": "Osallistuu",
     "ES": "Participando"
@@ -5025,7 +5025,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Vous n'avez pas encore enregistré vos informations de dresseur. Voulez-vous le faire maintenant?",
     "PL": "TRANSLATE",
     "FI": "Et ole vielä tallentanut tietoja pelihahmostasi. Haluaisitko tehdä sen nyt?",
     "ES": "Aún no has guardado la información de tu entrenador. ¿Te gustaría hacerlo ahora?"
@@ -5038,7 +5038,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Afficher l'historique des annonces de raid.",
     "PL": "TRANSLATE",
     "FI": "Katsele vanhoja raidi-ilmoituksia.",
     "ES": "Ver historial de anuncios de incursiones."
@@ -5051,7 +5051,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Affichage en cours des raids pour",
     "PL": "TRANSLATE",
     "FI": "Tällä hetkellä näytetään",
     "ES": "Actualmente se muestran incursiones para"
@@ -5064,7 +5064,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Choisir un raid",
     "PL": "TRANSLATE",
     "FI": "Valitse raidi",
     "ES": "Selecciona incursión"
@@ -5077,7 +5077,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Aucun raid avec participants trouvé!",
     "PL": "TRANSLATE",
     "FI": "Yhtään raidia ei löytynyt jossa olisi osallistujia!",
     "ES": "¡No se encontraron incursiones con los asistentes!"
@@ -5090,7 +5090,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Date",
     "PL": "TRANSLATE",
     "FI": "Päivämäärä",
     "ES": "Fecha"
@@ -5103,7 +5103,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Zone actuelle",
     "PL": "TRANSLATE",
     "FI": "Salit alueelta",
     "ES": "Zona de gimnasio actual"

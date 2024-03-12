@@ -7,7 +7,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "true/false ou 0/1 uniquement",
     "PL": "TRANSLATE",
     "FI": "vain true/false tai 0/1",
     "ES": "solo true/false o 0/1"
@@ -20,7 +20,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "nombres uniquement",
     "PL": "TRANSLATE",
     "FI": "vain numeroita",
     "ES": "solo números"
@@ -33,7 +33,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Valeurs autorisées: true/false ou 0/1",
     "PL": "TRANSLATE",
     "FI": "Sallitut arvot: true/false tai 0/1",
     "ES": "Valores validos: true/false o 0/1"
@@ -46,7 +46,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Valeurs autorisées: nombres supérieurs à 0",
     "PL": "TRANSLATE",
     "FI": "Sallittu arvo: 0 suuremmat luvut",
     "ES": "Valores validos: Números mayores que 0"
@@ -59,7 +59,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "Partager la position - Créer un raid",
     "PL": "TRANSLATE",
     "FI": "Jaa sijainti - Luo raidi",
     "ES": "Compartir ubicación - Crear incursión"
@@ -72,7 +72,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "/start - Créer un raid",
     "PL": "TRANSLATE",
     "FI": "/start - Luo raidi",
     "ES": "/start - Crear incursión"
@@ -85,7 +85,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "/start - Créer un raid EX",
     "PL": "TRANSLATE",
     "FI": "/start - Luo ex-raidi",
     "ES": "/start - Crear incursión EX"
@@ -98,7 +98,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "/start - Modifier la durée du raid",
     "PL": "TRANSLATE",
     "FI": "/start - Vaihda raidin kestoa",
     "ES": "/start - Cambiar duración de la incursión"
@@ -111,7 +111,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "/list - Afficher les 12 derniers raids en cours",
     "PL": "TRANSLATE",
     "FI": "/list - Edelliset 12 aktiivista raidia",
     "ES": "/list - Últimas 12 incursiones activas"
@@ -124,7 +124,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "/listall - Afficher tous les raids en cours",
     "PL": "TRANSLATE",
     "FI": "/listall - Kaikki aktiiviset raidit",
     "ES": "/listall - Todas las incursiones activas"
@@ -137,7 +137,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "/overview - Gérer l'aperçu de raid",
     "PL": "TRANSLATE",
     "FI": "/overview - Hallinnoi raidiyhteenvetoa",
     "ES": "/overview - Administrar descripción general de la incursión"
@@ -150,7 +150,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "/delete - Supprimer vos propres raids",
     "PL": "TRANSLATE",
     "FI": "/delete - Poista omia raidejasi",
     "ES": "/delete - Eliminar incursiones propias"
@@ -163,7 +163,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "/delete - Supprimer tous les raids",
     "PL": "TRANSLATE",
     "FI": "/delete - Poista kaikki raidit",
     "ES": "/delete - eliminar incursiones"
@@ -176,7 +176,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "/pokemon - Actualiser le Pokémon (propres raids)",
     "PL": "TRANSLATE",
     "FI": "/pokemon - Muuta pokemonia (omat raidisi)",
     "ES": "/pokemon - Actualizar Pokémon (incursiones propias)"
@@ -189,7 +189,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "/pokemon - Actualiser le Pokémon (tous les raids)",
     "PL": "TRANSLATE",
     "FI": "/pokemon - Muuta pokemonia (kaikki raidit)",
     "ES": "/pokemon - Actualizar Pokémon (todas incursiones)"
@@ -202,7 +202,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "/trainer - Modifier vos informations de dresseur",
     "PL": "TRANSLATE",
     "FI": "/trainer - Muuta kouluttajatietojasi",
     "ES": "/trainer - Editar datos del entrenador"
@@ -215,7 +215,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "/gym - Afficher les détails de l'arène",
     "PL": "TRANSLATE",
     "FI": "/gym - Näytä salin tiedot",
     "ES": "/gym - Ver detalles del gimnasio"
@@ -228,7 +228,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "/gym - Modifier les informations détaillées de l'arène",
     "PL": "TRANSLATE",
     "FI": "/gym - Muuta salin lisätietoja",
     "ES": "/gym - Editar detalles extendidos del gimnasio"
@@ -241,7 +241,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "@Ingressportalbot - Importer l'arène",
     "PL": "TRANSLATE",
     "FI": "@Ingressportalbot - Tuo sali",
     "ES": "@Ingressportalbot - Importar gimnasio"
@@ -254,7 +254,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "/pokedex - Gérer les boss de raid",
     "PL": "TRANSLATE",
     "FI": "/pokedex - Hallinnoi raidibosseja",
     "ES": "/pokedex - Gestionar jefes de incursión"
@@ -267,7 +267,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "/get - Afficher la configuration du bot",
     "PL": "TRANSLATE",
     "FI": "/get - Näytä botin asetukset",
     "ES": "/get - Ver configuración del bot"
@@ -280,7 +280,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "/set - Modifier la configuration du bot",
     "PL": "TRANSLATE",
     "FI": "/set - Muuta botin asetuksia",
     "ES": "/set - Editar configuración del bot"
@@ -293,7 +293,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "/help - Afficher l'aide",
     "PL": "TRANSLATE",
     "FI": "/help - Näytä ohjeet",
     "ES": "/help - Ver ayuda"
@@ -306,7 +306,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "/history - Afficher l'historique des raids avec participants",
     "PL": "TRANSLATE",
     "FI": "/history - Listaa päättyneet raidit joissa oli osallistujia",
     "ES": "TRANSLATE"
@@ -319,7 +319,7 @@
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "TRANSLATE",
+    "FR": "/events - Gérer les événements de raid",
     "PL": "TRANSLATE",
     "FI": "/events - Hallitse raiditapahtumia",
     "ES": "TRANSLATE"
