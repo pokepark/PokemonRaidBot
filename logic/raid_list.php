@@ -7,6 +7,7 @@ require_once(LOGIC_PATH . '/show_raid_poll.php');
  */
 function raid_list($update)
 {
+  global $config;
   // Init raid id.
   $iqq = 0;
 
@@ -42,7 +43,7 @@ function raid_list($update)
     $contents[$i]['text'] = show_raid_poll($row, true)['full'];
 
     // Set the title.
-    $contents[$i]['title'] = get_local_pokemon_name($row['pokemon'],$row['pokemon_form'], true) . ' ' . getPublicTranslation('from') . ' ' . dt2time($row['start_time'])  . ' ' . getPublicTranslation('to') . ' ' . dt2time($row['end_time']);
+    $contents[$i]['title'] = get_local_pokemon_name($row['pokemon'],$row['pokemon_form'], $config->LANGUAGE_PUBLIC) . ' ' . getPublicTranslation('from') . ' ' . dt2time($row['start_time'])  . ' ' . getPublicTranslation('to') . ' ' . dt2time($row['end_time']);
 
     // Get inline keyboard.
     $contents[$i]['keyboard'] = keys_vote($row);

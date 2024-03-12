@@ -32,7 +32,7 @@ function get_overview( $active_raids, $chat_title, $chat_username )
     $resolved_boss = resolve_raid_boss($row['pokemon'], $row['pokemon_form'], $row['spawn'], $row['level']);
     $row['pokemon'] = $resolved_boss['pokedex_id'];
     $row['pokemon_form'] = $resolved_boss['pokemon_form_id'];
-    $pokemon = get_local_pokemon_name($row['pokemon'], $row['pokemon_form'], true);
+    $pokemon = get_local_pokemon_name($row['pokemon'], $row['pokemon_form'], $config->LANGUAGE_PUBLIC);
     $gym = $row['gym_name'];
     $ex_raid_gym_marker = (strtolower($config->RAID_EX_GYM_MARKER) == 'icon') ? EMOJI_STAR : '<b>' . $config->RAID_EX_GYM_MARKER . '</b>';
     $start_time = $row['start_time'];

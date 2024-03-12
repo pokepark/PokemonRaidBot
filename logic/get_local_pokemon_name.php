@@ -1,31 +1,32 @@
 <?php
 /**
  * Get local name of pokemon.
- * @param $pokemon_id
- * @param $pokemon_form_id
- * @param $override_language
+ * @param int $pokemon_id
+ * @param int $pokemon_form_id
+ * @param string $language
  * @return string
  */
-function get_local_pokemon_name($pokemon_id, $pokemon_form_id, $override_language = false)
+function get_local_pokemon_name($pokemon_id, $pokemon_form_id, $language = null)
 {
+  global $config, $botUser;
   $q = my_query('SELECT pokemon_name, pokemon_form_name FROM pokemon WHERE pokedex_id = ? AND pokemon_form_id = ?', [$pokemon_id, $pokemon_form_id]);
   $res = $q->fetch();
   $pokemon_form_name = $res['pokemon_form_name'] ?? 'normal';
 
   debug_log('Pokemon_form: ' . $pokemon_form_name);
-
-  // Get translation type
-  $getTypeTranslation = ($override_language == true) ? 'getPublicTranslation' : 'getTranslation';
+  if($language === null) $language = $botUser->userLanguage;
 
   // Init pokemon name and define fake pokedex ids used for raid eggs
   $pokemon_name = '';
 
   // Get eggs from normal translation.
-  $pokemon_name = (in_array($pokemon_id, EGGS)) ? $getTypeTranslation('egg_' . str_replace('999', '', $pokemon_id)) : $getTypeTranslation('pokemon_id_' . $pokemon_id);
+  $pokemon_name = (in_array($pokemon_id, EGGS)) ?
+    getTranslation('egg_' . str_replace('999', '', $pokemon_id), $language) :
+    getTranslation('pokemon_id_' . $pokemon_id, $language);
 
   $skipFallback = false;
   if ($pokemon_form_name != 'normal') {
-    $pokemon_form_name = $getTypeTranslation('pokemon_form_' . $pokemon_form_id);
+    $pokemon_form_name = getTranslation('pokemon_form_' . $pokemon_form_id, $language);
     // Use only form name if form name contains Pokemon name
     // e.g. Black Kyurem, Frost Rotom
     if(strpos($pokemon_form_name, $pokemon_name, 0)) {

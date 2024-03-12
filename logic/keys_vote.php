@@ -171,7 +171,7 @@ function keys_vote($raid)
       foreach($raid_bosses as $pokemon) {
         if(in_array($pokemon['pokedex_id'], EGGS)) continue;
         $buttons['pokemon'][] = button(
-          get_local_pokemon_name($pokemon['pokedex_id'], $pokemon['pokemon_form_id'], true),
+          get_local_pokemon_name($pokemon['pokedex_id'], $pokemon['pokemon_form_id'], $config->LANGUAGE_PUBLIC),
           ['vote_pokemon', 'r' => $raid['id'], 'p' => $pokemon['pokedex_id'] . '-' . $pokemon['pokemon_form_id']]
         );
       }
