@@ -751,7 +751,9 @@ function curl_json_request($post_contents, $identifier)
   $json_response = curl_exec($curl);
 
   if($json_response === false) {
-     info_log(curl_error($curl));
+    info_log(curl_error($curl));
+    curl_close($curl);
+    return false;
   }
 
   // Close connection.
