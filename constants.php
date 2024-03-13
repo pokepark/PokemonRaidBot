@@ -65,6 +65,27 @@ define('PRIMAL_MONS', [382, 383]);
 // Limit the tiers of upcoming raid bosses imported from PokeBattler to legendary and mega
 $pokebattler_import_future_tiers = [5, 6, 7, 8, 9, 10, 15];
 
+define('TYPE_MAP_PROTO_TO_ID', [
+  'POKEMON_TYPE_NORMAL' => 1,
+  'POKEMON_TYPE_FIGHTING' => 2,
+  'POKEMON_TYPE_FLYING' => 3,
+  'POKEMON_TYPE_POISON' => 4,
+  'POKEMON_TYPE_GROUND' => 5,
+  'POKEMON_TYPE_ROCK' => 6,
+  'POKEMON_TYPE_BUG' => 7,
+  'POKEMON_TYPE_GHOST' => 8,
+  'POKEMON_TYPE_STEEL' => 9,
+  'POKEMON_TYPE_FIRE' => 10,
+  'POKEMON_TYPE_WATER' => 11,
+  'POKEMON_TYPE_GRASS' => 12,
+  'POKEMON_TYPE_ELECTRIC' => 13,
+  'POKEMON_TYPE_PSYCHIC' => 14,
+  'POKEMON_TYPE_ICE' => 15,
+  'POKEMON_TYPE_DRAGON' => 16,
+  'POKEMON_TYPE_DARK' => 17,
+  'POKEMON_TYPE_FAIRY' => 18,
+]);
+
 // Default language.
 defined('DEFAULT_LANGUAGE') or define('DEFAULT_LANGUAGE', 'EN');
 
@@ -83,7 +104,7 @@ $languages = array(
 
 // Value used for denoting anytime attendance
 define('ANYTIME', '1970-01-01 00:00:00');
-define('ANYTIME_TS', preg_replace("/[^0-9]/", "", ANYTIME));
+define('ANYTIME_TS', preg_replace('/[^0-9]/', '', ANYTIME));
 
 // Icons.
 defined('TEAM_B') 		or define('TEAM_B',        iconv('UCS-4LE', 'UTF-8', pack('V', 0x1F499)));
@@ -135,7 +156,7 @@ defined('EMOJI_CLIPPY')	or define('EMOJI_CLIPPY',iconv('UCS-4LE', 'UTF-8', pack(
 defined('CR') or define('CR',  "\n");
 defined('CR2') or define('CR2', "\n");
 // Space.
-defined('SP') or define('SP', " ");
+defined('SP') or define('SP', ' ');
 
 // Weather.
 $weather = array(

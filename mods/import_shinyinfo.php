@@ -2,6 +2,7 @@
 // Write to log.
 debug_log('pokebattler()');
 require_once(LOGIC_PATH . '/curl_get_contents.php');
+require_once(LOGIC_PATH . '/resolvePokebattlerNameToIds.php');
 
 // For debug.
 //debug_log($update);
@@ -9,8 +10,6 @@ require_once(LOGIC_PATH . '/curl_get_contents.php');
 
 // Check access.
 $botUser->accessCheck('pokedex');
-
-include(LOGIC_PATH . '/resolve_boss_name_to_ids.php');
 
 $link = 'https://fight.pokebattler.com/raids';
 $pb_data = curl_get_contents($link);
@@ -32,7 +31,7 @@ foreach($pb_data['tiers'] as $tier) {
     if(!isset($raid['pokemon']) || $raid['shiny'] != 'true') continue;
 
     // Get ID and form name used internally.
-    [$dex_id, $dex_form] = resolve_boss_name_to_ids($raid['pokemon']);
+    [$dex_id, $dex_form] = resolvePokebattlerNameToIds($raid['pokemon']);
 
     // Make sure we received a valid dex id.
     if(!is_numeric($dex_id) || $dex_id == 0) {

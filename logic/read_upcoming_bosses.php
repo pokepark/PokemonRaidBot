@@ -44,6 +44,9 @@ function read_upcoming_bosses($return_sql = false, $levelsToRead = false) {
     $boss = $news['pokemon'];
     $dex_id_form = resolve_boss_name_to_ids($boss);
 
+    // Exit if resolving boss failed
+    if($dex_id_form[0] == 0) continue;
+
     // In case Pokebattler keeps using RAID_LEVEL_MEGA_5 (legendary mega tier) for primal raids
     if(in_array($dex_id_form[0], PRIMAL_MONS) && $raid_level_id == 7) {
       $raid_level_id = 10;
