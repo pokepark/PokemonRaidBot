@@ -83,7 +83,7 @@ if($rs->rowcount() == 1) {
     $raid_pokemon_name = get_local_pokemon_name($raid['pokemon'], $raid['pokemon_form']);
     $msg .= '<b>' . $i .'. ' . $raid_pokemon_name . '</b>' . CR;
     if(!empty($raid['event_name'])) $msg .= $raid['event_name'] . CR;
-    $msg .= get_raid_times($raid,false, true) . CR . CR;
+    $msg .= get_raid_times($raid, $botUser->userLanguage, true) . CR . CR;
     $keys[][] = button($i . '. ' . $raid_pokemon_name,['list_raid', 'r' => $raid['id']]);
     $i++;
   }

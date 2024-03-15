@@ -3,11 +3,11 @@ require_once(LOGIC_PATH . '/get_raid_times.php');
 /**
  * Show small raid poll.
  * @param $raid
- * @param $override_language
  * @return string
  */
-function show_raid_poll_small($raid, $override_language = false)
+function show_raid_poll_small($raid)
 {
+  global $botUser;
   // Build message string.
   $msg = '';
 
@@ -31,7 +31,7 @@ function show_raid_poll_small($raid, $override_language = false)
   // Start time and end time
   if(!empty($raid['start_time']) && !empty($raid['end_time'])) {
     // Get raid times message.
-    $msg .= get_raid_times($raid, $override_language);
+    $msg .= get_raid_times($raid, $botUser->userLanguage);
   }
 
   // Count attendances

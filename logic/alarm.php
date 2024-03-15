@@ -36,7 +36,6 @@ function alarm($raid_id_array, $user_id, $action, $info = '', $tg_json = [])
   $raid_id = $raid['id'];
 
   $gymname = $raid['gym_name'];
-  $raidtimes = str_replace(CR, '', str_replace(' ', '', get_raid_times($raid, false, true)));
 
   // Get attend time.
   if(!in_array($action, ['new_att','new_boss','change_time','group_code_private','group_code_public'])) {
@@ -73,6 +72,7 @@ function alarm($raid_id_array, $user_id, $action, $info = '', $tg_json = [])
   {
     if(!isset($answer['lang']) or empty($answer['lang'])) $recipient_language = $config->LANGUAGE_PUBLIC;
     else $recipient_language = $GLOBALS['languages'][$answer['lang']];
+    $raidtimes = str_replace(CR, '', str_replace(' ', '', get_raid_times($raid, $recipient_language, true)));
     // Adding a guest
     if($action == 'extra') {
       debug_log('Alarm additional trainer: ' . $info);
@@ -115,7 +115,7 @@ function alarm($raid_id_array, $user_id, $action, $info = '', $tg_json = [])
       if($info != '0') {
         // Only a specific pokemon
         $pokemon = explode("-",$info,2);
-        $poke_name = get_local_pokemon_name($pokemon[0],$pokemon[1]);
+        $poke_name = get_local_pokemon_name($pokemon[0], $pokemon[1], $recipient_language);
         $msg_text = '<b>' . getTranslation('alert_individual_poke', $recipient_language) . SP . $poke_name . '</b>' . CR;
       } else {
         // Any pokemon
@@ -130,7 +130,7 @@ function alarm($raid_id_array, $user_id, $action, $info = '', $tg_json = [])
     } else if($action == 'pok_cancel_individual') {
       debug_log('Alarm Pokemon: ' . $info);
       $pokemon = explode("-",$info,2);
-      $poke_name = get_local_pokemon_name($pokemon[0],$pokemon[1]);
+      $poke_name = get_local_pokemon_name($pokemon[0], $pokemon[1], $recipient_language);
       $msg_text = '<b>' . getTranslation('alert_cancel_individual_poke', $recipient_language) . SP . $poke_name . '</b>' . CR;
       $msg_text .= EMOJI_HERE . SP . $gymname . SP . '(' . $raidtimes . ')' . CR;
       $msg_text .= EMOJI_SINGLE . SP . $username . CR;

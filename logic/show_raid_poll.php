@@ -37,7 +37,7 @@ function show_raid_poll($raid, $inline = false)
   }
 
   // Get raid times.
-  $msg = raid_poll_message($msg, get_raid_times($raid, true, ($raid['event_pokemon_title'] == 0 ? true : false)), true);
+  $msg = raid_poll_message($msg, get_raid_times($raid, $config->LANGUAGE_PUBLIC, ($raid['event_pokemon_title'] == 0 ? true : false)), true);
 
   // Get current time and time left.
   $time_now = utcnow();
@@ -373,7 +373,7 @@ function show_raid_poll($raid, $inline = false)
               if($cnt_array[$current_att_time]['other_pokemon'] > 0 ) {
                 // Add pokemon name.
                 $pokemon_id_form = explode("-",$current_pokemon,2);
-                $msg = raid_poll_message($msg, ($current_pokemon == 0) ? ('<b>' . getPublicTranslation('any_pokemon') . '</b>') : ('<b>' . get_local_pokemon_name($pokemon_id_form[0],$pokemon_id_form[1], true) . '</b>'));
+                $msg = raid_poll_message($msg, ($current_pokemon == 0) ? ('<b>' . getPublicTranslation('any_pokemon') . '</b>') : ('<b>' . get_local_pokemon_name($pokemon_id_form[0],$pokemon_id_form[1], $config->LANGUAGE_PUBLIC) . '</b>'));
 
                 // Add counts to message.
                 $msg = raid_poll_print_counts($msg, $cnt_array[$current_att_time][$current_pokemon]);

@@ -489,7 +489,7 @@ function create_raid_picture($raid, $standalone_photo = false, $debug = false) {
 
   // Raid times
   if(!$raid['raid_ended']) {
-    $time_text = get_raid_times($raid, true, true);
+    $time_text = get_raid_times($raid, $config->LANGUAGE_PUBLIC, true);
   } else {
     $time_text = getPublicTranslation('raid_done');
   }

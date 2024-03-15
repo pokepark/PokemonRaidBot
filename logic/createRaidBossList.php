@@ -1,6 +1,4 @@
 <?php
-require_once(LOGIC_PATH . '/get_raid_times.php');
-
 /**
  * Prints a list of saved raid bosses in this format
  * - Darkrai 20.10. - 2.11.
@@ -46,7 +44,7 @@ function createRaidBossList() {
   foreach($data[0] as $tempRow) {
     $list .= PHP_EOL . '- ';
     foreach($tempRow as $num => $row) {
-      $pokemonName = get_local_pokemon_name($row['pokedex_id'], $row['pokemon_form_id']);
+      $pokemonName = get_local_pokemon_name($row['pokedex_id'], $row['pokemon_form_id'], $config->LANGUAGE_PUBLIC);
       if($num != 0) $list .= ', ';
       $list .= $pokemonName;
     }
@@ -70,7 +68,7 @@ function createRaidBossList() {
         }
         $list .=  PHP_EOL . '- ';
       }
-      $pokemonName = get_local_pokemon_name($row['pokedex_id'], $row['pokemon_form_id']);
+      $pokemonName = get_local_pokemon_name($row['pokedex_id'], $row['pokemon_form_id'], $config->LANGUAGE_PUBLIC);
       if($num != 0) $list .= ', ';
       $list .= $pokemonName;
       $prevStartDate = $startDate;

@@ -60,7 +60,7 @@ function get_overview( $active_raids, $chat_title, $chat_username )
 
     // Raid has not started yet - adjust time left message
     if ($now < $start_time) {
-      $msg .= get_raid_times($row, true);
+      $msg .= get_raid_times($row, $config->LANGUAGE_PUBLIC);
     // Raid has started already
     } else {
       // Add time left message.

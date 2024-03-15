@@ -20,7 +20,7 @@ $raid = get_raid($raid_id);
 
 $msg = '';
 $msg .= getTranslation('raid_saved') . CR;
-$msg .= show_raid_poll_small($raid, false) . CR2;
+$msg .= show_raid_poll_small($raid) . CR2;
 
 if($mode == 'e') {
   $msg.= getTranslation('event_note_edit') . ': ';

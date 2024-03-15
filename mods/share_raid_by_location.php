@@ -97,7 +97,7 @@ while ($raid = $rs->fetch()) {
   $end = dt2time($raid['end_time']);
   $time_left = $raid['t_left'];
   if ($now < $start) {
-    $text .= get_raid_times($raid, true);
+    $text .= get_raid_times($raid, $botUser->userLanguage);
   // Raid has started already
   } else {
     // Add time left message.

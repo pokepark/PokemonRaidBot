@@ -60,7 +60,7 @@ $keys = array_merge($keys, $keys_share);
 // Build message string.
 $msg = '';
 $msg .= getTranslation('raid_saved') . CR;
-$msg .= show_raid_poll_small($raid, false) . CR;
+$msg .= show_raid_poll_small($raid) . CR;
 
 // User_id tag.
 $user_id_tag = '#' . $update['callback_query']['from']['id'];

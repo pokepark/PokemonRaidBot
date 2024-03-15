@@ -2,19 +2,13 @@
 /**
  * Get raid time message.
  * @param array $raid
- * @param bool $override_language
+ * @param bool $language
  * @param bool $unformatted
  * @return string
  */
-function get_raid_times($raid, $override_language = true, $unformatted = false)
+function get_raid_times($raid, $language = null, $unformatted = false)
 {
     global $config;
-    // Get translation type
-    if($override_language == true) {
-        $getTypeTranslation = 'getPublicTranslation';
-    } else {
-        $getTypeTranslation = 'getTranslation';
-    }
 
     // Init empty message string.
     $msg = '';
@@ -31,8 +25,8 @@ function get_raid_times($raid, $override_language = true, $unformatted = false)
     $year_start = utctime($raid['start_time'], 'Y');
 
     // Translation for raid day and month
-    $raid_day = $getTypeTranslation('weekday_' . $weekday_start);
-    $raid_month = $getTypeTranslation('month_' . $month_start);
+    $raid_day = getTranslation('weekday_' . $weekday_start, $language);
+    $raid_month = getTranslation('month_' . $month_start, $language);
 
     // Days until the raid starts
     $dt_now = utcdate('now');
@@ -44,9 +38,9 @@ function get_raid_times($raid, $override_language = true, $unformatted = false)
     // Raid times.
     if($unformatted == false) {
         if($config->RAID_POLL_POKEMON_NAME_FIRST_LINE == true) {
-            $msg .= get_local_pokemon_name($raid['pokemon'], $raid['pokemon_form'], $override_language) . ':' . SP;
+            $msg .= get_local_pokemon_name($raid['pokemon'], $raid['pokemon_form'], $language) . ':' . SP;
         } else {
-            $msg .= $getTypeTranslation('raid') . ':' . SP;
+            $msg .= getTranslation('raid', $language) . ':' . SP;
         }
     }
     // Is the raid in the same week?
@@ -66,7 +60,7 @@ function get_raid_times($raid, $override_language = true, $unformatted = false)
 
             // Adds 'at 17:00' to the output.
             if($unformatted == false) {
-                $msg .= SP . $getTypeTranslation('raid_egg_opens_at');
+                $msg .= SP . getTranslation('raid_egg_opens_at', $language);
             }
             $msg .= SP . dt2time($raid['start_time']);
         } else {

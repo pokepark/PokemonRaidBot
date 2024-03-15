@@ -8,7 +8,8 @@ require_once(LOGIC_PATH . '/get_raid_times.php');
  * @param boolean $alarm
  * @param array $raid Raid array from get_raid()
  */
-function sendAlertOnOffNotice($raid_id, $user_id, $alarm = null, $raid = null){
+function sendAlertOnOffNotice($raid_id, $user_id, $alarm = null, $raid = null) {
+  global $botUser;
   if(empty($raid)){
     // Request limited raid info
     $request = my_query('
@@ -22,7 +23,7 @@ function sendAlertOnOffNotice($raid_id, $user_id, $alarm = null, $raid = null){
   }
   $gymname = '<b>' . $raid['gym_name'] . '</b>';
   // parse raidtimes
-  $raidtimes = str_replace(CR, '', str_replace(' ', '', get_raid_times($raid, false, true)));
+  $raidtimes = str_replace(CR, '', str_replace(' ', '', get_raid_times($raid, $botUser->userLanguage, true)));
 
   if(empty($alarm)){
     // Get the new value
