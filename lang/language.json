@@ -4591,14 +4591,14 @@
   "alert_every_poke": {
     "NL": "Komt voor",
     "DE": "Kommt für jeden Raid-Boss",
-    "EN": "Coming for",
+    "EN": "Coming for any boss",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
     "RU": "TRANSLATE",
     "NO": "TRANSLATE",
-    "FR": "Vient pour",
+    "FR": "Vient pour tout boss de raid",
     "PL": "TRANSLATE",
-    "FI": "Ilmoittautuneet,",
+    "FI": "Osallistuu mihin tahansa bossiin",
     "ES": "Viene para"
   },
   "alert_new_att": {
