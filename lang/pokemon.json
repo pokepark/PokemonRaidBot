@@ -5750,5 +5750,56 @@
     "pokemon_id_1008": {
         "EN": "Miraidon",
         "RU": "Мирайдон"
+    },
+    "pokemon_id_1009": {
+        "EN": "Walking-wake"
+    },
+    "pokemon_id_1010": {
+        "EN": "Iron-leaves"
+    },
+    "pokemon_id_1011": {
+        "EN": "Dipplin"
+    },
+    "pokemon_id_1012": {
+        "EN": "Poltchageist"
+    },
+    "pokemon_id_1013": {
+        "EN": "Sinistcha"
+    },
+    "pokemon_id_1014": {
+        "EN": "Okidogi"
+    },
+    "pokemon_id_1015": {
+        "EN": "Munkidori"
+    },
+    "pokemon_id_1016": {
+        "EN": "Fezandipiti"
+    },
+    "pokemon_id_1017": {
+        "EN": "Ogerpon"
+    },
+    "pokemon_id_1018": {
+        "EN": "Archaludon"
+    },
+    "pokemon_id_1019": {
+        "EN": "Hydrapple"
+    },
+    "pokemon_id_1020": {
+        "EN": "Gouging-fire"
+    },
+    "pokemon_id_1021": {
+        "EN": "Raging-bolt"
+    },
+    "pokemon_id_1022": {
+        "EN": "Iron-boulder"
+    },
+    "pokemon_id_1023": {
+        "EN": "Iron-crown"
+    },
+    "pokemon_id_1024": {
+        "EN": "Terapagos"
+    },
+    "pokemon_id_1025": {
+        "EN": "Pecharunt"
     }
 }

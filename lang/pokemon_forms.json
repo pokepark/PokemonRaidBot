@@ -1613,7 +1613,7 @@
         "ES": "Estilo Apasionado"
     },
     "pokemon_form_2680": {
-        "PT-BR": "Estilo Pompom",
+        "PT-BR": "Estilo Animado",
         "EN": "Pom-Pom Style",
         "FR": "Style Pom-Pom",
         "DE": "Cheerleading",
@@ -1631,7 +1631,7 @@
         "ES": "Estilo Plácido"
     },
     "pokemon_form_2683": {
-        "PT-BR": "Estilo Leque",
+        "PT-BR": "Estilo Elegante",
         "EN": "Sensu Style",
         "FR": "Style Buyô",
         "DE": "Buyo",
@@ -2194,13 +2194,13 @@
         "ES": "Forma Tótem"
     },
     "pokemon_form_2804": {
-        "PT-BR": "Forma Listras Brancas",
-        "EN": "White-Striped Form",
+        "PT-BR": "Listras Brancas",
+        "EN": "White-Striped",
         "FR": "Motif Blanc",
-        "DE": "Weißlinige Form",
+        "DE": "Weißlinig",
         "IT": "Forma Lineabianca",
         "RU": "Белая полосатая форма",
-        "ES": "Forma Raya Blanca"
+        "ES": "Raya Blanca"
     },
     "pokemon_form_2805": {
         "EN": "Gofest 2022"
@@ -2303,6 +2303,9 @@
     },
     "pokemon_form_2841": {
         "EN": "Flying 08"
+    },
+    "pokemon_form_2842": {
+        "EN": "Horizons"
     },
     "pokemon_form_2982": {
         "PT-BR": "Fêmea",

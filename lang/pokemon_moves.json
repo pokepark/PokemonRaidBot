@@ -2899,7 +2899,13 @@
         "ES": "Ala Mortífera"
     },
     "pokemon_move_390": {
-        "EN": "Natures Madness"
+        "PT-BR": "Ira da Natureza",
+        "EN": "Nature’s Madness",
+        "FR": "Ire de la Nature",
+        "DE": "Naturzorn",
+        "IT": "Ira della Natura",
+        "RU": "Безумие Природы",
+        "ES": "Furia Natural"
     },
     "pokemon_move_391": {
         "PT-BR": "Pinote Triplo",
@@ -2936,15 +2942,84 @@
         "ES": "Distorsión"
     },
     "pokemon_move_395": {
-        "EN": "Bleakwind Storm"
+        "PT-BR": "Tempestade Álgida",
+        "EN": "Bleakwind Storm",
+        "FR": "Typhon Hivernal",
+        "DE": "Polarorkan",
+        "IT": "Tempesta Boreale",
+        "RU": "Ледяная Буря",
+        "ES": "Vendaval Gélido"
     },
     "pokemon_move_396": {
-        "EN": "Sandsear Storm"
+        "PT-BR": "Tempestade Saibrosa",
+        "EN": "Sandsear Storm",
+        "FR": "Typhon Pyrosable",
+        "DE": "Wüstenorkan",
+        "IT": "Tempesta Ardente",
+        "RU": "Обжигающая Буря",
+        "ES": "Simún de Arena"
     },
     "pokemon_move_397": {
-        "EN": "Wildbolt Storm"
+        "PT-BR": "Tempestade Chocante",
+        "EN": "Wildbolt Storm",
+        "FR": "Typhon Fulgurant",
+        "DE": "Donnerorkan",
+        "IT": "Tempesta Tonante",
+        "RU": "Громовая Буря",
+        "ES": "Electormenta"
     },
     "pokemon_move_398": {
-        "EN": "Spirit Shackle"
+        "PT-BR": "Manilha Sombria",
+        "EN": "Spirit Shackle",
+        "FR": "Tisse Ombre",
+        "DE": "Schattenfessel",
+        "IT": "Cucitura d’Ombra",
+        "RU": "Спиритические Оковы",
+        "ES": "Puntada Sombría"
+    },
+    "pokemon_move_399": {
+        "PT-BR": "Investida Trovão",
+        "EN": "Volt Tackle",
+        "FR": "Électacle",
+        "DE": "Volttackle",
+        "IT": "Locomovolt",
+        "RU": "Вольт-Бросок",
+        "ES": "Placaje Eléctrico"
+    },
+    "pokemon_move_400": {
+        "PT-BR": "Lariat Escuro",
+        "EN": "Darkest Lariat",
+        "FR": "Dark Lariat",
+        "DE": "Dark Lariat",
+        "IT": "Braccioteso",
+        "RU": "Тёмное Лассо",
+        "ES": "Lariat Oscuro"
+    },
+    "pokemon_move_401": {
+        "PT-BR": "Onda Psíquica",
+        "EN": "Psywave",
+        "FR": "Vague Psy",
+        "DE": "Psywelle",
+        "IT": "Psiconda",
+        "RU": "Психоволны",
+        "ES": "Psicoonda"
+    },
+    "pokemon_move_402": {
+        "PT-BR": "Som de Metal",
+        "EN": "Metal Sound",
+        "FR": "Strido-Son",
+        "DE": "Metallsound",
+        "IT": "Ferrostrido",
+        "RU": "Металлический Звук",
+        "ES": "Eco Metálico"
+    },
+    "pokemon_move_403": {
+        "PT-BR": "Ataque de Areia",
+        "EN": "Sand Attack",
+        "FR": "Jet de Sable",
+        "DE": "Sandwirbel",
+        "IT": "Turbosabbia",
+        "RU": "Песчаная Атака",
+        "ES": "Ataque Arena"
     }
 }
