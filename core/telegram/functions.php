@@ -268,7 +268,7 @@ function edit_message($update, $message, $keys, $merge_args = false, $multicurl 
  * @param $id_val
  * @param $text_val
  * @param $markup_val
- * @param null $chat_id
+ * @param int|null $chat_id
  * @param mixed $merge_args
  * @param $multicurl
  */
@@ -341,7 +341,7 @@ function edit_caption($update, $message, $keys, $merge_args = false, $multicurl 
  * @param $id_val
  * @param $text_val
  * @param $markup_val
- * @param null $chat_id
+ * @param int|null $chat_id
  * @param mixed $merge_args
  * @param $multicurl
  */
@@ -649,7 +649,7 @@ function send_photo($chatObj, $media_content, $content_type, $text = '', $inline
  * @param string $media_content content of the media file.
  * @param bool $content_type true = photo file, false = file_id/url
  * @param $markup_val
- * @param null $chat_id
+ * @param int|null $chat_id
  * @param mixed $merge_args
  * @param $multicurl
  */
@@ -742,6 +742,10 @@ function curl_json_request($post_contents, $identifier)
   if ($config->CURL_USEPROXY && !empty($config->CURL_PROXYSERVER)) {
     curl_setopt($curl, CURLOPT_PROXY, $config->CURL_PROXYSERVER);
   }
+  // Use only ipv4 if configured
+  if($config->CURL_IPRESOLVE_V4) {
+    curl_setopt($curl, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
+  }
 
   // Write to log.
   if(is_array($post_contents)) debug_log(print_r($post_contents,true), '->');
@@ -805,6 +809,10 @@ function curl_json_multi_request($json)
     // Use Proxyserver for curl if configured.
     if($config->CURL_USEPROXY && !empty($config->CURL_PROXYSERVER)) {
       curl_setopt($curly[$id], CURLOPT_PROXY, $config->CURL_PROXYSERVER);
+    }
+    // Use only ipv4 if configured
+    if($config->CURL_IPRESOLVE_V4) {
+      curl_setopt($curly[$id], CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
     }
 
     // Curl post.
