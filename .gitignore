@@ -5,6 +5,7 @@
 /access/**
 /custom/**
 /ddos/**
+/core/tools/hash.php
 !/access/.gitkeep
 !/custom/.gitkeep
 !/ddos/.gitkeep

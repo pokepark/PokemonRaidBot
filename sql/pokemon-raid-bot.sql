@@ -23,9 +23,12 @@ CREATE TABLE `cleanup` (
   `raid_id` int(10) unsigned NOT NULL,
   `chat_id` bigint(20) NOT NULL,
   `message_id` bigint(20) unsigned NOT NULL,
+  `thread_id` int(10) UNSIGNED NULL,
   `type` VARCHAR(20) NULL,
   `date_of_posting` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
+  `media_unique_id` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `unique_chat_msg` (`chat_id`,`message_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 CREATE TABLE `events` (
   `id` int(3) unsigned NOT NULL AUTO_INCREMENT,
@@ -35,6 +38,7 @@ CREATE TABLE `events` (
   `time_slots` int(3) DEFAULT NULL,
   `raid_duration` int(3) unsigned NOT NULL DEFAULT 0,
   `hide_raid_picture` tinyint(1) DEFAULT 0,
+  `pokemon_title` tinyint(1) NULL DEFAULT 1,
   `poll_template` VARCHAR(200) NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -58,15 +62,29 @@ CREATE TABLE `overview` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `chat_id` bigint(20) NOT NULL,
   `message_id` bigint(20) unsigned NOT NULL,
+  `thread_id` int(10) UNSIGNED NULL,
   `chat_title` varchar(128) DEFAULT NULL,
   `chat_username` varchar(32) DEFAULT NULL,
   `updated` date DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE TABLE `photo_cache` (
+  `id` varchar(100) NOT NULL,
+  `unique_id` varchar(45) NOT NULL,
+  `pokedex_id` int(10) DEFAULT NULL,
+  `form_id` int(4) DEFAULT NULL,
+  `raid_id` int(10) unsigned DEFAULT NULL,
+  `ended` tinyint(1) DEFAULT NULL,
+  `start_time` datetime DEFAULT NULL,
+  `end_time` datetime DEFAULT NULL,
+  `gym_id` int(10) unsigned DEFAULT NULL,
+  `standalone` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`unique_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 CREATE TABLE `pokemon` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `pokedex_id` int(10) unsigned NOT NULL,
-  `pokemon_name` varchar(12) DEFAULT NULL,
+  `pokemon_name` varchar(30) DEFAULT NULL,
   `pokemon_form_name` varchar(45) DEFAULT NULL,
   `pokemon_form_id` int(4) DEFAULT NULL,
   `min_cp` int(10) unsigned NOT NULL DEFAULT 0,
@@ -77,7 +95,6 @@ CREATE TABLE `pokemon` (
   `type` varchar(10) DEFAULT '',
   `type2` varchar(10) DEFAULT '',
   `shiny` tinyint(1) unsigned DEFAULT 0,
-  `asset_suffix` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx_pokemon_pokedex_id_pokemon_form_id` (`pokedex_id`,`pokemon_form_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8mb4;
@@ -87,7 +104,7 @@ CREATE TABLE `raid_bosses` (
   `pokemon_form_id` int(4) DEFAULT NULL,
   `date_start` datetime NOT NULL DEFAULT '1970-01-01 00:00:01',
   `date_end` datetime NOT NULL DEFAULT '2038-01-19 03:14:07',
-  `raid_level` enum('1','2','3','4','5','6','X') DEFAULT NULL,
+  `raid_level` TINYINT UNSIGNED DEFAULT NULL,
   `scheduled` TINYINT(1) NULL DEFAULT 0,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -101,7 +118,7 @@ CREATE TABLE `raids` (
   `end_time` datetime DEFAULT NULL,
   `gym_team` enum('mystic','valor','instinct') DEFAULT NULL,
   `gym_id` int(10) unsigned NOT NULL,
-  `level` enum('1','2','3','4','5','6','X') DEFAULT NULL,
+  `level` TINYINT UNSIGNED DEFAULT NULL,
   `move1` varchar(255) DEFAULT NULL,
   `move2` varchar(255) DEFAULT NULL,
   `gender` varchar(255) DEFAULT NULL,
@@ -116,11 +133,12 @@ CREATE TABLE `trainerinfo` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `chat_id` bigint(20) NOT NULL,
   `message_id` bigint(20) unsigned NOT NULL,
+  `thread_id` int(10) UNSIGNED NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 CREATE TABLE `user_input` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT NULL,
   `handler` varchar(45) DEFAULT NULL,
   `modifiers` text DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -139,6 +157,8 @@ CREATE TABLE `users` (
   `lang_manual` TINYINT UNSIGNED NOT NULL DEFAULT 0,
   `tutorial` TINYINT(1) NOT NULL DEFAULT 0,
   `auto_alarm` TINYINT(1) UNSIGNED NULL DEFAULT 0,
+  `gymarea` TINYINT UNSIGNED NULL,
+  `privileges` TEXT NULL,
    PRIMARY KEY (`id`),
   UNIQUE KEY `i_userid` (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8mb4;

@@ -8,9 +8,10 @@ debug_log('exit()');
 
 // Set empty keys.
 $keys = [];
+$arg = $data['d'] ?? 0;
 
 // Build message string.
-$msg = ($data['arg'] == 1) ? (getTranslation('done') . '!') : (getTranslation('action_aborted'));
+$msg = ($arg == 1) ? (getTranslation('done') . '!') : (getTranslation('action_aborted'));
 
 // Telegram JSON array.
 $tg_json = array();
@@ -23,6 +24,3 @@ $tg_json[] = edit_message($update, $msg, $keys, false, true);
 
 // Telegram multicurl request.
 curl_json_multi_request($tg_json);
-
-// Exit.
-exit();

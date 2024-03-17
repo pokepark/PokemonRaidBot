@@ -11,6 +11,9 @@ if(json_last_error() !== JSON_ERROR_NONE) {
     die('Config file not valid JSON, cannot continue.');
 }
 
+$tz = $config->TIMEZONE;
+date_default_timezone_set($tz);
+
 // Establish mysql connection.
 // TODO(artanicus): This should be centralized & imported instead of duplicated
 $dbh = new PDO('mysql:host=' . $config->DB_HOST . ';dbname=' . $config->DB_NAME . ';charset=utf8mb4', $config->DB_USER, $config->DB_PASSWORD, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
@@ -25,6 +28,7 @@ $raids_res = $raids->fetchAll(PDO::FETCH_COLUMN,0);
 $offset = date('Z');
 $interval = DateInterval::createFromDateString($offset.' seconds');
 $raid_to_create = [];
+$datesToCreate = [];
 $data = json_decode($data,true);
 if($data !== false) {
     $now = new DateTime('18:00');
@@ -68,9 +72,10 @@ if($data !== false) {
                 $pokemon_form = $mon[1];
             }
             $raid_to_create[] = [$pokemon, $pokemon_form,$event_start,$event_end];
+            $datesToCreate[] = $event_start;
         }
     }
-    if($now->format('w') == 3 && !in_array($now->format('Y-m-d H:i:s'),$raids_res)) {
+    if($now->format('w') == 3 && !in_array($now->format('Y-m-d H:i:s'), $raids_res) && !in_array($now->format('Y-m-d H:i:s'), $datesToCreate)) {
         $start_time = gmdate('Y-m-d H:i:s',mktime(18,0,0));
         $end_time = gmdate('Y-m-d H:i:s',mktime(19,0,0));
         $mon = get_current_bosses($start_time);
@@ -102,24 +107,27 @@ try {
 }
 catch (PDOException $exception) {
     echo($exception->getMessage());
-    $dbh = null;
     exit;
 }
-$dbh = null;
 function get_current_bosses($spawn) {
     global $dbh;
-    $pk = $dbh->prepare('SELECT pokedex_id,pokemon_form_id FROM raid_bosses WHERE raid_level = \'5\' AND \''.$spawn.'\' BETWEEN date_start AND date_end');
-    $pk->execute();
-    $res = $pk->fetch();
-    if($pk->rowCount()==1) {
-        $pokemon = $res['pokedex_id'];
-        $pokemon_form = $res['pokemon_form_id'];
-    }elseif($pk->rowCount()>1) {
-        $pokemon = 9995;
-        $pokemon_form = 0;
-    }else {
-        return false;
-    }
+    $i = 0;
+    $levels = [5, 7, 8]; // Search potential raid hour bosses from these raid levels
+    $pokemon = $pokemon_form = false;
+    do {
+        $pk = $dbh->prepare('SELECT pokedex_id,pokemon_form_id FROM raid_bosses WHERE raid_level = ? AND ? BETWEEN date_start AND date_end');
+        $pk->execute([$levels[$i], $spawn]);
+        $res = $pk->fetch();
+        if($pk->rowCount() == 1) {
+            $pokemon = $res['pokedex_id'];
+            $pokemon_form = $res['pokemon_form_id'];
+        }elseif($pk->rowCount() > 1) {
+            $pokemon = 999 . $levels[$i];
+            $pokemon_form = 0;
+        }
+        $i++;
+    } while($pk->rowcount() > 0 or $i <= 1);
+    if($pokemon === false) return false;
     return [$pokemon,$pokemon_form];
 }
 function curl_get_contents($url)
@@ -139,5 +147,3 @@ function curl_get_contents($url)
     curl_close($ch);
     return $content;
 }
-
-?>

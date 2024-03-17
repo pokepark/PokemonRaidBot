@@ -1,16 +1,110 @@
 <?php
+// Ex-raid event ID
+defined('EVENT_ID_EX') 		or define('EVENT_ID_EX', '999');
+defined('RAID_ID_EX') 		or define('RAID_ID_EX', '99');
+
 // Paths.
 define('PORTAL_IMAGES_PATH', IMAGES_PATH . '/gyms');
 
-// raid level constants
-define('RAID_LEVEL_ALL', '654321');
+// raid levels constant
+define('RAID_LEVEL_ALL', [RAID_ID_EX, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 1]);
+
+// Raid eggs.
+define('EGGS', [
+  '99915',  // Level 15 / Shadow 5
+  '99914',  // Level 14 / Shadow 4
+  '99913',  // Level 13 / Shadow 3
+  '99912',  // Level 12 / Shadow 2
+  '99911',  // Level 11 / Shadow 1
+  '99910',  // Level 10 / Primal raid
+  '9999',  // Level 9 / Elite raid
+  '9998',  // Level 8 / Ultra beast
+  '9997',  // Level 7 / Legendary Mega
+  '9996',  // Level 6 / Mega
+  '9995',  // Level 5
+  '9994',  // Level 4
+  '9993',  // Level 3
+  '9992',  // Level 2
+  '9991',  // Level 1
+]);
+
+// Raid levels limited to local players only
+define('RAID_LEVEL_LOCAL_ONLY', [4, 9, 11, 12, 13, 14, 15]);
+
+// Shadow raid levels
+define('RAID_LEVEL_SHADOW', [11, 12, 13, 14, 15]);
+
+// Levels available for import at PokeBattler
+$pokebattler_levels = array('15','13','11','10', '9', '8', '7', '6', '5', '4', '3', '1');
+
+// Map our raid levels to tier names PokeBattler uses
+$pokebattler_level_map = [
+  '1' => 1,
+  '3' => 3,
+  '4' => 4,
+  '5' => 5,
+  '6' => 'MEGA',
+  '7' => 'MEGA_5',
+  '8' => 'ULTRA_BEAST',
+  '9' => 'ELITE',
+  '10' => 'PRIMAL',
+  '11' => '1_SHADOW',
+  '13' => '3_SHADOW',
+  '15' => '5_SHADOW',
+];
+
+$pokebattler_pokemon_map = [
+  'GIRATINA' => 'GIRATINA_ALTERED',
+  'ZACIAN' => 'ZACIAN_HERO_FORM',
+  'ZAMAZENTA' => 'ZAMAZENTA_HERO_FORM',
+];
+
+// Storing Primal Kyogre and Groudon for now. These are not needed if Pokebattler starts using own raid tier for primals
+define('PRIMAL_MONS', [382, 383]);
+
+// Limit the tiers of upcoming raid bosses imported from PokeBattler to legendary and mega
+$pokebattler_import_future_tiers = [5, 6, 7, 8, 9, 10, 15];
+
+define('TYPE_MAP_PROTO_TO_ID', [
+  'POKEMON_TYPE_NORMAL' => 1,
+  'POKEMON_TYPE_FIGHTING' => 2,
+  'POKEMON_TYPE_FLYING' => 3,
+  'POKEMON_TYPE_POISON' => 4,
+  'POKEMON_TYPE_GROUND' => 5,
+  'POKEMON_TYPE_ROCK' => 6,
+  'POKEMON_TYPE_BUG' => 7,
+  'POKEMON_TYPE_GHOST' => 8,
+  'POKEMON_TYPE_STEEL' => 9,
+  'POKEMON_TYPE_FIRE' => 10,
+  'POKEMON_TYPE_WATER' => 11,
+  'POKEMON_TYPE_GRASS' => 12,
+  'POKEMON_TYPE_ELECTRIC' => 13,
+  'POKEMON_TYPE_PSYCHIC' => 14,
+  'POKEMON_TYPE_ICE' => 15,
+  'POKEMON_TYPE_DRAGON' => 16,
+  'POKEMON_TYPE_DARK' => 17,
+  'POKEMON_TYPE_FAIRY' => 18,
+]);
+
+// Default language.
+defined('DEFAULT_LANGUAGE') or define('DEFAULT_LANGUAGE', 'EN');
+
+// Telegram language code => Language files.
+$languages = array(
+  'nl' => 'NL',
+  'de' => 'DE',
+  'en' => 'EN',
+  'it' => 'IT',
+  'pt' => 'PT-BR',
+  'ru' => 'RU',
+  'fr' => 'FR',
+  'fi' => 'FI',
+  'es' => 'ES',
+);
 
 // Value used for denoting anytime attendance
 define('ANYTIME', '1970-01-01 00:00:00');
-define('ANYTIME_TS', preg_replace("/[^0-9]/", "", ANYTIME));
-
-// Ex-raid event ID
-defined('EVENT_ID_EX') 		or define('EVENT_ID_EX', '999');
+define('ANYTIME_TS', preg_replace('/[^0-9]/', '', ANYTIME));
 
 // Icons.
 defined('TEAM_B') 		or define('TEAM_B',        iconv('UCS-4LE', 'UTF-8', pack('V', 0x1F499)));
@@ -28,6 +122,9 @@ defined('EMOJI_GROUP') 		or define('EMOJI_GROUP',   iconv('UCS-4LE', 'UTF-8', pa
 defined('EMOJI_STAR') 		or define('EMOJI_STAR',    iconv('UCS-4LE', 'UTF-8', pack('V', 0x2B50)));
 defined('EMOJI_INVITE') 	or define('EMOJI_INVITE',  iconv('UCS-4LE', 'UTF-8', pack('V', 0x2709)));
 defined('EMOJI_INFO')		or define('EMOJI_INFO',    iconv('UCS-4LE', 'UTF-8', pack('V', 0x2139)));
+defined('EMOJI_DELETE')		or define('EMOJI_DELETE',  iconv('UCS-4LE', 'UTF-8', pack('V', 0x274C)));
+defined('EMOJI_MAP')		or define('EMOJI_MAP',     iconv('UCS-4LE', 'UTF-8', pack('V', 0x1F5FA)));
+defined('EMOJI_PENCIL')		or define('EMOJI_PENCIL',  iconv('UCS-4LE', 'UTF-8', pack('V', 0x270F)));
 defined('EMOJI_EGG')		or define('EMOJI_EGG',     iconv('UCS-4LE', 'UTF-8', pack('V', 0x1F95A)));
 defined('EMOJI_CLOCK')		or define('EMOJI_CLOCK',   iconv('UCS-4LE', 'UTF-8', pack('V', 0x1F551)));
 defined('EMOJI_CAMERA')		or define('EMOJI_CAMERA',  iconv('UCS-4LE', 'UTF-8', pack('V', 0x1F4F7)));
@@ -38,6 +135,7 @@ defined('EMOJI_WANT_INVITE')or define('EMOJI_WANT_INVITE',  iconv('UCS-4LE', 'UT
 defined('EMOJI_IN_PERSON')  or define('EMOJI_IN_PERSON',    iconv('UCS-4LE', 'UTF-8', pack('V', 0x1F9E1)));
 defined('EMOJI_ALIEN')      or define('EMOJI_ALIEN',        iconv('UCS-4LE', 'UTF-8', pack('V', 0x1F47D)));
 defined('EMOJI_CAN_INVITE')or define('EMOJI_CAN_INVITE',    iconv('UCS-4LE', 'UTF-8', pack('V', 0x1F695)));
+defined('EMOJI_SHINY') 		or define('EMOJI_SHINY',    iconv('UCS-4LE', 'UTF-8', pack('V', 0x2728)));
 
 // Weather Icons.
 defined('EMOJI_W_SUNNY') 		or define('EMOJI_W_SUNNY',            iconv('UCS-4LE', 'UTF-8', pack('V', 0x2600)));
@@ -49,33 +147,34 @@ defined('EMOJI_W_WINDY') 		or define('EMOJI_W_WINDY',            iconv('UCS-4LE'
 defined('EMOJI_W_SNOW') 		or define('EMOJI_W_SNOW',             iconv('UCS-4LE', 'UTF-8', pack('V', 0x2744)));
 defined('EMOJI_W_FOG') 			or define('EMOJI_W_FOG',              iconv('UCS-4LE', 'UTF-8', pack('V', 0x1F301)));
 
+defined('EMOJI_WARN')   or define('EMOJI_WARN',  iconv('UCS-4LE', 'UTF-8', pack('V', 0x26A0)));
+defined('EMOJI_DISK')   or define('EMOJI_DISK',  iconv('UCS-4LE', 'UTF-8', pack('V', 0x1F4BE)));
+defined('EMOJI_NEW')    or define('EMOJI_NEW',   iconv('UCS-4LE', 'UTF-8', pack('V', 0x1F195)));
+defined('EMOJI_CLIPPY')	or define('EMOJI_CLIPPY',iconv('UCS-4LE', 'UTF-8', pack('V', 0x1F4CE)));
+
+// Carriage return.
+defined('CR') or define('CR',  "\n");
+defined('CR2') or define('CR2', "\n");
+// Space.
+defined('SP') or define('SP', ' ');
+
 // Weather.
 $weather = array(
-    '1' => EMOJI_W_SUNNY,
-    '2' => EMOJI_W_CLEAR,
-    '3' => EMOJI_W_RAIN,
-    '4' => EMOJI_W_PARTLY_CLOUDY,
-    '5' => EMOJI_W_CLOUDY,
-    '6' => EMOJI_W_WINDY,
-    '7' => EMOJI_W_SNOW,
-    '8' => EMOJI_W_FOG
+  '1' => EMOJI_W_SUNNY,
+  '2' => EMOJI_W_CLEAR,
+  '3' => EMOJI_W_RAIN,
+  '4' => EMOJI_W_PARTLY_CLOUDY,
+  '5' => EMOJI_W_CLOUDY,
+  '6' => EMOJI_W_WINDY,
+  '7' => EMOJI_W_SNOW,
+  '8' => EMOJI_W_FOG
 );
 
 // Teams.
 $teams = array(
-    'mystic'    => TEAM_B,
-    'valor'     => TEAM_R,
-    'instinct'  => TEAM_Y,
-    'unknown'   => TEAM_UNKNOWN,
-    'cancel'    => TEAM_CANCEL
-);
-
-// Raid eggs.
-$eggs = array(
-    '9996',  // Level 6 / Mega
-    '9995',  // Level 5
-    '9994',  // Level 4
-    '9993',  // Level 3
-    '9992',  // Level 2
-    '9991'   // Level 1
+  'mystic'    => TEAM_B,
+  'valor'     => TEAM_R,
+  'instinct'  => TEAM_Y,
+  'unknown'   => TEAM_UNKNOWN,
+  'cancel'    => TEAM_CANCEL
 );

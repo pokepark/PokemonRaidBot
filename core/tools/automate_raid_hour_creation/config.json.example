@@ -6,10 +6,11 @@
   "RAID_HOUR_EVENT_ID":"2",
   "RAID_CREATOR_ID":"",
   "CHAT_ID": "",
+  "TIMEZONE": "Europe/Helsinki",
   "GYM_INFOS": [
-                    [1,"<-Gym id there and event note for 1st gym here"],
-                    [2,"<-Gym id there and event note for 2nd gym here"],
-                    [3,"<-Gym id there and event note for 3rd gym here"]
-                ],
+    [1,"<-Gym id there and event note for 1st gym here"],
+    [2,"<-Gym id there and event note for 2nd gym here"],
+    [3,"<-Gym id there and event note for 3rd gym here"]
+  ],
   "URL": "https://www.yourhost.com/PokemonRaidBot/index.php?apikey=123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11"
 }
