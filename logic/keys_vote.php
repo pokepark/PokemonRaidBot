@@ -261,7 +261,11 @@ function generateTimeslotKeys($RAID_SLOTS, $raid) {
   $five_slot = $five_slot->add(new DateInterval('PT'.$diff.'M'));
 
   // Get first regular raidslot
-  $first_slot = $five_slot->add(new DateInterval('PT'.$RAID_SLOTS.'M'));
+  $first_slot =
+    ($minute == 0) ?
+    $direct_slot->add(new DateInterval('PT'.$RAID_SLOTS.'M')) :
+    $five_slot->add(new DateInterval('PT'.$RAID_SLOTS.'M')
+  );
 
   // Write slots to log.
   debug_log($direct_slot, 'Direct start slot:');
@@ -274,7 +278,10 @@ function generateTimeslotKeys($RAID_SLOTS, $raid) {
     $last_slot = $direct_slot;
   }
   // Add five minutes slot
-  if($five_slot >= $dt_now && (empty($keys_time) || (!empty($keys_time) && $direct_slot != $five_slot))) {
+  if($five_slot >= $dt_now &&
+      (empty($keys_time) || (!empty($keys_time) && $direct_slot != $five_slot)) &&
+      $raid['event_vote_key_mode'] !== 0
+  ) {
     $keys_time[] = button(dt2time($five_slot->format('Y-m-d H:i:s')), ['vote_time', 'r' => $raid['id'], 't' => $five_slot->format('YmdHis')]);
     $last_slot = $five_slot;
   }
