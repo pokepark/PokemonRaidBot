@@ -187,7 +187,7 @@ function createGymKeys($buttonAction, $showHidden, $gymareaId, $gymareaQuery, $s
   );
   while ($gym = $rs->fetch()) {
     // Add first letter to keys array
-    $keys[] = button($gym['first_letter'], ['gymMenu', 'a' => $buttonAction, 'stage' => $stage+1, 'fl' => $gym['first_letter'], 'ga' => $gymareaId]);
+    $keys[] = button($gym['first_letter'], ['gymMenu', 'a' => $buttonAction, 'stage' => $stage+1, 'fl' => $gym['first_letter'], 'h' => $showHidden, 'ga' => $gymareaId]);
   }
 
   // Get the inline key array.
