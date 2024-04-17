@@ -13,6 +13,11 @@ $botUser->accessCheck('pokedex');
 
 $link = 'https://fight.pokebattler.com/raids';
 $pb_data = curl_get_contents($link);
+if($pb_data === false) {
+  $callback_response = getTranslation('internal_error');
+  answerCallbackQuery($update['callback_query']['id'], $callback_response);
+  exit();
+}
 $pb_data = json_decode($pb_data,true);
 
 // Init empty keys array.
