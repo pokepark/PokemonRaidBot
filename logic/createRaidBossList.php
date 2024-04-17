@@ -22,7 +22,7 @@ function createRaidBossList() {
   $levelList = '(' . implode(',', $config->RAID_BOSS_LIST_RAID_LEVELS). ')';
   $q = my_query('
     SELECT
-      pokedex_id, pokemon_form_id, date_start, date_end,
+      pokedex_id, pokemon_form_id, date_start, date_end, raid_level,
       CONCAT(DATE_FORMAT(date_start,"%d%m%y%k"), DATE_FORMAT(date_end,"%d%m%y%k")) AS arrkey,
       CASE WHEN date(date_start) = date(date_end) THEN 1 ELSE 0 END AS sameDay
     FROM  raid_bosses
@@ -45,6 +45,7 @@ function createRaidBossList() {
     $list .= PHP_EOL . '- ';
     foreach($tempRow as $num => $row) {
       $pokemonName = get_local_pokemon_name($row['pokedex_id'], $row['pokemon_form_id'], $config->LANGUAGE_PUBLIC);
+      if(in_array($row['raid_level'], RAID_LEVEL_SHADOW)) $pokemonName .= ' ' . getPublicTranslation('shadow');
       if($num != 0) $list .= ', ';
       $list .= $pokemonName;
     }
