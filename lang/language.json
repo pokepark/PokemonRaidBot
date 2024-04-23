@@ -456,7 +456,7 @@
   },
   "replace": {
     "NL": "Vervang",
-    "DE": "TRANSLATE",
+    "DE": "Ersetzen",
     "EN": "Replace",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -638,7 +638,7 @@
   },
   "config_option": {
     "NL": "Configuratie optie",
-    "DE": "TRANSLATE",
+    "DE": "Konfigurationsoption",
     "EN": "Configuration option",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -768,7 +768,7 @@
   },
   "tutorial_vote_failed": {
     "NL": "Je kan niet meedoen voordat je de tutorial hebt doorlopen.",
-    "DE": "TRANSLATE",
+    "DE": "Du kannst nicht abstimmen, bevor du das Tutorial durchlaufen hast.",
     "EN": "You can't vote before going through the tutorial.",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -781,7 +781,7 @@
   },
   "tutorial_command_failed": {
     "NL": "Je kan dit commando niet gebruiken voordat je de tutorial hebt doorlopen.",
-    "DE": "TRANSLATE",
+    "DE": "Du kannst diesen Befehl nicht verwenden, bevor du das Tutorial durchlaufen hast.",
     "EN": "You can't use this command before going through the tutorial.",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -820,7 +820,7 @@
   },
   "15stars": {
     "NL": "TRANSLATE",
-    "DE": "TRANSLATE",
+    "DE": "5 Sterne Shadow",
     "EN": "5 star shadow",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -833,7 +833,7 @@
   },
   "15stars_short": {
     "NL": "TRANSLATE",
-    "DE": "TRANSLATE",
+    "DE": "Shadow 5",
     "EN": "Shadow 5",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -846,7 +846,7 @@
   },
   "14stars": {
     "NL": "TRANSLATE",
-    "DE": "TRANSLATE",
+    "DE": "4 Sterne Shadow",
     "EN": "4 star shadow",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -859,7 +859,7 @@
   },
   "14stars_short": {
     "NL": "TRANSLATE",
-    "DE": "TRANSLATE",
+    "DE": "Shadow 4",
     "EN": "Shadow 4",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -872,7 +872,7 @@
   },
   "13stars": {
     "NL": "TRANSLATE",
-    "DE": "TRANSLATE",
+    "DE": "3 Sterne Shadow",
     "EN": "3 star shadow",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -885,7 +885,7 @@
   },
   "13stars_short": {
     "NL": "TRANSLATE",
-    "DE": "TRANSLATE",
+    "DE": "Shadow 3",
     "EN": "Shadow 3",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -898,7 +898,7 @@
   },
   "12stars": {
     "NL": "TRANSLATE",
-    "DE": "TRANSLATE",
+    "DE": "2 Sterne Shadow",
     "EN": "2 star shadow",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -911,7 +911,7 @@
   },
   "12stars_short": {
     "NL": "TRANSLATE",
-    "DE": "TRANSLATE",
+    "DE": "Shadow 2",
     "EN": "Shadow 2",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -924,7 +924,7 @@
   },
   "11stars": {
     "NL": "TRANSLATE",
-    "DE": "TRANSLATE",
+    "DE": "1 Stern Shadow",
     "EN": "1 star shadow",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -937,7 +937,7 @@
   },
   "11stars_short": {
     "NL": "TRANSLATE",
-    "DE": "TRANSLATE",
+    "DE": "Shadow 1",
     "EN": "Shadow 1",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -950,7 +950,7 @@
   },
   "10stars": {
     "NL": "Primal raid",
-    "DE": "TRANSLATE",
+    "DE": "Primal-Raid",
     "EN": "Primal raid",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -963,7 +963,7 @@
   },
   "10stars_short": {
     "NL": "Primal",
-    "DE": "TRANSLATE",
+    "DE": "Primal",
     "EN": "Primal",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -976,7 +976,7 @@
   },
   "9stars": {
     "NL": "Elite raid",
-    "DE": "TRANSLATE",
+    "DE": "Elite-Raid",
     "EN": "Elite raid",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -989,7 +989,7 @@
   },
   "9stars_short": {
     "NL": "Elite",
-    "DE": "TRANSLATE",
+    "DE": "Elite",
     "EN": "Elite",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -1015,7 +1015,7 @@
   },
   "8stars_short": {
     "NL": "Ultra",
-    "DE": "TRANSLATE",
+    "DE": "Ultra",
     "EN": "Ultra",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -1028,7 +1028,7 @@
   },
   "7stars": {
     "NL": "Legendary Mega-Raid",
-    "DE": "TRANSLATE",
+    "DE": "Legendäres Mega-Raid",
     "EN": "Legendary Mega-Raid",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -1041,7 +1041,7 @@
   },
   "7stars_short": {
     "NL": "Lege Mega",
-    "DE": "TRANSLATE",
+    "DE": "Legend Mega",
     "EN": "Lege Mega",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
