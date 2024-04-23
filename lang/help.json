@@ -300,7 +300,7 @@
   },
   "help_history": {
     "NL": "TRANSLATE",
-    "DE": "TRANSLATE",
+    "DE": "/history - Historie von Raids mit Teilnehmern ansehen",
     "EN": "/history - View history of raids that had attendees",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -313,7 +313,7 @@
   },
   "help_event-manage": {
     "NL": "TRANSLATE",
-    "DE": "TRANSLATE",
+    "DE": "/events - Raid-Events verwalten",
     "EN": "/events - Manage raid events",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
