@@ -1158,7 +1158,7 @@
   },
   "egg_15": {
     "NL": "TRANSLATE",
-    "DE": "TRANSLATE",
+    "DE": "Level 5 Shadow Ei",
     "EN": "Level 5 shadow egg",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -1171,7 +1171,7 @@
   },
   "egg_14": {
     "NL": "TRANSLATE",
-    "DE": "TRANSLATE",
+    "DE": "Level 4 Shadow Ei",
     "EN": "Level 4 shadow egg",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -1184,7 +1184,7 @@
   },
   "egg_13": {
     "NL": "TRANSLATE",
-    "DE": "TRANSLATE",
+    "DE": "Level 3 Shadow Ei",
     "EN": "Level 3 shadow egg",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -1197,7 +1197,7 @@
   },
   "egg_12": {
     "NL": "TRANSLATE",
-    "DE": "TRANSLATE",
+    "DE": "Level 2 Shadow Ei",
     "EN": "Level 2 shadow egg",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -1210,7 +1210,7 @@
   },
   "egg_11": {
     "NL": "TRANSLATE",
-    "DE": "TRANSLATE",
+    "DE": "Level 1 Shadow Ei",
     "EN": "Level 1 shadow egg",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -1223,7 +1223,7 @@
   },
   "egg_10": {
     "NL": "Primal raid ei",
-    "DE": "TRANSLATE",
+    "DE": "Primal Raid Ei",
     "EN": "Primal raid egg",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -1236,7 +1236,7 @@
   },
   "egg_9": {
     "NL": "Elite raid egg",
-    "DE": "TRANSLATE",
+    "DE": "Elite Raid Ei",
     "EN": "Elite raid egg",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -1262,7 +1262,7 @@
   },
   "egg_7": {
     "NL": "Legendary Mega-Raid Ei",
-    "DE": "TRANSLATE",
+    "DE": "Legendäres Mega-Raid Ei",
     "EN": "Legendary Mega-Raid Egg",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -1366,7 +1366,7 @@
   },
   "upcoming": {
     "NL": "geplande",
-    "DE": "TRANSLATE",
+    "DE": "Bevorstehend",
     "EN": "upcoming",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -1379,7 +1379,7 @@
   },
   "upcoming_bosses_not_found": {
     "NL": "Geen informatie gevonden voor geplande raid bazen!",
-    "DE": "TRANSLATE",
+    "DE": "Keine Info zu bevorstehenden Raid-Bossen gefunden!",
     "EN": "No info of upcoming bosses was found!",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -1392,7 +1392,7 @@
   },
   "current_scheduled_bosses": {
     "NL": "Geplande raid bazen van de database",
-    "DE": "TRANSLATE",
+    "DE": "Geplante Raid-Bosse von der Datenbank",
     "EN": "Scheduled raid bosses from database",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -1405,7 +1405,7 @@
   },
   "unscheduled_bosses": {
     "NL": "Ongeplande bazen",
-    "DE": "TRANSLATE",
+    "DE": "Ungeplante Raid-Bosse",
     "EN": "Unscheduled bosses",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -1418,7 +1418,7 @@
   },
   "delete_scheduled_confirmation": {
     "NL": "Wil je de geplande baas verwijderen?",
-    "DE": "TRANSLATE",
+    "DE": "Diesen geplanten Eintrag löschen?",
     "EN": "Do you want to delete this scheduled entry?",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -1431,7 +1431,7 @@
   },
   "found_upcoming_bosses": {
     "NL": "Volgende geplande raid bazen gevonden",
-    "DE": "TRANSLATE",
+    "DE": "Folgende bevorstehende Raid-Bosse gefunden",
     "EN": "Found following upcoming bosses",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -1444,7 +1444,7 @@
   },
   "confirm_replace_upcoming": {
     "NL": "Wil je de data vervangen met wat we gevonden hebben?",
-    "DE": "TRANSLATE",
+    "DE": "Aktuell vorhandene Daten durch die gefundenen Daten ersetzen?",
     "EN": "Would you like to replace the current data with what we found?",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -1717,7 +1717,7 @@
   },
   "no_remote_parcipants": {
     "NL": "Deze raid kan alleen lokaal gespeeld worden!",
-    "DE": "TRANSLATE",
+    "DE": "Teilnahme am Raid ist nur vor Ort möglich!",
     "EN": "This raid can not be participated using a Remote Raid Pass!",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -1756,7 +1756,7 @@
   },
   "update_pokemon_table": {
     "NL": "Update Pokemon tabel",
-    "DE": "TRANSLATE",
+    "DE": "Pokemon-Tabelle aktualisieren",
     "EN": "Update Pokemon table",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -1925,7 +1925,7 @@
   },
   "remote_raid": {
     "NL": "Remote Raid",
-    "DE": "TRANSLATE",
+    "DE": "Fern-Raid",
     "EN": "Remote raid",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -1938,7 +1938,7 @@
   },
   "remote_raids": {
     "NL": "Remote raids",
-    "DE": "TRANSLATE",
+    "DE": "Fern-Raids",
     "EN": "Remote raids",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -1977,7 +1977,7 @@
   },
   "delete_remote_raid_done": {
     "NL": "Je hebt de raid gespeeld die je hebt aangemaakt. Kan deze verwijderd worden?",
-    "DE": "TRANSLATE",
+    "DE": "Du hast deinen erstellten Fern-Raid fertig gespielt. Raid-Abstimmung löschen?",
     "EN": "You have played the remote raid you created. Can we delete the raid poll?",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -1990,7 +1990,7 @@
   },
   "delete_remote_raid_cancel": {
     "NL": "Je hebt je aanwezigheid bij de remote raid afgezegd. Kunnen we het raid overzicht verwijderen?",
-    "DE": "TRANSLATE",
+    "DE": "Du hast deine Teilnahme an deinem erstellten Fern-Raid abgesagt. Raid-Abstimmung löschen?",
     "EN": "You have canceled your attendance to the remote raid you created. Can we delete the raid poll?",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -2003,7 +2003,7 @@
   },
   "remote_raid_marked_ended": {
     "NL": "Bedankt! Remote raid is geëindigd",
-    "DE": "TRANSLATE",
+    "DE": "Danke! Fern-Raid als Beendet markiert!",
     "EN": "Thank you! Remote raid marked as ended!",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -2107,7 +2107,7 @@
   },
   "select_gym_first_letter_or_gym_area": {
     "NL": "Selecteer de eerste letter van de gym of gym gebied:",
-    "DE": "TRANSLATE",
+    "DE": "Bitte Anfangsbuchstaben der Arena oder des Arena-Gebiets auswählen:",
     "EN": "Please select the first letter of the gym or gym area:",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -2120,7 +2120,7 @@
   },
   "select_gym_name_or_gym_area": {
     "NL": "Selecteer gym of gym gebied:",
-    "DE": "TRANSLATE",
+    "DE": "Bitte Arena oder Arena-Gebiet auswählen:",
     "EN": "Please select gym or gym area:",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -2133,7 +2133,7 @@
   },
   "select_gym_area": {
     "NL": "Selecteer gym gebied:",
-    "DE": "TRANSLATE",
+    "DE": "Bitte Arena-Gebiet auswählen:",
     "EN": "Please select the gymarea:",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -2146,7 +2146,7 @@
   },
   "default_gymarea": {
     "NL": "Standaard gym gebied",
-    "DE": "TRANSLATE",
+    "DE": "Standard Arena-Gebiet",
     "EN": "Default gymarea",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -2159,7 +2159,7 @@
   },
   "gymareas": {
     "NL": "Gyn gebied",
-    "DE": "TRANSLATE",
+    "DE": "Arena-Gebiete",
     "EN": "Gymareas",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -2198,7 +2198,7 @@
   },
   "inspect_raid_or_create_event": {
     "NL": "Inspect de bestaande raid of create een new event raid",
-    "DE": "TRANSLATE",
+    "DE": "Existierenden Raid untersuchen oder neuen Event-Raid erstellen",
     "EN": "Inspect the existing raid or create a new event raid",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -2211,7 +2211,7 @@
   },
   "saved_raid": {
     "NL": "Laat opgeslagen raid zien",
-    "DE": "TRANSLATE",
+    "DE": "Gespeicherten Raid anzeigen",
     "EN": "Show saved raid",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -2224,7 +2224,7 @@
   },
   "create_event_raid": {
     "NL": "Maak een event raid",
-    "DE": "TRANSLATE",
+    "DE": "Event-Raid erstellen",
     "EN": "Create event raid",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -2458,7 +2458,7 @@
   },
   "trainername": {
     "NL": "Trainernaam",
-    "DE": "TRANSLATE",
+    "DE": "Trainername",
     "EN": "Trainername",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -2471,7 +2471,7 @@
   },
   "trainername_add": {
     "NL": "Trainernaam toevoegen",
-    "DE": "TRANSLATE",
+    "DE": "Trainername hinzufügen",
     "EN": "Add trainername",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -2484,7 +2484,7 @@
   },
   "trainername_edit": {
     "NL": "Trainernaam aanpassen",
-    "DE": "TRANSLATE",
+    "DE": "Trainername bearbeiten",
     "EN": "Edit trainername",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -2536,7 +2536,7 @@
   },
   "switch_display_name": {
     "NL": "Wissel display naam",
-    "DE": "TRANSLATE",
+    "DE": "Anzeigename wechseln",
     "EN": "Switch display name",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -2614,7 +2614,7 @@
   },
   "trainer_not_found": {
     "NL": "Trainer niet gevonden!",
-    "DE": "TRANSLATE",
+    "DE": "Trainer nicht gefunden!",
     "EN": "Trainer not found!",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -2627,7 +2627,7 @@
   },
   "bot_lang": {
     "NL": "Bot taal",
-    "DE": "TRANSLATE",
+    "DE": "Bot-Sprache",
     "EN": "Bot language",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -2640,7 +2640,7 @@
   },
   "change_lang": {
     "NL": "Verander de bot taal",
-    "DE": "TRANSLATE",
+    "DE": "Bot-Sprache ändern",
     "EN": "Change the bot's language",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -2653,7 +2653,7 @@
   },
   "new_lang_saved": {
     "NL": "Nieuwe taal opgeslagen!",
-    "DE": "TRANSLATE",
+    "DE": "Neue Sprache gespeichert!",
     "EN": "New language saved!",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -2666,7 +2666,7 @@
   },
   "display_name_explanation": {
     "NL": "De pijl (->) geeft aan welke naam er in de raid poll wordt gebruikt. Je kan dit aanpassen in de instellingen.",
-    "DE": "TRANSLATE",
+    "DE": "Der Pfeil (->) zeigt deinen Namen für Raid-Abstimmungen. Du kannst deinen Anzeigenamen in den Einstellungen anpassen.",
     "EN": "The arrow (->) marks the name displayed in raid polls. You can change your displayname from name settings.",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -2900,7 +2900,7 @@
   },
   "change_extended_gym_details": {
     "NL": "Verander de extra gym informatie?",
-    "DE": "Erweiterte Arena Details ändern?",
+    "DE": "Erweiterte Arena Details speichern?",
     "EN": "Save extended gym details?",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -2939,7 +2939,7 @@
   },
   "gym_coordinates": {
     "NL": "Coordinaten",
-    "DE": "TRANSLATE",
+    "DE": "Koordinaten",
     "EN": "Coordinates",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -2952,7 +2952,7 @@
   },
   "gym_edit_coordinates": {
     "NL": "Wijzig coordinaten",
-    "DE": "TRANSLATE",
+    "DE": "Koordinaten bearbeiten",
     "EN": "Edit coordinates",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -2991,7 +2991,7 @@
   },
   "gym_gps_instructions": {
     "NL": "Stuur me de gym coordinaten in de volgende format: <code>Latitude,Longitude</code>",
-    "DE": "TRANSLATE",
+    "DE": "Bitte die Arena-Koordinaten in folgendem Format senden: <code>Latitude,Longitude</code>",
     "EN": "Send me the gym coordinates in the following format: <code>Latitude,Longitude</code>",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -3043,7 +3043,7 @@
   },
   "gym_create": {
     "NL": "Maak een nieuwe gym",
-    "DE": "TRANSLATE",
+    "DE": "Neue Arena erstellen",
     "EN": "Create a new gym",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -3134,7 +3134,7 @@
   },
   "gym_edit_text_too_long": {
     "NL": "Error! niet meer dan 255 tekens!",
-    "DE": "TRANSLATE",
+    "DE": "Fehler! Es sind maximal 255 Zeichen erlaubt!",
     "EN": "Error! The maximum text length is 255 characters!",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -3147,7 +3147,7 @@
   },
   "gym_add_edit_note": {
     "NL": "gym note",
-    "DE": "TRANSLATE",
+    "DE": "Arena-Notiz",
     "EN": "gym note",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -3160,7 +3160,7 @@
   },
   "gym_note_instructions": {
     "NL": "Stuur me een nieuwe gym notitie (maximaal 255 tekens):",
-    "DE": "TRANSLATE",
+    "DE": "Neue Arena-Notiz eingeben (max. 255 Zeichen)",
     "EN": "Send me the new gym note (max 255 characters):",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -3173,7 +3173,7 @@
   },
   "gym_address": {
     "NL": "Gym adres",
-    "DE": "TRANSLATE",
+    "DE": "Arena-Adresse",
     "EN": "gym address",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -3186,7 +3186,7 @@
   },
   "gym_stored_address": {
     "NL": "Opgeslagen adres",
-    "DE": "TRANSLATE",
+    "DE": "Gespeicherte Adresse",
     "EN": "Stored address",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -3199,7 +3199,7 @@
   },
   "gym_address_instructions": {
     "NL": "Stuur me het nieuwe gym adres:",
-    "DE": "TRANSLATE",
+    "DE": "Neue Arena-Adresse eingeben:",
     "EN": "Send me the new gym address:",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -3212,7 +3212,7 @@
   },
   "gym_address_lookup_result": {
     "NL": "Opgezochte adres",
-    "DE": "TRANSLATE",
+    "DE": "Ergebnis der Adresssuche",
     "EN": "Address lookup result",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -3225,7 +3225,7 @@
   },
   "gym_save_lookup_result": {
     "NL": "Sla opgezochte resultaat op",
-    "DE": "TRANSLATE",
+    "DE": "Ergebnis der Adresssuche speichern",
     "EN": "Save lookup result",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -3277,7 +3277,7 @@
   },
   "featured_pokemon": {
     "NL": "Pokemon",
-    "DE": "TRANSLATE",
+    "DE": "Rampenlicht-Pokemon",
     "EN": "Featured Pokemon",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -4200,7 +4200,7 @@
   },
   "gym_id_name_missing": {
     "NL": "Error! Gym naam mist!",
-    "DE": "TRANSLATE",
+    "DE": "Fehler! Arena-Name fehlt!",
     "EN": "Error! Gym name is missing!",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -4226,7 +4226,7 @@
   },
   "gym_name_edit": {
     "NL": "Gym naam aanpassen",
-    "DE": "TRANSLATE",
+    "DE": "Arena-Name bearbeiten",
     "EN": "Edit gym name",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -4239,7 +4239,7 @@
   },
   "gym_name_instructions": {
     "NL": "Stuur me de gym naam:",
-    "DE": "TRANSLATE",
+    "DE": "Arena-Name eingeben:",
     "EN": "Send me the gym name:",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -4486,7 +4486,7 @@
   },
   "switch_alarm_on": {
     "NL": "Zet automatische raid alarm aan",
-    "DE": "TRANSLATE",
+    "DE": "Automatische Raid-Alarme aktivieren",
     "EN": "Enable automatic raid alerts",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -4499,7 +4499,7 @@
   },
   "switch_alarm_off": {
     "NL": "Zet automatisch raid alarm uit",
-    "DE": "TRANSLATE",
+    "DE": "Automatische Raid-Alarme deaktivieren",
     "EN": "Disable automatic raid alerts",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -4525,7 +4525,7 @@
   },
   "alert_add_alien_trainer": {
     "NL": "Een gebruiker is uitgenodigd buiten deze groep!",
-    "DE": "TRANSLATE",
+    "DE": "Trainer lädt Spieler außerhalb der Gruppe ein!",
     "EN": "User is inviting a player from outside the group!",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -4733,7 +4733,7 @@
   },
   "alert_want_invite": {
     "NL": "Wenst uitgenodigd te worden.",
-    "DE": "TRANSLATE",
+    "DE": "Möchte eingeladen werden.",
     "EN": "Wishes to be invited.",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -4746,7 +4746,7 @@
   },
   "alert_no_want_invite": {
     "NL": "Wil niet langer worden uitgenodigd.",
-    "DE": "TRANSLATE",
+    "DE": "Möchte nicht länger eingeladen werden.",
     "EN": "No longer wishes to be invited.",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -4759,7 +4759,7 @@
   },
   "alert_can_invite": {
     "NL": "Doet niet mee, maar kan wel invites versturen.",
-    "DE": "TRANSLATE",
+    "DE": "Spielt selbst nicht mit, kann aber einladen.",
     "EN": "Is not attending but can send invites.",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -4772,7 +4772,7 @@
   },
   "alert_no_can_invite": {
     "NL": "Kan niet langer andere uitnodigingen versturen.",
-    "DE": "TRANSLATE",
+    "DE": "Kann nicht länger andere einladen.",
     "EN": "Is no longer able to invite others.",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -4798,7 +4798,7 @@
   },
   "event_note": {
     "NL": "Event info",
-    "DE": "Event Notiz",
+    "DE": "Event-Notiz",
     "EN": "Event note",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -4811,7 +4811,7 @@
   },
   "event_note_add": {
     "NL": "Voeg event infot toe",
-    "DE": "Event Notiz hinzufügen",
+    "DE": "Event-Notiz hinzufügen",
     "EN": "Add event note",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -4824,7 +4824,7 @@
   },
   "event_note_edit": {
     "NL": "Wijzig de event info",
-    "DE": "Event Notiz ändern",
+    "DE": "Event-Notiz bearbeiten",
     "EN": "Edit event note",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -4850,7 +4850,7 @@
   },
   "events_manage": {
     "NL": "Event manager",
-    "DE": "TRANSLATE",
+    "DE": "Event verwalten",
     "EN": "Manage events",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -4863,7 +4863,7 @@
   },
   "events_create": {
     "NL": "Maak een nieuw event",
-    "DE": "TRANSLATE",
+    "DE": "Neues Event erstellen",
     "EN": "Create a new event",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -4876,7 +4876,7 @@
   },
   "events_created": {
     "NL": "Event succesvol aangemaakt!",
-    "DE": "TRANSLATE",
+    "DE": "Event erfolgreich erstellt!",
     "EN": "Event created succesfully!",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -4889,7 +4889,7 @@
   },
   "events_give_name": {
     "NL": "Geef het event een naam",
-    "DE": "TRANSLATE",
+    "DE": "Event-Name eingeben",
     "EN": "Give the event a name",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -4902,7 +4902,7 @@
   },
   "events_give_description": {
     "NL": "Geef de omschrijving van het event",
-    "DE": "TRANSLATE",
+    "DE": "Event-Beschreibung eingeben",
     "EN": "Give the event a description",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -4915,7 +4915,7 @@
   },
   "events_no_description": {
     "NL": "Geen omschrijving",
-    "DE": "TRANSLATE",
+    "DE": "Keine Beschreibung",
     "EN": "No description",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -4928,7 +4928,7 @@
   },
   "events_edit_name": {
     "NL": "Wijzig event naam",
-    "DE": "TRANSLATE",
+    "DE": "Event-Name bearbeiten",
     "EN": "Edit event name",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -4941,7 +4941,7 @@
   },
   "events_edit_description": {
     "NL": "Wijzig de event omschrijving",
-    "DE": "TRANSLATE",
+    "DE": "Event-Beschreibung bearbeiten",
     "EN": "Edit event description",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -4954,7 +4954,7 @@
   },
   "events_edit_raid_poll": {
     "NL": "Wijzig event raid poll",
-    "DE": "TRANSLATE",
+    "DE": "Event-Raid-Abstimmung bearbeiten",
     "EN": "Edit event raid poll",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -4967,7 +4967,7 @@
   },
   "events_delete": {
     "NL": "Verwijder event",
-    "DE": "TRANSLATE",
+    "DE": "Event löschen",
     "EN": "Delete event",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -4980,7 +4980,7 @@
   },
   "events_delete_confirmation": {
     "NL": "Wil je dit event echt verwijderen?",
-    "DE": "TRANSLATE",
+    "DE": "Dieses Event wirklich löschen?",
     "EN": "Do you really want to delete this event?",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -5032,7 +5032,7 @@
   },
   "history_title": {
     "NL": "Zie raid poll geschiedenis",
-    "DE": "TRANSLATE",
+    "DE": "Raid-Historie ansehen",
     "EN": "View raid poll history.",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -5045,7 +5045,7 @@
   },
   "history_displaying_month": {
     "NL": "Momenteel worden er raids weergegeven voor",
-    "DE": "TRANSLATE",
+    "DE": "Zeigt derzeit Raids an für",
     "EN": "Currently displaying raids for",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -5058,7 +5058,7 @@
   },
   "history_select_raid": {
     "NL": "Selecteer raid",
-    "DE": "TRANSLATE",
+    "DE": "Raid auswählen",
     "EN": "Select raid",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -5071,7 +5071,7 @@
   },
   "history_no_raids_found": {
     "NL": "Geen raids met spelers gevonden!",
-    "DE": "TRANSLATE",
+    "DE": "Keine Raids mit Teilnehmern gefunden!",
     "EN": "No raids with attendees found!",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
@@ -5097,7 +5097,7 @@
   },
   "current_gymarea": {
     "NL": "Gym gebied",
-    "DE": "TRANSLATE",
+    "DE": "Aktuelles Arena-Gebiet",
     "EN": "Current gymarea",
     "IT": "TRANSLATE",
     "PT-BR": "TRANSLATE",
