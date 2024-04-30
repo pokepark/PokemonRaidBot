@@ -255,46 +255,39 @@ function generateTimeslotKeys($RAID_SLOTS, $raid) {
   $directStartMinutes = $direct_slot->format('i');
 
   // Get first raidslot rounded up to the next 5 minutes
-  $five_slot = new DateTimeImmutable($raid['start_time'], new DateTimeZone('UTC'));
   $minute = $directStartMinutes % 5;
-  $diff = ($minute != 0) ? 5 - $minute : 5;
-  $five_slot = $five_slot->add(new DateInterval('PT'.$diff.'M'));
+  $diff = ($minute != 0) ? 5 - $minute : 0;
+  $five_slot = $direct_slot->add(new DateInterval('PT'.$diff.'M'));
+
+  // Add $config->RAID_FIRST_START minutes to five minutes slot
+  $five_plus_slot = $five_slot;
+  $five_plus_slot = $five_plus_slot->add(new DateInterval("PT".$config->RAID_FIRST_START."M"));
 
   // Get first regular raidslot
-  $first_slot =
-    ($minute == 0) ?
-    $direct_slot->add(new DateInterval('PT'.$RAID_SLOTS.'M')) :
-    $five_slot->add(new DateInterval('PT'.$RAID_SLOTS.'M')
-  );
+  $firstSlotMinute = $directStartMinutes % $RAID_SLOTS;
+  $firstSlotDiff = ($firstSlotMinute != 0) ? $RAID_SLOTS - ($firstSlotMinute) : 0;
+  $first_slot = $direct_slot->add(new DateInterval('PT'.$firstSlotDiff.'M'));
 
   // Write slots to log.
   debug_log($direct_slot, 'Direct start slot:');
   debug_log($five_slot, 'Next 5 Minute slot:');
   debug_log($first_slot, 'First regular slot:');
   $keys_time = [];
-  // Add button for when raid starts time
-  if($config->RAID_DIRECT_START && $direct_slot >= $dt_now) {
+
+  // Add button for direct start if needed
+  if($config->RAID_DIRECT_START && $direct_slot != $five_slot && $direct_slot >= $dt_now) {
     $keys_time[] = button(dt2time($direct_slot->format('Y-m-d H:i:s')), ['vote_time', 'r' => $raid['id'], 't' => $direct_slot->format('YmdHis')]);
-    $last_slot = $direct_slot;
   }
-  // Add five minutes slot
-  if($five_slot >= $dt_now &&
-      (empty($keys_time) || (!empty($keys_time) && $direct_slot != $five_slot)) &&
-      $raid['event_vote_key_mode'] !== 0
-  ) {
+
+  // Add button for first five minutes if needed
+  if($five_slot < $first_slot && $five_plus_slot <= $first_slot && $five_slot >= $dt_now) {
     $keys_time[] = button(dt2time($five_slot->format('Y-m-d H:i:s')), ['vote_time', 'r' => $raid['id'], 't' => $five_slot->format('YmdHis')]);
-    $last_slot = $five_slot;
-  }
-  // Add the first normal slot
-  if($first_slot >= $dt_now && $first_slot != $five_slot) {
-    $keys_time[] = button(dt2time($first_slot->format('Y-m-d H:i:s')), ['vote_time', 'r' => $raid['id'], 't' => $first_slot->format('YmdHis')]);
-    $last_slot = $first_slot;
   }
 
   // Get regular slots
   // Start with second slot as first slot is already added to keys.
   $dt_end = new DateTimeImmutable($raid['end_time'], new DateTimeZone('UTC'));
-  $regular_slots = new DatePeriod($first_slot, new DateInterval('PT'.$RAID_SLOTS.'M'), $dt_end->sub(new DateInterval('PT'.$config->RAID_LAST_START.'M')), DatePeriod::EXCLUDE_START_DATE);
+  $regular_slots = new DatePeriod($first_slot, new DateInterval('PT'.$RAID_SLOTS.'M'), $dt_end->sub(new DateInterval('PT'.$config->RAID_LAST_START.'M')));
 
   // Add regular slots.
   foreach($regular_slots as $slot){
@@ -309,8 +302,7 @@ function generateTimeslotKeys($RAID_SLOTS, $raid) {
 
   // Add raid last start slot
   // Set end_time to last extra slot, subtract $config->RAID_LAST_START minutes and round down to earlier 5 minutes.
-  $last_extra_slot = $dt_end;
-  $last_extra_slot = $last_extra_slot->sub(new DateInterval('PT'.$config->RAID_LAST_START.'M'));
+  $last_extra_slot = $dt_end->sub(new DateInterval('PT'.$config->RAID_LAST_START.'M'));
   $s = 5 * 60;
   $last_extra_slot = $last_extra_slot->setTimestamp($s * floor($last_extra_slot->getTimestamp() / $s));
 
@@ -319,8 +311,9 @@ function generateTimeslotKeys($RAID_SLOTS, $raid) {
   debug_log($last_extra_slot, 'Last extra slot:');
 
   // Last extra slot not conflicting with last slot
-  if((isset($last_slot) && $last_extra_slot > $last_slot && $last_extra_slot != $last_slot && $last_extra_slot >= $dt_now) ||
-    (!isset($last_slot) && $last_extra_slot >= $dt_now)) {
+  if($last_extra_slot >= $dt_now &&
+    ((isset($last_slot) && $last_extra_slot > $last_slot && $last_extra_slot != $last_slot) ||
+    !isset($last_slot))) {
     // Add last extra slot
     $keys_time[] = button(dt2time($last_extra_slot->format('Y-m-d H:i:s')), ['vote_time', 'r' => $raid['id'], 't' => $last_extra_slot->format('YmdHis')]);
   }
