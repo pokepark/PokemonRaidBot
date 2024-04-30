@@ -23,8 +23,8 @@ foreach($translations_to_fetch as $lanfile => $language) {
   $file = curl_open_file('https://raw.githubusercontent.com/WatWowMap/pogo-translations/master/static/locales/'. $lanfile. '.json');
   $translationData = json_decode($file, true);
   foreach($translationData as $title => $translation) {
-    $split = explode('_', $title, 2);
-    if(count($split) < 2 or intval($split[1]) <= 0) continue;
+    $split = explode('_', $title);
+    if(count($split) != 2 or intval($split[1]) <= 0) continue;
     [$key, $id] = $split;
     // Save pokemon names into an array if pokemon id is larger than 0
     if($key == 'poke') {

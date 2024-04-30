@@ -3021,5 +3021,14 @@
         "IT": "Turbosabbia",
         "RU": "Песчаная Атака",
         "ES": "Ataque Arena"
+    },
+    "pokemon_move_404": {
+        "EN": "Sunsteel Strike"
+    },
+    "pokemon_move_405": {
+        "EN": "Moongeist Beam"
+    },
+    "pokemon_move_408": {
+        "EN": "High Jump Kick"
     }
 }
