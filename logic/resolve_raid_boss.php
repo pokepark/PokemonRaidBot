@@ -15,6 +15,7 @@ function resolve_raid_boss($pokemon, $pokemon_form, $spawn, $raid_level) {
       FROM        raid_bosses
       WHERE       raid_level = :raidLevel
       AND         scheduled = 1
+      AND         disabled = 0
       AND         convert_tz(:spawn, "+00:00", :tzDiff) BETWEEN date_start AND date_end
     ', ['raidLevel' => $raid_level, 'spawn' => $spawn, 'tzDiff' => $tz_diff]);
     // Return egg

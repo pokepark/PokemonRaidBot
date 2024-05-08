@@ -106,6 +106,7 @@ CREATE TABLE `raid_bosses` (
   `date_end` datetime NOT NULL DEFAULT '2038-01-19 03:14:07',
   `raid_level` TINYINT UNSIGNED DEFAULT NULL,
   `scheduled` TINYINT(1) NULL DEFAULT 0,
+  `disabled` TINYINT(1) UNSIGNED DEFAULT 0,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 CREATE TABLE `raids` (

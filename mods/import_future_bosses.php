@@ -14,7 +14,7 @@ $action = $data['a'] ?? 0;
 
 if($action == '1') {
   $sql = 'DELETE FROM raid_bosses WHERE scheduled = 1;';
-  $sql .= read_upcoming_bosses(true);
+  $sql .= read_upcoming_bosses('sql');
   $query = my_query($sql);
   $msg = getTranslation('import_done');
   $tg_json = array();

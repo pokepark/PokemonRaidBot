@@ -28,6 +28,7 @@ function createRaidBossList() {
     FROM  raid_bosses
     WHERE raid_level IN ' . $levelList . '
     AND   date_end > DATE_SUB(NOW(), INTERVAL 1 HOUR)
+    AND   disabled = 0
     ORDER BY sameDay, date_start, date_end
   ');
   $list = '';

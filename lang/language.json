@@ -480,6 +480,58 @@
     "FI": "Poista",
     "ES": "Borrar"
   },
+  "disabled": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Disabled",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Pois käytöstä",
+    "ES": "TRANSLATE"
+  },
+  "enabled": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Enabled",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Käytössä",
+    "ES": "TRANSLATE"
+  },
+  "disable": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Disable",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Poista käytöstä",
+    "ES": "TRANSLATE"
+  },
+  "enable": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Enable",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Ota käyttöön",
+    "ES": "TRANSLATE"
+  },
   "edit": {
     "NL": "Bewerken",
     "DE": "Bearbeiten",
@@ -1428,6 +1480,19 @@
     "PL": "TRANSLATE",
     "FI": "Haluatko poistaa tämän ajastuksen?",
     "ES": "¿Quieres eliminar esta entrada programada?"
+  },
+  "edit_scheduled_entry": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "Edit scheduled entry",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "Muokkaa ajastusta",
+    "ES": "TRANSLATE"
   },
   "found_upcoming_bosses": {
     "NL": "Volgende geplande raid bazen gevonden",
