@@ -3023,12 +3023,30 @@
         "ES": "Ataque Arena"
     },
     "pokemon_move_404": {
-        "EN": "Sunsteel Strike"
+        "PT-BR": "Ataque Solaraço",
+        "EN": "Sunsteel Strike",
+        "FR": "Choc Météore",
+        "DE": "Stahlgestirn",
+        "IT": "Astrocarica",
+        "RU": "Солнечно-Стальной Удар",
+        "ES": "Meteoimpacto"
     },
     "pokemon_move_405": {
-        "EN": "Moongeist Beam"
+        "PT-BR": "Feixe Espectral",
+        "EN": "Moongeist Beam",
+        "FR": "Rayon Spectral",
+        "DE": "Schattenstrahl",
+        "IT": "Raggio d’Ombra",
+        "RU": "Луч Лунного Духа",
+        "ES": "Rayo Umbrío"
     },
     "pokemon_move_408": {
-        "EN": "High Jump Kick"
+        "PT-BR": "Chute de Pulo Alto",
+        "EN": "High Jump Kick",
+        "FR": "Pied Voltige",
+        "DE": "Turmkick",
+        "IT": "Calcinvolo",
+        "RU": "Прыжок-Удар",
+        "ES": "Patada Salto Alta"
     }
 }
