@@ -17,7 +17,8 @@ $rs = my_query('
           raid_bosses.raid_level,
           DATE_FORMAT(date_start, \'%e.%c. ' . getTranslation('raid_egg_opens_at') . ' %H:%i\') as date_start,
           DATE_FORMAT(date_end, \'%e.%c. ' . getTranslation('raid_egg_opens_at') . ' %H:%i\') as date_end,
-          raid_bosses.scheduled
+          raid_bosses.scheduled,
+          raid_bosses.disabled
   FROM    raid_bosses
   LEFT JOIN pokemon
   ON      raid_bosses.pokedex_id = pokemon.pokedex_id
@@ -68,8 +69,8 @@ while ($pokemon = $rs->fetch()) {
   // Add button to edit pokemon.
   if($pokemon['scheduled'] == 1) {
     $keys[] = button(
-      EMOJI_CLOCK . ' [' . $pokemon['raid_level'] . ']' . SP . $poke_name,
-      ['delete_scheduled_entry', 'i' => $pokemon['id']]
+      EMOJI_CLOCK . ($pokemon['disabled'] == 1 ? EMOJI_DISABLED : '').' [' . $pokemon['raid_level'] . ']' . SP . $poke_name,
+      ['edit_scheduled_entry', 'i' => $pokemon['id']]
     );
   } else {
     $keys[] = button('[' . $pokemon['raid_level'] . ']' . SP . $poke_name, ['pokedex_edit_pokemon', 'p' => $pokemon['pokedex_id'] . '-' . $pokemon['pokemon_form_id']]);

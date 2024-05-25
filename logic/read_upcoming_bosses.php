@@ -3,11 +3,11 @@ require_once(LOGIC_PATH . '/resolve_boss_name_to_ids.php');
 require_once(LOGIC_PATH . '/curl_get_contents.php');
 /**
  * Read upcoming bosses from Pokebattlers API and return the results as a HTML formatted text list
- * @param bool $return_sql Return results in sql insert query instead of text list
+ * @param string $returnFormat Defines the format in which result are returned. sql, list or array
  * @param array|bool $levelsToRead Array of raid levels to include in import. Otherwise use the levels set in constants.php
- * @return string
+ * @return string|array
  */
-function read_upcoming_bosses($return_sql = false, $levelsToRead = false) {
+function read_upcoming_bosses($returnFormat = 'list', $levelsToRead = false) {
   global $pokebattler_import_future_tiers, $pokebattler_level_map, $pokebattler_pokemon_map;
   $link = curl_get_contents('https://fight.pokebattler.com/raids');
   $pb = json_decode($link, true);
@@ -17,6 +17,7 @@ function read_upcoming_bosses($return_sql = false, $levelsToRead = false) {
   $standardTimezone = new dateTimeZone('UTC');
   $count = 0;
   $sql = $list = $prev_start = $prev_end = $prev_rl = '';
+  $returnArr = [];
   foreach($pb['breakingNews'] as $news) {
     if($news['type'] != 'RAID_TYPE_RAID') continue;
 
@@ -70,9 +71,17 @@ function read_upcoming_bosses($return_sql = false, $levelsToRead = false) {
     }else {
       $sql .= ',("'.$dex_id_form[0].'","'.$dex_id_form[1].'","'.$date_start.'","'.$date_end.'","'.$raid_level_id.'", 1)';
     }
+    $returnArr[] = [
+      'pokedex_id' => $dex_id_form[0],
+      'pokemon_form_id' => $dex_id_form[1],
+      'date_start' => $date_start,
+      'date_end' => $date_end,
+      'raid_level' => $raid_level_id,
+    ];
   }
   if($count > 0) $sql.=';';
 
-  if($return_sql) return $sql;
+  if($returnFormat == 'sql') return $sql;
+  elseif($returnFormat == 'array') return $returnArr;
   else return $list;
 }

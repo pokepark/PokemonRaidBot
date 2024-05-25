@@ -151,6 +151,7 @@ defined('EMOJI_WARN')   or define('EMOJI_WARN',  iconv('UCS-4LE', 'UTF-8', pack(
 defined('EMOJI_DISK')   or define('EMOJI_DISK',  iconv('UCS-4LE', 'UTF-8', pack('V', 0x1F4BE)));
 defined('EMOJI_NEW')    or define('EMOJI_NEW',   iconv('UCS-4LE', 'UTF-8', pack('V', 0x1F195)));
 defined('EMOJI_CLIPPY')	or define('EMOJI_CLIPPY',iconv('UCS-4LE', 'UTF-8', pack('V', 0x1F4CE)));
+defined('EMOJI_DISABLED')	or define('EMOJI_DISABLED',iconv('UCS-4LE', 'UTF-8', pack('V', 0x1F645)));
 
 // Carriage return.
 defined('CR') or define('CR',  "\n");
