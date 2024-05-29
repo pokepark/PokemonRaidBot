@@ -114,19 +114,20 @@ function get_current_bosses($spawn) {
     $i = 0;
     $levels = [5, 7, 8]; // Search potential raid hour bosses from these raid levels
     $pokemon = $pokemon_form = false;
-    do {
-        $pk = $dbh->prepare('SELECT pokedex_id,pokemon_form_id FROM raid_bosses WHERE raid_level = ? AND ? BETWEEN date_start AND date_end');
-        $pk->execute([$levels[$i], $spawn]);
+    foreach($levels as $level) {
+        $pk = $dbh->prepare('SELECT pokedex_id,pokemon_form_id FROM raid_bosses WHERE raid_level = ? AND ? BETWEEN date_start AND date_end and disabled = 0');
+        $pk->execute([$level, $spawn]);
         $res = $pk->fetch();
         if($pk->rowCount() == 1) {
             $pokemon = $res['pokedex_id'];
             $pokemon_form = $res['pokemon_form_id'];
+            break;
         }elseif($pk->rowCount() > 1) {
-            $pokemon = 999 . $levels[$i];
+            $pokemon = 999 . $level;
             $pokemon_form = 0;
+            break;
         }
-        $i++;
-    } while($pk->rowcount() > 0 or $i <= 1);
+    }
     if($pokemon === false) return false;
     return [$pokemon,$pokemon_form];
 }
