@@ -54,6 +54,7 @@ $pokebattler_level_map = [
 ];
 
 $pokebattler_pokemon_map = [
+  'HO_OH' => 'HO-OH',
   'GIRATINA' => 'GIRATINA_ALTERED',
   'ZACIAN' => 'ZACIAN_HERO_FORM',
   'ZAMAZENTA' => 'ZAMAZENTA_HERO_FORM',
