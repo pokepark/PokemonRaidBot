@@ -152,7 +152,7 @@ function parse_master_data($game_master_url) {
     elseif($weatherboost_table[$pokemon_types[0]] != $weatherboost_table[$pokemon_types[1]])
       $weather .= $weatherboost_table[$pokemon_types[1]];
     foreach($row['forms'] as $formData) {
-      if(($formData['name'] == 'Unset' && count($row['forms']) > 1) || $formData['name'] == 'Shadow' || $formData['name'] == 'Purified') continue;
+      if($formData['name'] == 'Shadow' || $formData['name'] == 'Purified') continue;
       if($formData['name'] == 'Normal') {
         $pokemon_array[$pokemon_id]['protoName'] = str_replace('_NORMAL', '', $formData['proto']);
         $form_name = 'normal';
