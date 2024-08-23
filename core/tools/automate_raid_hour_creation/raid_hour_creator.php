@@ -41,7 +41,7 @@ if($data !== false) {
         $end->sub($interval);
         $event_start = $start->format('Y-m-d H:i:s');
         $event_end = $end->format('Y-m-d H:i:s');
-        if($event['type'] == 'raid-hour' && (($raids->rowcount() > 0 && !in_array($event_start, $raids_res)) || $raids->rowcount() === 0)) {
+        if($event['type'] == 'raid-hour' && $event_start > $now && (($raids->rowcount() > 0 && !in_array($event_start, $raids_res)) || $raids->rowcount() === 0)) {
             $mon_name = trim(str_replace('Raid Hour','',str_replace('Forme','',$event['name'])));
             $mon_split = explode(' ',$mon_name);
             $part_count = count($mon_split);
@@ -71,15 +71,15 @@ if($data !== false) {
                 $pokemon = $mon[0];
                 $pokemon_form = $mon[1];
             }
-            $raid_to_create[] = [$pokemon, $pokemon_form,$event_start,$event_end];
+            $raid_to_create[] = [$pokemon, $pokemon_form,$event_start,$event_end, '5'];
             $datesToCreate[] = $event_start;
         }
     }
-    if($now->format('w') == 3 && !in_array($now->format('Y-m-d H:i:s'), $raids_res) && !in_array($now->format('Y-m-d H:i:s'), $datesToCreate)) {
+    if(($now->format('w') == 3 || in_array($now->format('Y-m-d'), $config->EXTRA_DATES)) && !in_array($now->format('Y-m-d H:i:s'), $raids_res) && !in_array($now->format('Y-m-d H:i:s'), $datesToCreate)) {
         $start_time = gmdate('Y-m-d H:i:s',mktime(18,0,0));
         $end_time = gmdate('Y-m-d H:i:s',mktime(19,0,0));
         $mon = get_current_bosses($start_time);
-        if($mon !== false) $raid_to_create[] = [$mon[0], $mon[1] ,$start_time, $end_time];
+        if($mon !== false) $raid_to_create[] = [$mon[0], $mon[1] ,$start_time, $end_time, $mon[2]];
     }
 }
 try {
@@ -98,10 +98,10 @@ try {
                           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                           ');
 
+    $now = gmdate('Y-m-d H:i:s');
     foreach($raid_to_create as $raid_info) {
         foreach($config->GYM_INFOS as $t) {
-            $now = gmdate('Y-m-d H:i:s');
-            $query->execute([$config->RAID_CREATOR_ID,$raid_info[0],$raid_info[1],$now,'5',$raid_info[2],$raid_info[3],$t[0],$config->RAID_HOUR_EVENT_ID,$t[1]]);
+            $query->execute([$config->RAID_CREATOR_ID,$raid_info[0],$raid_info[1],$now,$raid_info[4],$raid_info[2],$raid_info[3],$t[0],$config->RAID_HOUR_EVENT_ID,$t[1]]);
         }
     }
 }
@@ -129,7 +129,7 @@ function get_current_bosses($spawn) {
         }
     }
     if($pokemon === false) return false;
-    return [$pokemon,$pokemon_form];
+    return [$pokemon, $pokemon_form, $level];
 }
 function curl_get_contents($url)
 {
