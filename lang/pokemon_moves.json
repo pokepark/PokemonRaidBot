@@ -3040,6 +3040,24 @@
         "RU": "Луч Лунного Духа",
         "ES": "Rayo Umbrío"
     },
+    "pokemon_move_406": {
+        "PT-BR": "Roda de Aura",
+        "EN": "Aura Wheel",
+        "FR": "Roue Libre",
+        "DE": "Aura-Rad",
+        "IT": "Ruota d’Aura",
+        "RU": "Колесо Ауры",
+        "ES": "Rueda Aural"
+    },
+    "pokemon_move_407": {
+        "PT-BR": "Roda de Aura",
+        "EN": "Aura Wheel",
+        "FR": "Roue Libre",
+        "DE": "Aura-Rad",
+        "IT": "Ruota d’Aura",
+        "RU": "Колесо Ауры",
+        "ES": "Rueda Aural"
+    },
     "pokemon_move_408": {
         "PT-BR": "Chute de Pulo Alto",
         "EN": "High Jump Kick",
@@ -3048,5 +3066,674 @@
         "IT": "Calcinvolo",
         "RU": "Прыжок-Удар",
         "ES": "Patada Salto Alta"
+    },
+    "pokemon_move_409": {
+        "PT-BR": "Chama Max",
+        "EN": "Max Flare",
+        "FR": "Pyromax",
+        "DE": "Dyna-Brand",
+        "IT": "Dynafiammata",
+        "RU": "Вспышка Макс",
+        "ES": "Maxignición"
+    },
+    "pokemon_move_410": {
+        "PT-BR": "Nuvem de Inseto Max",
+        "EN": "Max Flutterby",
+        "FR": "Insectomax",
+        "DE": "Dyna-Schwarm",
+        "IT": "Dynainsetto",
+        "RU": "Бабочка Макс",
+        "ES": "Maxinsecto"
+    },
+    "pokemon_move_411": {
+        "PT-BR": "Raio Max",
+        "EN": "Max Lightning",
+        "FR": "Fulguromax",
+        "DE": "Dyna-Gewitter",
+        "IT": "Dynasaetta",
+        "RU": "Молния Макс",
+        "ES": "Maxitormenta"
+    },
+    "pokemon_move_412": {
+        "PT-BR": "Golpe Max",
+        "EN": "Max Strike",
+        "FR": "Normalomax",
+        "DE": "Dyna-Angriff",
+        "IT": "Dynattacco",
+        "RU": "Удар Макс",
+        "ES": "Maxiataque"
+    },
+    "pokemon_move_413": {
+        "PT-BR": "Punho Max",
+        "EN": "Max Knuckle",
+        "FR": "Pugilomax",
+        "DE": "Dyna-Faust",
+        "IT": "Dynapugno",
+        "RU": "Кулак Макс",
+        "ES": "Maxipuño"
+    },
+    "pokemon_move_414": {
+        "PT-BR": "Espectro Max",
+        "EN": "Max Phantasm",
+        "FR": "Spectromax",
+        "DE": "Dyna-Spuk",
+        "IT": "Dynavuoto",
+        "RU": "Иллюзия Макс",
+        "ES": "Maxiespectro"
+    },
+    "pokemon_move_415": {
+        "PT-BR": "Temporal de Granizo Max",
+        "EN": "Max Hailstorm",
+        "FR": "Cryomax",
+        "DE": "Dyna-Frost",
+        "IT": "Dynagelo",
+        "RU": "Град Макс",
+        "ES": "Maxihelada"
+    },
+    "pokemon_move_416": {
+        "PT-BR": "Corrosão Max",
+        "EN": "Max Ooze",
+        "FR": "Toxinomax",
+        "DE": "Dyna-Giftschwall",
+        "IT": "Dynacorrosione",
+        "RU": "Токсины Макс",
+        "ES": "Maxiácido"
+    },
+    "pokemon_move_417": {
+        "PT-BR": "Gêiser Max",
+        "EN": "Max Geyser",
+        "FR": "Hydromax",
+        "DE": "Dyna-Flut",
+        "IT": "Dynaflusso",
+        "RU": "Гейзер Макс",
+        "ES": "Maxichorro"
+    },
+    "pokemon_move_418": {
+        "PT-BR": "Corrente de Ar Max",
+        "EN": "Max Airstream",
+        "FR": "Aéromax",
+        "DE": "Dyna-Düse",
+        "IT": "Dynajet",
+        "RU": "Вихрь Макс",
+        "ES": "Maxiciclón"
+    },
+    "pokemon_move_419": {
+        "PT-BR": "Queda Estelar Max",
+        "EN": "Max Starfall",
+        "FR": "Enchantomax",
+        "DE": "Dyna-Zauber",
+        "IT": "Dynafata",
+        "RU": "Волшебство Макс",
+        "ES": "Maxiestela"
+    },
+    "pokemon_move_420": {
+        "PT-BR": "Bafo Dracônico Max",
+        "EN": "Max Wyrmwind",
+        "FR": "Dracomax",
+        "DE": "Dyna-Wyrm",
+        "IT": "Dynadragone",
+        "RU": "Дракон Макс",
+        "ES": "Maxidraco"
+    },
+    "pokemon_move_421": {
+        "PT-BR": "Tempestade Mental Max",
+        "EN": "Max Mindstorm",
+        "FR": "Psychomax",
+        "DE": "Dyna-Kinese",
+        "IT": "Dynapsiche",
+        "RU": "Психокинез Макс",
+        "ES": "Maxionda"
+    },
+    "pokemon_move_422": {
+        "PT-BR": "Desabamento Max",
+        "EN": "Max Rockfall",
+        "FR": "Lithomax",
+        "DE": "Dyna-Brocken",
+        "IT": "Dynamacigno",
+        "RU": "Камнепад Макс",
+        "ES": "Maxilito"
+    },
+    "pokemon_move_423": {
+        "PT-BR": "Oscilação Max",
+        "EN": "Max Quake",
+        "FR": "Sismomax",
+        "DE": "Dyna-Erdstoß",
+        "IT": "Dynasisma",
+        "RU": "Землетрясение Макс",
+        "ES": "Maxitemblor"
+    },
+    "pokemon_move_424": {
+        "PT-BR": "Escuridão Max",
+        "EN": "Max Darkness",
+        "FR": "Sinistromax",
+        "DE": "Dyna-Dunkel",
+        "IT": "Dynatenebre",
+        "RU": "Темнота Макс",
+        "ES": "Maxisombra"
+    },
+    "pokemon_move_425": {
+        "PT-BR": "Flora Max",
+        "EN": "Max Overgrowth",
+        "FR": "Phytomax",
+        "DE": "Dyna-Flora",
+        "IT": "Dynaflora",
+        "RU": "Рост Макс",
+        "ES": "Maxiflora"
+    },
+    "pokemon_move_426": {
+        "PT-BR": "Espinho de Aço Max",
+        "EN": "Max Steelspike",
+        "FR": "Métallomax",
+        "DE": "Dyna-Stahlzacken",
+        "IT": "Dynametallo",
+        "RU": "Остриё Макс",
+        "ES": "Maximetal"
+    },
+    "pokemon_move_427": {
+        "PT-BR": "Queimada G-Max",
+        "EN": "G-Max Wildfire",
+        "FR": "Fournaise G-Max",
+        "DE": "Giga-Feuerflug",
+        "IT": "Gigavampa",
+        "RU": "Лесной Пожар G-Макс",
+        "ES": "Gigallamarada"
+    },
+    "pokemon_move_428": {
+        "PT-BR": "Perturbação G-Max",
+        "EN": "G-Max Befuddle",
+        "FR": "Illusion G-Max",
+        "DE": "Giga-Benebelung",
+        "IT": "Gigastupore",
+        "RU": "Одурманивание G-Макс",
+        "ES": "Gigaestupor"
+    },
+    "pokemon_move_429": {
+        "PT-BR": "Trovoada G-Max",
+        "EN": "G-Max Volt Crash",
+        "FR": "Foudre G-Max",
+        "DE": "Giga-Blitzhagel",
+        "IT": "Gigapikafolgori",
+        "RU": "Вольт-Таран G-Макс",
+        "ES": "Gigatronada"
+    },
+    "pokemon_move_430": {
+        "PT-BR": "Corrida do Ouro G-Max",
+        "EN": "G-Max Gold Rush",
+        "FR": "Pactole G-Max",
+        "DE": "Giga-Münzregen",
+        "IT": "Gigamonete",
+        "RU": "Золотая Лихорадка G-Макс",
+        "ES": "Gigamonedas"
+    },
+    "pokemon_move_431": {
+        "PT-BR": "Golpe Chi G-Max",
+        "EN": "G-Max Chi Strike",
+        "FR": "Frappe G-Max",
+        "DE": "Giga-Fokusschlag",
+        "IT": "Gigapugnointuito",
+        "RU": "Кулак G-Макс",
+        "ES": "Gigapuñición"
+    },
+    "pokemon_move_432": {
+        "PT-BR": "Terror G-Max",
+        "EN": "G-Max Terror",
+        "FR": "Hantise G-Max",
+        "DE": "Giga-Spuksperre",
+        "IT": "Gigaillusione",
+        "RU": "Ужас G-Макс",
+        "ES": "Gigaaparición"
+    },
+    "pokemon_move_433": {
+        "PT-BR": "Explosão de Espuma G-Max",
+        "EN": "G-Max Foam Burst",
+        "FR": "Bulles G-Max",
+        "DE": "Giga-Schaumbad",
+        "IT": "Gigaschiuma",
+        "RU": "Пена G-Макс",
+        "ES": "Gigaespuma"
+    },
+    "pokemon_move_434": {
+        "PT-BR": "Ressonância G-Max",
+        "EN": "G-Max Resonance",
+        "FR": "Résonance G-Max",
+        "DE": "Giga-Melodie",
+        "IT": "Gigamelodia",
+        "RU": "Мелодия G-Макс",
+        "ES": "Gigamelodía"
+    },
+    "pokemon_move_435": {
+        "PT-BR": "Ternura G-Max",
+        "EN": "G-Max Cuddle",
+        "FR": "Câlin G-Max",
+        "DE": "Giga-Gekuschel",
+        "IT": "Gigabbraccio",
+        "RU": "Обнимашки G-Макс",
+        "ES": "Gigaternura"
+    },
+    "pokemon_move_436": {
+        "PT-BR": "Reabastecer G-Max",
+        "EN": "G-Max Replenish",
+        "FR": "Récolte G-Max",
+        "DE": "Giga-Recycling",
+        "IT": "Gigarinnovamento",
+        "RU": "Пополнение Запаса G-Макс",
+        "ES": "Gigarreciclaje"
+    },
+    "pokemon_move_437": {
+        "PT-BR": "Pestilência G-Max",
+        "EN": "G-Max Malodor",
+        "FR": "Pestilence G-Max",
+        "DE": "Giga-Gestank",
+        "IT": "Gigafetore",
+        "RU": "Зловоние G-Макс",
+        "ES": "Gigapestilencia"
+    },
+    "pokemon_move_438": {
+        "PT-BR": "Derretimento G-Max",
+        "EN": "G-Max Meltdown",
+        "FR": "Fonte G-Max",
+        "DE": "Giga-Schmelze",
+        "IT": "Gigaliquefazione",
+        "RU": "Разрушение G-Макс",
+        "ES": "Gigafundido"
+    },
+    "pokemon_move_439": {
+        "PT-BR": "Intempérie G-Max",
+        "EN": "G-Max Wind Rage",
+        "FR": "Rafale G-Max",
+        "DE": "Giga-Sturmstoß",
+        "IT": "Gigaciclone",
+        "RU": "Ярость Ветра G-Макс",
+        "ES": "Gigahuracán"
+    },
+    "pokemon_move_440": {
+        "PT-BR": "Seriedade G-Max",
+        "EN": "G-Max Gravitas",
+        "FR": "Ondes G-Max",
+        "DE": "Giga-Astrowellen",
+        "IT": "Gigagravitoforza",
+        "RU": "Сила Тяжести G-Макс",
+        "ES": "Gigabóveda"
+    },
+    "pokemon_move_441": {
+        "PT-BR": "Enxurrada de Rochas",
+        "EN": "G-Max Stonesurge",
+        "FR": "Récif G-Max",
+        "DE": "Giga-Geröll",
+        "IT": "Gigarocciagetto",
+        "RU": "Каменный Импульс G-Макс",
+        "ES": "Gigatrampa Rocas"
+    },
+    "pokemon_move_442": {
+        "PT-BR": "Rocha Vulcânica G-Max",
+        "EN": "G-Max Volcalith",
+        "FR": "Téphra G-Max",
+        "DE": "Giga-Schlacke",
+        "IT": "Gigalapilli",
+        "RU": "Вулкалит G-Макс",
+        "ES": "Gigarroca Ígnea"
+    },
+    "pokemon_move_443": {
+        "PT-BR": "Acidez G-Max",
+        "EN": "G-Max Tartness",
+        "FR": "Corrosion G-Max",
+        "DE": "Giga-Säureguss",
+        "IT": "Gigattaccoacido",
+        "RU": "Кислотность G-Макс",
+        "ES": "Gigacorrosión"
+    },
+    "pokemon_move_444": {
+        "PT-BR": "Néctar G-Max",
+        "EN": "G-Max Sweetness",
+        "FR": "Nectar G-Max",
+        "DE": "Giga-Nektarflut",
+        "IT": "Gigambrosia",
+        "RU": "Сладость G-Макс",
+        "ES": "Giganéctar"
+    },
+    "pokemon_move_445": {
+        "PT-BR": "Jorro de Areia G-Max",
+        "EN": "G-Max Sandblast",
+        "FR": "Enlisement G-Max",
+        "DE": "Giga-Sandstoß",
+        "IT": "Gigavortisabbia",
+        "RU": "Песчаная Струя G-Макс",
+        "ES": "Gigapolvareda"
+    },
+    "pokemon_move_446": {
+        "PT-BR": "Eletrocutar G-Max",
+        "EN": "G-Max Stun Shock",
+        "FR": "Choc G-Max",
+        "DE": "Giga-Voltschlag",
+        "IT": "Gigatoxiscossa",
+        "RU": "Ошеломление G-Макс",
+        "ES": "Gigadescarga"
+    },
+    "pokemon_move_447": {
+        "PT-BR": "Centiferno G-Max",
+        "EN": "G-Max Centiferno",
+        "FR": "Combustion G-Max",
+        "DE": "Giga-Feuerkessel",
+        "IT": "Gigamillefiamme",
+        "RU": "Сентиферно G-Макс",
+        "ES": "Gigacienfuegos"
+    },
+    "pokemon_move_448": {
+        "PT-BR": "Castigo G-Max",
+        "EN": "G-Max Smite",
+        "FR": "Sentence G-Max",
+        "DE": "Giga-Sanktion",
+        "IT": "Gigacastigo",
+        "RU": "Наказание G-Макс",
+        "ES": "Gigacastigo"
+    },
+    "pokemon_move_449": {
+        "PT-BR": "Cochilo G-Max",
+        "EN": "G-Max Snooze",
+        "FR": "Torpeur G-Max",
+        "DE": "Giga-Gähnzwang",
+        "IT": "Gigatorpore",
+        "RU": "Дрёма G-Макс",
+        "ES": "Gigasopor"
+    },
+    "pokemon_move_450": {
+        "PT-BR": "Grande Final G-Max",
+        "EN": "G-Max Finale",
+        "FR": "Cure G-Max",
+        "DE": "Giga-Lichtblick",
+        "IT": "Gigagranfinale",
+        "RU": "Финал G-Макс",
+        "ES": "Gigacolofón"
+    },
+    "pokemon_move_451": {
+        "PT-BR": "Enxurrada de Aço G-Max",
+        "EN": "G-Max Steelsurge",
+        "FR": "Percée G-Max",
+        "DE": "Giga-Stahlschlag",
+        "IT": "Gigaferroaculei",
+        "RU": "Стальные Шипы G-Макс",
+        "ES": "Gigatrampa Acero"
+    },
+    "pokemon_move_452": {
+        "PT-BR": "Esgotamento G-Max",
+        "EN": "G-Max Depletion",
+        "FR": "Usure G-Max",
+        "DE": "Giga-Dämpfer",
+        "IT": "Gigalogoramento",
+        "RU": "Опустошение G-Макс",
+        "ES": "Gigadesgaste"
+    },
+    "pokemon_move_453": {
+        "PT-BR": "Chicotada G-Max",
+        "EN": "G-Max Vine Lash",
+        "FR": "Fouet G-Max",
+        "DE": "Giga-Geißel",
+        "IT": "Gigasferzata",
+        "RU": "Удар Лозами G-Макс",
+        "ES": "Gigalianas"
+    },
+    "pokemon_move_454": {
+        "PT-BR": "Bombardeamento G-Max",
+        "EN": "G-Max Cannonade",
+        "FR": "Canonnade G-Max",
+        "DE": "Giga-Beschuss",
+        "IT": "Gigacannonata",
+        "RU": "Канонада G-Макс",
+        "ES": "Gigacañonazo"
+    },
+    "pokemon_move_455": {
+        "PT-BR": "Solo de Tambores G-Max",
+        "EN": "G-Max Drum Solo",
+        "FR": "Percussion G-Max",
+        "DE": "Giga-Getrommel",
+        "IT": "Gigarullio",
+        "RU": "Соло на Барабанах G-Макс",
+        "ES": "Gigarredoble"
+    },
+    "pokemon_move_456": {
+        "PT-BR": "Bola de Chamas G-Max",
+        "EN": "G-Max Fireball",
+        "FR": "Pyroball G-Max",
+        "DE": "Giga-Brandball",
+        "IT": "Gigafiammopalla",
+        "RU": "Огненный Шар G-Макс",
+        "ES": "Gigaesfera Ígnea"
+    },
+    "pokemon_move_457": {
+        "PT-BR": "Hidroatirador G-Max",
+        "EN": "G-Max Hydrosnipe",
+        "FR": "Gâchette G-Max",
+        "DE": "Giga-Schütze",
+        "IT": "Gigasparomirato",
+        "RU": "Гидроснайпер G-Макс",
+        "ES": "Gigadisparo"
+    },
+    "pokemon_move_458": {
+        "PT-BR": "Golpe Único G-Max",
+        "EN": "G-Max One Blow",
+        "FR": "Coup Final G-Max",
+        "DE": "Giga-Einzelhieb",
+        "IT": "Gigasingolcolpo",
+        "RU": "Единый Удар G-Макс",
+        "ES": "Gigagolpe Brusco"
+    },
+    "pokemon_move_459": {
+        "PT-BR": "Fluxo Veloz G-Max",
+        "EN": "G-Max Rapid Flow",
+        "FR": "Multicoup G-Max",
+        "DE": "Giga-Multihieb",
+        "IT": "Gigapluricolpo",
+        "RU": "Серийный Поток G-Макс",
+        "ES": "Gigagolpe Fluido"
+    },
+    "pokemon_move_460": {
+        "EN": "Vn Bm 052"
+    },
+    "pokemon_move_461": {
+        "EN": "Vn Bm 053"
+    },
+    "pokemon_move_462": {
+        "PT-BR": "Palma da Força",
+        "EN": "Force Palm",
+        "FR": "Forte-Paume",
+        "DE": "Kraftwelle",
+        "IT": "Palmoforza",
+        "RU": "Сильная Ладонь",
+        "ES": "Palmeo"
+    },
+    "pokemon_move_463": {
+        "PT-BR": "Aria Cintilante",
+        "EN": "Sparkling Aria",
+        "FR": "Aria de l’Écume",
+        "DE": "Schaumserenade",
+        "IT": "Canto Effimero",
+        "RU": "Искрящаяся Ария",
+        "ES": "Aria Burbuja"
+    },
+    "pokemon_move_464": {
+        "PT-BR": "Punho Feroz",
+        "EN": "Rage Fist",
+        "FR": "Poing de Colère",
+        "DE": "Zornesfaust",
+        "IT": "Pugno Furibondo",
+        "RU": "Кулак Ярости",
+        "ES": "Puño Furia"
+    },
+    "pokemon_move_465": {
+        "PT-BR": "Truque Floral",
+        "EN": "Flower Trick",
+        "FR": "Magie Florale",
+        "DE": "Blumentrick",
+        "IT": "Prestigiafiore",
+        "RU": "Цветочный Фокус",
+        "ES": "Truco Floral"
+    },
+    "pokemon_move_466": {
+        "PT-BR": "Choque Congelante",
+        "EN": "Freeze Shock",
+        "FR": "Éclair Gelé",
+        "DE": "Frostvolt",
+        "IT": "Elettrogelo",
+        "RU": "Холодовой Удар",
+        "ES": "Rayo Gélido"
+    },
+    "pokemon_move_467": {
+        "PT-BR": "Queimadura de Gelo",
+        "EN": "Ice Burn",
+        "FR": "Feu Glacé",
+        "DE": "Frosthauch",
+        "IT": "Vampagelida",
+        "RU": "Ледяной Ожог",
+        "ES": "Llama Gélida"
+    },
+    "pokemon_move_468": {
+        "PT-BR": "Canção Ardente",
+        "EN": "Torch Song",
+        "FR": "Chant Flamboyant",
+        "DE": "Loderlied",
+        "IT": "Canzone Ardente",
+        "RU": "Пение Пламени",
+        "ES": "Canto Ardiente"
+    },
+    "pokemon_move_469": {
+        "PT-BR": "Espada Colossal",
+        "EN": "Behemoth Blade",
+        "FR": "Gladius Maximus",
+        "DE": "Gigantenhieb",
+        "IT": "Taglio Maestoso",
+        "RU": "Меч Левиафана",
+        "ES": "Tajo Supremo"
+    },
+    "pokemon_move_470": {
+        "PT-BR": "Pancada Colossal",
+        "EN": "Behemoth Bash",
+        "FR": "Aegis Maxima",
+        "DE": "Gigantenstoß",
+        "IT": "Colpo Maestoso",
+        "RU": "Удар Левиафана",
+        "ES": "Embate Supremo"
+    },
+    "pokemon_move_471": {
+        "PT-BR": "Supermão",
+        "EN": "Upper Hand",
+        "FR": "Prio-Parade",
+        "DE": "Schnellkonter",
+        "IT": "Colpo di Mano",
+        "RU": "Тыльная Сторона Ладони",
+        "ES": "Palma Rauda"
+    },
+    "pokemon_move_472": {
+        "PT-BR": "Prisão Elétrica",
+        "EN": "Thunder Cage",
+        "FR": "Voltageôle",
+        "DE": "Blitzgefängnis",
+        "IT": "Elettrogabbia",
+        "RU": "Громовая Клетка",
+        "ES": "Electrojaula"
+    },
+    "pokemon_move_473": {
+        "PT-BR": "Indefeso",
+        "EN": "Guard",
+        "FR": "Garde",
+        "DE": "Wall",
+        "IT": "Barriera",
+        "RU": "Защита",
+        "ES": "Barrera"
+    },
+    "pokemon_move_474": {
+        "PT-BR": "Espírito",
+        "EN": "Spirit",
+        "FR": "Régé",
+        "DE": "Kampfgeist",
+        "IT": "Spirito",
+        "RU": "Дух",
+        "ES": "Espíritu"
+    },
+    "pokemon_move_475": {
+        "PT-BR": "Indefeso",
+        "EN": "Guard",
+        "FR": "Garde",
+        "DE": "Wall",
+        "IT": "Barriera",
+        "RU": "Защита",
+        "ES": "Barrera"
+    },
+    "pokemon_move_476": {
+        "PT-BR": "Espírito",
+        "EN": "Spirit",
+        "FR": "Régé",
+        "DE": "Kampfgeist",
+        "IT": "Spirito",
+        "RU": "Дух",
+        "ES": "Espíritu"
+    },
+    "pokemon_move_477": {
+        "PT-BR": "Indefeso",
+        "EN": "Guard",
+        "FR": "Garde",
+        "DE": "Wall",
+        "IT": "Barriera",
+        "RU": "Защита",
+        "ES": "Barrera"
+    },
+    "pokemon_move_478": {
+        "PT-BR": "Espírito",
+        "EN": "Spirit",
+        "FR": "Régé",
+        "DE": "Kampfgeist",
+        "IT": "Spirito",
+        "RU": "Дух",
+        "ES": "Espíritu"
+    },
+    "pokemon_move_479": {
+        "PT-BR": "Espada Colossal",
+        "EN": "Behemoth Blade",
+        "FR": "Gladius Maximus",
+        "DE": "Gigantenhieb",
+        "IT": "Taglio Maestoso",
+        "RU": "Меч Левиафана",
+        "ES": "Tajo Supremo"
+    },
+    "pokemon_move_480": {
+        "PT-BR": "Pancada Colossal",
+        "EN": "Behemoth Bash",
+        "FR": "Aegis Maxima",
+        "DE": "Gigantenstoß",
+        "IT": "Colpo Maestoso",
+        "RU": "Удар Левиафана",
+        "ES": "Embate Supremo"
+    },
+    "pokemon_move_481": {
+        "EN": "Thunder Cage Fast"
+    },
+    "pokemon_move_483": {
+        "EN": "Vn Bm 062"
+    },
+    "pokemon_move_484": {
+        "PT-BR": "Batida de Escamas",
+        "EN": "Clanging Scales",
+        "FR": "Vibrécaille",
+        "DE": "Schuppenrasseln",
+        "IT": "Clamorsquame",
+        "RU": "Лязгающая Чешуя",
+        "ES": "Fragor Escamas"
+    },
+    "pokemon_move_485": {
+        "PT-BR": "Aperto Esmagador",
+        "EN": "Crush Grip",
+        "FR": "Presse",
+        "DE": "Quetschgriff",
+        "IT": "Sbriciolmano",
+        "RU": "Сокрушительная Хватка",
+        "ES": "Agarrón"
+    },
+    "pokemon_move_486": {
+        "PT-BR": "Energia Dracônica",
+        "EN": "Dragon Energy",
+        "FR": "Draco-Énergie",
+        "DE": "Drachenkräfte",
+        "IT": "Dragoenergia",
+        "RU": "Энергия Дракона",
+        "ES": "Dracoenergía"
     }
 }

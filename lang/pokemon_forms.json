@@ -135,28 +135,28 @@
         "ES": "Velocidad"
     },
     "pokemon_form_37": {
-        "EN": "00"
-    },
-    "pokemon_form_38": {
         "EN": "01"
     },
-    "pokemon_form_39": {
+    "pokemon_form_38": {
         "EN": "02"
     },
-    "pokemon_form_40": {
+    "pokemon_form_39": {
         "EN": "03"
     },
-    "pokemon_form_41": {
+    "pokemon_form_40": {
         "EN": "04"
     },
-    "pokemon_form_42": {
+    "pokemon_form_41": {
         "EN": "05"
     },
-    "pokemon_form_43": {
+    "pokemon_form_42": {
         "EN": "06"
     },
-    "pokemon_form_44": {
+    "pokemon_form_43": {
         "EN": "07"
+    },
+    "pokemon_form_44": {
+        "EN": "08"
     },
     "pokemon_form_46": {
         "EN": "Alola",
@@ -568,40 +568,40 @@
         "ES": "Tronco Basura"
     },
     "pokemon_form_121": {
-        "EN": "08"
-    },
-    "pokemon_form_122": {
         "EN": "09"
     },
-    "pokemon_form_123": {
+    "pokemon_form_122": {
         "EN": "10"
     },
-    "pokemon_form_124": {
+    "pokemon_form_123": {
         "EN": "11"
     },
-    "pokemon_form_125": {
+    "pokemon_form_124": {
         "EN": "12"
     },
-    "pokemon_form_126": {
+    "pokemon_form_125": {
         "EN": "13"
     },
-    "pokemon_form_127": {
+    "pokemon_form_126": {
         "EN": "14"
     },
-    "pokemon_form_128": {
+    "pokemon_form_127": {
         "EN": "15"
     },
-    "pokemon_form_129": {
+    "pokemon_form_128": {
         "EN": "16"
     },
-    "pokemon_form_130": {
+    "pokemon_form_129": {
         "EN": "17"
     },
-    "pokemon_form_131": {
+    "pokemon_form_130": {
         "EN": "18"
     },
-    "pokemon_form_132": {
+    "pokemon_form_131": {
         "EN": "19"
+    },
+    "pokemon_form_132": {
+        "EN": "20"
     },
     "pokemon_form_133": {
         "EN": "A",
@@ -1049,6 +1049,7 @@
     "pokemon_form_2477": {
         "PT-BR": "Forma Falsificada",
         "EN": "Phony Form",
+        "FR": "Forme Contrefaçon",
         "DE": "Fälschungsform",
         "IT": "Forma Contraffatta",
         "RU": "Фальшивая форма",
@@ -1057,6 +1058,7 @@
     "pokemon_form_2478": {
         "PT-BR": "Forma Autêntica",
         "EN": "Antique Form",
+        "FR": "Forme Authentique",
         "DE": "Originalform",
         "IT": "Forma Autentica",
         "RU": "Антикварная форма",
@@ -1065,6 +1067,7 @@
     "pokemon_form_2480": {
         "PT-BR": "Forma Falsificada",
         "EN": "Phony Form",
+        "FR": "Forme Contrefaçon",
         "DE": "Fälschungsform",
         "IT": "Forma Contraffatta",
         "RU": "Фальшивая форма",
@@ -1073,6 +1076,7 @@
     "pokemon_form_2481": {
         "PT-BR": "Forma Autêntica",
         "EN": "Antique Form",
+        "FR": "Forme Authentique",
         "DE": "Originalform",
         "IT": "Forma Autentica",
         "RU": "Антикварная форма",
@@ -1113,52 +1117,34 @@
         "ES": "Hembra"
     },
     "pokemon_form_2544": {
-        "PT-BR": "Forma Saciada",
-        "EN": "Full Belly Mode",
+        "EN": "Full Belly",
         "DE": "Pappsatt",
-        "IT": "Motivo Panciapiena",
-        "RU": "Режим Полный Живот",
-        "ES": "Forma Saciada"
+        "RU": "Режим Полный Живот"
     },
     "pokemon_form_2545": {
-        "PT-BR": "Forma Voraz",
-        "EN": "Hangry Mode",
+        "EN": "Hangry",
         "DE": "Kohldampf",
-        "IT": "Motivo Panciavuota",
-        "RU": "Злоголодный режим",
-        "ES": "Forma Voraz"
+        "RU": "Злоголодный режим"
     },
     "pokemon_form_2576": {
-        "PT-BR": "Espada Coroada",
         "EN": "Crowned Sword",
         "DE": "König des Schwertes",
-        "IT": "Re delle Spade",
-        "RU": "Коронованный Меч",
-        "ES": "Espada Suprema"
+        "RU": "Коронованный Меч"
     },
     "pokemon_form_2577": {
-        "PT-BR": "Herói Veterano",
-        "EN": "Hero of Many Battles",
+        "EN": "Hero",
         "DE": "Heldenhafter Krieger",
-        "IT": "Eroe di Mille Lotte",
-        "RU": "Герой многих битв",
-        "ES": "Guerrero Avezado"
+        "RU": "Герой многих битв"
     },
     "pokemon_form_2578": {
-        "PT-BR": "Escudo Coroado",
         "EN": "Crowned Shield",
         "DE": "König des Schildes",
-        "IT": "Re degli Scudi",
-        "RU": "Коронованный Щит",
-        "ES": "Escudo Supremo"
+        "RU": "Коронованный Щит"
     },
     "pokemon_form_2579": {
-        "PT-BR": "Herói Veterano",
-        "EN": "Hero of Many Battles",
+        "EN": "Hero",
         "DE": "Heldenhafter Krieger",
-        "IT": "Eroe di Mille Lotte",
-        "RU": "Герой многих битв",
-        "ES": "Guerrero Avezado"
+        "RU": "Герой многих битв"
     },
     "pokemon_form_2580": {
         "EN": "Eternamax",
@@ -1920,14 +1906,22 @@
         "RU": "Исходный цвет"
     },
     "pokemon_form_2723": {
-        "EN": "Single Strike",
+        "PT-BR": "Estilo Golpe Decisivo",
+        "EN": "Single Strike Style",
+        "FR": "Style Poing Final",
         "DE": "Fokussierter Stil",
-        "RU": "Фома одного удара"
+        "IT": "Stile Singolcolpo",
+        "RU": "Фома одного удара",
+        "ES": "Estilo Brusco"
     },
     "pokemon_form_2724": {
-        "EN": "Rapid Strike",
+        "PT-BR": "Estilo Golpe Fluido",
+        "EN": "Rapid Strike Style",
+        "FR": "Style Mille Poings",
         "DE": "Fließender Stil",
-        "RU": "Форма множества ударов"
+        "IT": "Stile Pluricolpo",
+        "RU": "Форма множества ударов",
+        "ES": "Estilo Fluido"
     },
     "pokemon_form_2726": {
         "EN": "Ice Rider",
@@ -1971,7 +1965,7 @@
         "FR": "Forme Crépusculaire",
         "DE": "Zwielichtform",
         "IT": "Forma Crepuscolo",
-        "RU": "Сумеречная форма",
+        "RU": "Сумеречная Форма",
         "ES": "Forma Crepuscular"
     },
     "pokemon_form_2739": {
@@ -2052,7 +2046,7 @@
         "FR": "Solaire",
         "DE": "Sonnenform",
         "IT": "Sole",
-        "RU": "Солнечная форма",
+        "RU": "Солнечная Форма",
         "ES": "Sol"
     },
     "pokemon_form_2764": {
@@ -2118,7 +2112,7 @@
         "FR": "Solaire",
         "DE": "Sonnenform",
         "IT": "Sole",
-        "RU": "Солнечная форма",
+        "RU": "Солнечная Форма",
         "ES": "Sol"
     },
     "pokemon_form_2784": {
@@ -2181,7 +2175,7 @@
         "FR": "Forme Avatar",
         "DE": "Inkarnationsform",
         "IT": "Forma Incarnazione",
-        "RU": "Воплощённая форма",
+        "RU": "Воплощённая Форма",
         "ES": "Forma Avatar"
     },
     "pokemon_form_2803": {
@@ -2190,7 +2184,7 @@
         "FR": "Forme Totémique",
         "DE": "Tiergeistform",
         "IT": "Forma Totem",
-        "RU": "Форма Териан",
+        "RU": "Териан-Форма",
         "ES": "Forma Tótem"
     },
     "pokemon_form_2804": {
@@ -2199,7 +2193,7 @@
         "FR": "Motif Blanc",
         "DE": "Weißlinig",
         "IT": "Forma Lineabianca",
-        "RU": "Белая полосатая форма",
+        "RU": "Белая Полосатая Форма",
         "ES": "Raya Blanca"
     },
     "pokemon_form_2805": {
@@ -2214,7 +2208,7 @@
         "FR": "Femelle",
         "DE": "Weiblich",
         "IT": "Femmina",
-        "RU": "Женский",
+        "RU": "Женская Особь",
         "ES": "Hembra"
     },
     "pokemon_form_2813": {
@@ -2262,7 +2256,7 @@
         "FR": "Forme Originelle",
         "DE": "Urform",
         "IT": "Forma Originale",
-        "RU": "Исходная форма",
+        "RU": "Исходная Форма",
         "ES": "Forma Origen"
     },
     "pokemon_form_2830": {
@@ -2271,7 +2265,7 @@
         "FR": "Forme Originelle",
         "DE": "Urform",
         "IT": "Forma Originale",
-        "RU": "Исходная форма",
+        "RU": "Исходная Форма",
         "ES": "Forma Origen"
     },
     "pokemon_form_2832": {
@@ -2325,13 +2319,55 @@
     "pokemon_form_2848": {
         "EN": "Gofest 2024 Mscarf"
     },
+    "pokemon_form_2849": {
+        "EN": "Wildarea 2024"
+    },
+    "pokemon_form_2850": {
+        "EN": "Diwali 2024"
+    },
+    "pokemon_form_2856": {
+        "EN": "Gotour 2025 A"
+    },
+    "pokemon_form_2857": {
+        "EN": "Gotour 2025 B"
+    },
+    "pokemon_form_2858": {
+        "EN": "Gotour 2025 A 02"
+    },
+    "pokemon_form_2859": {
+        "EN": "Gotour 2025 B 02"
+    },
+    "pokemon_form_2863": {
+        "EN": "Kurta"
+    },
+    "pokemon_form_2864": {
+        "EN": "Gofest 2025 Goggles Red"
+    },
+    "pokemon_form_2865": {
+        "EN": "Gofest 2025 Goggles Blue"
+    },
+    "pokemon_form_2866": {
+        "EN": "Gofest 2025 Goggles Yellow"
+    },
+    "pokemon_form_2867": {
+        "EN": "Gofest 2025 Monocle Red"
+    },
+    "pokemon_form_2868": {
+        "EN": "Gofest 2025 Monocle Blue"
+    },
+    "pokemon_form_2869": {
+        "EN": "Gofest 2025 Monocle Yellow"
+    },
+    "pokemon_form_2870": {
+        "EN": "Gofest 2025 Train Conductor"
+    },
     "pokemon_form_2982": {
         "PT-BR": "Fêmea",
         "EN": "Female",
         "FR": "Femelle",
         "DE": "Weiblich",
         "IT": "Femmina",
-        "RU": "Женский",
+        "RU": "Женская Особь",
         "ES": "Hembra"
     },
     "pokemon_form_2983": {
@@ -2346,7 +2382,7 @@
         "FR": "Plumage Vert",
         "DE": "Grüngefiedert",
         "IT": "Piume Verdi",
-        "RU": "Зелёное оперение",
+        "RU": "Зелёное Оперение",
         "ES": "Plumaje Verde"
     },
     "pokemon_form_2986": {
@@ -2355,7 +2391,7 @@
         "FR": "Plumage Bleu",
         "DE": "Blaugefiedert",
         "IT": "Piume Azzurre",
-        "RU": "Синее оперение",
+        "RU": "Синее Оперение",
         "ES": "Plumaje Azul"
     },
     "pokemon_form_2987": {
@@ -2364,7 +2400,7 @@
         "FR": "Plumage Jaune",
         "DE": "Gelbgefiedert",
         "IT": "Piume Gialle",
-        "RU": "Жёлтое оперение",
+        "RU": "Жёлтое Оперение",
         "ES": "Plumaje Amarillo"
     },
     "pokemon_form_2988": {
@@ -2376,16 +2412,11 @@
         "FR": "Forme Ordinaire",
         "DE": "Alltagsform",
         "IT": "Forma Ingenua",
-        "RU": "Нулевая форма",
+        "RU": "Нулевая Форма",
         "ES": "Forma Ingenua"
     },
     "pokemon_form_2990": {
-        "PT-BR": "Herói Veterano",
-        "EN": "Hero of Many Battles",
-        "DE": "Heldenhafter Krieger",
-        "IT": "Eroe di Mille Lotte",
-        "RU": "Герой многих битв",
-        "ES": "Guerrero Avezado"
+        "EN": "Hero"
     },
     "pokemon_form_2991": {
         "PT-BR": "Forma Curvada",
@@ -2393,7 +2424,7 @@
         "FR": "Forme Courbée",
         "DE": "Gebogene Form",
         "IT": "Forma Arcuata",
-        "RU": "Изогнутая форма",
+        "RU": "Изогнутая Форма",
         "ES": "Forma Curvada"
     },
     "pokemon_form_2992": {
@@ -2402,7 +2433,7 @@
         "FR": "Forme Affalée",
         "DE": "Hängende Form",
         "IT": "Forma Adagiata",
-        "RU": "Свисающая форма",
+        "RU": "Свисающая Форма",
         "ES": "Forma Lánguida"
     },
     "pokemon_form_2993": {
@@ -2411,7 +2442,7 @@
         "FR": "Forme Raide",
         "DE": "Gestreckte Form",
         "IT": "Forma Tesa",
-        "RU": "Вытянутая форма",
+        "RU": "Вытянутая Форма",
         "ES": "Forma Recta"
     },
     "pokemon_form_2994": {
@@ -2420,7 +2451,7 @@
         "FR": "Forme Double",
         "DE": "Zweisegmentform",
         "IT": "Forma Bimetamero",
-        "RU": "Двухсегментная форма",
+        "RU": "Двухсегментная Форма",
         "ES": "Forma Binodular"
     },
     "pokemon_form_2995": {
@@ -2429,7 +2460,7 @@
         "FR": "Forme Triple",
         "DE": "Dreisegmentform",
         "IT": "Forma Trimetamero",
-        "RU": "Трёхсегментная форма",
+        "RU": "Трёхсегментная Форма",
         "ES": "Forma Trinodular"
     },
     "pokemon_form_2996": {
@@ -2438,7 +2469,7 @@
         "FR": "Forme Finale",
         "DE": "Vollkommene Gestalt",
         "IT": "Foggia Integrale",
-        "RU": "Финальная форма",
+        "RU": "Финальная Форма",
         "ES": "Fisonomía Plena"
     },
     "pokemon_form_2997": {
@@ -2447,7 +2478,7 @@
         "FR": "Mode Ultime",
         "DE": "Kompletter Modus",
         "IT": "Assetto Completo",
-        "RU": "Полноценный режим",
+        "RU": "Полноценный Режим",
         "ES": "Modo Pleno"
     },
     "pokemon_form_3001": {
@@ -2466,13 +2497,31 @@
         "EN": "Summer 2023 D"
     },
     "pokemon_form_3006": {
-        "EN": "Paldea Combat"
+        "PT-BR": "Espécie de Combate",
+        "EN": "Combat Breed",
+        "FR": "Race Combative",
+        "DE": "Gefechtvariante",
+        "IT": "Varietà Combattiva",
+        "RU": "Порода Сражение",
+        "ES": "Variedad Combatiente"
     },
     "pokemon_form_3007": {
-        "EN": "Paldea Blaze"
+        "PT-BR": "Espécie Labareda",
+        "EN": "Blaze Breed",
+        "FR": "Race Flamboyante",
+        "DE": "Flammenvariante",
+        "IT": "Varietà Infuocata",
+        "RU": "Порода Пламя",
+        "ES": "Variedad Ardiente"
     },
     "pokemon_form_3008": {
-        "EN": "Paldea Aqua"
+        "PT-BR": "Espécie Aquática",
+        "EN": "Aqua Breed",
+        "FR": "Race Aquatique",
+        "DE": "Flutenvariante",
+        "IT": "Varietà Acquatica",
+        "RU": "Порода Аква",
+        "ES": "Variedad Acuática"
     },
     "pokemon_form_3009": {
         "EN": "Paldea"
@@ -2491,5 +2540,8 @@
     },
     "pokemon_form_3014": {
         "EN": "Wcs 2023"
+    },
+    "pokemon_form_3015": {
+        "EN": "Wcs 2024"
     }
 }

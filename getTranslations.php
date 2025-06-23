@@ -65,7 +65,7 @@ function remove_duplicate_translations($array) {
   foreach($array as $translation_id => $translations) {
     foreach($translations as $lang => $translation) {
       if(
-        ($lang == 'EN' or $translation != $array[$translation_id]['EN']) and
+        ($lang == 'EN' or (isset($array[$translation_id]['EN']) && $translation != $array[$translation_id]['EN'])) and
         !in_array($array[$translation_id]['EN'], ['Normal','Purified','Shadow'])
         )
         $new_array[$translation_id][$lang] = $translation;
