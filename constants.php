@@ -29,7 +29,7 @@ define('EGGS', [
 ]);
 
 // Raid levels limited to local players only
-define('RAID_LEVEL_LOCAL_ONLY', [4, 9, 11, 12, 13, 14, 15]);
+define('RAID_LEVEL_LOCAL_ONLY', [4, 9]);
 
 // Shadow raid levels
 define('RAID_LEVEL_SHADOW', [11, 12, 13, 14, 15]);
