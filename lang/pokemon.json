@@ -5752,19 +5752,27 @@
         "RU": "Мирайдон"
     },
     "pokemon_id_1009": {
-        "EN": "Walking-wake"
+        "EN": "Walkingwake"
     },
     "pokemon_id_1010": {
-        "EN": "Iron-leaves"
+        "EN": "Ironleaves"
     },
     "pokemon_id_1011": {
-        "EN": "Dipplin"
+        "EN": "Dipplin",
+        "FR": "Pomdramour",
+        "DE": "Sirapfel",
+        "RU": "Дипплин"
     },
     "pokemon_id_1012": {
-        "EN": "Poltchageist"
+        "EN": "Poltchageist",
+        "DE": "Mortcha",
+        "RU": "Полчагейст"
     },
     "pokemon_id_1013": {
-        "EN": "Sinistcha"
+        "EN": "Sinistcha",
+        "FR": "Théffroyable",
+        "DE": "Fatalitcha",
+        "RU": "Синисча"
     },
     "pokemon_id_1014": {
         "EN": "Okidogi"
@@ -5782,19 +5790,22 @@
         "EN": "Archaludon"
     },
     "pokemon_id_1019": {
-        "EN": "Hydrapple"
+        "EN": "Hydrapple",
+        "FR": "Pomdorochi",
+        "DE": "Hydrapfel",
+        "RU": "Гидраппл"
     },
     "pokemon_id_1020": {
-        "EN": "Gouging-fire"
+        "EN": "Gougingfire"
     },
     "pokemon_id_1021": {
-        "EN": "Raging-bolt"
+        "EN": "Ragingbolt"
     },
     "pokemon_id_1022": {
-        "EN": "Iron-boulder"
+        "EN": "Ironboulder"
     },
     "pokemon_id_1023": {
-        "EN": "Iron-crown"
+        "EN": "Ironcrown"
     },
     "pokemon_id_1024": {
         "EN": "Terapagos"

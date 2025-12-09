@@ -2361,6 +2361,36 @@
     "pokemon_form_2870": {
         "EN": "Gofest 2025 Train Conductor"
     },
+    "pokemon_form_2871": {
+        "EN": "Counterfeit"
+    },
+    "pokemon_form_2872": {
+        "EN": "Artisan"
+    },
+    "pokemon_form_2873": {
+        "EN": "Unremarkable"
+    },
+    "pokemon_form_2874": {
+        "EN": "Masterpiece"
+    },
+    "pokemon_form_2875": {
+        "EN": "Teal"
+    },
+    "pokemon_form_2876": {
+        "EN": "Wellspring"
+    },
+    "pokemon_form_2877": {
+        "EN": "Hearthflame"
+    },
+    "pokemon_form_2879": {
+        "EN": "Cornerstone"
+    },
+    "pokemon_form_2881": {
+        "EN": "Terastal"
+    },
+    "pokemon_form_2882": {
+        "EN": "Stellar"
+    },
     "pokemon_form_2982": {
         "PT-BR": "Fêmea",
         "EN": "Female",
@@ -2543,5 +2573,32 @@
     },
     "pokemon_form_3015": {
         "EN": "Wcs 2024"
+    },
+    "pokemon_form_3017": {
+        "EN": "Wcs 2025"
+    },
+    "pokemon_form_3018": {
+        "EN": "Coin A1"
+    },
+    "pokemon_form_3019": {
+        "EN": "Swim 2025"
+    },
+    "pokemon_form_3021": {
+        "EN": "Wildarea 2025"
+    },
+    "pokemon_form_3315": {
+        "EN": "Winter 2025"
+    },
+    "pokemon_form_3316": {
+        "EN": "Winter 2025"
+    },
+    "pokemon_form_3317": {
+        "EN": "Winter 2025"
+    },
+    "pokemon_form_3322": {
+        "EN": "Gotour 2026 C"
+    },
+    "pokemon_form_3323": {
+        "EN": "Gotour 2026 C 02"
     }
 }

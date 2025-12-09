@@ -3619,7 +3619,7 @@
         "FR": "Prio-Parade",
         "DE": "Schnellkonter",
         "IT": "Colpo di Mano",
-        "RU": "Тыльная Сторона Ладони",
+        "RU": "Ручной Выстрел",
         "ES": "Palma Rauda"
     },
     "pokemon_move_472": {
@@ -3706,8 +3706,23 @@
     "pokemon_move_481": {
         "EN": "Thunder Cage Fast"
     },
+    "pokemon_move_482": {
+        "PT-BR": "Canhão Dinamax",
+        "EN": "Dynamax Cannon",
+        "FR": "Canon Dynamax",
+        "DE": "Dynamax-Kanone",
+        "IT": "Cannone Dynamax",
+        "RU": "Динамакс-Пушка",
+        "ES": "Cañón Dinamax"
+    },
     "pokemon_move_483": {
-        "EN": "Vn Bm 062"
+        "PT-BR": "Canhão Dinamax",
+        "EN": "Dynamax Cannon",
+        "FR": "Canon Dynamax",
+        "DE": "Dynamax-Kanone",
+        "IT": "Cannone Dynamax",
+        "RU": "Динамакс-Пушка",
+        "ES": "Cañón Dinamax"
     },
     "pokemon_move_484": {
         "PT-BR": "Batida de Escamas",
@@ -3735,5 +3750,44 @@
         "IT": "Dragoenergia",
         "RU": "Энергия Дракона",
         "ES": "Dracoenergía"
+    },
+    "pokemon_move_487": {
+        "PT-BR": "Passo Aquático",
+        "EN": "Aqua Step",
+        "FR": "Danse Aquatique",
+        "DE": "Wogentanz",
+        "IT": "Idroballetto",
+        "RU": "Танец Воды",
+        "ES": "Danza Acuática"
+    },
+    "pokemon_move_488": {
+        "PT-BR": "Água Fria",
+        "EN": "Chilling Water",
+        "FR": "Douche Froide",
+        "DE": "Kalte Dusche",
+        "IT": "Doccia Fredda",
+        "RU": "Холодный Душ",
+        "ES": "Agua Fría"
+    },
+    "pokemon_move_489": {
+        "PT-BR": "Espada Secreta",
+        "EN": "Secret Sword",
+        "FR": "Lame Ointe",
+        "DE": "Mystoschwert",
+        "IT": "Spadamistica",
+        "RU": "Тайный Меч",
+        "ES": "Sable Místico"
+    },
+    "pokemon_move_490": {
+        "PT-BR": "Bico Explosivo",
+        "EN": "Beak Blast",
+        "FR": "Bec-Canon",
+        "DE": "Schnabelkanone",
+        "IT": "Cannonbecco",
+        "RU": "Взрывоопасный Клюв",
+        "ES": "Pico Cañón"
+    },
+    "pokemon_move_491": {
+        "EN": "Mind Blown"
     }
 }
