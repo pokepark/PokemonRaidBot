@@ -273,15 +273,14 @@ function generateTimeslotKeys($RAID_SLOTS, $raid) {
   debug_log($five_slot, 'Next 5 Minute slot:');
   debug_log($first_slot, 'First regular slot:');
   $keys_time = [];
-
   // Add button for direct start if needed
-  if($config->RAID_DIRECT_START && $direct_slot != $five_slot && $direct_slot >= $dt_now) {
-    $keys_time[] = button(dt2time($direct_slot->format('Y-m-d H:i:s')), ['vote_time', 'r' => $raid['id'], 't' => $direct_slot->format('YmdHis')]);
+  if(($config->RAID_DIRECT_START && !$config->RAID_RSVP_SLOTS) && $direct_slot != $five_slot && $direct_slot >= $dt_now) {
+    $keys_time[$direct_slot->format('YmdHi')] = button($direct_slot->format('H:i'), ['vote_time', 'r' => $raid['id'], 't' => $direct_slot->format('YmdHis')]);
   }
 
   // Add button for first five minutes if needed
   if($five_slot < $first_slot && $five_plus_slot <= $first_slot && $five_slot >= $dt_now) {
-    $keys_time[] = button(dt2time($five_slot->format('Y-m-d H:i:s')), ['vote_time', 'r' => $raid['id'], 't' => $five_slot->format('YmdHis')]);
+    $keys_time[$five_slot->format('YmdHi')] = button($five_slot->format('H:i'), ['vote_time', 'r' => $raid['id'], 't' => $five_slot->format('YmdHis')]);
   }
 
   // Get regular slots
@@ -294,7 +293,7 @@ function generateTimeslotKeys($RAID_SLOTS, $raid) {
     debug_log($slot, 'Regular slot:');
     // Add regular slot.
     if($slot >= $dt_now) {
-      $keys_time[] = button(dt2time($slot->format('Y-m-d H:i:s')), ['vote_time', 'r' => $raid['id'], 't' => $slot->format('YmdHis')]);
+      $keys_time[$slot->format('YmdHi')] = button($slot->format('H:i'), ['vote_time', 'r' => $raid['id'], 't' => $slot->format('YmdHis')]);
     }
     // Set last slot for later.
     $last_slot = $slot;
@@ -315,9 +314,24 @@ function generateTimeslotKeys($RAID_SLOTS, $raid) {
     ((isset($last_slot) && $last_extra_slot > $last_slot && $last_extra_slot != $last_slot) ||
     !isset($last_slot))) {
     // Add last extra slot
-    $keys_time[] = button(dt2time($last_extra_slot->format('Y-m-d H:i:s')), ['vote_time', 'r' => $raid['id'], 't' => $last_extra_slot->format('YmdHis')]);
+    $keys_time[$last_extra_slot->format('YmdHi')] = button($last_extra_slot->format('H:i'), ['vote_time', 'r' => $raid['id'], 't' => $last_extra_slot->format('YmdHis')]);
   }
 
+  if($config->RAID_RSVP_SLOTS) {
+    $rsvp_slots = new DatePeriod($direct_slot, new DateInterval('PT15M'), 2);
+    foreach($rsvp_slots as $slot){
+      debug_log($slot, 'RSVP slot:');
+      // Add RSVP slot.
+      if($slot >= $dt_now) {
+        $keys_time[$slot->format('YmdHi')] = button($slot->format('H:i'), ['vote_time', 'r' => $raid['id'], 't' => $slot->format('YmdHis')]);
+      }
+    }
+  }
+
+  // Sort keys by time and reindex array
+  asort($keys_time);
+  $keys_time = array_values($keys_time);
+  
   // Attend raid at any time
   if($config->RAID_ANYTIME) {
     $keys_time[] = button(getPublicTranslation('anytime'), ['vote_time', 'r' => $raid['id']]);

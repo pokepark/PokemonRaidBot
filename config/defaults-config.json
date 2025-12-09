@@ -54,6 +54,7 @@
   "RAID_LOCATION": false,
   "RAID_SLOTS":"15",
   "RAID_DIRECT_START": false,
+  "RAID_RSVP_SLOTS": false,
   "RAID_FIRST_START":"5",
   "RAID_LAST_START":"5",
   "RAID_ANYTIME": false,
