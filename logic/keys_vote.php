@@ -275,12 +275,12 @@ function generateTimeslotKeys($RAID_SLOTS, $raid) {
   $keys_time = [];
   // Add button for direct start if needed
   if(($config->RAID_DIRECT_START && !$config->RAID_RSVP_SLOTS) && $direct_slot != $five_slot && $direct_slot >= $dt_now) {
-    $keys_time[$direct_slot->format('YmdHi')] = button($direct_slot->format('H:i'), ['vote_time', 'r' => $raid['id'], 't' => $direct_slot->format('YmdHis')]);
+    $keys_time[$direct_slot->format('YmdHi')] = button(timeslot_label($direct_slot), ['vote_time', 'r' => $raid['id'], 't' => $direct_slot->format('YmdHis')]);
   }
 
   // Add button for first five minutes if needed
   if($five_slot < $first_slot && $five_plus_slot <= $first_slot && $five_slot >= $dt_now) {
-    $keys_time[$five_slot->format('YmdHi')] = button($five_slot->format('H:i'), ['vote_time', 'r' => $raid['id'], 't' => $five_slot->format('YmdHis')]);
+    $keys_time[$five_slot->format('YmdHi')] = button(timeslot_label($five_slot), ['vote_time', 'r' => $raid['id'], 't' => $five_slot->format('YmdHis')]);
   }
 
   // Get regular slots
@@ -293,7 +293,7 @@ function generateTimeslotKeys($RAID_SLOTS, $raid) {
     debug_log($slot, 'Regular slot:');
     // Add regular slot.
     if($slot >= $dt_now) {
-      $keys_time[$slot->format('YmdHi')] = button($slot->format('H:i'), ['vote_time', 'r' => $raid['id'], 't' => $slot->format('YmdHis')]);
+      $keys_time[$slot->format('YmdHi')] = button(timeslot_label($slot), ['vote_time', 'r' => $raid['id'], 't' => $slot->format('YmdHis')]);
     }
     // Set last slot for later.
     $last_slot = $slot;
@@ -314,17 +314,16 @@ function generateTimeslotKeys($RAID_SLOTS, $raid) {
     ((isset($last_slot) && $last_extra_slot > $last_slot && $last_extra_slot != $last_slot) ||
     !isset($last_slot))) {
     // Add last extra slot
-    $keys_time[$last_extra_slot->format('YmdHi')] = button($last_extra_slot->format('H:i'), ['vote_time', 'r' => $raid['id'], 't' => $last_extra_slot->format('YmdHis')]);
+    $keys_time[$last_extra_slot->format('YmdHi')] = button(timeslot_label($last_extra_slot), ['vote_time', 'r' => $raid['id'], 't' => $last_extra_slot->format('YmdHis')]);
   }
 
   if($config->RAID_RSVP_SLOTS) {
     $rsvp_slots = new DatePeriod($direct_slot, new DateInterval('PT15M'), 2);
     foreach($rsvp_slots as $slot){
       debug_log($slot, 'RSVP slot:');
+      if($slot < $dt_now) continue;
       // Add RSVP slot.
-      if($slot >= $dt_now) {
-        $keys_time[$slot->format('YmdHi')] = button($slot->format('H:i'), ['vote_time', 'r' => $raid['id'], 't' => $slot->format('YmdHis')]);
-      }
+      $keys_time[$slot->format('YmdHi')] = button(timeslot_label($slot), ['vote_time', 'r' => $raid['id'], 't' => $slot->format('YmdHis')]);
     }
   }
 
@@ -337,4 +336,18 @@ function generateTimeslotKeys($RAID_SLOTS, $raid) {
     $keys_time[] = button(getPublicTranslation('anytime'), ['vote_time', 'r' => $raid['id']]);
   }
   return $keys_time;
+}
+
+/**
+ * Generate timeslot label in local time.
+ * @param DateTime $datetime
+ * @return string
+ */
+function timeslot_label($datetime)
+{
+  global $config;
+  $tz = $config->TIMEZONE;
+  // Change the timezone of the object without changing it's time
+  $new = $datetime->setTimezone(new DateTimeZone($tz));
+  return $new->format('H:i');
 }
