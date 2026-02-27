@@ -5752,10 +5752,22 @@
         "RU": "Мирайдон"
     },
     "pokemon_id_1009": {
-        "EN": "Walkingwake"
+        "PT-BR": "Onda Ando",
+        "EN": "Walking Wake",
+        "FR": "Serpente-Eau",
+        "DE": "Windewoge",
+        "IT": "Acquecrespe",
+        "RU": "Вздымающаяся Волна",
+        "ES": "Ondulagua"
     },
     "pokemon_id_1010": {
-        "EN": "Ironleaves"
+        "PT-BR": "Folhas Férreas",
+        "EN": "Iron Leaves",
+        "FR": "Vert-de-Fer",
+        "DE": "Eisenblatt",
+        "IT": "Fogliaferrea",
+        "RU": "Железные Листья",
+        "ES": "Ferroverdor"
     },
     "pokemon_id_1011": {
         "EN": "Dipplin",
@@ -5775,19 +5787,32 @@
         "RU": "Синисча"
     },
     "pokemon_id_1014": {
-        "EN": "Okidogi"
+        "EN": "Okidogi",
+        "FR": "Félicanis",
+        "DE": "Boninu",
+        "RU": "Окидоги"
     },
     "pokemon_id_1015": {
-        "EN": "Munkidori"
+        "EN": "Munkidori",
+        "FR": "Fortusimia",
+        "DE": "Benesaru",
+        "RU": "Манкидори"
     },
     "pokemon_id_1016": {
-        "EN": "Fezandipiti"
+        "EN": "Fezandipiti",
+        "FR": "Favianos",
+        "DE": "Beatori",
+        "RU": "Фезандипити"
     },
     "pokemon_id_1017": {
-        "EN": "Ogerpon"
+        "EN": "Ogerpon",
+        "RU": "Огерпон"
     },
     "pokemon_id_1018": {
-        "EN": "Archaludon"
+        "EN": "Archaludon",
+        "FR": "Pondralugon",
+        "DE": "Briduradon",
+        "RU": "Архалюдон"
     },
     "pokemon_id_1019": {
         "EN": "Hydrapple",
@@ -5796,21 +5821,48 @@
         "RU": "Гидраппл"
     },
     "pokemon_id_1020": {
-        "EN": "Gougingfire"
+        "PT-BR": "Fogo Corrosão",
+        "EN": "Gouging Fire",
+        "DE": "Keilflamme",
+        "IT": "Vampeaguzze",
+        "RU": "Пронзающее Пламя",
+        "ES": "Flamariete"
     },
     "pokemon_id_1021": {
-        "EN": "Ragingbolt"
+        "PT-BR": "Raio Fúria",
+        "EN": "Raging Bolt",
+        "FR": "Ire-Foudre",
+        "DE": "Furienblitz",
+        "IT": "Furiatonante",
+        "RU": "Яростная Молния",
+        "ES": "Electrofuria"
     },
     "pokemon_id_1022": {
-        "EN": "Ironboulder"
+        "PT-BR": "Rocha Férrea",
+        "EN": "Iron Boulder",
+        "FR": "Roc-de-Fer",
+        "DE": "Eisenfels",
+        "IT": "Massoferreo",
+        "RU": "Железный Валун",
+        "ES": "Ferromole"
     },
     "pokemon_id_1023": {
-        "EN": "Ironcrown"
+        "PT-BR": "Chifres Férreos",
+        "EN": "Iron Crown",
+        "FR": "Chef-de-Fer",
+        "DE": "Eisenhaupt",
+        "IT": "Capoferreo",
+        "RU": "Железный Вождь",
+        "ES": "Ferrotesta"
     },
     "pokemon_id_1024": {
-        "EN": "Terapagos"
+        "EN": "Terapagos",
+        "RU": "Терапагос"
     },
     "pokemon_id_1025": {
-        "EN": "Pecharunt"
+        "EN": "Pecharunt",
+        "FR": "Pêchaminus",
+        "DE": "Infamomo",
+        "RU": "Печарант"
     }
 }

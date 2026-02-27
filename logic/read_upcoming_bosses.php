@@ -51,6 +51,8 @@ function read_upcoming_bosses($returnFormat = 'list', $levelsToRead = false) {
     // In case Pokebattler keeps using RAID_LEVEL_MEGA_5 (legendary mega tier) for primal raids
     if(in_array($dex_id_form[0], PRIMAL_MONS) && $raid_level_id == 7) {
       $raid_level_id = 10;
+    }elseif(in_array($dex_id_form[1], [-1,-2,-3]) && $raid_level_id == 7) {
+      $raid_level_id = 16;
     }
     if($prev_start != $date_start or $prev_end != $date_end) {
       $list.= CR . EMOJI_CLOCK . ' <b>' . $starttime->format('j.n. ') . getTranslation('raid_egg_opens_at') . $starttime->format(' H:i') . ' —  ' .  $endtime->format('j.n. ') . getTranslation('raid_egg_opens_at') . $endtime->format(' H:i') . ':</b>' . CR;

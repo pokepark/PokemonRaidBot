@@ -109,6 +109,9 @@ foreach($pb_data['breakingNews'] as $news) {
   if(in_array($dex_id, PRIMAL_MONS) && $news['tier'] == 'RAID_LEVEL_MEGA_5') {
     $raid_level_id = 10;
     $tierHolder = 'RAID_LEVEL_PRIMAL';
+  }elseif(in_array($form_id, [-1,-2,-3]) && $news['tier'] == 'RAID_LEVEL_MEGA_5') {
+    $raid_level_id = 16;
+    $tierHolder = 'RAID_LEVEL_SUPER_MEGA_4';
   }
   if(in_array($tierHolder, $raidlevels) && $starttime->getTimestamp() < $now->getTimestamp() && $endtime->getTimestamp() > $now->getTimestamp()) {
     $levels_processed[$raid_level_id] = $news['tier'];
@@ -127,7 +130,7 @@ foreach($pb_data['tiers'] as $tier) {
   // Get raid bosses for each raid level.
   foreach($tier['raids'] as $raid) {
     // Raid level
-    if ($raid['id'] == 0) {
+    if (!array_key_exists('id', $raid) or $raid['id'] == 0) {
       debug_log('Skipping raid boss ' . $raid['pokemon'] . ' since it has no id, it\'s likely in the future!');
       continue;
     }

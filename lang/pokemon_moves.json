@@ -3788,6 +3788,30 @@
         "ES": "Pico Cañón"
     },
     "pokemon_move_491": {
-        "EN": "Mind Blown"
+        "PT-BR": "Explosão Mental",
+        "EN": "Mind Blown",
+        "FR": "Caboche-Kaboum",
+        "DE": "Knallkopf",
+        "IT": "Sbalorditesta",
+        "RU": "Взрыв Разума",
+        "ES": "Cabeza Sorpresa"
+    },
+    "pokemon_move_492": {
+        "PT-BR": "Toque do Tambor",
+        "EN": "Drum Beating",
+        "FR": "Tambour Battant",
+        "DE": "Trommelschläge",
+        "IT": "Tamburattacco",
+        "RU": "Барабанный Бой",
+        "ES": "Batería Asalto"
+    },
+    "pokemon_move_493": {
+        "PT-BR": "Bola Incendiária",
+        "EN": "Pyro Ball",
+        "FR": "Ballon Brûlant",
+        "DE": "Feuerball",
+        "IT": "Palla Infuocata",
+        "RU": "Огнешар",
+        "ES": "Balón Ígneo"
     }
 }

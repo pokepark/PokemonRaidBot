@@ -870,6 +870,18 @@
     "FI": "Ex-Raidi",
     "ES": "Incursión EX"
   },
+  "17stars": {
+    "EN": "5 Super Mega Raid"
+  },
+  "17stars_short": {
+    "EN": "5 Super Mega"
+  },
+  "16stars": {
+    "EN": "4 Super Mega Raid"
+  },
+  "16stars_short": {
+    "EN": "4 Super Mega"
+  },
   "15stars": {
     "NL": "TRANSLATE",
     "DE": "5 Sterne Shadow",
@@ -1207,6 +1219,32 @@
     "PL": "Nieaktywny",
     "FI": "Pois käytöstä",
     "ES": "Desactivado"
+  },
+  "egg_17": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "5 Mega Enhanced Egg",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "TRANSLATE",
+    "ES": "TRANSLATE"
+  },
+  "egg_16": {
+    "NL": "TRANSLATE",
+    "DE": "TRANSLATE",
+    "EN": "4 Mega Enhanced Egg",
+    "IT": "TRANSLATE",
+    "PT-BR": "TRANSLATE",
+    "RU": "TRANSLATE",
+    "NO": "TRANSLATE",
+    "FR": "TRANSLATE",
+    "PL": "TRANSLATE",
+    "FI": "TRANSLATE",
+    "ES": "TRANSLATE"
   },
   "egg_15": {
     "NL": "TRANSLATE",

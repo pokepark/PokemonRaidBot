@@ -7,10 +7,11 @@ defined('RAID_ID_EX') 		or define('RAID_ID_EX', '99');
 define('PORTAL_IMAGES_PATH', IMAGES_PATH . '/gyms');
 
 // raid levels constant
-define('RAID_LEVEL_ALL', [RAID_ID_EX, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 1]);
+define('RAID_LEVEL_ALL', [RAID_ID_EX, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 1]);
 
 // Raid eggs.
 define('EGGS', [
+  '99916',  // Level 16 / Super Mega
   '99915',  // Level 15 / Shadow 5
   '99914',  // Level 14 / Shadow 4
   '99913',  // Level 13 / Shadow 3
@@ -35,7 +36,7 @@ define('RAID_LEVEL_LOCAL_ONLY', [4, 9]);
 define('RAID_LEVEL_SHADOW', [11, 12, 13, 14, 15]);
 
 // Levels available for import at PokeBattler
-$pokebattler_levels = array('15','13','11','10', '9', '8', '7', '6', '5', '4', '3', '1');
+$pokebattler_levels = array('16','15','13','11','10', '9', '8', '7', '6', '5', '4', '3', '1');
 
 // Map our raid levels to tier names PokeBattler uses
 $pokebattler_level_map = [
@@ -51,6 +52,8 @@ $pokebattler_level_map = [
   '11' => '1_SHADOW',
   '13' => '3_SHADOW',
   '15' => '5_SHADOW',
+  '16' => 'SUPER_MEGA_4',  // Pokebattler currently uses MEGA_5 for super mega raids. This needs to be changed if they start using their own tier for super mega raids 
+  '17' => 'SUPER_MEGA_5',  // Pokebattler currently uses MEGA_5 for super mega raids. This needs to be changed if they start using their own tier for super mega raids 
 ];
 
 $pokebattler_pokemon_map = [
