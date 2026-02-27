@@ -25,6 +25,7 @@ jobs:
             echo ::set-output name=channel::"latest"
             echo ::set-output name=version::main_$(cat VERSION)-${GITHUB_SHA::6}
           elif [[ "$GITHUB_REF" == "refs/heads/"* ]]; then
+            echo ::set-output name=channel::${GITHUB_REF/refs\/heads\//}-"latest"
             echo ::set-output name=version::${GITHUB_REF/refs\/heads\//}-$(cat VERSION)-${GITHUB_SHA::6}
           elif [[ "$GITHUB_REF" == "refs/tags/"* ]]; then
             echo ::set-output name=channel::${GITHUB_REF/refs\/tags\//}

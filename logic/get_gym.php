@@ -6,18 +6,15 @@
  */
 function get_gym($id)
 {
-    // Get gym from database
-    $rs = my_query(
-            "
-            SELECT    *
-            FROM      gyms
-	    WHERE     id = {$id}
-            "
-        );
+  // Get gym from database
+  $rs = my_query('
+    SELECT  *
+    FROM    gyms
+    WHERE   id = ?
+    ', [$id]
+  );
 
-    $gym = $rs->fetch();
+  $gym = $rs->fetch();
 
-    return $gym;
+  return $gym;
 }
-
-?>

@@ -11,13 +11,16 @@ if(json_last_error() !== JSON_ERROR_NONE) {
     die('Config file not valid JSON, cannot continue.');
 }
 
+$tz = $config->TIMEZONE;
+date_default_timezone_set($tz);
+
 // Establish mysql connection.
 // TODO(artanicus): This should be centralized & imported instead of duplicated
 $dbh = new PDO('mysql:host=' . $config->DB_HOST . ';dbname=' . $config->DB_NAME . ';charset=utf8mb4', $config->DB_USER, $config->DB_PASSWORD, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
 $dbh->setAttribute(PDO::ATTR_ORACLE_NULLS, PDO::NULL_EMPTY_STRING);
 $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
-$link = 'https://raw.githubusercontent.com/ccev/pogoinfo/v2/active/events.json';
+$link = 'https://raw.githubusercontent.com/bigfoott/ScrapedDuck/refs/heads/data/events.min.json';
 $data = curl_get_contents($link);
 $raids = $dbh->prepare("SELECT start_time FROM raids WHERE event = '" . $config->RAID_HOUR_EVENT_ID . "'");
 $raids->execute();
@@ -25,6 +28,7 @@ $raids_res = $raids->fetchAll(PDO::FETCH_COLUMN,0);
 $offset = date('Z');
 $interval = DateInterval::createFromDateString($offset.' seconds');
 $raid_to_create = [];
+$datesToCreate = [];
 $data = json_decode($data,true);
 if($data !== false) {
     $now = new DateTime('18:00');
@@ -37,8 +41,15 @@ if($data !== false) {
         $end->sub($interval);
         $event_start = $start->format('Y-m-d H:i:s');
         $event_end = $end->format('Y-m-d H:i:s');
-        if($event['type'] == 'raid-hour' && (($raids->rowcount() > 0 && !in_array($event_start, $raids_res)) || $raids->rowcount() === 0)) {
-            $mon_name = trim(str_replace('Raid Hour','',str_replace('Forme','',$event['name'])));
+        $notePrefix = null;
+        if($event['eventType'] == 'raid-hour' && $start > $now && (($raids->rowcount() > 0 && !in_array($event_start, $raids_res)) || $raids->rowcount() === 0)) {
+            if(preg_match('/&amp;/', $event['name'])) {
+                $notePrefix = $event['name'] . PHP_EOL;
+                $raid_to_create[] = [9995, 0, $event_start, $event_end, '5', $notePrefix];
+                $datesToCreate[] = $event_start;
+                continue;
+            }
+            $mon_name = trim(preg_replace('/Forme|Form|Raid Hour|[()]/','',$event['name']));
             $mon_split = explode(' ',$mon_name);
             $part_count = count($mon_split);
             $mon_query_input = [];
@@ -66,61 +77,79 @@ if($data !== false) {
                 if($mon === false) continue;
                 $pokemon = $mon[0];
                 $pokemon_form = $mon[1];
+                $notePrefix = $event['name'] . PHP_EOL;
             }
-            $raid_to_create[] = [$pokemon, $pokemon_form,$event_start,$event_end];
+            $raid_to_create[] = [$pokemon, $pokemon_form,$event_start,$event_end, '5', $notePrefix];
+            $datesToCreate[] = $event_start;
         }
     }
-    if($now->format('w') == 3 && !in_array($now->format('Y-m-d H:i:s'),$raids_res)) {
+    if(($now->format('w') == 3 || in_array($now->format('Y-m-d'), $config->EXTRA_DATES)) && !in_array($now->format('Y-m-d H:i:s'), $raids_res) && !in_array($now->format('Y-m-d H:i:s'), $datesToCreate)) {
         $start_time = gmdate('Y-m-d H:i:s',mktime(18,0,0));
         $end_time = gmdate('Y-m-d H:i:s',mktime(19,0,0));
         $mon = get_current_bosses($start_time);
-        if($mon !== false) $raid_to_create[] = [$mon[0], $mon[1] ,$start_time, $end_time];
+        if($mon !== false) $raid_to_create[] = [$mon[0], $mon[1] ,$start_time, $end_time, $mon[2], null];
     }
 }
 try {
-    $query = $dbh->prepare('INSERT INTO raids (
-                                user_id,
-                                pokemon,
-                                pokemon_form,
-                                spawn,
-                                level,
-                                start_time,
-                                end_time,
-                                gym_id,
-                                event,
-                                event_note
-                               )
-                          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                          ');
+    $query = $dbh->prepare('
+        INSERT INTO raids (
+            user_id,
+            pokemon,
+            pokemon_form,
+            spawn,
+            level,
+            start_time,
+            end_time,
+            gym_id,
+            event,
+            event_note
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    ');
 
+    $now = gmdate('Y-m-d H:i:s');
     foreach($raid_to_create as $raid_info) {
         foreach($config->GYM_INFOS as $t) {
-            $now = gmdate('Y-m-d H:i:s');
-            $query->execute([$config->RAID_CREATOR_ID,$raid_info[0],$raid_info[1],$now,'5',$raid_info[2],$raid_info[3],$t[0],$config->RAID_HOUR_EVENT_ID,$t[1]]);
+            $query->execute([
+                $config->RAID_CREATOR_ID,
+                $raid_info[0],
+                $raid_info[1],
+                $now,
+                $raid_info[4],
+                $raid_info[2],
+                $raid_info[3],
+                $t[0],
+                $config->RAID_HOUR_EVENT_ID,
+                $raid_info[5] . $t[1]
+            ]);
         }
     }
 }
 catch (PDOException $exception) {
     echo($exception->getMessage());
-    $dbh = null;
     exit;
 }
-$dbh = null;
 function get_current_bosses($spawn) {
     global $dbh;
-    $pk = $dbh->prepare('SELECT pokedex_id,pokemon_form_id FROM raid_bosses WHERE raid_level = \'5\' AND \''.$spawn.'\' BETWEEN date_start AND date_end');
-    $pk->execute();
-    $res = $pk->fetch();
-    if($pk->rowCount()==1) {
-        $pokemon = $res['pokedex_id'];
-        $pokemon_form = $res['pokemon_form_id'];
-    }elseif($pk->rowCount()>1) {
-        $pokemon = 9995;
-        $pokemon_form = 0;
-    }else {
-        return false;
+    $i = 0;
+    $levels = [5, 7, 8]; // Search potential raid hour bosses from these raid levels
+    $pokemon = $pokemon_form = false;
+    foreach($levels as $level) {
+        $pk = $dbh->prepare('SELECT pokedex_id,pokemon_form_id FROM raid_bosses WHERE raid_level = ? AND ? BETWEEN date_start AND date_end and disabled = 0');
+        $pk->execute([$level, $spawn]);
+        $res = $pk->fetch();
+        if($pk->rowCount() == 1) {
+            $pokemon = $res['pokedex_id'];
+            $pokemon_form = $res['pokemon_form_id'];
+            break;
+        }elseif($pk->rowCount() > 1) {
+            $pokemon = 999 . $level;
+            $pokemon_form = 0;
+            break;
+        }
     }
-    return [$pokemon,$pokemon_form];
+    if($pokemon === false) return false;
+    return [$pokemon, $pokemon_form, $level];
 }
 function curl_get_contents($url)
 {
@@ -139,5 +168,3 @@ function curl_get_contents($url)
     curl_close($ch);
     return $content;
 }
-
-?>

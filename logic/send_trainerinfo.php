@@ -1,35 +1,35 @@
 <?php
+require_once(LOGIC_PATH . '/keys_trainerinfo.php');
+require_once(LOGIC_PATH . '/show_trainerinfo.php');
 /**
- * Send response vote.
+ * Send response vote and exit.
  * @param $update
  * @param $show
  */
 function send_trainerinfo($update, $show = false)
 {
-    // Get text and keys.
-    $msg = show_trainerinfo($update, $show);
-    $keys = keys_trainerinfo($show);
+  // Get text and keys.
+  $msg = show_trainerinfo($update, $show);
+  $keys = keys_trainerinfo($show);
 
-    // Write to log.
-    // debug_log($keys);
+  // Write to log.
+  // debug_log($keys);
 
-    // Change message string.
-    $callback_msg = getPublicTranslation('updated');
+  // Change message string.
+  $callback_msg = getPublicTranslation('updated');
 
-    // Telegram JSON array.
-    $tg_json = array();
+  // Telegram JSON array.
+  $tg_json = array();
 
-    // Answer the callback.
-    $tg_json[] = answerCallbackQuery($update['callback_query']['id'], $callback_msg, true, true);
+  // Answer the callback.
+  $tg_json[] = answerCallbackQuery($update['callback_query']['id'], $callback_msg, true);
 
-    // Edit the message.
-    $tg_json[] = edit_message($update, $msg, $keys, ['disable_web_page_preview' => 'true'], true);
+  // Edit the message.
+  $tg_json[] = edit_message($update, $msg, $keys, ['disable_web_page_preview' => 'true'], true);
 
-    // Telegram multicurl request.
-    curl_json_multi_request($tg_json);
+  // Telegram multicurl request.
+  curl_json_multi_request($tg_json);
 
-    // Exit.
-    exit();
+  // Exit.
+  exit();
 }
-
-?>

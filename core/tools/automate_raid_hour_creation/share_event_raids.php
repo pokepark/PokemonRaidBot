@@ -49,6 +49,3 @@ foreach($all as $raid) {
     // Close connection.
     curl_close($curl);
 }
-
-$dbh = null;
-?>

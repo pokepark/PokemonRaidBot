@@ -6,44 +6,48 @@
  * @param $attend_time
  * @return int
  */
-function get_remote_users_count($raid_id, $user_id, $attend_time = false)
+function get_remote_users_count($raidId, $userId, $attendTime = false)
 {
-    global $config;
+  global $config;
 
-    if(!$attend_time) {
-        // If attend time is not given, get the one user has already voted for from database
-        $att_sql = "(
-                    SELECT    attend_time
-                    FROM      attendance
-                    WHERE     raid_id = {$raid_id}
-                        AND   user_id = {$user_id}
-                    LIMIT     1
-                )";
-    }else {
-        // Use given attend time (needed when voting for new time)
-        $att_sql = "'{$attend_time}'";
-    }
+  $attBinds['userId'] = $userId;
+  if($attendTime) {
+    $attSql = ':attTime';
+    $attBinds['attTime'] = $attendTime;
+  }else {
+    // If attend time is not given, get the one user has already voted for from database
+    $attSql = '(
+      SELECT  attend_time
+      FROM    attendance
+      WHERE   raid_id = :raidId
+        AND   user_id = :userId
+      LIMIT   1
+      )';
+    $attBinds['raidId'] = $raidId;
+    $attBinds['userId'] = $userId;
+  }
 
-    // Check if max remote users limit is already reached!
-    // Ignore max limit if attend time is 'Anytime'
-    $rs = my_query(
-        "
-        SELECT    IF(attend_time = '" . ANYTIME . "', 0, sum(1 + extra_in_person)) AS remote_users
-        FROM      (SELECT DISTINCT user_id, extra_in_person, attend_time FROM attendance WHERE remote = 1 AND cancel = 0 AND raid_done = 0) as T
-        WHERE     attend_time = {$att_sql}
-        GROUP BY  attend_time
-        "
-    );
+  // Check if max remote users limit is already reached!
+  // Ignore max limit if attend time is 'Anytime'
+  $rs = my_query(
+    '
+    SELECT  CASE WHEN attend_time = \'' . ANYTIME . '\'
+        THEN 0
+        ELSE
+          sum(CASE WHEN remote = 1 THEN 1 + extra_in_person ELSE 0 END + extra_alien) END AS remote_users
+    FROM    (SELECT DISTINCT user_id, extra_in_person, extra_alien, remote, attend_time FROM attendance WHERE (remote = 1 or extra_alien > 0) AND cancel = 0 AND raid_done = 0 and user_id != :userId) as T
+    WHERE   attend_time = ' . $attSql . '
+    GROUP BY  attend_time
+    ', $attBinds
+  );
 
-    // Get the answer.
-    $answer = $rs->fetch();
-    $remote_users = empty($answer) ? 0 : $answer['remote_users'];
+  // Get the answer.
+  $answer = $rs->fetch();
+  $remoteUsers = empty($answer) ? 0 : $answer['remote_users'];
 
-    // Write to log.
-    debug_log($remote_users, 'Remote participants so far:');
-    debug_log($config->RAID_REMOTEPASS_USERS_LIMIT, 'Maximum remote participants:');
+  // Write to log.
+  debug_log($remoteUsers, 'Remote participants so far:');
+  debug_log($config->RAID_REMOTEPASS_USERS_LIMIT, 'Maximum remote participants:');
 
-    return $remote_users;
+  return $remoteUsers;
 }
-
-?>

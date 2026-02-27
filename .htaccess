@@ -1,11 +1,23 @@
-# Block access to all dot files
-RedirectMatch 404 /\..*$
+# Deny everything by default
+Order deny,allow
+Deny from all
 
-# Block access to .git files and folders
-RedirectMatch 404 /\.git
+# Allow plain requests that get routed to index.php
+<FilesMatch "^$">
+    Allow from all
+</FilesMatch>
 
-# Block access to .json and .sql files
-RedirectMatch 404 /*\.(json|sql)$
+# Allow endpoints we expect to be called directly
+<FilesMatch "(index|raidpicture)\.php$">
+    Allow from all
+</FilesMatch>
 
-# Block access to specifc folders
-RedirectMatch 404 /(access|config|custom|ddos|lang|sql|screens)/
+# Allow webhook setup, it's just static
+<Files "webhook.html">
+    Allow from all
+</Files>
+
+# Allow metrics without appending /
+<Files "metrics">
+    Allow from all
+</Files>

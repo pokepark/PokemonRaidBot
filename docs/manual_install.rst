@@ -9,7 +9,7 @@ Webserver requirements
 Preferably:
 
 * Apache2
-* PHP7
+* PHP8.1
 * MySQL5 or MariaDB10. MariaDB is preferred, MySQL8 will cause some warnings.
 * Curl
 * SSL Certificate ( https://www.letsencrypt.org )

@@ -47,7 +47,6 @@ it's already prepended to the right length.
 
 .. code-block::
 
-   {
    *snip*
            "chat": {
                "id": -1002233445566,
@@ -95,6 +94,22 @@ How to make a Supergroup
 * Once a group has been converted to a Supergroup it cannot go back to a normal Group, even if you change back the option that caused it to convert.
 * Be aware that the group ID will change completely when the group gets converted so you'll need to find it again!
 
+Configuring multiple bots
+-------------------------
+
+If you want to run multiple Telegram bots using this directory, you can create for each of them config and access files by prepending them with a unique name:
+
+.. code-block::
+
+   access/bot1-creator111222333
+   access/bot2-creator111222333
+   config/bot1-config.json
+   config/bot1-geoconfig.json
+   config/bot2-config.json
+   config/bot2-geoconfig.json
+
+When setting webhook to Telegram using ``webhook.html`` you must set the matching bot name.
+
 Database connection
 -------------------
 
@@ -110,8 +125,6 @@ Set ``DEBUG_LOGFILE`` to the location of the logfile, e.g. /var/log/tg-bots/dev-
 Set ``APIKEY_HASH`` to the hashed value of your bot token (preferably lowercase) using a hash generator, e.g. https://www.miniwebtool.com/sha512-hash-generator/
 
 Set ``DDOS_MAXIMUM`` to the amount of callback queries each user is allowed to do each minute. If the amount is reached any further callback query is rejected by the DDOS check. Default value: 10.
-
-Set ``BRIDGE_MODE`` to true when you're using the PokemonBotBridge. If you're not using the PokemonBotBridge the default value of false is used. PokemonBotBridge: https://github.com/pokepark/PokemonBotBridge
 
 More config options
 -------------------
@@ -138,6 +151,7 @@ You can set several languages for the bot. Available languages are (A-Z):
 
 * DE (German)
 * EN (English)
+* ES (Spanish)
 * FI (Finnish)
 * FR (French)
 * IT (Italian)
@@ -194,6 +208,8 @@ OpenStreetMap API
 
 To use OpenStreetMap's Nominatim API to lookup addresses of gyms, set ``OSM_LOOKUP`` to ``true`` and  ``MAPS_LOOKUP`` to ``false``.
 
+You can set a custom nominatim server address in ``OSM_URL``, e.g. ``http://localhost:8090``.
+
 Quote from `Nominatim documentation <https://nominatim.org/release-docs/latest/api/Reverse/>`_\ :
 
 ``The reverse geocoding API does not exactly compute the address for the coordinate it receives. It works by finding the closest suitable OSM object and returning its address information. This may occasionally lead to unexpected results.``
@@ -210,18 +226,6 @@ Set ``RAID_VIA_LOCATION_FUNCTION`` to select which action to perform with the sh
 Set ``RAID_EGG_DURATION`` to the maximum amount of minutes a user can select for the egg hatching phase.
 
 Set ``RAID_DURATION`` to the maximum amount of minutes a user can select as raid duration for already running/active raids.
-
-Set ``RAID_HOUR`` to true to enable the raid hour. Enabling the raid hour superseds the normal raid duration. Note that the raid hour takes precedence over the raid day. Make sure to disable the raid hour to get the raid day.
-
-Set ``RAID_HOUR_DURATION`` to the maximum amount of minutes a user can select as raid duration if the ``RAID_HOUR`` is enabled. Per default max. 60 minutes.
-
-Set ``RAID_HOUR_CREATION_LIMIT`` to the maximum amount of raids a user can create if the ``RAID_HOUR`` is enabled. Per default 1 raid.
-
-Set ``RAID_DAY`` to true to enable the raid day. Enabling the raid day superseds the normal raid duration. Note that the raid hour takes precedence over the raid day. Make sure to disable the raid hour to get the raid day.
-
-Set ``RAID_DAY_DURATION`` to the maximum amount of minutes a user can select as raid duration if the ``RAID_DAY`` is enabled. Per default max. 180 minutes.
-
-Set ``RAID_DAY_CREATION_LIMIT`` to the maximum amount of raids a user can create if the ``RAID_DAY`` is enabled. Per default 1 raid.
 
 Set ``RAID_DURATION_CLOCK_STYLE`` to customize the default style for the raid start time selection. Set to true, the bot will show the time in clocktime style, e.g. "18:34" as selection when the raid will start. Set to false the bot will show the time until the raid starts in minutes, e.g. "0:16" (similar to the countdown in the gyms). Users can switch between both style in the raid creation process.
 
@@ -273,6 +277,13 @@ Set ``RAID_EX_GYM_MARKER`` to set the marker for ex-raid gyms. You can use a pre
 
 Set ``RAID_CREATION_EX_GYM_MARKER`` to true to show the marker for ex-raid gyms during raid creation.
 
+Manage bot configuration values via Telegram
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+For bot admins to easily manage specific bot settings you can create a config file ``config/telegram.json`` containing the configuration values you want to be able to edit. Example file is located in ``config/defaults-telegram.json``.
+
+Users with the right permissions can then use the commands ``/get`` and ``/set`` to manage those configuration values.
+
 Automatically refreshing raid polls
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -295,9 +306,11 @@ For a specific chat:
 Raid Picture mode
 ^^^^^^^^^^^^^^^^^
 
-To enable raid announcements as images set ``RAID_PICTURE`` to true and set the url in ``RAID_PICTURE_URL`` to the location of raidpicture.php.
+To enable raid announcements as images set ``RAID_PICTURE`` to true.
 
 You also need to get the Pokemon sprites from known sources and put them in either images/pokemon/ or the images/pokemon_REPO-OWNER/ folder. The images/pokemon/ directory needs to be created manually, the images/pokemon_REPO-OWNER/ folders will be created automatically when by running the special download script mentioned below.
+
+If you have an UICONS repo stored on your server already you can softlink the ``pokemon`` folder from there to ``images/pokemon/`` in raidbot directory.
 
 Pokemon Icons / Sprites:
 Link: https://github.com/PokeMiners/pogo_assets/tree/master/Images/Pokemon%20-%20256x256
@@ -365,7 +378,7 @@ Sharing raid polls can be restricted, so only specific chats/users can be allowe
 
 With a predefined list ``SHARE_CHATS`` you can specify the chats which should appear as buttons for sharing raid polls.
 
-You can define different chats for specific raid levels using ``SHARE_CHATS_LEVEL_`` plus the raid level too. Raid levels can be 'X', '5', '4', '3', '2' or '1'.
+You can define different chats for specific raid levels using ``SHARE_CHATS_LEVEL_`` plus the raid level too.
 
 For the ID of a chat either forward a message from the chat to a bot like @RawDataBot, @getidsbot or search the web for another method ;)
 
@@ -389,11 +402,30 @@ Predefine sharing all raids to the chats -100111222333 and -100444555666, except
 Raids from Webhook
 ~~~~~~~~~~~~~~~~~~
 
-You can receive Raids from a mapping system such as MAD via Webhook.
-For that you need to setup ``WEBHOOK_CREATOR``\ , and to automatically share raids to chats, 
+You can receive Raids from a mapping systems such as MAD and RDM via Webhook.
+For that you need to setup ``WEBHOOK_CREATOR``\ , and to automatically share raids to chats,
 ``"WEBHOOK_CHATS_ALL_LEVELS":"-100444555666"``
 or by Raidlevel ``"WEBHOOK_CHATS_LEVEL_5":"-100444555666"``
 All incoming raids will be published in these chats.
+
+If you only want to automatically share a specific Pokemon, you can do that by editing the ``WEBHOOK_CHATS_BY_POKEMON`` json array:
+
+
+.. code-block::
+
+  "WEBHOOK_CHATS_BY_POKEMON" : [
+    {
+        "pokemon_id": 744,
+        "chats":[chat_id_1, chat_id_2]
+    },
+    {
+        "pokemon_id": 25,
+        "form_id": 2678,
+        "chats":[chat_id_3]
+    }
+  ],
+
+``pokemon_id`` and ``chats`` are required objects, ``form_id`` is optional.
 
 Filter Raids from Webhook / geoconfig.json
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -415,7 +447,7 @@ Event raids
 
 Users with the proper access rights can choose to create event raids. These can be handy for example on raid hours and raid days. These special raid polls have event specific name, description and poll settings that need to be set in database. Example of a few settings is in ``sql/event-table-example.sql``.
 
-``vote_key_mode`` currently supports 2 modes, 0 and 1. 0 is the standard mode where users vote for a time when they are attending. 1 is a mode with no timeslots, just a button for 'attending'.
+``vote_key_mode`` currently supports two modes, 0 and 1. 0 is the standard mode where users vote for a time when they are attending. 1 is a mode with no timeslots, just a button for 'attending'.
 
 With ``time_slots`` you can set event secific time slots for vote keys when ``vote_key_mode`` 0 is selected.
 
@@ -423,14 +455,17 @@ With ``time_slots`` you can set event secific time slots for vote keys when ``vo
 
 ``hide_raid_picture`` hides the raid picture from these event polls even if ``RAID_PICTURE`` is set to ``true``.
 
+``pokemon_title`` select how the Pokemon name is displayed for this event.
+``0`` = hide Pokemon name
+``1`` = Raid boss: Kyogre
+``2`` = Featured Pokemon: Kyogre
+
 Trainer settings
 ----------------
 
 The command '/trainer' allows users of the bot to change their trainer data like team, level, trainercode and trainername. It is also used to share a message that allows trainers to modify their trainer data like team and level to another chat. To share this message, every chat specified in the raid sharing list like SHARE_CHATS are used.
 
 With ``TRAINER_CHATS`` you can specify additional chats which should appear as buttons too for sharing the trainer message.
-
-Set ``TRAINER_BUTTONS_TOGGLE`` to true to enable the toggle which shows/hides the team and level+/- buttons under the trainer message. To disable the toggle button and always show the team and level+/- buttons set it to false.
 
 Add additional chats -100999555111 and -100888444222 to share the trainer message
 
@@ -469,7 +504,7 @@ Cleanup
 
 The bot features an automatic cleanup of Telegram raid poll messages as well as cleanup of the database (attendance and raids tables).
 
-To activate cleanup you need to `make sure your groups are Supergroups or Channels <#which-group-type-should-i-use--how-do-i-make-a-group-a-supergroup>`_\ , make your bot an admin in this chat, enable cleanup in the config and create a cronjob to trigger the cleanup process.
+To activate cleanup you need to `make sure your groups are Supergroups or Channels <#referring-to-groups-channels-and-users>`_\ , make your bot an admin in this chat, enable cleanup in the config and create a cronjob to trigger the cleanup process.
 
 
 #. Set the ``CLEANUP`` in the config to ``true`` and define a cleanup secret/passphrase under ``CLEANUP_SECRET``.
@@ -494,7 +529,7 @@ Access permissions
 Public access
 ^^^^^^^^^^^^^
 
-When no Telegram id, group, supergroup or channel is specified in ``BOT_ADMINS`` the bot will allow everyone to use it (public access).
+When no Telegram id is specified in ``BOT_ADMINS`` the bot will allow everyone to use it (public access).
 
 Example for public access: ``"BOT_ADMINS":""``
 
@@ -503,11 +538,11 @@ Access and permissions
 
 The ``MAINTAINER_ID`` is not able to access the bot nor has any permissions as that id is only contacted in case of errors and issues with the bot configuration.
 
-The ``BOT_ADMINS`` have all permissions and can use any feature of the bot.
+The ``BOT_ADMINS`` have all permissions and can use any feature of the bot. No restrictions specified in access files apply to these users.
 
 Telegram Users can only vote on raid polls, but have no access to other bot functions (unless you configured it).
 
-In order to allow Telegram chats to access the bot and use commands/features, you need to create an access file.
+In order to allow members of Telegram chats to access the bot and use commands/features, you need to create an access file.
 
 It does not matter if a chat is a user, group, supergroup or channel - any kind of chat is supported as every chat has a chat id!
 
@@ -612,7 +647,7 @@ A few examples for access files can be found below the permission overview table
      - Vote on shared raid poll
      - Not required!
    * - 
-     - Create raids ``/start``\ , ``/raid``
+     - Create raids ``/start``
      - ``create``
    * - 
      - Create ex-raids ``/start``
@@ -625,7 +660,7 @@ A few examples for access files can be found below the permission overview table
      - ``raid-duration``
    * - 
      - List all raids ``/list`` and ``/listall``
-     - ``list``
+     - ``list`` and ``listall``
    * - 
      - Manage overview ``/overview``
      - ``overview``
@@ -672,20 +707,23 @@ A few examples for access files can be found below the permission overview table
      - Edit extended gym details ``/gym``
      - ``gym-edit``
    * - 
-     - Edit gym name ``/gymname``
+     - Delete a gym ``/gym``
+     - ``gym-delete``
+   * - 
+     - Add a gym ``/gym``
+     - ``gym-add``
+   * - 
+     - Edit gym name after creating a gym with ``RAID_VIA_LOCATION``
      - ``gym-name``
    * - 
-     - Edit gym address ``/gymaddress``
-     - ``gym-address``
+     - 
+     - 
+   * - Settings
+     - Read the value of a specific setting in bot config ``/get``
+     - ``config-get``
    * - 
-     - Edit gym gps coordinates ``/gymgps``
-     - ``gym-gps``
-   * - 
-     - Edit gym note ``/gymnote``
-     - ``gym-note``
-   * - 
-     - Add a gym ``/addgym``
-     - ``gym-add``
+     - Set the value of a specific setting in bot config ``/set``
+     - ``config-set``
    * - 
      - 
      - 
@@ -708,7 +746,7 @@ A few examples for access files can be found below the permission overview table
      - 
      - 
    * - Pokedex
-     - Manage raid pokemon ``/pokedex``
+     - Manage raid Pokemon ``/pokedex``
      - ``pokedex``
    * - 
      - 
@@ -716,6 +754,12 @@ A few examples for access files can be found below the permission overview table
    * - Help
      - Show help ``/help``
      - ``help``
+   * - 
+     - 
+     - 
+   * - Events
+     - Show help ``/events``
+     - ``event-manage``
    * - 
      - 
      - 
@@ -771,7 +815,7 @@ To enable this feature:
 * Create ``tutorial.php`` in config folder. Use ``tutorial.php.example`` as reference
 * Set ``TUTORIAL_MODE`` to ``true`` in ``config.json``
 * ``tutorial`` in access config file(s)
-* ``force-tutorial`` in access config file(s) to force users to go through the tutorial before they're able to use the bot.
+* ``force-tutorial`` in access config file(s) to force users to go through the tutorial before they're able to use the bot. Does not apply to users specified in ``BOT_ADMINS``.
 
 Customization
 -------------
@@ -803,7 +847,7 @@ To change translations you can do the following:
 
 
 * Create a file named ``language.json`` in the custom folder
-* Find the translation name/id by searching the core and bot language.php files (\ ``core/lang/language.php`` and ``lang/language.php``\ )
+* Find the translation name/id by searching the bot language.json files (\ ``lang/*.json``\ )
 * Set your own translation in your custom language.json
 * For example to change the translation of 'Friday' to a shorter 'Fri' put the following in your ``custom/language.json``\ :
 
@@ -842,8 +886,6 @@ Config reference
      - One letter ID for the bot used in debug logging. Mostly useful if you run multiple.
    * - BOT_NAME
      - Name of the bot.
-   * - BRIDGE_MODE
-     - Bool, whether to enable bridge mode.
    * - CLEANUP_DATABASE
      - Bool, whether to clean up finished raids from DB if cleanup is enabled.
    * - CLEANUP_LOG
@@ -903,13 +945,15 @@ Config reference
    * - MAINTAINER
      - Name of main maintainer
    * - AUTO_REFRESH_POLLS
-     - Bool, enable the auto refresh feature and hides the refresh button from polls. Requires a curl job for refreshing. 
+     - Bool, enable the auto refresh feature and hides the refresh button from polls. Requires a curl job for refreshing.
    * - MAPS_API_KEY
      - Google Maps API key for ``MAPS_LOOKUP``
    * - MAPS_LOOKUP
      - Boolean, resolve missing gym addresses via Google Maps
    * - OSM_LOOKUP
      - Boolean, resolve missing gym addresses via OpenStreetMap
+   * - OSM_URL
+     - String, if OSM lookup is enabled, you can set private server address here. e.g. ``http://localhost:8090``
    * - MAP_URL
      - URL to your map. This is displayed under every raid poll.
    * - CUSTOM_TRAINERNAME
@@ -942,6 +986,10 @@ Config reference
      - In minutes the maximum length of the egg phase a user is allowed to give.
    * - RAID_EXCLUDE_EXRAID_DUPLICATION
      - Bool, true to exclude ex-raids from the duplication check which allows to create an ex-raid and a normal raid at the same gym
+   * - RAID_EXCLUDE_EVENT_DUPLICATION
+     - Bool, true to exclude event raids from the duplication check which allows to create an event and a normal raid at the same gym
+   * - RAID_EXCLUDE_ELITE_DUPLICATION
+     - Bool, true to exclude elite raids from the duplication check which allows to create an elite raid and a normal raid at the same gym
    * - RAID_EX_GYM_MARKER
      - Enum, "icon" (default value, a star icon) or a custom text/icon to indicate an ex-raid gym in the raid polls
    * - RAID_FIRST_START
@@ -986,6 +1034,14 @@ Config reference
      - Fully qualified HTTPS URL to ``raidpicture.php``\ , for example ``https://example.com/raidbot/raidpicture.php``
    * - RAID_PIN_MESSAGE
      - Custom message added to the bottom of the raid overview messages
+   * - RAID_BOSS_LIST"
+     - Bool, adds a list of saved raid bosses to overview message
+   * - RAID_BOSS_LIST_TITLE
+     - String, title of the list
+   * - RAID_BOSS_LIST_RAID_LEVELS
+     - Array, list of raid levels included in the list
+   * - RAID_BOSS_LIST_ROW_LIMIT
+     - Int, limit the list to set number of rows
    * - RAID_POLL_HIDE_BUTTONS_POKEMON
      - List of Pokemon dex IDs for which voting buttons are disabled
    * - RAID_POLL_HIDE_BUTTONS_RAID_LEVEL
@@ -1048,8 +1104,6 @@ Config reference
      - Timezone definition to use as per `TZ database names <https://www.wikiwand.com/en/List_of_tz_database_time_zones#/List>`_
    * - TRAINER_MAX_LEVEL
      - Int, Maximum level a trainer can be (currently 50)
-   * - TRAINER_BUTTONS_TOGGLE
-     - Bool, true to show/hide the team and level+/- buttons below the trainer data setup messages once a users hits the "trainer info" button. False to always show the team and level+/- buttons.
    * - TRAINER_CHATS
      - List of chats where trainer data setup messages can be shared
    * - UPGRADE_SQL_AUTO
@@ -1074,6 +1128,8 @@ Config reference
      - List of Telegram chat IDs to autoshare raids of level 5
    * - WEBHOOK_CHATS_ALL_LEVELS
      - List of Telegram chat IDs to autoshare raids of any level
+   * - WEBHOOK_CHATS_BY_POKEMON
+     - Automatically share only specific Pokemon to set chats. See `Raids from Webhook`_ for further details.
    * - WEBHOOK_CREATE_ONLY
      - Bool, only create raids, don't autoshare them to any chat
    * - WEBHOOK_CREATOR
