@@ -85,7 +85,7 @@ SSL with Docker
 Task scheduling
 ^^^^^^^^^^^^^^^
 
-* Overview refreshes & cleanup are not baked into the base Docker image. While you can definately live without these features they are quite nice to have.
+* Overview refreshes & cleanup are not baked into the base Docker image. While you can definitely live without these features they are quite nice to have.
 * The image does have a cron daemon available but since the calls have raw json in them, quoting can be tricky to get right.
 * The easiest way will be to follow the normal guidance for setting up the crons since they can be run from anywhere, not just within the container.
 * A sample Ofelia setup can be seen in the Nomad & Composer orchestration examples discussed below. Ofelia by default runs the tasks within the raidbot container and it does have curl installed for this purpose.
