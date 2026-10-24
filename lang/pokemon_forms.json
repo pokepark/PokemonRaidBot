@@ -2365,13 +2365,25 @@
         "EN": "Counterfeit"
     },
     "pokemon_form_2872": {
-        "EN": "Artisan"
+        "PT-BR": "Forma Artesanal",
+        "EN": "Artisan Form",
+        "FR": "Forme Onéreuse",
+        "DE": "Kostbarkeitsform",
+        "IT": "Forma Pregiata",
+        "RU": "Форма Подлинник",
+        "ES": "Forma Opulenta"
     },
     "pokemon_form_2873": {
         "EN": "Unremarkable"
     },
     "pokemon_form_2874": {
-        "EN": "Masterpiece"
+        "PT-BR": "Forma Primorosa",
+        "EN": "Masterpiece Form",
+        "FR": "Forme Exceptionnelle",
+        "DE": "Edle Form",
+        "IT": "Forma Eccezionale",
+        "RU": "Искусная Форма",
+        "ES": "Forma Exquisita"
     },
     "pokemon_form_2875": {
         "EN": "Teal"
@@ -2627,5 +2639,119 @@
     },
     "pokemon_form_3341": {
         "EN": "Visor 2026"
+    },
+    "pokemon_form_3342": {
+        "EN": "Fossil 2026"
+    },
+    "pokemon_form_3343": {
+        "EN": "Gofest 2026 Cap Blue"
+    },
+    "pokemon_form_3344": {
+        "EN": "Gofest 2026 Cap Red"
+    },
+    "pokemon_form_3345": {
+        "EN": "Gofest 2026 Cap Yellow"
+    },
+    "pokemon_form_3346": {
+        "EN": "Gofest 2026"
+    },
+    "pokemon_form_3348": {
+        "EN": "Anniversary 2026"
+    },
+    "pokemon_form_3349": {
+        "PT-BR": "Forma Engolidora",
+        "EN": "Gulping Form",
+        "DE": "Schlingform",
+        "IT": "Forma Inghiottitutto",
+        "RU": "Прожорливая Форма",
+        "ES": "Forma Tragatodo"
+    },
+    "pokemon_form_3350": {
+        "PT-BR": "Forma Devoradora",
+        "EN": "Gorging Form",
+        "DE": "Stopfform",
+        "IT": "Forma Inghiottintero",
+        "RU": "Пожирающая Форма",
+        "ES": "Forma Engulletodo"
+    },
+    "pokemon_form_3351": {
+        "EN": "Coin A2 2026"
+    },
+    "pokemon_form_3352": {
+        "EN": "Pxp 2026"
+    },
+    "pokemon_form_3353": {
+        "EN": "Wcs 2026"
+    },
+    "pokemon_form_3354": {
+        "EN": "Goggles 2026"
+    },
+    "pokemon_form_3355": {
+        "EN": "Goggles 2026"
+    },
+    "pokemon_form_3356": {
+        "EN": "Goggles 2026"
+    },
+    "pokemon_form_3357": {
+        "EN": "Glass Helmet 2026"
+    },
+    "pokemon_form_3358": {
+        "EN": "Anniversary 2026 Malaysia 01"
+    },
+    "pokemon_form_3359": {
+        "EN": "Anniversary 2026 Singapore 01"
+    },
+    "pokemon_form_3360": {
+        "EN": "Anniversary 2026 Taiwan 01"
+    },
+    "pokemon_form_3361": {
+        "EN": "K 2026 A 01"
+    },
+    "pokemon_form_3362": {
+        "EN": "Halloween 2026 01"
+    },
+    "pokemon_form_3363": {
+        "EN": "Halloween 2026 01"
+    },
+    "pokemon_form_3364": {
+        "EN": "Halloween 2026 01"
+    },
+    "pokemon_form_3365": {
+        "EN": "P Halloween 2026 01"
+    },
+    "pokemon_form_3366": {
+        "EN": "A Halloween 2026 01"
+    },
+    "pokemon_form_3367": {
+        "EN": "P Halloween 2026 01"
+    },
+    "pokemon_form_3368": {
+        "EN": "A Halloween 2026 01"
+    },
+    "pokemon_form_3369": {
+        "EN": "Wildarea 2026 01"
+    },
+    "pokemon_form_3375": {
+        "EN": "Anniversary 2026 Philippine 01"
+    },
+    "pokemon_form_3376": {
+        "EN": "Anniversary 2026 Thailand 01"
+    },
+    "pokemon_form_3377": {
+        "EN": "K 2026 B 01"
+    },
+    "pokemon_form_3378": {
+        "EN": "Anniversary 2026 Indonesia 01"
+    },
+    "pokemon_form_3379": {
+        "EN": "Halloween 2026"
+    },
+    "pokemon_form_3380": {
+        "PT-BR": "Forma Meteoro",
+        "EN": "Meteor Form",
+        "DE": "Meteorform",
+        "IT": "Forma Meteora",
+        "RU": "Метеорная Форма",
+        "ES": "Forma Meteorito"
     }
 }

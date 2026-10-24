@@ -3527,10 +3527,10 @@
         "ES": "Gigagolpe Fluido"
     },
     "pokemon_move_460": {
-        "EN": "Vn Bm 052"
+        "EN": "Max Shield"
     },
     "pokemon_move_461": {
-        "EN": "Vn Bm 053"
+        "EN": "Max Heal"
     },
     "pokemon_move_462": {
         "PT-BR": "Palma da Força",
@@ -3704,7 +3704,7 @@
         "ES": "Embate Supremo"
     },
     "pokemon_move_481": {
-        "EN": "Thunder Cage Fast"
+        "EN": "Thunder Cage"
     },
     "pokemon_move_482": {
         "PT-BR": "Canhão Dinamax",
@@ -3813,5 +3813,872 @@
         "IT": "Palla Infuocata",
         "RU": "Огнешар",
         "ES": "Balón Ígneo"
+    },
+    "pokemon_move_494": {
+        "PT-BR": "Martelo Gigatônico",
+        "EN": "Gigaton Hammer",
+        "FR": "Marteau Mastoc",
+        "DE": "Riesenhammer",
+        "IT": "Granmartello",
+        "RU": "Гигатонный Молот",
+        "ES": "Martillo Colosal"
+    },
+    "pokemon_move_495": {
+        "PT-BR": "Soco Dinâmico+",
+        "EN": "Dynamic Punch+",
+        "FR": "Dynamo-Poing +",
+        "DE": "Wuchtschlag+",
+        "IT": "Dinamipugno+",
+        "RU": "Динамический Удар+",
+        "ES": "Puño Dinámico+"
+    },
+    "pokemon_move_496": {
+        "PT-BR": "Visão do Futuro+",
+        "EN": "Future Sight+",
+        "FR": "Prescience +",
+        "DE": "Seher+",
+        "IT": "Divinazione+",
+        "RU": "Образ Будущего+",
+        "ES": "Premonición+"
+    },
+    "pokemon_move_497": {
+        "PT-BR": "Punhos de Plasma",
+        "EN": "Plasma Fists",
+        "FR": "Plasma Punch",
+        "DE": "Plasmafäuste",
+        "IT": "Pugni Plasma",
+        "RU": "Плазменные Кулаки",
+        "ES": "Puños Plasma"
+    },
+    "pokemon_move_498": {
+        "PT-BR": "Planta Mortal+",
+        "EN": "Frenzy Plant+",
+        "FR": "Végé-Attaque +",
+        "DE": "Flora-Statue+",
+        "IT": "Radicalbero+",
+        "RU": "Ярость Леса+",
+        "ES": "Planta Feroz+"
+    },
+    "pokemon_move_499": {
+        "PT-BR": "Garra de Dragão+",
+        "EN": "Dragon Claw+",
+        "FR": "Draco-Griffe +",
+        "DE": "Drachenklaue+",
+        "IT": "Dragartigli+",
+        "RU": "Коготь Дракона+",
+        "ES": "Garra Dragón+"
+    },
+    "pokemon_move_500": {
+        "PT-BR": "Queimadura Explosiva+",
+        "EN": "Blast Burn+",
+        "FR": "Rafale Feu +",
+        "DE": "Lohekanonade+",
+        "IT": "Incendio+",
+        "RU": "Обжигающий Взрыв+",
+        "ES": "Anillo Ígneo+"
+    },
+    "pokemon_move_501": {
+        "PT-BR": "Hidro Canhão+",
+        "EN": "Hydro Cannon+",
+        "FR": "Hydroblast +",
+        "DE": "Aquahaubitze+",
+        "IT": "Idrocannone+",
+        "RU": "Гидропушка+",
+        "ES": "Hidrocañón+"
+    },
+    "pokemon_move_502": {
+        "PT-BR": "Ferrão Letal+",
+        "EN": "Fell Stinger+",
+        "FR": "Dard Mortel +",
+        "DE": "Stachelfinale+",
+        "IT": "Pungiglione+",
+        "RU": "Беспощадное Жало+",
+        "ES": "Aguijón Letal+"
+    },
+    "pokemon_move_503": {
+        "PT-BR": "Furacão+",
+        "EN": "Hurricane+",
+        "FR": "Vent Violent +",
+        "DE": "Orkan+",
+        "IT": "Tifone+",
+        "RU": "Ураган+",
+        "ES": "Vendaval+"
+    },
+    "pokemon_move_504": {
+        "PT-BR": "Investida Trovão+",
+        "EN": "Volt Tackle+",
+        "FR": "Électacle +",
+        "DE": "Volttackle+",
+        "IT": "Locomovolt+",
+        "RU": "Вольт-Бросок+",
+        "ES": "Placaje Eléctrico+"
+    },
+    "pokemon_move_505": {
+        "PT-BR": "Canhão Zap+",
+        "EN": "Zap Cannon+",
+        "FR": "Élecanon +",
+        "DE": "Blitzkanone+",
+        "IT": "Falcecannone+",
+        "RU": "Грохот Пушек+",
+        "ES": "Electrocañón+"
+    },
+    "pokemon_move_506": {
+        "PT-BR": "Explosão Lunar+",
+        "EN": "Moonblast+",
+        "FR": "Pouvoir Lunaire +",
+        "DE": "Mondgewalt+",
+        "IT": "Forza Lunare+",
+        "RU": "Лунный Удар+",
+        "ES": "Fuerza Lunar+"
+    },
+    "pokemon_move_507": {
+        "PT-BR": "Choque Psíquico+",
+        "EN": "Psyshock+",
+        "FR": "Choc Psy +",
+        "DE": "Psychoschock+",
+        "IT": "Psicoshock+",
+        "RU": "Психошок+",
+        "ES": "Psicocarga+"
+    },
+    "pokemon_move_508": {
+        "PT-BR": "Spray Ácido+",
+        "EN": "Acid Spray+",
+        "FR": "Bombe Acide +",
+        "DE": "Säurespeier+",
+        "IT": "Acidobomba+",
+        "RU": "Кислотные Брызги+",
+        "ES": "Bomba Ácida+"
+    },
+    "pokemon_move_509": {
+        "PT-BR": "Água Fria+",
+        "EN": "Chilling Water+",
+        "FR": "Douche Froide +",
+        "DE": "Kalte Dusche+",
+        "IT": "Doccia Fredda+",
+        "RU": "Холодный Душ+",
+        "ES": "Agua Fría+"
+    },
+    "pokemon_move_510": {
+        "PT-BR": "Bola Sombria+",
+        "EN": "Shadow Ball+",
+        "FR": "Ball’Ombre +",
+        "DE": "Spukball+",
+        "IT": "Palla Ombra+",
+        "RU": "Шар Тьмы+",
+        "ES": "Bola Sombra+"
+    },
+    "pokemon_move_511": {
+        "EN": "Vm Move Temp Evolution Mega V0115 Pokemon Kangaskhan"
+    },
+    "pokemon_move_512": {
+        "PT-BR": "Aquaríete+",
+        "EN": "Liquidation+",
+        "FR": "Aqua-Brèche +",
+        "DE": "Aquadurchstoß+",
+        "IT": "Idrobreccia+",
+        "RU": "Ликвидация+",
+        "ES": "Hidroariete+"
+    },
+    "pokemon_move_513": {
+        "PT-BR": "Ás dos Ares+",
+        "EN": "Aerial Ace+",
+        "FR": "Aéropique +",
+        "DE": "Aero-Ass+",
+        "IT": "Aeroassalto+",
+        "RU": "Высший Пилотаж+",
+        "ES": "Golpe Aéreo+"
+    },
+    "pokemon_move_514": {
+        "PT-BR": "Revide+",
+        "EN": "Payback+",
+        "FR": "Représailles +",
+        "DE": "Gegenstoß+",
+        "IT": "Rivincita+",
+        "RU": "Расплата+",
+        "ES": "Vendetta+"
+    },
+    "pokemon_move_515": {
+        "PT-BR": "Ultraje+",
+        "EN": "Outrage+",
+        "FR": "Colère +",
+        "DE": "Wutanfall+",
+        "IT": "Oltraggio+",
+        "RU": "Гнев+",
+        "ES": "Enfado+"
+    },
+    "pokemon_move_516": {
+        "PT-BR": "Raio Solar+",
+        "EN": "Solar Beam+",
+        "FR": "Lance-Soleil +",
+        "DE": "Solarstrahl+",
+        "IT": "Solarraggio+",
+        "RU": "Солнечный Луч+",
+        "ES": "Rayo Solar+"
+    },
+    "pokemon_move_517": {
+        "PT-BR": "Golpe Deslizante+",
+        "EN": "Breaking Swipe+",
+        "FR": "Abattage +",
+        "DE": "Breitseite+",
+        "IT": "Vastoimpatto+",
+        "RU": "Разбивающий Удар+",
+        "ES": "Vasto Impacto+"
+    },
+    "pokemon_move_518": {
+        "PT-BR": "Soco Trovoada+",
+        "EN": "Thunder Punch+",
+        "FR": "Poing Éclair +",
+        "DE": "Donnerschlag+",
+        "IT": "Tuonopugno+",
+        "RU": "Громовой Кулак+",
+        "ES": "Puño Trueno+"
+    },
+    "pokemon_move_519": {
+        "PT-BR": "Girobola+",
+        "EN": "Gyro Ball+",
+        "FR": "Gyroballe +",
+        "DE": "Gyroball+",
+        "IT": "Vortexpalla+",
+        "RU": "Гиро-Шар+",
+        "ES": "Giro Bola+"
+    },
+    "pokemon_move_520": {
+        "PT-BR": "Tesoura X+",
+        "EN": "X-Scissor+",
+        "FR": "Plaie Croix +",
+        "DE": "Kreuzschere+",
+        "IT": "Forbice X+",
+        "RU": "Икс-Ножницы+",
+        "ES": "Tijera X+"
+    },
+    "pokemon_move_521": {
+        "PT-BR": "Estocada+",
+        "EN": "Lunge+",
+        "FR": "Furie-Bond +",
+        "DE": "Anfallen+",
+        "IT": "Assalto+",
+        "RU": "Выпад+",
+        "ES": "Plancha+"
+    },
+    "pokemon_move_522": {
+        "PT-BR": "Bico Broca+",
+        "EN": "Drill Peck+",
+        "FR": "Bec Vrille +",
+        "DE": "Bohrschnabel+",
+        "IT": "Perforbecco+",
+        "RU": "Сверлящий Клюв+",
+        "ES": "Pico Taladro+"
+    },
+    "pokemon_move_523": {
+        "PT-BR": "Pulso Sombrio+",
+        "EN": "Dark Pulse+",
+        "FR": "Vibrobscur +",
+        "DE": "Finsteraura+",
+        "IT": "Neropulsar+",
+        "RU": "Тёмный Пульс+",
+        "ES": "Pulso Umbrío+"
+    },
+    "pokemon_move_524": {
+        "PT-BR": "Gume de Pedra+",
+        "EN": "Stone Edge+",
+        "FR": "Lame de Roc +",
+        "DE": "Steinkante+",
+        "IT": "Pietrataglio+",
+        "RU": "Каменное Остриё+",
+        "ES": "Roca Afilada+"
+    },
+    "pokemon_move_525": {
+        "PT-BR": "Lâmina de Folha+",
+        "EN": "Leaf Blade+",
+        "FR": "Lame Feuille +",
+        "DE": "Laubklinge+",
+        "IT": "Fendifoglia+",
+        "RU": "Лист-Лезвие+",
+        "ES": "Hoja Aguda+"
+    },
+    "pokemon_move_526": {
+        "PT-BR": "Chute Labareda+",
+        "EN": "Blaze Kick+",
+        "FR": "Pied Brûleur +",
+        "DE": "Feuerfeger+",
+        "IT": "Calciardente+",
+        "RU": "Огненный Пинок+",
+        "ES": "Patada Ígnea+"
+    },
+    "pokemon_move_527": {
+        "PT-BR": "Água Barrenta+",
+        "EN": "Muddy Water+",
+        "FR": "Ocroupi +",
+        "DE": "Lehmbrühe+",
+        "IT": "Fanghiglia+",
+        "RU": "Мутная Вода+",
+        "ES": "Agua Lodosa+"
+    },
+    "pokemon_move_528": {
+        "PT-BR": "Clarão Deslumbrante+",
+        "EN": "Dazzling Gleam+",
+        "FR": "Éclat Magique +",
+        "DE": "Zauberschein+",
+        "IT": "Magibrillio+",
+        "RU": "Ослепительный Проблеск+",
+        "ES": "Brillo Mágico+"
+    },
+    "pokemon_move_529": {
+        "PT-BR": "Sombra Noturna+",
+        "EN": "Night Shade+",
+        "FR": "Ombre Nocturne +",
+        "DE": "Nachtnebel+",
+        "IT": "Ombra Notturna+",
+        "RU": "Ночная Тень+",
+        "ES": "Tinieblas+"
+    },
+    "pokemon_move_530": {
+        "PT-BR": "Jogo Duro+",
+        "EN": "Play Rough+",
+        "FR": "Câlinerie +",
+        "DE": "Knuddler+",
+        "IT": "Carineria+",
+        "RU": "Жёсткая Игра+",
+        "ES": "Carantoña+"
+    },
+    "pokemon_move_531": {
+        "PT-BR": "Golpe Pesado+",
+        "EN": "Heavy Slam+",
+        "FR": "Tacle Lourd +",
+        "DE": "Rammboss+",
+        "IT": "Pesobomba+",
+        "RU": "Тяжёлый Хлопок+",
+        "ES": "Cuerpo Pesado+"
+    },
+    "pokemon_move_532": {
+        "PT-BR": "Chute de Pulo Alto+",
+        "EN": "High Jump Kick+",
+        "FR": "Pied Voltige +",
+        "DE": "Turmkick+",
+        "IT": "Calcinvolo+",
+        "RU": "Прыжок-Удар+",
+        "ES": "Patada Salto Alta+"
+    },
+    "pokemon_move_533": {
+        "PT-BR": "Descarga+",
+        "EN": "Discharge+",
+        "FR": "Coup d’Jus +",
+        "DE": "Ladungsstoß+",
+        "IT": "Scarica+",
+        "RU": "Разряд+",
+        "ES": "Chispazo+"
+    },
+    "pokemon_move_534": {
+        "PT-BR": "Mastigada+",
+        "EN": "Crunch+",
+        "FR": "Mâchouille +",
+        "DE": "Knirscher+",
+        "IT": "Sgranocchio+",
+        "RU": "Хруст+",
+        "ES": "Triturar+"
+    },
+    "pokemon_move_535": {
+        "PT-BR": "Onda de Calor+",
+        "EN": "Heat Wave+",
+        "FR": "Canicule +",
+        "DE": "Hitzewelle+",
+        "IT": "Ondacalda+",
+        "RU": "Волна Жара+",
+        "ES": "Onda Ígnea+"
+    },
+    "pokemon_move_536": {
+        "PT-BR": "Voz Desarmante+",
+        "EN": "Disarming Voice+",
+        "FR": "Voix Enjôleuse +",
+        "DE": "Säuselstimme+",
+        "IT": "Incantavoce+",
+        "RU": "Обезоруживающий Голос+",
+        "ES": "Voz Cautivadora+"
+    },
+    "pokemon_move_537": {
+        "PT-BR": "Soco Sombrio+",
+        "EN": "Shadow Punch+",
+        "FR": "Poing Ombre +",
+        "DE": "Finsterfaust+",
+        "IT": "Pugnodombra+",
+        "RU": "Теневой Кулак+",
+        "ES": "Puño Sombra+"
+    },
+    "pokemon_move_538": {
+        "PT-BR": "Canhão de Flash+",
+        "EN": "Flash Cannon+",
+        "FR": "Luminocanon +",
+        "DE": "Lichtkanone+",
+        "IT": "Cannonflash+",
+        "RU": "Быстрая Пушка+",
+        "ES": "Foco Resplandor+"
+    },
+    "pokemon_move_539": {
+        "PT-BR": "Talho Noturno+",
+        "EN": "Night Slash+",
+        "FR": "Tranche-Nuit +",
+        "DE": "Nachthieb+",
+        "IT": "Nottesferza+",
+        "RU": "Ночной Удар+",
+        "ES": "Tajo Umbrío+"
+    },
+    "pokemon_move_540": {
+        "PT-BR": "Furtividade nas Sombras+",
+        "EN": "Shadow Sneak+",
+        "FR": "Ombre Portée +",
+        "DE": "Schattenstoß+",
+        "IT": "Furtivombra+",
+        "RU": "Сумеречный Проныра+",
+        "ES": "Sombra Vil+"
+    },
+    "pokemon_move_541": {
+        "PT-BR": "Raio Congelante+",
+        "EN": "Ice Beam+",
+        "FR": "Laser Glace +",
+        "DE": "Eisstrahl+",
+        "IT": "Geloraggio+",
+        "RU": "Ледяной Луч+",
+        "ES": "Rayo Hielo+"
+    },
+    "pokemon_move_542": {
+        "PT-BR": "Voar+",
+        "EN": "Fly+",
+        "FR": "Vol +",
+        "DE": "Fliegen+",
+        "IT": "Volo+",
+        "RU": "Полёт+",
+        "ES": "Vuelo+"
+    },
+    "pokemon_move_543": {
+        "PT-BR": "Meteoro Esmagador+",
+        "EN": "Meteor Mash+",
+        "FR": "Poing Météore +",
+        "DE": "Sternenhieb+",
+        "IT": "Meteorpugno+",
+        "RU": "Метеоритный Кулак+",
+        "ES": "Puño Meteoro+"
+    },
+    "pokemon_move_544": {
+        "PT-BR": "Bola de Névoa+",
+        "EN": "Mist Ball+",
+        "FR": "Ball’Brume +",
+        "DE": "Nebelball+",
+        "IT": "Foschisfera+",
+        "RU": "Шар Тумана+",
+        "ES": "Bola Neblina+"
+    },
+    "pokemon_move_545": {
+        "PT-BR": "Purga de Esplendor+",
+        "EN": "Luster Purge+",
+        "FR": "Lumi-Éclat +",
+        "DE": "Scheinwerfer+",
+        "IT": "Abbagliante+",
+        "RU": "Генеральная Чистка+",
+        "ES": "Resplandor+"
+    },
+    "pokemon_move_546": {
+        "PT-BR": "Ascenção do Dragão+",
+        "EN": "Dragon Ascent+",
+        "FR": "Draco Ascension +",
+        "DE": "Zenitstürmer+",
+        "IT": "Ascesa del Drago+",
+        "RU": "Взлёт Дракона+",
+        "ES": "Ascenso Draco+"
+    },
+    "pokemon_move_547": {
+        "PT-BR": "Pássaro Bravo+",
+        "EN": "Brave Bird+",
+        "FR": "Rapace +",
+        "DE": "Sturzflug+",
+        "IT": "Baldeali+",
+        "RU": "Храбрая Птица+",
+        "ES": "Pájaro Osado+"
+    },
+    "pokemon_move_548": {
+        "PT-BR": "Corpo-a-corpo+",
+        "EN": "Close Combat+",
+        "FR": "Close Combat +",
+        "DE": "Nahkampf+",
+        "IT": "Zuffa+",
+        "RU": "Ближний Бой+",
+        "ES": "A Bocajarro+"
+    },
+    "pokemon_move_549": {
+        "PT-BR": "Terremoto+",
+        "EN": "Earthquake+",
+        "FR": "Séisme +",
+        "DE": "Erdbeben+",
+        "IT": "Terremoto+",
+        "RU": "Землетрясение+",
+        "ES": "Terremoto+"
+    },
+    "pokemon_move_550": {
+        "PT-BR": "Meteoro do Dragão+",
+        "EN": "Draco Meteor+",
+        "FR": "Draco-Météore +",
+        "IT": "Dragobolide+",
+        "RU": "Метеор Дракона+",
+        "ES": "Cometa Draco+"
+    },
+    "pokemon_move_551": {
+        "PT-BR": "Aura Esférica+",
+        "EN": "Aura Sphere+",
+        "FR": "Aurasphère +",
+        "DE": "Aurasphäre+",
+        "IT": "Forzasfera+",
+        "RU": "Ауросфера+",
+        "ES": "Esfera Aural+"
+    },
+    "pokemon_move_552": {
+        "PT-BR": "Explosão Focalizada+",
+        "EN": "Focus Blast+",
+        "FR": "Exploforce +",
+        "DE": "Fokusstoß+",
+        "IT": "Focalcolpo+",
+        "RU": "Концентрированный Взрыв+",
+        "ES": "Onda Certera+"
+    },
+    "pokemon_move_553": {
+        "PT-BR": "Nevasca+",
+        "EN": "Blizzard+",
+        "FR": "Blizzard +",
+        "IT": "Bora+",
+        "RU": "Метель+",
+        "ES": "Ventisca+"
+    },
+    "pokemon_move_554": {
+        "PT-BR": "Espada Sagrada+",
+        "EN": "Sacred Sword+",
+        "FR": "Lame Sainte +",
+        "DE": "Sanctoklinge+",
+        "IT": "Spadasolenne+",
+        "RU": "Священный Меч+",
+        "ES": "Espada Santa+"
+    },
+    "pokemon_move_555": {
+        "PT-BR": "Esfera Climática+",
+        "EN": "Weather Ball+",
+        "FR": "Ball’Météo +",
+        "DE": "Meteorologe+",
+        "IT": "Palla Clima+",
+        "RU": "Шар Стихии+",
+        "ES": "Meteorobola+"
+    },
+    "pokemon_move_556": {
+        "PT-BR": "Tempestade de Magma+",
+        "EN": "Magma Storm+",
+        "FR": "Vortex Magma +",
+        "DE": "Lavasturm+",
+        "IT": "Magmaclisma+",
+        "RU": "Магма-Буря+",
+        "ES": "Lluvia Ígnea+"
+    },
+    "pokemon_move_557": {
+        "EN": "Vm Move Temp Evolution Mega V0491 Pokemon Darkrai"
+    },
+    "pokemon_move_558": {
+        "PT-BR": "Ataque de Chamas+",
+        "EN": "Flame Charge+",
+        "FR": "Nitrocharge +",
+        "DE": "Nitroladung+",
+        "IT": "Nitrocarica+",
+        "RU": "Огненный Заряд+",
+        "ES": "Nitrocarga+"
+    },
+    "pokemon_move_559": {
+        "PT-BR": "Furação+",
+        "EN": "Drill Run+",
+        "FR": "Tunnelier +",
+        "DE": "Schlagbohrer+",
+        "IT": "Giravvita+",
+        "RU": "Быстрое Сверло+",
+        "ES": "Taladradora+"
+    },
+    "pokemon_move_560": {
+        "PT-BR": "Beijo Drenante+",
+        "EN": "Draining Kiss+",
+        "FR": "Vampibaiser +",
+        "DE": "Diebeskuss+",
+        "IT": "Assorbibacio+",
+        "RU": "Поцелуй Вампира+",
+        "ES": "Beso Drenaje+"
+    },
+    "pokemon_move_561": {
+        "PT-BR": "Megachifre+",
+        "EN": "Megahorn+",
+        "FR": "Mégacorne +",
+        "DE": "Vielender+",
+        "IT": "Megacorno+",
+        "RU": "Мегарог+",
+        "ES": "Megacuerno+"
+    },
+    "pokemon_move_562": {
+        "PT-BR": "Supermão+",
+        "EN": "Upper Hand+",
+        "FR": "Prio-Parade +",
+        "DE": "Schnellkonter+",
+        "IT": "Colpo di Mano+",
+        "RU": "Ручной Выстрел+",
+        "ES": "Palma Rauda+"
+    },
+    "pokemon_move_563": {
+        "PT-BR": "Ataque Selvagem+",
+        "EN": "Wild Charge+",
+        "FR": "Éclair Fou +",
+        "DE": "Stromstoß+",
+        "IT": "Sprizzalampo+",
+        "RU": "Дикий Разряд+",
+        "ES": "Voltio Cruel+"
+    },
+    "pokemon_move_564": {
+        "PT-BR": "Vento Ominoso+",
+        "EN": "Ominous Wind+",
+        "FR": "Vent Mauvais +",
+        "DE": "Unheilböen+",
+        "IT": "Funestovento+",
+        "RU": "Зловещий Ветер+",
+        "ES": "Viento Aciago+"
+    },
+    "pokemon_move_565": {
+        "PT-BR": "Poder da Terra+",
+        "EN": "Earth Power+",
+        "FR": "Telluriforce +",
+        "DE": "Erdkräfte+",
+        "IT": "Geoforza+",
+        "RU": "Сила Земли+",
+        "ES": "Tierra Viva+"
+    },
+    "pokemon_move_566": {
+        "PT-BR": "Bomba de Sementes+",
+        "EN": "Seed Bomb+",
+        "FR": "Canon Graine +",
+        "DE": "Samenbomben+",
+        "IT": "Semebomba+",
+        "RU": "Семя-Бомба+",
+        "ES": "Bomba Germen+"
+    },
+    "pokemon_move_567": {
+        "PT-BR": "Fogo Místico+",
+        "EN": "Mystical Fire+",
+        "FR": "Feu Ensorcelé +",
+        "DE": "Magieflamme+",
+        "IT": "Magifiamma+",
+        "RU": "Мистический Огонь+",
+        "ES": "Llama Embrujada+"
+    },
+    "pokemon_move_568": {
+        "PT-BR": "Surfar+",
+        "EN": "Surf+",
+        "FR": "Surf +",
+        "DE": "Surfer+",
+        "RU": "Сёрф+"
+    },
+    "pokemon_move_569": {
+        "PT-BR": "Rajada de Fogo+",
+        "EN": "Fire Blast+",
+        "FR": "Déflagration +",
+        "DE": "Feuersturm+",
+        "IT": "Fuocobomba+",
+        "RU": "Огненный Залп+",
+        "ES": "Llamarada+"
+    },
+    "pokemon_move_570": {
+        "EN": "Vm Move Temp Evolution Mega V0670 Pokemon Floette"
+    },
+    "pokemon_move_571": {
+        "PT-BR": "Psíquico+",
+        "EN": "Psychic+",
+        "FR": "Psyko +",
+        "DE": "Psychokinese+",
+        "IT": "Psichico+",
+        "RU": "Психокинез+",
+        "ES": "Psíquico+"
+    },
+    "pokemon_move_572": {
+        "PT-BR": "Feixe Psíquico+",
+        "EN": "Psybeam+",
+        "FR": "Rafale Psy +",
+        "DE": "Psystrahl+",
+        "IT": "Psicoraggio+",
+        "RU": "Психолуч+",
+        "ES": "Psicorrayo+"
+    },
+    "pokemon_move_573": {
+        "PT-BR": "Golpe Cruzado+",
+        "EN": "Cross Chop+",
+        "FR": "Coup Croix +",
+        "DE": "Kreuzhieb+",
+        "IT": "Incrocolpo+",
+        "RU": "Перерубание+",
+        "ES": "Tajo Cruzado+"
+    },
+    "pokemon_move_574": {
+        "PT-BR": "Onda de Lama+",
+        "EN": "Sludge Wave+",
+        "FR": "Cradovague +",
+        "DE": "Schlammwoge+",
+        "IT": "Fangonda+",
+        "RU": "Грязевая Волна+",
+        "ES": "Onda Tóxica+"
+    },
+    "pokemon_move_575": {
+        "PT-BR": "Aperto Voador+",
+        "EN": "Flying Press+",
+        "FR": "Flying Press +",
+        "IT": "Schiacciatuffo+",
+        "RU": "Летающий Пресс+",
+        "ES": "Plancha Voladora+"
+    },
+    "pokemon_move_576": {
+        "EN": "Vm Move Temp Evolution Mega V0718 Pokemon Zygarde"
+    },
+    "pokemon_move_577": {
+        "PT-BR": "Gema Poderosa+",
+        "EN": "Power Gem+",
+        "FR": "Rayon Gemme +",
+        "DE": "Juwelenkraft+",
+        "IT": "Gemmoforza+",
+        "RU": "Самоцвет Силы+",
+        "ES": "Joya de Luz+"
+    },
+    "pokemon_move_578": {
+        "PT-BR": "Soco Dreno+",
+        "EN": "Drain Punch+",
+        "FR": "Vampi-Poing +",
+        "DE": "Ableithieb+",
+        "IT": "Assorbipugno+",
+        "RU": "Иссушающий Удар+",
+        "ES": "Puño Drenaje+"
+    },
+    "pokemon_move_579": {
+        "PT-BR": "Cabeça de Ferro+",
+        "EN": "Iron Head+",
+        "FR": "Tête de Fer +",
+        "DE": "Eisenschädel+",
+        "IT": "Metaltestata+",
+        "RU": "Стальная Голова+",
+        "ES": "Cabeza de Hierro+"
+    },
+    "pokemon_move_580": {
+        "EN": "Twister+",
+        "FR": "Ouragan +",
+        "DE": "Windhose+",
+        "IT": "Tornado+",
+        "RU": "Смерч+",
+        "ES": "Ciclón+"
+    },
+    "pokemon_move_581": {
+        "EN": "Vm Move Temp Evolution Mega V0801 Pokemon Magearna"
+    },
+    "pokemon_move_582": {
+        "PT-BR": "Punhos de Plasma+",
+        "EN": "Plasma Fists+",
+        "FR": "Plasma Punch +",
+        "DE": "Plasmafäuste+",
+        "IT": "Pugni Plasma+",
+        "RU": "Плазменные Кулаки+",
+        "ES": "Puños Plasma+"
+    },
+    "pokemon_move_583": {
+        "PT-BR": "Quebra-telha+",
+        "EN": "Brick Break+",
+        "FR": "Casse-Brique +",
+        "DE": "Durchbruch+",
+        "IT": "Breccia+",
+        "RU": "Кирпичный Пролом+",
+        "ES": "Demolición+"
+    },
+    "pokemon_move_584": {
+        "PT-BR": "Lança-chamas+",
+        "EN": "Flamethrower+",
+        "FR": "Lance-Flammes +",
+        "DE": "Flammenwurf+",
+        "IT": "Lanciafiamme+",
+        "RU": "Огнемёт+",
+        "ES": "Lanzallamas+"
+    },
+    "pokemon_move_585": {
+        "PT-BR": "Raio Meteórico+",
+        "EN": "Meteor Beam+",
+        "FR": "Laser Météore +",
+        "DE": "Meteorstrahl+",
+        "IT": "Raggiometeora+",
+        "RU": "Метеоритный Луч+",
+        "ES": "Rayo Meteórico+"
+    },
+    "pokemon_move_586": {
+        "PT-BR": "Pulso do Dragão+",
+        "EN": "Dragon Pulse+",
+        "FR": "Draco-Choc +",
+        "DE": "Drachenpuls+",
+        "IT": "Dragopulsar+",
+        "RU": "Пульс Дракона+",
+        "ES": "Pulso Dragón+"
+    },
+    "pokemon_move_587": {
+        "PT-BR": "Lança Congelada+",
+        "EN": "Icicle Spear+",
+        "FR": "Stalactite +",
+        "DE": "Eisspeer+",
+        "IT": "Gelolancia+",
+        "RU": "Ледяная Пика+",
+        "ES": "Carámbano+"
+    },
+    "pokemon_move_588": {
+        "EN": "Vm Move Temp Evolution Primal V0382 Pokemon Kyogre"
+    },
+    "pokemon_move_589": {
+        "EN": "Vm Move Temp Evolution Primal V0383 Pokemon Groudon"
+    },
+    "pokemon_move_590": {
+        "PT-BR": "Fúria de Glaive",
+        "EN": "Glaive Rush",
+        "FR": "Charge Glaive",
+        "DE": "Großklingenstoß",
+        "IT": "Spadoncarica",
+        "RU": "Яростный Меч",
+        "ES": "Asalto Espadón"
+    },
+    "pokemon_move_592": {
+        "PT-BR": "Tiro Certeiro",
+        "EN": "Snipe Shot",
+        "FR": "Tir de Précision",
+        "DE": "Präzisionsschuss",
+        "IT": "Tiromirato",
+        "RU": "Меткая Стрельба",
+        "ES": "Disparo Certero"
+    },
+    "pokemon_move_593": {
+        "PT-BR": "Mergulho",
+        "EN": "Dive",
+        "FR": "Plongée",
+        "DE": "Taucher",
+        "IT": "Sub",
+        "RU": "Нырок",
+        "ES": "Buceo"
+    },
+    "pokemon_move_594": {
+        "EN": "Gulp Missile Gulping"
+    },
+    "pokemon_move_595": {
+        "EN": "Gulp Missile Gorging"
+    },
+    "pokemon_move_615": {
+        "PT-BR": "Humilhação Dividida",
+        "EN": "Kowtow Cleave",
+        "FR": "Génusection",
+        "DE": "Kniefallspalter",
+        "IT": "Genufendente",
+        "RU": "Предательский Удар",
+        "ES": "Genufendiente"
+    },
+    "pokemon_move_619": {
+        "PT-BR": "Deslize de Pedras+",
+        "EN": "Rock Slide+",
+        "FR": "Éboulement +",
+        "DE": "Steinhagel+",
+        "IT": "Frana+",
+        "RU": "Сдвиг Скалы+",
+        "ES": "Avalancha+"
     }
 }
