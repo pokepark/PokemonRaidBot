@@ -9,8 +9,8 @@ Webserver requirements
 Preferably:
 
 * Apache2
-* PHP8.1
-* MySQL5 or MariaDB10. MariaDB is preferred, MySQL8 will cause some warnings.
+* PHP8.5
+* MySQL8 or MariaDB10. MariaDB is preferred.
 * Curl
 * SSL Certificate ( https://www.letsencrypt.org )
 
@@ -19,6 +19,7 @@ The following apache packages need to be installed:
 * PDO_mysql (ubuntu: php-mysql)
 * PHP_curl (ubuntu: php-curl)
 * PHP_GD (ubuntu: php-gd) for raid picture mode
+* PHP_mbstring (ubuntu: php-mbstring)
 
 Git clone
 ---------
