@@ -59,6 +59,9 @@ if($rs->rowcount() == 1) {
   if($botUser->raidaccessCheck($raid['id'], 'delete', true)) {
     $keys[][] = button(getTranslation('delete'), ['raids_delete', 'r' => $raid['id']]);
   }
+  if($raid['event'] !== NULL && $botUser->accessCheck('event-raids', true)) {
+    $keys[][] = button(getTranslation('event_note_edit'), ['edit_event_note', 'r' => $raid['id'], 'm' => 'e', 'c' => 'l']);
+  }
 
   // Add keys to share.
   debug_log($raid, 'raw raid data for share: ');

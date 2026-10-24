@@ -22,8 +22,9 @@ $msg .= CR.getTranslation('event_note').': '.$update['message']['text'].CR2;
 $msg .= show_raid_poll_small($raid) . CR;
 debug_log($msg);
 
-$keys[][] = button(getTranslation('event_note_edit'), ['edit_event_note', 'r' => $raid_id, 'm' => 'e']);
 $keys[][] = button(getTranslation('delete'), ['raids_delete', 'r' => $raid_id]);
+$keys[][] = button(getTranslation('done'), ['exit', 'd' => 1]);
+$keys[][] = button(getTranslation('event_note_edit'), ['edit_event_note', 'r' => $raid_id, 'm' => 'e']);
 $keys_share = share_keys($raid_id, 'raid_share', $update, $raid['level']);
 $keys = array_merge($keys, $keys_share);
 debug_log($keys);

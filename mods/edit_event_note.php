@@ -7,6 +7,9 @@ $raid_id = $data['r'];
 // Set the arg.
 $mode = $data['m'] ?? '';
 
+// Cancel button needs to return us either to list_raids or edit_save, depending on where we came from
+$cancelAction = $data['c'] ?? '';
+
 // Set the user id.
 $userid = $update['callback_query']['from']['id'];
 
@@ -26,12 +29,21 @@ if($mode == 'e') {
   $msg.= getTranslation('event_note_edit') . ': ';
 
   // Create an entry to user_input table
-  $modifiers = json_encode(array('id' => $raid_id, 'old_message_id' => $update['callback_query']['message']['message_id'])); // Save the raid id and the message id to db so we can delete it later
+  $modifiers = json_encode([
+    'id' => $raid_id,
+    'old_message_id' => $update['callback_query']['message']['message_id'],
+    'mode' => 'list'
+  ]); // Save the raid id and the message id to db so we can delete it later
   $handler = 'save_event_note';  // call for mods/save_event_note.php after user posts the answer
 
   my_query('INSERT INTO user_input SET user_id=:userId, modifiers=:modifiers, handler=:handler', ['userId' => $userid, 'modifiers' => $modifiers, 'handler' => $handler]);
 }elseif($mode == 'c') {
   my_query('DELETE FROM user_input WHERE user_id = ?', [$userid]);
+  if($cancelAction == 'l') {
+    $data = ['list_raid', 'g' => $raid['gym_id'], 'r' => $raid_id];
+    require_once('list_raid.php');
+    exit();
+  }
   require_once('edit_save.php');
   exit();
 }else {
