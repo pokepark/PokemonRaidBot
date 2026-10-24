@@ -756,12 +756,8 @@ function curl_json_request($post_contents, $identifier)
 
   if($json_response === false) {
     info_log(curl_error($curl));
-    curl_close($curl);
     return false;
   }
-
-  // Close connection.
-  curl_close($curl);
 
   // Process response from telegram api.
   responseHandler($json_response, $post_contents);
@@ -825,7 +821,7 @@ function curl_json_multi_request($json)
     // Don't log the binary data of a photo
     $content = $data['post_contents'];
     $log_content = $content;
-    if(is_array($content)) {
+    if(is_array($content) && array_key_exists('photo', $content)) {
       if(isset($content['photo']) && is_object($content['photo']) or isBinary($content['photo']) ) {
         $log_content = array_merge([],$content);
         $log_content['photo'] = '[binary content]';

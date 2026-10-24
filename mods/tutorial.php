@@ -50,9 +50,6 @@ if($action == 'end') {
 
       // Execute curl request.
       $json_response = curl_exec($curl);
-
-      // Close connection.
-      curl_close($curl);
     }
   }
   $q = my_query('SELECT level, team FROM users WHERE user_id = ? LIMIT 1', [$user_id]);

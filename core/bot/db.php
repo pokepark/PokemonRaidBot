@@ -8,7 +8,7 @@ if(!$config->DB_HOST || !$config->DB_PORT || !$config->DB_NAME || !$config->DB_U
   die($error);
 }
 // Establish PDO connection
-$dbh = new PDO(
+$dbh = new Pdo\Mysql(
   "mysql:host=" . $config->DB_HOST
   . ";port=" . $config->DB_PORT
   . ";dbname=" . $config->DB_NAME

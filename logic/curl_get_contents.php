@@ -15,6 +15,5 @@ function curl_get_contents($url)
     info_log(curl_error($ch));
     return false;
   }
-  curl_close($ch);
   return $content;
 }

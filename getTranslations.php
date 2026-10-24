@@ -57,7 +57,6 @@ function curl_open_file($input) {
   curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
   $data = curl_exec($ch);
-  curl_close ($ch);
   return $data;
 }
 function remove_duplicate_translations($array) {

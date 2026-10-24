@@ -23,7 +23,6 @@ function download_Portal_Image($img_url, $destination, $filename) {
   curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
   $result = curl_exec($ch);
-  curl_close ($ch);
 
   // Write to file.
   if(empty($result)) {

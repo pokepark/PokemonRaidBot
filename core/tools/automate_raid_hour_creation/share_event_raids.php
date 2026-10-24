@@ -46,6 +46,4 @@ foreach($all as $raid) {
     curl_setopt($curl, CURLOPT_POSTFIELDS, $json);
     // Execute curl request.
     curl_exec($curl);
-    // Close connection.
-    curl_close($curl);
 }

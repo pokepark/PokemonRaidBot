@@ -165,6 +165,5 @@ function curl_get_contents($url)
         echo 'Curl error: ' . curl_error($ch);
         $content = false;
     }
-    curl_close($ch);
     return $content;
 }
