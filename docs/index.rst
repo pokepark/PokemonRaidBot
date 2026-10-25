@@ -52,6 +52,7 @@ You can submit translations to expand our list of lanuages! For more information
 
 * DE (German)
 * EN (English)
+* ES (Spanish)
 * FI (Finnish)
 * FR (French)
 * IT (Italian)

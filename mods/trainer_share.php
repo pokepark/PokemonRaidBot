@@ -1,16 +1,19 @@
 <?php
 // Write to log.
 debug_log('trainer_share()');
+require_once(LOGIC_PATH . '/keys_trainerinfo.php');
+require_once(LOGIC_PATH . '/show_trainerinfo.php');
+require_once(LOGIC_PATH . '/config_chats.php');
 
 // For debug.
 //debug_log($update);
 //debug_log($data);
 
 // Access check.
-bot_access_check($update, 'trainer-share');
+$botUser->accessCheck('trainer-share');
 
-// Get chat id.
-$chat = $data['arg'];
+// Get chat object by chat short id
+$chatObj = get_config_chat_by_short_id($data['c']);
 
 // Get text and keys.
 $text = show_trainerinfo($update);
@@ -20,7 +23,7 @@ $keys = keys_trainerinfo();
 $tg_json = array();
 
 // Send the message.
-$tg_json[] = send_message($chat, $text, $keys, ['disable_web_page_preview' => 'true'], true, 'trainer');
+$tg_json[] = send_message($chatObj, $text, $keys, ['disable_web_page_preview' => 'true'], true, 'trainer');
 
 // Set callback keys and message
 $callback_msg = getTranslation('successfully_shared');
@@ -34,6 +37,3 @@ $tg_json[] = edit_message($update, $callback_msg, $callback_keys, false, true);
 
 // Telegram multicurl request.
 curl_json_multi_request($tg_json);
-
-// Exit.
-exit();

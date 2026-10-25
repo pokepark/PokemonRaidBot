@@ -5,9 +5,7 @@
 // Core Paths
 define('CORE_TG_PATH', CORE_PATH . '/telegram');
 define('CORE_BOT_PATH', CORE_PATH . '/bot');
-define('CORE_LANG_PATH', CORE_PATH . '/lang');
 define('CORE_COMMANDS_PATH', CORE_PATH . '/commands');
-define('CORE_CLASS_PATH', CORE_PATH . '/class');
 
 // Bot Paths
 define('CONFIG_PATH', ROOT_PATH . '/config');

@@ -1,47 +1,37 @@
 <?php
 // Write to log.
 debug_log('pokedex()');
+require_once(LOGIC_PATH . '/edit_pokedex_keys.php');
 
 // For debug.
 //debug_log($update);
 //debug_log($data);
 
 // Check access.
-bot_access_check($update, 'pokedex');
+$botUser->accessCheck('pokedex');
 
 // Get the limit.
-$limit = $data['id'];
+$limit = $data['l'] ?? 0;
 
-// Get the action.
-$action = $data['arg'];
+// Set message.
+$msg = getTranslation('pokedex_list_of_all') . CR . CR . '<b>' . getTranslation('pokedex_edit_pokemon') . '</b>';
 
-if ($update['callback_query']['message']['chat']['type'] == 'private') {
-    // Set message.
-    $msg = getTranslation('pokedex_list_of_all') . CR . CR . '<b>' . getTranslation('pokedex_edit_pokemon') . '</b>';
+// Get pokemon.
+$keys = edit_pokedex_keys($limit);
 
-    // Get pokemon.
-    $keys = edit_pokedex_keys($limit, $action);
+// Empty keys?
+if (!$keys) {
+  $msg = getTranslation('pokedex_not_found');
+}
 
-    // Empty keys?
-    if (!$keys) {
-	$msg = getTranslation('pokedex_not_found');
-    }
+// Telegram JSON array.
+$tg_json = array();
 
-    // Build callback message string.
-    $callback_response = 'OK';
+// Answer callback.
+$tg_json[] = answerCallbackQuery($update['callback_query']['id'], 'OK', true);
 
-    // Telegram JSON array.
-    $tg_json = array();
+// Edit message.
+$tg_json[] = edit_message($update, $msg, $keys, false, true);
 
-    // Answer callback.
-    $tg_json[] = answerCallbackQuery($update['callback_query']['id'], $callback_response, true);
-
-    // Edit message.
-    $tg_json[] = edit_message($update, $msg, $keys, false, true);
-
-    // Telegram multicurl request.
-    curl_json_multi_request($tg_json);
-} 
-
-// Exit.
-exit();
+// Telegram multicurl request.
+curl_json_multi_request($tg_json);

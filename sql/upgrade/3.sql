@@ -4,15 +4,14 @@ CREATE UNIQUE INDEX IF NOT EXISTS `idx_pokemon_pokedex_id_pokemon_form_id` ON `p
 
 ALTER TABLE `raids`
 DROP COLUMN IF EXISTS `first_seen`,
-ADD COLUMN IF NOT EXISTS `spawn` DATETIME NULL DEFAULT NULL AFTER `pokemon_form`,
 MODIFY `pokemon` int(4) DEFAULT NULL,
 ADD COLUMN IF NOT EXISTS `pokemon_form` int(4) unsigned NOT NULL DEFAULT 0,
+ADD COLUMN IF NOT EXISTS `spawn` DATETIME NULL DEFAULT NULL AFTER `pokemon_form`,
 ADD COLUMN IF NOT EXISTS `level` enum('1','2','3','4','5','6','X') DEFAULT NULL AFTER `gym_id`,
 ADD COLUMN IF NOT EXISTS `event` int(3) unsigned DEFAULT NULL AFTER `gender`,
 ADD COLUMN IF NOT EXISTS `event_note` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL AFTER `event`;
 
 CREATE TABLE IF NOT EXISTS `raid_bosses` (`id` int(11) NOT NULL AUTO_INCREMENT,`pokedex_id` int(10) DEFAULT NULL,`pokemon_form_id` int(4) DEFAULT NULL,`date_start` datetime NOT NULL DEFAULT '1970-01-01 00:00:01',`date_end` datetime NOT NULL DEFAULT '2038-01-19 03:14:07',`raid_level` enum('1','2','3','4','5','6','X') DEFAULT NULL,PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-INSERT INTO `raid_bosses` (`pokedex_id`,`pokemon_form_id`,`raid_level`) SELECT `pokedex_id`,`pokemon_form_id`,`raid_level` FROM pokemon WHERE raid_level != '0';
 
 ALTER TABLE `users`
 ADD COLUMN IF NOT EXISTS `trainername` varchar(200) CHARACTER SET utf8mb4 DEFAULT NULL AFTER `name`,

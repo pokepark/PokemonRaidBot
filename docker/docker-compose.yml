@@ -1,7 +1,6 @@
-version: "3.7"
-
 services:
   raidbot:
+    container_name: raidbot
     ports:
       - 8088:80
     depends_on:
@@ -9,8 +8,10 @@ services:
     restart: always
     volumes:
       # These are just example paths, change them to where you have stored the data!
-      - ./PokemonRaidBot/config/:/var/www/html/config/
       - ./PokemonRaidBot/access/:/var/www/html/access/
+      - ./PokemonRaidBot/config/config.json:/var/www/html/config/config.json
+      - ./PokemonRaidBot/custom/:/var/www/html/custom/
+      - ./PokemonRaidBot/images/gyms/:/var/www/html/images/gyms
       - ./PokemonRaidBot/images/pokemon_PokeMiners/:/var/www/html/images/pokemon_PokeMiners
       - ./tg-logs/:/var/log/tg-bots/
     environment:
@@ -26,7 +27,8 @@ services:
       ofelia.job-exec.raidbot-overview.command: /usr/bin/curl -s -k -d '{"callback_query":{"data":"0:overview_refresh:0"}}' https://raidbot.example.com/index.php?apikey=changeme
 
   raidbot-db:
-    image: mariadb:10.3
+    container_name: raidbot-db
+    image: mariadb:10.11
     restart: always
     command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
     volumes:
@@ -41,6 +43,7 @@ services:
       MYSQL_PASSWORD:
 
   ofelia:
+    container_name: raidbot-ofelia
     image: mcuadros/ofelia:latest
     depends_on:
       - raidbot

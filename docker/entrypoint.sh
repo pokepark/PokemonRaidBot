@@ -34,7 +34,7 @@ env | egrep -q '^POKEMONRAIDBOT_' && \
   | tee -a config/config.json)
 
 # Do some permission setting for any data that might've been volume mounted in, otherwise stuff will fail in weird ways.
-chown -R www-data:www-data config/config.json access/ custom/ images/pokemon*
+chown -R www-data:www-data config/config.json access/ custom/ images/gyms/ images/pokemon*
 
 # Ensure we now have a valid config
 if [[ ! -a /var/www/html/config/config.json ]]; then

@@ -48,7 +48,7 @@
                             $request = json_encode([
                                             'method'=>'deleteMyCommands',
                                             'scope'=>$scope,
-                                            
+
                                             ]);
                             $response = curl_json_request($request);
                         }
@@ -146,9 +146,6 @@ function curl_json_request($json)
 
     // Execute curl request.
     $json_response = curl_exec($curl);
-
-    // Close connection.
-    curl_close($curl);
 
     // Return response.
     return $json_response;

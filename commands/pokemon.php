@@ -6,101 +6,70 @@ debug_log('POKEMON()');
 //debug_log($update);
 //debug_log($data);
 
-// Check access.
-bot_access_check($update, 'access-bot');
+if($botUser->accessCheck('pokemon-own', true)) {
+  $userRestriction = 'AND raids.user_id = ?';
+  $binds = [$update['message']['chat']['id']];
+}elseif($botUser->accessCheck('pokemon-all', true)) {
+  $userRestriction = '';
+  $binds = [];
+}else {
+  $botUser->denyAccess();
+}
 
-// Count results.
-$count = 0;
+$query = my_query('
+  SELECT  raids.*, gyms.gym_name
+  FROM    raids
+  LEFT JOIN gyms
+  ON      raids.gym_id = gyms.id
+  WHERE   raids.end_time > UTC_TIMESTAMP
+  ' . $userRestriction . '
+  ORDER BY raids.end_time ASC
+  LIMIT 20
+', $binds);
+
+if($query->rowCount() == 0) {
+  $msg = '<b>' . getTranslation('no_active_raids_found') . '</b>';
+  send_message(create_chat_object([$update['message']['chat']['id']]), $msg);
+  exit;
+}
 
 // Init text and keys.
 $text = '';
 $keys = [];
 
-try {
+while ($row = $query->fetch()) {
+  // Get times.
+  $now = utcnow();
+  $today = dt2date($now);
+  $raid_day = dt2date($row['start_time']);
+  $start = dt2time($row['start_time']);
+  $end = dt2time($row['end_time']);
 
-    $query = '
-        SELECT
-            raids.*, gyms.lat ,
-            gyms.lon ,
-            gyms.address ,
-            gyms.gym_name ,
-            gyms.ex_gym ,
-            users. NAME 
-        FROM
-            raids
-        LEFT JOIN gyms ON raids.gym_id = gyms.id
-        LEFT JOIN users ON raids.user_id = users.user_id
-        WHERE
-            raids.end_time > UTC_TIMESTAMP
-        ORDER BY
-            raids.end_time ASC
-        LIMIT 20
-    ';
-    $statement = $dbh->prepare( $query );
-    $statement->execute();
-    while ($row = $statement->fetch()) {
-        // Get times.
-        $now = utcnow();
-        $today = dt2date($now);
-        $raid_day = dt2date($row['start_time']);
-        $start = dt2time($row['start_time']);
-        $end = dt2time($row['end_time']);
+  // Split pokemon and form to get the pokedex id.
+  $pokedex_id = explode('-', $row['pokemon'])[0];
 
-        // Split pokemon and form to get the pokedex id.
-        $pokedex_id = explode('-', $row['pokemon'])[0];
+  // Pokemon is an egg?
+  $keys_text = $row['gym_name'];
+  if(in_array($pokedex_id, EGGS)) {
+    $keys_text = EMOJI_EGG . SP . $row['gym_name'];
+  }
 
-        // Pokemon is an egg?
-        $eggs = $GLOBALS['eggs'];
-        if(in_array($pokedex_id, $eggs)) {
-            $keys_text = EMOJI_EGG . SP . $row['gym_name'];
-        } else {
-            $keys_text = $row['gym_name'];
-        }
-
-        // Set text and keys.
-        $text .= $row['gym_name'] . CR;
-        $text .= get_local_pokemon_name($row['pokemon'], $row['pokemon_form']) . SP . '—' . SP . (($raid_day == $today) ? '' : ($raid_day . ', ')) . $start . SP . getTranslation('to') . SP . $end . CR . CR;
-        $keys[] = array(
-            'text'          => $keys_text,
-            'callback_data' => $row['id'] . ':raid_edit_poke:' . $row['level'],
-        );
-
-        // Counter++
-        $count = $count + 1;
-    }
-}
-catch (PDOException $exception) {
-
-    error_log($exception->getMessage());
-    $dbh = null;
-    exit;
-}
-    
-// Set message.
-if($count == 0) {
-    $msg = '<b>' . getTranslation('no_active_raids_found') . '</b>';
-} else {
-    // Get the inline key array.
-    $keys = inline_key_array($keys, 1);
-
-    // Add exit key.
-    $keys[] = [
-        [
-            'text'          => getTranslation('abort'),
-            'callback_data' => '0:exit:0'
-        ]
-    ];
-
-    // Build message.
-    $msg = '<b>' . getTranslation('list_all_active_raids') . ':</b>' . CR;
-    $msg .= $text;
-    $msg .= '<b>' . getTranslation('select_gym_name') . '</b>' . CR;
+  // Set text and keys.
+  $text .= $row['gym_name'] . CR;
+  $text .= get_local_pokemon_name($row['pokemon'], $row['pokemon_form']) . SP . '—' . SP . (($raid_day == $today) ? '' : ($raid_day . ', ')) . $start . SP . getTranslation('to') . SP . $end . CR . CR;
+  $keys[] = button($keys_text, ['raid_edit_poke', 'r' => $row['id'], 'rl' => $row['level']]);
 }
 
-// Build callback message string.
-$callback_response = 'OK';
+// Get the inline key array.
+$keys = inline_key_array($keys, 1);
+
+// Add exit key.
+$keys[][] = button(getTranslation('abort'), 'exit');
+
+// Build message.
+$msg = '<b>' . getTranslation('list_all_active_raids') . ':</b>' . CR;
+$msg .= $text;
+$msg .= '<b>' . getTranslation('select_gym_name') . '</b>' . CR;
 
 // Send message.
-send_message($update['message']['chat']['id'], $msg, $keys, ['reply_markup' => ['selective' => true, 'one_time_keyboard' => true]]);
-
-?>
+send_message(create_chat_object([$update['message']['chat']['id']]), $msg, $keys, ['reply_markup' => ['selective' => true, 'one_time_keyboard' => true]]);

@@ -19,6 +19,5 @@
   "RAID_PICTURE": false,
   "RAID_PICTURE_AUTOEXTEND": false,
   "RAID_PICTURE_STORE_GYM_IMAGES_LOCALLY": true,
-  "RAID_PICTURE_URL":"https://example.com/raid/raidpicture.php",
   "RAID_POLL_UI_TEMPLATE":[["alone","extra","extra_alien","remote","inv_plz","can_inv","ex_inv"],["teamlvl"],["time"],["pokemon"],["refresh","alarm","here","late","done","cancel"]]
 }

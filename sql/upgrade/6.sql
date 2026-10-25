@@ -1,0 +1,1 @@
+ALTER TABLE `raid_bosses` ADD COLUMN IF NOT EXISTS `disabled` TINYINT(1) UNSIGNED DEFAULT 0 AFTER `scheduled`;

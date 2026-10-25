@@ -5,13 +5,14 @@
  * @return array
  */
 function get_pokemon_by_table_id($pokemon_table_id) {
-    $q = my_query("
-            SELECT  pokedex_id, 
-                    pokemon_form_id
-            FROM    pokemon
-            WHERE   id = {$pokemon_table_id}
-            LIMIT   1
-            ");
-    $return = $q->fetch();
-    return $return;
+  $q = my_query('
+    SELECT  pokedex_id,
+            pokemon_form_id
+    FROM    pokemon
+    WHERE   id = ?
+    LIMIT   1
+    ', [$pokemon_table_id]
+  );
+  $return = $q->fetch();
+  return $return;
 }

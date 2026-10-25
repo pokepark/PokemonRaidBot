@@ -32,7 +32,7 @@ function error_handler($severity, $message, $filename, $lineno) {
     $logger = 'error_log';
   }
   $logger('Crash incoming, have a detailed backtrace:');
-  $logger(debug_backtrace());
+  $logger(print_r(debug_backtrace(), true));
   throw new ErrorException($message, 0, $severity, $filename, $lineno);
 }
 

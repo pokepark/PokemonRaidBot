@@ -12,11 +12,11 @@ function get_config_array($file) {
     error_log('Unable to read config file, check permissions: ' . $file);
     die('Config file not readable, cannot continue: ' . $file);
   }
-  
+
   $config_array = json_decode($file_contents, true);
 
   if(json_last_error() !== JSON_ERROR_NONE) {
-    error_log('Invalid JSON (' . json_last_error_msg()  . '): ' . $file);
+    error_log('[core/bot/config.php] Invalid JSON (' . json_last_error_msg()  . '): ' . $file . "\n What we got from the file: \n" . $file_contents);
     die('Config file not valid JSON, cannot continue: ' . $file);
   }
 
@@ -58,6 +58,9 @@ function migrate_config($config, $file){
 function build_config() {
   // Get default config files without their full path, e.g. 'defaults-config.json'
   $default_configs = str_replace(CONFIG_PATH . '/', '', glob(CONFIG_PATH . '/defaults-*.json'));
+  if(!$default_configs){
+    error_log('No config defaults found, make sure you have not destroyed config/defaults-config.json. Things will break unless your custom config sets every possible option.');
+  }
 
   // Collection point for individual configfile arrays, will eventually be converted to a json object
   $config = Array();
@@ -65,7 +68,7 @@ function build_config() {
   // Iterate over subconfigs getting defaults and merging in custom overrides
   foreach ($default_configs as $filename) {
     $dfile = CONFIG_PATH . '/' . $filename; // config defaults, e.g. defaults-config.json
-    $cfile = CONFIG_PATH . '/' . str_replace('defaults-', '', $filename); // custom config overrides e.g. config.json
+    $cfile = botSpecificConfigFile(str_replace('defaults-', '', $filename)); // custom config overrides e.g. config.json
 
     // Get default config as an array so we can do an array merge later
     $config_array = get_config_array($dfile);
@@ -86,8 +89,12 @@ function build_config() {
   // Return the whole multi-source config as an Object
   return (Object)$config;
 }
+function botSpecificConfigFile($filename) {
+  $prefix = '';
+  if (isset($_GET['bot_name']) && !empty($_GET['bot_name']))
+    $prefix = $_GET['bot_name'] . '-';
+  return CONFIG_PATH . '/' . $prefix . $filename;
+}
 
 // Object, access a config option with e.g. $config->VERSION
 $config = build_config();
-
-?>
